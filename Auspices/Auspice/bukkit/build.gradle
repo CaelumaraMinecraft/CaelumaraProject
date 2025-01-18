@@ -1,0 +1,33 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.bukkit"
+
+repositories {
+}
+
+dependencies {
+    // 向外传递 API
+    implementation(api(project(":core:bukkit:base")))
+    implementation(api(project(":core:bukkit:common")))
+
+    implementation(api(project(":core:bukkit:craftbukkit")))
+    implementation(api(project(":core:bukkit:spigot")))
+    implementation(api(project(":core:bukkit:paper")))
+    implementation(api(project(":core:bukkit:purpur")))
+    implementation(api(project(":core:bukkit:leaf")))
+    implementation(api(project(":core:bukkit:folia")))
+
+
+    // Engines
+    implementation(libs.xseries)
+
+//    implementation(libs.adventure.platform.bukkit)
+
+
+    // ClassPath Libs
+    compileOnly(libs.server.craftbukkit)
+}

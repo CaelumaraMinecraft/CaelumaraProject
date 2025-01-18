@@ -1,0 +1,6 @@
+name: SpellCraftsmanship
+version: '0.1-SNAPSHOT'
+main: top.auspice.wandscraftsmanship.main.SpellCraftsmanship
+api-version: '1.18'
+depend:
+  - Auspice

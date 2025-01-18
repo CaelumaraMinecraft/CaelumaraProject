@@ -1,0 +1,13 @@
+plugins {
+    id("java")
+}
+
+group = "top.auspice.services.skinsrestorer"
+
+dependencies {
+    compileOnly(project(":core:bukkit:services:base"))
+    compileOnly(libs.server.craftbukkit)
+
+//    compileOnly("net.skinsrestorer:skinsrestorer-api:15.1.0")
+    compileOnly(fileTree("$rootDir/libs/services/skinsrestorer"))
+}

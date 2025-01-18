@@ -1,0 +1,215 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        gradlePluginPortal()
+
+        maven {
+            name = "nms-repo"
+            url = "https://repo.codemc.org/repository/nms/"
+        }
+
+        maven {
+            name = "minecraft-repo"
+            url = "https://libraries.minecraft.net/"
+        }
+
+        maven {
+            name = ("spigotmc-repo")
+            url = ("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        }
+
+        maven {
+            name = "sk89q-repo"
+            url = "https://maven.enginehub.org/repo/"
+        }
+
+        maven {
+            name("placeholderapi")
+            url = "https://repo.extendedclip.com/content/repositories/placeholderapi/"
+        }
+
+        maven {
+            name = "Lumine Releases"
+            url = "https://mvn.lumine.io/repository/maven-public/"
+        }
+
+        maven {
+            name = "MVdW Public Repositories"
+            url = "https://repo.mvdw-software.be/content/groups/public/"
+        }
+
+        maven {
+            name = "jitpack.io"
+            url = "https://jitpack.io/"
+        }
+
+        maven {
+            name = "Scarsz-Nexus"
+            url = "https://nexus.scarsz.me/content/groups/public/"
+        }
+
+
+        maven {
+            name = ("dynmap")
+            url = ("https://repo.mikeprimm.com/")
+        }
+
+
+        maven {
+            name = ("sonatype")
+            url = ("https://oss.sonatype.org/content/groups/public/")
+        }
+        maven {
+            name = ("essentials")
+            url = ("https://repo.essentialsx.net/releases/")
+        }
+        maven { url = ("https://repo.rosewooddev.io/repository/public/") }
+        maven { url = ("https://repo.auxilor.io/repository/maven-public/") }
+        maven { url = ("https://repo.papermc.io/repository/maven-public/") }
+        maven {
+            url = ("https://jitpack.io")
+            content {
+                includeGroupByRegex("com\\.github\\..*")
+            }
+        }
+
+        maven { url = "https://repo.auxilor.io/repository/maven-public/" }
+        maven { url = "https://repo.papermc.io/repository/maven-public/" }
+
+        maven {
+            name = "ossrh"
+            url = "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+
+        maven {
+            name = "ossrh"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        }
+
+
+        maven {
+            name = "papermc-repo"
+            url = "https://repo.papermc.io/repository/maven-public/"
+        }
+
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/groups/public/"
+        }
+
+    }
+
+}
+
+dependencyResolutionManagement {
+    repositoriesMode = RepositoriesMode.PREFER_PROJECT
+}
+
+rootProject.name = "Auspices"
+
+include("Auspices:base")
+include("Auspices:base:server")
+include("Auspices:base:gradle-plugin")
+
+include("Auspices:base:platform")
+include("Auspices:base:platform:bukkit")
+include("Auspices:base:platform:bukkit:common")
+include("Auspices:base:platform:bukkit:old-bukkit")
+include("Auspices:base:platform:paper")
+include("Auspices:base:platform:geyser")
+include("Auspices:base:platform:folia")
+
+include("Auspices:Auspice")
+
+include("Auspices:Auspice:services")
+include("Auspices:Auspice:services:base")
+include("Auspices:Auspice:services:common")
+
+
+include("Auspices:Auspice:bukkit")
+include("Auspices:Auspice:bukkit:base")
+
+include("Auspices:Auspice:bukkit:common")
+include("Auspices:Auspice:bukkit:common:server")
+include("Auspices:Auspice:bukkit:common:services:vault")
+include("Auspices:Auspice:bukkit:common:services:skinsrestorer")
+
+include("Auspices:Auspice:bukkit:services")
+include("Auspices:Auspice:bukkit:services:base")
+
+
+include("Auspices:Auspice:bukkit:craftbukkit:services:authme")
+include("Auspices:Auspice:bukkit:craftbukkit:services:luckperms")
+
+include("Auspices:Auspice:bukkit:craftbukkit:services")
+include("Auspices:Auspice:bukkit:craftbukkit:services:base")
+include("Auspices:Auspice:bukkit:craftbukkit:services:attributeplus")
+include("Auspices:Auspice:bukkit:craftbukkit:services:worldguard")
+include("Auspices:Auspice:bukkit:craftbukkit:services:cmi")
+include("Auspices:Auspice:bukkit:craftbukkit:services:project-korra")
+include("Auspices:Auspice:bukkit:craftbukkit:services:mythicmobs-v4")
+include("Auspices:Auspice:bukkit:craftbukkit:services:mythicmobs-v5")
+include("Auspices:Auspice:bukkit:craftbukkit:services:simplepets")
+include("Auspices:Auspice:bukkit:craftbukkit:services:mypet")
+include("Auspices:Auspice:bukkit:craftbukkit:services:placeholderapi")
+include("Auspices:Auspice:bukkit:craftbukkit:services:mvdwplaceholderapi")
+
+include("Auspices:Auspice:bukkit:spigot")
+
+include("Auspices:Auspice:bukkit:spigot:services")
+include("Auspices:Auspice:bukkit:spigot:services:base")
+include("Auspices:Auspice:bukkit:spigot:services:kingdoms")
+include("Auspices:Auspice:bukkit:spigot:services:essentials")
+
+include("Auspices:Auspice:bukkit:folia")
+include("Auspices:Auspice:bukkit:folia:base")
+include("Auspices:Auspice:bukkit:folia:common")
+include("Auspices:Auspice:bukkit:folia:server")
+include("Auspices:Auspice:bukkit:folia:services")
+include("Auspices:Auspice:bukkit:folia:services:base")
+
+include("Auspices:Auspice:bukkit:paper")
+include("Auspices:Auspice:bukkit:paper:base")
+include("Auspices:Auspice:bukkit:paper:common")
+include("Auspices:Auspice:bukkit:paper:server")
+include("Auspices:Auspice:bukkit:paper:services")
+include("Auspices:Auspice:bukkit:paper:services:base")
+include("Auspices:Auspice:bukkit:paper:services:serviceio")
+
+include("Auspices:Auspice:bukkit:purpur")
+
+include("Auspices:Auspice:bukkit:leaf")
+
+
+
+include("Auspices:Auspice:bukkit-legacy:base")
+include("Auspices:Auspice:bukkit-legacy:common")
+include("Auspices:Auspice:bukkit-legacy:common:server")
+include("Auspices:Auspice:bukkit-legacy:services")
+include("Auspices:Auspice:bukkit-legacy:craftbukkit")
+include("Auspices:Auspice:bukkit-legacy:craftbukkit:server")
+include("Auspices:Auspice:bukkit-legacy:craftbukkit:services")
+
+include("Auspices:Auspice:bukkit-legacy:spigot")
+
+
+
+include("Auspices:Auspice:bungee")
+
+
+include("Auspices:Auspice:sponge")
+
+
+include("Auspices:Auspice:velocity")
+
+
+include("WandsCraftsmanship")
+
+
+include("HiraethRPG")
+
+
+include("HiraethRPG:HiraethRPGPlugin")

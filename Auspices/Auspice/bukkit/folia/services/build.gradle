@@ -1,0 +1,18 @@
+plugins {
+    id("java-library")
+//    alias(libs.plugins.kotlin)
+//    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.folia.services"
+
+dependencies {
+    // 向上传递依赖项
+    implementation(api(project(":core:bukkit:services:base")))  // 全 Bukkit 下游平台通用
+
+
+    implementation(api(project(':core:bukkit:paper:services:serviceio')))  // ServicesIO 插件支持 Folia
+
+
+    compileOnly(libs.server.folia)
+}

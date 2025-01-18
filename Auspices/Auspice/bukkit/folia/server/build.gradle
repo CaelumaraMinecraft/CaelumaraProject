@@ -1,0 +1,16 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.folia.server"
+
+dependencies {
+    compileOnly(project(":base"))
+    compileOnly(project(":core:bukkit:folia:base"))
+
+    compileOnly(libs.server.folia)
+
+    compileOnly(libs.annotations.jetbrains)
+}

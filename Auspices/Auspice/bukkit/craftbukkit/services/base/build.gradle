@@ -1,0 +1,12 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.craftbukkit.services.base"
+
+dependencies {
+    compileOnly(api(project(":core:bukkit:services:base")))
+//    api(project(":core:bukkit:services:common"))
+}

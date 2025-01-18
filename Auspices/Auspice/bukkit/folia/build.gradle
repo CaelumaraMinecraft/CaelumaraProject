@@ -1,0 +1,105 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.folia"
+
+repositories {
+}
+
+dependencies {
+    // 向上传递依赖项
+    implementation(api(project(":base")))
+    implementation(api(project(":core:bukkit:base")))
+    implementation(api(project(":core:bukkit:common")))
+    implementation(api(project(":core:bukkit:folia:services")))
+
+
+    // Engines
+    implementation(libs.xseries)
+    implementation(libs.yamlengine)
+    implementation(libs.caffeine)
+    implementation(libs.guava)
+
+    // ClassPath Libs
+
+    // https://github.com/PaperMC/Folia/blob/master/README.md#the-new-rules
+    // https://github.com/PaperMC/Folia
+    compileOnly(libs.server.folia)
+    compileOnly(libs.annotations.jetbrains)
+
+    compileOnly(fileTree(".libs/"))
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+
+tasks {
+
+    build {
+        dependsOn("shadowJar")
+    }
+
+    compileKotlin {
+
+        kotlinOptions {
+            jvmTarget = 17
+        }
+
+    }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+
+        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+            options.release.set(targetJavaVersion)
+        }
+    }
+
+    shadowJar {
+
+        enabled = true
+
+        archiveBaseName = "Auspice-Folia"
+        archiveClassifier = null
+
+        relocate("kotlin", "top.auspice.libs.kotlin")
+        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
+        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
+        relocate("com.google.common", "top.auspice.libs.google.common")
+        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
+        relocate("org.objectweb.asm", "top.auspice.libs.asm")
+
+//        exclude(
+//                "kotlin-stdlib-2.0.20-Beta2.jar",
+//                "annotations-13.0.jar",
+//                "checker-qual-3.46.0.jar",
+//                "snakeyaml-2.2.jar"
+//        )
+
+    }
+
+    jar {
+        enabled = false
+    }
+
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset "UTF-8"
+    filesMatching("plugin.yml") {
+        expand props
+    }
+}

@@ -1,0 +1,16 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.bukkit.services"
+
+dependencies {
+    // 向上传递依赖项
+    implementation(api(project(":core:bukkit:services:base")))
+
+    implementation(api(project(":core:bukkit:craftbukkit:services")))
+    implementation(api(project(":core:bukkit:spigot:services")))
+    implementation(api(project(":core:bukkit:paper:services")))
+    implementation(api(project(":core:bukkit:folia:services")))
+
+}

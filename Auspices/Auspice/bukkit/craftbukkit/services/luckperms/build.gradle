@@ -1,0 +1,15 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+}
+
+group = "top.auspice.craftbukkit.services.luckperms"
+
+dependencies {
+    compileOnly(project(":base"))
+    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+    compileOnly(libs.server.craftbukkit)
+    compileOnly(libs.yamlengine)
+
+    compileOnly(fileTree("$rootDir/libs/services/luckperms-bukkit"))
+}

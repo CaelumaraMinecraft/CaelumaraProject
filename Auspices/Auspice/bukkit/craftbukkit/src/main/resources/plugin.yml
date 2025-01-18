@@ -1,0 +1,7 @@
+name: Auspice
+authors:
+  - Attaccer
+  - McKingdom
+version: '${version}'
+main: top.auspice.craftbukkit.loader.BukkitAuspiceLoader
+api-version: '1.13'

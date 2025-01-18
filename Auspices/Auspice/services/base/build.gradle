@@ -1,0 +1,9 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.services.base"
+
+dependencies {
+    compileOnly(libs.annotations.jetbrains)
+}

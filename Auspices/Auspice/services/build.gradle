@@ -1,0 +1,19 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.services"
+
+repositories {
+}
+
+subprojects {
+}
+
+dependencies {
+    implementation(api(project(":core:services:common")))
+
+    compileOnly(libs.annotations.jetbrains)
+}

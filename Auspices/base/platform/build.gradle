@@ -1,0 +1,14 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.platform"
+
+dependencies {
+    implementation(api(project(":base:platform:bukkit")))
+    implementation(api(project(":base:platform:folia")))
+    implementation(api(project(":base:platform:geyser")))
+
+    compileOnly(project(":base"))
+    compileOnly(project(":base:server"))
+}

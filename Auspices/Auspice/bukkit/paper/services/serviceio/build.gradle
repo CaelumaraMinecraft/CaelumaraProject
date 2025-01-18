@@ -1,0 +1,26 @@
+plugins {
+    id("java")
+    alias(libs.plugins.kotlin)
+}
+
+group = "top.auspice.paper.services.serviceio"
+
+repositories {
+    maven {
+        name = "thenextlvlReleases"
+        url = "https://repo.thenextlvl.net/releases"
+    }
+}
+
+dependencies {
+//    compileOnly(project(":base"))
+//    compileOnly(project(":core:services"))
+    compileOnly(project(":core:bukkit:paper:services:base"))
+
+    compileOnly(project(":core:bukkit:folia:services:base"))
+
+    compileOnly("net.thenextlvl.services:service-io:2.2.0")
+    compileOnly(fileTree("$rootDir/libs/services/ServiceIO"))
+
+    compileOnly(libs.server.paper)
+}

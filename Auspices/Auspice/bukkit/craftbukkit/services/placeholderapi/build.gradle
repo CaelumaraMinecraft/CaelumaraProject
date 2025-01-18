@@ -1,0 +1,23 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.services.placeholderapi"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        name = "placeholderapi"
+        url = "https://repo.extendedclip.com/releases/"
+    }
+}
+
+dependencies {
+    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly(fileTree("$rootDir/libs/services/placeholderapi"))
+
+    compileOnly(libs.server.craftbukkit)
+}

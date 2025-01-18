@@ -1,0 +1,12 @@
+plugins {
+    id("java")
+}
+
+group = "top.auspice.spigot.services.kingdoms"
+
+dependencies {
+    compileOnly(project(":base"))
+    compileOnly(project(":core:bukkit:spigot:services:base"))
+
+    compileOnly(fileTree("$rootDir/libs/services/kingdoms"))
+}

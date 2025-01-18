@@ -1,0 +1,9 @@
+name: HiraethRPG
+version: '1.0-SNAPSHOT'
+authors:
+  - Attaccer
+  - McKingdom
+main: top.auspice.hiraeth.folia.HiraethRPG
+api-version: '1.18'
+depend:
+  - Auspice

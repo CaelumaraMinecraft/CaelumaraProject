@@ -1,0 +1,9 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.folia"
+
+dependencies {
+    implementation(api(project(":core:bukkit:folia:base")))
+}
