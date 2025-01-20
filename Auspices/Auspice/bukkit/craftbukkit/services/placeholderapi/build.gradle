@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+    compileOnly(project(":Auspice:bukkit:craftbukkit:services:base"))
 
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly(fileTree("$rootDir/libs/services/placeholderapi"))

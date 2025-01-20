@@ -8,7 +8,7 @@ group = "top.auspice.folia.server"
 
 dependencies {
     compileOnly(project(":base"))
-    compileOnly(project(":core:bukkit:folia:base"))
+    compileOnly(project(":Auspice:bukkit:folia:base"))
 
     compileOnly(libs.server.folia)
 

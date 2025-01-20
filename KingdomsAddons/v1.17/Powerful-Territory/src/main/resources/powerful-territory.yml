@@ -1,0 +1,28 @@
+
+
+meticulous-land-protection:
+  relation-attribute:
+    elytra: true
+    ender-pearl: true
+    beacon-effects: true
+
+  kingdom-permission:
+    boat: true
+
+
+
+land-contraction:
+
+  enabled: true
+
+  #此土地的占有者是否可以管理这块土地有关土地承包的一切?
+  #比如在没有王国权限 MANAGE_CONTRACTIONS 的情况下, 将土地承包项目分配给别的玩家, 又或者是撤回某玩家的土地承包项目
+  #Is the claimer of a land has all the permissions of land contractions?
+  #It means the claimer can allocate and deallocate regardless of whether claimer has the KingdomPermission MANAGE_CONTRACTIONS
+  claimer-has-all-permissions: true
+
+  allocate:
+    #是否可以分配给别国的成员?
+    #Can it be allocated to members of other kingdoms?
+    other-kingdoms: true
+

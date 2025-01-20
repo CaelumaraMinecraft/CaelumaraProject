@@ -7,6 +7,6 @@ plugins {
 group = "top.auspice.craftbukkit.services.base"
 
 dependencies {
-    compileOnly(api(project(":core:bukkit:services:base")))
-//    api(project(":core:bukkit:services:common"))
+    compileOnly(api(project(":Auspice:bukkit:services:base")))
+//    api(project(":Auspice:bukkit:services:common"))
 }

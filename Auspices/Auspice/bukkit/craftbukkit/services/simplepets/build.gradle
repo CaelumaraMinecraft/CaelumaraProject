@@ -11,7 +11,7 @@ repositories {
     }
 }
 dependencies {
-    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+    compileOnly(project(":Auspice:bukkit:craftbukkit:services:base"))
 
     // https://github.com/brainsynder-Dev/SimplePets
     // https://www.spigotmc.org/resources/100106/

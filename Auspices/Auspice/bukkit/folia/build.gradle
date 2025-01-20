@@ -12,9 +12,9 @@ repositories {
 dependencies {
     // 向上传递依赖项
     implementation(api(project(":base")))
-    implementation(api(project(":core:bukkit:base")))
-    implementation(api(project(":core:bukkit:common")))
-    implementation(api(project(":core:bukkit:folia:services")))
+    implementation(api(project(":Auspice:bukkit:base")))
+    implementation(api(project(":Auspice:bukkit:common")))
+    implementation(api(project(":Auspice:bukkit:folia:services")))
 
 
     // Engines
@@ -33,7 +33,7 @@ dependencies {
     compileOnly(fileTree(".libs/"))
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion

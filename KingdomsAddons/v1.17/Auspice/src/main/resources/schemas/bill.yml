@@ -1,0 +1,4 @@
+expend: bool
+entries:
+  (keys): str
+  (values): str

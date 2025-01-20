@@ -25,7 +25,7 @@ dependencies {
     compileOnly(project(":base:platform"))
     compileOnly(project(":base"))
     compileOnly(project(":base:server"))
-    compileOnly(project(":core"))
+    compileOnly(project(":Auspice"))
 
     // Idk this gives an error
     // compileOnly("org.geysermc.geyser:api:2.1.0-SNAPSHOT")

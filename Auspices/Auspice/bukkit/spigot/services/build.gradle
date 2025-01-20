@@ -9,12 +9,12 @@ group = "top.auspice.spigot.services"
 dependencies {
 
     // 向外传递 API
-    implementation(api(project(":core:bukkit:spigot:services:base")))
+    implementation(api(project(":Auspice:bukkit:spigot:services:base")))
 
-    implementation(api(project(":core:bukkit:spigot:services:kingdoms")))
-    implementation(api(project(":core:bukkit:spigot:services:essentials")))
+    implementation(api(project(":Auspice:bukkit:spigot:services:kingdoms")))
+    implementation(api(project(":Auspice:bukkit:spigot:services:essentials")))
 
-    implementation(api(project(":core:bukkit:craftbukkit:services")))  // CraftBukkit 服务器的插件同样适用于 Spigot 服务器
+    implementation(api(project(":Auspice:bukkit:craftbukkit:services")))  // CraftBukkit 服务器的插件同样适用于 Spigot 服务器
 
 //    compileOnly(libs.server.spigot.get())
 }

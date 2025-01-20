@@ -16,8 +16,8 @@ subprojects {
 
 //    dependencies {
 //        compileOnly(project(":base"))
-//        compileOnly(project(":core:bukkit:common"))
-//        compileOnly(project(":core:bukkit:craftbukkit:services"))
+//        compileOnly(project(":Auspice:bukkit:common"))
+//        compileOnly(project(":Auspice:bukkit:craftbukkit:services"))
 //        compileOnly(libs.server.craftbukkit)
 //    }
 
@@ -27,9 +27,9 @@ dependencies {
 
     // 向外传递 API
     implementation(api(project(":base")))
-    implementation(api(project(":core:bukkit:base")))
-    implementation(api(project(":core:bukkit:common")))
-    implementation(api(project(":core:bukkit:craftbukkit:services")))
+    implementation(api(project(":Auspice:bukkit:base")))
+    implementation(api(project(":Auspice:bukkit:common")))
+    implementation(api(project(":Auspice:bukkit:craftbukkit:services")))
 
 
     // Engines

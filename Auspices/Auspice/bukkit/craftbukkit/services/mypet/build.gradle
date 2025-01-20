@@ -6,7 +6,7 @@ plugins {
 group = "top.auspice.services.mypet"
 
 dependencies {
-    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+    compileOnly(project(":Auspice:bukkit:craftbukkit:services:base"))
 
     // Local https://wiki.mypet-plugin.de/hooks/hook-types
     compileOnly(fileTree("$rootDir/libs/services/mypet"))

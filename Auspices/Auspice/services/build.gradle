@@ -13,7 +13,7 @@ subprojects {
 }
 
 dependencies {
-    implementation(api(project(":core:services:common")))
+    implementation(api(project(":Auspice:services:common")))
 
     compileOnly(libs.annotations.jetbrains)
 }

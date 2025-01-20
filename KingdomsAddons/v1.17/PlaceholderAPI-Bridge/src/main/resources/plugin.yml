@@ -1,0 +1,5 @@
+name: Kingdoms-PlaceholderAPI-Bridge
+version: '1.0-SNAPSHOT'
+main: top.mckingdom.bridges.placeholderapi.PlaceholderAPIBridge
+api-version: '1.13'
+depend: [Kingdoms]

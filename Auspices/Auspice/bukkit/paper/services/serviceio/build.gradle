@@ -14,10 +14,10 @@ repositories {
 
 dependencies {
 //    compileOnly(project(":base"))
-//    compileOnly(project(":core:services"))
-    compileOnly(project(":core:bukkit:paper:services:base"))
+//    compileOnly(project(":Auspice:services"))
+    compileOnly(project(":Auspice:bukkit:paper:services:base"))
 
-    compileOnly(project(":core:bukkit:folia:services:base"))
+    compileOnly(project(":Auspice:bukkit:folia:services:base"))
 
     compileOnly("net.thenextlvl.services:service-io:2.2.0")
     compileOnly(fileTree("$rootDir/libs/services/ServiceIO"))

@@ -16,12 +16,12 @@ subprojects {
 
 dependencies {
     // 向上传递依赖项
-    implementation(api(project(":core:bukkit:base")))
-    implementation(api(project(":core:bukkit:services:base")))
+    implementation(api(project(":Auspice:bukkit:base")))
+    implementation(api(project(":Auspice:bukkit:services:base")))
     implementation(api(project(":base")))
 
     // 向下传递依赖项
-    api(project(":core:bukkit")) { transitive = false }
+    api(project(":Auspice:bukkit")) { transitive = false }
 
     // Engines
     implementation(libs.xseries)

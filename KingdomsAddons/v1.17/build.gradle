@@ -1,0 +1,10 @@
+
+
+subprojects {
+    dependencies {
+        compileOnly(fileTree("$rootDir/v1.17/.libs"))
+        compileOnly(libs.spigot)
+        compileOnly(libs.annotations.jetbrains)
+        compileOnly(libs.annotations.checker)
+    }
+}

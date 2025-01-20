@@ -11,7 +11,7 @@ dependencies {
     api(project(":base"))
 
     // 向下传递依赖项
-    api(project(":core"))
+    api(project(":Auspice"))
 
     compileOnly(libs.server.bungee)
     compileOnly(libs.adventure.platform.bungee) {

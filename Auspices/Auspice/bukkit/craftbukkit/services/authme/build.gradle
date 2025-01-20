@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+    compileOnly(project(":Auspice:bukkit:craftbukkit:services:base"))
     compileOnly(libs.server.craftbukkit)
     // https://github.com/AuthMe/AuthMeReloaded
     compileOnly("fr.xephi:authme:5.7.0-SNAPSHOT")

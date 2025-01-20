@@ -1,0 +1,4 @@
+name: Kingdoms-Addon-Civilizations
+version: '0.2-SNAPSHOT'
+main: top.mckingdom.civilizations.Civilizations
+api-version: '1.20'

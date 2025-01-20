@@ -1,0 +1,13 @@
+meticulous-land-protection:
+  relation-attribute:
+    elytra: bool
+    ender-pearl: bool
+    beacon-effects: bool
+
+  kingdom-permission:
+    boat: bool
+
+
+land-contractions:
+  enabled: bool
+  can-allocate-other-kingdom: bool

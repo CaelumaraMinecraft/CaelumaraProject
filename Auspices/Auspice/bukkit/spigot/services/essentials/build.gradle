@@ -17,8 +17,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly(project(":core:bukkit:spigot:services:base"))
-    compileOnly(project(":core:bukkit:common"))
+    compileOnly(project(":Auspice:bukkit:spigot:services:base"))
+    compileOnly(project(":Auspice:bukkit:common"))
     compileOnly(libs.server.spigot)
     compileOnly("net.essentialsx:EssentialsX:2.20.1")
 //    compileOnly(fileTree("$rootDir/libs/services/essentials"))

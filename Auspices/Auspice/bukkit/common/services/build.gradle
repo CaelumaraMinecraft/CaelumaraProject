@@ -8,13 +8,13 @@ group = "top.auspice.craftbukkit.services"
 
 dependencies {
     // 向上传递依赖项
-    implementation(api(project(":core:bukkit:services:base")))
+    implementation(api(project(":Auspice:bukkit:services:base")))
 
-    implementation(api(project(":core:bukkit:common:services:vault")))
-    implementation(api(project(":core:bukkit:common:services:skinsrestorer")))
+    implementation(api(project(":Auspice:bukkit:common:services:vault")))
+    implementation(api(project(":Auspice:bukkit:common:services:skinsrestorer")))
 
     // 向下传递依赖项
-    api(project(":core:bukkit:services"))
+    api(project(":Auspice:bukkit:services"))
 //    api(libs.bukkit.craftbukkit)
 
     // ClassPath Libs

@@ -15,7 +15,7 @@ subprojects {
 dependencies {
 
     // 向上传递依赖项
-    implementation(api(project(":core:bukkit-legacy:services")))
+    implementation(api(project(":Auspice:bukkit-legacy:services")))
     implementation(api(project(":base")))
 
     //Engines

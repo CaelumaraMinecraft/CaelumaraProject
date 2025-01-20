@@ -5,5 +5,5 @@ plugins {
 group = "top.auspice.folia"
 
 dependencies {
-    implementation(api(project(":core:bukkit:folia:base")))
+    implementation(api(project(":Auspice:bukkit:folia:base")))
 }

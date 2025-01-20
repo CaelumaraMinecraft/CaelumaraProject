@@ -6,11 +6,11 @@ group = "top.auspice.bukkit.services"
 
 dependencies {
     // 向上传递依赖项
-    implementation(api(project(":core:bukkit:services:base")))
+    implementation(api(project(":Auspice:bukkit:services:base")))
 
-    implementation(api(project(":core:bukkit:craftbukkit:services")))
-    implementation(api(project(":core:bukkit:spigot:services")))
-    implementation(api(project(":core:bukkit:paper:services")))
-    implementation(api(project(":core:bukkit:folia:services")))
+    implementation(api(project(":Auspice:bukkit:craftbukkit:services")))
+    implementation(api(project(":Auspice:bukkit:spigot:services")))
+    implementation(api(project(":Auspice:bukkit:paper:services")))
+    implementation(api(project(":Auspice:bukkit:folia:services")))
 
 }

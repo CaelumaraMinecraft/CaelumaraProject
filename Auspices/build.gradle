@@ -1,0 +1,104 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+def ver = "0.0.1-SNAPSHOT"
+
+this.version = ver
+
+subprojects {
+    version = ver
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        gradlePluginPortal()
+
+        maven {
+            name = "SpigotMC-snapshots"
+            url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        }
+
+        maven {
+            name = "PaperMC-repo"
+            url = "https://repo.papermc.io/repository/maven-public/"
+        }
+
+        maven {
+            name = "PurpurMC-snapshots"
+            url = "https://repo.purpurmc.org/snapshots"
+        }
+
+        maven {
+            name = "nostal-ink-snapshots"
+            url = "https://maven.nostal.ink/repository/maven-snapshots/"
+        }
+
+        maven {
+            name = "minecraft-repo"
+            url = "https://libraries.minecraft.net"
+        }
+
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/groups/public/"
+        }
+
+        maven {
+            name = "essentials"
+            url = "https://repo.essentialsx.net/releases/"
+        }
+
+        maven {
+            name = "rosewood-dev"
+            url = "https://repo.rosewooddev.io/repository/public/"
+        }
+
+        maven {
+            name = "nms-repo"
+            url = "https://repo.codemc.org/repository/nms/"
+        }
+
+        maven {
+            name = "auxilor"
+            url = ("https://repo.auxilor.io/repository/maven-public/")
+        }
+
+        maven {
+            name = "jitpack-io"
+            url = "https://jitpack.io"
+            content {
+                includeGroupByRegex("com\\.github\\..*")
+            }
+        }
+
+        maven {
+            name = "sk89q-repo"
+            url = "https://maven.enginehub.org/repo/"
+        }
+    }
+}
+
+
+tasks {
+
+
+//    shadowJar {
+//
+//        enabled = true
+//
+//        archiveBaseName = "Auspice"
+//        archiveClassifier = null
+//        archiveVersion = ver
+//
+//        relocate("kotlin", "top.auspice.libs.kotlin")
+//        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
+//        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
+//        relocate("com.google.common", "top.auspice.libs.google.common")
+//        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
+//
+//
+//    }
+}

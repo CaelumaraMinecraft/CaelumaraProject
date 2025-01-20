@@ -9,11 +9,11 @@ group = "top.auspice.paper.services"
 dependencies {
 
     // 向外传递 API
-    implementation(api(project(":core:bukkit:paper:services:base")))
+    implementation(api(project(":Auspice:bukkit:paper:services:base")))
 
-    implementation(api(project(":core:bukkit:paper:services:serviceio")))
+    implementation(api(project(":Auspice:bukkit:paper:services:serviceio")))
 
-    implementation(api(project(":core:bukkit:spigot:services")))  // Spigot 服务器的插件同样适用于 Paper 服务器
-//    implementation(api(project(":core:bukkit:craftbukkit:services")))  // CraftBukkit 服务器的插件同样适用于 Paper 服务器
+    implementation(api(project(":Auspice:bukkit:spigot:services")))  // Spigot 服务器的插件同样适用于 Paper 服务器
+//    implementation(api(project(":Auspice:bukkit:craftbukkit:services")))  // CraftBukkit 服务器的插件同样适用于 Paper 服务器
 
 }

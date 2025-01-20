@@ -25,7 +25,6 @@ repositories {
 
 dependencies {
     compileOnly(project(":base"))
-    compileOnly(project(":core"))
 
     implementation(api(project(":base:platform:bukkit:common")))
     implementation(api(project(":base:platform:bukkit:old-bukkit")))

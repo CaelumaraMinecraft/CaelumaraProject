@@ -1,0 +1,6 @@
+name: Kingdoms-Addon-Supreme-Kingdom
+version: '0.2-SNAPSHOT'
+main: top.mckingdom.supreme_kingdom.SupremeKingdomAddon
+api-version: '1.20.6'
+depend: [Kingdoms]
+

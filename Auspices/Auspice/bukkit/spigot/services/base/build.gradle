@@ -7,5 +7,5 @@ plugins {
 group = "top.auspice.spigot.services.base"
 
 dependencies {
-    compileOnly(api(project(":core:bukkit:services:base")))
+    compileOnly(api(project(":Auspice:bukkit:services:base")))
 }

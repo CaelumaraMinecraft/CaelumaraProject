@@ -18,10 +18,10 @@ dependencies {
 
     // 向外传递 API
     implementation(api(project(":base")))
-    implementation(api(project(":core:bukkit:base")))
-    implementation(api(project(":core:bukkit:paper")))  // Paper 的 API 均适用于 PurPur
-//    implementation(api(project(":core:bukkit:spigot")))  // Spigot 的 API 均适用于 PurPur
-//    implementation(api(project(":core:bukkit:craftbukkit")))  // Craftbukkit 的 API 均适用于 PurPur
+    implementation(api(project(":Auspice:bukkit:base")))
+    implementation(api(project(":Auspice:bukkit:paper")))  // Paper 的 API 均适用于 PurPur
+//    implementation(api(project(":Auspice:bukkit:spigot")))  // Spigot 的 API 均适用于 PurPur
+//    implementation(api(project(":Auspice:bukkit:craftbukkit")))  // Craftbukkit 的 API 均适用于 PurPur
 
 
     // Engines
@@ -45,7 +45,7 @@ dependencies {
 
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 
 java {
     JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)

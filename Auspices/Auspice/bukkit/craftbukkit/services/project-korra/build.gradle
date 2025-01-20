@@ -6,7 +6,7 @@ plugins {
 group = "top.auspice.services.projectkorra"
 
 dependencies {
-    compileOnly(project(":core:bukkit:craftbukkit:services:base"))
+    compileOnly(project(":Auspice:bukkit:craftbukkit:services:base"))
 
     compileOnly(libs.server.craftbukkit)
 

@@ -13,7 +13,6 @@ repositories {
 
 dependencies {
     compileOnly(project(":base"))
-    compileOnly(project(":core"))
 
     implementation(project(":base:platform"))
 

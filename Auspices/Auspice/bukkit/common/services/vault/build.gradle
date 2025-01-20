@@ -8,6 +8,6 @@ group = "top.auspice.bukkit.services.vault"
 
 dependencies {
     compileOnly(project(":base"))
-    compileOnly(project(":core:bukkit:services:base"))
+    compileOnly(project(":Auspice:bukkit:services:base"))
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") // https://github.com/MilkBowl/VaultAPI
 }

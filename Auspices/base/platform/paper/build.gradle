@@ -13,7 +13,7 @@ dependencies {
     compileOnly(project(":base:platform"))
     compileOnly(project(":base"))
     compileOnly(project(":base:server"))
-    compileOnly(project(":core"))
+    compileOnly(project(":Auspice"))
 
     // https://papermc.io/using-the-api#gradle
     compileOnly(libs.server.paper)
