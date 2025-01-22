@@ -32,13 +32,13 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @NotNull
-    public DataProvider get(@NotNull String var1) {
+    public DataProvider get(@NotNull String key) {
         throw this.unsupported();
     }
 
-    public void setString(@Nullable String var1) {
-        if (var1 != null) {
-            this.c().add(var1);
+    public void setString(@Nullable String s) {
+        if (s != null) {
+            this.c().add(s);
         }
     }
 
@@ -46,21 +46,21 @@ public class UnknownDataGetter implements DataProvider {
         this.c().add(var1);
     }
 
-    public void setLong(long var1) {
-        this.c().add(var1);
+    public void setLong(long l) {
+        this.c().add(l);
     }
 
-    public void setDouble(double var1) {
-        this.c().add(var1);
+    public void setDouble(double d) {
+        this.c().add(d);
     }
 
-    public void setBoolean(boolean var1) {
+    public void setBoolean(boolean b) {
         throw this.unsupported();
     }
 
-    public void setUUID(@Nullable UUID var1) {
-        if (var1 != null) {
-            this.c().add(var1);
+    public void setUUID(@Nullable UUID uuid) {
+        if (uuid != null) {
+            this.c().add(uuid);
         }
     }
 
@@ -86,39 +86,39 @@ public class UnknownDataGetter implements DataProvider {
         throw this.unsupported();
     }
 
-    public void setSimpleLocation(@Nullable SimpleBlockLocation var1) {
-        if (var1 != null) {
-            this.c().add(var1);
+    public void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {
+        if (blockLocation != null) {
+            this.c().add(blockLocation);
         }
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation var1) {
-        Objects.requireNonNull(var1, "");
-        this.c().add(var1);
+    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation chunkLocation) {
+        Objects.requireNonNull(chunkLocation, "");
+        this.c().add(chunkLocation);
     }
 
-    public void setFloat(float var1) {
-        this.c().add(var1);
+    public void setFloat(float f) {
+        this.c().add(f);
     }
 
-    public <V> void setCollection(@NotNull Collection<? extends V> var1, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <V> void setCollection(@NotNull Collection<? extends V> c, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+        Objects.requireNonNull(c, "");
         Objects.requireNonNull(var2, "");
         List<Object> var3 = new ArrayList<>();
         UnknownDataGetter var4 = new UnknownDataGetter(var3);
 
-        for (V var5 : var1) {
+        for (V var5 : c) {
             var2.accept(var4, var5);
         }
 
         this.c().add(var3);
     }
 
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> var1, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(var1);
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> m, @NotNull MappingSetterHandler<K, V> var2) {
+        Objects.requireNonNull(m);
         Objects.requireNonNull(var2);
         Document var3 = new Document();
-        (new MongoDataProvider(null, var3)).setMap(var1, var2);
+        (new MongoDataProvider(null, var3)).setMap(m, var2);
         this.c().add(var3);
     }
 
@@ -137,6 +137,7 @@ public class UnknownDataGetter implements DataProvider {
         }
     }
 
+    @Override
     @NotNull
     public UUID asUUID() {
         Object value = this.value;
@@ -149,8 +150,7 @@ public class UnknownDataGetter implements DataProvider {
         return var10000;
     }
 
-    @NotNull
-    public SimpleBlockLocation asSimpleLocation() {
+    public @Nullable SimpleBlockLocation asSimpleLocation() {
         SimpleBlockLocation var10000 = SimpleBlockLocation.fromString(this.value.toString());
         Objects.requireNonNull(var10000);
         return var10000;

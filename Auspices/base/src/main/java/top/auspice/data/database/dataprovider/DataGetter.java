@@ -1,14 +1,14 @@
 package top.auspice.data.database.dataprovider;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleBlockLocation;
-import top.auspice.server.location.Location;
+import top.auspice.constants.location.SimpleChunkLocation;
+import top.auspice.constants.location.SimpleLocation;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
@@ -42,13 +42,13 @@ public interface DataGetter {
 
     @Nullable String asString(@NotNull Supplier<String> def);
 
-    @Nullable UUID asUUID() throws SQLException;
+    @Nullable UUID asUUID();
 
     @Nullable SimpleBlockLocation asSimpleLocation();
 
-    @NotNull SimpleChunkLocation asSimpleChunkLocation();
+    @Nullable SimpleChunkLocation asSimpleChunkLocation();
 
-    @Nullable Location asLocation();
+    @Nullable SimpleLocation asLocation();
 
     int asInt(@NotNull IntSupplier def);
 
@@ -60,7 +60,9 @@ public interface DataGetter {
 
     boolean asBoolean(@NotNull BooleanSupplier def);
 
-    @NotNull <V, C extends Collection<V>> C asCollection(@NotNull C collection, @NotNull BiConsumer<C, SectionableDataGetter> collectionOperator) throws SQLException;
+    @Contract("_, _ -> param1")
+    <E, C extends Collection<E>> @NotNull C asCollection(@NotNull C collection, @NotNull BiConsumer<C, SectionableDataGetter> collectionOperator);
 
-    @NotNull <K, V, M extends Map<K, V>> M asMap(@NotNull M map, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> mapOperator) throws SQLException;
+    @Contract("_, _ -> param1")
+    <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M map, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> mapOperator);
 }

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Function;
 
+@Deprecated
 public class TypeMappingSet<From, To> extends AbstractSet<To> implements Set<To> {
     private final Set<From> original;
     private final Function<From, To> converter;

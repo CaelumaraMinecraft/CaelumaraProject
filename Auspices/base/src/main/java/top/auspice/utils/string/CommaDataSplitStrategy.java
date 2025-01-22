@@ -1,5 +1,6 @@
 package top.auspice.utils.string;
 
+import org.jetbrains.annotations.NotNull;
 import top.auspice.utils.Checker;
 
 import java.util.Arrays;
@@ -12,7 +13,7 @@ public final class CommaDataSplitStrategy {
     private final int expectedComponentCount;
     private final String[] components;
 
-    public CommaDataSplitStrategy(String data, int expectedComponentCount) {
+    public CommaDataSplitStrategy(@NotNull String data, int expectedComponentCount) {
         Checker.Argument.checkNotEmptyString(data, "data", "Data cannot be null or empty");
         if (expectedComponentCount < 1)
             throw new IllegalArgumentException("expectedComponentCount must be greater than zero: " + expectedComponentCount);

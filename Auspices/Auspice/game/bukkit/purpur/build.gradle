@@ -1,0 +1,117 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.purpur"
+
+//repositories {
+//
+//}
+
+//subprojects {
+//
+//}
+
+dependencies {
+
+    // 向外传递 API
+    implementation(api(project(":base")))
+    implementation(api(project(":Auspice:game:bukkit:base")))
+    implementation(api(project(":Auspice:game:bukkit:paper")))  // Paper 的 API 均适用于 PurPur
+//    implementation(api(project(":Auspice:game:bukkit:spigot")))  // Spigot 的 API 均适用于 PurPur
+//    implementation(api(project(":Auspice:game:bukkit:craftbukkit")))  // Craftbukkit 的 API 均适用于 PurPur
+
+
+    // Engines
+    implementation(libs.xseries)
+    implementation(libs.yamlengine)
+
+    implementation(libs.caffeine)
+    implementation(libs.guava)
+
+
+    // Classpath libs
+    compileOnly(libs.server.purpur)
+    compileOnly(libs.bungee.chat)
+
+//    compileOnly("org.purpurmc.purpur:purpur-api:1.21.4-R0.1-SNAPSHOT")
+
+    compileOnly(fileTree("$rootDir/libs/servers/purpur"))
+
+    compileOnly(libs.annotations.checker)
+    compileOnly(libs.annotations.jetbrains)
+
+}
+
+def targetJavaVersion = 21
+
+java {
+    JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks {
+
+    build {
+        dependsOn("shadowJar")
+    }
+
+    compileKotlin {
+
+        kotlinOptions {
+            jvmTarget = 17
+        }
+
+    }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+
+        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+            options.release.set(targetJavaVersion)
+        }
+    }
+
+    shadowJar {
+
+        enabled = true
+
+        archiveBaseName = "Auspice-Purpur"
+        archiveClassifier = null
+
+        relocate("kotlin", "top.auspice.libs.kotlin")
+        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
+        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
+        relocate("com.google.common", "top.auspice.libs.google.common")
+        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
+        relocate("org.objectweb.asm", "top.auspice.libs.asm")
+
+//        exclude(
+//                "kotlin-stdlib-2.0.20-Beta2.jar",
+//                "annotations-13.0.jar",
+//                "checker-qual-3.46.0.jar",
+//                "snakeyaml-2.2.jar"
+//        )
+
+    }
+
+    jar {
+        enabled = false
+    }
+
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset "UTF-8"
+    filesMatching("plugin.yml") {
+        expand props
+    }
+}

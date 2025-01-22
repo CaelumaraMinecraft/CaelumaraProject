@@ -172,7 +172,6 @@ public final class FSUtil {
         if (fileChannel != null) {
             fileChannel.close();
         }
-
     }
 
     private static boolean isInvalidFileNameChar(char ch) {
@@ -264,12 +263,10 @@ public final class FSUtil {
                         errored.set(true);
                         var5.printStackTrace();
                     }
-
                 });
                 if (!errored.get()) {
                     Files.delete(folder);
                 }
-
             } catch (IOException var3) {
                 throw new RuntimeException(var3);
             }
@@ -296,12 +293,10 @@ public final class FSUtil {
                 } catch (IOException var4) {
                     var4.printStackTrace();
                 }
-
             });
         } catch (IOException var3) {
             var3.printStackTrace();
         }
-
     }
 
     public static List<Path> getFiles(Path folder) {
@@ -310,7 +305,6 @@ public final class FSUtil {
             if (attrs.isRegularFile()) {
                 files.add(p);
             }
-
         });
 
         try {
@@ -334,7 +328,6 @@ public final class FSUtil {
         while ((read = in.read(buffer, 0, 8192)) >= 0) {
             out.write(buffer, 0, read);
         }
-
     }
 
     public static void copyFolder(Path source, Path destination) {
@@ -394,7 +387,6 @@ public final class FSUtil {
         if (fileChannel != null) {
             fileChannel.close();
         }
-
     }
 
     static {

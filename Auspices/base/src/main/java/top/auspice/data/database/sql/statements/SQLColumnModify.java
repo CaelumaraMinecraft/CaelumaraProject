@@ -1,20 +1,19 @@
 package top.auspice.data.database.sql.statements;
 
-import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 
-public class SQLColumnModify extends SQLColumnChange {
-    @NotNull
-    private final SQLColumn a;
+import java.util.Objects;
 
-    public SQLColumnModify(@NotNull SQLColumn var1) {
-        super(var1.getName());
-        Intrinsics.checkNotNullParameter(var1, "");
-        this.a = var1;
+public class SQLColumnModify extends SQLColumnChange {
+
+    private final @NotNull SQLColumn column;
+
+    public SQLColumnModify(@NotNull SQLColumn column) {
+        super(Objects.requireNonNull(column, "column").getName());
+        this.column = column;
     }
 
-    @NotNull
-    public final SQLColumn getColumn() {
-        return this.a;
+    public @NotNull SQLColumn getColumn() {
+        return this.column;
     }
 }

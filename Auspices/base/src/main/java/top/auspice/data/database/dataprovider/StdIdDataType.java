@@ -12,10 +12,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class StdIdDataType {
-    @NotNull
-    public static final UUIDKey UUID = new UUIDKey("id");
-    @NotNull
-    public static final SimpleChunkLocationKey SIMPLE_CHUNK_LOCATION = new SimpleChunkLocationKey("id");
+
+    public static final @NotNull UUIDKey UUID = new UUIDKey("id");
+    public static final @NotNull SimpleChunkLocationKey SIMPLE_CHUNK_LOCATION = new SimpleChunkLocationKey("id");
 
     private StdIdDataType() {
     }

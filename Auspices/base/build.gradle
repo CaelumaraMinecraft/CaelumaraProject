@@ -46,6 +46,10 @@ dependencies {
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.sync)
 
+    implementation(libs.h2)
+
+    implementation(libs.postgresql)
+
 //    compileOnly(fileTree(".libs/"))
 
     compileOnly("commons-io:commons-io:2.15.1")

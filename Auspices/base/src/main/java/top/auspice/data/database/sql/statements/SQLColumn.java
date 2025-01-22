@@ -5,36 +5,32 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class SQLColumn {
-    @NotNull
-    private final String a;
-    @NotNull
-    private final String b;
-    private final boolean c;
 
-    public SQLColumn(@NotNull String var1, @NotNull String var2, boolean var3) {
-        Objects.requireNonNull(var1);
-        Objects.requireNonNull(var2);
-        this.a = var1;
-        this.b = var2;
-        this.c = var3;
+    private final @NotNull String name;
+    private final @NotNull String type;
+    private final boolean nullable;
+
+    public SQLColumn(@NotNull String name, @NotNull String type, boolean var3) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(type, "type");
+        this.name = name;
+        this.type = type;
+        this.nullable = var3;
     }
 
-    @NotNull
-    public final String getName() {
-        return this.a;
+    public @NotNull String getName() {
+        return this.name;
     }
 
-    @NotNull
-    public final String getType() {
-        return this.b;
+    public @NotNull String getType() {
+        return this.type;
     }
 
-    public final boolean getNullable() {
-        return this.c;
+    public boolean getNullable() {
+        return this.nullable;
     }
 
-    @NotNull
-    public final String getNullability() {
-        return this.c ? "NULL" : "NOT NULL";
+    public @NotNull String getNullability() {
+        return this.nullable ? "NULL" : "NOT NULL";
     }
 }

@@ -4,30 +4,31 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import kotlin.jvm.functions.Function0;
 import kotlin.jvm.internal.Intrinsics;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleBlockLocation;
+import top.auspice.constants.location.SimpleChunkLocation;
+import top.auspice.constants.location.SimpleLocation;
 import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.dataprovider.DataGetter;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
+import top.auspice.data.database.flatfile.json.JsonElementDataProvider;
 import top.auspice.data.database.sql.statements.getters.SimpleResultSetQuery;
-import top.auspice.server.location.OldLocation;
+import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.gson.KingdomsGson;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.BiConsumer;
+import java.util.function.*;
 
 public class SQLDataGetterProvider extends SQLDataProvider implements SectionableDataGetter {
-    @NotNull
-    private final SimpleResultSetQuery a;
+
+    private final @NotNull SimpleResultSetQuery a;
 
     public SQLDataGetterProvider(@NotNull DatabaseType var1, @NotNull String var2, @Nullable String var3, boolean var4, boolean var5, @NotNull SimpleResultSetQuery var6) {
         super(var1, var2, var3, var4, var5);
@@ -35,39 +36,48 @@ public class SQLDataGetterProvider extends SQLDataProvider implements Sectionabl
         this.a = var6;
     }
 
-    @NotNull
-    public SectionableDataGetter asSection() {
+    @Override
+    public @NotNull SectionableDataGetter asSection() {
         return new SQLDataGetterProvider(this.getDatabaseType$core(), this.getTable$core(), this.getName$core(), false, true, this.a);
     }
 
-    @NotNull
-    public SectionableDataGetter get(@NotNull String var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    @Override
+    public @NotNull SectionableDataGetter get(@NotNull String key) {
+        Intrinsics.checkNotNullParameter(key, "");
         if (this.getName$core() != null && !this.getNameIsSection$core()) {
-            throw new IllegalStateException("Attempting to get() without specifying the previous ones type: " + this.getTable$core() + " -> " + this.getName$core() + " -> " + var1);
+            throw new IllegalStateException("Attempting to get() without specifying the previous ones type: " + this.getTable$core() + " -> " + this.getName$core() + " -> " + key);
         } else {
-            return new SQLDataGetterProvider(this.getDatabaseType$core(), this.getTable$core(), this.nameSepOrEmpty$core() + var1, false, false, this.a);
+            return new SQLDataGetterProvider(this.getDatabaseType$core(), this.getTable$core(), this.nameSepOrEmpty$core() + key, false, false, this.a);
         }
     }
 
-    @Nullable
-    public String asString(@NotNull Function0<String> var1) throws SQLException {
+    @Override
+    public @Nullable String asString(@NotNull Supplier<String> var1) {
         Intrinsics.checkNotNullParameter(var1, "");
-        String var10000 = this.a.getString(this.getNamed$core());
+        String var10000 = null;
+        try {
+            var10000 = this.a.getString(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (var10000 == null) {
-            var10000 = var1.invoke();
+            var10000 = var1.get();
         }
 
         return var10000;
     }
 
-    @Nullable
-    public UUID asUUID() throws SQLException {
-        return this.a.getUUID((this).getNamed$core());
+    @Override
+    public @Nullable UUID asUUID() {
+        try {
+            return this.a.getUUID((this).getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Nullable
-    public SimpleBlockLocation asSimpleLocation() {
+    @Override
+    public @Nullable SimpleBlockLocation asSimpleLocation() {
         SectionableDataGetter var1 = this.asSection();
         String var10002 = var1.getString("world");
         if (var10002 == null) {
@@ -77,7 +87,7 @@ public class SQLDataGetterProvider extends SQLDataProvider implements Sectionabl
         }
     }
 
-    @NotNull
+    @Override
     public SimpleChunkLocation asSimpleChunkLocation() {
         SectionableDataGetter var1 = this.asSection();
         String var10002 = var1.getString("world");
@@ -85,87 +95,118 @@ public class SQLDataGetterProvider extends SQLDataProvider implements Sectionabl
         return new SimpleChunkLocation(var10002, var1.getInt("x"), var1.getInt("z"));
     }
 
-    @Nullable
-    public OldLocation asLocation() {
-        SectionableDataGetter var1;
-        String worldName = (var1 = this.asSection()).getString("world");
+    @Override
+    public SimpleLocation asLocation() {
+        SectionableDataGetter var1 = this.asSection();
+        String worldName = var1.getString("world");
         if (worldName == null) {
             return null;
         } else {
-            return new OldLocation(BukkitWorld.getWorld(worldName, var1), var1.getDouble("x"), var1.getDouble("y"), var1.getDouble("z"), var1.getFloat("yaw"), var1.getFloat("pitch"));
+            return new SimpleLocation(worldName, var1.getDouble("x"), var1.getDouble("y"), var1.getDouble("z"), var1.getFloat("yaw"), var1.getFloat("pitch"));
         }
     }
 
-    public int asInt(@NotNull Function0<Integer> var1) throws SQLException {
+    @Override
+    public int asInt(@NotNull IntSupplier var1) {
         Intrinsics.checkNotNullParameter(var1, "");
-        return this.a.getInt(this.getNamed$core());
+        try {
+            return this.a.getInt(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public long asLong(@NotNull Function0<Long> var1) throws SQLException {
+    @Override
+    public long asLong(@NotNull LongSupplier var1) {
         Intrinsics.checkNotNullParameter(var1, "");
-        return this.a.getLong(this.getNamed$core());
+        try {
+            return this.a.getLong(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public float asFloat(@NotNull Function0<Float> var1) throws SQLException {
+    @Override
+    public float asFloat(@NotNull FloatSupplier var1) {
         Intrinsics.checkNotNullParameter(var1, "");
-        return this.a.getFloat(this.getNamed$core());
+        try {
+            return this.a.getFloat(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public double asDouble(@NotNull Function0<Double> var1) throws SQLException {
+    @Override
+    public double asDouble(@NotNull DoubleSupplier var1) {
         Intrinsics.checkNotNullParameter(var1, "");
-        return this.a.getDouble(this.getNamed$core());
+        try {
+            return this.a.getDouble(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public boolean asBoolean(@NotNull Function0<Boolean> var1) throws SQLException {
+    @Override
+    public boolean asBoolean(@NotNull BooleanSupplier var1) {
         Intrinsics.checkNotNullParameter(var1, "");
-        return this.a.getBoolean(this.getNamed$core());
+        try {
+            return this.a.getBoolean(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    @Override
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) throws SQLException {
+    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
         Intrinsics.checkNotNullParameter(var1, "");
         Intrinsics.checkNotNullParameter(var2, "");
-        String var10000 = this.a.getString(this.getNamed$core());
-        if (var10000 == null) {
-            return var1;
-        } else {
+        String var10000 = null;
+        try {
+            var10000 = this.a.getString(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (var10000 != null) {
             JsonElement var5 = KingdomsGson.fromString(var10000);
             Intrinsics.checkNotNull(var5);
-            Iterator var3 = ((JsonArray) var5).iterator();
 
-            while (var3.hasNext()) {
-                JsonElement var4 = (JsonElement) var3.next();
+            if (!(var5 instanceof JsonArray jsonArray)) {
+                throw new IllegalStateException();
+            }
+
+            for (JsonElement var4 : jsonArray) {
                 Intrinsics.checkNotNull(var4);
                 var2.accept(var1, new JsonElementDataProvider(var4));
             }
-
-            return var1;
         }
+        return var1;
     }
 
-    @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) throws SQLException {
+    @Override
+    @Contract("_, _ -> param1")
+    public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) {
         Intrinsics.checkNotNullParameter(var1, "");
         Intrinsics.checkNotNullParameter(var2, "");
-        String var10000 = this.a.getString(this.getNamed$core());
-        if (var10000 == null) {
-            return var1;
-        } else {
+        String var10000 = null;
+        try {
+            var10000 = this.a.getString(this.getNamed$core());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (var10000 != null) {
             JsonElement var6 = KingdomsGson.fromString(var10000);
             Intrinsics.checkNotNull(var6);
-            Iterator var3 = ((JsonObject) var6).entrySet().iterator();
 
-            while (var3.hasNext()) {
-                Map.Entry var4;
-                Intrinsics.checkNotNull(var4 = (Map.Entry) var3.next());
-                String var5 = (String) var4.getKey();
-                JsonElement var7 = (JsonElement) var4.getValue();
-                JsonElementDataProvider var10002 = new JsonElementDataProvider((JsonElement) (new JsonPrimitive(var5)));
+            for (Map.Entry<String, JsonElement> stringJsonElementEntry : ((JsonObject) var6).entrySet()) {
+                Intrinsics.checkNotNull(stringJsonElementEntry);
+                String var5 = (stringJsonElementEntry).getKey();
+                JsonElement var7 = (stringJsonElementEntry).getValue();
+                JsonElementDataProvider var10002 = new JsonElementDataProvider(new JsonPrimitive(var5));
                 Intrinsics.checkNotNull(var7);
                 var2.accept(var1, var10002, new JsonElementDataProvider(var7));
             }
-
-            return var1;
         }
+        return var1;
     }
 }

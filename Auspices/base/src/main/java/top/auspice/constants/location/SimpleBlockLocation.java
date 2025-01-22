@@ -97,18 +97,22 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
         return (World) Objects.requireNonNull(BukkitWorld.getWorld(this.worldName, this));
     }
 
+    @Override
     public int getX() {
         return this.x;
     }
 
+    @Override
     public int getZ() {
         return this.z;
     }
 
+    @Override
     public int getY() {
         return this.y;
     }
 
+    @Override
     public @NonNull SimpleBlockLocation clone() {
         try {
             return (SimpleBlockLocation) super.clone();
@@ -156,10 +160,6 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
         return Math.sqrt(this.distance(var1));
     }
 
-    public double distanceSquared(org.bukkit.@NonNull Location var1) {
-        return Math.sqrt(this.distance(var1));
-    }
-
     public double distance(@NonNull SimpleBlockLocation var1) {
         Objects.requireNonNull(var1, "Cannot check distance between a null location");
         if (!Objects.equals(this.worldName, var1.worldName)) {
@@ -182,37 +182,17 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
         return Math.sqrt(this.distanceIgnoreWorld(var1));
     }
 
-    public double distance(org.bukkit.@NonNull Location var1) {
-        Objects.requireNonNull(var1, "Cannot check distance between a null location");
-        World var2;
-        if ((var2 = var1.getWorld()) != null) {
-            if (!var2.getName().equals(this.worldName)) {
-                throw new IllegalArgumentException("Cannot measure distance between " + this.worldName + " and " + var2.getName());
-            } else {
-                return NumberConversions.square((double) this.x - var1.getX()) + NumberConversions.square((double) this.y - var1.getY()) + NumberConversions.square((double) this.z - var1.getZ());
-            }
-        } else {
-            throw new IllegalArgumentException("Cannot measure distance to a null world");
-        }
-    }
-
-    public org.bukkit.@NonNull Location toBukkitLocation(World var1) {
-        return new org.bukkit.Location(var1, (double) this.x, (double) this.y, (double) this.z);
-    }
-
-    public org.bukkit.@NonNull Location toBukkitLocation() {
-        return this.toBukkitLocation(this.getBukkitWorld());
-    }
 
     public static SimpleBlockLocation fromString(@NotNull String var0) {
         CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(var0, 4);
-        String var1 = splitter.nextString();
-        int var2 = splitter.nextInt();
-        int var3 = splitter.nextInt();
-        int var5 = splitter.nextInt();
-        return new SimpleBlockLocation(var1, var2, var3, var5);
+        String world = splitter.nextString();
+        int x = splitter.nextInt();
+        int y = splitter.nextInt();
+        int z = splitter.nextInt();
+        return new SimpleBlockLocation(world, x, y, z);
     }
 
+    @Override
     public @NotNull String asDataString() {
         return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.y, this.z});
     }

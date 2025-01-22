@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface SectionableDataSetter extends DataSetter, SectionableDataProvider {
     @NotNull
-    SectionableDataSetter get(@NotNull String var1);
+    SectionableDataSetter get(@NotNull String key);
 
     default void setString(@NotNull String var1, @Nullable String var2) {
         Objects.requireNonNull(var1, "");

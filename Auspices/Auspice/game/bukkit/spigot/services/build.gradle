@@ -1,0 +1,20 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.spigot.services"
+
+dependencies {
+
+    // 向外传递 API
+    implementation(api(project(":Auspice:game:bukkit:spigot:services:base")))
+
+    implementation(api(project(":Auspice:game:bukkit:spigot:services:kingdoms")))
+    implementation(api(project(":Auspice:game:bukkit:spigot:services:essentials")))
+
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services")))  // CraftBukkit 服务器的插件同样适用于 Spigot 服务器
+
+//    compileOnly(libs.server.spigot.get())
+}

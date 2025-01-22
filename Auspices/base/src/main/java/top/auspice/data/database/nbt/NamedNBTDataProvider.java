@@ -64,9 +64,9 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
     }
 
     @NotNull
-    public DataProvider get(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
-        return new NamedNBTDataProvider(var1, this.b);
+    public DataProvider get(@NotNull String key) {
+        Objects.requireNonNull(key, "");
+        return new NamedNBTDataProvider(key, this.b);
     }
 
     @NotNull
@@ -91,6 +91,7 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         return var10000;
     }
 
+    @Override
     @Nullable
     public UUID asUUID() {
         String var10000 = this.asString();
@@ -203,25 +204,25 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         }
     }
 
-    public void setString(@Nullable String var1) {
-        if (var1 != null) {
-            this.b.set(this.b(), var1);
+    public void setString(@Nullable String s) {
+        if (s != null) {
+            this.b.set(this.b(), s);
         }
 
     }
 
-    public void setSimpleLocation(@Nullable SimpleBlockLocation var1) {
-        this.setString(var1 != null ? var1.asDataString() : null);
+    public void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {
+        this.setString(blockLocation != null ? blockLocation.asDataString() : null);
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation var1) {
-        Objects.requireNonNull(var1, "");
-        this.setString(var1.asDataString());
+    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation chunkLocation) {
+        Objects.requireNonNull(chunkLocation, "");
+        this.setString(chunkLocation.asDataString());
     }
 
-    public void setUUID(@Nullable UUID var1) {
-        if (var1 != null) {
-            this.b.set(this.b(), FastUUID.toString(var1));
+    public void setUUID(@Nullable UUID uuid) {
+        if (uuid != null) {
+            this.b.set(this.b(), FastUUID.toString(uuid));
         }
 
     }
@@ -230,20 +231,20 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         this.b.set(this.b(), var1);
     }
 
-    public void setLong(long var1) {
-        this.b.set(this.b(), var1);
+    public void setLong(long l) {
+        this.b.set(this.b(), l);
     }
 
-    public void setFloat(float var1) {
-        this.b.set(this.b(), var1);
+    public void setFloat(float f) {
+        this.b.set(this.b(), f);
     }
 
-    public void setDouble(double var1) {
-        this.b.set(this.b(), var1);
+    public void setDouble(double d) {
+        this.b.set(this.b(), d);
     }
 
-    public void setBoolean(boolean var1) {
-        this.b.set(this.b(), var1);
+    public void setBoolean(boolean b) {
+        this.b.set(this.b(), b);
     }
 
     public void setLocation(@Nullable OldLocation var1) {
@@ -252,14 +253,14 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         }
     }
 
-    public <V> void setCollection(@NotNull Collection<? extends V> var1, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <V> void setCollection(@NotNull Collection<? extends V> c, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+        Objects.requireNonNull(c, "");
         Objects.requireNonNull(var2, "");
-        if (!var1.isEmpty()) {
+        if (!c.isEmpty()) {
             NBTTagList var10000 = NBTTagList.unknownEmpty();
             Objects.requireNonNull(var10000, "");
             NBTTagList var3 = var10000;
-            Iterator var5 = var1.iterator();
+            Iterator var5 = c.iterator();
 
             while (var5.hasNext()) {
                 Object var4 = var5.next();
@@ -270,15 +271,15 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         }
     }
 
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> var1, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> m, @NotNull MappingSetterHandler<K, V> var2) {
+        Objects.requireNonNull(m, "");
         Objects.requireNonNull(var2, "");
-        if (!var1.isEmpty()) {
+        if (!m.isEmpty()) {
             NBTTagCompound var10000 = NBTTagCompound.empty();
             Objects.requireNonNull(var10000, "");
             final NBTTagCompound var3 = var10000;
 
-            for (Map.Entry<K, ? extends V> kEntry : var1.entrySet()) {
+            for (Map.Entry<K, ? extends V> kEntry : m.entrySet()) {
                 K var5 = kEntry.getKey();
                 V var7 = kEntry.getValue();
 

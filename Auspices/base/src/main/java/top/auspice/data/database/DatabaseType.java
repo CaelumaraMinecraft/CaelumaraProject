@@ -2,8 +2,6 @@ package top.auspice.data.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import kotlin.collections.CollectionsKt;
-import kotlin.jvm.internal.DefaultConstructorMarker;
-import kotlin.text.Regex;
 import kotlin.text.StringsKt;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.data.database.sql.DatabaseProperties;
@@ -14,8 +12,9 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public enum DatabaseType {
-    SQLite("SQLite", 3, 3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "org.kingdoms.libs.mysql.cj.jdbc.MysqlDataSource", '\0', 8, null) {
-        public final void applyProperties(@NotNull final HikariConfig hikariConfig, @NotNull final DatabaseProperties props) {
+    SQLite(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "net.caelumaramc.auspice.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
+        @Override
+        public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig);
             Objects.requireNonNull(props);
             props.add("cachePrepStmts", Boolean.TRUE);
@@ -32,14 +31,14 @@ public enum DatabaseType {
             props.useStandardDataSourcePropertyAppendar(hikariConfig);
         }
 
-        @NotNull
-        public final String processCommands(@NotNull final String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             Objects.requireNonNull(cmd, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
 
-        @NotNull
-        public final String createStatement(@NotNull final SQLStatement statement, @NotNull final String s) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
             Objects.requireNonNull(statement, "");
             Objects.requireNonNull(s, "");
             if (statement instanceof SQLUpsert) {
@@ -57,15 +56,16 @@ public enum DatabaseType {
             throw new UnsupportedOperationException(statement.toString());
         }
     },
-    H2(null, 1, 0, new Dependency[]{Dependency.H2_DRIVER}, "org.h2.jdbcx.JdbcDataSource", '\u0000', 8, null) {
-        public final void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
+    H2(0, new Dependency[]{Dependency.H2_DRIVER}, "org.h2.jdbcx.JdbcDataSource", '`') {
+        @Override
+        public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig, "");
             Objects.requireNonNull(props, "");
             throw new UnsupportedOperationException();
         }
 
-        @NotNull
-        public final String createStatement(@NotNull SQLStatement statement, @NotNull String var2) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String var2) {
             Objects.requireNonNull(statement, "");
             Objects.requireNonNull(var2, "");
             if (statement instanceof SQLUpsert) {
@@ -88,21 +88,22 @@ public enum DatabaseType {
             }
         }
 
-        @NotNull
-        public final String processCommands(@NotNull String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             Objects.requireNonNull(cmd, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "LONG", "BIGINT", false), "FLOAT", "REAL", false), "DOUBLE", "DOUBLE PRECISION", false), "NVARCHAR", "VARCHAR", false), "STRICT", "", false);
         }
     },
-    MariaDB(null, 2, 3306, new Dependency[]{Dependency.MARIADB_DRIVER}, "org.kingdoms.libs.mariadb.MariaDbDataSource", '\0', 8, null) {
-        public final void applyProperties(@NotNull final HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
+    MariaDB(3306, new Dependency[]{Dependency.MARIADB_DRIVER}, "org.kingdoms.libs.mariadb.MariaDbDataSource", '`') {
+        @Override
+        public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig, "");
             Objects.requireNonNull(props, "");
             String string;
             if ((props).getOthers().isEmpty()) {
-                final Map<String, Object> others = props.getOthers();
-                final Collection<String> collection = new ArrayList<>((others).size());
-                for (final Map.Entry<String, Object> entry : others.entrySet()) {
+                Map<String, Object> others = props.getOthers();
+                Collection<String> collection = new ArrayList<>((others).size());
+                for (Map.Entry<String, Object> entry : others.entrySet()) {
                     collection.add(entry.getKey() + '=' + entry.getValue());
                 }
                 string = "?" + CollectionsKt.joinToString(collection, "&", "", "", -1, "...", null);
@@ -114,8 +115,8 @@ public enum DatabaseType {
             hikariConfig.addDataSourceProperty("password", props.getPassword());
         }
 
-        @NotNull
-        public final String createStatement(@NotNull final SQLStatement statement, @NotNull final String s) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
             Objects.requireNonNull(statement, "");
             Objects.requireNonNull(s, "");
             if (statement instanceof SQLUpsert) {
@@ -133,14 +134,15 @@ public enum DatabaseType {
             throw new UnsupportedOperationException(statement.toString());
         }
 
-        @NotNull
-        public final String processCommands(@NotNull final String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             Objects.requireNonNull(cmd, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
     },
-    MySQL("MySQL", 3, 3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "org.kingdoms.libs.mysql.cj.jdbc.MysqlDataSource", '\0', 8, null) {
-        public final void applyProperties(@NotNull final HikariConfig hikariConfig, @NotNull final DatabaseProperties props) {
+    MySQL(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "org.kingdoms.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
+        @Override
+        public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig, "");
             Objects.requireNonNull(props, "");
             props.add("cachePrepStmts", Boolean.TRUE);
@@ -153,21 +155,21 @@ public enum DatabaseType {
             props.add("cacheServerConfiguration", Boolean.TRUE);
             props.add("elideSetAutoCommits", Boolean.TRUE);
             props.add("maintainTimeStats", Boolean.FALSE);
-            final String[] array;
+            String[] array;
             (array = new String[2])[0] = "useUnicode";
             array[1] = "characterEncoding";
             props.ignore(array);
             props.useStandardDataSourcePropertyAppendar(hikariConfig);
         }
 
-        @NotNull
-        public final String processCommands(@NotNull final String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             Objects.requireNonNull(cmd, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
 
-        @NotNull
-        public final String createStatement(@NotNull final SQLStatement statement, @NotNull final String s) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
             Objects.requireNonNull(statement, "");
             Objects.requireNonNull(s, "");
             if (statement instanceof SQLUpsert) {
@@ -185,30 +187,31 @@ public enum DatabaseType {
             throw new UnsupportedOperationException(statement.toString());
         }
     },
-    PostgreSQL("PostgreSQL", 4, 5432, new Dependency[]{Dependency.POSTGRESQL_DRIVER}, "org.kingdoms.libs.postgresql.ds.PGSimpleDataSource", '\"', null) {
-        public final void applyProperties(@NotNull final HikariConfig hikariConfig, @NotNull final DatabaseProperties props) {
+    PostgreSQL(5432, new Dependency[]{Dependency.POSTGRESQL_DRIVER}, "org.kingdoms.libs.postgresql.ds.PGSimpleDataSource", '\"') {
+        @Override
+        public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig);
             Objects.requireNonNull(props);
-            final String[] array = new String[]{"verifyServerCertificate", "allowPublicKeyRetrieval", "useSSL", "useUnicode", "characterEncoding", "port"};
+            String[] array = new String[]{"verifyServerCertificate", "allowPublicKeyRetrieval", "useSSL", "useUnicode", "characterEncoding", "port"};
             props.ignore(array);
             props.useStandardDataSourcePropertyAppendar(hikariConfig);
         }
 
-        @NotNull
-        public final String processCommands(@NotNull final String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             Objects.requireNonNull(cmd, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "NVARCHAR", "VARCHAR", false), "LONG", "BIGINT", false), "DOUBLE", "DOUBLE PRECISION", false), "STRICT", "", false), '`', '\"', false);
         }
 
-        @NotNull
-        public final String createStatement(@NotNull final SQLStatement statement, @NotNull final String str) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String str) {
             Objects.requireNonNull(statement, "");
             Objects.requireNonNull(str, "");
             if (statement instanceof SQLUpsert) {
-                final String replace$default = StringsKt.replace(((SQLUpsert) statement).getParameters(), '`', this.getSystemIdentifierEscapeChar(), false);
-                final StringBuilder append = new StringBuilder("INSERT INTO \"").append(str).append("\" (").append(replace$default).append(") VALUES(").append(((SQLUpsert) statement).getPreparedValues()).append(") ON CONFLICT ON CONSTRAINT \"").append(str).append("_pkey\" DO UPDATE SET (").append(replace$default).append(") = (");
-                final List<String> iterable = StringsKt.split(replace$default, new String[]{","}, false, 0);
-                final Collection<Object> collection = new ArrayList<>(10);
+                String replace$default = StringsKt.replace(((SQLUpsert) statement).getParameters(), '`', this.getSystemIdentifierEscapeChar(), false);
+                StringBuilder append = new StringBuilder("INSERT INTO \"").append(str).append("\" (").append(replace$default).append(") VALUES(").append(((SQLUpsert) statement).getPreparedValues()).append(") ON CONFLICT ON CONSTRAINT \"").append(str).append("_pkey\" DO UPDATE SET (").append(replace$default).append(") = (");
+                List<String> iterable = StringsKt.split(replace$default, new String[]{","}, false, 0);
+                Collection<Object> collection = new ArrayList<>(10);
                 for (CharSequence o : iterable) {
                     collection.add(StringsKt.trim(o).toString());
                 }
@@ -226,122 +229,90 @@ public enum DatabaseType {
             throw new UnsupportedOperationException(statement.toString());
         }
     },
-    JSON(null, 5, 0, new Dependency[0], "", '\u0000', 8, null) {
-        @NotNull
-        public final String processCommands(@NotNull String cmd) {
+    JSON(0, new Dependency[0], "", '`') {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             throw new UnsupportedOperationException();
         }
 
-        @NotNull
-        public final String createStatement(@NotNull SQLStatement statement, @NotNull String string) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String string) {
             throw new UnsupportedOperationException();
         }
 
-        public final void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
+        @Override
+        public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             throw new UnsupportedOperationException();
         }
     },
-    YAML("YAML", 6, 0, new Dependency[0], "", '\0', 8, null) {
+    YAML(0, new Dependency[0], "", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             throw new UnsupportedOperationException();
         }
 
-        @NotNull
-        public final String processCommands(@NotNull final String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             throw new UnsupportedOperationException();
         }
 
-        @NotNull
-        public final String createStatement(@NotNull final SQLStatement statement, @NotNull final String s) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
             throw new UnsupportedOperationException();
         }
     },
-    MongoDB("MongoDB", 7, 27017, new Dependency[]{Dependency.SLF4J_SIMPLE, Dependency.MONGODB_DRIVER_SYNC, Dependency.MONGODB_DRIVER_BSON, Dependency.MONGODB_DRIVER_CORE}, "", '\0', 8, null) {
+    MongoDB(27017, new Dependency[]{Dependency.SLF4J_SIMPLE, Dependency.MONGODB_DRIVER_SYNC, Dependency.MONGODB_DRIVER_BSON, Dependency.MONGODB_DRIVER_CORE}, "", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             throw new UnsupportedOperationException();
         }
 
-        @NotNull
-        public final String processCommands(@NotNull final String cmd) {
+        @Override
+        public @NotNull String processCommands(@NotNull String cmd) {
             throw new UnsupportedOperationException();
         }
 
-        @NotNull
-        public final String createStatement(@NotNull final SQLStatement statement, @NotNull final String s) {
+        @Override
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
             throw new UnsupportedOperationException();
         }
     };
+
     private final int defaultPort;
-    @NotNull
-    private final Dependency[] dependencies;
-    @NotNull
-    private final String dataSourceClassName;
+    private final @NotNull Dependency @NotNull [] dependencies;
+    private final @NotNull String dataSourceClassName;
     private final char systemIdentifierEscapeChar;
-    @NotNull
-    private static final Regex SQLITE_TEXT_AFFINITY;
-    @NotNull
-    private static final Regex SQLITE_BLOB_AFFINITY;
 
-    DatabaseType(int n2, Dependency[] dependencyArray, String string2, char c) {
-        this.defaultPort = n2;
-        this.dependencies = dependencyArray;
-        this.dataSourceClassName = string2;
-        this.systemIdentifierEscapeChar = c;
+    public static final @NotNull Pattern SQLITE_TEXT_AFFINITY = Pattern.compile("(N)?(VAR)?CHAR\\(\\d+\\)");
+    public static final @NotNull Pattern SQLITE_BLOB_AFFINITY = Pattern.compile("BINARY\\(\\d+\\)");
+
+    DatabaseType(int defaultPort, @NotNull Dependency @NotNull [] dependencies, @NotNull String dataSourceClassName, char systemIdentifierEscapeChar) {
+        this.defaultPort = defaultPort;
+        this.dependencies = dependencies;
+        this.dataSourceClassName = dataSourceClassName;
+        this.systemIdentifierEscapeChar = systemIdentifierEscapeChar;
     }
 
-    DatabaseType(String string, int n, int n2, Dependency[] dependencyArray, String string2, char c, int n3, DefaultConstructorMarker defaultConstructorMarker) {
-        if ((n3 & 8) != 0) {
-            c = '`';
-        }
-        this(n2, dependencyArray, string2, c);
-    }
-
-    public final int getDefaultPort() {
+    public int getDefaultPort() {
         return this.defaultPort;
     }
 
-    @NotNull
-    public final Dependency[] getDependencies() {
+    public @NotNull Dependency @NotNull [] getDependencies() {
         return this.dependencies;
     }
 
-    @NotNull
-    public final String getDataSourceClassName() {
+    public @NotNull String getDataSourceClassName() {
         return this.dataSourceClassName;
     }
 
-    public final char getSystemIdentifierEscapeChar() {
+    public char getSystemIdentifierEscapeChar() {
         return this.systemIdentifierEscapeChar;
     }
 
     public abstract void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props);
 
-    @NotNull
-    public abstract String processCommands(@NotNull String cmd);
+    public abstract @NotNull String processCommands(@NotNull String cmd);
 
-    @NotNull
-    public abstract String createStatement(@NotNull SQLStatement statement, @NotNull String var2);
-
-    public static Regex access$getSQLITE_BLOB_AFFINITY$cp() {
-        return SQLITE_BLOB_AFFINITY;
-    }
-
-    public static Regex access$getSQLITE_TEXT_AFFINITY$cp() {
-        return SQLITE_TEXT_AFFINITY;
-    }
-
-    DatabaseType(String string, int n, int n2, Dependency[] dependencyArray, String string2, char c, DefaultConstructorMarker defaultConstructorMarker) {
-        this(n2, dependencyArray, string2, c);
-    }
-
-    static {
-        Pattern pattern = Pattern.compile("(N)?(VAR)?CHAR\\(\\d+\\)");
-        SQLITE_TEXT_AFFINITY = new Regex(pattern);
-        Pattern pattern2 = Pattern.compile("BINARY\\(\\d+\\)");
-        SQLITE_BLOB_AFFINITY = new Regex(pattern2);
-    }
-
+    public abstract @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String var2);
 }
 

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Function;
 
+@Deprecated
 public class TypeMappingCollection<From, To> extends AbstractCollection<To> implements Collection<To> {
 
     private final Collection<From> original;

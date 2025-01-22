@@ -5,6 +5,7 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.data.database.DatabaseType;
+import top.auspice.data.database.sql.base.SQLDatabase;
 import top.auspice.utils.gson.KingdomsGson;
 
 import java.io.InputStream;
@@ -20,818 +21,814 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class SimpleResultSetQuery implements ResultSet {
-    @NotNull
-    private final DatabaseType a;
-    @NotNull
-    private final ResultSet b;
 
-    public SimpleResultSetQuery(@NotNull DatabaseType var1, @NotNull ResultSet var2) {
+    private final @NotNull DatabaseType databaseType;
+    private final @NotNull ResultSet resultSet;
+
+    public SimpleResultSetQuery(@NotNull DatabaseType databaseType, @NotNull ResultSet resultSet) {
+        Objects.requireNonNull(databaseType, "databaseType");
+        Objects.requireNonNull(resultSet, "resultSet");
+        this.databaseType = databaseType;
+        this.resultSet = resultSet;
+    }
+
+    public boolean absolute(int var1) throws SQLException {
+        return this.resultSet.absolute(var1);
+    }
+
+    public void afterLast() throws SQLException {
+        this.resultSet.afterLast();
+    }
+
+    public void beforeFirst() throws SQLException {
+        this.resultSet.beforeFirst();
+    }
+
+    public void cancelRowUpdates() throws SQLException {
+        this.resultSet.cancelRowUpdates();
+    }
+
+    public void clearWarnings() throws SQLException {
+        this.resultSet.clearWarnings();
+    }
+
+    public void close() throws SQLException {
+        this.resultSet.close();
+    }
+
+    public void deleteRow() throws SQLException {
+        this.resultSet.deleteRow();
+    }
+
+    public int findColumn(String var1) throws SQLException {
+        return this.resultSet.findColumn(var1);
+    }
+
+    public boolean first() throws SQLException {
+        return this.resultSet.first();
+    }
+
+    public Array getArray(int var1) throws SQLException {
+        return this.resultSet.getArray(var1);
+    }
+
+    public Array getArray(String var1) throws SQLException {
+        return this.resultSet.getArray(var1);
+    }
+
+    public InputStream getAsciiStream(int var1) throws SQLException {
+        return this.resultSet.getAsciiStream(var1);
+    }
+
+    public InputStream getAsciiStream(String var1) throws SQLException {
+        return this.resultSet.getAsciiStream(var1);
+    }
+
+    public BigDecimal getBigDecimal(int var1) throws SQLException {
+        return this.resultSet.getBigDecimal(var1);
+    }
+
+    @Deprecated(
+    )
+    public BigDecimal getBigDecimal(int var1, int var2) throws SQLException {
+        return this.resultSet.getBigDecimal(var1, var2);
+    }
+
+    public BigDecimal getBigDecimal(String var1) throws SQLException {
+        return this.resultSet.getBigDecimal(var1);
+    }
+
+    @Deprecated(
+    )
+    public BigDecimal getBigDecimal(String var1, int var2) throws SQLException {
+        return this.resultSet.getBigDecimal(var1, var2);
+    }
+
+    public InputStream getBinaryStream(int var1) throws SQLException {
+        return this.resultSet.getBinaryStream(var1);
+    }
+
+    public InputStream getBinaryStream(String var1) throws SQLException {
+        return this.resultSet.getBinaryStream(var1);
+    }
+
+    public Blob getBlob(int var1) throws SQLException {
+        return this.resultSet.getBlob(var1);
+    }
+
+    public Blob getBlob(String var1) throws SQLException {
+        return this.resultSet.getBlob(var1);
+    }
+
+    public boolean getBoolean(int var1) throws SQLException {
+        return this.resultSet.getBoolean(var1);
+    }
+
+    public boolean getBoolean(String var1) throws SQLException {
+        return this.resultSet.getBoolean(var1);
+    }
+
+    public byte getByte(int var1) throws SQLException {
+        return this.resultSet.getByte(var1);
+    }
+
+    public byte getByte(String var1) throws SQLException {
+        return this.resultSet.getByte(var1);
+    }
+
+    public byte[] getBytes(int var1) throws SQLException {
+        return this.resultSet.getBytes(var1);
+    }
+
+    public byte[] getBytes(String var1) throws SQLException {
+        return this.resultSet.getBytes(var1);
+    }
+
+    public Reader getCharacterStream(int var1) throws SQLException {
+        return this.resultSet.getCharacterStream(var1);
+    }
+
+    public Reader getCharacterStream(String var1) throws SQLException {
+        return this.resultSet.getCharacterStream(var1);
+    }
+
+    public Clob getClob(int var1) throws SQLException {
+        return this.resultSet.getClob(var1);
+    }
+
+    public Clob getClob(String var1) throws SQLException {
+        return this.resultSet.getClob(var1);
+    }
+
+    public int getConcurrency() throws SQLException {
+        return this.resultSet.getConcurrency();
+    }
+
+    public String getCursorName() throws SQLException {
+        return this.resultSet.getCursorName();
+    }
+
+    public Date getDate(int var1) throws SQLException {
+        return this.resultSet.getDate(var1);
+    }
+
+    public Date getDate(int var1, Calendar var2) throws SQLException {
+        return this.resultSet.getDate(var1, var2);
+    }
+
+    public Date getDate(String var1) throws SQLException {
+        return this.resultSet.getDate(var1);
+    }
+
+    public Date getDate(String var1, Calendar var2) throws SQLException {
+        return this.resultSet.getDate(var1, var2);
+    }
+
+    public double getDouble(int var1) throws SQLException {
+        return this.resultSet.getDouble(var1);
+    }
+
+    public double getDouble(String var1) throws SQLException {
+        return this.resultSet.getDouble(var1);
+    }
+
+    public int getFetchDirection() throws SQLException {
+        return this.resultSet.getFetchDirection();
+    }
+
+    public int getFetchSize() throws SQLException {
+        return this.resultSet.getFetchSize();
+    }
+
+    public float getFloat(int var1) throws SQLException {
+        return this.resultSet.getFloat(var1);
+    }
+
+    public float getFloat(String var1) throws SQLException {
+        return this.resultSet.getFloat(var1);
+    }
+
+    public int getHoldability() throws SQLException {
+        return this.resultSet.getHoldability();
+    }
+
+    public int getInt(int var1) throws SQLException {
+        return this.resultSet.getInt(var1);
+    }
+
+    public int getInt(String var1) throws SQLException {
+        return this.resultSet.getInt(var1);
+    }
+
+    public long getLong(int var1) throws SQLException {
+        return this.resultSet.getLong(var1);
+    }
+
+    public long getLong(String var1) throws SQLException {
+        return this.resultSet.getLong(var1);
+    }
+
+    public ResultSetMetaData getMetaData() throws SQLException {
+        return this.resultSet.getMetaData();
+    }
+
+    public Reader getNCharacterStream(int var1) throws SQLException {
+        return this.resultSet.getNCharacterStream(var1);
+    }
+
+    public Reader getNCharacterStream(String var1) throws SQLException {
+        return this.resultSet.getNCharacterStream(var1);
+    }
+
+    public NClob getNClob(int var1) throws SQLException {
+        return this.resultSet.getNClob(var1);
+    }
+
+    public NClob getNClob(String var1) throws SQLException {
+        return this.resultSet.getNClob(var1);
+    }
+
+    public String getNString(int var1) throws SQLException {
+        return this.resultSet.getNString(var1);
+    }
+
+    public String getNString(String var1) throws SQLException {
+        return this.resultSet.getNString(var1);
+    }
+
+    public Object getObject(int var1) throws SQLException {
+        return this.resultSet.getObject(var1);
+    }
+
+    public <T> T getObject(int var1, Class<T> var2) throws SQLException {
+        return this.resultSet.getObject(var1, var2);
+    }
+
+    public Object getObject(int var1, Map<String, Class<?>> var2) throws SQLException {
+        return this.resultSet.getObject(var1, var2);
+    }
+
+    public Object getObject(String var1) throws SQLException {
+        return this.resultSet.getObject(var1);
+    }
+
+    public <T> T getObject(String var1, Class<T> var2) throws SQLException {
+        return this.resultSet.getObject(var1, var2);
+    }
+
+    public Object getObject(String var1, Map<String, Class<?>> var2) throws SQLException {
+        return this.resultSet.getObject(var1, var2);
+    }
+
+    public Ref getRef(int var1) throws SQLException {
+        return this.resultSet.getRef(var1);
+    }
+
+    public Ref getRef(String var1) throws SQLException {
+        return this.resultSet.getRef(var1);
+    }
+
+    public int getRow() throws SQLException {
+        return this.resultSet.getRow();
+    }
+
+    public RowId getRowId(int var1) throws SQLException {
+        return this.resultSet.getRowId(var1);
+    }
+
+    public RowId getRowId(String var1) throws SQLException {
+        return this.resultSet.getRowId(var1);
+    }
+
+    public SQLXML getSQLXML(int var1) throws SQLException {
+        return this.resultSet.getSQLXML(var1);
+    }
+
+    public SQLXML getSQLXML(String var1) throws SQLException {
+        return this.resultSet.getSQLXML(var1);
+    }
+
+    public short getShort(int var1) throws SQLException {
+        return this.resultSet.getShort(var1);
+    }
+
+    public short getShort(String var1) throws SQLException {
+        return this.resultSet.getShort(var1);
+    }
+
+    public Statement getStatement() throws SQLException {
+        return this.resultSet.getStatement();
+    }
+
+    public String getString(int var1) throws SQLException {
+        return this.resultSet.getString(var1);
+    }
+
+    public String getString(String var1) throws SQLException {
+        return this.resultSet.getString(var1);
+    }
+
+    public Time getTime(int var1) throws SQLException {
+        return this.resultSet.getTime(var1);
+    }
+
+    public Time getTime(int var1, Calendar var2) throws SQLException {
+        return this.resultSet.getTime(var1, var2);
+    }
+
+    public Time getTime(String var1) throws SQLException {
+        return this.resultSet.getTime(var1);
+    }
+
+    public Time getTime(String var1, Calendar var2) throws SQLException {
+        return this.resultSet.getTime(var1, var2);
+    }
+
+    public Timestamp getTimestamp(int var1) throws SQLException {
+        return this.resultSet.getTimestamp(var1);
+    }
+
+    public Timestamp getTimestamp(int var1, Calendar var2) throws SQLException {
+        return this.resultSet.getTimestamp(var1, var2);
+    }
+
+    public Timestamp getTimestamp(String var1) throws SQLException {
+        return this.resultSet.getTimestamp(var1);
+    }
+
+    public Timestamp getTimestamp(String var1, Calendar var2) throws SQLException {
+        return this.resultSet.getTimestamp(var1, var2);
+    }
+
+    public int getType() throws SQLException {
+        return this.resultSet.getType();
+    }
+
+    public URL getURL(int var1) throws SQLException {
+        return this.resultSet.getURL(var1);
+    }
+
+    public URL getURL(String var1) throws SQLException {
+        return this.resultSet.getURL(var1);
+    }
+
+    @Deprecated(
+    )
+    public InputStream getUnicodeStream(int var1) throws SQLException {
+        return this.resultSet.getUnicodeStream(var1);
+    }
+
+    @Deprecated(
+    )
+    public InputStream getUnicodeStream(String var1) throws SQLException {
+        return this.resultSet.getUnicodeStream(var1);
+    }
+
+    public SQLWarning getWarnings() throws SQLException {
+        return this.resultSet.getWarnings();
+    }
+
+    public void insertRow() throws SQLException {
+        this.resultSet.insertRow();
+    }
+
+    public boolean isAfterLast() throws SQLException {
+        return this.resultSet.isAfterLast();
+    }
+
+    public boolean isBeforeFirst() throws SQLException {
+        return this.resultSet.isBeforeFirst();
+    }
+
+    public boolean isClosed() throws SQLException {
+        return this.resultSet.isClosed();
+    }
+
+    public boolean isFirst() throws SQLException {
+        return this.resultSet.isFirst();
+    }
+
+    public boolean isLast() throws SQLException {
+        return this.resultSet.isLast();
+    }
+
+    public boolean isWrapperFor(Class<?> var1) throws SQLException {
+        return this.resultSet.isWrapperFor(var1);
+    }
+
+    public boolean last() throws SQLException {
+        return this.resultSet.last();
+    }
+
+    public void moveToCurrentRow() throws SQLException {
+        this.resultSet.moveToCurrentRow();
+    }
+
+    public void moveToInsertRow() throws SQLException {
+        this.resultSet.moveToInsertRow();
+    }
+
+    public boolean next() throws SQLException {
+        return this.resultSet.next();
+    }
+
+    public boolean previous() throws SQLException {
+        return this.resultSet.previous();
+    }
+
+    public void refreshRow() throws SQLException {
+        this.resultSet.refreshRow();
+    }
+
+    public boolean relative(int var1) throws SQLException {
+        return this.resultSet.relative(var1);
+    }
+
+    public boolean rowDeleted() throws SQLException {
+        return this.resultSet.rowDeleted();
+    }
+
+    public boolean rowInserted() throws SQLException {
+        return this.resultSet.rowInserted();
+    }
+
+    public boolean rowUpdated() throws SQLException {
+        return this.resultSet.rowUpdated();
+    }
+
+    public void setFetchDirection(int var1) throws SQLException {
+        this.resultSet.setFetchDirection(var1);
+    }
+
+    public void setFetchSize(int var1) throws SQLException {
+        this.resultSet.setFetchSize(var1);
+    }
+
+    public <T> T unwrap(Class<T> var1) throws SQLException {
+        return this.resultSet.unwrap(var1);
+    }
+
+    public void updateArray(int var1, Array var2) throws SQLException {
+        this.resultSet.updateArray(var1, var2);
+    }
+
+    public void updateArray(String var1, Array var2) throws SQLException {
+        this.resultSet.updateArray(var1, var2);
+    }
+
+    public void updateAsciiStream(int var1, InputStream var2) throws SQLException {
+        this.resultSet.updateAsciiStream(var1, var2);
+    }
+
+    public void updateAsciiStream(int var1, InputStream var2, int var3) throws SQLException {
+        this.resultSet.updateAsciiStream(var1, var2, var3);
+    }
+
+    public void updateAsciiStream(int var1, InputStream var2, long var3) throws SQLException {
+        this.resultSet.updateAsciiStream(var1, var2, var3);
+    }
+
+    public void updateAsciiStream(String var1, InputStream var2) throws SQLException {
+        this.resultSet.updateAsciiStream(var1, var2);
+    }
+
+    public void updateAsciiStream(String var1, InputStream var2, int var3) throws SQLException {
+        this.resultSet.updateAsciiStream(var1, var2, var3);
+    }
+
+    public void updateAsciiStream(String var1, InputStream var2, long var3) throws SQLException {
+        this.resultSet.updateAsciiStream(var1, var2, var3);
+    }
+
+    public void updateBigDecimal(int var1, BigDecimal var2) throws SQLException {
+        this.resultSet.updateBigDecimal(var1, var2);
+    }
+
+    public void updateBigDecimal(String var1, BigDecimal var2) throws SQLException {
+        this.resultSet.updateBigDecimal(var1, var2);
+    }
+
+    public void updateBinaryStream(int var1, InputStream var2) throws SQLException {
+        this.resultSet.updateBinaryStream(var1, var2);
+    }
+
+    public void updateBinaryStream(int var1, InputStream var2, int var3) throws SQLException {
+        this.resultSet.updateBinaryStream(var1, var2, var3);
+    }
+
+    public void updateBinaryStream(int var1, InputStream var2, long var3) throws SQLException {
+        this.resultSet.updateBinaryStream(var1, var2, var3);
+    }
+
+    public void updateBinaryStream(String var1, InputStream var2) throws SQLException {
+        this.resultSet.updateBinaryStream(var1, var2);
+    }
+
+    public void updateBinaryStream(String var1, InputStream var2, int var3) throws SQLException {
+        this.resultSet.updateBinaryStream(var1, var2, var3);
+    }
+
+    public void updateBinaryStream(String var1, InputStream var2, long var3) throws SQLException {
+        this.resultSet.updateBinaryStream(var1, var2, var3);
+    }
+
+    public void updateBlob(int var1, InputStream var2) throws SQLException {
+        this.resultSet.updateBlob(var1, var2);
+    }
+
+    public void updateBlob(int var1, InputStream var2, long var3) throws SQLException {
+        this.resultSet.updateBlob(var1, var2, var3);
+    }
+
+    public void updateBlob(int var1, Blob var2) throws SQLException {
+        this.resultSet.updateBlob(var1, var2);
+    }
+
+    public void updateBlob(String var1, InputStream var2) throws SQLException {
+        this.resultSet.updateBlob(var1, var2);
+    }
+
+    public void updateBlob(String var1, InputStream var2, long var3) throws SQLException {
+        this.resultSet.updateBlob(var1, var2, var3);
+    }
+
+    public void updateBlob(String var1, Blob var2) throws SQLException {
+        this.resultSet.updateBlob(var1, var2);
+    }
+
+    public void updateBoolean(int var1, boolean var2) throws SQLException {
+        this.resultSet.updateBoolean(var1, var2);
+    }
+
+    public void updateBoolean(String var1, boolean var2) throws SQLException {
+        this.resultSet.updateBoolean(var1, var2);
+    }
+
+    public void updateByte(int var1, byte var2) throws SQLException {
+        this.resultSet.updateByte(var1, var2);
+    }
+
+    public void updateByte(String var1, byte var2) throws SQLException {
+        this.resultSet.updateByte(var1, var2);
+    }
+
+    public void updateBytes(int var1, byte[] var2) throws SQLException {
+        this.resultSet.updateBytes(var1, var2);
+    }
+
+    public void updateBytes(String var1, byte[] var2) throws SQLException {
+        this.resultSet.updateBytes(var1, var2);
+    }
+
+    public void updateCharacterStream(int var1, Reader var2) throws SQLException {
+        this.resultSet.updateCharacterStream(var1, var2);
+    }
+
+    public void updateCharacterStream(int var1, Reader var2, int var3) throws SQLException {
+        this.resultSet.updateCharacterStream(var1, var2, var3);
+    }
+
+    public void updateCharacterStream(int var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateCharacterStream(var1, var2, var3);
+    }
+
+    public void updateCharacterStream(String var1, Reader var2) throws SQLException {
+        this.resultSet.updateCharacterStream(var1, var2);
+    }
+
+    public void updateCharacterStream(String var1, Reader var2, int var3) throws SQLException {
+        this.resultSet.updateCharacterStream(var1, var2, var3);
+    }
+
+    public void updateCharacterStream(String var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateCharacterStream(var1, var2, var3);
+    }
+
+    public void updateClob(int var1, Reader var2) throws SQLException {
+        this.resultSet.updateClob(var1, var2);
+    }
+
+    public void updateClob(int var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateClob(var1, var2, var3);
+    }
+
+    public void updateClob(int var1, Clob var2) throws SQLException {
+        this.resultSet.updateClob(var1, var2);
+    }
+
+    public void updateClob(String var1, Reader var2) throws SQLException {
+        this.resultSet.updateClob(var1, var2);
+    }
+
+    public void updateClob(String var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateClob(var1, var2, var3);
+    }
+
+    public void updateClob(String var1, Clob var2) throws SQLException {
+        this.resultSet.updateClob(var1, var2);
+    }
+
+    public void updateDate(int var1, Date var2) throws SQLException {
+        this.resultSet.updateDate(var1, var2);
+    }
+
+    public void updateDate(String var1, Date var2) throws SQLException {
+        this.resultSet.updateDate(var1, var2);
+    }
+
+    public void updateDouble(int var1, double var2) throws SQLException {
+        this.resultSet.updateDouble(var1, var2);
+    }
+
+    public void updateDouble(String var1, double var2) throws SQLException {
+        this.resultSet.updateDouble(var1, var2);
+    }
+
+    public void updateFloat(int var1, float var2) throws SQLException {
+        this.resultSet.updateFloat(var1, var2);
+    }
+
+    public void updateFloat(String var1, float var2) throws SQLException {
+        this.resultSet.updateFloat(var1, var2);
+    }
+
+    public void updateInt(int var1, int var2) throws SQLException {
+        this.resultSet.updateInt(var1, var2);
+    }
+
+    public void updateInt(String var1, int var2) throws SQLException {
+        this.resultSet.updateInt(var1, var2);
+    }
+
+    public void updateLong(int var1, long var2) throws SQLException {
+        this.resultSet.updateLong(var1, var2);
+    }
+
+    public void updateLong(String var1, long var2) throws SQLException {
+        this.resultSet.updateLong(var1, var2);
+    }
+
+    public void updateNCharacterStream(int var1, Reader var2) throws SQLException {
+        this.resultSet.updateNCharacterStream(var1, var2);
+    }
+
+    public void updateNCharacterStream(int var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateNCharacterStream(var1, var2, var3);
+    }
+
+    public void updateNCharacterStream(String var1, Reader var2) throws SQLException {
+        this.resultSet.updateNCharacterStream(var1, var2);
+    }
+
+    public void updateNCharacterStream(String var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateNCharacterStream(var1, var2, var3);
+    }
+
+    public void updateNClob(int var1, Reader var2) throws SQLException {
+        this.resultSet.updateNClob(var1, var2);
+    }
+
+    public void updateNClob(int var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateNClob(var1, var2, var3);
+    }
+
+    public void updateNClob(int var1, NClob var2) throws SQLException {
+        this.resultSet.updateNClob(var1, var2);
+    }
+
+    public void updateNClob(String var1, Reader var2) throws SQLException {
+        this.resultSet.updateNClob(var1, var2);
+    }
+
+    public void updateNClob(String var1, Reader var2, long var3) throws SQLException {
+        this.resultSet.updateNClob(var1, var2, var3);
+    }
+
+    public void updateNClob(String var1, NClob var2) throws SQLException {
+        this.resultSet.updateNClob(var1, var2);
+    }
+
+    public void updateNString(int var1, String var2) throws SQLException {
+        this.resultSet.updateNString(var1, var2);
+    }
+
+    public void updateNString(String var1, String var2) throws SQLException {
+        this.resultSet.updateNString(var1, var2);
+    }
+
+    public void updateNull(int var1) throws SQLException {
+        this.resultSet.updateNull(var1);
+    }
+
+    public void updateNull(String var1) throws SQLException {
+        this.resultSet.updateNull(var1);
+    }
+
+    public void updateObject(int var1, Object var2) throws SQLException {
+        this.resultSet.updateObject(var1, var2);
+    }
+
+    public void updateObject(int var1, Object var2, int var3) throws SQLException {
+        this.resultSet.updateObject(var1, var2, var3);
+    }
+
+    public void updateObject(String var1, Object var2) throws SQLException {
+        this.resultSet.updateObject(var1, var2);
+    }
+
+    public void updateObject(String var1, Object var2, int var3) throws SQLException {
+        this.resultSet.updateObject(var1, var2, var3);
+    }
+
+    public void updateRef(int var1, Ref var2) throws SQLException {
+        this.resultSet.updateRef(var1, var2);
+    }
+
+    public void updateRef(String var1, Ref var2) throws SQLException {
+        this.resultSet.updateRef(var1, var2);
+    }
+
+    public void updateRow() throws SQLException {
+        this.resultSet.updateRow();
+    }
+
+    public void updateRowId(int var1, RowId var2) throws SQLException {
+        this.resultSet.updateRowId(var1, var2);
+    }
+
+    public void updateRowId(String var1, RowId var2) throws SQLException {
+        this.resultSet.updateRowId(var1, var2);
+    }
+
+    public void updateSQLXML(int var1, SQLXML var2) throws SQLException {
+        this.resultSet.updateSQLXML(var1, var2);
+    }
+
+    public void updateSQLXML(String var1, SQLXML var2) throws SQLException {
+        this.resultSet.updateSQLXML(var1, var2);
+    }
+
+    public void updateShort(int var1, short var2) throws SQLException {
+        this.resultSet.updateShort(var1, var2);
+    }
+
+    public void updateShort(String var1, short var2) throws SQLException {
+        this.resultSet.updateShort(var1, var2);
+    }
+
+    public void updateString(int var1, String var2) throws SQLException {
+        this.resultSet.updateString(var1, var2);
+    }
+
+    public void updateString(String var1, String var2) throws SQLException {
+        this.resultSet.updateString(var1, var2);
+    }
+
+    public void updateTime(int var1, Time var2) throws SQLException {
+        this.resultSet.updateTime(var1, var2);
+    }
+
+    public void updateTime(String var1, Time var2) throws SQLException {
+        this.resultSet.updateTime(var1, var2);
+    }
+
+    public void updateTimestamp(int var1, Timestamp var2) throws SQLException {
+        this.resultSet.updateTimestamp(var1, var2);
+    }
+
+    public void updateTimestamp(String var1, Timestamp var2) throws SQLException {
+        this.resultSet.updateTimestamp(var1, var2);
+    }
+
+    public boolean wasNull() throws SQLException {
+        return this.resultSet.wasNull();
+    }
+
+    public @Nullable UUID getUUID(@NotNull String var1) throws SQLException {
         Objects.requireNonNull(var1, "");
-        Objects.requireNonNull(var2, "");
-        this.a = var1;
-        this.b = var2;
-    }
-
-    public final boolean absolute(int var1) throws SQLException {
-        return this.b.absolute(var1);
-    }
-
-    public final void afterLast() throws SQLException {
-        this.b.afterLast();
-    }
-
-    public final void beforeFirst() throws SQLException {
-        this.b.beforeFirst();
-    }
-
-    public final void cancelRowUpdates() throws SQLException {
-        this.b.cancelRowUpdates();
-    }
-
-    public final void clearWarnings() throws SQLException {
-        this.b.clearWarnings();
-    }
-
-    public final void close() throws SQLException {
-        this.b.close();
-    }
-
-    public final void deleteRow() throws SQLException {
-        this.b.deleteRow();
-    }
-
-    public final int findColumn(String var1) throws SQLException {
-        return this.b.findColumn(var1);
-    }
-
-    public final boolean first() throws SQLException {
-        return this.b.first();
-    }
-
-    public final Array getArray(int var1) throws SQLException {
-        return this.b.getArray(var1);
-    }
-
-    public final Array getArray(String var1) throws SQLException {
-        return this.b.getArray(var1);
-    }
-
-    public final InputStream getAsciiStream(int var1) throws SQLException {
-        return this.b.getAsciiStream(var1);
-    }
-
-    public final InputStream getAsciiStream(String var1) throws SQLException {
-        return this.b.getAsciiStream(var1);
-    }
-
-    public final BigDecimal getBigDecimal(int var1) throws SQLException {
-        return this.b.getBigDecimal(var1);
-    }
-
-    @Deprecated(
-    )
-    public final BigDecimal getBigDecimal(int var1, int var2) throws SQLException {
-        return this.b.getBigDecimal(var1, var2);
-    }
-
-    public final BigDecimal getBigDecimal(String var1) throws SQLException {
-        return this.b.getBigDecimal(var1);
-    }
-
-    @Deprecated(
-    )
-    public final BigDecimal getBigDecimal(String var1, int var2) throws SQLException {
-        return this.b.getBigDecimal(var1, var2);
-    }
-
-    public final InputStream getBinaryStream(int var1) throws SQLException {
-        return this.b.getBinaryStream(var1);
-    }
-
-    public final InputStream getBinaryStream(String var1) throws SQLException {
-        return this.b.getBinaryStream(var1);
-    }
-
-    public final Blob getBlob(int var1) throws SQLException {
-        return this.b.getBlob(var1);
-    }
-
-    public final Blob getBlob(String var1) throws SQLException {
-        return this.b.getBlob(var1);
-    }
-
-    public final boolean getBoolean(int var1) throws SQLException {
-        return this.b.getBoolean(var1);
-    }
-
-    public final boolean getBoolean(String var1) throws SQLException {
-        return this.b.getBoolean(var1);
-    }
-
-    public final byte getByte(int var1) throws SQLException {
-        return this.b.getByte(var1);
-    }
-
-    public final byte getByte(String var1) throws SQLException {
-        return this.b.getByte(var1);
-    }
-
-    public final byte[] getBytes(int var1) throws SQLException {
-        return this.b.getBytes(var1);
-    }
-
-    public final byte[] getBytes(String var1) throws SQLException {
-        return this.b.getBytes(var1);
-    }
-
-    public final Reader getCharacterStream(int var1) throws SQLException {
-        return this.b.getCharacterStream(var1);
-    }
-
-    public final Reader getCharacterStream(String var1) throws SQLException {
-        return this.b.getCharacterStream(var1);
-    }
-
-    public final Clob getClob(int var1) throws SQLException {
-        return this.b.getClob(var1);
-    }
-
-    public final Clob getClob(String var1) throws SQLException {
-        return this.b.getClob(var1);
-    }
-
-    public final int getConcurrency() throws SQLException {
-        return this.b.getConcurrency();
-    }
-
-    public final String getCursorName() throws SQLException {
-        return this.b.getCursorName();
-    }
-
-    public final Date getDate(int var1) throws SQLException {
-        return this.b.getDate(var1);
-    }
-
-    public final Date getDate(int var1, Calendar var2) throws SQLException {
-        return this.b.getDate(var1, var2);
-    }
-
-    public final Date getDate(String var1) throws SQLException {
-        return this.b.getDate(var1);
-    }
-
-    public final Date getDate(String var1, Calendar var2) throws SQLException {
-        return this.b.getDate(var1, var2);
-    }
-
-    public final double getDouble(int var1) throws SQLException {
-        return this.b.getDouble(var1);
-    }
-
-    public final double getDouble(String var1) throws SQLException {
-        return this.b.getDouble(var1);
-    }
-
-    public final int getFetchDirection() throws SQLException {
-        return this.b.getFetchDirection();
-    }
-
-    public final int getFetchSize() throws SQLException {
-        return this.b.getFetchSize();
-    }
-
-    public final float getFloat(int var1) throws SQLException {
-        return this.b.getFloat(var1);
-    }
-
-    public final float getFloat(String var1) throws SQLException {
-        return this.b.getFloat(var1);
-    }
-
-    public final int getHoldability() throws SQLException {
-        return this.b.getHoldability();
-    }
-
-    public final int getInt(int var1) throws SQLException {
-        return this.b.getInt(var1);
-    }
-
-    public final int getInt(String var1) throws SQLException {
-        return this.b.getInt(var1);
-    }
-
-    public final long getLong(int var1) throws SQLException {
-        return this.b.getLong(var1);
-    }
-
-    public final long getLong(String var1) throws SQLException {
-        return this.b.getLong(var1);
-    }
-
-    public final ResultSetMetaData getMetaData() throws SQLException {
-        return this.b.getMetaData();
-    }
-
-    public final Reader getNCharacterStream(int var1) throws SQLException {
-        return this.b.getNCharacterStream(var1);
-    }
-
-    public final Reader getNCharacterStream(String var1) throws SQLException {
-        return this.b.getNCharacterStream(var1);
-    }
-
-    public final NClob getNClob(int var1) throws SQLException {
-        return this.b.getNClob(var1);
-    }
-
-    public final NClob getNClob(String var1) throws SQLException {
-        return this.b.getNClob(var1);
-    }
-
-    public final String getNString(int var1) throws SQLException {
-        return this.b.getNString(var1);
-    }
-
-    public final String getNString(String var1) throws SQLException {
-        return this.b.getNString(var1);
-    }
-
-    public final Object getObject(int var1) throws SQLException {
-        return this.b.getObject(var1);
-    }
-
-    public final <T> T getObject(int var1, Class<T> var2) throws SQLException {
-        return (T) this.b.getObject(var1, var2);
-    }
-
-    public final Object getObject(int var1, Map<String, Class<?>> var2) throws SQLException {
-        return this.b.getObject(var1, var2);
-    }
-
-    public final Object getObject(String var1) throws SQLException {
-        return this.b.getObject(var1);
-    }
-
-    public final <T> T getObject(String var1, Class<T> var2) throws SQLException {
-        return (T) this.b.getObject(var1, var2);
-    }
-
-    public final Object getObject(String var1, Map<String, Class<?>> var2) throws SQLException {
-        return this.b.getObject(var1, var2);
-    }
-
-    public final Ref getRef(int var1) throws SQLException {
-        return this.b.getRef(var1);
-    }
-
-    public final Ref getRef(String var1) throws SQLException {
-        return this.b.getRef(var1);
-    }
-
-    public final int getRow() throws SQLException {
-        return this.b.getRow();
-    }
-
-    public final RowId getRowId(int var1) throws SQLException {
-        return this.b.getRowId(var1);
-    }
-
-    public final RowId getRowId(String var1) throws SQLException {
-        return this.b.getRowId(var1);
-    }
-
-    public final SQLXML getSQLXML(int var1) throws SQLException {
-        return this.b.getSQLXML(var1);
-    }
-
-    public final SQLXML getSQLXML(String var1) throws SQLException {
-        return this.b.getSQLXML(var1);
-    }
-
-    public final short getShort(int var1) throws SQLException {
-        return this.b.getShort(var1);
-    }
-
-    public final short getShort(String var1) throws SQLException {
-        return this.b.getShort(var1);
-    }
-
-    public final Statement getStatement() throws SQLException {
-        return this.b.getStatement();
-    }
-
-    public final String getString(int var1) throws SQLException {
-        return this.b.getString(var1);
-    }
-
-    public final String getString(String var1) throws SQLException {
-        return this.b.getString(var1);
-    }
-
-    public final Time getTime(int var1) throws SQLException {
-        return this.b.getTime(var1);
-    }
-
-    public final Time getTime(int var1, Calendar var2) throws SQLException {
-        return this.b.getTime(var1, var2);
-    }
-
-    public final Time getTime(String var1) throws SQLException {
-        return this.b.getTime(var1);
-    }
-
-    public final Time getTime(String var1, Calendar var2) throws SQLException {
-        return this.b.getTime(var1, var2);
-    }
-
-    public final Timestamp getTimestamp(int var1) throws SQLException {
-        return this.b.getTimestamp(var1);
-    }
-
-    public final Timestamp getTimestamp(int var1, Calendar var2) throws SQLException {
-        return this.b.getTimestamp(var1, var2);
-    }
-
-    public final Timestamp getTimestamp(String var1) throws SQLException {
-        return this.b.getTimestamp(var1);
-    }
-
-    public final Timestamp getTimestamp(String var1, Calendar var2) throws SQLException {
-        return this.b.getTimestamp(var1, var2);
-    }
-
-    public final int getType() throws SQLException {
-        return this.b.getType();
-    }
-
-    public final URL getURL(int var1) throws SQLException {
-        return this.b.getURL(var1);
-    }
-
-    public final URL getURL(String var1) throws SQLException {
-        return this.b.getURL(var1);
-    }
-
-    @Deprecated(
-    )
-    public final InputStream getUnicodeStream(int var1) throws SQLException {
-        return this.b.getUnicodeStream(var1);
-    }
-
-    @Deprecated(
-    )
-    public final InputStream getUnicodeStream(String var1) throws SQLException {
-        return this.b.getUnicodeStream(var1);
-    }
-
-    public final SQLWarning getWarnings() throws SQLException {
-        return this.b.getWarnings();
-    }
-
-    public final void insertRow() throws SQLException {
-        this.b.insertRow();
-    }
-
-    public final boolean isAfterLast() throws SQLException {
-        return this.b.isAfterLast();
-    }
-
-    public final boolean isBeforeFirst() throws SQLException {
-        return this.b.isBeforeFirst();
-    }
-
-    public final boolean isClosed() throws SQLException {
-        return this.b.isClosed();
-    }
-
-    public final boolean isFirst() throws SQLException {
-        return this.b.isFirst();
-    }
-
-    public final boolean isLast() throws SQLException {
-        return this.b.isLast();
-    }
-
-    public final boolean isWrapperFor(Class<?> var1) throws SQLException {
-        return this.b.isWrapperFor(var1);
-    }
-
-    public final boolean last() throws SQLException {
-        return this.b.last();
-    }
-
-    public final void moveToCurrentRow() throws SQLException {
-        this.b.moveToCurrentRow();
-    }
-
-    public final void moveToInsertRow() throws SQLException {
-        this.b.moveToInsertRow();
-    }
-
-    public final boolean next() throws SQLException {
-        return this.b.next();
-    }
-
-    public final boolean previous() throws SQLException {
-        return this.b.previous();
-    }
-
-    public final void refreshRow() throws SQLException {
-        this.b.refreshRow();
-    }
-
-    public final boolean relative(int var1) throws SQLException {
-        return this.b.relative(var1);
-    }
-
-    public final boolean rowDeleted() throws SQLException {
-        return this.b.rowDeleted();
-    }
-
-    public final boolean rowInserted() throws SQLException {
-        return this.b.rowInserted();
-    }
-
-    public final boolean rowUpdated() throws SQLException {
-        return this.b.rowUpdated();
-    }
-
-    public final void setFetchDirection(int var1) throws SQLException {
-        this.b.setFetchDirection(var1);
-    }
-
-    public final void setFetchSize(int var1) throws SQLException {
-        this.b.setFetchSize(var1);
-    }
-
-    public final <T> T unwrap(Class<T> var1) throws SQLException {
-        return (T) this.b.unwrap(var1);
-    }
-
-    public final void updateArray(int var1, Array var2) throws SQLException {
-        this.b.updateArray(var1, var2);
-    }
-
-    public final void updateArray(String var1, Array var2) throws SQLException {
-        this.b.updateArray(var1, var2);
-    }
-
-    public final void updateAsciiStream(int var1, InputStream var2) throws SQLException {
-        this.b.updateAsciiStream(var1, var2);
-    }
-
-    public final void updateAsciiStream(int var1, InputStream var2, int var3) throws SQLException {
-        this.b.updateAsciiStream(var1, var2, var3);
-    }
-
-    public final void updateAsciiStream(int var1, InputStream var2, long var3) throws SQLException {
-        this.b.updateAsciiStream(var1, var2, var3);
-    }
-
-    public final void updateAsciiStream(String var1, InputStream var2) throws SQLException {
-        this.b.updateAsciiStream(var1, var2);
-    }
-
-    public final void updateAsciiStream(String var1, InputStream var2, int var3) throws SQLException {
-        this.b.updateAsciiStream(var1, var2, var3);
-    }
-
-    public final void updateAsciiStream(String var1, InputStream var2, long var3) throws SQLException {
-        this.b.updateAsciiStream(var1, var2, var3);
-    }
-
-    public final void updateBigDecimal(int var1, BigDecimal var2) throws SQLException {
-        this.b.updateBigDecimal(var1, var2);
-    }
-
-    public final void updateBigDecimal(String var1, BigDecimal var2) throws SQLException {
-        this.b.updateBigDecimal(var1, var2);
-    }
-
-    public final void updateBinaryStream(int var1, InputStream var2) throws SQLException {
-        this.b.updateBinaryStream(var1, var2);
-    }
-
-    public final void updateBinaryStream(int var1, InputStream var2, int var3) throws SQLException {
-        this.b.updateBinaryStream(var1, var2, var3);
-    }
-
-    public final void updateBinaryStream(int var1, InputStream var2, long var3) throws SQLException {
-        this.b.updateBinaryStream(var1, var2, var3);
-    }
-
-    public final void updateBinaryStream(String var1, InputStream var2) throws SQLException {
-        this.b.updateBinaryStream(var1, var2);
-    }
-
-    public final void updateBinaryStream(String var1, InputStream var2, int var3) throws SQLException {
-        this.b.updateBinaryStream(var1, var2, var3);
-    }
-
-    public final void updateBinaryStream(String var1, InputStream var2, long var3) throws SQLException {
-        this.b.updateBinaryStream(var1, var2, var3);
-    }
-
-    public final void updateBlob(int var1, InputStream var2) throws SQLException {
-        this.b.updateBlob(var1, var2);
-    }
-
-    public final void updateBlob(int var1, InputStream var2, long var3) throws SQLException {
-        this.b.updateBlob(var1, var2, var3);
-    }
-
-    public final void updateBlob(int var1, Blob var2) throws SQLException {
-        this.b.updateBlob(var1, var2);
-    }
-
-    public final void updateBlob(String var1, InputStream var2) throws SQLException {
-        this.b.updateBlob(var1, var2);
-    }
-
-    public final void updateBlob(String var1, InputStream var2, long var3) throws SQLException {
-        this.b.updateBlob(var1, var2, var3);
-    }
-
-    public final void updateBlob(String var1, Blob var2) throws SQLException {
-        this.b.updateBlob(var1, var2);
-    }
-
-    public final void updateBoolean(int var1, boolean var2) throws SQLException {
-        this.b.updateBoolean(var1, var2);
-    }
-
-    public final void updateBoolean(String var1, boolean var2) throws SQLException {
-        this.b.updateBoolean(var1, var2);
-    }
-
-    public final void updateByte(int var1, byte var2) throws SQLException {
-        this.b.updateByte(var1, var2);
-    }
-
-    public final void updateByte(String var1, byte var2) throws SQLException {
-        this.b.updateByte(var1, var2);
-    }
-
-    public final void updateBytes(int var1, byte[] var2) throws SQLException {
-        this.b.updateBytes(var1, var2);
-    }
-
-    public final void updateBytes(String var1, byte[] var2) throws SQLException {
-        this.b.updateBytes(var1, var2);
-    }
-
-    public final void updateCharacterStream(int var1, Reader var2) throws SQLException {
-        this.b.updateCharacterStream(var1, var2);
-    }
-
-    public final void updateCharacterStream(int var1, Reader var2, int var3) throws SQLException {
-        this.b.updateCharacterStream(var1, var2, var3);
-    }
-
-    public final void updateCharacterStream(int var1, Reader var2, long var3) throws SQLException {
-        this.b.updateCharacterStream(var1, var2, var3);
-    }
-
-    public final void updateCharacterStream(String var1, Reader var2) throws SQLException {
-        this.b.updateCharacterStream(var1, var2);
-    }
-
-    public final void updateCharacterStream(String var1, Reader var2, int var3) throws SQLException {
-        this.b.updateCharacterStream(var1, var2, var3);
-    }
-
-    public final void updateCharacterStream(String var1, Reader var2, long var3) throws SQLException {
-        this.b.updateCharacterStream(var1, var2, var3);
-    }
-
-    public final void updateClob(int var1, Reader var2) throws SQLException {
-        this.b.updateClob(var1, var2);
-    }
-
-    public final void updateClob(int var1, Reader var2, long var3) throws SQLException {
-        this.b.updateClob(var1, var2, var3);
-    }
-
-    public final void updateClob(int var1, Clob var2) throws SQLException {
-        this.b.updateClob(var1, var2);
-    }
-
-    public final void updateClob(String var1, Reader var2) throws SQLException {
-        this.b.updateClob(var1, var2);
-    }
-
-    public final void updateClob(String var1, Reader var2, long var3) throws SQLException {
-        this.b.updateClob(var1, var2, var3);
-    }
-
-    public final void updateClob(String var1, Clob var2) throws SQLException {
-        this.b.updateClob(var1, var2);
-    }
-
-    public final void updateDate(int var1, Date var2) throws SQLException {
-        this.b.updateDate(var1, var2);
-    }
-
-    public final void updateDate(String var1, Date var2) throws SQLException {
-        this.b.updateDate(var1, var2);
-    }
-
-    public final void updateDouble(int var1, double var2) throws SQLException {
-        this.b.updateDouble(var1, var2);
-    }
-
-    public final void updateDouble(String var1, double var2) throws SQLException {
-        this.b.updateDouble(var1, var2);
-    }
-
-    public final void updateFloat(int var1, float var2) throws SQLException {
-        this.b.updateFloat(var1, var2);
-    }
-
-    public final void updateFloat(String var1, float var2) throws SQLException {
-        this.b.updateFloat(var1, var2);
-    }
-
-    public final void updateInt(int var1, int var2) throws SQLException {
-        this.b.updateInt(var1, var2);
-    }
-
-    public final void updateInt(String var1, int var2) throws SQLException {
-        this.b.updateInt(var1, var2);
-    }
-
-    public final void updateLong(int var1, long var2) throws SQLException {
-        this.b.updateLong(var1, var2);
-    }
-
-    public final void updateLong(String var1, long var2) throws SQLException {
-        this.b.updateLong(var1, var2);
-    }
-
-    public final void updateNCharacterStream(int var1, Reader var2) throws SQLException {
-        this.b.updateNCharacterStream(var1, var2);
-    }
-
-    public final void updateNCharacterStream(int var1, Reader var2, long var3) throws SQLException {
-        this.b.updateNCharacterStream(var1, var2, var3);
-    }
-
-    public final void updateNCharacterStream(String var1, Reader var2) throws SQLException {
-        this.b.updateNCharacterStream(var1, var2);
-    }
-
-    public final void updateNCharacterStream(String var1, Reader var2, long var3) throws SQLException {
-        this.b.updateNCharacterStream(var1, var2, var3);
-    }
-
-    public final void updateNClob(int var1, Reader var2) throws SQLException {
-        this.b.updateNClob(var1, var2);
-    }
-
-    public final void updateNClob(int var1, Reader var2, long var3) throws SQLException {
-        this.b.updateNClob(var1, var2, var3);
-    }
-
-    public final void updateNClob(int var1, NClob var2) throws SQLException {
-        this.b.updateNClob(var1, var2);
-    }
-
-    public final void updateNClob(String var1, Reader var2) throws SQLException {
-        this.b.updateNClob(var1, var2);
-    }
-
-    public final void updateNClob(String var1, Reader var2, long var3) throws SQLException {
-        this.b.updateNClob(var1, var2, var3);
-    }
-
-    public final void updateNClob(String var1, NClob var2) throws SQLException {
-        this.b.updateNClob(var1, var2);
-    }
-
-    public final void updateNString(int var1, String var2) throws SQLException {
-        this.b.updateNString(var1, var2);
-    }
-
-    public final void updateNString(String var1, String var2) throws SQLException {
-        this.b.updateNString(var1, var2);
-    }
-
-    public final void updateNull(int var1) throws SQLException {
-        this.b.updateNull(var1);
-    }
-
-    public final void updateNull(String var1) throws SQLException {
-        this.b.updateNull(var1);
-    }
-
-    public final void updateObject(int var1, Object var2) throws SQLException {
-        this.b.updateObject(var1, var2);
-    }
-
-    public final void updateObject(int var1, Object var2, int var3) throws SQLException {
-        this.b.updateObject(var1, var2, var3);
-    }
-
-    public final void updateObject(String var1, Object var2) throws SQLException {
-        this.b.updateObject(var1, var2);
-    }
-
-    public final void updateObject(String var1, Object var2, int var3) throws SQLException {
-        this.b.updateObject(var1, var2, var3);
-    }
-
-    public final void updateRef(int var1, Ref var2) throws SQLException {
-        this.b.updateRef(var1, var2);
-    }
-
-    public final void updateRef(String var1, Ref var2) throws SQLException {
-        this.b.updateRef(var1, var2);
-    }
-
-    public final void updateRow() throws SQLException {
-        this.b.updateRow();
-    }
-
-    public final void updateRowId(int var1, RowId var2) throws SQLException {
-        this.b.updateRowId(var1, var2);
-    }
-
-    public final void updateRowId(String var1, RowId var2) throws SQLException {
-        this.b.updateRowId(var1, var2);
-    }
-
-    public final void updateSQLXML(int var1, SQLXML var2) throws SQLException {
-        this.b.updateSQLXML(var1, var2);
-    }
-
-    public final void updateSQLXML(String var1, SQLXML var2) throws SQLException {
-        this.b.updateSQLXML(var1, var2);
-    }
-
-    public final void updateShort(int var1, short var2) throws SQLException {
-        this.b.updateShort(var1, var2);
-    }
-
-    public final void updateShort(String var1, short var2) throws SQLException {
-        this.b.updateShort(var1, var2);
-    }
-
-    public final void updateString(int var1, String var2) throws SQLException {
-        this.b.updateString(var1, var2);
-    }
-
-    public final void updateString(String var1, String var2) throws SQLException {
-        this.b.updateString(var1, var2);
-    }
-
-    public final void updateTime(int var1, Time var2) throws SQLException {
-        this.b.updateTime(var1, var2);
-    }
-
-    public final void updateTime(String var1, Time var2) throws SQLException {
-        this.b.updateTime(var1, var2);
-    }
-
-    public final void updateTimestamp(int var1, Timestamp var2) throws SQLException {
-        this.b.updateTimestamp(var1, var2);
-    }
-
-    public final void updateTimestamp(String var1, Timestamp var2) throws SQLException {
-        this.b.updateTimestamp(var1, var2);
-    }
-
-    public final boolean wasNull() throws SQLException {
-        return this.b.wasNull();
-    }
-
-    @Nullable
-    public final UUID getUUID(@NotNull String var1) throws SQLException {
-        Objects.requireNonNull(var1, "");
-        if (this.a == DatabaseType.PostgreSQL) {
-            return (UUID) this.b.getObject(var1, UUID.class);
+        if (this.databaseType == DatabaseType.PostgreSQL) {
+            return this.resultSet.getObject(var1, UUID.class);
         } else {
-            byte[] var10000 = this.b.getBytes(var1);
+            byte[] var10000 = this.resultSet.getBytes(var1);
             if (var10000 != null) {
-                byte[] var2 = var10000;
-                return SQLDatabase.Companion.asUUID(var2);
+                return SQLDatabase.asUUID(var10000);
             } else {
                 return null;
             }
         }
     }
 
-    @Nullable
-    public final JsonElement getJson(@NotNull String var1) throws SQLException {
+    public @Nullable JsonElement getJson(@NotNull String var1) throws SQLException {
         Objects.requireNonNull(var1, "");
         String var5;
-        if (this.a == DatabaseType.H2) {
-            byte[] var10000 = this.b.getBytes(var1);
+        if (this.databaseType == DatabaseType.H2) {
+            byte[] var10000 = this.resultSet.getBytes(var1);
             Intrinsics.checkNotNullExpressionValue(var10000, "");
             Charset var4 = StandardCharsets.UTF_8;
             Intrinsics.checkNotNullExpressionValue(var4, "");
             var5 = new String(var10000, var4);
         } else {
-            var5 = this.b.getString(var1);
+            var5 = this.resultSet.getString(var1);
         }
 
         return KingdomsGson.fromString(var5);

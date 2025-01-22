@@ -37,9 +37,9 @@ public class CompressorDataProvider implements SectionCreatableDataSetter, Secti
     }
 
     @NotNull
-    public final CompressorDataProvider get(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
-        return new CompressorDataProvider(var1, this.compressor);
+    public final CompressorDataProvider get(@NotNull String key) {
+        Objects.requireNonNull(key, "");
+        return new CompressorDataProvider(key, this.compressor);
     }
 
     @NotNull
@@ -58,45 +58,45 @@ public class CompressorDataProvider implements SectionCreatableDataSetter, Secti
         }
     }
 
-    public final void setString(@Nullable String var1) {
-        this.compressor.compress(var1);
+    public final void setString(@Nullable String s) {
+        this.compressor.compress(s);
     }
 
-    public final void setSimpleLocation(@Nullable SimpleBlockLocation var1) {
-        if (var1 == null) {
+    public final void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {
+        if (blockLocation == null) {
             this.compressor.compressNull();
         } else {
-            this.compressor.compress(var1.getWorld()).compress(var1.getX()).compress(var1.getY()).compress(var1.getZ());
+            this.compressor.compress(blockLocation.getWorld()).compress(blockLocation.getX()).compress(blockLocation.getY()).compress(blockLocation.getZ());
         }
     }
 
-    public final void setSimpleChunkLocation(@NotNull SimpleChunkLocation var1) {
-        Objects.requireNonNull(var1, "");
-        this.compressor.compress(var1.getWorld()).compress(var1.getX()).compress(var1.getZ());
+    public final void setSimpleChunkLocation(@NotNull SimpleChunkLocation chunkLocation) {
+        Objects.requireNonNull(chunkLocation, "");
+        this.compressor.compress(chunkLocation.getWorld()).compress(chunkLocation.getX()).compress(chunkLocation.getZ());
     }
 
-    public final void setUUID(@Nullable UUID var1) {
-        this.compressor.compress(var1);
+    public final void setUUID(@Nullable UUID uuid) {
+        this.compressor.compress(uuid);
     }
 
     public final void setInt(int var1) {
         this.compressor.compress(var1);
     }
 
-    public final void setLong(long var1) {
-        this.compressor.compress(var1);
+    public final void setLong(long l) {
+        this.compressor.compress(l);
     }
 
-    public final void setFloat(float var1) {
-        this.compressor.compress(var1);
+    public final void setFloat(float f) {
+        this.compressor.compress(f);
     }
 
-    public final void setDouble(double var1) {
-        this.compressor.compress(var1);
+    public final void setDouble(double d) {
+        this.compressor.compress(d);
     }
 
-    public final void setBoolean(boolean var1) {
-        this.compressor.compress(var1);
+    public final void setBoolean(boolean b) {
+        this.compressor.compress(b);
     }
 
     public final void setLocation(@Nullable OldLocation var1) {
@@ -107,23 +107,23 @@ public class CompressorDataProvider implements SectionCreatableDataSetter, Secti
         }
     }
 
-    public final <V> void setCollection(@NotNull Collection<? extends V> var1, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public final <V> void setCollection(@NotNull Collection<? extends V> c, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+        Objects.requireNonNull(c, "");
         Objects.requireNonNull(var2, "");
-        if (!var1.isEmpty()) {
-            for (V var3 : var1) {
+        if (!c.isEmpty()) {
+            for (V var3 : c) {
                 var2.accept(this, var3);
             }
 
         }
     }
 
-    public final <K, V> void setMap(@NotNull Map<K, ? extends V> var1, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public final <K, V> void setMap(@NotNull Map<K, ? extends V> m, @NotNull MappingSetterHandler<K, V> var2) {
+        Objects.requireNonNull(m, "");
         Objects.requireNonNull(var2, "");
-        if (!var1.isEmpty()) {
+        if (!m.isEmpty()) {
 
-            for (Map.Entry<K, ? extends V> kEntry : var1.entrySet()) {
+            for (Map.Entry<K, ? extends V> kEntry : m.entrySet()) {
                 K var4 = kEntry.getKey();
                 V var6 = kEntry.getValue();
 

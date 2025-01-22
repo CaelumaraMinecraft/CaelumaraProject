@@ -6,8 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public interface SectionableDataGetter extends DataGetter, SectionableDataProvider {
-    @NotNull
-    SectionableDataGetter get(@NotNull String var1);
+    @NotNull SectionableDataGetter get(@NotNull String key);
 
     @NotNull SectionableDataGetter asSection();
 
@@ -16,28 +15,28 @@ public interface SectionableDataGetter extends DataGetter, SectionableDataProvid
         return this.get(key).asString();
     }
 
-    default int getInt(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        return this.get(var1).asInt();
+    default int getInt(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return this.get(key).asInt();
     }
 
-    default float getFloat(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        return this.get(var1).asFloat();
+    default float getFloat(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return this.get(key).asFloat();
     }
 
-    default long getLong(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        return this.get(var1).asLong();
+    default long getLong(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return this.get(key).asLong();
     }
 
-    default double getDouble(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        return this.get(var1).asDouble();
+    default double getDouble(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return this.get(key).asDouble();
     }
 
-    default boolean getBoolean(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        return this.get(var1).asBoolean();
+    default boolean getBoolean(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return this.get(key).asBoolean();
     }
 }

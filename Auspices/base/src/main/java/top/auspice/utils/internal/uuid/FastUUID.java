@@ -15,10 +15,10 @@ public final class FastUUID {
     public static UUID randomUUID(Random random) {
         byte[] randomBytes = new byte[16];
         random.nextBytes(randomBytes);
-        randomBytes[6] = (byte)(randomBytes[6] & 15);
-        randomBytes[6] = (byte)(randomBytes[6] | 64);
-        randomBytes[8] = (byte)(randomBytes[8] & 63);
-        randomBytes[8] = (byte)(randomBytes[8] | 128);
+        randomBytes[6] = (byte) (randomBytes[6] & 15);
+        randomBytes[6] = (byte) (randomBytes[6] | 64);
+        randomBytes[8] = (byte) (randomBytes[8] & 63);
+        randomBytes[8] = (byte) (randomBytes[8] | 128);
         return bytesToUUID(randomBytes);
     }
 
@@ -27,12 +27,12 @@ public final class FastUUID {
         long lsb = 0L;
 
         int i;
-        for(i = 0; i < 8; ++i) {
-            msb = msb << 8 | (long)(data[i] & 255);
+        for (i = 0; i < 8; ++i) {
+            msb = msb << 8 | (long) (data[i] & 255);
         }
 
-        for(i = 8; i < 16; ++i) {
-            lsb = lsb << 8 | (long)(data[i] & 255);
+        for (i = 8; i < 16; ++i) {
+            lsb = lsb << 8 | (long) (data[i] & 255);
         }
 
         return new UUID(msb, lsb);
@@ -42,7 +42,7 @@ public final class FastUUID {
         return first.getMostSignificantBits() == other.getMostSignificantBits() && first.getLeastSignificantBits() == other.getLeastSignificantBits();
     }
 
-     public static UUID fromString(CharSequence uuid) {
+    public static UUID fromString(CharSequence uuid) {
         try {
             long mostSignificantBits = getHexValueForChar(uuid.charAt(0)) << 60 | getHexValueForChar(uuid.charAt(1)) << 56 | getHexValueForChar(uuid.charAt(2)) << 52 | getHexValueForChar(uuid.charAt(3)) << 48 | getHexValueForChar(uuid.charAt(4)) << 44 | getHexValueForChar(uuid.charAt(5)) << 40 | getHexValueForChar(uuid.charAt(6)) << 36 | getHexValueForChar(uuid.charAt(7)) << 32 | getHexValueForChar(uuid.charAt(9)) << 28 | getHexValueForChar(uuid.charAt(10)) << 24 | getHexValueForChar(uuid.charAt(11)) << 20 | getHexValueForChar(uuid.charAt(12)) << 16 | getHexValueForChar(uuid.charAt(14)) << 12 | getHexValueForChar(uuid.charAt(15)) << 8 | getHexValueForChar(uuid.charAt(16)) << 4 | getHexValueForChar(uuid.charAt(17));
             long leastSignificantBits = getHexValueForChar(uuid.charAt(19)) << 60 | getHexValueForChar(uuid.charAt(20)) << 56 | getHexValueForChar(uuid.charAt(21)) << 52 | getHexValueForChar(uuid.charAt(22)) << 48 | getHexValueForChar(uuid.charAt(24)) << 44 | getHexValueForChar(uuid.charAt(25)) << 40 | getHexValueForChar(uuid.charAt(26)) << 36 | getHexValueForChar(uuid.charAt(27)) << 32 | getHexValueForChar(uuid.charAt(28)) << 28 | getHexValueForChar(uuid.charAt(29)) << 24 | getHexValueForChar(uuid.charAt(30)) << 20 | getHexValueForChar(uuid.charAt(31)) << 16 | getHexValueForChar(uuid.charAt(32)) << 12 | getHexValueForChar(uuid.charAt(33)) << 8 | getHexValueForChar(uuid.charAt(34)) << 4 | getHexValueForChar(uuid.charAt(35));
@@ -58,7 +58,7 @@ public final class FastUUID {
         } else {
             long mostSignificantBits = uuid.getMostSignificantBits();
             long leastSignificantBits = uuid.getLeastSignificantBits();
-            char[] uuidChars = new char[]{HEX_DIGITS[(int)((mostSignificantBits & -1152921504606846976L) >>> 60)], HEX_DIGITS[(int)((mostSignificantBits & 1080863910568919040L) >>> 56)], HEX_DIGITS[(int)((mostSignificantBits & 67553994410557440L) >>> 52)], HEX_DIGITS[(int)((mostSignificantBits & 4222124650659840L) >>> 48)], HEX_DIGITS[(int)((mostSignificantBits & 263882790666240L) >>> 44)], HEX_DIGITS[(int)((mostSignificantBits & 16492674416640L) >>> 40)], HEX_DIGITS[(int)((mostSignificantBits & 1030792151040L) >>> 36)], HEX_DIGITS[(int)((mostSignificantBits & 64424509440L) >>> 32)], '-', HEX_DIGITS[(int)((mostSignificantBits & 4026531840L) >>> 28)], HEX_DIGITS[(int)((mostSignificantBits & 251658240L) >>> 24)], HEX_DIGITS[(int)((mostSignificantBits & 15728640L) >>> 20)], HEX_DIGITS[(int)((mostSignificantBits & 983040L) >>> 16)], '-', HEX_DIGITS[(int)((mostSignificantBits & 61440L) >>> 12)], HEX_DIGITS[(int)((mostSignificantBits & 3840L) >>> 8)], HEX_DIGITS[(int)((mostSignificantBits & 240L) >>> 4)], HEX_DIGITS[(int)(mostSignificantBits & 15L)], '-', HEX_DIGITS[(int)((leastSignificantBits & -1152921504606846976L) >>> 60)], HEX_DIGITS[(int)((leastSignificantBits & 1080863910568919040L) >>> 56)], HEX_DIGITS[(int)((leastSignificantBits & 67553994410557440L) >>> 52)], HEX_DIGITS[(int)((leastSignificantBits & 4222124650659840L) >>> 48)], '-', HEX_DIGITS[(int)((leastSignificantBits & 263882790666240L) >>> 44)], HEX_DIGITS[(int)((leastSignificantBits & 16492674416640L) >>> 40)], HEX_DIGITS[(int)((leastSignificantBits & 1030792151040L) >>> 36)], HEX_DIGITS[(int)((leastSignificantBits & 64424509440L) >>> 32)], HEX_DIGITS[(int)((leastSignificantBits & 4026531840L) >>> 28)], HEX_DIGITS[(int)((leastSignificantBits & 251658240L) >>> 24)], HEX_DIGITS[(int)((leastSignificantBits & 15728640L) >>> 20)], HEX_DIGITS[(int)((leastSignificantBits & 983040L) >>> 16)], HEX_DIGITS[(int)((leastSignificantBits & 61440L) >>> 12)], HEX_DIGITS[(int)((leastSignificantBits & 3840L) >>> 8)], HEX_DIGITS[(int)((leastSignificantBits & 240L) >>> 4)], HEX_DIGITS[(int)(leastSignificantBits & 15L)]};
+            char[] uuidChars = new char[]{HEX_DIGITS[(int) ((mostSignificantBits & -1152921504606846976L) >>> 60)], HEX_DIGITS[(int) ((mostSignificantBits & 1080863910568919040L) >>> 56)], HEX_DIGITS[(int) ((mostSignificantBits & 67553994410557440L) >>> 52)], HEX_DIGITS[(int) ((mostSignificantBits & 4222124650659840L) >>> 48)], HEX_DIGITS[(int) ((mostSignificantBits & 263882790666240L) >>> 44)], HEX_DIGITS[(int) ((mostSignificantBits & 16492674416640L) >>> 40)], HEX_DIGITS[(int) ((mostSignificantBits & 1030792151040L) >>> 36)], HEX_DIGITS[(int) ((mostSignificantBits & 64424509440L) >>> 32)], '-', HEX_DIGITS[(int) ((mostSignificantBits & 4026531840L) >>> 28)], HEX_DIGITS[(int) ((mostSignificantBits & 251658240L) >>> 24)], HEX_DIGITS[(int) ((mostSignificantBits & 15728640L) >>> 20)], HEX_DIGITS[(int) ((mostSignificantBits & 983040L) >>> 16)], '-', HEX_DIGITS[(int) ((mostSignificantBits & 61440L) >>> 12)], HEX_DIGITS[(int) ((mostSignificantBits & 3840L) >>> 8)], HEX_DIGITS[(int) ((mostSignificantBits & 240L) >>> 4)], HEX_DIGITS[(int) (mostSignificantBits & 15L)], '-', HEX_DIGITS[(int) ((leastSignificantBits & -1152921504606846976L) >>> 60)], HEX_DIGITS[(int) ((leastSignificantBits & 1080863910568919040L) >>> 56)], HEX_DIGITS[(int) ((leastSignificantBits & 67553994410557440L) >>> 52)], HEX_DIGITS[(int) ((leastSignificantBits & 4222124650659840L) >>> 48)], '-', HEX_DIGITS[(int) ((leastSignificantBits & 263882790666240L) >>> 44)], HEX_DIGITS[(int) ((leastSignificantBits & 16492674416640L) >>> 40)], HEX_DIGITS[(int) ((leastSignificantBits & 1030792151040L) >>> 36)], HEX_DIGITS[(int) ((leastSignificantBits & 64424509440L) >>> 32)], HEX_DIGITS[(int) ((leastSignificantBits & 4026531840L) >>> 28)], HEX_DIGITS[(int) ((leastSignificantBits & 251658240L) >>> 24)], HEX_DIGITS[(int) ((leastSignificantBits & 15728640L) >>> 20)], HEX_DIGITS[(int) ((leastSignificantBits & 983040L) >>> 16)], HEX_DIGITS[(int) ((leastSignificantBits & 61440L) >>> 12)], HEX_DIGITS[(int) ((leastSignificantBits & 3840L) >>> 8)], HEX_DIGITS[(int) ((leastSignificantBits & 240L) >>> 4)], HEX_DIGITS[(int) (leastSignificantBits & 15L)]};
             return new String(uuidChars);
         }
     }

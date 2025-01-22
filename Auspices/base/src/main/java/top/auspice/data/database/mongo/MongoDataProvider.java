@@ -76,12 +76,12 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @NotNull
-    public DataProvider get(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
+    public DataProvider get(@NotNull String key) {
+        Objects.requireNonNull(key, "");
         if (this.a != null) {
             throw new IllegalStateException("Specified name not processed: " + this.a);
         } else {
-            return new MongoDataProvider(var1, this.b);
+            return new MongoDataProvider(key, this.b);
         }
     }
 
@@ -105,13 +105,13 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
         return var10000;
     }
 
+    @Override
     @Nullable
     public UUID asUUID() {
         return this.b.get(this.a(), UUID.class);
     }
 
-    @NotNull
-    public SimpleBlockLocation asSimpleLocation() {
+    public @Nullable SimpleBlockLocation asSimpleLocation() {
         Document document = this.c();
         String worldName = document.getString("world");
         Integer x = document.getInteger("x");
@@ -123,8 +123,7 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
         return new SimpleBlockLocation(worldName, x, y, z);
     }
 
-    @NotNull
-    public SimpleChunkLocation asSimpleChunkLocation() {
+    public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
         Document var1 = this.c();
         String var10002 = var1.getString("world");
         Integer var10003 = var1.getInteger("x");
@@ -236,41 +235,41 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
         this.b.append(this.a(), var1);
     }
 
-    public void setString(@Nullable String var1) {
-        this.a(var1);
+    public void setString(@Nullable String s) {
+        this.a(s);
     }
 
     public void setInt(int var1) {
         this.a(var1);
     }
 
-    public void setSimpleLocation(@Nullable SimpleBlockLocation var1) {
-        this.a(var1);
+    public void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {
+        this.a(blockLocation);
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation var1) {
-        Objects.requireNonNull(var1, "");
-        this.a(var1);
+    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation chunkLocation) {
+        Objects.requireNonNull(chunkLocation, "");
+        this.a(chunkLocation);
     }
 
-    public void setLong(long var1) {
-        this.a(var1);
+    public void setLong(long l) {
+        this.a(l);
     }
 
-    public void setFloat(float var1) {
-        this.a(var1);
+    public void setFloat(float f) {
+        this.a(f);
     }
 
-    public void setDouble(double var1) {
-        this.a(var1);
+    public void setDouble(double d) {
+        this.a(d);
     }
 
-    public void setBoolean(boolean var1) {
-        this.a(var1);
+    public void setBoolean(boolean b) {
+        this.a(b);
     }
 
-    public void setUUID(@Nullable UUID var1) {
-        this.a(var1);
+    public void setUUID(@Nullable UUID uuid) {
+        this.a(uuid);
     }
 
     public void setLocation(@Nullable Location var1) {
@@ -282,24 +281,24 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
         }
     }
 
-    public <V> void setCollection(@NotNull Collection<? extends V> var1, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <V> void setCollection(@NotNull Collection<? extends V> c, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+        Objects.requireNonNull(c, "");
         Objects.requireNonNull(var2, "");
         List var3 = new ArrayList<>();
 
-        for (V var4 : var1) {
+        for (V var4 : c) {
             var2.accept(createProvider$core(var3), var4);
         }
 
         this.b.append(this.a(), var3);
     }
 
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> var1, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> m, @NotNull MappingSetterHandler<K, V> var2) {
+        Objects.requireNonNull(m, "");
         Objects.requireNonNull(var2, "");
         final Document var3 = new Document();
 
-        for (Map.Entry<K, ? extends V> kEntry : var1.entrySet()) {
+        for (Map.Entry<K, ? extends V> kEntry : m.entrySet()) {
             K var5 = kEntry.getKey();
             V var7 = kEntry.getValue();
 

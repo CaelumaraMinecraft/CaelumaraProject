@@ -6,11 +6,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public interface SimplePreparedStatement {
-    void setString(@NotNull String var1, @Nullable String var2);
+    void setString(@NotNull String key, @Nullable String var2);
 
-    void setInt(@NotNull String var1, int var2);
+    void setInt(@NotNull String key, int var2);
 
-    void setFloat(@NotNull String var1, float var2);
+    void setFloat(@NotNull String key, float var2);
 
     void setLong(@NotNull String var1, long var2);
 

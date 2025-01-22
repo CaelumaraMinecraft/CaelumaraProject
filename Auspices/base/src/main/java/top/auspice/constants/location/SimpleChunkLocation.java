@@ -1,6 +1,7 @@
 package top.auspice.constants.location;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.data.DataStringRepresentation;
 import top.auspice.server.entity.Entity;
@@ -8,6 +9,7 @@ import top.auspice.server.location.BlockPoint2D;
 import top.auspice.server.location.BlockVector2;
 import top.auspice.server.location.Direction;
 import top.auspice.server.location.Location;
+import top.auspice.utils.string.CommaDataSplitStrategy;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -270,11 +272,15 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
         return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.y});
     }
 
-    public static SimpleChunkLocation fromString(@NotNull String var0) {
-        CommaDataSplitStrategy var3;
-        String var1 = (var3 = new CommaDataSplitStrategy(var0, 3)).nextString();
-        int var2 = var3.nextInt();
-        int var4 = var3.nextInt();
-        return new SimpleChunkLocation(var1, var2, var4);
+    public static SimpleChunkLocation fromDataString(@NotNull String data) {
+        CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(data, 3);
+        String worldName = splitter.nextString();
+        int x = splitter.nextInt();
+        int z = splitter.nextInt();
+        return new SimpleChunkLocation(worldName, x, z);
+    }
+
+    public static SimpleChunkLocation fromString(@NotNull String str) {
+        return fromDataString(str);
     }
 }

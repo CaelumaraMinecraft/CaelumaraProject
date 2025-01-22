@@ -31,18 +31,18 @@ public  class RawSimplePreparedStatement implements SimplePreparedStatement {
         this(1, var1, var2);
     }
 
-    public final void setString(@NotNull String var1, @Nullable String var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public final void setString(@NotNull String key, @Nullable String var2) {
+        Intrinsics.checkNotNullParameter(key, "");
         this.b.setString(this.a(), var2);
     }
 
-    public final void setInt(@NotNull String var1, int var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public final void setInt(@NotNull String key, int var2) {
+        Intrinsics.checkNotNullParameter(key, "");
         this.b.setInt(this.a(), var2);
     }
 
-    public final void setFloat(@NotNull String var1, float var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public final void setFloat(@NotNull String key, float var2) {
+        Intrinsics.checkNotNullParameter(key, "");
         this.b.setFloat(this.a(), var2);
     }
 

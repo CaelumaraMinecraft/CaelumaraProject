@@ -1,0 +1,30 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.craftbukkit.services"
+
+dependencies {
+    // 向上传递依赖项
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:base")))
+
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:attributeplus")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:cmi")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:mythicmobs-v4")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:mythicmobs-v5")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:simplepets")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:mypet")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:placeholderapi")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:mvdwplaceholderapi")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:project-korra")))
+    implementation(api(project(":Auspice:game:bukkit:craftbukkit:services:worldguard")))
+
+    // 向下传递依赖项
+    api(project(":Auspice:game:bukkit:services:base")) { transitive = false }
+
+    // ClassPath Libs
+    compileOnly(project(":base"))
+    compileOnly(libs.server.spigot)
+}

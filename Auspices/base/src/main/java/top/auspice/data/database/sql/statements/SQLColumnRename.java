@@ -5,17 +5,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class SQLColumnRename extends SQLColumnChange {
-    @NotNull
-    private final String a;
 
-    public SQLColumnRename(@NotNull String var1, @NotNull String var2) {
-        super(var1);
-        Objects.requireNonNull(var2);
-        this.a = var2;
+    private final @NotNull String newColumnName;
+
+    public SQLColumnRename(@NotNull String oldColumnName, @NotNull String newColumnName) {
+        super(oldColumnName);
+        Objects.requireNonNull(newColumnName, "newColumnName");
+        this.newColumnName = newColumnName;
     }
 
-    @NotNull
-    public final String getNewColumnName() {
-        return this.a;
+    public @NotNull String getNewColumnName() {
+        return this.newColumnName;
     }
 }

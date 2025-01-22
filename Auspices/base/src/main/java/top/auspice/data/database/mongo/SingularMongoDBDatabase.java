@@ -28,11 +28,11 @@ public class SingularMongoDBDatabase<T extends AuspiceObject> extends MongoDBDat
         this.getCollection().deleteOne((Bson) (new SingularMongoIdQueryContainer()));
     }
 
-    public void save(@NotNull T var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public void save(@NotNull T obj) {
+        Intrinsics.checkNotNullParameter(obj, "");
         Document var2 = new Document("_id", null);
         MongoDataProvider var3 = new MongoDataProvider(null, var2);
-        this.getDataHandler().save(var3, var1);
+        this.getDataHandler().save(var3, obj);
         this.getCollection().replaceOne((Bson) (new SingularMongoIdQueryContainer()), var2, MongoDBDatabase.Companion.getUPSERT$core());
     }
 

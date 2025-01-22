@@ -14,7 +14,8 @@ public interface KeyedKingdomsDatabase<K, T extends KeyedAuspiceObject<K>> exten
 
     void load(@NonNull Collection<K> var1, @NonNull Consumer<T> var2);
 
-    @NonNull Collection<T> loadAllData(@Nullable Predicate<K> var1);
+    @NonNull
+    Collection<T> loadAllData(@Nullable Predicate<K> var1);
 
     void save(@NonNull @Unmodifiable Collection<T> var1);
 
@@ -22,5 +23,6 @@ public interface KeyedKingdomsDatabase<K, T extends KeyedAuspiceObject<K>> exten
 
     boolean hasData(@NonNull K var1);
 
-    @NonNull Collection<K> getAllDataKeys();
+    @NonNull
+    Collection<K> getAllDataKeys();
 }

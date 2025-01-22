@@ -59,9 +59,9 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
     }
 
     @NotNull
-    public DataProvider get(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        return new NamedNBTDataProvider(var1, NBTTagType.COMPOUND.cast(this.element));
+    public DataProvider get(@NotNull String key) {
+        Objects.requireNonNull(key);
+        return new NamedNBTDataProvider(key, NBTTagType.COMPOUND.cast(this.element));
     }
 
     @NotNull
@@ -86,6 +86,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         return var3;
     }
 
+    @Override
     @NotNull
     public UUID asUUID() {
 
@@ -102,8 +103,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         return var10000 != null ? SimpleBlockLocation.fromString(var10000) : null;
     }
 
-    @NotNull
-    public SimpleChunkLocation asSimpleChunkLocation() {
+    public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
 
         String var10000 = this.asString(() -> {
             throw new IllegalStateException();
@@ -192,27 +192,27 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         return var1;
     }
 
-    public void setSimpleLocation(@Nullable SimpleBlockLocation var1) {
-        this.setString(var1 != null ? var1.asDataString() : null);
+    public void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {
+        this.setString(blockLocation != null ? blockLocation.asDataString() : null);
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation var1) {
-        Objects.requireNonNull(var1, "");
-        this.setString(var1.asDataString());
+    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation chunkLocation) {
+        Objects.requireNonNull(chunkLocation, "");
+        this.setString(chunkLocation.asDataString());
     }
 
-    public void setLong(long var1) {
+    public void setLong(long l) {
         if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagLong.of(var1));
+            ((NBTTagList<?>) this.element).addUnknown(NBTTagLong.of(l));
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
-    public void setString(@Nullable String var1) {
-        if (var1 != null) {
+    public void setString(@Nullable String s) {
+        if (s != null) {
             if (this.element instanceof NBTTagList) {
-                ((NBTTagList<?>) this.element).addUnknown(NBTTagString.of(var1));
+                ((NBTTagList<?>) this.element).addUnknown(NBTTagString.of(s));
             } else {
                 throw new UnsupportedOperationException();
             }
@@ -227,38 +227,38 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
-    public void setFloat(float var1) {
+    public void setFloat(float f) {
         if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagFloat.of(var1));
+            ((NBTTagList<?>) this.element).addUnknown(NBTTagFloat.of(f));
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
-    public void setDouble(double var1) {
+    public void setDouble(double d) {
         if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagDouble.of(var1));
+            ((NBTTagList<?>) this.element).addUnknown(NBTTagDouble.of(d));
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
-    public void setBoolean(boolean var1) {
+    public void setBoolean(boolean b) {
         if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagBool.of(var1));
+            ((NBTTagList<?>) this.element).addUnknown(NBTTagBool.of(b));
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
-    public <V> void setCollection(@NotNull Collection<? extends V> var1, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <V> void setCollection(@NotNull Collection<? extends V> c, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+        Objects.requireNonNull(c, "");
         Objects.requireNonNull(var2, "");
         throw new UnsupportedOperationException();
     }
 
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> var1, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(var1, "");
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> m, @NotNull MappingSetterHandler<K, V> var2) {
+        Objects.requireNonNull(m, "");
         Objects.requireNonNull(var2, "");
         throw new UnsupportedOperationException();
     }
@@ -269,7 +269,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
-    public void setUUID(@Nullable UUID var1) {
-        this.setString(FastUUID.toString(var1));
+    public void setUUID(@Nullable UUID uuid) {
+        this.setString(FastUUID.toString(uuid));
     }
 }

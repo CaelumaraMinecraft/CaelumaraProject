@@ -32,18 +32,17 @@ public final class MongoIDGetter implements DataGetter {
         return this.a;
     }
 
+    @Override
     @Nullable
     public UUID asUUID() {
         return FastUUID.fromString(this.a);
     }
 
-    @NotNull
-    public SimpleBlockLocation asSimpleLocation() {
+    public @Nullable SimpleBlockLocation asSimpleLocation() {
         throw new UnsupportedOperationException();
     }
 
-    @NotNull
-    public SimpleChunkLocation asSimpleChunkLocation() {
+    public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
         throw new UnsupportedOperationException();
     }
 

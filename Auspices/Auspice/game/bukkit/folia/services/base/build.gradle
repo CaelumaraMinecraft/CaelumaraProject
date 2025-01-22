@@ -1,0 +1,11 @@
+plugins {
+    id("java-library")
+//    alias(libs.plugins.kotlin)
+//    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.folia.services"
+
+dependencies {
+    compileOnly(api(project(":Auspice:game:bukkit:services:base")))
+}

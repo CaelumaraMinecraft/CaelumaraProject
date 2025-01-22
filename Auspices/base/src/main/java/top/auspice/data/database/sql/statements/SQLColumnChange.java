@@ -5,16 +5,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public abstract class SQLColumnChange extends SQLStatement {
-    @NotNull
-    private final String a;
 
-    public SQLColumnChange(@NotNull String var1) {
-        Objects.requireNonNull(var1);
-        this.a = var1;
+    private final @NotNull String columnName;
+
+    public SQLColumnChange(@NotNull String columnName) {
+        Objects.requireNonNull(columnName, "columnName");
+        this.columnName = columnName;
     }
 
-    @NotNull
-    public final String getColumnName() {
-        return this.a;
+    public final @NotNull String getColumnName() {
+        return this.columnName;
     }
 }

@@ -11,18 +11,13 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class IdDataTypeHandler<T> {
-    @NotNull
-    private final String prefix;
-    @NotNull
-    private final Class<T> klass;
-    @NotNull
-    private final String[] columns;
-    @NotNull
-    private final String columnTuple;
-    @NotNull
-    private final String whereClause;
-    @NotNull
-    private final String inClause;
+
+    private final @NotNull String prefix;
+    private final @NotNull Class<T> klass;
+    private final @NotNull String @NotNull[] columns;
+    private final @NotNull String columnTuple;
+    private final @NotNull String whereClause;
+    private final @NotNull String inClause;
 
     public IdDataTypeHandler(@NotNull String prefix, @NotNull Class<T> klass, @NotNull String[] columns) {
         Objects.requireNonNull(prefix);

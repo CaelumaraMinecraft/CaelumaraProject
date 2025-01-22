@@ -6,16 +6,15 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 public class SQLRestore extends SQLStatement {
-    @NotNull
-    private final Path from;
 
-    public SQLRestore(@NotNull Path var1) {
-        Objects.requireNonNull(var1);
-        this.from = var1;
+    private final @NotNull Path from;
+
+    public SQLRestore(@NotNull Path from) {
+        Objects.requireNonNull(from);
+        this.from = from;
     }
 
-    @NotNull
-    public final Path getFrom() {
+    public @NotNull Path getFrom() {
         return this.from;
     }
 }
