@@ -9,8 +9,10 @@ import kotlin.text.Regex;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.data.database.DatabaseType;
+import top.auspice.data.database.sql.schema.SQLSchemaProcessor;
 import top.auspice.main.Auspice;
-import top.auspice.utils.AuspiceLogger;
+import top.auspice.utils.internal.AutoCloseableUtils;
+import top.auspice.utils.logging.AuspiceLogger;
 
 import java.io.Closeable;
 import java.io.File;
@@ -49,12 +51,11 @@ public abstract class SQLConnectionProvider implements Closeable {
 
     public final void runSchema() {
         this.printMeta();
-        InputStream var1 = Auspice.get().getResource("schema.sql");
+        InputStream var1 = Auspice.get().getResource("schema.sql");  // TODO
         SQLSchemaProcessor.runSchema(this.a, var1, SQLConnectionProvider::a);
     }
 
-    @NotNull
-    public final String getMetaString() {
+    public final @NotNull String getMetaString() {
         try {
             AutoCloseable var1 = this.getConnection();
             Throwable var2 = null;
@@ -72,11 +73,11 @@ public abstract class SQLConnectionProvider implements Closeable {
                 throw var8;
             } finally {
                 if (var7) {
-                    AutoCloseableKt.closeFinally(var1, var2);
+                    AutoCloseableUtils.closeFinally(var1, var2);
                 }
             }
 
-            AutoCloseableKt.closeFinally(var1, (Throwable) null);
+            AutoCloseableUtils.closeFinally(var1, (Throwable) null);
             return var12;
         } catch (SQLException var10) {
             throw new RuntimeException("Failed to retrieve meta information for SQL: " + this.a, var10);
@@ -127,7 +128,6 @@ public abstract class SQLConnectionProvider implements Closeable {
         if (ArraysKt.contains(var2, var1) && (!(var3 = new File(System.getProperty("java.io.tmpdir"))).exists() || !var3.isDirectory() || !var3.canRead() || !var3.canWrite())) {
             AuspiceLogger.error("A problem has occurred for with java.io.tmpdir " + var3.exists() + " | " + var3.isDirectory() + " | " + var3.canRead() + " | " + var3.canWrite());
         }
-
     }
 
     private static Connection a(SQLConnectionProvider var0) {
@@ -157,5 +157,4 @@ public abstract class SQLConnectionProvider implements Closeable {
     static {
         TABLE_PREFIX = AuspiceGlobalConfig.DATABASE_TABLE_PREFIX.getString() + '_';
     }
-
 }

@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package top.auspice.data.database.sql.schema;
 
 import top.auspice.utils.nonnull.NonNullList;
@@ -19,7 +14,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class SQLSchemaReader {
+public class SQLSchemaReader {
     private static final Pattern a = Pattern.compile("\\[\\[(\\w+)\\]\\]");
     private final List<String> b = new NonNullList<>(100);
     private final Map<String, String> c = new NonNullMap<>(5);
@@ -31,18 +26,18 @@ public final class SQLSchemaReader {
     public SQLSchemaReader() {
     }
 
-    public final void error(String var1) {
+    public void error(String var1) {
         throw new IllegalStateException(var1 + " at line " + this.g + ": " + this.f);
     }
 
-    public final List<String> getStatements(InputStream var1) throws IOException {
+    public List<String> getStatements(InputStream var1) throws IOException {
         Objects.requireNonNull(var1, "Cannot get statements from null stream");
         BufferedReader var7 = new BufferedReader(new InputStreamReader(var1, StandardCharsets.UTF_8));
 
         try {
             this.g = 0;
 
-            while((this.f = var7.readLine()) != null) {
+            while ((this.f = var7.readLine()) != null) {
                 ++this.g;
                 this.f = this.f.trim();
                 if (!this.f.isEmpty() && !this.f.startsWith("--") && !this.f.startsWith("#")) {
@@ -67,9 +62,9 @@ public final class SQLSchemaReader {
                         }
 
                         String var4;
-                        for(Matcher var3 = a.matcher(this.f); var3.find(); this.f = var3.replaceAll(var4)) {
+                        for (Matcher var3 = a.matcher(this.f); var3.find(); this.f = var3.replaceAll(var4)) {
                             String var8 = var3.group(1);
-                            if ((var4 = (String)this.c.get(var8)) == null) {
+                            if ((var4 = this.c.get(var8)) == null) {
                                 this.error("Unknown macro '" + var8 + '\'');
                             }
                         }

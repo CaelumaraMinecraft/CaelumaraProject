@@ -1,7 +1,6 @@
 package top.auspice.data.handlers;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.key.NSedKey;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.data.database.dataprovider.SQLDataHandlerProperties;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
@@ -10,6 +9,7 @@ import top.auspice.data.database.dataprovider.StdIdDataType;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
 import top.auspice.diversity.Diversity;
 import top.auspice.diversity.DiversityRegistry;
+import top.auspice.key.NSedKey;
 
 import java.util.UUID;
 

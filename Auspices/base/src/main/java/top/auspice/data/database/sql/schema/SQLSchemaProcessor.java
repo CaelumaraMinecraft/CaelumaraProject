@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package top.auspice.data.database.sql.schema;
 
 import kotlin.text.MatchGroup;
@@ -32,20 +27,18 @@ public final class SQLSchemaProcessor {
     public SQLSchemaProcessor() {
     }
 
-    public static void runSchema(DatabaseType var0, InputStream var1, Supplier<Connection> var2) {
+    public static void runSchema(DatabaseType databaseType, InputStream var1, Supplier<Connection> var2) {
         try {
-            String var3 = var0 == DatabaseType.SQLite ? "PRAGMA strict=ON" : null;
-            List var11 = (new SQLSchemaReader()).getStatements(var1);
-            Connection var13 = (Connection)var2.get();
+            String var3 = databaseType == DatabaseType.SQLite ? "PRAGMA strict=ON" : null;
+            List<String> var11 = (new SQLSchemaReader()).getStatements(var1);
+            Connection var13 = var2.get();
 
             try {
                 Statement var4 = var13.createStatement();
 
                 try {
-                    Iterator var12 = var11.iterator();
 
-                    while(var12.hasNext()) {
-                        String var5 = (String)var12.next();
+                    for (String var5 : var11) {
                         if (var3 != null) {
                             var4.addBatch(var3);
                             var3 = null;
@@ -55,7 +48,7 @@ public final class SQLSchemaProcessor {
                         var5 = a(a, var5, "world WORLD", "x DOUBLE", "y DOUBLE", "z DOUBLE", "yaw FLOAT", "pitch FLOAT");
                         var5 = a(b, var5, "world WORLD", "x INT", "y INT", "z INT");
                         var5 = Strings.replace(Strings.replace(Strings.replace(Strings.replace(a(c, var5, "world WORLD", "x INT", "z INT"), "WORLD", "VARCHAR(64)"), "RANK_NODE", "VARCHAR(50)"), "RANK_NAME", "NVARCHAR(100)"), "COLOR", "VARCHAR(30)");
-                        var5 = var0.processCommands(var5);
+                        var5 = databaseType.processCommands(var5);
                         var4.addBatch(var5);
                     }
 

@@ -17,26 +17,21 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.*;
 
-public final class JsonElementDataProvider
-        implements DataProvider,
-        SectionCreatableDataSetter,
-        JsonDataProvider {
-    @NotNull
-    private final JsonElement a;
+public final class JsonElementDataProvider implements DataProvider, SectionCreatableDataSetter, JsonDataProvider {
+
+    private final @NotNull JsonElement a;
 
     public JsonElementDataProvider(@NotNull JsonElement jsonElement) {
         Intrinsics.checkNotNullParameter(jsonElement, "");
         this.a = jsonElement;
     }
 
-    @NotNull
     public JsonElement getElement$core() {
         return this.a;
     }
 
     @Override
-    @NotNull
-    public DataProvider createSection(@NotNull String string) {
+    public @NotNull DataProvider createSection(@NotNull String string) {
         Intrinsics.checkNotNullParameter(string, "");
         throw new UnsupportedOperationException();
     }
@@ -198,7 +193,7 @@ public final class JsonElementDataProvider
     }
 
     @Override
-    public void setString( String s) {
+    public void setString(String s) {
         if (this.a instanceof JsonArray) {
             ((JsonArray) this.a).add(s);
             return;
@@ -216,13 +211,13 @@ public final class JsonElementDataProvider
     }
 
     @Override
-    public void setSimpleLocation( SimpleBlockLocation simpleLocation) {
+    public void setSimpleLocation(SimpleBlockLocation simpleLocation) {
         SimpleBlockLocation simpleLocation2 = simpleLocation;
         this.setString(simpleLocation2 != null ? simpleLocation2.asDataString() : null);
     }
 
     @Override
-    public void setSimpleChunkLocation( SimpleChunkLocation simpleChunkLocation) {
+    public void setSimpleChunkLocation(SimpleChunkLocation simpleChunkLocation) {
         Intrinsics.checkNotNullParameter(simpleChunkLocation, "");
         this.setString(simpleChunkLocation.asDataString());
     }
@@ -272,7 +267,7 @@ public final class JsonElementDataProvider
     }
 
     @Override
-    public void setLocation( SimpleLocation location) {
+    public void setLocation(SimpleLocation location) {
         if (location == null) {
             return;
         }

@@ -55,6 +55,7 @@ server_velocity = { group = "com.velocitypowered", name = "velocity-api", versio
 yamlengine = { group = "org.snakeyaml", name = "snakeyaml-engine", version.ref = "yamlengine" }
 
 adventure_api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure_main" }
+adventure_nbt = { group = "net.kyori", name = "adventure-nbt", version.ref = "adventure_main" }
 adventure_text_bungee = { group = "net.kyori", name = "adventure-text-serializer-bungeecord", version.ref = "adventure_platform" }
 adventure_text_gson = { group = "net.kyori", name = "adventure-text-serializer-gson", version.ref = "adventure_main" }
 adventure_text_json = { group = "net.kyori", name = "adventure-text-serializer-json", version.ref = "adventure_main" }

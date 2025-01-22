@@ -3,27 +3,26 @@ package top.auspice.data.managers;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.key.NSedKey;
 import top.auspice.key.NSKeyed;
+import top.auspice.key.NSedKey;
 
 import java.io.Closeable;
 import java.time.Duration;
 import java.util.Objects;
 
 public abstract class BaseDataManager implements Closeable, NSKeyed {
-    @NotNull
-    private final NSedKey NSedKey;
-    @Nullable
-    private final Duration autoSaveInterval;
+
+    private final @NotNull NSedKey NSedKey;
+    private final @Nullable Duration autoSaveInterval;
     private final boolean isCacheStatic;
     private final boolean isTemporary;
     private final boolean isSmartSaving;
     private boolean isClosed;
     private boolean shouldSaveData;
 
-    public BaseDataManager(@NotNull NSedKey NSedKey, @Nullable Duration autoSaveInterval, boolean isCacheStatic, boolean isTemporary, boolean isSmartSaving) {
-        Objects.requireNonNull(NSedKey);
-        this.NSedKey = NSedKey;
+    public BaseDataManager(@NotNull NSedKey key, @Nullable Duration autoSaveInterval, boolean isCacheStatic, boolean isTemporary, boolean isSmartSaving) {
+        Objects.requireNonNull(key, "key");
+        this.NSedKey = key;
         this.autoSaveInterval = autoSaveInterval;
         this.isCacheStatic = isCacheStatic;
         this.isTemporary = isTemporary;

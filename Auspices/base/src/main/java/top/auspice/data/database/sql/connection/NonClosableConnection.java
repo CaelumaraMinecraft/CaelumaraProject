@@ -10,8 +10,8 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class NonClosableConnection implements Connection {
-    @NotNull
-    private final Connection connection;
+
+    private final @NotNull Connection connection;
 
     public NonClosableConnection(@NotNull Connection var1) {
         Objects.requireNonNull(var1, "");

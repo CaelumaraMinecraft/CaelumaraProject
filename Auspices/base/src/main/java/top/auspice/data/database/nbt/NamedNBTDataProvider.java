@@ -3,21 +3,24 @@ package top.auspice.data.database.nbt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleBlockLocation;
+import top.auspice.constants.location.SimpleChunkLocation;
+import top.auspice.constants.location.SimpleLocation;
 import top.auspice.data.database.dataprovider.*;
 import top.auspice.nbt.tag.NBTTag;
 import top.auspice.nbt.tag.NBTTagCompound;
 import top.auspice.nbt.tag.NBTTagList;
 import top.auspice.nbt.tag.NBTTagType;
-import top.auspice.server.location.OldLocation;
+import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.internal.Fn;
 import top.auspice.utils.internal.uuid.FastUUID;
 
-import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.*;
 
 public final class NamedNBTDataProvider implements DataProvider, SectionCreatableDataSetter {
     @Nullable
@@ -104,51 +107,46 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         return var10000 != null ? SimpleBlockLocation.fromString(var10000) : null;
     }
 
-    @NotNull
-    public SimpleChunkLocation asSimpleChunkLocation() {
+    public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
         String var10000 = this.asString();
-        Objects.requireNonNull(var10000);
-        SimpleChunkLocation var1 = SimpleChunkLocation.fromString(var10000);
-        Objects.requireNonNull(var1, "");
-        return var1;
+        return var10000 != null ? SimpleChunkLocation.fromString(var10000) : null;
     }
 
-    @Nullable
-    public OldLocation asLocation() {
+    public @Nullable SimpleLocation asLocation() {
         String var10000 = this.asString();
-        return var10000 != null ? LocationUtils.fromString(var10000) : null;
+        return var10000 != null ? SimpleLocation.fromString(var10000) : null;
     }
 
-    public int asInt(@NotNull Supplier<Integer> def) {
+    public int asInt(@NotNull IntSupplier def) {
         Objects.requireNonNull(def, "");
         Integer var10000 = this.b.get(this.b(), NBTTagType.INT);
-        return var10000 == null ? ((Number) def.get()).intValue() : var10000;
+        return var10000 == null ? def.getAsInt() : var10000;
     }
 
-    public long asLong(@NotNull Supplier<Long> def) {
+    public long asLong(@NotNull LongSupplier def) {
         Objects.requireNonNull(def, "");
         Long var10000 = this.b.get(this.b(), NBTTagType.LONG);
-        return var10000 == null ? ((Number) def.get()).longValue() : var10000;
+        return var10000 == null ? def.getAsLong() : var10000;
     }
 
-    public float asFloat(@NotNull Supplier<Float> def) {
+    public float asFloat(@NotNull FloatSupplier def) {
         Objects.requireNonNull(def, "");
         Float var10000 = this.b.get(this.b(), NBTTagType.FLOAT);
-        return var10000 == null ? ((Number) def.get()).floatValue() : var10000;
+        return var10000 == null ? def.getAsFloat() : var10000;
     }
 
-    public double asDouble(@NotNull Supplier<Double> def) {
+    public double asDouble(@NotNull DoubleSupplier def) {
         Objects.requireNonNull(def, "");
         Double var10000 = this.b.get(this.b(), NBTTagType.DOUBLE);
-        return var10000 == null ? ((Number) def.get()).doubleValue() : var10000;
+        return var10000 == null ? def.getAsDouble() : var10000;
     }
 
-    public boolean asBoolean(@NotNull Supplier<Boolean> def) {
+    public boolean asBoolean(@NotNull BooleanSupplier def) {
         Objects.requireNonNull(def, "");
         Byte var10000 = this.b.get(this.b(), NBTTagType.BOOL);
         boolean var2;
         if (var10000 != null) {
-            if (((Number) var10000).byteValue() == 0) {
+            if (var10000 == 0) {
                 return false;
             }
 
@@ -208,7 +206,6 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         if (s != null) {
             this.b.set(this.b(), s);
         }
-
     }
 
     public void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {
@@ -224,7 +221,6 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         if (uuid != null) {
             this.b.set(this.b(), FastUUID.toString(uuid));
         }
-
     }
 
     public void setInt(int var1) {
@@ -247,9 +243,9 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         this.b.set(this.b(), b);
     }
 
-    public void setLocation(@Nullable OldLocation var1) {
+    public void setLocation(@Nullable SimpleLocation var1) {
         if (var1 != null) {
-            this.setString(LocationUtils.toString(var1));
+            this.setString(var1.asDataString());
         }
     }
 
@@ -260,10 +256,8 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
             NBTTagList var10000 = NBTTagList.unknownEmpty();
             Objects.requireNonNull(var10000, "");
             NBTTagList var3 = var10000;
-            Iterator var5 = c.iterator();
 
-            while (var5.hasNext()) {
-                Object var4 = var5.next();
+            for (V var4 : c) {
                 var2.accept(createProvider$core(var3), var4);
             }
 
@@ -320,5 +314,4 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
         Objects.requireNonNull(var1, "");
         return var1 instanceof NBTTagCompound ? new NamedNBTDataProvider(null, (NBTTagCompound) var1) : new NBTDataProvider(var1);
     }
-
 }

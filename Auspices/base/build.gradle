@@ -9,7 +9,6 @@ plugins {
 group = "top.auspice"
 
 repositories {
-
 }
 
 dependencies {
@@ -50,6 +49,8 @@ dependencies {
 
     implementation(libs.postgresql)
 
+    implementation(libs.adventure.nbt)
+
 //    compileOnly(fileTree(".libs/"))
 
     compileOnly("commons-io:commons-io:2.15.1")
@@ -60,7 +61,6 @@ dependencies {
     // Classpath libs
     compileOnly(libs.annotations.jetbrains)
     compileOnly(libs.annotations.checker)
-
 }
 
 def targetJavaVersion = 17
@@ -112,5 +112,4 @@ tasks {
     jar {
         enabled = false
     }
-
 }

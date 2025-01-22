@@ -3,12 +3,12 @@ package top.auspice.data.database.nbt;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleBlockLocation;
+import top.auspice.constants.location.SimpleChunkLocation;
+import top.auspice.constants.location.SimpleLocation;
 import top.auspice.data.database.dataprovider.*;
 import top.auspice.nbt.tag.*;
-import top.auspice.server.location.Location;
-import top.auspice.server.location.OldLocation;
+import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.internal.uuid.FastUUID;
 
@@ -16,8 +16,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public final class NBTDataProvider implements DataProvider, SectionCreatableDataSetter {
     @NotNull
@@ -104,70 +103,54 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
     }
 
     public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
-
         String var10000 = this.asString(() -> {
             throw new IllegalStateException();
         });
-        Intrinsics.checkNotNull(var10000);
         SimpleChunkLocation var1 = SimpleChunkLocation.fromString(var10000);
         Intrinsics.checkNotNullExpressionValue(var1, "");
         return var1;
     }
 
-    @Nullable
-    public Location asLocation() {
+    public @Nullable SimpleLocation asLocation() {
         String var10000 = this.asString(() -> null);
-        return var10000 != null ? LocationUtils.fromString(var10000) : null;
+        return var10000 != null ? SimpleLocation.fromString(var10000) : null;
     }
 
-    public int asInt(@NotNull Supplier<Integer> def) {
-        Objects.requireNonNull(def, "");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
-        return ((NBTTagInt) var10000).valueAsInt();
+    public int asInt(@NotNull IntSupplier def) {
+        return ((NBTTagInt) this.element).valueAsInt();
     }
 
-    public long asLong(@NotNull Supplier<Long> def) {
-        Objects.requireNonNull(def, "");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
-        return ((NBTTagLong) var10000).valueAsLong();
+    public long asLong(@NotNull LongSupplier def) {
+        return ((NBTTagLong) this.element).valueAsLong();
     }
 
-    public float asFloat(@NotNull Supplier<Float> def) {
-        Objects.requireNonNull(def, "");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
-        return ((NBTTagFloat) var10000).valueAsFloat();
+    public float asFloat(@NotNull FloatSupplier def) {
+        return ((NBTTagFloat) this.element).valueAsFloat();
     }
 
-    public double asDouble(@NotNull Supplier<Double> def) {
+    public double asDouble(@NotNull DoubleSupplier def) {
         Objects.requireNonNull(def, "");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
-        return ((NBTTagDouble) var10000).valueAsDouble();
+        return ((NBTTagDouble) this.element).valueAsDouble();
     }
 
-    public boolean asBoolean(@NotNull Supplier<Boolean> def) {
+    public boolean asBoolean(@NotNull BooleanSupplier def) {
         Objects.requireNonNull(def, "");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
-        return ((NBTTagBool) var10000).valueAsBool();
+        return ((NBTTagBool) this.element).valueAsBool();
     }
 
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1, "");
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
+        Objects.requireNonNull(c, "c");
         Objects.requireNonNull(var2, "");
         NBTTag<?> var10000 = this.element;
         Intrinsics.checkNotNull(var10000);
 
         for (NBTTag<?> o : ((NBTTagList<?>) var10000).value()) {
             Intrinsics.checkNotNull(o);
-            var2.accept(var1, new NBTDataProvider(o));
+            var2.accept(c, new NBTDataProvider(o));
         }
 
-        return var1;
+        return c;
     }
 
     @NotNull
@@ -196,7 +179,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         this.setString(blockLocation != null ? blockLocation.asDataString() : null);
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation chunkLocation) {
+    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation chunkLocation) {
         Objects.requireNonNull(chunkLocation, "");
         this.setString(chunkLocation.asDataString());
     }
@@ -263,9 +246,9 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         throw new UnsupportedOperationException();
     }
 
-    public void setLocation(@Nullable OldLocation var1) {
+    public void setLocation(@Nullable SimpleLocation var1) {
         if (var1 != null) {
-            this.setString(LocationUtils.toString(var1));
+            this.setString(var1.asDataString());
         }
     }
 

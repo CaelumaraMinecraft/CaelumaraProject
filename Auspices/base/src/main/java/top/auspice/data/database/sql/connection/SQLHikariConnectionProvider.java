@@ -6,15 +6,15 @@ import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.sql.DatabaseProperties;
-import top.auspice.utils.AuspiceLogger;
+import top.auspice.utils.logging.AuspiceLogger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 
 public class SQLHikariConnectionProvider extends SQLConnectionProvider {
-    @NotNull
-    private final HikariDataSource a;
+
+    private final @NotNull HikariDataSource a;
 
     public SQLHikariConnectionProvider(@NotNull DatabaseType var1, @NotNull HikariDataSource var2) {
         super(var1);
@@ -35,8 +35,7 @@ public class SQLHikariConnectionProvider extends SQLConnectionProvider {
         var3.setConnectionTimeout(AuspiceGlobalConfig.DATABASE_POOL_SETTINGS_CONNECTION_TIMEOUT.getInt());
     }
 
-    @NotNull
-    public Connection getConnection() {
+    public @NotNull Connection getConnection() {
         Connection var1;
         try {
             var1 = this.a.getConnection();
@@ -53,7 +52,11 @@ public class SQLHikariConnectionProvider extends SQLConnectionProvider {
     }
 
     public void connect() {
-        ((SQLConnectionProvider) this).getConnection().close();
+        try {
+            this.getConnection().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void close() {
