@@ -12,7 +12,7 @@ import top.auspice.nbt.NBTTagId;
 import top.auspice.nbt.tag.NBTTag;
 import top.auspice.nbt.tag.NBTTagCompound;
 import top.auspice.nbt.tag.NBTTagType;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

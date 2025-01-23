@@ -4,9 +4,9 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.data.database.DatabaseType;
-import top.auspice.data.database.base.KeyedKingdomsDatabase;
+import top.auspice.data.database.base.KeyedDatabase;
 import top.auspice.data.database.dataprovider.IdDataTypeHandler;
 import top.auspice.data.database.sql.SQLDataGetterProvider;
 import top.auspice.data.database.sql.SQLDataSetterProvider;
@@ -15,7 +15,7 @@ import top.auspice.data.database.sql.statements.getters.SimpleResultSetQuery;
 import top.auspice.data.database.sql.statements.setters.PreparedNamedSetterStatement;
 import top.auspice.data.database.sql.statements.setters.RawSimplePreparedStatement;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
-import top.auspice.utils.internal.AutoCloseableUtils;
+import top.auspice.utils.unsafe.AutoCloseableUtils;
 import top.auspice.utils.logging.AuspiceLogger;
 import top.auspice.utils.string.Strings;
 
@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class KeyedSQLDatabase<K, T extends KeyedAuspiceObject<K>> extends SQLDatabase<T> implements KeyedKingdomsDatabase<K, T> {
+public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLDatabase<T> implements KeyedDatabase<K, T> {
 
     private final @NotNull KeyedDataHandler<K, T> a;
     private int b;

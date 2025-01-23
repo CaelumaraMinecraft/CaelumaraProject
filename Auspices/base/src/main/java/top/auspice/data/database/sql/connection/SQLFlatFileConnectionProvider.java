@@ -8,7 +8,7 @@ import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.sql.H2Tools;
 import top.auspice.dependencies.classpath.IsolatedClassLoader;
 import top.auspice.main.Auspice;
-import top.auspice.utils.internal.AutoCloseableUtils;
+import top.auspice.utils.unsafe.AutoCloseableUtils;
 import top.auspice.utils.logging.AuspiceLogger;
 
 import java.lang.reflect.Constructor;

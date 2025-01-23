@@ -2,10 +2,10 @@ package top.auspice.data.centers;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.key.NSedKey;
 import top.auspice.data.database.DatabaseType;
-import top.auspice.data.database.base.KingdomsDatabase;
+import top.auspice.data.database.base.Database;
 import top.auspice.data.database.sql.base.KeyedSQLDatabase;
 import top.auspice.data.database.sql.base.SingularSQLDatabase;
 import top.auspice.data.database.sql.connection.SQLConnectionProvider;
@@ -64,7 +64,7 @@ public class AuspiceDataCenter extends DataCenter {
     }
 
     @Override
-    protected <T extends AuspiceObject> KingdomsDatabase<T> constructDatabase0(String var1, String var2, DataHandler<T> var3) {
+    protected <T extends DataObject.Impl> Database<T> constructDatabase0(String var1, String var2, DataHandler<T> var3) {
         Objects.requireNonNull(var1);
         Objects.requireNonNull(var2);
         Objects.requireNonNull(var3);

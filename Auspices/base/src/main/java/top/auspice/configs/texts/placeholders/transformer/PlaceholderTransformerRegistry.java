@@ -14,8 +14,8 @@ import top.auspice.utils.Checker;
 import top.auspice.utils.HierarchalClassMap;
 import top.auspice.utils.ItemUtil;
 import top.auspice.utils.compiler.base.Expression;
-import top.auspice.utils.internal.Fn;
-import top.auspice.utils.internal.stacktrace.StackTraces;
+import top.auspice.utils.unsafe.Fn;
+import top.auspice.utils.unsafe.stacktrace.StackTraces;
 import top.auspice.utils.string.Strings;
 
 import java.time.Duration;

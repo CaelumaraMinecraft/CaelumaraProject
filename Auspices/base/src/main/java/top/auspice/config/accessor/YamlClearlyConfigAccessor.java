@@ -1,6 +1,6 @@
 package top.auspice.config.accessor;
 
-import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import top.auspice.config.path.ConfigEntry;
 import top.auspice.config.path.ConfigPath;
 import top.auspice.config.sections.YamlConfigSection;
@@ -29,7 +29,6 @@ public class YamlClearlyConfigAccessor implements ClearlyConfigAccessor {
         return this.defaultSection.getPath();
     }
 
-    @Contract("-> this")
     public YamlClearlyConfigAccessor noDefault() {
         this.noDefault = true;
         return this;
@@ -105,7 +104,7 @@ public class YamlClearlyConfigAccessor implements ClearlyConfigAccessor {
         return this.currentSection.getSets(false);
     }
 
-    public YamlClearlyConfigAccessor gotoSection(String[] path) {
+    public YamlClearlyConfigAccessor gotoSection(@NotNull String @NotNull [] path) {
         YamlConfigSection newCurrentSection = this.currentSection.getSection(path);
         YamlConfigSection newDefaultSection = this.defaultSection.getSection(path);
         YamlClearlyConfigAccessor newClearly;

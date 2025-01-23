@@ -2,7 +2,7 @@ package top.auspice.utils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.internal.reflection.ClassHierarchyWalker;
+import top.auspice.utils.unsafe.reflection.ClassHierarchyWalker;
 import top.auspice.utils.nonnull.NonNullMap;
 
 import java.util.*;

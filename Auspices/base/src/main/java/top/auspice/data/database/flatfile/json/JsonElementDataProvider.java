@@ -10,7 +10,7 @@ import top.auspice.constants.location.SimpleLocation;
 import top.auspice.data.database.dataprovider.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
@@ -158,9 +158,9 @@ public final class JsonElementDataProvider implements DataProvider, SectionCreat
 
     @Override
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> biConsumer) {
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Intrinsics.checkNotNullParameter(c, "");
-        Intrinsics.checkNotNullParameter(biConsumer, "");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         JsonElement jsonElement = this.a;
         Intrinsics.checkNotNull(jsonElement);
         Object object = jsonElement;
@@ -168,26 +168,26 @@ public final class JsonElementDataProvider implements DataProvider, SectionCreat
         while (object.hasNext()) {
             JsonElement jsonElement2 = (JsonElement) object.next();
             Intrinsics.checkNotNull(jsonElement2);
-            biConsumer.accept(c, new JsonElementDataProvider(jsonElement2));
+            dataProcessor.accept(c, new JsonElementDataProvider(jsonElement2));
         }
         return c;
     }
 
     @Override
     @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> triConsumer) {
+    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
         Intrinsics.checkNotNullParameter(m, "");
-        Intrinsics.checkNotNullParameter(triConsumer, "");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         JsonElement jsonElement = this.a;
         Intrinsics.checkNotNull(jsonElement);
         JsonObject jsonObject = (JsonObject) jsonElement;
-        for (Map.Entry entry : jsonObject.entrySet()) {
+        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
             Intrinsics.checkNotNull(entry);
-            String string = (String) entry.getKey();
-            entry = (JsonElement) entry.getValue();
+            String string = entry.getKey();
+            JsonElement e = entry.getValue();
             JsonElementDataProvider jsonElementDataProvider = new JsonElementDataProvider(new JsonPrimitive(string));
-            Intrinsics.checkNotNull(entry);
-            triConsumer.accept(m, jsonElementDataProvider, new JsonElementDataProvider((JsonElement) entry));
+            Intrinsics.checkNotNull(e);
+            dataProcessor.accept(m, jsonElementDataProvider, new JsonElementDataProvider(e));
         }
         return m;
     }

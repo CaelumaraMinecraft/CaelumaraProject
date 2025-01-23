@@ -14,7 +14,7 @@ public abstract class IdDataTypeHandler<T> {
 
     private final @NotNull String prefix;
     private final @NotNull Class<T> klass;
-    private final @NotNull String @NotNull[] columns;
+    private final @NotNull String @NotNull [] columns;
     private final @NotNull String columnTuple;
     private final @NotNull String whereClause;
     private final @NotNull String inClause;
@@ -46,33 +46,27 @@ public abstract class IdDataTypeHandler<T> {
         this.inClause = ArraysKt.joinToString(this.columns, ", ", "", "", -1, "", (str) -> "?");
     }
 
-    @NotNull
-    public final String getPrefix$core() {
+    public final @NotNull String getPrefix$core() {
         return this.prefix;
     }
 
-    @NotNull
-    public final Class<T> getKlass() {
+    public final @NotNull Class<T> getKlass() {
         return this.klass;
     }
 
-    @NotNull
-    public final String[] getColumns() {
+    public final @NotNull String @NotNull [] getColumns() {
         return this.columns;
     }
 
-    @NotNull
-    public final String getColumnsTuple() {
+    public final @NotNull String getColumnsTuple() {
         return this.columnTuple;
     }
 
-    @NotNull
-    public final String getWhereClause() {
+    public final @NotNull String getWhereClause() {
         return this.whereClause;
     }
 
-    @NotNull
-    public final String getInClause() {
+    public final @NotNull String getInClause() {
         return this.inClause;
     }
 
@@ -82,6 +76,5 @@ public abstract class IdDataTypeHandler<T> {
 
     public abstract T fromString(@NotNull String var1);
 
-    @NotNull
-    public abstract String toString(T var1);
+    public abstract @NotNull String toString(T var1);
 }

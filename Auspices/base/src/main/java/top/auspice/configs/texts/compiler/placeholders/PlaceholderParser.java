@@ -18,7 +18,7 @@ import top.auspice.configs.texts.messenger.Messenger;
 import top.auspice.configs.texts.placeholders.FunctionalPlaceholder;
 import top.auspice.configs.texts.placeholders.KingdomsPlaceholderTranslator;
 import top.auspice.utils.arrays.CursorList;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import javax.annotation.Nullable;
 import java.util.*;

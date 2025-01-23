@@ -3,7 +3,8 @@ package top.auspice.constants.location;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
+import top.auspice.data.object.structure.DataStructureObject;
 import top.auspice.server.entity.Entity;
 import top.auspice.server.location.BlockPoint2D;
 import top.auspice.server.location.BlockVector2;
@@ -11,23 +12,20 @@ import top.auspice.server.location.Direction;
 import top.auspice.server.location.Location;
 import top.auspice.utils.string.CommaDataSplitStrategy;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D {
+public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, DataStructureObject {
     private final @NonNull String worldName;
     private final int x;
-    private final int y;
+    private final int z;
 
     public SimpleChunkLocation(@NonNull String var1, int var2, int var3) {
         this.worldName = Objects.requireNonNull(var1, "Simple chunk location cannot have a null world");
         this.x = var2;
-        this.y = var3;
+        this.z = var3;
     }
 
     public static SimpleChunkLocation of(@NonNull Chunk var0) {
@@ -46,7 +44,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public BlockVector2 toBlockVector() {
-        return BlockVector2.of(this.x, this.y);
+        return BlockVector2.of(this.x, this.z);
     }
 
     public static int calculateBorderSize(int var0) {
@@ -69,11 +67,11 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public boolean equalsIgnoreWorld(SimpleChunkLocation var1) {
-        return this.x == var1.x && this.y == var1.y;
+        return this.x == var1.x && this.z == var1.z;
     }
 
     public SimpleChunkLocation getRelative(int var1, int var2) {
-        return new SimpleChunkLocation(this.worldName, this.x + var1, this.y + var2);
+        return new SimpleChunkLocation(this.worldName, this.x + var1, this.z + var2);
     }
 
     public SimpleChunkLocation getRelative(Direction var1) {
@@ -86,7 +84,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
 
     public boolean isInChunk(@NonNull SimpleBlockLocation var1) {
         SimpleChunkLocation var2;
-        return (var2 = var1.toSimpleChunkLocation()).x == this.x && var2.y == this.y && Objects.equals(this.worldName, var2.worldName);
+        return (var2 = var1.toSimpleChunkLocation()).x == this.x && var2.z == this.z && Objects.equals(this.worldName, var2.worldName);
     }
 
     public boolean isInChunk(org.bukkit.@NonNull Location var1) {
@@ -102,31 +100,31 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public double distanceIgnoreWorld(@NonNull SimpleChunkLocation var1) {
-        return Math.sqrt(NumberConversions.square((double) this.x - (double) var1.x) + NumberConversions.square((double) this.y - (double) var1.y));
+        return Math.sqrt(NumberConversions.square((double) this.x - (double) var1.x) + NumberConversions.square((double) this.z - (double) var1.z));
     }
 
     public org.bukkit.@NonNull Location getCenterLocation() {
         org.bukkit.World var1 = this.getBukkitWorld();
         int var2 = (this.x << 4) + 8;
-        int var3 = (this.y << 4) + 8;
+        int var3 = (this.z << 4) + 8;
         int var4 = var1.getHighestBlockYAt(var2, var3) + 1;
         return new org.bukkit.Location(var1, (double) var2, (double) var4, (double) var3);
     }
 
     public BlockVector2 toLocationXZ() {
-        return BlockVector2.of((this.x << 4) + 8, (this.y << 4) + 8);
+        return BlockVector2.of((this.x << 4) + 8, (this.z << 4) + 8);
     }
 
     public org.bukkit.@NonNull Location getCenterLocation(double var1) {
         org.bukkit.World var3 = this.getBukkitWorld();
         int var4 = (this.x << 4) + 8;
-        int var5 = (this.y << 4) + 8;
+        int var5 = (this.z << 4) + 8;
         return new org.bukkit.Location(var3, (double) var4, var1, (double) var5);
     }
 
     public @NonNull SimpleBlockLocation getSimpleLocation(int var1, int var2, int var3) {
         var1 = this.x << 4 | var1;
-        var3 = this.y << 4 | var3;
+        var3 = this.z << 4 | var3;
         return new SimpleBlockLocation(this.worldName, var1, var2, var3);
     }
 
@@ -139,7 +137,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public int getZ() {
-        return this.y;
+        return this.z;
     }
 
     public @NonNull SimpleChunkLocation clone() {
@@ -151,13 +149,13 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public BlockVector2 worldlessWrapper() {
-        return BlockVector2.of(this.x, this.y);
+        return BlockVector2.of(this.x, this.z);
     }
 
     public int hashCode() {
         int var1 = 589 + this.worldName.hashCode();
         var1 = var1 * 31 + this.x;
-        return var1 * 31 + this.y;
+        return var1 * 31 + this.z;
     }
 
     public boolean equals(Object var1) {
@@ -165,7 +163,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
             return true;
         } else if (var1 instanceof SimpleChunkLocation) {
             var1 = var1;
-            return this.x == var1.b && this.y == var1.c && Objects.equals(this.worldName, var1.a);
+            return this.x == var1.b && this.z == var1.c && Objects.equals(this.worldName, var1.a);
         } else {
             return false;
         }
@@ -261,15 +259,15 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public String toString() {
-        return this.worldName + ", " + this.x + ", " + this.y;
+        return this.worldName + ", " + this.x + ", " + this.z;
     }
 
     public @NonNull Chunk toChunk() {
-        return this.getBukkitWorld().getChunkAt(this.x, this.y);
+        return this.getBukkitWorld().getChunkAt(this.x, this.z);
     }
 
     public @NotNull String asDataString() {
-        return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.y});
+        return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.z});
     }
 
     public static SimpleChunkLocation fromDataString(@NotNull String data) {
@@ -282,5 +280,10 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
 
     public static SimpleChunkLocation fromString(@NotNull String str) {
         return fromDataString(str);
+    }
+
+    @Override
+    public @NonNull Map<String, Object> getData() {
+        return Map.of("world", this.worldName, "x", this.x, "z", this.z);
     }
 }

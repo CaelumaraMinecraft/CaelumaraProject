@@ -8,7 +8,7 @@ import top.auspice.server.core.Server;
 import top.auspice.utils.debug.DebugNS;
 import top.auspice.utils.debug.DebugSettings;
 import top.auspice.utils.debug.StacktraceSettings;
-import top.auspice.utils.internal.stacktrace.StackTraces;
+import top.auspice.utils.unsafe.stacktrace.StackTraces;
 
 import java.util.logging.Logger;
 

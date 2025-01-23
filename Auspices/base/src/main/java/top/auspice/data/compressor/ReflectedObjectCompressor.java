@@ -1,6 +1,6 @@
 package top.auspice.data.compressor;
 
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.reflection.Reflect;
 
 import java.lang.invoke.MethodHandle;

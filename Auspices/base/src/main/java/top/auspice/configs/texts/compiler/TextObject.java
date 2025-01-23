@@ -13,7 +13,7 @@ import top.auspice.configs.texts.compiler.builders.context.PlainTextBuilderConte
 import top.auspice.configs.texts.compiler.pieces.TextPiece;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.utils.Checker;
-import top.auspice.utils.internal.arrays.UnsafeArrayList;
+import top.auspice.utils.unsafe.arrays.UnsafeArrayList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

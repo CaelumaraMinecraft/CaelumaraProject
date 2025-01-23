@@ -5,7 +5,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.dataflow.qual.Pure;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
 import top.auspice.main.Auspice;
 import top.auspice.utils.Checker;
 

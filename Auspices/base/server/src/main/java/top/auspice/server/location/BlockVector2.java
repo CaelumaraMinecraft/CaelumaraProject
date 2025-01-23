@@ -2,10 +2,9 @@ package top.auspice.server.location;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
 import top.auspice.utils.string.CommaDataSplitStrategy;
 
-import java.util.Hashtable;
 import java.util.Objects;
 
 public class BlockVector2 implements BlockPoint2D, DataStringRepresentation {

@@ -4,7 +4,7 @@ import kotlin.NotImplementedError;
 import kotlin.jvm.internal.markers.KMutableMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.internal.reflection.ClassHierarchyWalker;
+import top.auspice.utils.unsafe.reflection.ClassHierarchyWalker;
 
 import java.util.*;
 import java.util.function.Function;

@@ -12,7 +12,7 @@ import top.auspice.nbt.tag.NBTTag;
 import top.auspice.nbt.tag.NBTTagType;
 import top.auspice.platform.bukkit.location.BukkitWorld;
 import top.auspice.server.location.*;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import java.util.Objects;
 

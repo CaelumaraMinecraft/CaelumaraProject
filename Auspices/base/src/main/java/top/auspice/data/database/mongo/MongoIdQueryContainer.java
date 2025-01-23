@@ -7,7 +7,7 @@ import org.bson.codecs.Encoder;
 import org.bson.codecs.EncoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 public final class MongoIdQueryContainer<K> implements Bson {
     private final K a;

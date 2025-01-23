@@ -192,30 +192,30 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1);
-        Objects.requireNonNull(var2);
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(c);
+        Objects.requireNonNull(dataProcessor);
         List var10000 = this.b.get(this.a, List.class);
         if (var10000 == null) {
-            return var1;
+            return c;
         } else {
 
             for (Object var4 : var10000) {
                 Objects.requireNonNull(var4);
-                var2.accept(var1, createProvider$core(var4));
+                dataProcessor.accept(c, createProvider$core(var4));
             }
 
-            return var1;
+            return c;
         }
     }
 
     @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1, "");
-        Objects.requireNonNull(var2, "");
+    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(m, "");
+        Objects.requireNonNull(dataProcessor, "");
         Document var10000 = this.b.get(this.a, Document.class);
         if (var10000 == null) {
-            return var1;
+            return m;
         } else {
 
             for (Map.Entry<String, Object> object : var10000.entrySet()) {
@@ -224,10 +224,10 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
                 Objects.requireNonNull(var5);
                 MongoIDGetter var10002 = new MongoIDGetter(var5);
                 Objects.requireNonNull(var6);
-                var2.accept(var1, var10002, createProvider$core(var6));
+                dataProcessor.accept(m, var10002, createProvider$core(var6));
             }
 
-            return var1;
+            return m;
         }
     }
 

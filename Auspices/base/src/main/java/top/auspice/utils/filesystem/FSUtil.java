@@ -3,7 +3,7 @@ package top.auspice.utils.filesystem;
 import com.google.common.base.Strings;
 import org.apache.commons.io.function.IORunnable;
 import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import java.io.*;
 import java.nio.channels.Channels;

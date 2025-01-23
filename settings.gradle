@@ -110,8 +110,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Caelumara"
 
-includeBuild("/commons/abstraction")
-includeBuild("/commons/annotations")
+includeBuild("/commons")
+includeBuild("/commons")
 
 includeBuild("/Auspices")
 

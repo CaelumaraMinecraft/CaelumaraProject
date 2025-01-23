@@ -10,7 +10,7 @@ import org.snakeyaml.engine.v2.nodes.Tag;
 import org.snakeyaml.engine.v2.parser.ParserImpl;
 import org.snakeyaml.engine.v2.scanner.StreamReader;
 import top.auspice.config.yaml.snakeyaml.common.SimpleWriter;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.data.handlers.abstraction.DataHandler;
 
 import java.io.BufferedReader;
@@ -45,7 +45,7 @@ public final class YamlDatabase {
         return new YamlMappingDataProvider(null, var4);
     }
 
-    public static <T extends AuspiceObject> void save(@NotNull T var0, @NotNull DataHandler<T> var1, @NotNull BufferedWriter var2) {
+    public static <T extends DataObject.Impl> void save(@NotNull T var0, @NotNull DataHandler<T> var1, @NotNull BufferedWriter var2) {
         Intrinsics.checkNotNullParameter(var0, "");
         Intrinsics.checkNotNullParameter(var1, "");
         Intrinsics.checkNotNullParameter(var2, "");

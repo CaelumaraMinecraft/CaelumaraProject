@@ -3,14 +3,14 @@ package top.auspice.data.managers.base;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.key.NSedKey;
-import top.auspice.data.database.base.KingdomsDatabase;
+import top.auspice.data.database.base.Database;
 import top.auspice.data.managers.BaseDataManager;
 
 import java.util.Collection;
 
-public abstract class DataManager<T extends AuspiceObject> extends BaseDataManager {
+public abstract class DataManager<T extends DataObject> extends BaseDataManager {
     private final NSedKey NSedKey;
     protected boolean savingState = true;
 
@@ -27,7 +27,7 @@ public abstract class DataManager<T extends AuspiceObject> extends BaseDataManag
     }
 
     @Internal
-    public abstract KingdomsDatabase<T> getDatabase();
+    public abstract Database<T> getDatabase();
 
     public abstract void deleteAllData();
 

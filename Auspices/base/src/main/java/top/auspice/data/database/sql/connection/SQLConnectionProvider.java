@@ -11,7 +11,7 @@ import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.sql.schema.SQLSchemaProcessor;
 import top.auspice.main.Auspice;
-import top.auspice.utils.internal.AutoCloseableUtils;
+import top.auspice.utils.unsafe.AutoCloseableUtils;
 import top.auspice.utils.logging.AuspiceLogger;
 
 import java.io.Closeable;

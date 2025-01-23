@@ -7,7 +7,7 @@ import top.auspice.bukkit.loader.PluginAuspiceLoader;
 import top.auspice.dependencies.classpath.BootstrapProvider;
 import top.auspice.scheduler.*;
 import top.auspice.scheduler.Task.ExecutionContextType;
-import top.auspice.utils.internal.time.TickTemporalUnit;
+import top.auspice.utils.unsafe.time.TickTemporalUnit;
 
 import java.time.Duration;
 import java.util.Objects;

@@ -3,16 +3,16 @@ package top.auspice.data.database.sql.base;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.data.database.DatabaseType;
-import top.auspice.data.database.base.SingularKingdomsDatabase;
+import top.auspice.data.database.base.SingularDatabase;
 import top.auspice.data.database.sql.connection.SQLConnectionProvider;
 import top.auspice.data.handlers.abstraction.SingularDataHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-public final class SingularSQLDatabase<T extends AuspiceObject> extends SQLDatabase<T> implements SingularKingdomsDatabase<T> {
+public final class SingularSQLDatabase<T extends DataObject.Impl> extends SQLDatabase<T> implements SingularDatabase<T> {
     @NotNull
     private final SingularDataHandler<T> a;
 
@@ -41,7 +41,7 @@ public final class SingularSQLDatabase<T extends AuspiceObject> extends SQLDatab
             Throwable var4 = null;
             boolean var17 = false;
 
-            AuspiceObject var42;
+            DataObject.Impl var42;
             try {
                 var17 = true;
                 Connection var5;
@@ -49,7 +49,7 @@ public final class SingularSQLDatabase<T extends AuspiceObject> extends SQLDatab
                 Throwable var6 = null;
                 boolean var25 = false;
 
-                AuspiceObject var44;
+                DataObject.Impl var44;
                 try {
                     var25 = true;
                     PreparedStatement var7;

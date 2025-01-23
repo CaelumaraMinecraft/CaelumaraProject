@@ -3,9 +3,9 @@ package top.auspice.data.database.sql;
 import com.zaxxer.hikari.HikariConfig;
 import kotlin.Pair;
 import kotlin.TuplesKt;
-import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
+import top.auspice.api.annotations.data.LateInit;
 import top.auspice.config.accessor.YamlClearlyConfigAccessor;
 import top.auspice.config.sections.ConfigSection;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
@@ -16,28 +16,26 @@ import java.time.Duration;
 import java.util.*;
 
 public class DatabaseProperties {
-    public String user;
-    public String password;
-    public String address;
-    private int a;
-    public String databaseName;
-    private boolean b = true;
-    private boolean c = true;
-    private boolean d;
-    private final long e = Duration.ofSeconds(30L).toMillis();
-    @NotNull
-    private final Map<String, Object> f = new HashMap<>();
-    @NotNull
-    private final Set<String> g = new HashSet<>();
-    @NotNull
-    private static final DatabaseProperties h = new DatabaseProperties();
+
+    public @LateInit String user;
+    public @LateInit String password;
+    public @LateInit String address;
+    private int port;
+    public @LateInit String databaseName;
+    private boolean useSSL = true;
+    private boolean verifyServerCertificate = true;
+    private boolean allowPublicKeyRetrieval;
+    private final long socketTimeout = Duration.ofSeconds(30L).toMillis();
+    private final @NotNull Map<String, Object> others = new HashMap<>();
+    private final @NotNull Set<String> ignoredProperties = new HashSet<>();
+
+    private static final @NotNull DatabaseProperties h = new DatabaseProperties();
     private static boolean i;
 
     public DatabaseProperties() {
     }
 
-    @NotNull
-    public String getUser() {
+    public @NotNull String getUser() {
         String var10000 = this.user;
         if (var10000 != null) {
             return var10000;
@@ -47,29 +45,27 @@ public class DatabaseProperties {
         }
     }
 
-    public void setUser(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
-        this.user = var1;
+    public void setUser(@NotNull String user) {
+        Objects.requireNonNull(user, "user");
+        this.user = user;
     }
 
-    @NotNull
-    public String getPassword() {
+    public @NotNull String getPassword() {
         String var10000 = this.password;
         if (var10000 != null) {
             return var10000;
         } else {
-            Intrinsics.throwUninitializedPropertyAccessException("");
+            Intrinsics.throwUninitializedPropertyAccessException("password");
             return null;
         }
     }
 
-    public void setPassword(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
-        this.password = var1;
+    public void setPassword(@NotNull String password) {
+        Objects.requireNonNull(password, "password");
+        this.password = password;
     }
 
-    @NotNull
-    public String getAddress() {
+    public @NotNull String getAddress() {
         String var10000 = this.address;
         if (var10000 != null) {
             return var10000;
@@ -80,81 +76,78 @@ public class DatabaseProperties {
     }
 
     public void setAddress(@NotNull String address) {
-        Objects.requireNonNull(address, "");
+        Objects.requireNonNull(address, "address");
         this.address = address;
     }
 
     public int getPort() {
-        return this.a;
+        return this.port;
     }
 
-    public void setPort(int var1) {
-        this.a = var1;
+    public void setPort(int port) {
+        this.port = port;
     }
 
-    @NotNull
-    public String getDatabaseName() {
+    public @NotNull String getDatabaseName() {
         String var10000 = this.databaseName;
         if (var10000 != null) {
             return var10000;
         } else {
-            Intrinsics.throwUninitializedPropertyAccessException("");
+            Intrinsics.throwUninitializedPropertyAccessException("databaseName");
             return null;
         }
     }
 
-    public void setDatabaseName(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
-        this.databaseName = var1;
+    public void setDatabaseName(@NotNull String databaseName) {
+        Objects.requireNonNull(databaseName, "databaseName");
+        this.databaseName = databaseName;
     }
 
     public boolean getUseSSL() {
-        return this.b;
+        return this.useSSL;
     }
 
-    public void setUseSSL(boolean var1) {
-        this.b = var1;
+    public void setUseSSL(boolean useSSL) {
+        this.useSSL = useSSL;
     }
 
     public boolean getVerifyServerCertificate() {
-        return this.c;
+        return this.verifyServerCertificate;
     }
 
-    public void setVerifyServerCertificate(boolean var1) {
-        this.c = var1;
+    public void setVerifyServerCertificate(boolean verifyServerCertificate) {
+        this.verifyServerCertificate = verifyServerCertificate;
     }
 
     public boolean getAllowPublicKeyRetrieval() {
-        return this.d;
+        return this.allowPublicKeyRetrieval;
     }
 
-    public void setAllowPublicKeyRetrieval(boolean var1) {
-        this.d = var1;
+    public void setAllowPublicKeyRetrieval(boolean allowPublicKeyRetrieval) {
+        this.allowPublicKeyRetrieval = allowPublicKeyRetrieval;
     }
 
     public long getSocketTimeout() {
-        return this.e;
+        return this.socketTimeout;
     }
 
-    @NotNull
-    public Map<String, Object> getOthers() {
-        return this.f;
+    public @NotNull Map<String, Object> getOthers() {
+        return this.others;
     }
 
-    @NotNull
-    public Set<String> getIgnoredProperties() {
-        return this.g;
+    public @NotNull Set<String> getIgnoredProperties() {
+        return this.ignoredProperties;
     }
 
-    public boolean ignore(@NotNull String[] var1) {
-        Objects.requireNonNull(var1);
-        return CollectionsKt.addAll(this.g, var1);
+    public boolean ignore(@NotNull String @NotNull [] ignoredProperties) {
+        Objects.requireNonNull(ignoredProperties, "ignoredProperties");
+        return this.ignoredProperties.addAll(List.of(ignoredProperties));
     }
 
-    public void add(@NotNull String var1, @NotNull Object var2) {
-        Objects.requireNonNull(var1);
-        Objects.requireNonNull(var2);
-        this.f.put(var1, var2);
+    public void add(@NotNull String property, @NotNull Object value) {
+        Objects.requireNonNull(property, "property");
+        Objects.requireNonNull(value, "value");
+        this.others.put(property, value);
     }
 
     public void useStandardDataSourcePropertyAppendar(@NotNull HikariConfig var1) {
@@ -162,49 +155,49 @@ public class DatabaseProperties {
         a(this, var1, "user", this.getUser());
         a(this, var1, "password", this.getPassword());
         a(this, var1, "serverName", this.getAddress());
-        a(this, var1, "port", this.a);
-        a(this, var1, "portNumber", this.a);
+        a(this, var1, "port", this.port);
+        a(this, var1, "portNumber", this.port);
         a(this, var1, "databaseName", this.getDatabaseName());
-        a(this, var1, "useSSL", this.b);
-        a(this, var1, "verifyServerCertificate", this.c);
-        a(this, var1, "allowPublicKeyRetrieval", this.d);
-        a(this, var1, "socketTimeout", this.e);
+        a(this, var1, "useSSL", this.useSSL);
+        a(this, var1, "verifyServerCertificate", this.verifyServerCertificate);
+        a(this, var1, "allowPublicKeyRetrieval", this.allowPublicKeyRetrieval);
+        a(this, var1, "socketTimeout", this.socketTimeout);
 
-        for (Map.Entry<String, Object> var3 : this.f.entrySet()) {
+        for (Map.Entry<String, Object> var3 : this.others.entrySet()) {
             a(this, var1, var3.getKey(), var3.getValue());
         }
-
     }
 
     @NotNull
     public Properties asJavaProperties() {
-        Properties var1 = new Properties();
-        Map var10000 = this.f;
-        return var1;
+        Properties properties = new Properties();
+        for (Map.Entry<String, Object> entry : this.others.entrySet()) {
+            properties.setProperty(entry.getKey(), entry.getValue().toString());
+        }
+        return properties;
     }
 
     private static void a(DatabaseProperties var0, HikariConfig var1, String var2, Object var3) {
-        if (!var0.g.contains(var2)) {
+        if (!var0.ignoredProperties.contains(var2)) {
             var1.addDataSourceProperty(var2, var3);
         }
     }
 
     @NotNull
-    public static DatabaseProperties defaults(@NotNull DatabaseType var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public static DatabaseProperties defaults(@NotNull DatabaseType databaseType) {  // TODO 迁移
+        Objects.requireNonNull(databaseType, "databaseType");
         if (DatabaseProperties.i) {
             return DatabaseProperties.h;
         } else {
             DatabaseProperties var2 = DatabaseProperties.h;
-            String var3 = AuspiceGlobalConfig.DATABASE_ADDRESS.getManager().getString();
-            int var9 = var1.getDefaultPort();
-            List var10000 = Strings.split(var3, ':', false);
+            String var3 = AuspiceGlobalConfig.DATABASE_ADDRESS.getManager().getString(new String[0]);
+            int var9 = databaseType.getDefaultPort();
+            List<String> var10000 = Strings.split(var3, ':', false);
             Intrinsics.checkNotNullExpressionValue(var10000, "");
-            List var4 = var10000;
             Object var15;
             if (var10000.size() == 2) {
-                var3 = (String) var4.get(0);
-                var15 = var4.get(1);
+                var3 = var10000.get(0);
+                var15 = var10000.get(1);
                 Intrinsics.checkNotNullExpressionValue(var15, "");
                 var9 = Integer.parseInt((String) var15);
             }
@@ -213,24 +206,24 @@ public class DatabaseProperties {
             ConfigSection var17;
             label28:
             {
-                Pair var10;
-                var3 = (String) (var10 = TuplesKt.to(var3, var9)).component1();
-                var9 = ((Number) var10.component2()).intValue();
+                Pair<String, Integer> var10 = TuplesKt.to(var3, var9);
+                var3 = var10.component1();
+                var9 = var10.component2();
                 var2.setAddress(var3);
                 var2.setPort(var9);
                 var11 = var2;
-                String var10001 = AuspiceGlobalConfig.DATABASE_USERNAME.getManager().getString();
+                String var10001 = AuspiceGlobalConfig.DATABASE_USERNAME.getManager().getString(new String[0]);
                 Intrinsics.checkNotNullExpressionValue(var10001, "");
                 var2.setUser(var10001);
-                var10001 = AuspiceGlobalConfig.DATABASE_PASSWORD.getManager().getString();
+                var10001 = AuspiceGlobalConfig.DATABASE_PASSWORD.getManager().getString(new String[0]);
                 Intrinsics.checkNotNullExpressionValue(var10001, "");
                 var2.setPassword(var10001);
-                var10001 = AuspiceGlobalConfig.DATABASE_DATABASE.getManager().getString();
+                var10001 = AuspiceGlobalConfig.DATABASE_DATABASE.getManager().getString(new String[0]);
                 Intrinsics.checkNotNullExpressionValue(var10001, "");
                 var2.setDatabaseName(var10001);
-                var2.setUseSSL(AuspiceGlobalConfig.DATABASE_SSL_ENABLED.getManager().getBoolean());
-                var2.setVerifyServerCertificate(AuspiceGlobalConfig.DATABASE_SSL_VERIFY_SERVER_CERTIFICATE.getManager().getBoolean());
-                var2.setAllowPublicKeyRetrieval(AuspiceGlobalConfig.DATABASE_SSL_ALLOW_PUBLIC_KEY_RETRIEVAL.getManager().getBoolean());
+                var2.setUseSSL(AuspiceGlobalConfig.DATABASE_SSL_ENABLED.getManager().getBoolean(new String[0]));
+                var2.setVerifyServerCertificate(AuspiceGlobalConfig.DATABASE_SSL_VERIFY_SERVER_CERTIFICATE.getManager().getBoolean(new String[0]));
+                var2.setAllowPublicKeyRetrieval(AuspiceGlobalConfig.DATABASE_SSL_ALLOW_PUBLIC_KEY_RETRIEVAL.getManager().getBoolean(new String[0]));
                 YamlClearlyConfigAccessor var16 = AuspiceGlobalConfig.DATABASE_PROPERTIES.getManager().getSection();
                 if (var16 != null) {
                     var16 = var16.noDefault();

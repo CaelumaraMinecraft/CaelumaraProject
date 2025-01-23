@@ -9,7 +9,7 @@ import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.nodes.*;
 import top.auspice.config.sections.ConfigSection;
 import top.auspice.configs.texts.MessageHandler;
-import top.auspice.utils.internal.stacktrace.StackTraces;
+import top.auspice.utils.unsafe.stacktrace.StackTraces;
 
 import java.util.*;
 import java.util.stream.Collectors;

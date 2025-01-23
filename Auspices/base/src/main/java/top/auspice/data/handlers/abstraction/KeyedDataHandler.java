@@ -5,6 +5,7 @@ import top.auspice.abstraction.Keyed;
 import top.auspice.data.database.dataprovider.IdDataTypeHandler;
 import top.auspice.data.database.dataprovider.SQLDataHandlerProperties;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
+import top.auspice.data.database.dataprovider.SectionableDataSetter;
 
 import java.util.Objects;
 
@@ -20,6 +21,8 @@ public abstract class KeyedDataHandler<K, T extends Keyed<K>> extends DataHandle
     public final @NotNull IdDataTypeHandler<K> getIdHandler() {
         return this.idHandler;
     }
+
+    public abstract void save(@NotNull SectionableDataSetter dataSetter, T object);
 
     public abstract @NotNull T load(@NotNull SectionableDataGetter dataGetter, K key);
 }

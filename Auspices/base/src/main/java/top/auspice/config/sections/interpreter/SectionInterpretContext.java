@@ -3,7 +3,7 @@ package top.auspice.config.sections.interpreter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.config.sections.ConfigSection;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import java.util.Objects;
 import java.util.function.Supplier;

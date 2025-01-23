@@ -9,7 +9,7 @@ import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.sql.base.SQLDatabase;
 import top.auspice.data.database.sql.statements.SQLUpsert;
 import top.auspice.utils.gson.KingdomsGson;
-import top.auspice.utils.internal.AutoCloseableUtils;
+import top.auspice.utils.unsafe.AutoCloseableUtils;
 import top.auspice.utils.logging.AuspiceLogger;
 
 import java.nio.charset.Charset;

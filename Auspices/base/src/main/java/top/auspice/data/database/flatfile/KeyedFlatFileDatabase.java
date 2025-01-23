@@ -4,11 +4,11 @@ import kotlin.jvm.internal.Intrinsics;
 import kotlin.ranges.RangesKt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.KeyedAuspiceObject;
-import top.auspice.data.database.base.KeyedKingdomsDatabase;
+import top.auspice.data.object.KeyedDataObject;
+import top.auspice.data.database.base.KeyedDatabase;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
 import top.auspice.utils.filesystem.FSUtil;
-import top.auspice.utils.internal.CloseableUtils;
+import top.auspice.utils.unsafe.CloseableUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public abstract class KeyedFlatFileDatabase<K, T extends KeyedAuspiceObject<K>> implements KeyedKingdomsDatabase<K, T> {
+public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject.Impl<K>> implements KeyedDatabase<K, T> {
 
     private final @NotNull String extension;
     private final @NotNull Path folder;
@@ -137,9 +137,9 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedAuspiceObject<K>> 
 
     public abstract void save(@NotNull T obj, @NotNull BufferedWriter var2);
 
-    public final void save(@NotNull T obj) {
-        Intrinsics.checkNotNullParameter(obj, "");
-        String var2 = "" + obj.getKey() + '.' + this.extension;
+    public final void save(@NotNull T data) {
+        Intrinsics.checkNotNullParameter(data, "");
+        String var2 = "" + data.getKey() + '.' + this.extension;
         Path var12 = this.folder.resolve(var2);
 
         try {
@@ -150,7 +150,7 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedAuspiceObject<K>> 
             try {
                 var8 = true;
                 Intrinsics.checkNotNull(var13);
-                this.save(obj, var13);
+                this.save(data, var13);
                 var8 = false;
             } catch (Throwable var9) {
                 thr = var9;

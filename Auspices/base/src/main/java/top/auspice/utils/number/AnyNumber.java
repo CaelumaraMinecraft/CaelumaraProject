@@ -2,7 +2,7 @@ package top.auspice.utils.number;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
 
 import java.util.Objects;
 

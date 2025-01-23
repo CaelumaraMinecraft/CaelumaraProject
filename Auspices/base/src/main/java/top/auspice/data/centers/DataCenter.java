@@ -2,14 +2,14 @@ package top.auspice.data.centers;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 import top.auspice.configs.texts.MessageHandler;
-import top.auspice.constants.base.AuspiceObject;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.DataObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.key.NSedKey;
 import top.auspice.key.NamespacedMap;
 import top.auspice.data.database.DatabaseType;
-import top.auspice.data.database.base.KeyedKingdomsDatabase;
-import top.auspice.data.database.base.KingdomsDatabase;
-import top.auspice.data.database.base.SingularKingdomsDatabase;
+import top.auspice.data.database.base.KeyedDatabase;
+import top.auspice.data.database.base.Database;
+import top.auspice.data.database.base.SingularDatabase;
 import top.auspice.data.handlers.abstraction.DataHandler;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
 import top.auspice.data.handlers.abstraction.SingularDataHandler;
@@ -18,7 +18,7 @@ import top.auspice.data.managers.base.DataManager;
 import top.auspice.api.user.AuspiceUser;
 import top.auspice.scheduler.DelayedRepeatingTask;
 import top.auspice.utils.debug.AuspiceDebug;
-import top.auspice.utils.internal.string.StringPadder;
+import top.auspice.utils.unsafe.string.StringPadder;
 import top.auspice.utils.logging.AuspiceLogger;
 import top.auspice.utils.string.Strings;
 
@@ -99,19 +99,19 @@ public abstract class DataCenter extends BaseDataManager {
         return this.registry;
     }
 
-    public <K, T extends KeyedAuspiceObject<K>> KeyedKingdomsDatabase<K, T> constructDatabase(String var1, String var2, KeyedDataHandler<K, T> var3) {
-        return (KeyedKingdomsDatabase<K, T>) this.constructDatabase0(var1, var2, var3);
+    public <K, T extends KeyedDataObject.Impl<K>> KeyedDatabase<K, T> constructDatabase(String var1, String var2, KeyedDataHandler<K, T> var3) {
+        return (KeyedDatabase<K, T>) this.constructDatabase0(var1, var2, var3);
     }
 
-    public <T extends AuspiceObject> SingularKingdomsDatabase<T> constructDatabase(String var1, String var2, SingularDataHandler<T> var3) {
-        return (SingularKingdomsDatabase<T>) this.constructDatabase0(var1, var2, var3);
+    public <T extends DataObject.Impl> SingularDatabase<T> constructDatabase(String var1, String var2, SingularDataHandler<T> var3) {
+        return (SingularDatabase<T>) this.constructDatabase0(var1, var2, var3);
     }
 
     public DatabaseType getDatabaseType() {
         return this.databaseType;
     }
 
-    protected abstract <T extends AuspiceObject> KingdomsDatabase<T> constructDatabase0(String var1, String var2, DataHandler<T> dataHandler);
+    protected abstract <T extends DataObject.Impl> Database<T> constructDatabase0(String var1, String var2, DataHandler<T> dataHandler);
 
     public Collection<DataManager<?>> getAllDataManagers() {
         return this.registry.values();

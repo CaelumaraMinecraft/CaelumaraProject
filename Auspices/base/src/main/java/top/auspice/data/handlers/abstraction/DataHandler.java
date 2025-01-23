@@ -9,9 +9,9 @@ import java.util.Objects;
 public abstract class DataHandler<T> {
     private final @NotNull SQLDataHandlerProperties sqlProperties;
 
-    public DataHandler(@NotNull SQLDataHandlerProperties props) {
-        Objects.requireNonNull(props);
-        this.sqlProperties = props;
+    public DataHandler(@NotNull SQLDataHandlerProperties sqlProperties) {
+        Objects.requireNonNull(sqlProperties, "sqlProperties");
+        this.sqlProperties = sqlProperties;
     }
 
     public final @NotNull SQLDataHandlerProperties getSqlProperties() {

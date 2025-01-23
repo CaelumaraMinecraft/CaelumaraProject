@@ -2,7 +2,7 @@ package top.auspice.data.database.flatfile.json;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.flatfile.SingularFlatFileDatabase;
 import top.auspice.data.handlers.abstraction.SingularDataHandler;
@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.Path;
 
-public final class SingularJsonDatabase<T extends AuspiceObject> extends SingularFlatFileDatabase<T> {
+public final class SingularJsonDatabase<T extends DataObject.Impl> extends SingularFlatFileDatabase<T> {
     public SingularJsonDatabase(@NotNull Path path, @NotNull SingularDataHandler<T> singularDataHandler) {
         super(path, singularDataHandler);
     }

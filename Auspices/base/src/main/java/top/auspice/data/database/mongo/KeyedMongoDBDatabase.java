@@ -11,8 +11,8 @@ import org.bson.Document;
 import org.bson.codecs.Codec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.KeyedAuspiceObject;
-import top.auspice.data.database.base.KeyedKingdomsDatabase;
+import top.auspice.data.object.KeyedDataObject;
+import top.auspice.data.database.base.KeyedDatabase;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
 import top.auspice.utils.logging.AuspiceLogger;
 
@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class KeyedMongoDBDatabase<K, T extends KeyedAuspiceObject<K>> extends MongoDBDatabase<T> implements KeyedKingdomsDatabase<K, T> {
+public final class KeyedMongoDBDatabase<K, T extends KeyedDataObject.Impl<K>> extends MongoDBDatabase<T> implements KeyedDatabase<K, T> {
     @NotNull
     private final KeyedDataHandler<K, T> dataHandler;
     private int b;
@@ -59,16 +59,16 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedAuspiceObject<K>> exte
         }
     }
 
-    private K c(Object var1) {
-        if (var1 instanceof Document) {
+    private K c(Object o) {
+        if (o instanceof Document document) {
             Codec<K> var10000 = this.getCollection().getCodecRegistry().get(this.getDataHandler().getIdHandler().getKlass());
             Intrinsics.checkNotNull(var10000);
-            K var3 = var10000.decode(new BsonDocumentReader(((Document) var1).toBsonDocument()), MongoDBDatabase.DEFAULT_DECODER_CONTEXT);
+            K var3 = var10000.decode(new BsonDocumentReader(document.toBsonDocument()), MongoDBDatabase.DEFAULT_DECODER_CONTEXT);
             Objects.requireNonNull(var3, "");
             return var3;
         } else {
-            Intrinsics.checkNotNull(var1);
-            return (K) var1;
+            Intrinsics.checkNotNull(o);
+            return (K) o;
         }
     }
 
@@ -90,16 +90,16 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedAuspiceObject<K>> exte
         }
     }
 
-    public void save(@NotNull T obj) {
-        Objects.requireNonNull(obj, "");
-        K var10001 = obj.getKey();
+    public void save(@NotNull T data) {
+        Objects.requireNonNull(data, "");
+        K var10001 = data.getKey();
         Objects.requireNonNull(var10001, "");
         MongoIdQueryContainer<K> var2 = this.a(var10001);
-        K var10000 = obj.getKey();
+        K var10000 = data.getKey();
         Objects.requireNonNull(var10000, "");
         Document var3 = b(var10000);
         MongoDataProvider var4 = new MongoDataProvider(null, var3);
-        this.getDataHandler().save(var4, obj);
+        this.getDataHandler().save(var4, data);
         this.getCollection().replaceOne(var2, var3, MongoDBDatabase.UPSERT);
     }
 
@@ -176,7 +176,7 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedAuspiceObject<K>> exte
                 Document var6 = b(var10000);
                 MongoDataProvider var7 = new MongoDataProvider(null, var6);
                 this.getDataHandler().save(var7, t);
-                var2.add(new ReplaceOneModel<>(var5, var6, MongoDBDatabase.Companion.getUPSERT$core()));
+                var2.add(new ReplaceOneModel<>(var5, var6, MongoDBDatabase.UPSERT));
             }
 
             this.getCollection().bulkWrite(var2, (new BulkWriteOptions()).ordered(false).comment("Save batch data of " + var1.size()));
@@ -188,7 +188,7 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedAuspiceObject<K>> exte
     }
 
     @NotNull
-    public static <K, T extends KeyedAuspiceObject<K>> KeyedMongoDBDatabase<K, T> withCollection(@NotNull String var1, @NotNull KeyedDataHandler<K, T> var2) {
+    public static <K, T extends KeyedDataObject.Impl<K>> KeyedMongoDBDatabase<K, T> withCollection(@NotNull String var1, @NotNull KeyedDataHandler<K, T> var2) {
         return new KeyedMongoDBDatabase<>(var2, MongoDBDatabase.getCollection(var1));
     }
 }

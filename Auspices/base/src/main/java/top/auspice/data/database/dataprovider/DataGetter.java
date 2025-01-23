@@ -40,16 +40,6 @@ public interface DataGetter {
         return this.asBoolean(() -> false);
     }
 
-    @Nullable String asString(@NotNull Supplier<String> def);
-
-    @Nullable UUID asUUID();
-
-    @Nullable SimpleBlockLocation asSimpleLocation();
-
-    @Nullable SimpleChunkLocation asSimpleChunkLocation();
-
-    @Nullable SimpleLocation asLocation();
-
     int asInt(@NotNull IntSupplier def);
 
     long asLong(@NotNull LongSupplier def);
@@ -60,9 +50,34 @@ public interface DataGetter {
 
     boolean asBoolean(@NotNull BooleanSupplier def);
 
-    @Contract("_, _ -> param1")
-    <E, C extends Collection<E>> @NotNull C asCollection(@NotNull C collection, @NotNull BiConsumer<C, SectionableDataGetter> collectionOperator);
+    String asString(@NotNull Supplier<String> def);
 
+    @Nullable UUID asUUID();
+
+    @Nullable SimpleLocation asLocation();
+
+    @Nullable SimpleBlockLocation asSimpleLocation();
+
+    @Nullable SimpleChunkLocation asSimpleChunkLocation();
+
+    /**
+     * @param c             存储数据的集合
+     * @param dataProcessor 数据处理器, 提供给数据处理器的第一个参数为 {@link C}, 第二个参数为集合元素数据的 Getter.
+     * @param <E>           The element type of collection
+     * @param <C>           The type of collection
+     * @return 处理完成的集合
+     */
     @Contract("_, _ -> param1")
-    <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M map, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> mapOperator);
+    <E, C extends Collection<E>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor);
+
+    /**
+     * @param m             存储数据的映射
+     * @param dataProcessor 数据处理器, 提供给数据处理器的第一个参数为 {@link M}, 第二个参数为键数据的 Getter, 第三个参数为值数据的 Getter.
+     * @param <K>           the key type of map.
+     * @param <V>           The value type of map.
+     * @param <M>           The map type.
+     * @return 处理完成的映射
+     */
+    @Contract("_, _ -> param1")
+    <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor);
 }

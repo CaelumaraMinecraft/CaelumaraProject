@@ -1,7 +1,7 @@
 package top.auspice.scheduler;
 
 import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.internal.stacktrace.StackTraces;
+import top.auspice.utils.unsafe.stacktrace.StackTraces;
 
 import java.util.Arrays;
 import java.util.Objects;

@@ -158,9 +158,9 @@ public class SQLDataGetterProvider extends SQLDataProvider implements Sectionabl
 
     @Override
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
+        Intrinsics.checkNotNullParameter(c, "");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         String var10000 = null;
         try {
             var10000 = this.a.getString(this.getNamed$core());
@@ -177,17 +177,17 @@ public class SQLDataGetterProvider extends SQLDataProvider implements Sectionabl
 
             for (JsonElement var4 : jsonArray) {
                 Intrinsics.checkNotNull(var4);
-                var2.accept(var1, new JsonElementDataProvider(var4));
+                dataProcessor.accept(c, new JsonElementDataProvider(var4));
             }
         }
-        return var1;
+        return c;
     }
 
     @Override
     @Contract("_, _ -> param1")
-    public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
+    public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Intrinsics.checkNotNullParameter(m, "");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         String var10000 = null;
         try {
             var10000 = this.a.getString(this.getNamed$core());
@@ -204,9 +204,9 @@ public class SQLDataGetterProvider extends SQLDataProvider implements Sectionabl
                 JsonElement var7 = (stringJsonElementEntry).getValue();
                 JsonElementDataProvider var10002 = new JsonElementDataProvider(new JsonPrimitive(var5));
                 Intrinsics.checkNotNull(var7);
-                var2.accept(var1, var10002, new JsonElementDataProvider(var7));
+                dataProcessor.accept(m, var10002, new JsonElementDataProvider(var7));
             }
         }
-        return var1;
+        return m;
     }
 }

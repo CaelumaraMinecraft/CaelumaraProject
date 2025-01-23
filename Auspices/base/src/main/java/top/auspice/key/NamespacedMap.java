@@ -2,7 +2,7 @@ package top.auspice.key;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.internal.string.PrettyStringFactory;
+import top.auspice.utils.unsafe.string.PrettyStringFactory;
 import top.auspice.utils.nonnull.NonNullMap;
 
 import java.util.Collection;

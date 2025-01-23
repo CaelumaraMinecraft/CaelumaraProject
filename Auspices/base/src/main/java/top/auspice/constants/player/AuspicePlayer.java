@@ -2,11 +2,13 @@ package top.auspice.constants.player;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import top.auspice.api.annotations.data.LateInit;
 import top.auspice.config.functional.invoking.ConfigFunctionalInvokingData;
 import top.auspice.config.placeholder.invoking.PlaceholderInvokable;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
-import top.auspice.constants.base.KeyedAuspiceObject;
 import top.auspice.data.centers.AuspiceDataCenter;
+import top.auspice.data.handlers.DataHandlerAuspicePlayer;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.diversity.Diversity;
 import top.auspice.server.player.OfflinePlayer;
 
@@ -20,9 +22,12 @@ import java.util.UUID;
  * Bukkit.getPlayer(auspicePlayer.getKey);
  * </pre></blockquote>
  */
-public class AuspicePlayer extends KeyedAuspiceObject<UUID> implements PlaceholderInvokable {
+public class AuspicePlayer extends KeyedAuspiceObject<UUID, AuspicePlayer.DataObject> implements PlaceholderInvokable {
+
+    private final @NotNull AuspicePlayer.DataObject data = new DataObject();
+
     protected final @NotNull UUID key;
-    private Diversity diversity;
+    private @LateInit(by = "the default diversity") Diversity diversity;
 
     public AuspicePlayer(@NotNull UUID key) {
         this.key = key;
@@ -73,5 +78,23 @@ public class AuspicePlayer extends KeyedAuspiceObject<UUID> implements Placehold
     public static @NotNull AuspicePlayer getAuspicePlayer(@NotNull UUID uuid) {
         AuspicePlayer ap = AuspiceDataCenter.get().getAuspicePlayerManager().getOrLoadData(uuid);
         return ap == null ? new AuspicePlayer(uuid) : ap;
+    }
+
+    @Override
+    public @NotNull AuspicePlayer.DataObject toDataObject() {
+        return this.data;
+    }
+
+    public class DataObject extends KeyedDataObject.Impl<UUID> {
+
+        @Override
+        public @NotNull UUID getKey() {
+            return AuspicePlayer.this.key;
+        }
+
+        @Override
+        public DataHandlerAuspicePlayer getDataHandler() {
+            return DataHandlerAuspicePlayer.INSTANCE;
+        }
     }
 }

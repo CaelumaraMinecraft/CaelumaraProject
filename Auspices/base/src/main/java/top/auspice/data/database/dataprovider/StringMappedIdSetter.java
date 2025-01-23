@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
 
 import java.util.Collection;
 import java.util.Map;

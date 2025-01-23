@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public enum DatabaseType {
-    SQLite(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "net.caelumaramc.auspice.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
+    SQLite(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "net.aurika.auspice.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig);
@@ -32,26 +32,26 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
-            Objects.requireNonNull(cmd, "");
-            return StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
+        public @NotNull String processCommands(@NotNull String commands) {
+            Objects.requireNonNull(commands, "");
+            return StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(s, "");
+            Objects.requireNonNull(value, "");
             if (statement instanceof SQLUpsert) {
-                return "REPLACE INTO `" + s + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
+                return "REPLACE INTO `" + value + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             }
             if (statement instanceof SQLColumnRemove) {
-                return "ALTER TABLE `" + s + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
+                return "ALTER TABLE `" + value + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
             }
             if (statement instanceof SQLColumnAdd) {
-                return "ALTER TABLE `" + s + "` ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL");
+                return "ALTER TABLE `" + value + "` ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL");
             }
             if (statement instanceof SQLColumnRename) {
-                return "ALTER TABLE `" + s + "` ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
+                return "ALTER TABLE `" + value + "` ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
             }
             throw new UnsupportedOperationException(statement.toString());
         }
@@ -65,20 +65,20 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String var2) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(var2, "");
+            Objects.requireNonNull(value, "");
             if (statement instanceof SQLUpsert) {
-                return "MERGE INTO `" + var2 + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
+                return "MERGE INTO `" + value + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             } else if (statement instanceof SQLColumnRemove) {
-                return "ALTER TABLE `" + var2 + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
+                return "ALTER TABLE `" + value + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
             } else if (statement instanceof SQLColumnAdd) {
                 String var3 = ((SQLColumnAdd) statement).getDefaultValue() == null ? "" : " DEFAULT '" + ((SQLColumnAdd) statement).getDefaultValue() + '\'';
-                return "ALTER TABLE `" + var2 + "` ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + ((SQLColumnAdd) statement).getColumn().getNullability() + var3;
+                return "ALTER TABLE `" + value + "` ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + ((SQLColumnAdd) statement).getColumn().getNullability() + var3;
             } else if (statement instanceof SQLColumnRename) {
-                return "ALTER TABLE `" + var2 + "` ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
+                return "ALTER TABLE `" + value + "` ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
             } else if (statement instanceof SQLColumnModify) {
-                return "ALTER TABLE `" + var2 + "` ALTER COLUMN " + ((SQLColumnModify) statement).getColumnName() + ' ' + ((SQLColumnModify) statement).getColumn().getType() + ' ' + ((SQLColumnModify) statement).getColumn().getNullability();
+                return "ALTER TABLE `" + value + "` ALTER COLUMN " + ((SQLColumnModify) statement).getColumnName() + ' ' + ((SQLColumnModify) statement).getColumn().getType() + ' ' + ((SQLColumnModify) statement).getColumn().getNullability();
             } else if (statement instanceof SQLBackup) {
                 return "SCRIPT TO '" + ((SQLBackup) statement).getTo().resolve(((SQLBackup) statement).getNamed() + ".sql").toAbsolutePath() + '\'';
             } else if (statement instanceof SQLRestore) {
@@ -89,18 +89,18 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
-            Objects.requireNonNull(cmd, "");
-            return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "LONG", "BIGINT", false), "FLOAT", "REAL", false), "DOUBLE", "DOUBLE PRECISION", false), "NVARCHAR", "VARCHAR", false), "STRICT", "", false);
+        public @NotNull String processCommands(@NotNull String commands) {
+            Objects.requireNonNull(commands, "");
+            return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "LONG", "BIGINT", false), "FLOAT", "REAL", false), "DOUBLE", "DOUBLE PRECISION", false), "NVARCHAR", "VARCHAR", false), "STRICT", "", false);
         }
     },
-    MariaDB(3306, new Dependency[]{Dependency.MARIADB_DRIVER}, "org.kingdoms.libs.mariadb.MariaDbDataSource", '`') {
+    MariaDB(3306, new Dependency[]{Dependency.MARIADB_DRIVER}, "net.aurika.auspice.libs.mariadb.MariaDbDataSource", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
             Objects.requireNonNull(hikariConfig, "");
             Objects.requireNonNull(props, "");
             String string;
-            if ((props).getOthers().isEmpty()) {
+            if (props.getOthers().isEmpty()) {
                 Map<String, Object> others = props.getOthers();
                 Collection<String> collection = new ArrayList<>((others).size());
                 for (Map.Entry<String, Object> entry : others.entrySet()) {
@@ -116,28 +116,28 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(s, "");
+            Objects.requireNonNull(value, "");
             if (statement instanceof SQLUpsert) {
-                return "REPLACE INTO " + s + " (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
+                return "REPLACE INTO " + value + " (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             }
             if (statement instanceof SQLColumnRemove) {
-                return "ALTER TABLE " + s + " DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
+                return "ALTER TABLE " + value + " DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
             }
             if (statement instanceof SQLColumnAdd) {
-                return "ALTER TABLE " + s + " ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL");
+                return "ALTER TABLE " + value + " ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL");
             }
             if (statement instanceof SQLColumnRename) {
-                return "ALTER TABLE " + s + " ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
+                return "ALTER TABLE " + value + " ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
             }
             throw new UnsupportedOperationException(statement.toString());
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
-            Objects.requireNonNull(cmd, "");
-            return StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
+        public @NotNull String processCommands(@NotNull String commands) {
+            Objects.requireNonNull(commands, "");
+            return StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
     },
     MySQL(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "org.kingdoms.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
@@ -163,26 +163,26 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
-            Objects.requireNonNull(cmd, "");
-            return StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
+        public @NotNull String processCommands(@NotNull String commands) {
+            Objects.requireNonNull(commands, "");
+            return StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(s, "");
+            Objects.requireNonNull(value, "");
             if (statement instanceof SQLUpsert) {
-                return "REPLACE INTO `" + s + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
+                return "REPLACE INTO `" + value + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             }
             if (statement instanceof SQLColumnRemove) {
-                return "ALTER TABLE `" + s + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
+                return "ALTER TABLE `" + value + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
             }
             if (statement instanceof SQLColumnAdd) {
-                return "ALTER TABLE `" + s + "` ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL");
+                return "ALTER TABLE `" + value + "` ADD " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL");
             }
             if (statement instanceof SQLColumnRename) {
-                return "ALTER TABLE `" + s + "` ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
+                return "ALTER TABLE `" + value + "` ALTER COLUMN " + ((SQLColumnRename) statement).getColumnName() + " RENAME TO " + ((SQLColumnRename) statement).getNewColumnName();
             }
             throw new UnsupportedOperationException(statement.toString());
         }
@@ -198,18 +198,18 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
-            Objects.requireNonNull(cmd, "");
-            return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(cmd, "NVARCHAR", "VARCHAR", false), "LONG", "BIGINT", false), "DOUBLE", "DOUBLE PRECISION", false), "STRICT", "", false), '`', '\"', false);
+        public @NotNull String processCommands(@NotNull String commands) {
+            Objects.requireNonNull(commands, "");
+            return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "NVARCHAR", "VARCHAR", false), "LONG", "BIGINT", false), "DOUBLE", "DOUBLE PRECISION", false), "STRICT", "", false), '`', '\"', false);
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String str) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(str, "");
+            Objects.requireNonNull(value, "");
             if (statement instanceof SQLUpsert) {
                 String replace$default = StringsKt.replace(((SQLUpsert) statement).getParameters(), '`', this.getSystemIdentifierEscapeChar(), false);
-                StringBuilder append = new StringBuilder("INSERT INTO \"").append(str).append("\" (").append(replace$default).append(") VALUES(").append(((SQLUpsert) statement).getPreparedValues()).append(") ON CONFLICT ON CONSTRAINT \"").append(str).append("_pkey\" DO UPDATE SET (").append(replace$default).append(") = (");
+                StringBuilder append = new StringBuilder("INSERT INTO \"").append(value).append("\" (").append(replace$default).append(") VALUES(").append(((SQLUpsert) statement).getPreparedValues()).append(") ON CONFLICT ON CONSTRAINT \"").append(value).append("_pkey\" DO UPDATE SET (").append(replace$default).append(") = (");
                 List<String> iterable = StringsKt.split(replace$default, new String[]{","}, false, 0);
                 Collection<Object> collection = new ArrayList<>(10);
                 for (CharSequence o : iterable) {
@@ -218,25 +218,25 @@ public enum DatabaseType {
                 return append.append(CollectionsKt.joinToString(collection, ", ", "", "", -1, "...", (S) -> "excluded." + S)).append(')').toString();
             }
             if (statement instanceof SQLColumnRemove) {
-                return "ALTER TABLE `" + str + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
+                return "ALTER TABLE `" + value + "` DROP COLUMN " + ((SQLColumnRemove) statement).getColumnName();
             }
             if (statement instanceof SQLColumnAdd) {
-                return "ALTER TABLE `" + str + "` ADD COLUMN " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL") + ((((SQLColumnAdd) statement).getDefaultValue() == null) ? "" : (" DEFAULT '" + ((SQLColumnAdd) statement).getDefaultValue() + '\''));
+                return "ALTER TABLE `" + value + "` ADD COLUMN " + this.processCommands(((SQLColumnAdd) statement).getColumn().getName()) + ' ' + ((SQLColumnAdd) statement).getColumn().getType() + ' ' + (((SQLColumnAdd) statement).getColumn().getNullable() ? "NULL" : "NOT NULL") + ((((SQLColumnAdd) statement).getDefaultValue() == null) ? "" : (" DEFAULT '" + ((SQLColumnAdd) statement).getDefaultValue() + '\''));
             }
             if (statement instanceof SQLColumnRename) {
-                return "ALTER TABLE `" + str + "` RENAME COLUMN " + ((SQLColumnRename) statement).getColumnName() + " TO " + ((SQLColumnRename) statement).getNewColumnName();
+                return "ALTER TABLE `" + value + "` RENAME COLUMN " + ((SQLColumnRename) statement).getColumnName() + " TO " + ((SQLColumnRename) statement).getNewColumnName();
             }
             throw new UnsupportedOperationException(statement.toString());
         }
     },
     JSON(0, new Dependency[0], "", '`') {
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
+        public @NotNull String processCommands(@NotNull String commands) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String string) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             throw new UnsupportedOperationException();
         }
 
@@ -252,12 +252,12 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
+        public @NotNull String processCommands(@NotNull String commands) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             throw new UnsupportedOperationException();
         }
     },
@@ -268,12 +268,12 @@ public enum DatabaseType {
         }
 
         @Override
-        public @NotNull String processCommands(@NotNull String cmd) {
+        public @NotNull String processCommands(@NotNull String commands) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String s) {
+        public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
             throw new UnsupportedOperationException();
         }
     };
@@ -311,8 +311,8 @@ public enum DatabaseType {
 
     public abstract void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props);
 
-    public abstract @NotNull String processCommands(@NotNull String cmd);
+    public abstract @NotNull String processCommands(@NotNull String commands);
 
-    public abstract @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String var2);
+    public abstract @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value);
 }
 

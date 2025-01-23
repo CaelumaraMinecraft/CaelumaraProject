@@ -117,9 +117,21 @@ include(":base:platform:folia")
 include(
         ":Auspice",
 
+        ":Auspice:services",
+        ":Auspice:services:base",
+
         ":Auspice:game",
         ":Auspice:game:base",
         ":Auspice:game:common",
+
+        ":Auspice:game:bukkit",
+        ":Auspice:game:bukkit:base",
+        ":Auspice:game:bukkit:common",
+        ":Auspice:game:bukkit:common:server",
+        ":Auspice:game:bukkit:common:services:vault",
+        ":Auspice:game:bukkit:common:services:skinsrestorer",
+
+
 
 //        ":Auspice:game:fabric",
 //        ":Auspice:game:forge",
@@ -135,18 +147,6 @@ include(
         ":Auspice:proxy:velocity",
 )
 
-
-include(":Auspice:services")
-include(":Auspice:services:base")
-
-
-include(":Auspice:game:bukkit")
-include(":Auspice:game:bukkit:base")
-
-include(":Auspice:game:bukkit:common")
-include(":Auspice:game:bukkit:common:server")
-include(":Auspice:game:bukkit:common:services:vault")
-include(":Auspice:game:bukkit:common:services:skinsrestorer")
 
 include(":Auspice:game:bukkit:services")
 include(":Auspice:game:bukkit:services:base")

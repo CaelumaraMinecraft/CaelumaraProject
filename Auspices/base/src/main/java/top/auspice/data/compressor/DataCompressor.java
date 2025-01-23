@@ -5,10 +5,11 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import top.auspice.constants.location.SimpleLocation;
 import top.auspice.key.NSedKey;
 import top.auspice.key.NSKeyed;
 import top.auspice.server.location.OldLocation;
-import top.auspice.utils.internal.io.ByteArrayOutputStream;
+import top.auspice.utils.unsafe.io.ByteArrayOutputStream;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,7 +23,6 @@ import java.util.function.BiConsumer;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
-@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class DataCompressor {
     public static final DataCompressRegistry REGISTRY = new DataCompressRegistry();
     private final ByteArrayOutputStream a;
@@ -62,8 +62,8 @@ public class DataCompressor {
         }
     }
 
-    public final DataCompressor compress(ByteBuffer var1) {
-        this.compress(var1.array());
+    public final DataCompressor compress(ByteBuffer byteBuffer) {
+        this.compress(byteBuffer.array());
         return this;
     }
 
@@ -118,39 +118,29 @@ public class DataCompressor {
         return this.compress(ByteBuffer.allocate(8).putDouble(d));
     }
 
-    public final DataCompressor compress(Location location) {
+    public final DataCompressor compress(SimpleLocation location) {
         if (location == null) {
             return this.compressNull();
         } else {
-            World var2 = location.getWorld();
-            if (var2 == null) {
-                this.compressNull();
-            } else {
-                this.compress(var2.getName());
-            }
-
-            return this.compress(location.getX()).compress(location.getY()).compress(location.getZ()).compress(location.getYaw()).compress(location.getPitch());
+            return this.compress(location.getWorld()).compress(location.getX()).compress(location.getY()).compress(location.getZ()).compress(location.getYaw()).compress(location.getPitch());
         }
     }
 
-    public final DataCompressor compress(OldLocation location) {
-        return location == null ? this.compressNull() : this.compress(location.getWorld().getName()).compress(location.getX()).compress(location.getY()).compress(location.getZ()).compress(location.getYaw()).compress(location.getPitch());
+
+    public final DataCompressor compress(NSKeyed nsKeyed) {
+        return this.compress(nsKeyed.getNamespacedKey());
     }
 
-    public final DataCompressor compress(NSKeyed NSKeyed) {
-        return this.compress(NSKeyed.getNamespacedKey());
-    }
-
-    public final DataCompressor compress(NSedKey NSedKey) {
-        return NSedKey == null ? this.compressNull() : this.compress(NSedKey.asString());
+    public final DataCompressor compress(NSedKey nsKey) {
+        return nsKey == null ? this.compressNull() : this.compress(nsKey.asString());
     }
 
     public final DataCompressor compress(UUID uuid) {
         return uuid == null ? this.compressNull() : this.compress(uuid.getLeastSignificantBits()).compress(uuid.getMostSignificantBits());
     }
 
-    public final DataCompressor compress(boolean var1) {
-        this.compressByte((byte) (var1 ? 1 : 0));
+    public final DataCompressor compress(boolean b) {
+        this.compressByte((byte) (b ? 1 : 0));
         return this;
     }
 
@@ -163,16 +153,16 @@ public class DataCompressor {
         }
     }
 
-    public final DataCompressor compress(String var1) {
-        return var1 == null ? this.compressNull() : this.compress(var1.length()).compress(var1.getBytes(StandardCharsets.UTF_8));
+    public final DataCompressor compress(String string) {
+        return string == null ? this.compressNull() : this.compress(string.length()).compress(string.getBytes(StandardCharsets.UTF_8));
     }
 
-    public final DataCompressor compress(Enum<?> var1) {
-        return var1 == null ? this.compressNull() : this.compress(var1.ordinal());
+    public final DataCompressor compress(Enum<?> e) {
+        return e == null ? this.compressNull() : this.compress(e.ordinal());
     }
 
-    public final DataCompressor compress(Color var1) {
-        return var1 == null ? this.compressNull() : this.compress(var1.getRGB());
+    public final DataCompressor compress(Color color) {
+        return color == null ? this.compressNull() : this.compress(color.getRGB());
     }
 
     public final DataCompressor compress(Inventory var1) {
@@ -199,11 +189,11 @@ public class DataCompressor {
         return this.compress(var1, 0, var2);
     }
 
-    public final <T> DataCompressor compress(Collection<T> var1, int var2, BiConsumer<DataCompressor, T> var3) {
-        Objects.requireNonNull(var1, "Cannot compress null collection");
+    public final <T> DataCompressor compress(Collection<T> collection, int var2, BiConsumer<DataCompressor, T> var3) {
+        Objects.requireNonNull(collection, "Cannot compress null collection");
         Objects.requireNonNull(var3, "Compress function cannot be null");
         int var4;
-        if ((var4 = var1.size()) == 0) {
+        if ((var4 = collection.size()) == 0) {
             return this.compressNull();
         } else {
             if (var2 == 0) {
@@ -211,9 +201,9 @@ public class DataCompressor {
             }
 
             this.ensureAdditionalCapacity(var2 << 1);
-            this.compress(var1.size());
+            this.compress(collection.size());
 
-            for (T var6 : var1) {
+            for (T var6 : collection) {
                 var3.accept(this, var6);
             }
 

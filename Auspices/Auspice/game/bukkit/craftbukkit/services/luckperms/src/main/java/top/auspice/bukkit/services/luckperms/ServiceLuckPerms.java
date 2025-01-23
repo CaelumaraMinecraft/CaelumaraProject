@@ -22,7 +22,7 @@ import top.auspice.config.sections.YamlConfigSection;
 import top.auspice.configs.texts.MessageHandler;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.craftbukkit.services.base.CraftBukkitService;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.string.Strings;
 
 import java.time.Duration;

@@ -1,6 +1,6 @@
 package top.auspice.utils.map
 
-import top.auspice.utils.internal.reflection.ClassHierarchyWalker
+import top.auspice.utils.unsafe.reflection.ClassHierarchyWalker
 import top.auspice.utils.nonnull.NonNullMap
 import java.util.*
 import java.util.function.Function

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.Node;
 import org.snakeyaml.engine.v2.nodes.Tag;
 import top.auspice.config.accessor.YamlClearlyConfigAccessor;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.string.Strings;
 
 import java.util.*;

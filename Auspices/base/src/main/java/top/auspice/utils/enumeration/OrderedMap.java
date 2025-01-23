@@ -1,11 +1,9 @@
 package top.auspice.utils.enumeration;
 
 import kotlin.NotImplementedError;
-import kotlin.collections.ArraysKt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.Checker;
-import top.auspice.utils.internal.map.IndexedHashMap;
 
 import java.util.*;
 

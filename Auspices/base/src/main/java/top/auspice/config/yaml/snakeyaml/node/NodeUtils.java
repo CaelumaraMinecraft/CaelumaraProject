@@ -12,7 +12,7 @@ import top.auspice.config.annotations.ImplicitConstructed;
 import top.auspice.config.yaml.snakeyaml.common.NodeReplacer;
 import top.auspice.utils.Checker;
 import top.auspice.utils.Generics;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import java.util.*;
 import java.util.function.Predicate;

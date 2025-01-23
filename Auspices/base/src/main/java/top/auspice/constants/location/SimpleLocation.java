@@ -1,13 +1,17 @@
 package top.auspice.constants.location;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.api.annotations.data.Immutable;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
+import top.auspice.data.object.structure.DataStructureObject;
 import top.auspice.utils.Checker;
 import top.auspice.utils.string.CommaDataSplitStrategy;
 
+import java.util.Map;
+
 @Immutable
-public class SimpleLocation implements DataStringRepresentation {
+public class SimpleLocation implements DataStringRepresentation, DataStructureObject {
     private final @NotNull String world;
     private final double x;
     private final double y;
@@ -72,5 +76,10 @@ public class SimpleLocation implements DataStringRepresentation {
     @Override
     public @NotNull String asDataString() {
         return CommaDataSplitStrategy.toString(new Object[]{this.world, this.x, this.y, this.z, this.yaw, this.pitch});
+    }
+
+    @Override
+    public @NonNull Map<String, Object> getData() {
+        return Map.of("world", this.world, "x", this.x, "y", this.y, "z", this.z, "yaw", this.yaw, "pitch", this.pitch);
     }
 }

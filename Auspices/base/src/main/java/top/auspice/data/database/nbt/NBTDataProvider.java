@@ -10,7 +10,7 @@ import top.auspice.data.database.dataprovider.*;
 import top.auspice.nbt.tag.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
@@ -139,24 +139,24 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
     }
 
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Objects.requireNonNull(c, "c");
-        Objects.requireNonNull(var2, "");
+        Objects.requireNonNull(dataProcessor, "");
         NBTTag<?> var10000 = this.element;
         Intrinsics.checkNotNull(var10000);
 
         for (NBTTag<?> o : ((NBTTagList<?>) var10000).value()) {
             Intrinsics.checkNotNull(o);
-            var2.accept(c, new NBTDataProvider(o));
+            dataProcessor.accept(c, new NBTDataProvider(o));
         }
 
         return c;
     }
 
     @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1, "");
-        Objects.requireNonNull(var2, "");
+    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(m, "");
+        Objects.requireNonNull(dataProcessor, "");
         NBTTag<?> var10000 = this.element;
         Intrinsics.checkNotNull(var10000);
         Map<String, ? extends NBTTag<?>> var6 = ((NBTTagCompound) var10000).value();
@@ -169,10 +169,10 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
             Intrinsics.checkNotNullExpressionValue(var10004, "");
             NBTDataProvider var10002 = new NBTDataProvider(var10004);
             Intrinsics.checkNotNull(var7);
-            var2.accept(var1, var10002, new NBTDataProvider(var7));
+            dataProcessor.accept(m, var10002, new NBTDataProvider(var7));
         }
 
-        return var1;
+        return m;
     }
 
     public void setSimpleLocation(@Nullable SimpleBlockLocation blockLocation) {

@@ -2,8 +2,8 @@ package top.auspice.data.database.flatfile.yaml;
 
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.constants.base.AuspiceObject;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.DataObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
 import top.auspice.data.database.flatfile.KeyedFlatFileDatabase;
@@ -15,7 +15,7 @@ import java.io.BufferedWriter;
 import java.nio.file.Path;
 
 
-public final class KeyedYamlDatabase<K, T extends KeyedAuspiceObject<K>> extends KeyedFlatFileDatabase<K, T> {
+public final class KeyedYamlDatabase<K, T extends KeyedDataObject.Impl<K>> extends KeyedFlatFileDatabase<K, T> {
     public KeyedYamlDatabase(@NotNull Path var1, @NotNull KeyedDataHandler<K, T> var2) {
         super("yml", var1, var2);
     }
@@ -36,6 +36,6 @@ public final class KeyedYamlDatabase<K, T extends KeyedAuspiceObject<K>> extends
     public void save(@NotNull T var1, @NotNull BufferedWriter var2) {
         Intrinsics.checkNotNullParameter(var1, "");
         Intrinsics.checkNotNullParameter(var2, "");
-        YamlDatabase.save((AuspiceObject)var1, (DataHandler)((KeyedFlatFileDatabase)this).getDataHandler(), var2);
+        YamlDatabase.save((DataObject.Impl)var1, (DataHandler)((KeyedFlatFileDatabase)this).getDataHandler(), var2);
     }
 }

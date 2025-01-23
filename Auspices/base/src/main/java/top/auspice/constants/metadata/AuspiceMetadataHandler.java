@@ -1,10 +1,9 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.constants.base.KeyedAuspiceObject;
-import top.auspice.key.NSedKey;
-import top.auspice.key.NSKeyed;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
+import top.auspice.key.NSKeyed;
+import top.auspice.key.NSedKey;
 
 import java.util.Objects;
 
@@ -20,7 +19,7 @@ public abstract class AuspiceMetadataHandler implements NSKeyed {
         return this.NSedKey;
     }
 
-    public abstract @NotNull AuspiceMetadata deserialize(@NotNull KeyedAuspiceObject<?> var1, @NotNull SectionableDataGetter dataGetter);
+    public abstract @NotNull AuspiceMetadata deserialize(@NotNull KeyedAuspiceObject<?, ?> var1, @NotNull SectionableDataGetter dataGetter);
 
     public int hashCode() {
         return this.NSedKey.hashCode();
@@ -33,5 +32,4 @@ public abstract class AuspiceMetadataHandler implements NSKeyed {
     public String toString() {
         return this.getClass().getSimpleName() + '[' + this.NSedKey.asString() + ']';
     }
-
 }

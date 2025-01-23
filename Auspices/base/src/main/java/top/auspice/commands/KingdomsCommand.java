@@ -27,7 +27,7 @@ import top.auspice.permission.PermissionDefaultValue;
 import top.auspice.server.entity.Player;
 import top.auspice.utils.arrays.ArrayUtils;
 import top.auspice.utils.enumeration.QuickEnumMap;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.logging.AuspiceLogger;
 import top.auspice.utils.nonnull.NonNullMap;
 import top.auspice.utils.string.Strings;

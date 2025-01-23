@@ -1,7 +1,7 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.key.Lockable;
 import top.auspice.key.NSKedRegistry;
 import top.auspice.data.managers.base.KeyedDataManager;
@@ -34,7 +34,7 @@ public class AuspiceMetadataRegistry extends NSKedRegistry<AuspiceMetadataHandle
     }
 
     public static void removeMetadata(KeyedDataManager<?, ?> dataManager, Collection<AuspiceMetadataHandler> handlers) {
-        for (KeyedAuspiceObject<?> keyedAuspiceObject : dataManager.getLoadedData()) {
+        for (KeyedDataObject.Impl<?> keyedAuspiceObject : dataManager.getLoadedData()) {
             handlers.forEach((it) -> (keyedAuspiceObject).getMetadata().remove(it));
         }
 

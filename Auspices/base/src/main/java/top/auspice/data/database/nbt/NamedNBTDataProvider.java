@@ -13,8 +13,8 @@ import top.auspice.nbt.tag.NBTTagList;
 import top.auspice.nbt.tag.NBTTagType;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.internal.Fn;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.Fn;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
@@ -159,30 +159,30 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
     }
 
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1, "");
-        Objects.requireNonNull(var2, "");
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(c, "");
+        Objects.requireNonNull(dataProcessor, "");
         NBTTagList<?> var10000 = this.b.get(this.b(), Fn.cast(NBTTagType.LIST));
         if (var10000 == null) {
-            return var1;
+            return c;
         } else {
 
             for (NBTTag<?> o : var10000.value()) {
                 Objects.requireNonNull(o);
-                var2.accept(var1, createProvider$core(o));
+                dataProcessor.accept(c, createProvider$core(o));
             }
 
-            return var1;
+            return c;
         }
     }
 
     @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1);
-        Objects.requireNonNull(var2);
+    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(m);
+        Objects.requireNonNull(dataProcessor);
         NBTTagCompound var10000 = this.a();
         if (var10000 == null) {
-            return var1;
+            return m;
         } else {
             Map<String, ? extends NBTTag<?>> var7 = var10000.value();
             Objects.requireNonNull(var7);
@@ -195,10 +195,10 @@ public final class NamedNBTDataProvider implements DataProvider, SectionCreatabl
                 Objects.requireNonNull(var8);
                 NBTDataProvider var10002 = new NBTDataProvider(var8);
                 Objects.requireNonNull(var6);
-                var2.accept(var1, var10002, createProvider$core(var6));
+                dataProcessor.accept(m, var10002, createProvider$core(var6));
             }
 
-            return var1;
+            return m;
         }
     }
 

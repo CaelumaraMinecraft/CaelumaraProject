@@ -1,5 +1,6 @@
 package top.auspice.data.database.mongo;
 
+import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -13,43 +14,37 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.data.database.DatabaseType;
-import top.auspice.data.database.base.KingdomsDatabase;
+import top.auspice.data.database.base.Database;
 import top.auspice.data.database.sql.DatabaseProperties;
 import top.auspice.data.handlers.abstraction.DataHandler;
 
 import java.util.Objects;
 
-public abstract class MongoDBDatabase<T extends AuspiceObject> implements KingdomsDatabase<T> {
+public abstract class MongoDBDatabase<T extends DataObject.Impl> implements Database<T> {
     @NotNull
-    public static final Companion Companion = new Companion();
-    @NotNull
-    protected final MongoCollection<Document> a;
+    protected final MongoCollection<Document> collection;
     @NotNull
     protected static final MongoClient CLIENT;
     @NotNull
     protected static final MongoDatabase DATABASE;
     protected static final ReplaceOptions UPSERT = (new ReplaceOptions()).upsert(true);
-    @NotNull
-    protected static final String PRIMARY_KEY_ID = "_id";
-    protected static final DecoderContext DEFAULT_DECODER_CONTEXT = DecoderContext.builder().build();
+    protected static final @NotNull String PRIMARY_KEY_ID = "_id";
+    protected static final @NotNull DecoderContext DEFAULT_DECODER_CONTEXT = DecoderContext.builder().build();
 
     protected MongoDBDatabase(@NotNull MongoCollection<Document> var1) {
         Objects.requireNonNull(var1);
-        this.a = var1;
+        this.collection = var1;
     }
 
-    @NotNull
-    protected final MongoCollection<Document> getCollection() {
-        return this.a;
+    protected final @NotNull MongoCollection<Document> getCollection() {
+        return this.collection;
     }
 
-    @NotNull
-    protected abstract DataHandler<T> getDataHandler();
+    protected abstract @NotNull DataHandler<T> getDataHandler();
 
-    @NotNull
-    public DatabaseType getDatabaseType() {
+    public @NotNull DatabaseType getDatabaseType() {
         return DatabaseType.MongoDB;
     }
 
@@ -57,8 +52,7 @@ public abstract class MongoDBDatabase<T extends AuspiceObject> implements Kingdo
         CLIENT.close();
     }
 
-    @NotNull
-    public static MongoCollection<Document> getCollection(@NotNull String var1) {
+    public static @NotNull MongoCollection<Document> getCollection(@NotNull String var1) {
         Objects.requireNonNull(var1);
         var1 = AuspiceGlobalConfig.DATABASE_TABLE_PREFIX.getString() + '_' + var1;
         MongoCollection<Document> var10000 = DATABASE.getCollection(var1);
@@ -83,7 +77,7 @@ public abstract class MongoDBDatabase<T extends AuspiceObject> implements Kingdo
             var2.credential(MongoCredential.createCredential(var10001, var10002, var10003));
         }
 
-        var2.retryReads(false);
+        var2.retryReads(false);   // TODO use
         var2.retryWrites(true);
         var2.uuidRepresentation(UuidRepresentation.STANDARD);
         var2.serverApi(ServerApi.builder().version(ServerApiVersion.V1).deprecationErrors(true).strict(true).build());
@@ -101,29 +95,5 @@ public abstract class MongoDBDatabase<T extends AuspiceObject> implements Kingdo
         MongoDatabase var8 = var7.getDatabase(var0.getDatabaseName());
         Objects.requireNonNull(var8, "");
         DATABASE = var8;
-    }
-
-    public static final class Companion {
-        private Companion() {
-        }
-
-        @NotNull
-        public MongoClient getCLIENT$core() {
-            return MongoDBDatabase.CLIENT;
-        }
-
-        @NotNull
-        public MongoDatabase getDATABASE$core() {
-            return MongoDBDatabase.DATABASE;
-        }
-
-        public ReplaceOptions getUPSERT$core() {
-            return MongoDBDatabase.UPSERT;
-        }
-
-        public DecoderContext getDEFAULT_DECODER_CONTEXT$core() {
-            return MongoDBDatabase.DEFAULT_DECODER_CONTEXT;
-        }
-
     }
 }

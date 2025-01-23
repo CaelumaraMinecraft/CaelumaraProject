@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import top.auspice.commands.CommandContext;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 import top.auspice.utils.nonnull.NonNullMap;
 
 import java.util.*;

@@ -5,27 +5,28 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.KeyedAuspiceObject;
-import top.auspice.key.NSedKey;
 import top.auspice.data.centers.DataCenter;
-import top.auspice.data.database.base.KeyedKingdomsDatabase;
+import top.auspice.data.database.base.KeyedDatabase;
+import top.auspice.data.object.KeyedDataObject;
+import top.auspice.key.NSedKey;
 import top.auspice.utils.cache.JavaMapWrapper;
 import top.auspice.utils.cache.PeekableMap;
 import top.auspice.utils.cache.caffeine.CacheHandler;
 import top.auspice.utils.cache.caffeine.CaffeineWrapper;
+import top.auspice.utils.logging.AuspiceLogger;
 
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> extends DataManager<T> {
+public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends DataManager<T> {
     protected final PeekableMap<K, T> cache;
     protected final Set<K> doesntExist;
-    protected KeyedKingdomsDatabase<K, T> database;
+    protected KeyedDatabase<K, T> database;
     private final boolean a;
 
-    public KeyedDataManager(NSedKey NSedKey, final KeyedKingdomsDatabase<K, T> database, boolean b, DataCenter kingdomsDataCenter) {
+    public KeyedDataManager(NSedKey NSedKey, final KeyedDatabase<K, T> database, boolean b, DataCenter kingdomsDataCenter) {
         super(NSedKey, kingdomsDataCenter);
         this.database = database;
         if (b) {
@@ -60,7 +61,6 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
         if (this.doesntExist != null) {
             this.doesntExist.add(key);
         }
-
     }
 
     public void clearCache() {
@@ -68,10 +68,9 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
         if (this.doesntExist != null) {
             this.doesntExist.clear();
         }
-
     }
 
-    public KeyedKingdomsDatabase<K, T> getDatabase() {
+    public KeyedDatabase<K, T> getDatabase() {
         return this.database;
     }
 
@@ -119,11 +118,11 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
 
     public int saveAll(boolean var1) {
         if (!var1) {
-            Collection var5 = this.cache.values();
+            Collection<T> var5 = this.cache.values();
             this.database.save(var5);
             return var5.size();
         } else if (!super.savingState) {
-            KLogger.info("Saving state was turned off for " + this + ", skipping saving data...");
+            AuspiceLogger.info("Saving state was turned off for " + this + ", skipping saving data...");
             return 0;
         } else {
             ArrayList<T> objects = new ArrayList<>(this.cache.size());
@@ -147,7 +146,7 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
     public @Nullable T getOrLoadData(@NonNull K key) {
         T var2 = this.cache.get(key);
         this.saveObjectState(var2, false);
-        return  var2;
+        return var2;
     }
 
     public T getDataIfLoaded(K key) {
@@ -171,16 +170,15 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
         if (this.doesntExist != null) {
             this.doesntExist.remove(key);
         }
-
     }
 
     public @Nullable T peek(@NonNull K var1) {
-        KeyedAuspiceObject var2;
-        if ((var2 = this.cache.peek(var1)) == null) {
+        T var2 = this.cache.peek(var1);
+        if (var2 == null) {
             var2 = this.database.load(var1);
         }
 
-        return (T) var2;
+        return var2;
     }
 
     public boolean exists(K var1) {
@@ -201,14 +199,14 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
 
     public Collection<T> peekAllData() {
         if (this.a) {
-            return ((DataManager) this).getLoadedData();
+            return this.getLoadedData();
         } else {
-            Collection var1 = this.database.getAllDataKeys();
-            ArrayList var2;
-            (var2 = new ArrayList(var1.size())).addAll(this.cache.values());
-            HashSet var3;
-            (var3 = new HashSet(var1)).removeAll(this.cache.keySet());
-            KeyedKingdomsDatabase var10000 = this.database;
+            Collection<K> var1 = this.database.getAllDataKeys();
+            ArrayList<T> var2 = new ArrayList<>(var1.size());
+            var2.addAll(this.cache.values());
+            HashSet<K> var3 = new HashSet<>(var1);
+            var3.removeAll(this.cache.keySet());
+            KeyedDatabase<K, T> var10000 = this.database;
             Objects.requireNonNull(var2);
             var10000.load(var3, var2::add);
             return var2;
@@ -216,21 +214,20 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
     }
 
     class CacheLoader_1 implements CacheLoader<K, T> {
-        private final KeyedKingdomsDatabase<K, T> a;
+        private final KeyedDatabase<K, T> a;
 
-        CacheLoader_1(KeyedKingdomsDatabase<K, T> var2) {
+        CacheLoader_1(KeyedDatabase<K, T> var2) {
             this.a = var2;
         }
 
-        // $FF: synthetic method
         @Nullable
-        public final T load(@NonNull K var1) throws Exception {
-            if (KeyedDataManager.this.doesntExist.contains(var1)) {
+        public final T load(@NonNull K k) throws Exception {
+            if (KeyedDataManager.this.doesntExist.contains(k)) {
                 return null;
             } else {
-                T var3 = this.a.load(var1);
+                T var3 = this.a.load(k);
                 if (var3 == null) {
-                    KeyedDataManager.this.doesntExist.add(var1);
+                    KeyedDataManager.this.doesntExist.add(k);
                 }
 
                 if (var3 != null) {
@@ -243,13 +240,12 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
     }
 
     class CacheLoader_2 implements CacheLoader<K, T> {
-        private final KeyedKingdomsDatabase<K, T> dataBase;
+        private final KeyedDatabase<K, T> dataBase;
 
-        CacheLoader_2(KeyedKingdomsDatabase<K, T> database) {
+        CacheLoader_2(KeyedDatabase<K, T> database) {
             this.dataBase = database;
         }
 
-        // $FF: synthetic method
         @Nullable
         public final T load(@NonNull K key) throws Exception {
             T loaded = this.dataBase.load(key);
@@ -260,5 +256,4 @@ public abstract class KeyedDataManager<K, T extends KeyedAuspiceObject<K>> exten
             return loaded;
         }
     }
-
 }

@@ -3,7 +3,7 @@ package top.auspice.config.yaml.snakeyaml;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.Node;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 
 import java.util.Objects;
 import java.util.function.Supplier;

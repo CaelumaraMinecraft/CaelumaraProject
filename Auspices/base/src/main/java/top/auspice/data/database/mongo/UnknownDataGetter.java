@@ -12,7 +12,7 @@ import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.data.database.dataprovider.*;
 import top.auspice.server.location.OldLocation;
 import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -214,16 +214,16 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1);
-        Objects.requireNonNull(var2);
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(c);
+        Objects.requireNonNull(dataProcessor);
 
         for (Object var4 : (Collection<?>) this.value) {
             Objects.requireNonNull(var4);
-            var2.accept(var1, MongoDataProvider.createProvider$core(var4));
+            dataProcessor.accept(c, MongoDataProvider.createProvider$core(var4));
         }
 
-        return var1;
+        return c;
     }
 
     private Number b() {
@@ -238,9 +238,9 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> var2) {
-        Objects.requireNonNull(var1, "");
-        Objects.requireNonNull(var2, "");
+    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Objects.requireNonNull(m, "");
+        Objects.requireNonNull(dataProcessor, "");
         throw this.unsupported();
     }
 

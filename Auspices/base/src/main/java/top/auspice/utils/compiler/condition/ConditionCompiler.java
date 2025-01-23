@@ -3,7 +3,7 @@ package top.auspice.utils.compiler.condition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.compiler.math.MathCompiler;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.math.MathUtils;
 
 import java.util.*;

@@ -1,8 +1,8 @@
 package top.auspice.data.compressor;
 
 import top.auspice.utils.HierarchalClassMap;
-import top.auspice.utils.internal.Fn;
 import top.auspice.utils.math.Avg;
+import top.auspice.utils.unsafe.Fn;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
@@ -19,14 +19,14 @@ public class DataCompressRegistry implements CompressableData<Object> {
     }
 
     public final void registerDefaults() {
-        this.register(Byte.TYPE, DataCompressor::compressByte);
-        this.register(Boolean.TYPE, DataCompressor::compress);
-        this.register(Character.TYPE, DataCompressor::compress);
-        this.register(Short.TYPE, DataCompressor::compress);
-        this.register(Integer.TYPE, DataCompressor::compress);
-        this.register(Long.TYPE, DataCompressor::compress);
-        this.register(Float.TYPE, DataCompressor::compress);
-        this.register(Double.TYPE, DataCompressor::compress);
+        this.register(byte.class, DataCompressor::compressByte);
+        this.register(boolean.class, DataCompressor::compress);
+        this.register(char.class, DataCompressor::compress);
+        this.register(short.class, DataCompressor::compress);
+        this.register(int.class, DataCompressor::compress);
+        this.register(long.class, DataCompressor::compress);
+        this.register(float.class, DataCompressor::compress);
+        this.register(double.class, DataCompressor::compress);
         this.register(byte[].class, DataCompressor::compress);
         this.register(ByteBuffer.class, DataCompressor::compress);
         this.register(String.class, DataCompressor::compress);
@@ -38,9 +38,7 @@ public class DataCompressRegistry implements CompressableData<Object> {
     }
 
     public final void registerSize(Class<?> var1, int var2) {
-        this.b.compute(var1, (var1x, var2x) -> {
-            return var2x == null ? new Avg(var2, 1L) : var2x.plus(var2);
-        });
+        this.b.compute(var1, (var1x, var2x) -> var2x == null ? new Avg(var2, 1L) : var2x.plus(var2));
     }
 
     public final int getAvgSize(Class<?> var1, int var2) {

@@ -1,17 +1,13 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package top.auspice.data.database.flatfile;
 
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.AuspiceObject;
-import top.auspice.data.database.base.SingularKingdomsDatabase;
+import top.auspice.data.object.DataObject;
+import top.auspice.data.database.base.SingularDatabase;
 import top.auspice.data.handlers.abstraction.SingularDataHandler;
 import top.auspice.utils.filesystem.FSUtil;
+import top.auspice.utils.unsafe.CloseableUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,40 +16,35 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.util.Objects;
 
-public abstract class SingularFlatFileDatabase<T extends AuspiceObject> implements SingularKingdomsDatabase<T> {
-    @NotNull
-    private final Path a;
-    @NotNull
-    private final SingularDataHandler<T> b;
+public abstract class SingularFlatFileDatabase<T extends DataObject.Impl> implements SingularDatabase<T> {
 
-    public SingularFlatFileDatabase(@NotNull Path var1, @NotNull SingularDataHandler<T> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
-        this.a = var1;
-        this.b = var2;
+    private final @NotNull Path file;
+    private final @NotNull SingularDataHandler<T> dataHandler;
+
+    public SingularFlatFileDatabase(@NotNull Path file, @NotNull SingularDataHandler<T> dataHandler) {
+        Objects.requireNonNull(file, "file");
+        Objects.requireNonNull(dataHandler, "dataHandler");
+        this.file = file;
+        this.dataHandler = dataHandler;
     }
 
-    @NotNull
-
-    public final Path getFile() {
-        return this.a;
+    public final @NotNull Path getFile() {
+        return this.file;
     }
 
-    @NotNull
-
-    public final SingularDataHandler<T> getDataHandler() {
-        return this.b;
+    public final @NotNull SingularDataHandler<T> getDataHandler() {
+        return this.dataHandler;
     }
 
-    @Nullable
-    public final T load() {
-        if (!Files.exists(this.a, new LinkOption[0])) {
+    public final @NotNull T load() {
+        if (!Files.exists(this.file, new LinkOption[0])) {
             return null;
         } else {
             BufferedReader var1 = null;
             try {
-                var1 = Files.newBufferedReader(this.a, StandardCharsets.UTF_8);
+                var1 = Files.newBufferedReader(this.file, StandardCharsets.UTF_8);
             } catch (IOException e) {  // TODO
                 throw new RuntimeException(e);
             }
@@ -71,55 +62,54 @@ public abstract class SingularFlatFileDatabase<T extends AuspiceObject> implemen
                 throw var7;
             } finally {
                 if (var6) {
-                    CloseableUtil.closeFinally(var1, var2);
+                    CloseableUtils.closeFinally(var1, var2);
                 }
             }
 
-            CloseableUtil.closeFinally(var1, null);
+            CloseableUtils.closeFinally(var1, null);
             return var9;
         }
     }
 
-    @Nullable
-    public abstract T load(@NotNull BufferedReader var1);
+    public abstract @Nullable T load(@NotNull BufferedReader var1);
 
     public abstract void save(@NotNull T var1, @NotNull BufferedWriter var2);
 
-    public final void save(@NotNull T obj) {
-        Intrinsics.checkNotNullParameter(obj, "");
+    public final void save(@NotNull T data) {
+        Objects.requireNonNull(data, "");
 
         try {
-            BufferedWriter var2 = FSUtil.standardWriter(this.a);
+            BufferedWriter writer = FSUtil.standardWriter(this.file);
             Throwable thr = null;
             boolean var8 = false;
 
             try {
                 var8 = true;
-                Intrinsics.checkNotNull(var2);
-                this.save(obj, var2);
+                Intrinsics.checkNotNull(writer);
+                this.save(data, writer);
                 var8 = false;
             } catch (Throwable var9) {
                 thr = var9;
                 throw var9;
             } finally {
                 if (var8) {
-                    CloseableUtil.closeFinally(var2, thr);
+                    CloseableUtils.closeFinally(writer, thr);
                 }
             }
 
-            CloseableUtil.closeFinally(var2, null);
+            CloseableUtils.closeFinally(writer, null);
         } catch (IOException var11) {
             var11.printStackTrace();
         }
     }
 
     public final boolean hasData() {
-        return Files.exists(this.a, new LinkOption[0]);
+        return Files.exists(this.file, new LinkOption[0]);
     }
 
     public final void deleteAllData() {
         try {
-            Files.delete(this.a);
+            Files.delete(this.file);
         } catch (IOException e) {  // TODO
             throw new RuntimeException(e);
         }

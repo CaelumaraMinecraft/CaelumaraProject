@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.data.database.sql.statements.getters.SimpleResultSetQuery;
 import top.auspice.data.database.sql.statements.setters.SimplePreparedStatement;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.sql.SQLException;
 import java.util.Objects;

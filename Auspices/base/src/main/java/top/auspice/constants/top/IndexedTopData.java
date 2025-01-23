@@ -4,7 +4,7 @@ import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import top.auspice.utils.Validate;
-import top.auspice.utils.internal.map.IndexedHashMap;
+import top.auspice.utils.unsafe.map.IndexedHashMap;
 
 import java.util.*;
 import java.util.function.Predicate;

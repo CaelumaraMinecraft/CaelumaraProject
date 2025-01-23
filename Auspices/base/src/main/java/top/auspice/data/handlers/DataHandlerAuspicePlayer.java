@@ -1,6 +1,7 @@
 package top.auspice.data.handlers;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.data.database.dataprovider.SQLDataHandlerProperties;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
@@ -14,14 +15,16 @@ import top.auspice.key.NSedKey;
 import java.util.UUID;
 
 public class DataHandlerAuspicePlayer extends KeyedDataHandler<UUID, AuspicePlayer> {
+    public static final DataHandlerAuspicePlayer INSTANCE = new DataHandlerAuspicePlayer();
+
     public DataHandlerAuspicePlayer() {
-        super(StdIdDataType.UUID, new SQLDataHandlerProperties();
+        super(StdIdDataType.UUID, new SQLDataHandlerProperties(new String[]{"diversity"}));  // TODO
     }
 
     @Override
     public void save(@NotNull SectionableDataSetter dataSetter, AuspicePlayer object) {
         Diversity lang = object.getDiversity();
-        String langNs = lang == null ? Diversity.getDefault().getNamespacedKey().asString() : lang.getNamespacedKey().asString();
+        String langNs = lang.getNamespacedKey().asString();
         dataSetter.setString("lang", langNs);
     }
 

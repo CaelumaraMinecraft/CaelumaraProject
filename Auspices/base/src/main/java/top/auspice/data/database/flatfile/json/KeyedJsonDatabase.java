@@ -3,7 +3,7 @@ package top.auspice.data.database.flatfile.json;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.data.database.DatabaseType;
 import top.auspice.data.database.flatfile.KeyedFlatFileDatabase;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.Path;
 
-public final class KeyedJsonDatabase<K, T extends KeyedAuspiceObject<K>>
+public final class KeyedJsonDatabase<K, T extends KeyedDataObject.Impl<K>>
         extends KeyedFlatFileDatabase<K, T> {
     public KeyedJsonDatabase(@NotNull Path path, @NotNull KeyedDataHandler<K, T> keyedDataHandler) {
         super("json", path, keyedDataHandler);

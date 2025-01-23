@@ -197,9 +197,9 @@ public final class YamlMappingDataProvider implements DataProvider, SectionCreat
 
     @Override
     @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> biConsumer) {
+    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Intrinsics.checkNotNullParameter(c, "");
-        Intrinsics.checkNotNullParameter(biConsumer, "");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         Node node2 = this.map.getNode(this.b());
         SequenceNode sequenceNode = node2 instanceof SequenceNode ? (SequenceNode) node2 : null;
         if (sequenceNode == null) {
@@ -208,7 +208,7 @@ public final class YamlMappingDataProvider implements DataProvider, SectionCreat
         SequenceNode sequenceNode2 = sequenceNode;
         for (Node node2 : sequenceNode.getValue()) {
             Intrinsics.checkNotNull(node2);
-            biConsumer.accept(c, new YamlNodeDataProvider(node2));
+            dataProcessor.accept(c, new YamlNodeDataProvider(node2));
         }
         return c;
     }

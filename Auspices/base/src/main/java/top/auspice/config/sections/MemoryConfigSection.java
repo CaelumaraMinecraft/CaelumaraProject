@@ -14,7 +14,7 @@ import top.auspice.config.validation.ConfigValidators;
 import top.auspice.config.validation.ValidationContext;
 import top.auspice.utils.Checker;
 import top.auspice.utils.Validate;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.number.Numbers;
 
 import java.util.*;

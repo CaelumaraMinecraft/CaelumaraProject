@@ -3,18 +3,20 @@ package top.auspice.constants.location;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.api.annotations.data.Immutable;
-import top.auspice.data.DataStringRepresentation;
+import top.auspice.data.object.DataStringRepresentation;
+import top.auspice.data.object.structure.DataStructureObject;
 import top.auspice.server.location.*;
 import top.auspice.utils.Checker;
 import top.auspice.utils.string.CommaDataSplitStrategy;
 import top.auspice.utils.string.Strings;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
 @Immutable
-public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D {
+public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, DataStructureObject {
     private final @NonNull String worldName;
     private final int x;
     private final int y;
@@ -195,5 +197,10 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     @Override
     public @NotNull String asDataString() {
         return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.y, this.z});
+    }
+
+    @Override
+    public @NonNull Map<String, Object> getData() {
+        return Map.of("world", this.worldName, "x", this.x, "y", this.y, "z", this.z);
     }
 }

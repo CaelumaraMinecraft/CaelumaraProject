@@ -2,7 +2,7 @@ package top.auspice.constants.metadata;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.key.NSedKey;
 import top.auspice.data.database.dataprovider.SectionableDataGetter;
 
@@ -11,7 +11,7 @@ public class StandardAuspiceMetadataHandler extends AuspiceMetadataHandler {
         super(NSedKey);
     }
 
-    public @NonNull AuspiceMetadata deserialize(@NotNull KeyedAuspiceObject<?> var1, @NonNull SectionableDataGetter var2) {
+    public @NonNull AuspiceMetadata deserialize(@NotNull KeyedDataObject.Impl<?> var1, @NonNull SectionableDataGetter var2) {
 
 
         if (var2.getDataProvider() instanceof ObjectDataProvider) {

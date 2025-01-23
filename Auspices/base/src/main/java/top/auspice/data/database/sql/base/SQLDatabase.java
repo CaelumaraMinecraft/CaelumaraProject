@@ -5,10 +5,10 @@ import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.StringsKt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.AuspiceObject;
-import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.data.object.DataObject;
+import top.auspice.data.object.KeyedDataObject;
 import top.auspice.data.database.DatabaseType;
-import top.auspice.data.database.base.KingdomsDatabase;
+import top.auspice.data.database.base.Database;
 import top.auspice.data.database.dataprovider.IdDataTypeHandler;
 import top.auspice.data.database.sql.SQLDataSetterProvider;
 import top.auspice.data.database.sql.connection.SQLConnectionProvider;
@@ -17,8 +17,8 @@ import top.auspice.data.database.sql.statements.setters.PreparedNamedSetterState
 import top.auspice.data.database.sql.statements.setters.SimplePreparedStatement;
 import top.auspice.data.handlers.abstraction.DataHandler;
 import top.auspice.data.handlers.abstraction.KeyedDataHandler;
-import top.auspice.utils.internal.AutoCloseableUtils;
-import top.auspice.utils.internal.Fn;
+import top.auspice.utils.unsafe.AutoCloseableUtils;
+import top.auspice.utils.unsafe.Fn;
 
 import java.nio.ByteBuffer;
 import java.sql.Connection;
@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
 
-public abstract class SQLDatabase<T extends AuspiceObject> implements KingdomsDatabase<T> {
+public abstract class SQLDatabase<T extends DataObject.Impl> implements Database<T> {
 
     private final @NotNull DatabaseType databaseType;
     private final @NotNull String table;
@@ -68,8 +68,8 @@ public abstract class SQLDatabase<T extends AuspiceObject> implements KingdomsDa
 
     protected abstract DataHandler<T> getDataHandler();
 
-    public void save(@NotNull T obj) {
-        Objects.requireNonNull(obj, "obj");
+    public void save(@NotNull T data) {
+        Objects.requireNonNull(data, "obj");
         DataHandler<T> dataHandler = this.getDataHandler();
         PreparedNamedSetterStatement var3 = new PreparedNamedSetterStatement(this.databaseType, dataHandler.getSqlProperties().getAssociateNamedData());
 
@@ -84,14 +84,14 @@ public abstract class SQLDatabase<T extends AuspiceObject> implements KingdomsDa
                 if (dataHandler instanceof KeyedDataHandler) {
                     IdDataTypeHandler var10000 = ((KeyedDataHandler) dataHandler).getIdHandler();
                     SimplePreparedStatement var10001 = var3;
-                    Object var10002 = Fn.cast(((KeyedAuspiceObject<?>) obj).getKey());
+                    Object var10002 = Fn.cast(((KeyedDataObject.Impl<?>) data).getKey());
                     Intrinsics.checkNotNullExpressionValue(var10002, "");
                     var10000.setSQL(var10001, var10002);
                 } else {
                     var7.setBoolean("id", true);
                 }
 
-                dataHandler.save(var7, obj);
+                dataHandler.save(var7, data);
                 var3.buildStatement(this.table, connection);
                 var3.execute();
                 var11 = false;
@@ -106,7 +106,7 @@ public abstract class SQLDatabase<T extends AuspiceObject> implements KingdomsDa
 
             AutoCloseableUtils.closeFinally(connection, null);
         } catch (Throwable var14) {
-            throw new RuntimeException("Error while saving data " + obj + " (" + obj.getClass() + ')', var14);
+            throw new RuntimeException("Error while saving data " + data + " (" + data.getClass() + ')', var14);
         }
     }
 

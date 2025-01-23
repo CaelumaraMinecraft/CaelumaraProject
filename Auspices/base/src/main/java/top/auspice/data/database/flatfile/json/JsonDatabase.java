@@ -5,7 +5,7 @@ import com.google.gson.JsonSyntaxException;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.base.AuspiceObject;
+import top.auspice.data.object.DataObject;
 import top.auspice.data.handlers.abstraction.DataHandler;
 import top.auspice.utils.gson.KingdomsGson;
 import top.auspice.utils.logging.AuspiceLogger;
@@ -23,7 +23,7 @@ public final class JsonDatabase {
     private JsonDatabase() {
     }
 
-    public static @Nullable <T extends AuspiceObject> T load(@NotNull String string, @NotNull Path path, @NotNull DataHandler<T> dataHandler, @NotNull BufferedReader bufferedReader, @NotNull Function<? super JsonObject, ? extends T> converter) {
+    public static @Nullable <T extends DataObject.Impl> T load(@NotNull String string, @NotNull Path path, @NotNull DataHandler<T> dataHandler, @NotNull BufferedReader bufferedReader, @NotNull Function<? super JsonObject, ? extends T> converter) {
         Intrinsics.checkNotNullParameter(string, "");
         Intrinsics.checkNotNullParameter(path, "");
         Intrinsics.checkNotNullParameter(dataHandler, "");
@@ -56,7 +56,7 @@ public final class JsonDatabase {
         return null;
     }
 
-    public static <T extends AuspiceObject> void save(@NotNull T t, @NotNull DataHandler<T> dataHandler, @NotNull BufferedWriter bufferedWriter) {
+    public static <T extends DataObject.Impl> void save(@NotNull T t, @NotNull DataHandler<T> dataHandler, @NotNull BufferedWriter bufferedWriter) {
         Intrinsics.checkNotNullParameter(t, "");
         Intrinsics.checkNotNullParameter(dataHandler, "");
         Intrinsics.checkNotNullParameter(bufferedWriter, "");

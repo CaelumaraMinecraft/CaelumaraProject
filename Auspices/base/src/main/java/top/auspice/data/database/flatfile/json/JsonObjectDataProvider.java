@@ -13,7 +13,7 @@ import top.auspice.constants.location.SimpleLocation;
 import top.auspice.data.database.dataprovider.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.internal.uuid.FastUUID;
+import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
@@ -186,9 +186,9 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
     }
 
     @Override
-    public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> biConsumer) {
+    public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Intrinsics.checkNotNullParameter(c, "");
-        Intrinsics.checkNotNullParameter(biConsumer, "");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         JsonElement je = this.a();
         JsonArray jsonArr = je != null ? je.getAsJsonArray() : null;
         if (jsonArr == null) {
@@ -196,15 +196,15 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
         }
         for (JsonElement e : jsonArr) {
             Intrinsics.checkNotNull(e);
-            biConsumer.accept(c, new JsonElementDataProvider(e));
+            dataProcessor.accept(c, new JsonElementDataProvider(e));
         }
         return c;
     }
 
     @Override
-    public @NotNull <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> triConsumer) {
-        Intrinsics.checkNotNullParameter(m, "");
-        Intrinsics.checkNotNullParameter(triConsumer, "");
+    public @NotNull <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Intrinsics.checkNotNullParameter(m, "m");
+        Intrinsics.checkNotNullParameter(dataProcessor, "");
         JsonElement je = this.a();
         JsonObject jsonMap = je != null ? je.getAsJsonObject() : null;
         if (jsonMap == null) {
@@ -216,7 +216,7 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
             JsonElement e = entry.getValue();
             JsonElementDataProvider jsonElementDataProvider = new JsonElementDataProvider(new JsonPrimitive(string));
             Intrinsics.checkNotNull(entry);
-            triConsumer.accept(m, jsonElementDataProvider, new JsonElementDataProvider(e));
+            dataProcessor.accept(m, jsonElementDataProvider, new JsonElementDataProvider(e));
         }
         return m;
     }

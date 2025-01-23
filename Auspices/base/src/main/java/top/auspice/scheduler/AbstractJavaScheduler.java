@@ -4,7 +4,7 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.dependencies.classpath.BootstrapProvider;
 import top.auspice.scheduler.Task.ExecutionContextType;
-import top.auspice.utils.internal.stacktrace.StackTraces;
+import top.auspice.utils.unsafe.stacktrace.StackTraces;
 
 import java.time.Duration;
 import java.util.Arrays;

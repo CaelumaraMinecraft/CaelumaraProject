@@ -1,23 +1,24 @@
 package top.auspice.data.managers.base;
 
-import top.auspice.constants.base.AuspiceObject;
-import top.auspice.key.NSedKey;
 import top.auspice.data.centers.DataCenter;
-import top.auspice.data.database.base.SingularKingdomsDatabase;
+import top.auspice.data.database.base.SingularDatabase;
+import top.auspice.data.object.DataObject;
+import top.auspice.key.NSedKey;
+import top.auspice.utils.logging.AuspiceLogger;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public abstract class SingularDataManager<T extends AuspiceObject> extends DataManager<T> {
+public abstract class SingularDataManager<T extends DataObject.Impl> extends DataManager<T> {
     private T a;
-    private final SingularKingdomsDatabase<T> b;
+    private final SingularDatabase<T> b;
 
-    public SingularDataManager(NSedKey var1, SingularKingdomsDatabase<T> var2, DataCenter var3) {
+    public SingularDataManager(NSedKey var1, SingularDatabase<T> var2, DataCenter var3) {
         super(var1, var3);
         this.b = var2;
     }
 
-    public SingularKingdomsDatabase<T> getDatabase() {
+    public SingularDatabase<T> getDatabase() {
         return this.b;
     }
 
@@ -30,10 +31,10 @@ public abstract class SingularDataManager<T extends AuspiceObject> extends DataM
     }
 
     public void copyAllDataTo(DataManager<T> var1) {
-        if (!(var1 instanceof SingularDataManager)) {
+        if (!(var1 instanceof SingularDataManager<T> singularDataManager)) {
             throw new UnsupportedOperationException("Cannot copy from " + this + " to " + var1);
         } else {
-            ((SingularDataManager) var1).a = this.a;
+            singularDataManager.a = this.a;
         }
     }
 
@@ -68,7 +69,7 @@ public abstract class SingularDataManager<T extends AuspiceObject> extends DataM
         } else {
             if (var1) {
                 if (!super.savingState) {
-                    KLogger.info("Saving state was turned off for " + this + ", skipping saving data...");
+                    AuspiceLogger.info("Saving state was turned off for " + this + ", skipping saving data...");
                     return 0;
                 }
 
@@ -90,7 +91,7 @@ public abstract class SingularDataManager<T extends AuspiceObject> extends DataM
     }
 
     public Collection<T> loadAllData(boolean var1) {
-        return ((DataManager) this).peekAllData();
+        return this.peekAllData();
     }
 
     public Collection<T> getLoadedData() {
