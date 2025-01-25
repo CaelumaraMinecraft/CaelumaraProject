@@ -5,7 +5,7 @@ import com.cryptomorin.xseries.messages.ActionBar;
 import com.cryptomorin.xseries.messages.Titles;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.compiler.TextObject;

@@ -12,7 +12,7 @@ import top.auspice.configs.texts.compiler.builders.context.HTMLTextBuilderContex
 import top.auspice.configs.texts.compiler.builders.context.PlainTextBuilderContextProvider;
 import top.auspice.configs.texts.compiler.pieces.TextPiece;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 import top.auspice.utils.unsafe.arrays.UnsafeArrayList;
 
 import java.util.ArrayList;

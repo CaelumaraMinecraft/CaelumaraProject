@@ -4,8 +4,8 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.SequenceNode;
-import top.auspice.config.accessor.YamlClearlyConfigAccessor;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.accessor.YamlClearlyConfigAccessor;
+import net.aurika.config.sections.ConfigSection;
 
 import java.util.*;
 

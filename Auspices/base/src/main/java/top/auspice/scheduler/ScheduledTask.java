@@ -1,6 +1,6 @@
 package top.auspice.scheduler;
 
-import top.auspice.abstraction.Cancellable;
+import net.aurika.abstraction.Cancellable;
 
 public interface ScheduledTask extends Task, Cancellable {
     public abstract ExecutionContextType getExecutionContextType();

@@ -3,7 +3,7 @@ package top.auspice.utils.unsafe.string;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.Locale;
 import java.util.stream.IntStream;

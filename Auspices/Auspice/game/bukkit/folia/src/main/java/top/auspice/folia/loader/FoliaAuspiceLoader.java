@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import top.auspice.api.user.AuspiceUser;
 import top.auspice.bukkit.loader.PluginAuspiceLoader;
 import top.auspice.bukkit.scheduler.BukkitSchedulerAdapter;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.dependencies.DependencyManager;
 import top.auspice.main.Auspice;
 import top.auspice.permission.DefaultAuspicePluginPermissions;

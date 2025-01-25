@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.provider.MessageProvider;
 import top.auspice.diversity.Diversity;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.Objects;
 import java.util.function.Supplier;

@@ -2,7 +2,7 @@ package top.auspice.constants.ecomony.currency;
 
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.ecomony.currency.bill.CurrencyEntry;
-import top.auspice.key.NSKeyed;
+import net.aurika.namespace.NSKeyed;
 
 public interface Currency<T, C> extends NSKeyed {
 

@@ -2,69 +2,25 @@ package top.auspice.constants.player;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.api.annotations.data.LateInit;
-import top.auspice.config.functional.invoking.ConfigFunctionalInvokingData;
-import top.auspice.config.placeholder.invoking.PlaceholderInvokable;
+import net.aurika.annotations.data.LateInit;
+import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
+import net.aurika.config.placeholder.invoking.PlaceholderInvokable;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
-import top.auspice.data.centers.AuspiceDataCenter;
-import top.auspice.data.handlers.DataHandlerAuspicePlayer;
-import top.auspice.data.object.KeyedDataObject;
+import top.auspice.constants.base.KeyedAuspiceObject;
+import net.aurika.data.centers.AuspiceDataCenter;
 import top.auspice.diversity.Diversity;
 import top.auspice.server.player.OfflinePlayer;
 
 import java.util.UUID;
 
-/**
- * AuspiceAPI 抽象的玩家
- * <p>
- * 获取这个玩家对应的 Bukkit 玩家的方法是:
- * <blockquote><pre>
- * Bukkit.getPlayer(auspicePlayer.getKey);
- * </pre></blockquote>
- */
-public class AuspicePlayer extends KeyedAuspiceObject<UUID, AuspicePlayer.DataObject> implements PlaceholderInvokable {
+public interface AuspicePlayer extends KeyedAuspiceObject<UUID>, PlaceholderInvokable {
 
-    private final @NotNull AuspicePlayer.DataObject data = new DataObject();
+    @NotNull Diversity getDiversity();
 
-    protected final @NotNull UUID key;
-    private @LateInit(by = "the default diversity") Diversity diversity;
+    void setDiversity(Diversity diversity);
 
-    public AuspicePlayer(@NotNull UUID key) {
-        this.key = key;
-    }
-
-    public AuspicePlayer(@NotNull UUID key, Diversity diversity) {
-        this.key = key;
-        this.diversity = diversity;
-    }
-
-    public @NotNull UUID getKey() {
-        return this.key;
-    }
-
-    public @Nullable Object providePlaceholderAttribute(@NotNull String attributeName) {
-        return switch (attributeName) {
-            case "key", "uuid" -> this.key;
-//            case "name" ->
-            default -> null;
-        };
-    }
-
-    public @Nullable Object invokePlaceholderFunction(@NotNull String functionName, ConfigFunctionalInvokingData invokeData, PlaceholderContextBuilder context) {
-        return null;
-    }
-
-    public @NotNull Diversity getDiversity() {
-        if (this.diversity == null) this.diversity = Diversity.getDefault();
-        return this.diversity;
-    }
-
-    public void setDiversity(Diversity diversity) {
-        this.diversity = diversity;
-    }
-
-    public static @NotNull AuspicePlayer getAuspicePlayer(@NotNull OfflinePlayer player) {
-        return getAuspicePlayer(player.getUniqueId());
+    static @NotNull AuspicePlayer getAuspicePlayer(@NotNull OfflinePlayer offlinePlayer) {
+        return getAuspicePlayer(offlinePlayer.getUniqueId());
     }
 
     /**
@@ -75,26 +31,42 @@ public class AuspicePlayer extends KeyedAuspiceObject<UUID, AuspicePlayer.DataOb
      * @param uuid 玩家的唯一的 id
      * @return 一个 {@link AuspicePlayer} 实例
      */
-    public static @NotNull AuspicePlayer getAuspicePlayer(@NotNull UUID uuid) {
+    static @NotNull AuspicePlayer getAuspicePlayer(@NotNull UUID uuid) {
         AuspicePlayer ap = AuspiceDataCenter.get().getAuspicePlayerManager().getOrLoadData(uuid);
-        return ap == null ? new AuspicePlayer(uuid) : ap;
+        return ap == null ? new AuspicePlayer.Impl(uuid) : ap;
     }
 
-    @Override
-    public @NotNull AuspicePlayer.DataObject toDataObject() {
-        return this.data;
-    }
+    class Impl extends KeyedAuspiceObject.Impl<UUID> implements AuspicePlayer {
+        private @LateInit(by = "default diversity") Diversity diversity;
 
-    public class DataObject extends KeyedDataObject.Impl<UUID> {
-
-        @Override
-        public @NotNull UUID getKey() {
-            return AuspicePlayer.this.key;
+        public Impl(@NotNull UUID key) {
+            super(key);
         }
 
-        @Override
-        public DataHandlerAuspicePlayer getDataHandler() {
-            return DataHandlerAuspicePlayer.INSTANCE;
+        public Impl(@NotNull UUID key, Diversity diversity) {
+            super(key);
+            this.diversity = diversity;
+        }
+
+        public @Nullable Object providePlaceholderAttribute(@NotNull String attributeName) {
+            return switch (attributeName) {
+                case "key", "uuid" -> this.getKey();
+//            case "name" ->
+                default -> null;
+            };
+        }
+
+        public @Nullable Object invokePlaceholderFunction(@NotNull String functionName, ConfigFunctionalInvokingData invokeData, PlaceholderContextBuilder context) {
+            return null;
+        }
+
+        public @NotNull Diversity getDiversity() {
+            if (this.diversity == null) this.diversity = Diversity.getDefault();
+            return this.diversity;
+        }
+
+        public void setDiversity(Diversity diversity) {
+            this.diversity = diversity;
         }
     }
 }

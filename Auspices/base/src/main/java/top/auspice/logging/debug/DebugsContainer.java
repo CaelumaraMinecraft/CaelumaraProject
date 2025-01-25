@@ -1,7 +1,7 @@
 package top.auspice.logging.debug;
 
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 
 import java.util.Map;
 

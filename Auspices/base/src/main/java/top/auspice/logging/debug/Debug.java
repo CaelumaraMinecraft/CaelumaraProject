@@ -1,6 +1,6 @@
 package top.auspice.logging.debug;
 
-import top.auspice.key.NSKeyed;
+import net.aurika.namespace.NSKeyed;
 
 public interface Debug extends NSKeyed {
 

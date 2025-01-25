@@ -4,7 +4,7 @@ import kotlin.collections.ArraysKt;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.config.path.ConfigEntry;
+import net.aurika.config.path.ConfigEntry;
 import top.auspice.configs.messages.provider.MessageProvider;
 import top.auspice.diversity.Diversity;
 

@@ -1,6 +1,6 @@
 package top.auspice.configs.texts.compiler.builders;
 
-import top.auspice.config.path.ConfigEntry;
+import net.aurika.config.path.ConfigEntry;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.compiler.TextCompilerSettings;
 import top.auspice.configs.texts.compiler.TextObject;

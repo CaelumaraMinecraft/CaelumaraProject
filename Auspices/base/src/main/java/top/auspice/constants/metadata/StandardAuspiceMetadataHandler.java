@@ -2,9 +2,9 @@ package top.auspice.constants.metadata;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.data.object.KeyedDataObject;
-import top.auspice.key.NSedKey;
-import top.auspice.data.database.dataprovider.SectionableDataGetter;
+import net.aurika.data.object.KeyedDataObject;
+import net.aurika.namespace.NSedKey;
+import net.aurika.data.database.dataprovider.SectionableDataGetter;
 
 public class StandardAuspiceMetadataHandler extends AuspiceMetadataHandler {
     public StandardAuspiceMetadataHandler(NSedKey NSedKey) {

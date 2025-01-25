@@ -3,11 +3,11 @@ package top.auspice.diversity;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.config.path.ConfigEntry;
+import net.aurika.config.path.ConfigEntry;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.messages.provider.MessageProvider;
-import top.auspice.key.NSKeyed;
+import net.aurika.namespace.NSKeyed;
 
 import java.util.Map;
 import java.util.TimeZone;

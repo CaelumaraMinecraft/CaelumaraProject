@@ -1,8 +1,8 @@
 package top.auspice.permission;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.annotations.data.Immutable;
-import top.auspice.utils.Checker;
+import net.aurika.annotations.data.Immutable;
+import net.aurika.utils.Checker;
 import top.auspice.utils.string.Strings;
 
 import java.util.Arrays;

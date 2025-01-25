@@ -27,8 +27,7 @@ public class Avg {
         this.count = count;
     }
 
-    @NotNull
-    public final Avg plus(double additional) {
+    public final @NotNull Avg plus(double additional) {
         this.sum += additional;
         return this;
     }

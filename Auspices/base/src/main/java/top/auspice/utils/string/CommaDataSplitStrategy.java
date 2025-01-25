@@ -1,7 +1,7 @@
 package top.auspice.utils.string;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.Arrays;
 import java.util.StringJoiner;

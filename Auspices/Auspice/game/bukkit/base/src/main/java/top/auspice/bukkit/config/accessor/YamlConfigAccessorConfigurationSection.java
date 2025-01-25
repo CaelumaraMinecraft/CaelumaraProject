@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.Node;
 import org.snakeyaml.engine.v2.nodes.Tag;
-import top.auspice.config.accessor.YamlClearlyConfigAccessor;
+import net.aurika.config.accessor.YamlClearlyConfigAccessor;
 import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.string.Strings;
 

@@ -2,8 +2,8 @@ package top.auspice.configs.texts;
 
 import com.cryptomorin.xseries.XMaterial;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import top.auspice.config.annotations.Comment;
-import top.auspice.config.path.ConfigEntry;
+import net.aurika.config.annotations.Comment;
+import net.aurika.config.path.ConfigEntry;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.messenger.EnumDefinedMessenger;
 

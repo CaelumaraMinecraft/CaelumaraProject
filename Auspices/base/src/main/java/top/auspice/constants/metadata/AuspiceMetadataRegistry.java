@@ -1,10 +1,10 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.data.object.KeyedDataObject;
-import top.auspice.key.Lockable;
-import top.auspice.key.NSKedRegistry;
-import top.auspice.data.managers.base.KeyedDataManager;
+import net.aurika.data.object.KeyedDataObject;
+import net.aurika.namespace.Lockable;
+import net.aurika.namespace.NSKedRegistry;
+import net.aurika.data.managers.base.KeyedDataManager;
 import top.auspice.main.Auspice;
 
 import java.util.Collection;

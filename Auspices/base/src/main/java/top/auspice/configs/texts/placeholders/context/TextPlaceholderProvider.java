@@ -15,7 +15,7 @@ import top.auspice.diversity.DiversityManager;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
 import top.auspice.server.player.OfflinePlayer;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 import top.auspice.utils.cache.single.CachedSupplier;
 import top.auspice.utils.string.Strings;
 

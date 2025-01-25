@@ -2,14 +2,14 @@ package top.auspice.api.user;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.annotations.UtilMethod;
+import net.aurika.annotations.UtilMethod;
 import top.auspice.configs.texts.LanguageManager;
 import top.auspice.configs.texts.messenger.DefinedMessenger;
 import top.auspice.constants.metadata.AuspiceMetadataRegistry;
 import top.auspice.diversity.Diversity;
-import top.auspice.key.NSKey;
-import top.auspice.key.NSedKey;
-import top.auspice.key.nested.NestedNamespace;
+import net.aurika.namespace.NSKey;
+import net.aurika.namespace.NSedKey;
+import net.aurika.namespace.nested.NestedNamespace;
 import top.auspice.scheduler.TaskScheduleProvider;
 
 import java.lang.annotation.*;

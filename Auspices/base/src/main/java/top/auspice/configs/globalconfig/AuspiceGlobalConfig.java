@@ -1,10 +1,10 @@
 package top.auspice.configs.globalconfig;
 
 import com.cryptomorin.xseries.XSound;
-import top.auspice.config.accessor.YamlUndefinedPathConfigAccessor;
-import top.auspice.config.adapters.YamlResource;
-import top.auspice.config.path.ConfigPath;
-import top.auspice.config.yaml.importers.YamlGlobalImporter;
+import net.aurika.config.accessor.YamlUndefinedPathConfigAccessor;
+import net.aurika.config.adapters.YamlResource;
+import net.aurika.config.path.ConfigPath;
+import net.aurika.config.yaml.importers.YamlGlobalImporter;
 import top.auspice.configs.globalconfig.accessor.EnumGlobalConfig;
 import top.auspice.main.Auspice;
 import top.auspice.server.entity.Player;

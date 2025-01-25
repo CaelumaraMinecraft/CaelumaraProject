@@ -3,7 +3,7 @@ package top.auspice.configs.texts;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.texts.messenger.DefinedMessenger;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.diversity.Diversity;
 import top.auspice.api.user.AuspiceUser;

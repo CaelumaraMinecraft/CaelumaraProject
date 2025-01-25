@@ -1,7 +1,7 @@
 package top.auspice.diversity;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 
 import java.util.Objects;
 

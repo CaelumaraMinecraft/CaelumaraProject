@@ -8,7 +8,7 @@ import top.auspice.configs.texts.compiler.PlaceholderTranslationContext;
 import top.auspice.configs.texts.compiler.placeholders.modifiers.PlaceholderModifier;
 import top.auspice.configs.texts.compiler.placeholders.Placeholder;
 import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.List;
 import java.util.Objects;

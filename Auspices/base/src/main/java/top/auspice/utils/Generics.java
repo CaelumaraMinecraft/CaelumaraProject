@@ -1,5 +1,6 @@
 package top.auspice.utils;
 
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

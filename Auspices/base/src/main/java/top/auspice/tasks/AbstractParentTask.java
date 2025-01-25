@@ -2,7 +2,7 @@ package top.auspice.tasks;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.tasks.context.TaskContext;
 import top.auspice.tasks.priority.Priority;
 

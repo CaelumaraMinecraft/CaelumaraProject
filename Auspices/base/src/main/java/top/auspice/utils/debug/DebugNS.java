@@ -1,7 +1,7 @@
 package top.auspice.utils.debug;
 
-import top.auspice.key.NSKeyed;
-import top.auspice.key.NSKedRegistry;
+import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NSKedRegistry;
 import top.auspice.main.Auspice;
 
 public interface DebugNS extends NSKeyed {

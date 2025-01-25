@@ -3,7 +3,7 @@ package top.auspice.utils.string;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
@@ -113,8 +113,7 @@ public class Strings {
         return var1.toString();
     }
 
-    @Nullable
-    public static String capitalize(@Nullable String s) {
+    public static @Nullable String capitalize(@Nullable String s) {
         if (Strings.isNullOrEmpty(s)) {
             return s;
         } else {

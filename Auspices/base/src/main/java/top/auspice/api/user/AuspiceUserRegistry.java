@@ -2,7 +2,7 @@ package top.auspice.api.user;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import top.auspice.key.NSKey;
+import net.aurika.namespace.NSKey;
 import top.auspice.utils.string.Strings;
 
 import java.util.*;

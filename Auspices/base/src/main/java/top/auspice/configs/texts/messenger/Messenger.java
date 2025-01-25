@@ -13,7 +13,7 @@ import top.auspice.diversity.DiversityManager;
 import top.auspice.server.player.OfflinePlayer;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.Objects;
 

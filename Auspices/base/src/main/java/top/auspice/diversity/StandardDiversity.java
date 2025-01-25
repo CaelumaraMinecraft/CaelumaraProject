@@ -2,11 +2,11 @@ package top.auspice.diversity;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.config.path.ConfigEntry;
+import net.aurika.config.path.ConfigEntry;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.messages.provider.MessageProvider;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 
 import java.nio.file.Path;
 import java.util.Locale;

@@ -3,7 +3,7 @@ package top.auspice.configs.messages;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 public class MessageObject {
 

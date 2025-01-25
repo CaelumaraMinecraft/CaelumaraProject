@@ -2,10 +2,10 @@ package top.auspice.constants.location;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.annotations.data.Immutable;
-import top.auspice.data.object.DataStringRepresentation;
-import top.auspice.data.object.structure.DataStructureObject;
-import top.auspice.utils.Checker;
+import net.aurika.annotations.data.Immutable;
+import net.aurika.data.object.DataStringRepresentation;
+import net.aurika.data.object.structure.DataStructureObject;
+import net.aurika.utils.Checker;
 import top.auspice.utils.string.CommaDataSplitStrategy;
 
 import java.util.Map;

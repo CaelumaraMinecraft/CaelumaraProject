@@ -1,7 +1,7 @@
 package top.auspice.constants.ecomony.currency;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 
 public abstract class AbstractCurrency<T, C> implements Currency<T, C> {
 

@@ -9,7 +9,7 @@ import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.compiler.pieces.TextPiece;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 import top.auspice.utils.string.Strings;
 
 import java.util.ArrayList;

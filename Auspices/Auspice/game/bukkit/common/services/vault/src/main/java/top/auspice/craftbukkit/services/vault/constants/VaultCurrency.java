@@ -4,7 +4,7 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.ecomony.currency.AbstractNumberCurrency;
 import top.auspice.constants.ecomony.currency.bill.CurrencyEntry;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.craftbukkit.services.vault.ServiceVault;
 import top.auspice.utils.math.MathUtils;
 

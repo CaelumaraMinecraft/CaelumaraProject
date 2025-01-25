@@ -1,7 +1,7 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.data.database.dataprovider.SectionCreatableDataSetter;
+import net.aurika.data.database.dataprovider.SectionCreatableDataSetter;
 
 public interface AuspiceMetadata {
 

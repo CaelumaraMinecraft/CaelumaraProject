@@ -1,6 +1,6 @@
 package top.auspice.diversity;
 
-import top.auspice.key.NSKedRegistry;
+import net.aurika.namespace.NSKedRegistry;
 import top.auspice.main.Auspice;
 
 public class DiversityRegistry extends NSKedRegistry<Diversity> {

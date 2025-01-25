@@ -2,7 +2,7 @@ package top.auspice.constants.ecomony.currency;
 
 
 import org.bukkit.Bukkit;
-import top.auspice.key.NSKedRegistry;
+import net.aurika.namespace.NSKedRegistry;
 import top.auspice.main.Auspice;
 
 public final class CurrencyRegistry extends NSKedRegistry<Currency<?, ?>> {

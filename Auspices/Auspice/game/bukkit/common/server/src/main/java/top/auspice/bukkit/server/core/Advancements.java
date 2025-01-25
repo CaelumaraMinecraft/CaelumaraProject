@@ -1,7 +1,7 @@
 package top.auspice.bukkit.server.core;
 
-import top.auspice.api.annotations.bookmark.Bookmark;
-import top.auspice.api.annotations.bookmark.BookmarkType;
+import net.aurika.annotations.bookmark.Bookmark;
+import net.aurika.annotations.bookmark.BookmarkType;
 
 // https://github.com/rowan-vr/CustomAdvancements
 // https://www.spigotmc.org/resources/ultimateadvancementapi-1-15-1-21-1.95585/

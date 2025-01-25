@@ -2,9 +2,9 @@ package top.auspice.logging.debug;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.key.NSKedRegistry;
-import top.auspice.key.NSKey;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSKedRegistry;
+import net.aurika.namespace.NSKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.main.Auspice;
 
 import java.util.Collections;

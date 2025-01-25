@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Contract;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.placeholders.transformer.PlaceholderTransformerRegistry;
 import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 public final class PlaceholderTranslationContext {
     private final Object value;

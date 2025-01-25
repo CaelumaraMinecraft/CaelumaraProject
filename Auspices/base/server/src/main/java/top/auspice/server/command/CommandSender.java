@@ -1,9 +1,8 @@
 package top.auspice.server.command;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.annotations.ImplDontThrowUnsupported;
+import net.aurika.annotations.ImplDontThrowUnsupported;
 import top.auspice.configs.messages.MessageObject;
-import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.server.core.Server;
 import top.auspice.server.permissions.Permissible;
 

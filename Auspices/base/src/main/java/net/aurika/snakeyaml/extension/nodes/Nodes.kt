@@ -1,0 +1,15 @@
+package net.aurika.snakeyaml.extension.nodes
+
+import org.jetbrains.annotations.Contract
+import org.snakeyaml.engine.v2.nodes.Node
+
+const val PARSED_MARKER = "aurika_parsed"
+
+fun Node.cacheConstructed(parsed: Any) {
+    this.setProperty(PARSED_MARKER, parsed)
+}
+
+@Contract("null -> null")
+fun Node?.getParsed(): Any? {
+    return this?.getProperty(PARSED_MARKER)
+}

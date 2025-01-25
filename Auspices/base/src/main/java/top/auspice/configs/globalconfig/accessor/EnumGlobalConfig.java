@@ -1,7 +1,7 @@
 package top.auspice.configs.globalconfig.accessor;
 
-import top.auspice.config.accessor.ClearlyConfigAccessor;
-import top.auspice.config.accessor.UndefinedPathConfigAccessor;
+import net.aurika.config.accessor.ClearlyConfigAccessor;
+import net.aurika.config.accessor.UndefinedPathConfigAccessor;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.math.MathCompiler;
 

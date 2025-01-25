@@ -1,6 +1,6 @@
 package top.auspice.utils.container;
 
-import top.auspice.api.annotations.data.Immutable;
+import net.aurika.annotations.data.Immutable;
 
 @Immutable
 public final class TriContainer<T, U, V> {

@@ -4,12 +4,13 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.api.user.AuspiceUser;
-import top.auspice.data.centers.AuspiceDataCenter;
+import net.aurika.data.centers.AuspiceDataCenter;
 import top.auspice.dependencies.DependencyManager;
 import top.auspice.dependencies.classpath.BootstrapProvider;
 import top.auspice.diversity.Diversity;
 import top.auspice.diversity.StandardDiversity;
-import top.auspice.key.NSKey;
+import net.aurika.namespace.NSKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.loader.AuspiceLoader;
 import top.auspice.permission.DefaultAuspicePluginPermissions;
 
@@ -128,6 +129,10 @@ public final class Auspice implements AuspiceUser {
 
     public Path getPath(String path) {
         return this.getDataFolder().toPath().resolve(path);
+    }
+
+    public static @NotNull NSedKey namespacedKey(@NotNull @NSKey.Key String key) {
+        return NSedKey.of(NAMESPACE, key);
     }
 
     public static void init() {

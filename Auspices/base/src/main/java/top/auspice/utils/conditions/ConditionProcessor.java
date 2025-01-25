@@ -1,8 +1,8 @@
 package top.auspice.utils.conditions;
 
-import top.auspice.abstraction.conditional.ConditionBranch;
-import top.auspice.abstraction.conditional.ConditionChain;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.abstraction.conditional.ConditionBranch;
+import net.aurika.abstraction.conditional.ConditionChain;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.compiler.PlaceholderTranslationContext;
 import top.auspice.configs.texts.compiler.builders.MessageObjectBuilder;
@@ -17,7 +17,6 @@ import top.auspice.utils.string.Strings;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.function.Function;
 
 public final class ConditionProcessor implements ConditionVariableTranslator {
     private final PlaceholderProvider placeholderProvider;

@@ -3,7 +3,7 @@ package top.auspice.bukkit.permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.permission.PermissionDefaultValue;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 public final class PermissionDefaultConverter {
     public static @NotNull PermissionDefault convert(@NotNull PermissionDefaultValue auspicePermissionDefault) {

@@ -21,7 +21,7 @@ import top.auspice.configs.texts.compiler.builders.context.TextBuilderContextPro
 import top.auspice.configs.texts.compiler.placeholders.Placeholder;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 import top.auspice.utils.Pair;
 import top.auspice.utils.chat.BaseColorUtils;
 import top.auspice.utils.chat.CodedChatFormats;

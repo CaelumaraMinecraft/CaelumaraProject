@@ -16,7 +16,7 @@ import top.auspice.configs.texts.messenger.StaticMessenger;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.diversity.Diversity;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.loader.AuspiceLoader;
 import top.auspice.platform.bukkit.entity.OfflinePlayer;
 import top.auspice.server.command.CommandSender;

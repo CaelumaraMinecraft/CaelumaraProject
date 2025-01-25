@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.Style.Merge;
 import org.jetbrains.annotations.Unmodifiable;
 import top.auspice.configs.texts.compiler.pieces.TextPiece;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.LinkedList;
 import java.util.List;

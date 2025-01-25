@@ -2,11 +2,11 @@ package top.auspice.constants.location;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.annotations.data.Immutable;
-import top.auspice.data.object.DataStringRepresentation;
-import top.auspice.data.object.structure.DataStructureObject;
+import net.aurika.annotations.data.Immutable;
+import net.aurika.data.object.DataStringRepresentation;
+import net.aurika.data.object.structure.DataStructureObject;
 import top.auspice.server.location.*;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 import top.auspice.utils.string.CommaDataSplitStrategy;
 import top.auspice.utils.string.Strings;
 
@@ -184,9 +184,12 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
         return Math.sqrt(this.distanceIgnoreWorld(var1));
     }
 
+    public static SimpleBlockLocation fromString(@NotNull String str) {
+        return fromDataString(str);
+    }
 
-    public static SimpleBlockLocation fromString(@NotNull String var0) {
-        CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(var0, 4);
+    public static SimpleBlockLocation fromDataString(@NotNull String data) {
+        CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(data, 4);
         String world = splitter.nextString();
         int x = splitter.nextInt();
         int y = splitter.nextInt();

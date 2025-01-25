@@ -3,7 +3,7 @@ package top.auspice.utils.unsafe;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.Objects;
 import java.util.concurrent.Callable;

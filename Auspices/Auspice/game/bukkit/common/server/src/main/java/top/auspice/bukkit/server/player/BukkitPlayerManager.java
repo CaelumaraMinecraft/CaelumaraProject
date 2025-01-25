@@ -3,7 +3,7 @@ package top.auspice.bukkit.server.player;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.annotations.data.SyncedData;
+import net.aurika.annotations.data.SyncedData;
 import top.auspice.bukkit.server.core.BukkitServer;
 import top.auspice.platform.bukkit.entity.BukkitPlayer;
 import top.auspice.server.player.PlayerManager;

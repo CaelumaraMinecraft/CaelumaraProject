@@ -1,8 +1,8 @@
 package top.auspice.configs.texts.compiler.container;
 
-import top.auspice.config.accessor.ClearlyConfigAccessor;
-import top.auspice.config.accessor.UndefinedPathConfigAccessor;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.accessor.ClearlyConfigAccessor;
+import net.aurika.config.accessor.UndefinedPathConfigAccessor;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;

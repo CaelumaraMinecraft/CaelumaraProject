@@ -1,9 +1,9 @@
 package top.auspice.constants.logs;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.key.Lockable;
-import top.auspice.key.NSedKey;
-import top.auspice.key.NSKedRegistry;
+import net.aurika.namespace.Lockable;
+import net.aurika.namespace.NSedKey;
+import net.aurika.namespace.NSKedRegistry;
 import top.auspice.main.Auspice;
 
 import java.util.Map;

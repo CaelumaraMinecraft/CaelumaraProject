@@ -3,7 +3,7 @@ package top.auspice.tasks.priority;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.tasks.Task;
 import top.auspice.tasks.TaskRegistry;
 

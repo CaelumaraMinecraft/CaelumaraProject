@@ -1,9 +1,9 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.data.database.dataprovider.SectionableDataGetter;
-import top.auspice.key.NSKeyed;
-import top.auspice.key.NSedKey;
+import net.aurika.data.database.dataprovider.SectionableDataGetter;
+import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NSedKey;
 
 import java.util.Objects;
 

@@ -9,7 +9,7 @@ import top.auspice.configs.messages.provider.SingleMessageProvider;
 import top.auspice.diversity.Diversity;
 import top.auspice.diversity.DiversityManager;
 import top.auspice.server.command.CommandSender;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 public final class StaticMessenger implements Messenger {
     private final MessageProvider messageProvider;

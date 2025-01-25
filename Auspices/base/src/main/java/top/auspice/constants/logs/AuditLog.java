@@ -4,10 +4,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.context.provider.TextContextProvider;
-import top.auspice.data.object.serialize.Deserializable;
-import top.auspice.data.object.serialize.Serializable;
-import top.auspice.data.database.dataprovider.SectionableDataGetter;
-import top.auspice.data.database.dataprovider.SectionableDataSetter;
+import net.aurika.data.object.serialize.Deserializable;
+import net.aurika.data.object.serialize.Serializable;
+import net.aurika.data.database.dataprovider.SectionableDataGetter;
+import net.aurika.data.database.dataprovider.SectionableDataSetter;
 import top.auspice.utils.time.TimeUtils;
 
 public abstract class AuditLog implements TextContextProvider, Serializable, Deserializable {

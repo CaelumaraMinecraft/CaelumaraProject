@@ -2,9 +2,9 @@ package top.auspice.managers.network.socket
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import top.auspice.key.NSedKey
-import top.auspice.key.NSKeyed
-import top.auspice.key.NSKedRegistry
+import net.aurika.namespace.NSedKey
+import net.aurika.namespace.NSKeyed
+import net.aurika.namespace.NSKedRegistry
 import top.auspice.main.Auspice
 import top.auspice.utils.network.SocketJsonCommunicator
 import java.util.function.Consumer

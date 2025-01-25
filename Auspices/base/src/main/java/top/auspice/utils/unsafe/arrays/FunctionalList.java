@@ -2,7 +2,7 @@ package top.auspice.utils.unsafe.arrays;
 
 import kotlin.jvm.internal.CollectionToArray;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 import top.auspice.utils.nonnull.NonNullList;
 
 import java.util.*;

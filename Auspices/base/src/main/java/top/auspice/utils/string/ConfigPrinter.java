@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.comments.CommentLine;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.nodes.*;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.texts.MessageHandler;
 import top.auspice.utils.unsafe.stacktrace.StackTraces;
 

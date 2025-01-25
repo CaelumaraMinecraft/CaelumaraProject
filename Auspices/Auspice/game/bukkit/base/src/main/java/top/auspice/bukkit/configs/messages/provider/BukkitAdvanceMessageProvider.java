@@ -6,7 +6,7 @@ import com.cryptomorin.xseries.messages.Titles;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.bukkit.config.sections.ConfigSectionExtension;
 import top.auspice.bukkit.loader.PluginAuspiceLoader;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.configs.messages.MessageObject;
 import top.auspice.configs.texts.compiler.TextCompiler;

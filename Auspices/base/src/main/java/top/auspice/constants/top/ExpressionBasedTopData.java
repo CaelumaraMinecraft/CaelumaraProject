@@ -2,7 +2,7 @@ package top.auspice.constants.top;
 
 import com.google.common.base.Strings;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.texts.AuspiceLang;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.messenger.Messenger;

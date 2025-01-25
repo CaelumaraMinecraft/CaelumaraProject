@@ -1,7 +1,7 @@
 package top.auspice.gui;
 
-import top.auspice.config.abstraction.ConfigurationObject;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.abstraction.ConfigurationObject;
+import net.aurika.config.sections.ConfigSection;
 
 public abstract class GUITemplate implements ConfigurationObject {
     protected ConfigSection configSection;

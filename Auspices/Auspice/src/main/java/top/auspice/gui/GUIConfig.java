@@ -1,13 +1,13 @@
 package top.auspice.gui;
 
+import net.aurika.config.adapters.*;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import top.auspice.commands.CommandContext;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.config.adapters.*;
-import top.auspice.config.profile.managers.ConfigManager;
-import top.auspice.config.yaml.snakeyaml.validation.NodeValidator;
-import top.auspice.config.yaml.snakeyaml.validation.Validator;
+import net.aurika.config.profile.managers.ConfigManager;
+import net.aurika.snakeyaml.extension.validation.NodeValidator;
+import net.aurika.snakeyaml.extension.validation.Validator;
 import top.auspice.utils.Pair;
 import top.auspice.debug.AuspiceDebug;
 import top.auspice.gui.objects.GUIObject;

@@ -3,7 +3,7 @@
 package top.auspice.bukkit.config.sections
 
 import org.bukkit.configuration.ConfigurationSection
-import top.auspice.config.sections.ConfigSection
+import net.aurika.config.sections.ConfigSection
 
 fun ConfigSection.toBukkitConfigurationSection(): ConfigurationSection {
     return BukkitConfigurationSection(this)

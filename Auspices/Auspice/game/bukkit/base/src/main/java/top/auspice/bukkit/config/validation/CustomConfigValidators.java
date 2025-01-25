@@ -4,12 +4,12 @@ import com.cryptomorin.xseries.XEnchantment;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
-import top.auspice.config.sections.ConfigSection;
-import top.auspice.config.sections.label.Label;
-import top.auspice.config.validation.ConfigValidator;
-import top.auspice.config.validation.ConfigValidators;
-import top.auspice.config.validation.ValidationContext;
-import top.auspice.config.validation.ValidationFailure;
+import net.aurika.config.sections.ConfigSection;
+import net.aurika.config.sections.label.Label;
+import net.aurika.config.validation.ConfigValidator;
+import net.aurika.config.validation.ConfigValidators;
+import net.aurika.config.validation.ValidationContext;
+import net.aurika.config.validation.ValidationFailure;
 
 import java.util.*;
 

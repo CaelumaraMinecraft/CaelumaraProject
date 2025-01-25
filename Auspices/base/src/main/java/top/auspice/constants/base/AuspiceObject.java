@@ -2,7 +2,7 @@ package top.auspice.constants.base;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.config.accessor.ClearlyConfigAccessor;
+import net.aurika.config.accessor.ClearlyConfigAccessor;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.configs.texts.context.provider.CascadingTextContextProvider;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
@@ -11,7 +11,7 @@ import top.auspice.constants.logs.Loggable;
 import top.auspice.constants.metadata.AuspiceMetadata;
 import top.auspice.constants.metadata.AuspiceMetadataHandler;
 import top.auspice.constants.metadata.Metadatable;
-import top.auspice.data.object.DataObject;
+import net.aurika.data.object.DataObject;
 import top.auspice.utils.ZeroArrays;
 import top.auspice.utils.nonnull.NonNullMap;
 
@@ -145,5 +145,42 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
         }
     }
 
-    interface WrapperImpl extends AuspiceObject {}
+    interface WrapperImpl extends AuspiceObject, DataObject.WrapperImpl {
+        @NotNull AuspiceObject getWrapped();
+
+        @Override
+        default void addMessageContextEdits(@NotNull TextPlaceholderProvider textPlaceholderProvider) {
+            this.getWrapped().addMessageContextEdits(textPlaceholderProvider);
+        }
+
+        @Override
+        default AuspiceMetadata getMetadata(AuspiceMetadataHandler handler) {
+            return this.getWrapped().getMetadata(handler);
+        }
+
+        @Override
+        default @NotNull Map<AuspiceMetadataHandler, AuspiceMetadata> getMetadata() {
+            return this.getWrapped().getMetadata();
+        }
+
+        @Override
+        default void setMetadata(Map<AuspiceMetadataHandler, AuspiceMetadata> metadata) {
+            this.getWrapped().setMetadata(metadata);
+        }
+
+        @Override
+        default <C extends AuditLog, T> T getNewestLog(Class<C> type, Function<C, T> var2) {
+            return this.getWrapped().getNewestLog(type, var2);
+        }
+
+        @Override
+        default @NonNull LinkedList<AuditLog> getLogs() {
+            return this.getWrapped().getLogs();
+        }
+
+        @Override
+        default void log(@NotNull AuditLog log) {
+            this.getWrapped().log(log);
+        }
+    }
 }

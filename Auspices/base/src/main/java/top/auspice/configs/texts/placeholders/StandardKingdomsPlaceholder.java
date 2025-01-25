@@ -4,7 +4,7 @@ import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.config.accessor.ClearlyConfigAccessor;
+import net.aurika.config.accessor.ClearlyConfigAccessor;
 import top.auspice.configs.texts.compiler.container.TextContainer;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.SupportedLocale;

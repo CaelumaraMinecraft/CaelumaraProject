@@ -3,7 +3,7 @@ package top.auspice.configs.texts.compiler.placeholders.functions;
 import kotlin.collections.CollectionsKt;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.texts.compiler.placeholders.types.KingdomsPlaceholder;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.List;
 import java.util.Objects;

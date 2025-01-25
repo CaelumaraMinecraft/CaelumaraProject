@@ -2,7 +2,7 @@ package top.auspice.configs.texts.compiler.placeholders.functions;
 
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.texts.compiler.placeholders.types.KingdomsPlaceholder;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 public class PlaceholderFunctionData {
     private final @NotNull String functionName;

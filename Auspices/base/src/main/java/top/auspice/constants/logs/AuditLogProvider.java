@@ -1,6 +1,6 @@
 package top.auspice.constants.logs;
 
-import top.auspice.key.NSKeyed;
+import net.aurika.namespace.NSKeyed;
 
 public interface AuditLogProvider extends NSKeyed {
     AuditLog construct();

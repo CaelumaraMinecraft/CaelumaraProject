@@ -4,13 +4,13 @@ import com.cryptomorin.xseries.XSound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.config.adapters.YamlWithDefaults;
+import net.aurika.config.adapters.YamlWithDefaults;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.messenger.Messenger;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.gui.objects.inventory.GUIInventoryConstructor;
-import top.auspice.abstraction.conditional.ConditionChain;
+import net.aurika.abstraction.conditional.ConditionChain;
 
 import java.util.Collections;
 import java.util.List;

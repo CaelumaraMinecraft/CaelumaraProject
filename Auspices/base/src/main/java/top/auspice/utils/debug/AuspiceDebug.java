@@ -1,7 +1,7 @@
 package top.auspice.utils.debug;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.key.NSedKey;
+import net.aurika.namespace.NSedKey;
 import top.auspice.main.Auspice;
 
 public enum AuspiceDebug implements DebugNS {

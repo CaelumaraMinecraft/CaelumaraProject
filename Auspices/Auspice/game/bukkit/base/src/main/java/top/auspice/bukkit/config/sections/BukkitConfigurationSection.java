@@ -10,8 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.bukkit.config.sections.ConfigSectionExtension;
-import top.auspice.config.sections.ConfigSection;
+import net.aurika.config.sections.ConfigSection;
 import top.auspice.utils.string.Strings;
 
 import java.util.HashSet;

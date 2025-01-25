@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.texts.compiler.TextCompiler;
 import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 public class MessageProcessor {
     protected final @NotNull String originalString;

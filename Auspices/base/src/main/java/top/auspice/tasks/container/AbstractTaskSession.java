@@ -1,7 +1,7 @@
 package top.auspice.tasks.container;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.key.NamespacedMap;
+import net.aurika.namespace.NamespacedMap;
 import top.auspice.tasks.context.TaskContext;
 
 import java.util.IdentityHashMap;

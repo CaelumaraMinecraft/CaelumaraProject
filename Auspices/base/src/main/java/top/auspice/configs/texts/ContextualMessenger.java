@@ -8,7 +8,7 @@ import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.context.provider.TextContextProvider;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.Arrays;
 import java.util.Objects;

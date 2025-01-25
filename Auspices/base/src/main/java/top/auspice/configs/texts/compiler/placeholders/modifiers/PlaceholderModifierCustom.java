@@ -3,7 +3,7 @@ package top.auspice.configs.texts.compiler.placeholders.modifiers;
 import jline.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.config.accessor.ClearlyConfigAccessor;
+import net.aurika.config.accessor.ClearlyConfigAccessor;
 import top.auspice.configs.texts.compiler.placeholders.types.KingdomsPlaceholder;
 import top.auspice.configs.texts.compiler.PlaceholderTranslationContext;
 import top.auspice.configs.texts.compiler.placeholders.Placeholder;

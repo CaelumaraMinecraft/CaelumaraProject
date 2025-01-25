@@ -61,9 +61,11 @@ public final class Pair<K, V> implements Map.Entry<K, V> {
         } else if (!(obj instanceof Map.Entry)) {
             return false;
         } else {
-            label43: {
-                label29: {
-                    Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
+            label43:
+            {
+                label29:
+                {
+                    Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
                     if (this.key == null) {
                         if (entry.getKey() != null) {
                             break label29;

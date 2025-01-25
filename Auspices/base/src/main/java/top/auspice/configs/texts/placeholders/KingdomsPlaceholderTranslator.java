@@ -5,7 +5,7 @@ import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.player.AuspicePlayer;
-import top.auspice.utils.Checker;
+import net.aurika.utils.Checker;
 
 import java.util.HashMap;
 import java.util.Locale;
