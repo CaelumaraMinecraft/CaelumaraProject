@@ -14,26 +14,39 @@ import static net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpretContex
 public class ListNodeInterpreter<E> implements NodeInterpreter<List<E>> {
 
     private final @NotNull NodeInterpreter<E> elementInterpreter;
-    private final boolean translateSingleToList;
-    private final boolean requireAllSuccessElements;
+    private final boolean translateSingleNodeToList;
+    private final boolean requireAllSuccessfulElements;
 
-    protected ListNodeInterpreter(@NotNull NodeInterpreter<E> elementInterpreter, boolean translateSingleToList, boolean requireAllSuccessElements) {
+    public static <E> @NotNull ListNodeInterpreter<E> strictListInterpreter(@NotNull NodeInterpreter<E> elementInterpreter) {
+        return listInterpreter(elementInterpreter, false, true);
+    }
+
+    public static <E> @NotNull ListNodeInterpreter<E> looseListInterpreter(@NotNull NodeInterpreter<E> elementInterpreter) {
+        return listInterpreter(elementInterpreter, true, false);
+    }
+
+    public static <E> @NotNull ListNodeInterpreter<E> listInterpreter(@NotNull NodeInterpreter<E> elementInterpreter, boolean translateSingleNodeToList, boolean requireAllSuccessfulElements) {
+        Checker.Arg.notNull(elementInterpreter, "elementInterpreter");
+        return new ListNodeInterpreter<>(elementInterpreter, translateSingleNodeToList, requireAllSuccessfulElements);
+    }
+
+    protected ListNodeInterpreter(@NotNull NodeInterpreter<E> elementInterpreter, boolean translateSingleNodeToList, boolean requireAllSuccessfulElements) {
         Checker.Arg.notNull(elementInterpreter, "elementInterpreter");
         this.elementInterpreter = elementInterpreter;
-        this.translateSingleToList = translateSingleToList;
-        this.requireAllSuccessElements = requireAllSuccessElements;
+        this.translateSingleNodeToList = translateSingleNodeToList;
+        this.requireAllSuccessfulElements = requireAllSuccessfulElements;
     }
 
     public @NotNull NodeInterpreter<E> elementInterpreter() {
         return elementInterpreter;
     }
 
-    public boolean translateSingleToList() {
-        return translateSingleToList;
+    public boolean translateSingleNodeToList() {
+        return translateSingleNodeToList;
     }
 
-    public boolean requireAllSuccessElements() {
-        return requireAllSuccessElements;
+    public boolean requireAllSuccessfulElements() {
+        return requireAllSuccessfulElements;
     }
 
     @Override
@@ -43,9 +56,10 @@ public class ListNodeInterpreter<E> implements NodeInterpreter<List<E>> {
             return context.asResult(NULL, null);
         }
         if (node instanceof ScalarNode scalarNode) {
-            if (translateSingleToList) {
+            if (translateSingleNodeToList) {
                 List<E> list = new ArrayList<>();
-                list.add(elementInterpreter.parse(new NodeInterpretContext<>(scalarNode)));
+                NodeInterpretContext<E> eContext = new NodeInterpretContext<>(scalarNode);
+                list.add(elementInterpreter.parse(eContext));
                 return context.asResult(COERCED_TYPE, list);
             } else {
                 return context.asResult(DIFFERENT_TYPE, null);
@@ -56,9 +70,9 @@ public class ListNodeInterpreter<E> implements NodeInterpreter<List<E>> {
             for (Node eNode : sequenceNode.getValue()) {
                 NodeInterpretContext<E> eContext = new NodeInterpretContext<>(eNode);
                 E eValue = elementInterpreter.parse(eContext);
-                if (requireAllSuccessElements) {
+                if (requireAllSuccessfulElements) {
                     NodeInterpretContext.Result eResult = eContext.getResult();
-                    if (eResult == null || !eResult.isSuccess()) {
+                    if (eResult == null || !eResult.isSuccessful()) {
                         return context.asResult(DIFFERENT_TYPE, null);
                     }
                 }

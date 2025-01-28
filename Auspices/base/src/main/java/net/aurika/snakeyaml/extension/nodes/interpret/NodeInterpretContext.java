@@ -107,7 +107,7 @@ public class NodeInterpretContext<V> {
 
         @NotNull String getName();
 
-        boolean isSuccess();
+        boolean isSuccessful();
     }
 
     enum StdResults implements Result {
@@ -130,7 +130,7 @@ public class NodeInterpretContext<V> {
         }
 
         @Override
-        public boolean isSuccess() {
+        public boolean isSuccessful() {
             return isSuccess;
         }
     }
