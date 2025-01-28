@@ -1007,7 +1007,7 @@ public class Strings {
      * @return 分割后的字符串数组
      */
     public static @NotNull String @NotNull [] splitArray(@NotNull String string, char separator, boolean keepEmptyString) {
-        Checker.Argument.checkNotNull(string, "string");
+        Checker.Arg.notNull(string, "string");
 
         int length = string.length();
         if (length == 0) {  // ""
@@ -1046,7 +1046,7 @@ public class Strings {
     }
 
     public static @NotNull String reverse(@NotNull String string) {
-        Checker.Argument.checkNotNull(string, "string");
+        Checker.Arg.notNull(string, "string");
 
         char[] var4 = string.toCharArray();
         int var1 = 0;

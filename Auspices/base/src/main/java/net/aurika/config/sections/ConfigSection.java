@@ -1,14 +1,14 @@
 package net.aurika.config.sections;
 
+import net.aurika.config.path.ConfigEntry;
+import net.aurika.config.path.ConfigEntryMap;
+import net.aurika.config.sections.format.ConfigSectionFormat;
+import net.aurika.config.sections.interpreter.SectionInterpreter;
+import net.aurika.config.sections.label.Label;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.config.path.ConfigEntry;
-import net.aurika.config.path.ConfigEntryMap;
-import net.aurika.config.sections.interpreter.SectionInterpreter;
-import net.aurika.config.sections.label.Label;
-import net.aurika.config.sections.format.ConfigSectionFormat;
 import top.auspice.configs.texts.compiler.TextCompilerSettings;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
@@ -113,7 +113,7 @@ public interface ConfigSection {
      * @param parsed 子配置节所配置的值
      * @return 已有的或新增的子配置节
      */
-    @NotNull ConfigSection makeSubSection(@NotNull String key, @Nullable Object parsed);
+    @NotNull ConfigSection set(@NotNull String key, @Nullable Object parsed);
 
     /**
      * 移除一个子配置节
@@ -142,11 +142,11 @@ public interface ConfigSection {
      */
     @NotNull ConfigSection createSection(@NotNull String @NotNull [] path);
 
-    @NotNull Set<String> getKeys();
+    Set<String> getKeys();
 
-    @NotNull Collection<String> getKeys(boolean deep);
+    Collection<String> getKeys(boolean deep);
 
-    @NotNull Collection<String> getKeys(@IntRange(from = 1) int depth);
+    Collection<String> getKeys(@IntRange(from = 1) int depth);
 
     @NotNull Map<String, Object> getSets();
 

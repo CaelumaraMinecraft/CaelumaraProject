@@ -7,7 +7,7 @@ import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
 import net.aurika.config.placeholder.invoking.PlaceholderInvokable;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.constants.base.KeyedAuspiceObject;
-import net.aurika.data.centers.AuspiceDataCenter;
+import top.auspice.data.AuspiceDataCenter;
 import top.auspice.diversity.Diversity;
 import top.auspice.server.player.OfflinePlayer;
 

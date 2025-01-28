@@ -5,9 +5,9 @@ import net.aurika.config.adapters.YamlContainer;
 import net.aurika.config.adapters.YamlWithDefaults;
 import net.aurika.config.path.ConfigPath;
 import net.aurika.config.path.ConfigPathBuilder;
-import net.aurika.config.sections.YamlConfigSection;
-import net.aurika.snakeyaml.extension.interpret.NodeInterpretContext;
-import net.aurika.snakeyaml.extension.interpret.NodeInterpreter;
+import net.aurika.config.sections.YamlNodeSection;
+import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpretContext;
+import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpreter;
 import net.aurika.utils.Checker;
 import top.auspice.utils.arrays.ArrayUtils;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Set;
 
 public class YamlUndefinedPathConfigAccessor implements Cloneable, UndefinedPathConfigAccessor {
-    private final YamlConfigSection currentConfigRoot;
-    private final YamlConfigSection defaultConfigRoot;
+    private final YamlNodeSection currentConfigRoot;
+    private final YamlNodeSection defaultConfigRoot;
     private final ConfigPathBuilder configPathBuilder;
     private boolean noDefault;
 
@@ -27,14 +27,14 @@ public class YamlUndefinedPathConfigAccessor implements Cloneable, UndefinedPath
         this(yamlContainer == null ? null : yamlContainer.getConfig(), !(yamlContainer instanceof YamlWithDefaults) ? null : ((YamlWithDefaults) yamlContainer).getDefaults(), configPath);
     }
 
-    public YamlUndefinedPathConfigAccessor(YamlConfigSection currentConfigRoot, YamlConfigSection defaultConfigRoot, ConfigPath configPath) {
-        Checker.Argument.checkNotNull(configPath, "configPath", "option for undefined config accessor cannot be null");
+    public YamlUndefinedPathConfigAccessor(YamlNodeSection currentConfigRoot, YamlNodeSection defaultConfigRoot, ConfigPath configPath) {
+        Checker.Arg.notNull(configPath, "configPath", "option for undefined config accessor cannot be null");
         this.configPathBuilder = new ConfigPathBuilder(configPath);
         this.currentConfigRoot = currentConfigRoot;
         this.defaultConfigRoot = defaultConfigRoot;
     }
 
-    private YamlUndefinedPathConfigAccessor(YamlConfigSection var1, YamlConfigSection var2, ConfigPathBuilder configPathBuilder, boolean noDefault) {
+    private YamlUndefinedPathConfigAccessor(YamlNodeSection var1, YamlNodeSection var2, ConfigPathBuilder configPathBuilder, boolean noDefault) {
         this.currentConfigRoot = var1;
         this.defaultConfigRoot = var2;
         this.configPathBuilder = configPathBuilder;
@@ -145,8 +145,8 @@ public class YamlUndefinedPathConfigAccessor implements Cloneable, UndefinedPath
     }
 
     public YamlClearlyConfigAccessor getSection() throws UndefinedConfigPathAccessException {
-        YamlConfigSection currentSection = this.currentConfigRoot.getSection(this.configPathBuilder.build());
-        YamlConfigSection defaultSection = this.defaultConfigRoot == null ? null : this.defaultConfigRoot.getSection(this.configPathBuilder.build());
+        YamlNodeSection currentSection = this.currentConfigRoot.getSection(this.configPathBuilder.build());
+        YamlNodeSection defaultSection = this.defaultConfigRoot == null ? null : this.defaultConfigRoot.getSection(this.configPathBuilder.build());
         if (currentSection == null) {
             if (!this.noDefault && defaultSection != null) {
                 YamlClearlyConfigAccessor clearly = new YamlClearlyConfigAccessor(defaultSection, defaultSection);

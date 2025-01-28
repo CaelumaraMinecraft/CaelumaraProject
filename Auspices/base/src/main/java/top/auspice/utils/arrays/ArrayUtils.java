@@ -6,12 +6,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.util.*;
-import java.util.function.BiFunction;
 
 public final class ArrayUtils {
 
     @Contract("_, _ -> new")
-    public static <T> T[] removeHead(T[] oldArray, int count) {
+    public static <T> T[] removePre(T[] oldArray, int count) {
         if (count > oldArray.length) {
             throw new IllegalArgumentException("Count is better than array length: " + count + " > " + Arrays.toString(oldArray) + ".length");
         }
@@ -52,7 +51,6 @@ public final class ArrayUtils {
             array[var1] = var3;
             ++var1;
         }
-
     }
 
     public static int sizeOfIterator(Iterator<?> iterator) {
@@ -102,9 +100,9 @@ public final class ArrayUtils {
         return merged;
     }
 
-    public static Object[] shift(Object[] var0) {
-        Object[] var1 = new Object[var0.length - 1];
-        System.arraycopy(var0, 1, var1, 0, var1.length);
+    public static Object[] shift(Object[] array) {
+        Object[] var1 = new Object[array.length - 1];
+        System.arraycopy(array, 1, var1, 0, var1.length);
         return var1;
     }
 
@@ -116,9 +114,9 @@ public final class ArrayUtils {
         if (count <= array.length) {
             throw new IllegalArgumentException("Cannot allocate array with the same or smaller size than the initial array " + count + " <= " + array.length);
         } else {
-            T[] var2 = (T[]) Array.newInstance(array.getClass().getComponentType(), count);
-            System.arraycopy(array, 0, var2, 0, array.length);
-            return var2;
+            T[] newArr = (T[]) Array.newInstance(array.getClass().getComponentType(), count);
+            System.arraycopy(array, 0, newArr, 0, array.length);
+            return newArr;
         }
     }
 
@@ -132,30 +130,6 @@ public final class ArrayUtils {
             }
         }
         return var1;
-    }
-
-    public static <T> T[] requireNonNull(T[] array) {
-        return requireNonNull(array, "Input array contains null value: " + Arrays.toString(array));
-    }
-
-    public static <T> T[] requireNonNull(T[] array, String message) {
-        boolean hasNull = false;
-        if (array == null) {
-            hasNull = true;
-        } else {
-            for (T t : array) {
-                if (t == null) {
-                    hasNull = true;
-                    break;
-                }
-            }
-        }
-
-        if (hasNull) {
-            throw new IllegalArgumentException(message);
-        } else {
-            return array;
-        }
     }
 
     public static <T> int[] findNullIndexes(T[] array) {
@@ -181,7 +155,6 @@ public final class ArrayUtils {
         return indexes;
     }
 
-    @SuppressWarnings("unchecked")
     @Contract("_, _, _, _ -> param2")
     public static <T> List<T> typeFilter(List<?> list, List<T> to, Class<T> elementType, boolean nonNulElement) {
         for (Object e : list) {
@@ -217,6 +190,15 @@ public final class ArrayUtils {
         }
 
         return (List<T>) list;
+    }
+
+    public static boolean contains(Object @NotNull [] array, Object o) {
+        for (Object e : array) {
+            if (e.equals(o)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static final class ConditionalBuilder<T> {

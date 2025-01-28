@@ -6,6 +6,11 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
+import net.aurika.data.database.DatabaseType;
+import net.aurika.data.database.base.Database;
+import net.aurika.data.database.sql.DatabaseProperties;
+import net.aurika.data.handlers.abstraction.DataHandler;
+import net.aurika.data.object.DataObject;
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.codecs.Codec;
@@ -14,21 +19,15 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import net.aurika.data.database.DatabaseType;
-import net.aurika.data.database.base.Database;
-import net.aurika.data.database.sql.DatabaseProperties;
-import net.aurika.data.handlers.abstraction.DataHandler;
-import net.aurika.data.object.DataObject;
 
 import java.util.Objects;
 
 public abstract class MongoDBDatabase<T extends DataObject> implements Database<T> {
-    @NotNull
-    protected final MongoCollection<Document> collection;
-    @NotNull
-    protected static final MongoClient CLIENT;
-    @NotNull
-    protected static final MongoDatabase DATABASE;
+
+    protected final @NotNull MongoCollection<Document> collection;
+
+    protected static final @NotNull MongoClient CLIENT;
+    protected static final @NotNull MongoDatabase DATABASE;
     protected static final ReplaceOptions UPSERT = (new ReplaceOptions()).upsert(true);
     protected static final @NotNull String PRIMARY_KEY_ID = "_id";
     protected static final @NotNull DecoderContext DEFAULT_DECODER_CONTEXT = DecoderContext.builder().build();
@@ -64,7 +63,7 @@ public abstract class MongoDBDatabase<T extends DataObject> implements Database<
         DatabaseProperties var0 = DatabaseProperties.defaults(DatabaseType.MongoDB);
         MongoClientSettings.Builder var1;
         MongoClientSettings.Builder var2;
-        (var2 = var1 = MongoClientSettings.builder()).applicationName("KingdomsX");
+        (var2 = var1 = MongoClientSettings.builder()).applicationName("Aurika");
         String databaseUri = AuspiceGlobalConfig.DATABASE_URI.getString();
         CharSequence var4;
         if ((var4 = databaseUri) != null && !var4.isEmpty()) {

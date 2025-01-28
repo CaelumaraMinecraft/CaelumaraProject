@@ -3,9 +3,9 @@ package net.aurika.data.database.sql.schema;
 import kotlin.text.MatchGroup;
 import kotlin.text.MatchGroupCollection;
 import kotlin.text.Regex;
+import net.aurika.data.database.DatabaseType;
 import org.intellij.lang.annotations.Language;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import net.aurika.data.database.DatabaseType;
 import top.auspice.utils.string.Strings;
 
 import java.io.IOException;

@@ -43,21 +43,21 @@ public interface ContextualMessenger extends TextContextProvider {
 
     @NonExtendable
     default void sendMessage(@NotNull Messenger messenger, @NotNull Object... edits) {
-        Checker.Argument.checkNotNull(messenger, "messenger");
+        Checker.Arg.notNull(messenger, "messenger");
         Objects.requireNonNull(edits);
         this.sendMessage(this.getMessageReceiver(), messenger, Arrays.copyOf(edits, edits.length));
     }
 
     @NonExtendable
     default void sendMessage(@NotNull Messenger messenger, @NotNull TextPlaceholderProvider textPlaceholderProvider) {
-        Checker.Argument.checkNotNull(messenger, "messenger");
-        Checker.Argument.checkNotNull(textPlaceholderProvider, "messagePlaceholderProvider");
+        Checker.Arg.notNull(messenger, "messenger");
+        Checker.Arg.notNull(textPlaceholderProvider, "messagePlaceholderProvider");
         messenger.sendMessage(this.getMessageReceiver(), textPlaceholderProvider);
     }
 
     default void sendMessage(@NotNull CommandSender messageReceiver, @NotNull Messenger messenger, @NotNull Object... edits) {
-        Checker.Argument.checkNotNull(messageReceiver, "messageReceiver");
-        Checker.Argument.checkNotNull(messenger, "messenger");
+        Checker.Arg.notNull(messageReceiver, "messageReceiver");
+        Checker.Arg.notNull(messenger, "messenger");
         Objects.requireNonNull(edits);
         if (edits.length != 0) {
             this.getTextContext().placeholders(Arrays.copyOf(edits, edits.length));

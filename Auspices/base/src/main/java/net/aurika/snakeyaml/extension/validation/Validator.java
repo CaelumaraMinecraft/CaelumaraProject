@@ -7,7 +7,7 @@ import org.snakeyaml.engine.v2.comments.CommentLine;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
 import org.snakeyaml.engine.v2.nodes.*;
-import net.aurika.config.yaml.snakeyaml.common.SimpleWriter;
+import net.aurika.snakeyaml.extension.common.SimpleWriter;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

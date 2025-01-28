@@ -7,7 +7,6 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.data.database.dataprovider.*;
 import top.auspice.nbt.tag.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
@@ -19,22 +18,21 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.*;
 
-public final class NBTDataProvider implements DataProvider, SectionCreatableDataSetter {
-    @NotNull
-    private final NBTTag<?> element;
+public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter {
+
+    private final @NotNull NBTTag<?> element;
 
     public NBTDataProvider(@NotNull NBTTag<?> element) {
         Objects.requireNonNull(element);
         this.element = element;
     }
 
-    @NotNull
-    public NBTTag<?> getElement$core() {
+    public @NotNull NBTTag<?> getElement$core() {
         return this.element;
     }
 
-    @NotNull
-    public DataProvider createSection(@NotNull String key) {
+    @Override
+    public @NotNull DataProvider createSection(@NotNull String key) {
         Objects.requireNonNull(key);
         NBTTagCompound var10000 = NBTTagCompound.empty();
         Intrinsics.checkNotNullExpressionValue(var10000, "");
@@ -46,8 +44,8 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
-    @NotNull
-    public SectionableDataSetter createSection() {
+    @Override
+    public @NotNull SectionableDataSetter createSection() {
         NBTTagCompound var10000 = NBTTagCompound.empty();
         Intrinsics.checkNotNullExpressionValue(var10000, "");
         if (this.element instanceof NBTTagList) {
@@ -58,19 +56,19 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
-    @NotNull
-    public DataProvider get(@NotNull String key) {
+    @Override
+    public @NotNull DataProvider get(@NotNull String key) {
         Objects.requireNonNull(key);
         return new NamedNBTDataProvider(key, NBTTagType.COMPOUND.cast(this.element));
     }
 
-    @NotNull
-    public NBTDataProvider asSection() {
+    @Override
+    public @NotNull NBTDataProvider asSection() {
         return this;
     }
 
-    @Nullable
-    public String asString(@NotNull Supplier<String> def) {
+    @Override
+    public @Nullable String asString(@NotNull Supplier<String> def) {
         Objects.requireNonNull(def);
         NBTTag<?> var2 = this.element;
         NBTTagString var10000 = var2 instanceof NBTTagString ? (NBTTagString) var2 : null;
@@ -87,62 +85,60 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
     }
 
     @Override
-    @NotNull
-    public UUID asUUID() {
-
-        UUID uuid = FastUUID.fromString(this.asString(() -> {
-            throw new IllegalStateException();
-        }));
-        Intrinsics.checkNotNullExpressionValue(uuid, "");
-        return uuid;
+    public @Nullable UUID asUUID() {
+        String s = this.asString();
+        return s == null ? null : FastUUID.fromString(s);
     }
 
-    @Nullable
-    public SimpleBlockLocation asSimpleLocation() {
-        String var10000 = this.asString();
-        return var10000 != null ? SimpleBlockLocation.fromString(var10000) : null;
+    @Override
+    public @Nullable SimpleBlockLocation asSimpleLocation() {
+        String s = this.asString();
+        return s != null ? SimpleBlockLocation.fromString(s) : null;
     }
 
+    @Override
     public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
-        String var10000 = this.asString(() -> {
-            throw new IllegalStateException();
-        });
-        SimpleChunkLocation var1 = SimpleChunkLocation.fromString(var10000);
-        Intrinsics.checkNotNullExpressionValue(var1, "");
-        return var1;
+        String s = this.asString();
+        return s == null ? null : SimpleChunkLocation.fromString(s);
     }
 
+    @Override
     public @Nullable SimpleLocation asLocation() {
-        String var10000 = this.asString(() -> null);
-        return var10000 != null ? SimpleLocation.fromString(var10000) : null;
+        String s = this.asString(() -> null);
+        return s != null ? SimpleLocation.fromString(s) : null;
     }
 
+    @Override
     public int asInt(@NotNull IntSupplier def) {
         return ((NBTTagInt) this.element).valueAsInt();
     }
 
+    @Override
     public long asLong(@NotNull LongSupplier def) {
         return ((NBTTagLong) this.element).valueAsLong();
     }
 
+    @Override
     public float asFloat(@NotNull FloatSupplier def) {
         return ((NBTTagFloat) this.element).valueAsFloat();
     }
 
+    @Override
     public double asDouble(@NotNull DoubleSupplier def) {
-        Objects.requireNonNull(def, "");
+        Objects.requireNonNull(def, "def");
         return ((NBTTagDouble) this.element).valueAsDouble();
     }
 
+    @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
-        Objects.requireNonNull(def, "");
+        Objects.requireNonNull(def, "def");
         return ((NBTTagBool) this.element).valueAsBool();
     }
 
-    @NotNull
-    public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
+    @Override
+    public <E, C extends Collection<E>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Objects.requireNonNull(c, "c");
-        Objects.requireNonNull(dataProcessor, "");
+        Objects.requireNonNull(dataProcessor, "dataProcessor");
         NBTTag<?> var10000 = this.element;
         Intrinsics.checkNotNull(var10000);
 
@@ -154,8 +150,8 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         return c;
     }
 
-    @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+    @Override
+    public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
         Objects.requireNonNull(m, "");
         Objects.requireNonNull(dataProcessor, "");
         NBTTag<?> var10000 = this.element;
@@ -176,15 +172,18 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         return m;
     }
 
-    public void setSimpleLocation(@NotNull SimpleBlockLocation value) {
+    @Override
+    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
         this.setString(value != null ? value.asDataString() : null);
     }
 
+    @Override
     public void setSimpleChunkLocation(@NotNull SimpleChunkLocation value) {
         Objects.requireNonNull(value, "");
         this.setString(value.asDataString());
     }
 
+    @Override
     public void setLong(long value) {
         if (this.element instanceof NBTTagList) {
             ((NBTTagList<?>) this.element).addUnknown(NBTTagLong.of(value));
@@ -193,7 +192,8 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
-    public void setString(@NotNull String value) {
+    @Override
+    public void setString(@Nullable String value) {
         if (value != null) {
             if (this.element instanceof NBTTagList) {
                 ((NBTTagList<?>) this.element).addUnknown(NBTTagString.of(value));
@@ -203,6 +203,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
+    @Override
     public void setInt(int value) {
         if (this.element instanceof NBTTagList) {
             ((NBTTagList<?>) this.element).addUnknown(NBTTagInt.of(value));
@@ -211,6 +212,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
+    @Override
     public void setFloat(float value) {
         if (this.element instanceof NBTTagList) {
             ((NBTTagList<?>) this.element).addUnknown(NBTTagFloat.of(value));
@@ -219,6 +221,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
+    @Override
     public void setDouble(double value) {
         if (this.element instanceof NBTTagList) {
             ((NBTTagList<?>) this.element).addUnknown(NBTTagDouble.of(value));
@@ -227,6 +230,7 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
+    @Override
     public void setBoolean(boolean value) {
         if (this.element instanceof NBTTagList) {
             ((NBTTagList<?>) this.element).addUnknown(NBTTagBool.of(value));
@@ -235,25 +239,25 @@ public final class NBTDataProvider implements DataProvider, SectionCreatableData
         }
     }
 
+    @Override
     public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(value, "");
-        Objects.requireNonNull(var2, "");
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(value, "");
-        Objects.requireNonNull(var2, "");
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setLocation(@Nullable SimpleLocation value) {
         if (value != null) {
             this.setString(value.asDataString());
         }
     }
 
-    public void setUUID(@Nullable UUID value) {
+    @Override
+    public void setUUID(@NotNull UUID value) {
         this.setString(FastUUID.toString(value));
     }
 }

@@ -39,8 +39,7 @@ public class SQLDataHandlerProperties {
         return (String[]) ArraysKt.plus(ofSimpleLocation, (Object[]) array);
     }
 
-    @NotNull
-    public static String[] ofSimpleLocation(@NotNull String s) {
+    public static @NotNull String @NotNull [] ofSimpleLocation(@NotNull String s) {
         Objects.requireNonNull(s, "");
         String[] array = new String[4];
         array[0] = s + "_world";

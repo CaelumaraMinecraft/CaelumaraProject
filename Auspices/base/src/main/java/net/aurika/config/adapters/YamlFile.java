@@ -7,9 +7,9 @@ import org.snakeyaml.engine.v2.api.DumpSettings;
 import org.snakeyaml.engine.v2.exceptions.ScannerException;
 import net.aurika.config.accessor.YamlClearlyConfigAccessor;
 import net.aurika.config.profile.managers.ConfigManager;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.importers.YamlImporter;
-import net.aurika.config.yaml.snakeyaml.common.SimpleWriter;
+import net.aurika.snakeyaml.extension.common.SimpleWriter;
 import top.auspice.utils.AuspiceLogger;
 
 import java.io.BufferedWriter;
@@ -23,7 +23,7 @@ import java.util.Objects;
 @SuppressWarnings("unused")
 public class YamlFile implements YamlContainer {
     protected @NonNull File file;
-    protected YamlConfigSection config;
+    protected YamlNodeSection config;
 
     private YamlImporter importer;
 
@@ -31,7 +31,7 @@ public class YamlFile implements YamlContainer {
         this.file = Objects.requireNonNull(var1);
     }
 
-    public YamlConfigSection getConfig() {
+    public YamlNodeSection getConfig() {
         return this.config;
     }
 
@@ -49,7 +49,7 @@ public class YamlFile implements YamlContainer {
             BufferedWriter var2 = Files.newBufferedWriter(this.file.toPath(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
 
             try {
-                dump.dumpNode(this.config.getRoot(), new SimpleWriter(var2));
+                dump.dumpNode(this.config.getRootNode(), new SimpleWriter(var2));
             } catch (Throwable var4) {
                 //noinspection ConstantValue
                 if (var2 != null) {
@@ -102,7 +102,7 @@ public class YamlFile implements YamlContainer {
                     FileInputStream var1 = new FileInputStream(this.file);
 
                     try {
-                        this.config = YamlConfigSection.root(YamlContainer.parse((new YamlParseContext()).named(this.file.getName()).stream(var1)));
+                        this.config = YamlNodeSection.root(YamlContainer.parse((new YamlParseContext()).named(this.file.getName()).stream(var1)));
                     } catch (Throwable var4) {
                         try {
                             var1.close();
@@ -118,12 +118,12 @@ public class YamlFile implements YamlContainer {
                     throw new AssertionError(ioExc);
                 }
             } catch (ScannerException var6) {
-                this.config = YamlConfigSection.empty();
+                this.config = YamlNodeSection.empty();
                 AuspiceLogger.error("Failed to load config '" + this.file.getAbsolutePath() + "':");
                 var6.printStackTrace();
             }
         } else {
-            this.config = YamlConfigSection.empty();
+            this.config = YamlNodeSection.empty();
         }
 
         this.importDeclarations();

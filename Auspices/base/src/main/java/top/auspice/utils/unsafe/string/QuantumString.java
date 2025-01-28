@@ -17,7 +17,7 @@ public class QuantumString implements CharSequence, Cloneable {
     }
 
     public QuantumString(@NonNull String original, boolean quantum) {
-        Checker.Argument.checkNotNull(original, "original", "Quantum original string cannot be null");
+        Checker.Arg.notNull(original, "original", "Quantum original string cannot be null");
         this.original = quantum ? original : null;
         this.quantumValue = quantum ? original.toLowerCase(Locale.ENGLISH) : original;
     }

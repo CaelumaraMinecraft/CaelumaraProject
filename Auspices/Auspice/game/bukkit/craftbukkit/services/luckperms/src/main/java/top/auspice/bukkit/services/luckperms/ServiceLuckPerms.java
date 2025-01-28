@@ -18,7 +18,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.nodes.SequenceNode;
 import net.aurika.config.sections.ConfigSection;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 import top.auspice.configs.texts.MessageHandler;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.craftbukkit.services.base.CraftBukkitService;
@@ -131,7 +131,7 @@ public final class ServiceLuckPerms implements ContextCalculator<Player>, CraftB
         if (yamlNode == null) {
             throw new IllegalArgumentException("Unexpected permission type");
         }
-        return buildNode(new YamlConfigSection(null, yamlNode));
+        return buildNode(new YamlNodeSection(null, yamlNode));
     }
 
     public static Node buildNode(ConfigSection section) {

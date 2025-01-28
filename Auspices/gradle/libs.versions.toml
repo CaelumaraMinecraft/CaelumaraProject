@@ -15,7 +15,7 @@ bungee = "1.16-R0.4"
 velocity = "3.1.1"
 
 # Engines
-yamlengine = "2.8"
+yamlengine = "2.9"
 adventure_main = "4.18.0"
 adventure_platform = "4.3.4"
 xseries = "11.3.0"

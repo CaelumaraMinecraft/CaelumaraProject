@@ -22,8 +22,8 @@ public abstract class AbstractPlaceholder implements Placeholder {
     private final List<PlaceholderModifier> modifiers;
 
     public AbstractPlaceholder(@NotNull String originalString, @Nullable String pointer, @NotNull List<PlaceholderModifier> modifiers) {
-        Checker.Argument.checkNotNull(originalString, "originalString");
-        Checker.Argument.checkNotNull(pointer, "pointer");
+        Checker.Arg.notNull(originalString, "originalString");
+        Checker.Arg.notNull(pointer, "pointer");
         this.originalString = Objects.requireNonNull(originalString);
         this.pointer = Objects.requireNonNull(pointer);
         this.modifiers = Objects.requireNonNull(modifiers);

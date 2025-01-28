@@ -67,7 +67,7 @@ public final class ConfigManager {
 
         YamlResource var4;
         Path var5;
-        for (Iterator<YamlResource> var3 = RESOURCES.iterator(); var3.hasNext(); Validator.implicitSchemaGenerator(var4.getDefaults().getRoot(), var5)) {
+        for (Iterator<YamlResource> var3 = RESOURCES.iterator(); var3.hasNext(); Validator.implicitSchemaGenerator(var4.getDefaults().getRootNode(), var5)) {
             var4 = var3.next();
             var5 = var1.relativize(var4.getFile().toPath());
             var5 = var2.resolve(var5);

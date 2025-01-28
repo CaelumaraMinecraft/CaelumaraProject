@@ -12,11 +12,11 @@ import org.snakeyaml.engine.v2.nodes.Node;
 import org.snakeyaml.engine.v2.parser.ParserImpl;
 import org.snakeyaml.engine.v2.scanner.StreamReader;
 import net.aurika.config.accessor.YamlClearlyConfigAccessor;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.importers.YamlDeclarationNotFoundException;
 import net.aurika.config.yaml.importers.YamlImporter;
 import net.aurika.config.yaml.importers.YamlModuleLoader;
-import net.aurika.config.yaml.snakeyaml.constructor.AuspiceConstructor;
+import net.aurika.snakeyaml.extension.constructor.AuspiceConstructor;
 import net.aurika.snakeyaml.extension.validation.NodeValidator;
 import net.aurika.snakeyaml.extension.validation.Validator;
 import top.auspice.main.Auspice;
@@ -29,7 +29,7 @@ import java.util.Optional;
 
 public interface YamlContainer extends Profile {
 
-    YamlConfigSection getConfig();
+    YamlNodeSection getConfig();
 
     YamlClearlyConfigAccessor accessor();
 
@@ -73,7 +73,7 @@ public interface YamlContainer extends Profile {
             AuspiceConstructor constructor = new AuspiceConstructor(loadSettings);
 
             Load load = new Load(loadSettings);
-            MappingNode var4 = (MappingNode) this.getConfig().getRoot();
+            MappingNode var4 = (MappingNode) this.getConfig().getRootNode();
             LinkedHashMap<String, Anchor> anchors = new LinkedHashMap<>();
 
             for (YamlImportDeclaration declaration : YamlModuleLoader.loadImports(this).values()) {

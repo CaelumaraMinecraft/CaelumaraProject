@@ -15,7 +15,7 @@ import java.util.Objects;
 public final class BukkitColorUtils {
 
     public static int legacyColorToHex(@NotNull ChatColor bukkitChatColor) {
-        Checker.Argument.checkNotNull(bukkitChatColor, "bukkitChatColor");
+        Checker.Arg.notNull(bukkitChatColor, "bukkitChatColor");
         return switch (bukkitChatColor) {
             case WHITE -> 0xFF_FF_FF;
             case BLACK -> 0x00_00_00;
@@ -38,7 +38,7 @@ public final class BukkitColorUtils {
     }
 
     public static ChatColor hexColorToLegacy(@NotNull Color color) {
-        Checker.Argument.checkNotNull(color, "color");
+        Checker.Arg.notNull(color, "color");
         switch (BaseColorUtils.getRGB(color)) {
             case 0x00_00_00 -> {
                 return ChatColor.BLACK;

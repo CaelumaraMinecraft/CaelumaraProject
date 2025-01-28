@@ -14,7 +14,7 @@ public interface YamlImporter {
     YamlModule getDeclaration(YamlImportDeclaration declaration);
 
     static void importTo(YamlContainer to, Map<String, Anchor> anchors, YamlImporter importer, YamlImportDeclaration importDeclaration) {
-        MappingNode root = (MappingNode) to.getConfig().getRoot();
+        MappingNode root = (MappingNode) to.getConfig().getRootNode();
         String var5 = importDeclaration.getName();
 
         try {
@@ -29,7 +29,7 @@ public interface YamlImporter {
 
                 if (importDeclaration.getExtends()) {
 //                    root.copyIfDoesntExist(declaration.getAdapter().getConfig().getNode(), "", (var0x) -> false);
-                    NodeUtils.copyIfDoesntExist(root, (MappingNode) declaration.getAdapter().getConfig().getRoot(), "", (var0x) -> false);
+                    NodeUtils.copyIfDoesntExist(root, (MappingNode) declaration.getAdapter().getConfig().getRootNode(), "", (var0x) -> false);
                 }
 
                 for (String var11 : importDeclaration.getImportedAnchors()) {

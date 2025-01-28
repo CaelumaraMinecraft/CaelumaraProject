@@ -16,7 +16,7 @@ public final class ConditionChain<T> {
     private final @NotNull List<ConditionBranch<T>> branches;
 
     public ConditionChain(@NotNull List<ConditionBranch<T>> branches) {
-        Checker.Argument.checkNotNull(branches, "branches");
+        Checker.Arg.notNull(branches, "branches");
         this.branches = branches;
     }
 
@@ -31,7 +31,7 @@ public final class ConditionChain<T> {
 
     @Nullable
     public T evaluate(@NotNull PlaceholderProvider placeholderProvider, boolean todo_rename) {
-        Checker.Argument.checkNotNull(placeholderProvider, "placeholderProvider");
+        Checker.Arg.notNull(placeholderProvider, "placeholderProvider");
         Iterator<ConditionBranch<T>> var3 = this.branches.iterator();
 
         ConditionBranch<T> var4;

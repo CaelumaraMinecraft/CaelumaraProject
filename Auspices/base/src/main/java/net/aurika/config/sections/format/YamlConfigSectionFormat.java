@@ -1,5 +1,6 @@
 package net.aurika.config.sections.format;
 
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
@@ -104,6 +105,7 @@ public enum YamlConfigSectionFormat implements ConfigSectionFormat {
     }
 
     public static @NotNull YamlConfigSectionFormat fromNode(@NotNull Node node) {
+        Checker.Arg.notNull(node, "node");
         node = NodeUtils.unpackAnchor(node);
         if (node instanceof ScalarNode sca) {
             ScalarStyle style = sca.getScalarStyle();

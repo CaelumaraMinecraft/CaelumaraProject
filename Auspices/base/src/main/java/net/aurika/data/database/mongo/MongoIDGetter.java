@@ -1,12 +1,12 @@
 package net.aurika.data.database.mongo;
 
+import net.aurika.data.database.dataprovider.DataGetter;
+import net.aurika.data.database.dataprovider.SectionableDataGetter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import net.aurika.data.database.dataprovider.DataGetter;
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.unsafe.uuid.FastUUID;
@@ -17,24 +17,24 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.*;
 
-public final class MongoIDGetter implements DataGetter {
+public class MongoIDGetter implements DataGetter {
 
-    private final @NotNull String a;
+    private final @NotNull String value;
 
-    public MongoIDGetter(@NotNull String var1) {
-        Objects.requireNonNull(var1, "");
-        this.a = var1;
+    public MongoIDGetter(@NotNull String value) {
+        Objects.requireNonNull(value, "value");
+        this.value = value;
     }
 
     @Override
     public @NotNull String asString(@NotNull Supplier<String> def) {
-        Objects.requireNonNull(def, "");
-        return this.a;
+        Objects.requireNonNull(def, "def");
+        return this.value;
     }
 
     @Override
     public @NotNull UUID asUUID() {
-        return FastUUID.fromString(this.a);
+        return FastUUID.fromString(this.value);
     }
 
     @Override
@@ -55,25 +55,25 @@ public final class MongoIDGetter implements DataGetter {
     @Override
     public int asInt(@NotNull IntSupplier def) {
         Objects.requireNonNull(def, "def");
-        return Integer.parseInt(this.a);
+        return Integer.parseInt(this.value);
     }
 
     @Override
     public long asLong(@NotNull LongSupplier def) {
         Objects.requireNonNull(def, "def");
-        return Long.parseLong(this.a);
+        return Long.parseLong(this.value);
     }
 
     @Override
     public float asFloat(@NotNull FloatSupplier def) {
         Objects.requireNonNull(def, "def");
-        return Float.parseFloat(this.a);
+        return Float.parseFloat(this.value);
     }
 
     @Override
     public double asDouble(@NotNull DoubleSupplier def) {
         Objects.requireNonNull(def, "def");
-        return Double.parseDouble(this.a);
+        return Double.parseDouble(this.value);
     }
 
     @Override

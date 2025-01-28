@@ -1,35 +1,37 @@
 package top.auspice.constants.metadata;
 
-import org.jetbrains.annotations.NotNull;
 import net.aurika.data.database.dataprovider.SectionableDataGetter;
 import net.aurika.namespace.NSKeyed;
 import net.aurika.namespace.NSedKey;
+import org.jetbrains.annotations.NotNull;
+import top.auspice.constants.base.KeyedAuspiceObject;
 
 import java.util.Objects;
 
 public abstract class AuspiceMetadataHandler implements NSKeyed {
 
-    protected final NSedKey NSedKey;
+    protected final NSedKey id;
 
-    protected AuspiceMetadataHandler(@NotNull NSedKey NSedKey) {
-        this.NSedKey = Objects.requireNonNull(NSedKey);
+    protected AuspiceMetadataHandler(@NotNull NSedKey id) {
+        Objects.requireNonNull(id, "id");
+        this.id = id;
     }
 
     public @NotNull NSedKey getNamespacedKey() {
-        return this.NSedKey;
+        return this.id;
     }
 
-    public abstract @NotNull AuspiceMetadata deserialize(@NotNull KeyedAuspiceObject<?, ?> var1, @NotNull SectionableDataGetter dataGetter);
+    public abstract @NotNull AuspiceMetadata deserialize(@NotNull KeyedAuspiceObject<?> var1, @NotNull SectionableDataGetter dataGetter);
 
     public int hashCode() {
-        return this.NSedKey.hashCode();
+        return this.id.hashCode();
     }
 
     public boolean equals(Object var1) {
-        return var1 instanceof AuspiceMetadataHandler && this.NSedKey.equals(((AuspiceMetadataHandler) var1).NSedKey);
+        return var1 instanceof AuspiceMetadataHandler && this.id.equals(((AuspiceMetadataHandler) var1).id);
     }
 
     public String toString() {
-        return this.getClass().getSimpleName() + '[' + this.NSedKey.asString() + ']';
+        return this.getClass().getSimpleName() + '[' + this.id.asString() + ']';
     }
 }

@@ -10,7 +10,7 @@ import org.snakeyaml.engine.v2.parser.Parser;
 import org.snakeyaml.engine.v2.parser.ParserImpl;
 import org.snakeyaml.engine.v2.scanner.StreamReader;
 import net.aurika.config.sections.ConfigSection;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 import top.auspice.utils.Validate;
 
 import java.io.File;
@@ -57,7 +57,7 @@ public class LocalFileProfile implements Profile {
 
                 Optional<Node> root = composer.getSingleNode();
                 if (root.isPresent()) {
-                    newRoot = YamlConfigSection.root(root.get());
+                    newRoot = YamlNodeSection.root(root.get());
                 } else {
                     throw new RuntimeException("Multiple documents YAML profile is not supported.");
                 }

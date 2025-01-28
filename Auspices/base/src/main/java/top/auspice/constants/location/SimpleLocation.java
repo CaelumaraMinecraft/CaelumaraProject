@@ -24,7 +24,7 @@ public class SimpleLocation implements DataStringRepresentation, DataStructureOb
     }
 
     public SimpleLocation(@NotNull String worldName, double x, double y, double z, float yaw, float pitch) {
-        Checker.Argument.checkNotNull(worldName, "worldName");
+        Checker.Arg.notNull(worldName, "worldName");
         this.world = worldName;
         this.x = x;
         this.y = y;
@@ -62,7 +62,7 @@ public class SimpleLocation implements DataStringRepresentation, DataStructureOb
     }
 
     public static SimpleLocation fromDataString(String data) {
-        Checker.Argument.checkNotNull(data, "data");
+        Checker.Arg.notNull(data, "data");
         CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(data, 6);
         String worldName = splitter.nextString();
         int x = splitter.nextInt();

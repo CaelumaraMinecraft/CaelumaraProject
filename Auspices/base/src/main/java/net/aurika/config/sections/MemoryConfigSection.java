@@ -216,8 +216,8 @@ public class MemoryConfigSection extends AbstractConfigSection implements Config
     }
 
     @Override
-    public @NotNull ConfigSection makeSubSection(@NotNull String key, @Nullable Object parsed) {
-        Checker.Argument.checkNotNull(key, "key");
+    public @NotNull ConfigSection set(@NotNull String key, @Nullable Object parsed) {
+        Checker.Arg.notNull(key, "key");
         if (this.subSections == null) {
             this.subSections = new LinkedHashMap<>();
         }
@@ -273,7 +273,7 @@ public class MemoryConfigSection extends AbstractConfigSection implements Config
 
         ConfigSection section = this;
         for (String subKey : path) {
-            section = section.makeSubSection(subKey, null);
+            section = section.set(subKey, null);
         }
 
         return section;
@@ -385,7 +385,7 @@ public class MemoryConfigSection extends AbstractConfigSection implements Config
 
     @Override
     public @Nullable Object getParsed(@NotNull String @NotNull [] path) {
-        Checker.Argument.checkNotNullArray(path, "path", PATH_CONTAINS_NULL);
+        Checker.Arg.nonNullArray(path, "path", PATH_CONTAINS_NULL);
         ConfigSection config = this.getSection(path);
         return config == null ? null : config.getParsedValue();
     }

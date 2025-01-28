@@ -29,8 +29,8 @@ public final class NSedKey implements DataStringRepresentation {
     private NSedKey(@NSKey.Namespace @NotNull String namespace,
                     @NSKey.Key @NotNull String key,
                     int hashCode) {
-        Checker.Argument.checkNotNull(namespace, "namespace", "Namespace cannot be null");
-        Checker.Argument.checkNotNull(key, "key", "Key cannot be null");
+        Checker.Arg.notNull(namespace, "namespace", "Namespace cannot be null");
+        Checker.Arg.notNull(key, "key", "Key cannot be null");
 
         if (!NSKey.KEY_PATTERN.matcher(key).matches()) {
             throw new IllegalStateException("Key string '" + key + "' doesn't match: " + NSKey.ALLOWED_KEY);
@@ -43,7 +43,7 @@ public final class NSedKey implements DataStringRepresentation {
 
     @Pure
     public static NSedKey fromString(@NSKey @NotNull String str) {
-        Checker.Argument.checkNotNull(str, "str");
+        Checker.Arg.notNull(str, "str");
         int sep = str.indexOf(':');
         String key = str.substring(sep + 1);
         if (sep == -1) {
@@ -98,22 +98,22 @@ public final class NSedKey implements DataStringRepresentation {
     }
 
     public static @NotNull NSedKey auspice(@NotNull @NSKey.Key String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         return new NSedKey(Auspice.NAMESPACE, key);
     }
 
     public static @NotNull NSedKey adventure(@NotNull @NSKey.Key String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         return new NSedKey(Adventure.NAMESPACE, key);
     }
 
     public static @NotNull NSedKey minecraft(@NotNull @NSKey.Key String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         return new NSedKey("minecraft", key);
     }
 
     public static @NotNull NSedKey kingdoms(@NotNull @NSKey.Key String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         return new NSedKey("kingdoms", key);
     }
 

@@ -32,7 +32,7 @@ public final class StackTraces {
     }
 
     public static @NotNull List<Throwable> getCausationChain(@NotNull Throwable throwable) {
-        Checker.Argument.checkNotNull(throwable, "throwable");
+        Checker.Arg.notNull(throwable, "throwable");
         ArrayList<Throwable> chain = new ArrayList<>(5);
         Set<Throwable> var2 = Collections.newSetFromMap(new IdentityHashMap<>(5));
         Throwable var3 = throwable;

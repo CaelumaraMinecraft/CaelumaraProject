@@ -49,14 +49,14 @@ public interface KingdomsPlaceholderTranslator {
 
     @Nullable
     static KingdomsPlaceholderTranslator getByName(@NotNull String name) {
-        Checker.Argument.checkNotNull(name, "name");
+        Checker.Arg.notNull(name, "name");
         String var2 = name.toUpperCase(Locale.ENGLISH);
         return Companion.b.get(var2);
     }
 
     @NotNull
     static Function<KingdomsPlaceholderTranslationContext, Object> ofPlayer(@NotNull Function<? super AuspicePlayer, ?> translator) {
-        Checker.Argument.checkNotNull(translator, "translator");
+        Checker.Arg.notNull(translator, "translator");
 
         final class NamelessClass_4 implements Function<KingdomsPlaceholderTranslationContext, Object> {
             public NamelessClass_4() {

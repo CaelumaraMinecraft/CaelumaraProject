@@ -55,7 +55,7 @@ public final class Fn {
     }
 
     public static <T> @Nullable T safeCast(@NotNull Object object, Class<T> clazz) {
-        Checker.Argument.checkNotNull(object, "object", "Cannot safely cast null to generic type");
+        Checker.Arg.notNull(object, "object", "Cannot safely cast null to generic type");
         return clazz.isInstance(object) ? (T) object : null;
     }
 
@@ -142,7 +142,7 @@ public final class Fn {
         }
 
         public @NonNull R orElse(@NotNull R finalCheck) {
-            Checker.Argument.checkNotNull(finalCheck, "finalCheck", "Final non-lambda object cannot be null");
+            Checker.Arg.notNull(finalCheck, "finalCheck", "Final non-lambda object cannot be null");
             return this.orElse((new ConstantCallable<>(finalCheck)));
         }
 

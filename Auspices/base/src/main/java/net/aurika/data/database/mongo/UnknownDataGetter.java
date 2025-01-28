@@ -1,6 +1,5 @@
 package net.aurika.data.database.mongo;
 
-import kotlin.jvm.functions.Function0;
 import kotlin.jvm.internal.TypeIntrinsics;
 import kotlin.text.StringsKt;
 import net.aurika.data.database.dataprovider.*;
@@ -10,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.data.database.dataprovider.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.unsafe.uuid.FastUUID;
@@ -19,8 +17,8 @@ import java.util.*;
 import java.util.function.*;
 
 public class UnknownDataGetter implements DataProvider {
-    @NotNull
-    private final Object value;
+
+    private final @NotNull Object value;
 
     public UnknownDataGetter(@NotNull Object value) {
         Objects.requireNonNull(value);
@@ -31,12 +29,11 @@ public class UnknownDataGetter implements DataProvider {
         return new UnsupportedOperationException("Operation unsupported for value: " + this.value);
     }
 
-    @NotNull
-    public DataProvider get(@NotNull String key) {
+    public @NotNull DataProvider get(@Nullable String key) {
         throw this.unsupported();
     }
 
-    public void setString(@NotNull String value) {
+    public void setString(@Nullable String value) {
         if (value != null) {
             this.c().add(value);
         }
@@ -81,20 +78,16 @@ public class UnknownDataGetter implements DataProvider {
         return var2;
     }
 
-    @NotNull
-    public Void setLocation(@NotNull SimpleLocation value) {
+    public void setLocation(@Nullable SimpleLocation value) {
         throw this.unsupported();
     }
 
-    public void setSimpleLocation(@NotNull SimpleBlockLocation value) {
-        if (value != null) {
-            this.c().add(value);
-        }
+    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
+        if (value != null) this.c().add(value);
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation value) {
-        Objects.requireNonNull(value, "");
-        this.c().add(value);
+    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
+        if (value != null) this.c().add(value);
     }
 
     public void setFloat(float value) {
@@ -128,7 +121,7 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @NotNull
-    public String asString(@NotNull Function0<String> var1) {
+    public String asString(@NotNull Supplier<String> var1) {
         Objects.requireNonNull(var1);
         if (this.value instanceof String) {
             return this.value.toString();
@@ -163,11 +156,11 @@ public class UnknownDataGetter implements DataProvider {
         return SimpleLocation.fromDataString(this.value.toString());
     }
 
-    public int asInt(@NotNull Supplier<Integer> def) {
+    public int asInt(@NotNull IntSupplier def) {
         Objects.requireNonNull(def);
         Number var10000 = this.b();
         if (var10000 == null) {
-            var10000 = def.get();
+            var10000 = def.getAsInt();
         }
 
         return var10000.intValue();
@@ -239,7 +232,7 @@ public class UnknownDataGetter implements DataProvider {
 
     private <T> List<T> c() {
         Object value = this.value;
-        List<T> var10000 = TypeIntrinsics.isMutableList(value) ? (List<?>) value : null;
+        List var10000 = TypeIntrinsics.isMutableList(value) ? (List<?>) value : null;
         if (var10000 == null) {
             throw new IllegalStateException("Cannot add to " + this.value + " (" + this.value.getClass().getSimpleName() + ')');
         } else {

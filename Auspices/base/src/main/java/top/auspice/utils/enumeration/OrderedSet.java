@@ -24,7 +24,7 @@ public final class OrderedSet<E> extends AbstractSet<E> implements Set<E> {
     }
 
     public OrderedSet(@NotNull Collection<? extends E> collection) {
-        this(Checker.Argument.checkNotNull(collection, "collection").size());
+        this(Checker.Arg.notNull(collection, "collection").size());
         this.addAll(collection);
     }
 
@@ -51,7 +51,7 @@ public final class OrderedSet<E> extends AbstractSet<E> implements Set<E> {
     }
 
     public boolean addAll(@NotNull Collection<? extends E> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         this.ensureCapacity(elements.size());
         this.modCount++;
 
@@ -87,7 +87,7 @@ public final class OrderedSet<E> extends AbstractSet<E> implements Set<E> {
     }
 
     public boolean removeAll(@NotNull Collection<? extends Object> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         this.modCount++;
 
         for (Object element : elements) {
@@ -98,7 +98,7 @@ public final class OrderedSet<E> extends AbstractSet<E> implements Set<E> {
     }
 
     public boolean retainAll(@NotNull Collection<? extends Object> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         java.util.Iterator<E> iter = this.iterator();
         this.modCount++;
 
@@ -124,7 +124,7 @@ public final class OrderedSet<E> extends AbstractSet<E> implements Set<E> {
     }
 
     public boolean containsAll(@NotNull Collection<? extends Object> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
 
         for (Object element : elements) {
             if (!this.contains(element)) {

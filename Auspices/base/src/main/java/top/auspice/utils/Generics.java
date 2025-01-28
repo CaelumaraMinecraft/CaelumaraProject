@@ -13,8 +13,8 @@ import java.util.function.Function;
 public final class Generics {
 
     public static <K, V, M extends Map<K, V>> @Nullable M filterKVType(Map<?, ?> map, @NotNull Class<K> keyType, @NotNull Class<V> valueType) {
-        Checker.Argument.checkNotNull(keyType, "keyType");
-        Checker.Argument.checkNotNull(valueType, "valueType");
+        Checker.Arg.notNull(keyType, "keyType");
+        Checker.Arg.notNull(valueType, "valueType");
 
         if (map == null) {
             return null;
@@ -35,7 +35,7 @@ public final class Generics {
     }
 
     public static <K, V, M extends Map<K, V>> @Nullable M filterKeyType(Map<?, V> map, @NotNull Class<K> keyType) {
-        Checker.Argument.checkNotNull(keyType, "keyType");
+        Checker.Arg.notNull(keyType, "keyType");
 
         if (map == null) {
             return null;
@@ -56,7 +56,7 @@ public final class Generics {
     }
 
     public static <K, V, M extends Map<K, V>> @Nullable M filterValueType(Map<K, ?> map, @NotNull Class<K> valueType) {
-        Checker.Argument.checkNotNull(valueType, "valueType");
+        Checker.Arg.notNull(valueType, "valueType");
 
         if (map == null) {
             return null;
@@ -78,7 +78,7 @@ public final class Generics {
 
     @Contract("_, _ -> param1")
     public static <E, C extends Collection<E>> @Nullable C filterElementType(Collection<?> collection, @NotNull Class<E> elementType) {
-        Checker.Argument.checkNotNull(elementType, "elementType");
+        Checker.Arg.notNull(elementType, "elementType");
 
         if (collection == null) {
             return null;
@@ -104,10 +104,10 @@ public final class Generics {
                                                                                              @NotNull Class<NewType> newType,
                                                                                              @NotNull Function<OldType, NewType> toNewType
     ) {
-        Checker.Argument.checkNotNull(oldTypeCollection, "oldTypeCollection");
-        Checker.Argument.checkNotNull(newTypeCollection, "newTypeCollection");
-        Checker.Argument.checkNotNull(newType, "newType");
-        Checker.Argument.checkNotNull(toNewType, "toNewType");
+        Checker.Arg.notNull(oldTypeCollection, "oldTypeCollection");
+        Checker.Arg.notNull(newTypeCollection, "newTypeCollection");
+        Checker.Arg.notNull(newType, "newType");
+        Checker.Arg.notNull(toNewType, "toNewType");
 
         for (OldType oldTypeObj : oldTypeCollection) {
             if (newType.isInstance(oldTypeObj)) {

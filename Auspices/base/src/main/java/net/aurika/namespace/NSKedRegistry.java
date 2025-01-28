@@ -26,9 +26,9 @@ public abstract class NSKedRegistry<C extends NSKeyed> implements NSKeyed {
     }
 
     protected NSKedRegistry(@NotNull AuspiceUser provider, @NotNull @NSKey.Key String module, @NotNull Map<NSedKey, C> registry) {
-        Checker.Argument.checkNotNull(provider, "provider");
-        Checker.Argument.checkNotNull(module, "module");
-        Checker.Argument.checkNotNull(registry, "registry");
+        Checker.Arg.notNull(provider, "provider");
+        Checker.Arg.notNull(module, "module");
+        Checker.Arg.notNull(registry, "registry");
 
         if (!NSKey.KEY_PATTERN.matcher(module).matches()) {
             throw new IllegalArgumentException("Invalid module: '" + module + "': doesnt match: " + NSKey.ALLOWED_KEY);
@@ -45,7 +45,7 @@ public abstract class NSKedRegistry<C extends NSKeyed> implements NSKeyed {
     }
 
     public void register(@NotNull C value) {
-        Checker.Argument.checkNotNull(value, "value", "Cannot register null object");
+        Checker.Arg.notNull(value, "value", "Cannot register null object");
         NSedKey NSedKey = value.getNamespacedKey();
         Objects.requireNonNull(NSedKey, "Cannot register object provides null namespaced key");
         C prev = this.registered.putIfAbsent(NSedKey, value);

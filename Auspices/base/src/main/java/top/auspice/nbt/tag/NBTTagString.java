@@ -1,26 +1,27 @@
 package top.auspice.nbt.tag;
 
 import org.jetbrains.annotations.NotNull;
+import top.auspice.nbt.stream.NBTStream;
+import top.auspice.nbt.stream.token.NBTToken;
+
+import java.util.Objects;
 
 public class NBTTagString extends NBTTag<String> {
     private String value;
 
-    @NotNull
-    public static NBTTagString of(@NotNull String value) {
+    public static @NotNull NBTTagString of(@NotNull String value) {
         return new NBTTagString(value);
     }
 
     private NBTTagString(@NotNull String value) {
-        this.value = (String)Objects.requireNonNull(value, "value is null");
+        this.value = Objects.requireNonNull(value, "value is null");
     }
 
-    @NotNull
-    public NBTTagType<NBTTagString> type() {
+    public @NotNull NBTTagType<NBTTagString> type() {
         return NBTTagType.STRING;
     }
 
-    @NotNull
-    public String value() {
+    public @NotNull String value() {
         return this.value;
     }
 
@@ -28,8 +29,7 @@ public class NBTTagString extends NBTTag<String> {
         this.value = value;
     }
 
-    @NotNull
-    public NBTStream stream() {
+    public @NotNull NBTStream stream() {
         return NBTStream.of(new NBTToken.String(this.value));
     }
 }

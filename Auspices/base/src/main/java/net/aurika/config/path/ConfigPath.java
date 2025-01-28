@@ -124,7 +124,7 @@ public class ConfigPath {
      */
     public ConfigPath removePrefix(String[] other) {
         if (ArrayUtils.startsWith(this.path, other)) {
-            return new ConfigPath(ArrayUtils.removeHead(this.path, other.length));
+            return new ConfigPath(ArrayUtils.removePre(this.path, other.length));
         } else {
             throw new IllegalArgumentException("This path is not starts with other String array: " + Arrays.toString(this.path) + ", other: " + Arrays.toString(other));
         }
@@ -156,7 +156,7 @@ public class ConfigPath {
 
     @Contract("_ -> new")
     public ConfigPath removeHead(int count) {
-        return new ConfigPath(ArrayUtils.removeHead(this.path, count));
+        return new ConfigPath(ArrayUtils.removePre(this.path, count));
     }
 
     @Contract("-> new")

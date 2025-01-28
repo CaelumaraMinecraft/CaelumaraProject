@@ -37,8 +37,8 @@ public class ConditionalConfigSection implements ConditionalObject, ConfigSectio
     }
 
     protected ConditionalConfigSection(@NotNull ConfigSection section, @NotNull ConditionChain<ConfigSection> branches, @Nullable ConfigSection defaultValue) {
-        Checker.Argument.checkNotNull(section, "section");
-        Checker.Argument.checkNotNull(branches, "branches");
+        Checker.Arg.notNull(section, "section");
+        Checker.Arg.notNull(branches, "branches");
 
         this.section = section;
         this.branches = branches;
@@ -88,8 +88,8 @@ public class ConditionalConfigSection implements ConditionalObject, ConfigSectio
         return this.section.getSubSection(key);
     }
 
-    public @NotNull ConfigSection makeSubSection(@NotNull String key, @Nullable Object parsed) {
-        return this.section.makeSubSection(key, parsed);
+    public @NotNull ConfigSection set(@NotNull String key, @Nullable Object parsed) {
+        return this.section.set(key, parsed);
     }
 
     public @Nullable ConfigSection removeSubSection(@NotNull String key) {

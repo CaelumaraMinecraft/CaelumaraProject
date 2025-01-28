@@ -3,9 +3,9 @@ package net.aurika.data.database.sql;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import kotlin.jvm.internal.Intrinsics;
+import net.aurika.data.database.DatabaseType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.data.database.DatabaseType;
 import top.auspice.utils.reflection.Reflect;
 
 public abstract class SQLDataProvider {

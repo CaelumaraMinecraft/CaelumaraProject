@@ -16,7 +16,7 @@ public final class BukkitPermission implements Permission {
     private final @NotNull PermissionKey key;
 
     public BukkitPermission(@NotNull org.bukkit.permissions.Permission perm) {
-        Checker.Argument.checkNotNull(perm, "perm");
+        Checker.Arg.notNull(perm, "perm");
         this.perm = perm;
         this.key = PermissionKey.fromFullName(perm.getName());
     }

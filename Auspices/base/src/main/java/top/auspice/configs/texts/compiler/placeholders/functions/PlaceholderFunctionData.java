@@ -9,8 +9,8 @@ public class PlaceholderFunctionData {
     private final @NotNull PlaceholderFunctionParameters parameters;
 
     public PlaceholderFunctionData(@NotNull String functionName, @NotNull PlaceholderFunctionParameters parameters) {
-        Checker.Argument.checkNotNull(functionName, "functionName");
-        Checker.Argument.checkNotNull(parameters, "parameters");
+        Checker.Arg.notNull(functionName, "functionName");
+        Checker.Arg.notNull(parameters, "parameters");
         this.functionName = functionName;
         this.parameters = parameters;
     }
@@ -24,7 +24,7 @@ public class PlaceholderFunctionData {
     }
 
     public @NotNull PlaceholderFunctionInvoker newSession(@NotNull KingdomsPlaceholder placeholder) {
-        Checker.Argument.checkNotNull(placeholder, "placeholder");
+        Checker.Arg.notNull(placeholder, "placeholder");
         return this.parameters.createInvoker(placeholder, this);
     }
 

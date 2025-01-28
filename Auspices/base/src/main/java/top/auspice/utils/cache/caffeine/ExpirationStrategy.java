@@ -15,7 +15,7 @@ public final class ExpirationStrategy {
     private final Duration expiryAfterRead;
 
     public ExpirationStrategy(@NotNull Duration expiryAfterCreate, @Nullable Duration expiryAfterUpdate, @Nullable Duration expiryAfterRead) {
-        Checker.Argument.checkNotNull(expiryAfterCreate, "expiryAfterCreate");
+        Checker.Arg.notNull(expiryAfterCreate, "expiryAfterCreate");
         this.expiryAfterCreate = expiryAfterCreate;
         this.expiryAfterUpdate = expiryAfterUpdate;
         this.expiryAfterRead = expiryAfterRead;

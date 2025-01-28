@@ -3,12 +3,12 @@ package net.aurika.data.database.flatfile.json;
 import com.google.gson.*;
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.dataprovider.*;
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.data.database.dataprovider.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.unsafe.uuid.FastUUID;
@@ -23,7 +23,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     private final @NotNull JsonElement element;
 
     public JsonElementDataProvider(@NotNull JsonElement jsonElement) {
-        Intrinsics.checkNotNullParameter(jsonElement, "");
+        Checker.Arg.notNull(jsonElement, "");
         this.element = jsonElement;
     }
 
@@ -37,8 +37,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    @NotNull
-    public SectionableDataSetter createSection() {
+    public @NotNull SectionableDataSetter createSection() {
         JsonObject jsonObject = new JsonObject();
         if (!(this.element instanceof JsonArray)) {
             throw new UnsupportedOperationException();
@@ -48,23 +47,20 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    @NotNull
-    public JsonElement getElement() {
+    public @NotNull JsonElement getElement() {
         return this.element;
     }
 
     @Override
-    @NotNull
-    public DataProvider get(@NotNull String key) {
-        Intrinsics.checkNotNullParameter(key, "");
+    public @NotNull DataProvider get(@NotNull String key) {
+        Checker.Arg.notNull(key, "");
         JsonObject jsonObject = this.element.getAsJsonObject();
         Intrinsics.checkNotNullExpressionValue(jsonObject, "");
         return new JsonObjectDataProvider(key, jsonObject);
     }
 
     @Override
-    @NotNull
-    public DataProvider asSection() {
+    public @NotNull DataProvider asSection() {
         if (!(this.element instanceof JsonObject)) {
             String string = "Failed requirement.";
             throw new IllegalArgumentException(string);
@@ -74,7 +70,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public String asString(@NotNull Supplier<String> def) {
-        Intrinsics.checkNotNullParameter(def, "");
+        Checker.Arg.notNull(def, "");
         if (this.element instanceof JsonNull) {
             return null;
         }
@@ -86,40 +82,27 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    @NotNull
-    public UUID asUUID() {
-        UUID uUID = FastUUID.fromString(this.asString(() -> {
-            throw new IllegalArgumentException();
-        }));
-        Intrinsics.checkNotNullExpressionValue(uUID, "");
-        return uUID;
+    public @Nullable UUID asUUID() {
+        String s = this.asString();
+        return s == null ? null : FastUUID.fromString(s);
     }
 
     @Override
     public @Nullable SimpleBlockLocation asSimpleLocation() {
-        String string = this.asString();
-        if (string != null) {
-            return SimpleBlockLocation.fromDataString(string);
-        }
-        return null;
+        String s = this.asString();
+        return s != null ? SimpleBlockLocation.fromDataString(s) : null;
     }
 
     @Override
     public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
-        String string = this.asString(() -> null);
-        if (string != null) {
-            return SimpleChunkLocation.fromDataString(string);
-        }
-        return null;
+        String s = this.asString(() -> null);
+        return s != null ? SimpleChunkLocation.fromDataString(s) : null;
     }
 
     @Override
     public @Nullable SimpleLocation asLocation() {
-        String string = this.asString(() -> null);
-        if (string != null) {
-            return SimpleLocation.fromDataString(string);
-        }
-        return null;
+        String s = this.asString(() -> null);
+        return s != null ? SimpleLocation.fromDataString(s) : null;
     }
 
     @Override
@@ -148,25 +131,25 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C var1, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
+    public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
+        Checker.Arg.notNull(c, "c");
+        Checker.Arg.notNull(var2, "dataProcessor");
         JsonElement var10000 = this.element;
         Intrinsics.checkNotNull(var10000);
 
         for (JsonElement var4 : (JsonArray) var10000) {
             Intrinsics.checkNotNull(var4);
-            var2.accept(var1, new JsonElementDataProvider(var4));
+            var2.accept(c, new JsonElementDataProvider(var4));
         }
 
-        return var1;
+        return c;
     }
 
     @Override
     @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M var1, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(dataProcessor, "");
+    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+        Checker.Arg.notNull(m, "m");
+        Checker.Arg.notNull(dataProcessor, "dataProcessor");
         JsonElement var10000 = this.element;
         Intrinsics.checkNotNull(var10000);
 
@@ -176,14 +159,14 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
             JsonElement var6 = stringJsonElementEntry.getValue();
             JsonElementDataProvider var10002 = new JsonElementDataProvider(new JsonPrimitive(var5));
             Intrinsics.checkNotNull(var6);
-            dataProcessor.accept(var1, var10002, new JsonElementDataProvider(var6));
+            dataProcessor.accept(m, var10002, new JsonElementDataProvider(var6));
         }
 
-        return var1;
+        return m;
     }
 
     @Override
-    public void setString(@NotNull String value) {
+    public void setString(@Nullable String value) {
         if (this.element instanceof JsonArray) {
             ((JsonArray) this.element).add(value);
             return;
@@ -201,13 +184,13 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public void setSimpleLocation(@NotNull SimpleBlockLocation value) {
+    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
         this.setString(value != null ? value.asDataString() : null);
     }
 
     @Override
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation value) {
-        Intrinsics.checkNotNullParameter(value, "");
+    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
+        Checker.Arg.notNull(value, "");
         this.setString(value.asDataString());
     }
 
@@ -258,11 +241,8 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public void setLocation(@NotNull SimpleLocation value) {
-        if (value == null) {
-            return;
-        }
-        this.setString(value.asDataString());
+    public void setLocation(@Nullable SimpleLocation value) {
+        if (value != null) this.setString(value.asDataString());
     }
 
     @Override

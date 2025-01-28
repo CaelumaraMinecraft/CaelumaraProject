@@ -15,7 +15,7 @@ public final class StaticMessenger implements Messenger {
     private final MessageProvider messageProvider;
 
     public StaticMessenger(@NotNull String str) {
-        this(TextCompiler.compile(Checker.Argument.checkNotNull(str, "str")));
+        this(TextCompiler.compile(Checker.Arg.notNull(str, "str")));
     }
 
     public StaticMessenger(MessageProvider msgProvider) {

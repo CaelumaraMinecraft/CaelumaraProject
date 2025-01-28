@@ -11,7 +11,7 @@ import top.auspice.constants.location.SimpleBlockLocation;
 
 import java.util.Objects;
 
-public class SimpleLocationEncoder implements Codec<SimpleBlockLocation> {
+public final class SimpleLocationEncoder implements Codec<SimpleBlockLocation> {
     public SimpleLocationEncoder() {
     }
 
@@ -26,20 +26,18 @@ public class SimpleLocationEncoder implements Codec<SimpleBlockLocation> {
         bsonWriter.writeEndDocument();
     }
 
-    @NotNull
-    public SimpleBlockLocation decode(@NotNull BsonReader bsonReader, @Nullable DecoderContext context) {
+    public @NotNull SimpleBlockLocation decode(@NotNull BsonReader bsonReader, @Nullable DecoderContext context) {
         Objects.requireNonNull(bsonReader);
         bsonReader.readStartDocument();
-        String var6 = bsonReader.readString("world");
-        int var3 = bsonReader.readInt32("x");
-        int var4 = bsonReader.readInt32("y");
-        int var5 = bsonReader.readInt32("z");
+        String world = bsonReader.readString("world");
+        int x = bsonReader.readInt32("x");
+        int y = bsonReader.readInt32("y");
+        int z = bsonReader.readInt32("z");
         bsonReader.readEndDocument();
-        return new SimpleBlockLocation(var6, var3, var4, var5);
+        return new SimpleBlockLocation(world, x, y, z);
     }
 
-    @NotNull
-    public Class<SimpleBlockLocation> getEncoderClass() {
+    public @NotNull Class<SimpleBlockLocation> getEncoderClass() {
         return SimpleBlockLocation.class;
     }
 }

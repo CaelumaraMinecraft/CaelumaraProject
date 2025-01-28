@@ -4,6 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.base.SingularDatabase;
 import net.aurika.data.handlers.abstraction.SingularDataHandler;
 import net.aurika.data.object.DataObject;
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.filesystem.FSUtil;
@@ -16,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public abstract class SingularFlatFileDatabase<T extends DataObject> implements SingularDatabase<T> {
 
@@ -24,8 +24,8 @@ public abstract class SingularFlatFileDatabase<T extends DataObject> implements 
     private final @NotNull SingularDataHandler<T> dataHandler;
 
     public SingularFlatFileDatabase(@NotNull Path file, @NotNull SingularDataHandler<T> dataHandler) {
-        Objects.requireNonNull(file, "file");
-        Objects.requireNonNull(dataHandler, "dataHandler");
+        Checker.Arg.notNull(file, "file");
+        Checker.Arg.notNull(dataHandler, "dataHandler");
         this.file = file;
         this.dataHandler = dataHandler;
     }
@@ -73,10 +73,10 @@ public abstract class SingularFlatFileDatabase<T extends DataObject> implements 
 
     public abstract @Nullable T load(@NotNull BufferedReader reader);
 
-    public abstract void save(@NotNull T var1, @NotNull BufferedWriter writer);
+    public abstract void save(@NotNull T data, @NotNull BufferedWriter writer);
 
     public final void save(@NotNull T data) {
-        Objects.requireNonNull(data, "data");
+        Checker.Arg.notNull(data, "data");
 
         try {
             BufferedWriter writer = FSUtil.standardWriter(this.file);

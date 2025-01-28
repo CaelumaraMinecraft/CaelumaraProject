@@ -23,14 +23,14 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     private final int z;
 
     public SimpleBlockLocation(@NonNull String worldName, int x, int y, int z) {
-        this.worldName = Checker.Argument.checkNotNull(worldName, "worldName", "World name cannot be null");
+        this.worldName = Checker.Arg.notNull(worldName, "worldName", "World name cannot be null");
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
     public static SimpleBlockLocation of(@NonNull String worldName, @NonNull BlockVector3 var1) {
-        Checker.Argument.checkNotNull(worldName, "worldName", "Cannot get simple location of a null location");
+        Checker.Arg.notNull(worldName, "worldName", "Cannot get simple location of a null location");
         return new SimpleBlockLocation(worldName, var1.getX(), var1.getY(), var1.getZ());
     }
 

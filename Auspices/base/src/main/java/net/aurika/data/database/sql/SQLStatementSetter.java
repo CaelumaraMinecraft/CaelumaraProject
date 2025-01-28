@@ -15,5 +15,5 @@ public interface SQLStatementSetter {
 
     void setDouble(@NotNull String var1, double var2);
 
-    void setBytes(@NotNull String var1, byte[] var2);
+    void setBytes(@NotNull String var1, byte @NotNull [] var2);
 }

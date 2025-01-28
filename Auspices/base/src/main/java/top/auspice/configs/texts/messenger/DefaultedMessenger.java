@@ -16,8 +16,8 @@ public class DefaultedMessenger implements Messenger {
     private final Supplier<Messenger> second;
 
     public DefaultedMessenger(@NotNull Messenger first, @NotNull Supplier<Messenger> second) {
-        Checker.Argument.checkNotNull(first, "first");
-        Checker.Argument.checkNotNull(second, "second");
+        Checker.Arg.notNull(first, "first");
+        Checker.Arg.notNull(second, "second");
         this.first = first;
         this.second = second;
     }
@@ -32,7 +32,7 @@ public class DefaultedMessenger implements Messenger {
 
     @Nullable
     public MessageProvider getProvider(@NotNull Diversity diversity) {
-        Checker.Argument.checkNotNull(diversity, "diversity");
+        Checker.Arg.notNull(diversity, "diversity");
         MessageProvider provider = this.first.getProvider(diversity);
         if (provider == null) {
             provider = this.second.get().getProvider(diversity);
@@ -59,8 +59,8 @@ public class DefaultedMessenger implements Messenger {
 
     @NotNull
     public static DefaultedMessenger of(@NotNull Messenger first, @NotNull Messenger second) {
-        Checker.Argument.checkNotNull(first, "first");
-        Checker.Argument.checkNotNull(second, "second");
+        Checker.Arg.notNull(first, "first");
+        Checker.Arg.notNull(second, "second");
         return new DefaultedMessenger(second, () -> Objects.requireNonNull(second));
     }
 

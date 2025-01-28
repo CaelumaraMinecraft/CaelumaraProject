@@ -14,7 +14,7 @@ public class AuspiceComponentDecoder implements ComponentDecoder<TextObject, Tex
 
     @Override
     public @NotNull TextComponent deserialize(@NotNull TextObject input) {  // TODO
-        Checker.Argument.checkNotNull(input, "input");
+        Checker.Arg.notNull(input, "input");
         ComplexTextBuilderContextProvider builderProvider = new ComplexTextBuilderContextProvider(new TextPlaceholderProvider());
         for (TextPiece piece : input.getPieces()) {
             piece.build(builderProvider);

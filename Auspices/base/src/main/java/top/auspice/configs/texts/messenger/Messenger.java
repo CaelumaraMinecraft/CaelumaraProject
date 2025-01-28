@@ -45,7 +45,7 @@ public interface Messenger {
     @Nullable MessageProvider getProvider(@NotNull Diversity diversity);
 
     default TextObject getMessageObject(@NotNull Diversity diversity) {
-        Checker.Argument.checkNotNull(diversity, "diversity");
+        Checker.Arg.notNull(diversity, "diversity");
         MessageProvider msgProvider = this.getProvider(diversity);
         return msgProvider == null ? null : msgProvider.getMessage();
     }

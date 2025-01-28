@@ -1,7 +1,7 @@
 package net.aurika.config.adapters;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,15 +10,15 @@ public final class YamlImportDeclaration {
     @NotNull
     private final String name;
     @NotNull
-    private final YamlConfigSection info;
+    private final YamlNodeSection info;
     private final boolean Extends;
     @NotNull
     private final List<String> importedAnchors;
 
-    public YamlImportDeclaration(@NotNull String name, @NotNull YamlConfigSection info) {
+    public YamlImportDeclaration(@NotNull String name, @NotNull YamlNodeSection info) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(info);
-        YamlConfigSection var10001;
+        YamlNodeSection var10001;
         boolean findExtend;
         label12:
         {
@@ -48,7 +48,7 @@ public final class YamlImportDeclaration {
     }
 
     @NotNull
-    public YamlConfigSection getInfo() {
+    public YamlNodeSection getInfo() {
         return this.info;
     }
 

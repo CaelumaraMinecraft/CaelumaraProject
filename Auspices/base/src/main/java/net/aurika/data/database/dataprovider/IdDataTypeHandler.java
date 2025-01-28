@@ -1,9 +1,9 @@
 package net.aurika.data.database.dataprovider;
 
 import kotlin.collections.ArraysKt;
-import org.jetbrains.annotations.NotNull;
 import net.aurika.data.database.sql.statements.getters.SimpleResultSetQuery;
 import net.aurika.data.database.sql.statements.setters.SimplePreparedStatement;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

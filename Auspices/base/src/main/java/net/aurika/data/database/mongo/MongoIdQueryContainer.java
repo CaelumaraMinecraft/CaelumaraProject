@@ -9,7 +9,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
 import top.auspice.utils.unsafe.Fn;
 
-public final class MongoIdQueryContainer<K> implements Bson {
+public class MongoIdQueryContainer<K> implements Bson {
     private final K a;
     private final Class<K> b;
 
@@ -19,7 +19,7 @@ public final class MongoIdQueryContainer<K> implements Bson {
     }
 
     public <TDocument> BsonDocument toBsonDocument(Class<TDocument> var1, CodecRegistry var2) {
-        return new BsonDocumentWrapper(this, new a(var2));
+        return new BsonDocumentWrapper<>(this, new a(var2));
     }
 
     public String toString() {

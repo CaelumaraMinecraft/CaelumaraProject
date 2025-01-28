@@ -1,11 +1,11 @@
 package net.aurika.config.path;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.abstraction.BuildableObject;
 import net.aurika.annotations.data.Immutable;
 import net.aurika.utils.Checker;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.arrays.ArrayUtils;
 import top.auspice.utils.string.Strings;
 
@@ -16,12 +16,12 @@ import java.util.regex.Pattern;
 public class ConfigEntry implements BuildableObject {
     public static final String ALLOWED_PATH = "[A-Za-z0-9-]+((\\.[A-Za-z0-9-]+)+)?";
     private static final Pattern PATH_PATTERN = Pattern.compile(ALLOWED_PATH);
-    public static final ConfigEntry EMPTY = new ConfigEntry(new String[0]);
+    protected static final ConfigEntry EMPTY = new ConfigEntry(new String[0]);
 
     private final @NotNull String @NotNull [] path;
 
     public ConfigEntry(@NotNull String @NotNull [] path) {
-        Checker.Argument.checkNotNullArray(path, "path", "Path array cannot contains null values");
+        Checker.Arg.nonNullArray(path, "path", "Path array cannot contains null values");
         this.path = path;
     }
 
@@ -79,7 +79,7 @@ public class ConfigEntry implements BuildableObject {
     }
 
     public ConfigEntry removePrefix(@NotNull ConfigEntry prefix) {
-        Checker.Argument.checkNotNull(prefix, "prefix");
+        Checker.Arg.notNull(prefix, "prefix");
         return this.removePrefix(prefix.path);
     }
 
@@ -93,7 +93,7 @@ public class ConfigEntry implements BuildableObject {
      */
     public ConfigEntry removePrefix(@NotNull String @NotNull [] other) {
         if (ArrayUtils.startsWith(this.path, other)) {
-            return new ConfigEntry(ArrayUtils.removeHead(this.path, other.length));
+            return new ConfigEntry(ArrayUtils.removePre(this.path, other.length));
         } else {
             throw new IllegalArgumentException("This path is not starts with other String array: " + Arrays.toString(this.path) + ", other: " + Arrays.toString(other));
         }

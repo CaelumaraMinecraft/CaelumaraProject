@@ -13,7 +13,7 @@ import java.util.Map;
 @ApiStatus.Experimental
 public final class TagUtils {
     public static @Nullable Tag standardTypeToTag(@NotNull Class<?> type) {
-        Checker.Argument.checkNotNull(type, "type");
+        Checker.Arg.notNull(type, "type");
 
         if (int.class == type || long.class == type || byte.class == type || short.class == type) {
             return Tag.INT;

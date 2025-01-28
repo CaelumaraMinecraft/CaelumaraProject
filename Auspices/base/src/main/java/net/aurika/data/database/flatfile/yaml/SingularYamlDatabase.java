@@ -1,17 +1,17 @@
 package net.aurika.data.database.flatfile.yaml;
 
-import kotlin.jvm.internal.Intrinsics;
-import org.jetbrains.annotations.NotNull;
-import net.aurika.data.object.DataObject;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.flatfile.SingularFlatFileDatabase;
 import net.aurika.data.handlers.abstraction.SingularDataHandler;
+import net.aurika.data.object.DataObject;
+import net.aurika.utils.Checker;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.Path;
 
-public final class SingularYamlDatabase<T extends DataObject> extends SingularFlatFileDatabase<T> {
+public class SingularYamlDatabase<T extends DataObject> extends SingularFlatFileDatabase<T> {
     public SingularYamlDatabase(@NotNull Path var1, @NotNull SingularDataHandler<T> var2) {
         super(var1, var2);
     }
@@ -21,14 +21,14 @@ public final class SingularYamlDatabase<T extends DataObject> extends SingularFl
     }
 
     public @NotNull T load(@NotNull BufferedReader reader) {
-        Intrinsics.checkNotNullParameter(reader, "");
-        YamlMappingDataProvider var2 = YamlDatabase.load(this.getFile().toAbsolutePath().toString(), reader);
-        return this.getDataHandler().load(var2);
+        Checker.Arg.notNull(reader, "reader");
+        YamlMappingDataProvider yamlDataProvider = YamlDatabase.load(this.getFile().toAbsolutePath().toString(), reader);
+        return this.getDataHandler().load(yamlDataProvider);
     }
 
-    public void save(@NotNull T var1, @NotNull BufferedWriter writer) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(writer, "");
-        YamlDatabase.save(var1, this.getDataHandler(), writer);
+    public void save(@NotNull T data, @NotNull BufferedWriter writer) {
+        Checker.Arg.notNull(data, "data");
+        Checker.Arg.notNull(writer, "writer");
+        YamlDatabase.save(data, this.getDataHandler(), writer);
     }
 }

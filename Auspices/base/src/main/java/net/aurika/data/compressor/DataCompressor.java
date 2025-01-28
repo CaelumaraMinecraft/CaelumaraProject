@@ -1,13 +1,11 @@
 package net.aurika.data.compressor;
 
-import org.bukkit.Location;
+import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NSedKey;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import top.auspice.constants.location.SimpleLocation;
-import net.aurika.namespace.NSedKey;
-import net.aurika.namespace.NSKeyed;
 import top.auspice.utils.unsafe.io.ByteArrayOutputStream;
 
 import java.awt.*;
@@ -124,7 +122,6 @@ public class DataCompressor {
             return this.compress(location.getWorld()).compress(location.getX()).compress(location.getY()).compress(location.getZ()).compress(location.getYaw()).compress(location.getPitch());
         }
     }
-
 
     public final DataCompressor compress(NSKeyed nsKeyed) {
         return this.compress(nsKeyed.getNamespacedKey());

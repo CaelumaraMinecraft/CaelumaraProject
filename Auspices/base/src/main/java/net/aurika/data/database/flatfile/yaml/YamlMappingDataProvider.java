@@ -2,8 +2,8 @@ package net.aurika.data.database.flatfile.yaml;
 
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.dataprovider.*;
-import net.aurika.snakeyaml.extension.interpret.NodeInterpreter;
 import net.aurika.snakeyaml.extension.nodes.MapNode;
+import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpreter;
 import net.aurika.snakeyaml.extension.nodes.NodeUtils;
 import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +37,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     private @NotNull MapNode obj;
 
     public YamlMappingDataProvider(@Nullable String name, @NotNull MapNode obj) {
-        Checker.Argument.checkNotNull(obj, "obj");
+        Checker.Arg.notNull(obj, "obj");
         this.name = name;
         this.obj = obj;
     }
@@ -56,7 +56,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     }
 
     public final void setObj$core(@NotNull MappingNode MappingNode) {
-        Checker.Argument.checkNotNull(MappingNode, "mappingNode");
+        Checker.Arg.notNull(MappingNode, "mappingNode");
         this.obj = new MapNode(MappingNode);
     }
 
@@ -88,18 +88,18 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public @NotNull YamlMappingDataProvider get(@NotNull String key) {
-        Checker.Argument.checkNotNull(key, "");
+        Checker.Arg.notNull(key, "key");
         return new YamlMappingDataProvider(key, this.a());
     }
 
     @Override
-    public @NotNull DataProvider asSection() {
+    public @NotNull YamlMappingDataProvider asSection() {
         return new YamlMappingDataProvider(null, this.a());
     }
 
     @Override
     public @Nullable String asString(@NotNull Supplier<String> def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         String s = NodeInterpreter.STRING.parse(this.obj.getNode(this.getKey()));
         return s == null ? def.get() : s;
     }
@@ -142,7 +142,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public int asInt(@NotNull IntSupplier def) {
-        Checker.Argument.checkNotNull(def, "");
+        Checker.Arg.notNull(def, "");
         Integer i = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.INT, null);
         if (i != null) {
             return i;
@@ -152,36 +152,36 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public long asLong(@NotNull LongSupplier def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         Long l = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.LONG, null);
         return l != null ? l : def.getAsLong();
     }
 
     @Override
     public float asFloat(@NotNull FloatSupplier def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         Float f = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.FLOAT, null);
         return f != null ? f : def.getAsFloat();
     }
 
     @Override
     public double asDouble(@NotNull DoubleSupplier def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         Double d = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.DOUBLE, null);
         return d != null ? d : def.getAsDouble();
     }
 
     @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         Boolean b = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.BOOLEAN, null);
         return b != null ? b : def.getAsBoolean();
     }
 
     @Override
     public @NotNull <E, C extends Collection<E>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
-        Checker.Argument.checkNotNull(c, "c");
-        Checker.Argument.checkNotNull(dataProcessor, "dataProcessor");
+        Checker.Arg.notNull(c, "c");
+        Checker.Arg.notNull(dataProcessor, "dataProcessor");
         Node node = this.obj.getNode(this.getKey());
         SequenceNode sequenceNode = node instanceof SequenceNode ? (SequenceNode) node : null;
         if (sequenceNode == null) {
@@ -195,8 +195,8 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
-        Checker.Argument.checkNotNull(m, "m");
-        Checker.Argument.checkNotNull(dataProcessor, "triConsumer");
+        Checker.Arg.notNull(m, "m");
+        Checker.Arg.notNull(dataProcessor, "triConsumer");
         Node object2 = this.obj.getNode(this.getKey());
         MappingNode mappingNode = object2 instanceof MappingNode ? (MappingNode) object2 : null;
         if (mappingNode == null) {
@@ -283,8 +283,8 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public <E> void setCollection(@NotNull Collection<? extends E> value, @NotNull BiConsumer<SectionCreatableDataSetter, E> biConsumer) {
-        Checker.Argument.checkNotNull(value, "value");
-        Checker.Argument.checkNotNull(biConsumer, "");
+        Checker.Arg.notNull(value, "value");
+        Checker.Arg.notNull(biConsumer, "");
         if (value.isEmpty()) return;
         SequenceNode sequenceNode = new SequenceNode(Tag.SEQ, new ArrayList<>(), FlowStyle.AUTO);
         for (E e : value) {
@@ -295,8 +295,8 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> mappingSetterHandler) {
-        Checker.Argument.checkNotNull(value, "value");
-        Checker.Argument.checkNotNull(mappingSetterHandler, "mappingSetterHandler");
+        Checker.Arg.notNull(value, "value");
+        Checker.Arg.notNull(mappingSetterHandler, "mappingSetterHandler");
         if (value.isEmpty()) return;
         MappingNode mappingNode = NodeUtils.emptyMapping();
         for (Map.Entry<K, ? extends V> entry : value.entrySet()) {
@@ -316,7 +316,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public @NotNull SectionableDataSetter createSection(@NotNull String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         if (this.name != null) {
             throw new IllegalStateException("Previous name not handled: " + this.name + " -> " + key);
         }
@@ -326,7 +326,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     }
 
     public static @NotNull DataProvider createProvider$core(@NotNull Node node) {
-        Checker.Argument.checkNotNull(node, "");
+        Checker.Arg.notNull(node, "");
         if (node instanceof MappingNode) {
             List<NodeTuple> value = new ArrayList<>();
             value.addAll(((MappingNode) node).getValue());

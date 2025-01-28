@@ -11,9 +11,9 @@ import org.snakeyaml.engine.v2.nodes.MappingNode;
 import org.snakeyaml.engine.v2.nodes.Tag;
 import net.aurika.config.accessor.YamlClearlyConfigAccessor;
 import net.aurika.config.profile.managers.ConfigManager;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.importers.YamlImporter;
-import net.aurika.config.yaml.snakeyaml.common.SimpleWriter;
+import net.aurika.snakeyaml.extension.common.SimpleWriter;
 import net.aurika.snakeyaml.extension.validation.CustomNodeValidators;
 import net.aurika.snakeyaml.extension.validation.NodeValidator;
 import net.aurika.snakeyaml.extension.validation.ValidationFailure;
@@ -31,8 +31,8 @@ import java.util.Objects;
 public abstract class YamlWithDefaults implements YamlContainer {
     @Nullable
     protected final File file;
-    protected YamlConfigSection config;
-    protected YamlConfigSection defaults;
+    protected YamlNodeSection config;
+    protected YamlNodeSection defaults;
     protected NodeValidator schema;
     protected YamlImporter importer;
     protected boolean loadAnchors = true;
@@ -44,7 +44,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
     public List<ValidationFailure> validate() {
         Objects.requireNonNull(this.schema, "Cannot validate config with no validator attached: " + this.file.getPath());
         Objects.requireNonNull(this.config, "Cannot validate config that isn't loaded yet: " + this.file.getPath());
-        return Validator.validate(this.config.getRoot(), this.schema, CustomNodeValidators.getValidators());
+        return Validator.validate(this.config.getRootNode(), this.schema, CustomNodeValidators.getValidators());
     }
 
     protected static void transferTo(InputStream inputStream, OutputStream outputStream) throws IOException {
@@ -79,7 +79,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
         return this.importer;
     }
 
-    public final YamlConfigSection getConfig() {
+    public final YamlNodeSection getConfig() {
         return this.config;
     }
 
@@ -97,7 +97,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
             BufferedWriter var2 = Files.newBufferedWriter(this.file.toPath(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
 
             try {
-                var1.dumpNode(this.config.getRoot(), new SimpleWriter(var2));
+                var1.dumpNode(this.config.getRootNode(), new SimpleWriter(var2));
             } catch (Throwable var4) {
                 if (var2 != null) {
                     try {
@@ -255,7 +255,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
                 if (var1 != null) {
                     try {
                         String var2 = this.file != null && this.file.exists() ? this.file.getName() : this.toString();
-                        this.defaults = YamlConfigSection.root(YamlContainer.parse((new YamlParseContext()).named(var2).shouldLoadAliases(this.loadAnchors).stream(var1)));
+                        this.defaults = YamlNodeSection.root(YamlContainer.parse((new YamlParseContext()).named(var2).shouldLoadAliases(this.loadAnchors).stream(var1)));
                     } catch (ParserException | ComposerException | UnsupportedOperationException |
                              ScannerException var4) {
                         AuspiceLogger.error("Failed to load defaults for config '" + this.file.getAbsolutePath() + "' from '" + this.getDefaultsPath() + "':");
@@ -291,7 +291,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
             if (this.file.exists()) {
                 try {
                     InputStream var1 = inputStreamOf(this.file);
-                    this.config = YamlConfigSection.root(YamlContainer.parse((new YamlParseContext()).named(this.file.getName()).shouldLoadAliases(this.loadAnchors).stream(var1)));
+                    this.config = YamlNodeSection.root(YamlContainer.parse((new YamlParseContext()).named(this.file.getName()).shouldLoadAliases(this.loadAnchors).stream(var1)));
                     var1.close();
                 } catch (ParserException | ComposerException | UnsupportedOperationException |
                          ScannerException parseExc) {
@@ -315,7 +315,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
     public YamlWithDefaults createEmptyConfigIfNull() {
         if (this.config == null) {
             this.createFile();
-            this.config = YamlConfigSection.root(new MappingNode(Tag.MAP, new ArrayList<>(), FlowStyle.BLOCK));
+            this.config = YamlNodeSection.root(new MappingNode(Tag.MAP, new ArrayList<>(), FlowStyle.BLOCK));
         }
 
         return this;
@@ -325,7 +325,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
         return this.config == this.defaults;
     }
 
-    public final YamlConfigSection getDefaults() {
+    public final YamlNodeSection getDefaults() {
         return this.defaults;
     }
 
@@ -340,7 +340,7 @@ public abstract class YamlWithDefaults implements YamlContainer {
 
 
                 try {
-                    var1 = Updater.updateConfig(this.config.getRoot(), this.defaults.getRoot().clone(), this.schema, this.file.toPath(), new Dump(new DumpSettings()));
+                    var1 = Updater.updateConfig(this.config.getRootNode(), this.defaults.getRootNode().clone(), this.schema, this.file.toPath(), new Dump(new DumpSettings()));
                 } catch (Throwable var7) {
                     AuspiceLogger.error("An error occurred while attempting to update " + this.file.getAbsolutePath() + ": " + var7.getMessage() + (var7.getMessage().contains("another process") ? ". This is probably caused by your text editor" : ""));
                     return;

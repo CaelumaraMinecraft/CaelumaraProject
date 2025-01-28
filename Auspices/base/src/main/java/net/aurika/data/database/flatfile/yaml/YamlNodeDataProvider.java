@@ -2,8 +2,8 @@ package net.aurika.data.database.flatfile.yaml;
 
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.dataprovider.*;
-import net.aurika.snakeyaml.extension.interpret.NodeInterpretContext;
-import net.aurika.snakeyaml.extension.interpret.NodeInterpreter;
+import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpretContext;
+import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpreter;
 import net.aurika.snakeyaml.extension.nodes.MapNode;
 import net.aurika.snakeyaml.extension.nodes.NodeUtils;
 import net.aurika.utils.Checker;
@@ -32,7 +32,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     private final @NotNull Node node;
 
     public YamlNodeDataProvider(@NotNull Node node) {
-        Checker.Argument.checkNotNull(node, "node");
+        Checker.Arg.notNull(node, "node");
         this.node = node;
     }
 
@@ -66,7 +66,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public @NotNull DataProvider get(@NotNull String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         Node a = this.node;
         Intrinsics.checkNotNull(a);
         return new YamlMappingDataProvider(key, new MapNode((MappingNode) a));
@@ -79,7 +79,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public String asString(@NotNull Supplier<String> def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         String s = this.interpret(NodeInterpreter.STRING);
         return s == null ? def.get() : s;
     }
@@ -110,7 +110,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public int asInt(@NotNull IntSupplier def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         Integer i = this.interpret(NodeInterpreter.INT);
         if (i != null) {
             return i;
@@ -120,7 +120,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public long asLong(@NotNull LongSupplier function0) {
-        Checker.Argument.checkNotNull(function0, "def");
+        Checker.Arg.notNull(function0, "def");
         Long l = this.interpret(NodeInterpreter.LONG);
         if (l != null) {
             return l;
@@ -130,7 +130,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public float asFloat(@NotNull FloatSupplier function0) {
-        Checker.Argument.checkNotNull(function0, "def");
+        Checker.Arg.notNull(function0, "def");
         Float f = this.interpret(NodeInterpreter.FLOAT);
         if (f != null) {
             return f;
@@ -140,7 +140,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public double asDouble(@NotNull DoubleSupplier function0) {
-        Checker.Argument.checkNotNull(function0, "def");
+        Checker.Arg.notNull(function0, "def");
         Double d = this.interpret(NodeInterpreter.DOUBLE);
         if (d != null) {
             return d;
@@ -150,7 +150,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
-        Checker.Argument.checkNotNull(def, "def");
+        Checker.Arg.notNull(def, "def");
         Boolean b = this.interpret(NodeInterpreter.BOOLEAN);
         if (b != null) {
             return b;
@@ -160,8 +160,8 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> biConsumer) {
-        Checker.Argument.checkNotNull(c, "");
-        Checker.Argument.checkNotNull(biConsumer, "");
+        Checker.Arg.notNull(c, "");
+        Checker.Arg.notNull(biConsumer, "");
         final Node a = this.node;
         Intrinsics.checkNotNull(a);
         for (final Node node : ((SequenceNode) a).getValue()) {
@@ -173,8 +173,8 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull final M m, @NotNull final TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
-        Checker.Argument.checkNotNull(m, "");
-        Checker.Argument.checkNotNull(dataProcessor, "");
+        Checker.Arg.notNull(m, "");
+        Checker.Arg.notNull(dataProcessor, "");
         final Node a = this.node;
         Intrinsics.checkNotNull(a);
         for (final NodeTuple nodePair : ((MappingNode) a).getValue()) {
@@ -261,8 +261,8 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     }
 
     public static @NotNull ScalarNode plainNode(@NotNull Tag tag, @NotNull Object obj) {
-        Checker.Argument.checkNotNull(tag, "tag");
-        Checker.Argument.checkNotNull(obj, "obj");
+        Checker.Arg.notNull(tag, "tag");
+        Checker.Arg.notNull(obj, "obj");
         return new ScalarNode(tag, obj.toString(), ScalarStyle.PLAIN);
     }
 }

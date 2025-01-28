@@ -1,6 +1,7 @@
 package net.aurika.utils;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import top.auspice.utils.function.ToBooleanFunction;
 
 import java.util.Arrays;
@@ -44,50 +45,54 @@ public final class Checker {
         throw exceptionSupplier.get();
     }
 
-    public static final class Argument {
+    public static final class Arg {
 
         @Contract("null, _ -> fail")
-        public static <T> T checkNotNull(T obj, String paramName) {
+        public static <T> @NotNull T notNull(T obj, String paramName) {
             return check(obj, getNotNullChecker(), () ->
-                    sanitizeStackTrace(new IllegalArgumentException("Null argument '" + paramName + '\''), Argument.class.getName())
+                    sanitizeStackTrace(new IllegalArgumentException("Null argument '" + paramName + '\''), Arg.class.getName())
             );
         }
 
-        public static <T> T checkNotNull(T obj, String paramName, String message) {
+        public static <T> @NotNull T notNull(T obj, String paramName, String message) {
             return check(obj, getNotNullChecker(), () ->
-                    sanitizeStackTrace(new IllegalArgumentException("Null argument '" + paramName + "': " + message), Argument.class.getName())
+                    sanitizeStackTrace(new IllegalArgumentException("Null argument '" + paramName + "': " + message), Arg.class.getName())
             );
         }
 
-        public static String checkNotEmptyString(String str, String paramName) {
+        public static @NotNull String notEmpty(String str, String paramName) {
             return check(str, getNotEmptyStringChecker(), () ->
-                    sanitizeStackTrace(new IllegalArgumentException("Empty argument string '" + paramName + '\''), Argument.class.getName())
+                    sanitizeStackTrace(new IllegalArgumentException("Empty argument string '" + paramName + '\''), Arg.class.getName())
             );
         }
 
-        public static String checkNotEmptyString(String str, String paramName, String message) {
+        public static @NotNull String notEmpty(String str, String paramName, String message) {
             return check(str, getNotEmptyStringChecker(), () ->
-                    sanitizeStackTrace(new IllegalArgumentException("Empty argument string '" + paramName + "': " + message), Argument.class.getName())
+                    sanitizeStackTrace(new IllegalArgumentException("Empty argument string '" + paramName + "': " + message), Arg.class.getName())
             );
         }
 
         @Contract("null, _ -> fail")
-        public static <T> T[] checkNotNullArray(T[] arr, String paramName) {
+        public static <T> @NotNull T @NotNull [] nonNullArray(T[] arr, String paramName) {
             return check(arr, getNonNullArrayChecker(), () ->
-                    sanitizeStackTrace(new IllegalArgumentException("Argument '" + paramName + "' array contains null value"), Argument.class.getName())
+                    sanitizeStackTrace(new IllegalArgumentException("Argument array '" + paramName + "' contains null value"), Arg.class.getName())
             );
         }
 
-        @Contract("null, _ -> fail")
-        public static <T> T[] checkNotNullArray(T[] arr, String paramName, String message) {
-            checkNotNull(arr, paramName, message);
+        @Contract("null, _, _ -> fail")
+        public static <T> @NotNull T @NotNull [] nonNullArray(T[] arr, String paramName, String message) {
+            notNull(arr, paramName, message);
             return check(arr, getNonNullArrayChecker(), () ->
-                    sanitizeStackTrace(new IllegalArgumentException("Argument '" + paramName + "' array contains null value: " + message), Argument.class.getName())
+                    sanitizeStackTrace(new IllegalArgumentException("Argument array '" + paramName + "' contains null value: " + message), Arg.class.getName())
             );
         }
     }
 
-    public static final class Expression {
+    public static final class Expr {
+
+    }
+
+    public static final class State {
 
     }
 

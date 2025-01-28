@@ -70,7 +70,7 @@ public class ComplexTextBuilderContextProvider extends TextBuilderContextProvide
     }
 
     public TextComponent.Builder newComponentBuilder(Set<Merge> merges) {
-        Checker.Argument.checkNotNull(merges, "merges");
+        Checker.Arg.notNull(merges, "merges");
         //
         //
         TextComponent oldText = this.currentBuilder.build();

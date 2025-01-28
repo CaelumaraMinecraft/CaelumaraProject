@@ -108,7 +108,7 @@ public class TextObject implements MessageObjectBuilder {
      * @return 合并过后的 {@linkplain TextObject}
      */
     public static @Nullable("texts.length == 0") TextObject combine(@NotNull TextObject @NotNull ... texts) {
-        Checker.Argument.checkNotNullArray(texts, "texts");
+        Checker.Arg.nonNullArray(texts, "texts");
         if (texts.length == 0) {
             return null;
         } else if (texts.length == 1) {
@@ -134,7 +134,7 @@ public class TextObject implements MessageObjectBuilder {
     }
 
     public TextObject filter(Predicate<TextPiece> msgPieceFilter) {
-        Checker.Argument.checkNotNull(msgPieceFilter, "msgPieceFilter");
+        Checker.Arg.notNull(msgPieceFilter, "msgPieceFilter");
         TextPiece[] var2 = Arrays.stream(this.pieces).filter(msgPieceFilter).toArray(TextPiece[]::new);
         return new TextObject(var2, this.usePrefix, this.settings);
     }

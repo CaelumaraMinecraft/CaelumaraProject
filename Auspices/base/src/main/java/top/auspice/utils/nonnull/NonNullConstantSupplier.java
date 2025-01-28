@@ -10,7 +10,7 @@ public class NonNullConstantSupplier<T> implements Supplier<T> {
     private final T value;
 
     public NonNullConstantSupplier(T value) {
-        Checker.Argument.checkNotNull(value, "value");
+        Checker.Arg.notNull(value, "value");
         this.value = value;
     }
 

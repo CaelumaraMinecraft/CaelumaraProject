@@ -834,8 +834,8 @@ public final class MathCompiler {
         }
 
         public final <T extends Expression> boolean contains(@NotNull Class<T> type, @NotNull Predicate<T> predicate) {
-            Checker.Argument.checkNotNull(type, "type");
-            Checker.Argument.checkNotNull(predicate, "predicate");
+            Checker.Arg.notNull(type, "type");
+            Checker.Arg.notNull(predicate, "predicate");
 
             if (type.isInstance(this)) {
                 return predicate.test((T) this);
@@ -944,9 +944,9 @@ public final class MathCompiler {
         private final @NotNull Expression[] args;
 
         public FunctionExpr(@NotNull String name, @NotNull MathFunction handler, @NotNull Expression[] args) {
-            Checker.Argument.checkNotNull(name, "name");
-            Checker.Argument.checkNotNull(handler, "handler");
-            Checker.Argument.checkNotNull(args, "args");
+            Checker.Arg.notNull(name, "name");
+            Checker.Arg.notNull(handler, "handler");
+            Checker.Arg.notNull(args, "args");
             this.name = name;
             this.handler = handler;
             this.args = args;

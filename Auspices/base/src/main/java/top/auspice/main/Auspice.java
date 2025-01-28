@@ -4,7 +4,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.api.user.AuspiceUser;
-import net.aurika.data.centers.AuspiceDataCenter;
+import top.auspice.data.AuspiceDataCenter;
 import top.auspice.dependencies.DependencyManager;
 import top.auspice.dependencies.classpath.BootstrapProvider;
 import top.auspice.diversity.Diversity;

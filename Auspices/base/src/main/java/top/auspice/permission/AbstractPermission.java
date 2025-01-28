@@ -12,8 +12,8 @@ public class AbstractPermission implements Permission {
     }
 
     public AbstractPermission(@NotNull PermissionKey key, @NotNull PermissionDefaultValue defaultValue) {
-        Checker.Argument.checkNotNull(key, "key");
-        Checker.Argument.checkNotNull(defaultValue, "defaultValue");
+        Checker.Arg.notNull(key, "key");
+        Checker.Arg.notNull(defaultValue, "defaultValue");
         this.key = key;
         this.defaultValue = defaultValue;
     }
@@ -30,7 +30,7 @@ public class AbstractPermission implements Permission {
 
     @Override
     public void setDefaultValue(@NotNull PermissionDefaultValue defaultValue) {
-        Checker.Argument.checkNotNull(defaultValue, "defaultValue");
+        Checker.Arg.notNull(defaultValue, "defaultValue");
         this.defaultValue = defaultValue;
     }
 }

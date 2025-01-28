@@ -16,7 +16,7 @@ public final class FunctionalList<E> implements List<E> {
     }
 
     public FunctionalList(@NotNull final List<E> original) {
-        Checker.Argument.checkNotNull(original, "original");
+        Checker.Arg.notNull(original, "original");
         this.original = original;
     }
 
@@ -36,13 +36,13 @@ public final class FunctionalList<E> implements List<E> {
 
     @Override
     public boolean addAll(final int index, @NotNull final Collection<? extends E> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         return this.original.addAll(index, elements);
     }
 
     @Override
     public boolean addAll(@NotNull final Collection<? extends E> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         return this.original.addAll(elements);
     }
 
@@ -58,7 +58,7 @@ public final class FunctionalList<E> implements List<E> {
 
     @Override
     public boolean containsAll(@NotNull final Collection<?> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         return this.original.containsAll(elements);
     }
 
@@ -107,7 +107,7 @@ public final class FunctionalList<E> implements List<E> {
 
     @Override
     public boolean removeAll(@NotNull final Collection<?> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         return this.original.removeAll(elements);
     }
 
@@ -117,7 +117,7 @@ public final class FunctionalList<E> implements List<E> {
 
     @Override
     public boolean retainAll(@NotNull final Collection<?> elements) {
-        Checker.Argument.checkNotNull(elements, "elements");
+        Checker.Arg.notNull(elements, "elements");
         return this.original.retainAll(elements);
     }
 
@@ -165,7 +165,7 @@ public final class FunctionalList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(final T @NotNull [] array) {
-        Checker.Argument.checkNotNull(array, "array");
+        Checker.Arg.notNull(array, "array");
         return (T[]) CollectionToArray.toArray(this, array);
     }
 

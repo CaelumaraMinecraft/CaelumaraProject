@@ -33,13 +33,13 @@ public final class PlaceholderTransformerRegistry {
     }
 
     public <I, O> void register(@NotNull Class<? extends I> type, @NotNull PlaceholderTransformer<? extends I, O> transformer) {
-        Checker.Argument.checkNotNull(type, "type");
-        Checker.Argument.checkNotNull(transformer, "transformer");
+        Checker.Arg.notNull(type, "type");
+        Checker.Arg.notNull(transformer, "transformer");
         this.registry.put(type, transformer);
     }
 
     public @Nullable PlaceholderTransformer<?, ?> getTransformer(@NotNull Class<?> type) {
-        Checker.Argument.checkNotNull(type, "type");
+        Checker.Arg.notNull(type, "type");
         return this.registry.get(type);
     }
 
@@ -115,7 +115,7 @@ public final class PlaceholderTransformerRegistry {
 
     static {
         INSTANCE.register(OfflinePlayer.class, (offlinePlayer -> {
-            Checker.Argument.checkNotNull(offlinePlayer, "offlinePlayer");
+            Checker.Arg.notNull(offlinePlayer, "offlinePlayer");
             String name = offlinePlayer.getName();
             if (!Strings.isNullOrEmpty(name)) {
                 return name;
@@ -129,11 +129,11 @@ public final class PlaceholderTransformerRegistry {
         INSTANCE.register(BlockPoint3D.class, PlaceholderTransformerRegistry::a);
         INSTANCE.register(SimpleChunkLocation.class, PlaceholderTransformerRegistry::a);
         INSTANCE.register(Supplier.class, supplier -> {
-            Checker.Argument.checkNotNull(supplier, "supplier");
+            Checker.Arg.notNull(supplier, "supplier");
             return supplier.get();
         });
         INSTANCE.register(Callable.class, callable -> {
-            Checker.Argument.checkNotNull(callable, "callable");
+            Checker.Arg.notNull(callable, "callable");
             try {
                 return callable.call();
             } catch (Exception e) {
@@ -145,7 +145,7 @@ public final class PlaceholderTransformerRegistry {
         INSTANCE.register(Expression.class, PlaceholderTransformerRegistry::a);
 
         INSTANCE.register(Throwable.class, throwable -> {
-            Checker.Argument.checkNotNull(throwable, "throwable");
+            Checker.Arg.notNull(throwable, "throwable");
             List<Throwable> causations = StackTraces.getCausationChain(throwable);
             return CollectionsKt.joinToString(causations, " <- ", "", "", -1, "...", (Throwable x) -> x.getClass().getName() + ": " + x.getMessage());
         });

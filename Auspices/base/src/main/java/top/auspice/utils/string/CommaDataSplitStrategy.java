@@ -14,7 +14,7 @@ public final class CommaDataSplitStrategy {
     private final String[] components;
 
     public CommaDataSplitStrategy(@NotNull String data, int expectedComponentCount) {
-        Checker.Argument.checkNotEmptyString(data, "data", "Data cannot be null or empty");
+        Checker.Arg.notEmpty(data, "data", "Data cannot be null or empty");
         if (expectedComponentCount < 1)
             throw new IllegalArgumentException("expectedComponentCount must be greater than zero: " + expectedComponentCount);
 

@@ -15,29 +15,27 @@ public final class SimpleChunkLocationEncoder implements Codec<SimpleChunkLocati
     public SimpleChunkLocationEncoder() {
     }
 
-    public final void encode(@NotNull BsonWriter var1, @NotNull SimpleChunkLocation var2, @Nullable EncoderContext var3) {
+    public void encode(@NotNull BsonWriter var1, @NotNull SimpleChunkLocation var2, @Nullable EncoderContext var3) {
         Objects.requireNonNull(var1);
         Objects.requireNonNull(var2);
-        (var1 = var1).writeStartDocument();
+        var1.writeStartDocument();
         var1.writeString("world", var2.getWorld());
         var1.writeInt32("x", var2.getX());
         var1.writeInt32("z", var2.getZ());
         var1.writeEndDocument();
     }
 
-    @NotNull
-    public final SimpleChunkLocation decode(@NotNull BsonReader bsonReader, @Nullable DecoderContext context) {
+    public @NotNull SimpleChunkLocation decode(@NotNull BsonReader bsonReader, @Nullable DecoderContext context) {
         Objects.requireNonNull(bsonReader);
         bsonReader.readStartDocument();
-        String var5 = bsonReader.readString("world");
-        int var3 = bsonReader.readInt32("x");
-        int var4 = bsonReader.readInt32("z");
+        String world = bsonReader.readString("world");
+        int x = bsonReader.readInt32("x");
+        int z = bsonReader.readInt32("z");
         bsonReader.readEndDocument();
-        return new SimpleChunkLocation(var5, var3, var4);
+        return new SimpleChunkLocation(world, x, z);
     }
 
-    @NotNull
-    public final Class<SimpleChunkLocation> getEncoderClass() {
+    public @NotNull Class<SimpleChunkLocation> getEncoderClass() {
         return SimpleChunkLocation.class;
     }
 }

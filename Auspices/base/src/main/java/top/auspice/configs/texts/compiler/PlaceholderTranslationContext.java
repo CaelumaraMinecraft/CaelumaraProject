@@ -12,7 +12,7 @@ public final class PlaceholderTranslationContext {
     public static final TextCompilerSettings PLACEHOLDER_SETTINGS = new TextCompilerSettings(false, false, true, true, true, null);
 
     public PlaceholderTranslationContext(Object rawValue, TextCompilerSettings var2) {
-        Checker.Argument.checkNotNull(rawValue, "rawValue", "Raw value cannot be null");
+        Checker.Arg.notNull(rawValue, "rawValue", "Raw value cannot be null");
         this.value = rawValue;
         this.settings = var2;
     }

@@ -1,21 +1,24 @@
 package net.aurika.snakeyaml.extension.nodes;
 
-import net.aurika.annotations.RecursiveMethod;
 import net.aurika.annotations.bookmark.Bookmark;
 import net.aurika.annotations.bookmark.BookmarkType;
-import net.aurika.config.annotations.ImplicitConstructed;
+import net.aurika.config.annotations.ImplicitOperateCached;
 import net.aurika.config.yaml.snakeyaml.common.NodeReplacer;
 import net.aurika.utils.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.api.DumpSettings;
+import org.snakeyaml.engine.v2.api.LoadSettings;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
+import org.snakeyaml.engine.v2.constructor.BaseConstructor;
+import org.snakeyaml.engine.v2.constructor.StandardConstructor;
 import org.snakeyaml.engine.v2.nodes.*;
 import org.snakeyaml.engine.v2.representer.BaseRepresenter;
 import org.snakeyaml.engine.v2.representer.StandardRepresenter;
 import top.auspice.utils.Generics;
+import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.unsafe.Fn;
 
 import java.util.*;
@@ -24,7 +27,7 @@ import java.util.function.ObjIntConsumer;
 import java.util.function.Predicate;
 
 public final class NodeUtils {
-    static final @NotNull BaseRepresenter STD_REPRESENTER = new StandardRepresenter(
+    static final @NotNull BaseRepresenter CORE_REPRESENTER = new StandardRepresenter(
             DumpSettings.builder()
                     .setDumpComments(true)
                     .build()
@@ -32,21 +35,11 @@ public final class NodeUtils {
 
     };
 
-    private static final @NotNull ScalarNode NULL_SCALAR = new ScalarNode(Tag.NULL, true, "~", ScalarStyle.PLAIN, Optional.empty(), Optional.empty());
-    private static final @NotNull MappingNode EMPTY_MAPPING = new MappingNode(Tag.MAP, true, new ArrayList<>(), FlowStyle.AUTO, Optional.empty(), Optional.empty());
-
-    @Contract(value = "-> new", pure = true)
-    public static @NotNull ScalarNode nullScalar() {
-        return copyScalarNode(NULL_SCALAR);
-    }
-
-    @Contract(value = "-> new", pure = true)
-    public static @NotNull MappingNode emptyMapping() {
-        return deepCopyMappingNode(EMPTY_MAPPING);
-    }
-
+    @ImplicitOperateCached
     public static Node nodeOfObject(@Nullable Object obj) {
-        return STD_REPRESENTER.represent(obj);
+        Node node = CORE_REPRESENTER.represent(obj);
+        NodesKt.cacheConstructed(node, obj);
+        return node;
     }
 
 //    public static Node nodeOfObject(@Nullable Object obj) {
@@ -74,6 +67,34 @@ public final class NodeUtils {
 //            }
 //        }
 //    }
+
+    static final @NotNull BaseConstructor CORE_CONSTRUCTOR = new StandardConstructor(LoadSettings.builder().build());
+
+    @Contract("null -> null")
+    public static Object objectOfNode(Node node) {
+        if (node == null) return null;
+        return CORE_CONSTRUCTOR.constructSingleDocument(Optional.of(node));
+    }
+
+    private static final @NotNull ScalarNode NULL_SCALAR = new ScalarNode(Tag.NULL, true, "~", ScalarStyle.PLAIN, Optional.empty(), Optional.empty());
+    private static final @NotNull MappingNode EMPTY_MAPPING = new MappingNode(Tag.MAP, true, new ArrayList<>(), FlowStyle.AUTO, Optional.empty(), Optional.empty());
+
+    @Contract(value = "-> new", pure = true)
+    public static @NotNull ScalarNode nullScalar() {
+        return copyScalarNode(NULL_SCALAR);
+    }
+
+    @Contract(value = "-> new", pure = true)
+    public static @NotNull MappingNode emptyMapping() {
+        return deepCopyMappingNode(EMPTY_MAPPING);
+    }
+
+    public static boolean isEmptyNode(Node node) {
+        if (node == null) return true;
+        if (node instanceof ScalarNode && (node.getTag().equals(Tag.NULL) || ((ScalarNode) node).getValue().isEmpty())) return true;
+        if (node instanceof CollectionNode<?> && ((CollectionNode<?>) node).getValue().isEmpty()) return true;
+        return false;
+    }
 
     public static void copyIfDoesntExist(MappingNode $this$copyIfDoesntExist, MappingNode copyFrom, String rootPath, Predicate<NodeReplacer.ReplacementDetails> ignore) {
 
@@ -166,23 +187,39 @@ public final class NodeUtils {
         return new ScalarNode(node.getTag(), true, node.getValue(), node.getScalarStyle(), node.getStartMark(), node.getEndMark());
     }
 
+    public static boolean hasNode(@NotNull MappingNode mappingNode, @NotNull String key) {
+        Checker.Arg.notNull(mappingNode, "mappingNode");
+        return hasNode(mappingNode.getValue(), key);
+    }
+
+    public static boolean hasNode(@NotNull List<NodeTuple> tupleList, @NotNull String key) {
+        Checker.Arg.notNull(tupleList, "tupleList");
+        Checker.Arg.notNull(key, "key");
+        for (NodeTuple tuple : tupleList) {
+            Node keyNode = tuple.getKeyNode();
+            if (equalsScalarValue(keyNode, key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @return 之前存在的键相同的节点
      */
     public static @Nullable Node putNode(@NotNull MappingNode mappingNode, @NotNull String key, @NotNull Node value) {
-        Checker.Argument.checkNotNull(mappingNode, "mappingNode");
+        Checker.Arg.notNull(mappingNode, "mappingNode");
         return putNode(mappingNode.getValue(), key, value);
     }
 
     public static @Nullable Node putNode(@NotNull List<NodeTuple> tupleList, @NotNull String key, @NotNull Node value) {
-        Checker.Argument.checkNotNull(tupleList, "tupleList");
-        Checker.Argument.checkNotNull(key, "key");
-        Checker.Argument.checkNotNull(value, "value");
+        Checker.Arg.notNull(tupleList, "tupleList");
+        Checker.Arg.notNull(key, "key");
+        Checker.Arg.notNull(value, "value");
         Node keyNode = null;
         for (NodeTuple tuple : tupleList) {  // Search for existent node
             keyNode = tuple.getKeyNode();
-            keyNode = unpackAnchor(keyNode);
-            if (keyNode instanceof ScalarNode scalarKey && scalarKey.getValue().equals(key)) {
+            if (equalsScalarValue(keyNode, key)) {
                 tupleList.remove(tuple);
                 return tuple.getValueNode();
             }
@@ -199,10 +236,9 @@ public final class NodeUtils {
     }
 
     public static @Nullable Node getNode(@NotNull List<NodeTuple> tupleList, String key) {
-        Checker.Argument.checkNotNull(tupleList, "tupleList");
+        Checker.Arg.notNull(tupleList, "tupleList");
         for (NodeTuple tuple : tupleList) {
             Node keyNode = tuple.getKeyNode();
-            keyNode = unpackAnchor(keyNode);
             if (equalsScalarValue(keyNode, key)) {
                 return tuple.getValueNode();
             }
@@ -211,12 +247,12 @@ public final class NodeUtils {
     }
 
     public static @Nullable NodeTuple getTuple(@NotNull MappingNode mappingNode, String key) {
-        Checker.Argument.checkNotNull(mappingNode, "mappingNode");
+        Checker.Arg.notNull(mappingNode, "mappingNode");
         return getTuple(mappingNode.getValue(), key);
     }
 
     public static @Nullable NodeTuple getTuple(@NotNull List<NodeTuple> tupleList, String key) {
-        Checker.Argument.checkNotNull(tupleList, "tupleList");
+        Checker.Arg.notNull(tupleList, "tupleList");
         for (NodeTuple tuple : tupleList) {
             Node keyNode = tuple.getKeyNode();
             keyNode = unpackAnchor(keyNode);
@@ -228,12 +264,12 @@ public final class NodeUtils {
     }
 
     public static @Nullable Node removeNode(@NotNull MappingNode mappingNode, String key) {
-        Checker.Argument.checkNotNull(mappingNode, "mappingNode");
+        Checker.Arg.notNull(mappingNode, "mappingNode");
         return removeNode(mappingNode.getValue(), key);
     }
 
     public static @Nullable Node removeNode(@NotNull List<NodeTuple> tupleList, String key) {
-        Checker.Argument.checkNotNull(tupleList, "tupleList");
+        Checker.Arg.notNull(tupleList, "tupleList");
         AtomicReference<Node> removed = new AtomicReference<>();
         consumeWhenFindTuple(tupleList, key, ((tuple, index) -> {
             tupleList.remove(index);
@@ -248,8 +284,8 @@ public final class NodeUtils {
      * @param tupleAndIndexConsumer 处理器, 将会接收寻找到的 {@link NodeTuple} 和其对应的在 tupleList 中的位置
      */
     public static void consumeWhenFindTuple(@NotNull List<NodeTuple> tupleList, String key, @NotNull ObjIntConsumer<NodeTuple> tupleAndIndexConsumer) {
-        Checker.Argument.checkNotNull(tupleList, "tupleList");
-        Checker.Argument.checkNotNull(tupleAndIndexConsumer, "tupleAndIndexConsumer");
+        Checker.Arg.notNull(tupleList, "tupleList");
+        Checker.Arg.notNull(tupleAndIndexConsumer, "tupleAndIndexConsumer");
         for (int i = 0, tupleListSize = tupleList.size(); i < tupleListSize; i++) {
             NodeTuple tuple = tupleList.get(i);
             Node keyNode = tuple.getKeyNode();
@@ -286,8 +322,7 @@ public final class NodeUtils {
         return node instanceof ScalarNode;
     }
 
-    @RecursiveMethod
-    @ImplicitConstructed
+    @ImplicitOperateCached
     public static @Nullable Object deepGetParsed(Node node) {
         node = unpackAnchor(node);
         Object parsed = NodesKt.getParsed(node);
@@ -295,9 +330,10 @@ public final class NodeUtils {
             return parsed;
         }
         if (node instanceof MappingNode mappingNode) {
-            parsed = new HashMap<String, Object>();
+            HashMap<String, Object> map = new HashMap<>();
+            parsed = map;
             for (NodeTuple tuple : mappingNode.getValue()) {
-                ((Map<String, Object>) parsed).put(((ScalarNode) tuple.getKeyNode()).getValue(), deepGetParsed(tuple.getValueNode()));
+                map.put(((ScalarNode) tuple.getKeyNode()).getValue(), deepGetParsed(tuple.getValueNode()));
             }
             NodesKt.cacheConstructed(node, parsed);
             return parsed;
@@ -309,9 +345,9 @@ public final class NodeUtils {
         return parsed;
     }
 
-    @RecursiveMethod
-    @ImplicitConstructed
+    @ImplicitOperateCached
     public static List<?> deepGetParsed(SequenceNode node) {
+        if (node == null) return null;
         Object parsed = NodesKt.getParsed(node);
         if (parsed instanceof List) {
             return (List<?>) parsed;
@@ -324,14 +360,14 @@ public final class NodeUtils {
         return (List<?>) parsed;
     }
 
-    @RecursiveMethod
-    @ImplicitConstructed
+    @ImplicitOperateCached
     public static Map<String, ?> deepGetParsed(MappingNode node) {
         Object parsed = NodesKt.getParsed(node);
         if (parsed instanceof Map<?, ?>) {
-            parsed = Generics.filterKeyType(((Map<?, ?>) parsed), String.class);
+            Map<String, ?> filtedMap = Generics.filterKeyType(((Map<?, ?>) parsed), String.class);
+            parsed = filtedMap;
             if (parsed != null) {
-                return (Map<String, ?>) parsed;
+                return filtedMap;
             }
         }
         HashMap<String, Object> map = new HashMap<>();
@@ -342,7 +378,21 @@ public final class NodeUtils {
         return map;
     }
 
-    @RecursiveMethod
+    @Contract("null -> null; !null -> !null")
+    public static Map<String, ?> asMap(MappingNode node) {
+        if (node == null) return null;
+        return asMap(node, new LinkedHashMap<>(), (m, keyNode, valueNode) -> m.put(((ScalarNode) keyNode).getValue(), deepGetParsed(valueNode)));
+    }
+
+    public static <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull MappingNode mappingNode, @NotNull M map, TriConsumer<M, Node, Node> consumeKeyValueNode) {
+        Checker.Arg.notNull(mappingNode, "mappingNode");
+        Checker.Arg.notNull(map, "map");
+        for (NodeTuple tuple : mappingNode.getValue()) {
+            if (consumeKeyValueNode != null) consumeKeyValueNode.accept(map, tuple.getKeyNode(), tuple.getValueNode());
+        }
+        return map;
+    }
+
     @Contract("null -> null; !null -> !null")
     public static Node unpackAnchor(Node node) {
         if (node instanceof AnchorNode anchorNode) {
@@ -352,7 +402,7 @@ public final class NodeUtils {
     }
 
     static @NotNull ScalarNode key(@NotNull String key) {
-        Checker.Argument.checkNotNull(key, "key");
+        Checker.Arg.notNull(key, "key");
         if (key.contains(" ") || key.contains(":")) {
             return new ScalarNode(Tag.STR, key, ScalarStyle.SINGLE_QUOTED);
         }
@@ -363,7 +413,7 @@ public final class NodeUtils {
      * @param requiredElementType 需要的列表项目类型, 为 null 时则是不验证
      * @param requiredElementTag  需要的列表项目标签, 为 null 时则不验证
      */
-    public static @Nullable <T> List<@NotNull T> getParsedListWithFilter(@Nullable SequenceNode seqNode, @Nullable Class<T> requiredElementType, @Nullable Tag requiredElementTag) {
+    public static <T> @Nullable List<@NotNull T> getParsedListWithElementFilter(SequenceNode seqNode, @Nullable Class<T> requiredElementType, @Nullable Tag requiredElementTag) {
         if (seqNode == null) return null;
 
         boolean allRight = true;
@@ -374,19 +424,19 @@ public final class NodeUtils {
                 break;
             }
 
-            @Nullable Object parsed = NodesKt.getParsed(element);
-            if (requiredElementType != null && !requiredElementType.isInstance(parsed)) {
+            @Nullable Object eleParsed = NodesKt.getParsed(element);
+            if (requiredElementType != null && !requiredElementType.isInstance(eleParsed)) {
                 allRight = false;
                 break;
             }
 
-            list.add((T) parsed);
+            list.add((T) eleParsed);
         }
 
         return allRight ? list : null;
     }
 
-    public static <T> @Nullable T getParsedWithFilter(@Nullable Node node, @Nullable Class<T> requiredType, @Nullable Tag requiredTag) {
+    public static <T> @Nullable T getParsedWithFilter(Node node, @Nullable Class<T> requiredType, @Nullable Tag requiredTag) {
         if (node == null) return null;
 
         Object parsed = NodesKt.getParsed(node);

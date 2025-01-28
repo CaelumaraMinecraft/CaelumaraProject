@@ -20,10 +20,10 @@ public class MessageProcessor {
     }
 
     public MessageProcessor(@NotNull String originalString, @NotNull PrefixProvider prefixProvider, @NotNull String usePrefixSign, @NotNull String noPrefixSign) {
-        Checker.Argument.checkNotNull(originalString, "originalString");
-        Checker.Argument.checkNotNull(prefixProvider, "prefixProvider");
-        Checker.Argument.checkNotNull(usePrefixSign, "usePrefixSign");
-        Checker.Argument.checkNotNull(noPrefixSign, "noPrefixSign");
+        Checker.Arg.notNull(originalString, "originalString");
+        Checker.Arg.notNull(prefixProvider, "prefixProvider");
+        Checker.Arg.notNull(usePrefixSign, "usePrefixSign");
+        Checker.Arg.notNull(noPrefixSign, "noPrefixSign");
 
         this.originalString = originalString;
         this.prefixProvider = prefixProvider;

@@ -16,9 +16,9 @@ public final class PlaceholderNamedFunctionInvoker implements PlaceholderFunctio
     private final @NotNull Map<String, String> paramValues;
 
     public PlaceholderNamedFunctionInvoker(@NotNull KingdomsPlaceholder placeholder, @NotNull PlaceholderFunctionData function, @NotNull Map<String, String> paramValues) {
-        Checker.Argument.checkNotNull(placeholder, "placeholder");
-        Checker.Argument.checkNotNull(function, "function");
-        Checker.Argument.checkNotNull(paramValues, "paramValues");
+        Checker.Arg.notNull(placeholder, "placeholder");
+        Checker.Arg.notNull(function, "function");
+        Checker.Arg.notNull(paramValues, "paramValues");
         this.placeholder = placeholder;
         this.function = function;
         this.paramValues = paramValues;

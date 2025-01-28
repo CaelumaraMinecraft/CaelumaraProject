@@ -3,17 +3,16 @@ package net.aurika.data.database.sql;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import kotlin.jvm.internal.Intrinsics;
+import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.dataprovider.*;
+import net.aurika.data.database.flatfile.json.JsonElementDataProvider;
+import net.aurika.data.database.flatfile.json.JsonObjectDataProvider;
+import net.aurika.data.database.sql.statements.setters.PreparedNamedSetterStatement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import net.aurika.data.database.DatabaseType;
-import top.auspice.data.database.dataprovider.*;
-import net.aurika.data.database.flatfile.json.JsonElementDataProvider;
-import net.aurika.data.database.flatfile.json.JsonObjectDataProvider;
-import net.aurika.data.database.sql.statements.setters.PreparedNamedSetterStatement;
 
 import java.util.Collection;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class SQLDataSetterProvider extends SQLDataProvider implements Sectionabl
         this.a.setInt(this.getNamed$core(), value);
     }
 
-    public void setLocation(@NotNull SimpleLocation value) {
+    public void setLocation(@Nullable SimpleLocation value) {
         if (value == null) return;
         PreparedNamedSetterStatement var2 = this.a;
         var2.setString(this.getNamed$core() + "_world", value.getWorld());
@@ -62,7 +61,7 @@ public class SQLDataSetterProvider extends SQLDataProvider implements Sectionabl
         var2.setFloat(this.getNamed$core() + "_pitch", value.getPitch());
     }
 
-    public void setSimpleLocation(@NotNull SimpleBlockLocation value) {
+    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
         if (value == null) return;
         PreparedNamedSetterStatement var2;
         PreparedNamedSetterStatement var10000 = var2 = this.a;
@@ -75,7 +74,7 @@ public class SQLDataSetterProvider extends SQLDataProvider implements Sectionabl
         var2.setInt(this.getNamed$core() + "_z", value.getZ());
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation value) {
+    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
         if (value == null) return;
         PreparedNamedSetterStatement var2 = this.a;
         var2.setString(this.getNamed$core() + "_world", value.getWorld());

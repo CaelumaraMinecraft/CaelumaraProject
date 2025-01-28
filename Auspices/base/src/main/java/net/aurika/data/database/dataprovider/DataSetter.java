@@ -1,10 +1,10 @@
 package net.aurika.data.database.dataprovider;
 
+import net.aurika.data.object.DataStringRepresentation;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import net.aurika.data.object.DataStringRepresentation;
 
 import java.util.Collection;
 import java.util.Map;

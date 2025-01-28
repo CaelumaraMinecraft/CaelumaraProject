@@ -88,7 +88,7 @@ public class OrderedMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
     }
 
     public void putAll(@NotNull Map<? extends K, ? extends V> from) {
-        Checker.Argument.checkNotNull(from, "from");
+        Checker.Arg.notNull(from, "from");
         String string = "Not yet implemented";
         throw new NotImplementedError("An operation is not implemented: " + string);
     }

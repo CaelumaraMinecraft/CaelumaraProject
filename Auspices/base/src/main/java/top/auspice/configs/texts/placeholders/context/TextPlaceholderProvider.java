@@ -59,7 +59,7 @@ public class TextPlaceholderProvider extends PlaceholderContextBuilder implement
 
     @Contract("_ -> this")
     public TextPlaceholderProvider viewer(@NotNull AuspicePlayer player) {
-        Checker.Argument.checkNotNull(player, "player");
+        Checker.Arg.notNull(player, "player");
         this.lang(player.getDiversity());
         return this;
     }

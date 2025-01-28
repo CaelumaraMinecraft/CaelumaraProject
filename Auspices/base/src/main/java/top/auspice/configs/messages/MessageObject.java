@@ -12,8 +12,8 @@ public class MessageObject {
     protected @Nullable Boolean usePrefix;
 
     public MessageObject(@NotNull TextObject text, @NotNull PrefixProvider prefixProvider, @Nullable Boolean usePrefix) {
-        Checker.Argument.checkNotNull(text, "text");
-        Checker.Argument.checkNotNull(prefixProvider, "prefixProvider");
+        Checker.Arg.notNull(text, "text");
+        Checker.Arg.notNull(prefixProvider, "prefixProvider");
         this.text = text;
         this.prefixProvider = prefixProvider;
         this.usePrefix = usePrefix;
@@ -36,7 +36,7 @@ public class MessageObject {
     }
 
     public static @Nullable("messages.length == 0") MessageObject combine(@NotNull MessageObject @NotNull ... messages) {
-        Checker.Argument.checkNotNullArray(messages, "messages");
+        Checker.Arg.nonNullArray(messages, "messages");
         int length = messages.length;
         if (length == 0) {
             return null;

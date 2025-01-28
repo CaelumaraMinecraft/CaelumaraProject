@@ -4,7 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.common.Anchor;
 import org.snakeyaml.engine.v2.nodes.Node;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -31,12 +31,12 @@ public final class YamlModule {
         this.imports = var2;
         this.adapter = var3;
         this.d = new LinkedHashMap<>();
-        YamlConfigSection var10000 = this.adapter.getConfig();
+        YamlNodeSection var10000 = this.adapter.getConfig();
         if (var10000 == null) {
             throw new IllegalStateException("Config is null for " + this.name + " -> " + this.adapter);
         } else {
-            YamlConfigSection var5 = var10000;
-            LinkedHashMap<String, Anchor> var10001 = var5.getRoot().getAnchors();
+            YamlNodeSection var5 = var10000;
+            LinkedHashMap<String, Anchor> var10001 = var5.getRootNode().getAnchors();
             Objects.requireNonNull(var10001, "");
             this.anchors = var10001;
             if ((var5 = var10000.getSection(new String[]{"(module)"})) != null) {
@@ -81,10 +81,10 @@ public final class YamlModule {
     public Map<String, Node> getParameterInputFrom(@NotNull YamlImportDeclaration var1) {
         Objects.requireNonNull(var1, "");
         Map<String, Node> var2 = new HashMap<>();
-        YamlConfigSection var10000 = var1.getInfo();
+        YamlNodeSection var10000 = var1.getInfo();
         String[] var3;
         (var3 = new String[1])[0] = "parameters";
-        YamlConfigSection var7;
+        YamlNodeSection var7;
         if ((var7 = var10000.getSection(var3)) != null) {
 
             for (String var4 : var7.getKeys()) {

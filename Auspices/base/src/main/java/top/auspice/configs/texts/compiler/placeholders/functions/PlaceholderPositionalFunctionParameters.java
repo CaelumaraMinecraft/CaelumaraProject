@@ -13,7 +13,7 @@ public final class PlaceholderPositionalFunctionParameters implements Placeholde
     private final @NotNull List<String> parameters;
 
     public PlaceholderPositionalFunctionParameters(@NotNull List<String> parameters) {
-        Checker.Argument.checkNotNull(parameters, "parameters");
+        Checker.Arg.notNull(parameters, "parameters");
         this.parameters = parameters;
     }
 

@@ -6,14 +6,14 @@ import com.mongodb.client.model.BulkWriteOptions;
 import com.mongodb.client.model.ReplaceOneModel;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.ranges.RangesKt;
+import net.aurika.data.database.base.KeyedDatabase;
+import net.aurika.data.handlers.abstraction.KeyedDataHandler;
+import net.aurika.data.object.KeyedDataObject;
 import org.bson.BsonDocumentReader;
 import org.bson.Document;
 import org.bson.codecs.Codec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.data.object.KeyedDataObject;
-import net.aurika.data.database.base.KeyedDatabase;
-import net.aurika.data.handlers.abstraction.KeyedDataHandler;
 import top.auspice.utils.logging.AuspiceLogger;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public final class KeyedMongoDBDatabase<K, T extends KeyedDataObject.Impl<K>> extends MongoDBDatabase<T> implements KeyedDatabase<K, T> {
+public class KeyedMongoDBDatabase<K, T extends KeyedDataObject<K>> extends MongoDBDatabase<T> implements KeyedDatabase<K, T> {
     @NotNull
     private final KeyedDataHandler<K, T> dataHandler;
     private int b;
@@ -47,8 +47,7 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedDataObject.Impl<K>> ex
         return new Document("_id", var0);
     }
 
-    @Nullable
-    public T load(@NotNull K var1) {
+    public @Nullable T load(@NotNull K var1) {
         Objects.requireNonNull(var1, "");
         Document var10000 = this.getCollection().find(this.a(var1)).first();
         if (var10000 == null) {
@@ -113,8 +112,7 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedDataObject.Impl<K>> ex
         return this.getCollection().find(this.a(var1)).first() != null;
     }
 
-    @NotNull
-    public Collection<K> getAllDataKeys() {
+    public @NotNull Collection<K> getAllDataKeys() {
         List<K> var1 = new ArrayList<>((int) this.getCollection().estimatedDocumentCount());
 
         for (Document var3 : this.getCollection().find()) {
@@ -131,8 +129,7 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedDataObject.Impl<K>> ex
         this.getCollection().drop();
     }
 
-    @NotNull
-    public Collection<T> loadAllData(@Nullable Predicate<K> var1) {
+    public @NotNull Collection<T> loadAllData(@Nullable Predicate<K> var1) {
         List<T> var2 = new ArrayList<>(this.b);
         MongoCursor<Document> var3 = this.getCollection().find().iterator();
 
@@ -188,7 +185,7 @@ public final class KeyedMongoDBDatabase<K, T extends KeyedDataObject.Impl<K>> ex
     }
 
     @NotNull
-    public static <K, T extends KeyedDataObject.Impl<K>> KeyedMongoDBDatabase<K, T> withCollection(@NotNull String var1, @NotNull KeyedDataHandler<K, T> var2) {
+    public static <K, T extends KeyedDataObject<K>> KeyedMongoDBDatabase<K, T> withCollection(@NotNull String var1, @NotNull KeyedDataHandler<K, T> var2) {
         return new KeyedMongoDBDatabase<>(var2, MongoDBDatabase.getCollection(var1));
     }
 }

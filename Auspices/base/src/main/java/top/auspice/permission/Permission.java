@@ -41,12 +41,12 @@ public interface Permission {
     }
 
     default boolean hasPermission(@NotNull Permissible permissible) {
-        Checker.Argument.checkNotNull(permissible, "permissible");
+        Checker.Arg.notNull(permissible, "permissible");
         return permissible.hasPermission(this.getKey());
     }
 
     public static void register(@NotNull Permission permission) {
-        Checker.Argument.checkNotNull(permission, "permission");
+        Checker.Arg.notNull(permission, "permission");
         final class Holder {
             static @Nullable PermissionManager INSTANCE;
 
@@ -61,7 +61,7 @@ public interface Permission {
     }
 
     public static @NotNull Permission fromFullName(@NotNull String fullName, @NotNull PermissionDefaultValue defaultValue) {
-        Checker.Argument.checkNotNull(defaultValue, "defaultValue");
+        Checker.Arg.notNull(defaultValue, "defaultValue");
         PermissionKey key = PermissionKey.fromFullName(fullName);
         return new AbstractPermission(key, defaultValue);
     }

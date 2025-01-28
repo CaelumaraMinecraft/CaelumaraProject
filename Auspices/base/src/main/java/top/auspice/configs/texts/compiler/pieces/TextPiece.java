@@ -679,7 +679,7 @@ public abstract class TextPiece implements AbstractTextPiece {
                 fontKey;
 
         public Font(@NotNull @KeyPattern String fontKey) {
-            Checker.Argument.checkNotNull(fontKey, "fontKey");
+            Checker.Arg.notNull(fontKey, "fontKey");
             if (!Key.parseable(fontKey)) {
                 throw new IllegalArgumentException("Invalid font key: " + fontKey);
             }

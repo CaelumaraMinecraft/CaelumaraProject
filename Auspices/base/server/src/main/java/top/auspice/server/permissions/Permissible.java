@@ -8,14 +8,14 @@ import net.aurika.utils.Checker;
 public interface Permissible extends ServerOperator {
 
     default boolean hasPermission(@NotNull Permission permission) {
-        Checker.Argument.checkNotNull(permission, "permission");
+        Checker.Arg.notNull(permission, "permission");
         return this.hasPermission(permission.getKey());
     }
 
     boolean hasPermission(@NotNull PermissionKey permKey);
 
     default @NotNull Permission.State permissionState(@NotNull Permission permission) {
-        Checker.Argument.checkNotNull(permission, "permission");
+        Checker.Arg.notNull(permission, "permission");
         return this.permissionState(permission.getKey());
     }
 

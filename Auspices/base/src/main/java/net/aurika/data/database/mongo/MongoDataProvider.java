@@ -7,16 +7,13 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.data.database.dataprovider.*;
-import top.auspice.server.location.Location;
-import top.auspice.server.location.World;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 
 import java.util.*;
 import java.util.function.*;
 
-public final class MongoDataProvider implements DataProvider, SectionCreatableDataSetter {
+public class MongoDataProvider implements DataProvider, SectionCreatableDataSetter {
     @Nullable
     private final String keyName;
     @NotNull
@@ -29,7 +26,7 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @NotNull
-    public Document getDocument$core() {
+    public final Document getDocument$core() {
         return this.document;
     }
 
@@ -269,12 +266,12 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
         this.a(value);
     }
 
-    public void setLocation(@Nullable Location var1) {
+    public void setLocation(@Nullable SimpleLocation var1) {
         if (var1 != null) {
             Document var10000 = this.d();
-            World var10002 = var1.getWorld();
+            String var10002 = var1.getWorld();
             Objects.requireNonNull(var10002);
-            var10000.append("world", var10002.getName()).append("x", var1.getX()).append("y", var1.getY()).append("z", var1.getZ()).append("yaw", var1.getYaw()).append("pitch", var1.getPitch());
+            var10000.append("world", var10002).append("x", var1.getX()).append("y", var1.getY()).append("z", var1.getZ()).append("yaw", var1.getYaw()).append("pitch", var1.getPitch());
         }
     }
 
@@ -320,8 +317,7 @@ public final class MongoDataProvider implements DataProvider, SectionCreatableDa
         return new MongoDataProvider(null, var1);
     }
 
-    @NotNull
-    public static DataProvider createProvider$core(@NotNull Object obj) {
+    public static @NotNull DataProvider createProvider$core(@NotNull Object obj) {
         Objects.requireNonNull(obj);
         return obj instanceof Document ? new MongoDataProvider(null, (Document) obj) : new UnknownDataGetter(obj);
     }

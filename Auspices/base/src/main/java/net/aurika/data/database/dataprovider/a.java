@@ -5,19 +5,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 final class a implements DynamicSection {
-    @NotNull
-    private final SectionableDataSetter setter;
+
+    private final @NotNull SectionableDataSetter setter;
 
     public a(@NotNull SectionableDataSetter setter) {
         Objects.requireNonNull(setter, "setter");
         this.setter = setter;
     }
 
-    @NotNull
-    public SectionableDataSetter getSetter() {
+    @Override
+    public @NotNull SectionableDataSetter getSetter() {
         return this.setter;
     }
 
+    @Override
     public void close() {
     }
 }

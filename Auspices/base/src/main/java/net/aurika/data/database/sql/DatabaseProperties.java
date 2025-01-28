@@ -4,12 +4,12 @@ import com.zaxxer.hikari.HikariConfig;
 import kotlin.Pair;
 import kotlin.TuplesKt;
 import kotlin.jvm.internal.Intrinsics;
-import org.jetbrains.annotations.NotNull;
 import net.aurika.annotations.data.LateInit;
 import net.aurika.config.accessor.YamlClearlyConfigAccessor;
 import net.aurika.config.sections.ConfigSection;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.data.database.DatabaseType;
+import org.jetbrains.annotations.NotNull;
+import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.utils.string.Strings;
 
 import java.time.Duration;

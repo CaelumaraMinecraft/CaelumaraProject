@@ -1,18 +1,18 @@
 package net.aurika.data.database.flatfile.json;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.flatfile.KeyedFlatFileDatabase;
 import net.aurika.data.handlers.abstraction.KeyedDataHandler;
 import net.aurika.data.object.KeyedDataObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.Path;
 import java.util.Objects;
 
-public final class KeyedJsonDatabase<K, T extends KeyedDataObject<K>> extends KeyedFlatFileDatabase<K, T> {
+public class KeyedJsonDatabase<K, T extends KeyedDataObject<K>> extends KeyedFlatFileDatabase<K, T> {
     public KeyedJsonDatabase(@NotNull Path path, @NotNull KeyedDataHandler<K, T> keyedDataHandler) {
         super("json", path, keyedDataHandler);
     }

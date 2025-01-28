@@ -23,8 +23,8 @@ public final class PlaceholderNamedFunctionParameters implements PlaceholderFunc
     }
 
     public @NotNull PlaceholderFunctionInvoker createInvoker(@NotNull KingdomsPlaceholder placeholder, @NotNull PlaceholderFunctionData function) {
-        Checker.Argument.checkNotNull(placeholder, "placeholder");
-        Checker.Argument.checkNotNull(function, "function");
+        Checker.Arg.notNull(placeholder, "placeholder");
+        Checker.Arg.notNull(function, "function");
         return new PlaceholderNamedFunctionInvoker(placeholder, function, this.parameters);
     }
 

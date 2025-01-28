@@ -7,7 +7,7 @@ import net.aurika.utils.Checker;
 
 public final class PermissionDefaultAdapter {
     public static @NotNull PermissionDefault auspiceToBukkit(@NotNull PermissionDefaultValue value) {
-        Checker.Argument.checkNotNull(value, "value");
+        Checker.Arg.notNull(value, "value");
         return switch (value) {
             case EVERYONE -> PermissionDefault.TRUE;
             case NO_ONE -> PermissionDefault.FALSE;
@@ -17,7 +17,7 @@ public final class PermissionDefaultAdapter {
     }
 
     public static @NotNull PermissionDefaultValue bukkitToAuspice(@NotNull PermissionDefault value) {
-        Checker.Argument.checkNotNull(value, "value");
+        Checker.Arg.notNull(value, "value");
         return switch (value) {
             case TRUE -> PermissionDefaultValue.EVERYONE;
             case FALSE -> PermissionDefaultValue.NO_ONE;

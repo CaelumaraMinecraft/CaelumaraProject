@@ -27,7 +27,7 @@ public final class ItemUtil {
     }
 
     public static String getName(@NotNull ItemStack itemStack) {
-        Checker.Argument.checkNotNull(itemStack, "itemStack");
+        Checker.Arg.notNull(itemStack, "itemStack");
         if (itemStack.hasItemMeta()) {
             ItemMeta meta = itemStack.getItemMeta();
             //noinspection DataFlowIssue    //itemStack.hasItemMeta() == true 代表 ItemMeta meta != null;

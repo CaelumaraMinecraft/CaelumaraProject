@@ -3,8 +3,8 @@ package net.aurika.config.accessor;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.config.path.ConfigEntry;
 import net.aurika.config.path.ConfigPath;
-import net.aurika.config.sections.YamlConfigSection;
-import net.aurika.snakeyaml.extension.interpret.NodeInterpreter;
+import net.aurika.config.sections.YamlNodeSection;
+import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpreter;
 import net.aurika.utils.Checker;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.math.MathCompiler;
@@ -14,13 +14,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class YamlClearlyConfigAccessor implements ClearlyConfigAccessor {
-    protected final YamlConfigSection currentSection;
-    protected final YamlConfigSection defaultSection;
+    protected final YamlNodeSection currentSection;
+    protected final YamlNodeSection defaultSection;
     protected boolean noDefault = false;
 
-    public YamlClearlyConfigAccessor(YamlConfigSection currentSection, YamlConfigSection defaultSection) {
-        Checker.Argument.checkNotNull(currentSection, "currentSection");
-        Checker.Argument.checkNotNull(defaultSection, "defaultSection");
+    public YamlClearlyConfigAccessor(YamlNodeSection currentSection, YamlNodeSection defaultSection) {
+        Checker.Arg.notNull(currentSection, "currentSection");
+        Checker.Arg.notNull(defaultSection, "defaultSection");
         this.currentSection = currentSection;
         this.defaultSection = defaultSection;
     }
@@ -43,9 +43,9 @@ public class YamlClearlyConfigAccessor implements ClearlyConfigAccessor {
     }
 
     public <T> T get(NodeInterpreter<T> interpreter, String... path) {
-        T var3 = this.currentSection.get(interpreter, path);
+        T var3 = this.currentSection.get(path, interpreter);
         if (var3 == null) {
-            var3 = this.defaultSection.get(interpreter, path);
+            var3 = this.defaultSection.get(path, interpreter);
         }
 
         return var3;
@@ -89,14 +89,14 @@ public class YamlClearlyConfigAccessor implements ClearlyConfigAccessor {
     }
 
     public MathCompiler.Expression getMath(String... path) {
-        return !this.noDefault && !this.isSet(path) ? this.defaultSection.get(NodeInterpreter.MATH, path) : this.currentSection.get(NodeInterpreter.MATH, path);
+        return !this.noDefault && !this.isSet(path) ? this.defaultSection.get(path, NodeInterpreter.MATH) : this.currentSection.get(path, NodeInterpreter.MATH);
     }
 
     public ConditionCompiler.LogicalOperand getCondition(String... path) {
-        return !this.noDefault && !this.isSet(path) ? this.defaultSection.get(NodeInterpreter.CONDITION, path) : this.currentSection.get(NodeInterpreter.CONDITION, path);
+        return !this.noDefault && !this.isSet(path) ? this.defaultSection.get(path, NodeInterpreter.CONDITION) : this.currentSection.get(path, NodeInterpreter.CONDITION);
     }
 
-    public YamlConfigSection getSection() {
+    public YamlNodeSection getSection() {
         return this.currentSection;
     }
 
@@ -105,8 +105,8 @@ public class YamlClearlyConfigAccessor implements ClearlyConfigAccessor {
     }
 
     public YamlClearlyConfigAccessor gotoSection(@NotNull String @NotNull [] path) {
-        YamlConfigSection newCurrentSection = this.currentSection.getSection(path);
-        YamlConfigSection newDefaultSection = this.defaultSection.getSection(path);
+        YamlNodeSection newCurrentSection = this.currentSection.getSection(path);
+        YamlNodeSection newDefaultSection = this.defaultSection.getSection(path);
         YamlClearlyConfigAccessor newClearly;
         if (newCurrentSection != null) {
             newClearly = new YamlClearlyConfigAccessor(newCurrentSection, this.noDefault ? newCurrentSection : newDefaultSection);

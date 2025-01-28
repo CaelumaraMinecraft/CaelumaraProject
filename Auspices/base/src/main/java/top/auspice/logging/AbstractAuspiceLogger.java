@@ -18,7 +18,7 @@ public class AbstractAuspiceLogger implements AuspiceLogger {
     protected final Logger logger;
 
     protected AbstractAuspiceLogger(@NotNull Logger logger) {
-        Checker.Argument.checkNotNull(logger, "logger");
+        Checker.Arg.notNull(logger, "logger");
         this.logger = logger;
     }
 

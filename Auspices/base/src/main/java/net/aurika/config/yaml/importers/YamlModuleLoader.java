@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import net.aurika.config.adapters.YamlContainer;
 import net.aurika.config.adapters.YamlImportDeclaration;
 import net.aurika.config.adapters.YamlModule;
-import net.aurika.config.sections.YamlConfigSection;
+import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.FolderYamlRegistry;
 
 import java.util.*;
@@ -29,11 +29,11 @@ public final class YamlModuleLoader {
     @NotNull
     public static Map<String, YamlImportDeclaration> loadImports(@NotNull YamlContainer container) {
         Objects.requireNonNull(container, "");
-        YamlConfigSection root = container.getConfig();
+        YamlNodeSection root = container.getConfig();
         if (root == null) {
             throw new IllegalArgumentException("Adapter not loaded to load imports: " + container);
         } else {
-            YamlConfigSection declarationSec = root.getSection("(import)");
+            YamlNodeSection declarationSec = root.getSection("(import)");
             if (declarationSec == null) {
                 return new HashMap<>();
             } else {
@@ -43,7 +43,7 @@ public final class YamlModuleLoader {
                 LinkedHashMap<String, YamlImportDeclaration> declarations = new LinkedHashMap<>(16);
 
                 for (String key : keys) {
-                    YamlConfigSection var10003 = declarationSec.getSection(key);
+                    YamlNodeSection var10003 = declarationSec.getSection(key);
                     Objects.requireNonNull(var10003);
                     YamlImportDeclaration declaration = new YamlImportDeclaration(key, var10003);
                     declarations.put(key, declaration);

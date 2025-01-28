@@ -1,9 +1,9 @@
 package net.aurika.data.database.base;
 
+import net.aurika.data.object.KeyedDataObject;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
-import net.aurika.data.object.KeyedDataObject;
 
 import java.util.Collection;
 import java.util.function.Consumer;

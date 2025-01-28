@@ -20,7 +20,7 @@ public class ConfigEntryBuilder implements BuildableObject.Builder {
     }
 
     public ConfigEntryBuilder(@NotNull String @NotNull [] initialization) {
-        Checker.Argument.checkNotNullArray(initialization, "initialization");
+        Checker.Arg.nonNullArray(initialization, "initialization");
         LinkedList<@NotNull String> path = new LinkedList<>();
         path.addAll(Arrays.asList(initialization));
         this.path = path;
@@ -39,14 +39,14 @@ public class ConfigEntryBuilder implements BuildableObject.Builder {
 
     @Contract("_ -> this")
     public ConfigEntryBuilder append(@NotNull String section) {
-        Checker.Argument.checkNotNull(section, "section");
+        Checker.Arg.notNull(section, "section");
         this.path.add(section);
         return this;
     }
 
     @Contract("_ -> this")
     public ConfigEntryBuilder append(@NotNull String @NotNull [] sections) {
-        Checker.Argument.checkNotNullArray(sections, "sections");
+        Checker.Arg.nonNullArray(sections, "sections");
         Collections.addAll(this.path, sections);
         return this;
     }

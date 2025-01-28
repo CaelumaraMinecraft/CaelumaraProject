@@ -2,12 +2,12 @@ package net.aurika.data.database.mongo;
 
 import com.mongodb.client.MongoCollection;
 import kotlin.jvm.internal.Intrinsics;
-import org.bson.Document;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.data.database.base.SingularDatabase;
 import net.aurika.data.handlers.abstraction.SingularDataHandler;
 import net.aurika.data.object.DataObject;
+import org.bson.Document;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SingularMongoDBDatabase<T extends DataObject> extends MongoDBDatabase<T> implements SingularDatabase<T> {
 

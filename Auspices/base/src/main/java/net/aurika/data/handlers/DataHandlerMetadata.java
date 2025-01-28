@@ -1,19 +1,20 @@
 package net.aurika.data.handlers;
 
-import top.auspice.api.user.AuspiceUser;
-import top.auspice.constants.metadata.AuspiceMetadata;
-import top.auspice.constants.metadata.AuspiceMetadataHandler;
-import top.auspice.constants.metadata.StandardAuspiceMetadataHandler;
 import net.aurika.data.database.dataprovider.SectionableDataGetter;
 import net.aurika.data.database.dataprovider.SectionableDataSetter;
 import net.aurika.namespace.NSedKey;
+import top.auspice.api.user.AuspiceUser;
+import top.auspice.constants.base.KeyedAuspiceObject;
+import top.auspice.constants.metadata.AuspiceMetadata;
+import top.auspice.constants.metadata.AuspiceMetadataHandler;
+import top.auspice.constants.metadata.StandardAuspiceMetadataHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class DataHandlerMetadata {
 
-    public static void deserializeMetadata(SectionableDataGetter dataGetter, KeyedAuspiceObject<?, ?> auspiceObject) {
+    public static void deserializeMetadata(SectionableDataGetter dataGetter, KeyedAuspiceObject<?> auspiceObject) {
         Map<AuspiceMetadataHandler, AuspiceMetadata> var2 = dataGetter.get("metadata").asMap(new HashMap<>(), (var1x, var2x, subSexc) -> {
             String var8 = var2x.asString(() -> {
                 throw new UnsupportedOperationException();
@@ -34,7 +35,7 @@ public final class DataHandlerMetadata {
         auspiceObject.setMetadata(var2);
     }
 
-    public static void serializeMetadata(SectionableDataSetter dataSetter, KeyedAuspiceObject<?, ?> auspiceObject) {
+    public static void serializeMetadata(SectionableDataSetter dataSetter, KeyedAuspiceObject<?> auspiceObject) {
         dataSetter.get("metadata").setMap(auspiceObject.getMetadata(), (metaHandler, var2, metadata) -> {
             if (metadata.shouldSave(auspiceObject)) {
                 var2.setString(metaHandler.getNamespacedKey().asDataString());

@@ -1,8 +1,6 @@
 package net.aurika.data.database.sql.base;
 
 import kotlin.jvm.internal.Intrinsics;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.base.SingularDatabase;
 import net.aurika.data.database.sql.SQLDataGetterProvider;
@@ -10,6 +8,8 @@ import net.aurika.data.database.sql.connection.SQLConnectionProvider;
 import net.aurika.data.database.sql.statements.getters.SimpleResultSetQuery;
 import net.aurika.data.handlers.abstraction.SingularDataHandler;
 import net.aurika.data.object.DataObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.unsafe.AutoCloseableUtils;
 
 import java.sql.Connection;

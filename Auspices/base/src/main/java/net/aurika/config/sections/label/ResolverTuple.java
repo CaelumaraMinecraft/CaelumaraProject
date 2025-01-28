@@ -10,8 +10,8 @@ public final class ResolverTuple {
     private final @NotNull Pattern regexp;
 
     public ResolverTuple(@NotNull Label label, @NotNull Pattern regexp) {
-        Checker.Argument.checkNotNull(label, "label");
-        Checker.Argument.checkNotNull(regexp, "regexp");
+        Checker.Arg.notNull(label, "label");
+        Checker.Arg.notNull(regexp, "regexp");
         this.label = label;
         this.regexp = regexp;
     }

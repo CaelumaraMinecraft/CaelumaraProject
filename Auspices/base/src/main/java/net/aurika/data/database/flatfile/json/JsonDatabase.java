@@ -3,10 +3,11 @@ package net.aurika.data.database.flatfile.json;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import kotlin.jvm.internal.Intrinsics;
+import net.aurika.data.handlers.abstraction.DataHandler;
+import net.aurika.data.object.DataObject;
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.data.object.DataObject;
-import net.aurika.data.handlers.abstraction.DataHandler;
 import top.auspice.utils.gson.KingdomsGson;
 import top.auspice.utils.logging.AuspiceLogger;
 
@@ -23,51 +24,57 @@ public final class JsonDatabase {
     private JsonDatabase() {
     }
 
-    public static @Nullable <T extends DataObject> T load(@NotNull String string, @NotNull Path path, @NotNull DataHandler<T> dataHandler, @NotNull BufferedReader bufferedReader, @NotNull Function<? super JsonObject, ? extends T> converter) {
-        Intrinsics.checkNotNullParameter(string, "");
-        Intrinsics.checkNotNullParameter(path, "");
-        Intrinsics.checkNotNullParameter(dataHandler, "");
-        Intrinsics.checkNotNullParameter(bufferedReader, "");
-        Intrinsics.checkNotNullParameter(converter, "");
+    public static <T extends DataObject> @Nullable T load(@NotNull String label, @NotNull Path file, @NotNull DataHandler<T> dataHandler, @NotNull BufferedReader reader, @NotNull Function<? super JsonObject, ? extends T> converter) {
+        Checker.Arg.notNull(label, "label");
+        Checker.Arg.notNull(file, "file");
+        Checker.Arg.notNull(dataHandler, "dataHandler");
+        Checker.Arg.notNull(reader, "reader");
+        Checker.Arg.notNull(converter, "converter");
+
         try {
-            JsonObject jsonObject = KingdomsGson.parse(bufferedReader);
-            Intrinsics.checkNotNull(bufferedReader);
-            T o = converter.apply(jsonObject);
-            if (o == null) {
-                AuspiceLogger.error("Could not load data for '" + string + "' with adapter " + dataHandler + " JSON:(" + Files.lines(path).collect(Collectors.joining()) + ") Deleting their data...");
-                Files.delete(path);
+            JsonObject var9 = KingdomsGson.parse(reader);
+            Intrinsics.checkNotNull(var9);
+            DataObject var11;
+            if ((var11 = converter.apply(var9)) == null) {
+                AuspiceLogger.error("Could not load data for '" + label + "' with adapter " + dataHandler + " JSON:(" + Files.lines(file).collect(Collectors.joining()) + ") Deleting their data...");
+                Files.delete(file);
                 return null;
+            } else {
+                return (T) var11;
             }
-            return o;
-        } catch (JsonSyntaxException jsonSyntaxException) {
+        } catch (JsonSyntaxException var6) {
+            JsonSyntaxException var8 = var6;
+
             try {
-                String var1 = Files.lines(path).collect(Collectors.joining());
-                AuspiceLogger.error("Malformed JSON data '" + path.toAbsolutePath() + "' with adapter " + dataHandler + " JSON:(" + var1 + ") Deleting their data...");
-                if (var1.length() <= 2) {
-                    Files.delete(path);
+                String var10 = Files.lines(file).collect(Collectors.joining());
+                AuspiceLogger.error("Malformed JSON data '" + file.toAbsolutePath() + "' with adapter " + dataHandler + " JSON:(" + var10 + ") Deleting their data...");
+                if (var10.length() <= 2) {
+                    Files.delete(file);
                 }
-                jsonSyntaxException.printStackTrace();
-            } catch (IOException iOException) {
-                iOException.printStackTrace();
+
+                var8.printStackTrace();
+            } catch (IOException var5) {
+                var5.printStackTrace();
             }
-        } catch (IOException iOException) {
-            throw new RuntimeException(iOException);
+
+            return null;
+        } catch (IOException var7) {
+            throw new RuntimeException(var7);
         }
-        return null;
     }
 
-    public static <T extends DataObject> void save(@NotNull T t, @NotNull DataHandler<T> dataHandler, @NotNull BufferedWriter bufferedWriter) {
-        Intrinsics.checkNotNullParameter(t, "");
-        Intrinsics.checkNotNullParameter(dataHandler, "");
-        Intrinsics.checkNotNullParameter(bufferedWriter, "");
-        JsonObject jsonObject = new JsonObject();
-        JsonObjectDataProvider jsonObjectDataProvider = new JsonObjectDataProvider(null, jsonObject);
-        dataHandler.save(jsonObjectDataProvider, t);
+    public static <T extends DataObject> void save(@NotNull T data, @NotNull DataHandler<T> dataHandler, @NotNull BufferedWriter writer) {
+        Checker.Arg.notNull(data, "data");
+        Checker.Arg.notNull(dataHandler, "dataHandler");
+        Checker.Arg.notNull(writer, "writer");
+        JsonObject var3 = new JsonObject();
+        JsonObjectDataProvider var4 = new JsonObjectDataProvider(null, var3);
+        dataHandler.save(var4, data);
+
         try {
-            KingdomsGson.toJson(jsonObject, bufferedWriter);
-        } catch (IOException iOException) {
-            throw new RuntimeException(iOException);
+            KingdomsGson.toJson(var3, writer);
+        } catch (IOException var5) {
+            throw new RuntimeException(var5);
         }
     }
 }
- 

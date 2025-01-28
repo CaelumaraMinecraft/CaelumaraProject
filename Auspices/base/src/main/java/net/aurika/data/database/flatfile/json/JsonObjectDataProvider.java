@@ -11,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.data.database.dataprovider.*;
 import top.auspice.utils.function.FloatSupplier;
 import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.unsafe.uuid.FastUUID;
@@ -223,7 +222,7 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
     }
 
     @Override
-    public void setString(@NotNull String value) {
+    public void setString(@Nullable String value) {
         if (value != null) {
             this.obj.addProperty(this.b(), value);
         }
@@ -235,21 +234,18 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
     }
 
     @Override
-    public void setSimpleLocation(@NotNull SimpleBlockLocation value) {
+    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
         this.setString(value != null ? value.asDataString() : null);
     }
 
     @Override
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation value) {
-        Intrinsics.checkNotNullParameter(value, "");
-        this.setString(value.asDataString());
+    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
+        this.setString(value != null ? value.asDataString() : null);
     }
 
     @Override
     public void setUUID(@Nullable UUID value) {
-        if (value != null) {
-            this.obj.addProperty(this.b(), FastUUID.toString(value));
-        }
+        if (value != null) this.obj.addProperty(this.b(), FastUUID.toString(value));
     }
 
     @Override
@@ -305,16 +301,14 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
     }
 
     @Override
-    @NotNull
-    public SectionableDataSetter createSection() {
+    public @NotNull SectionableDataSetter createSection() {
         JsonObject jsonObject = new JsonObject();
         this.obj.add(this.a, jsonObject);
         return new JsonObjectDataProvider(null, jsonObject);
     }
 
     @Override
-    @NotNull
-    public DataProvider createSection(@NotNull String key) {
+    public @NotNull DataProvider createSection(@NotNull String key) {
         Intrinsics.checkNotNullParameter(key, "");
         if (this.a != null) {
             throw new IllegalStateException("Previous name not handled: " + this.a + " -> " + key);

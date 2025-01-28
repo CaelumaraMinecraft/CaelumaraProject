@@ -1,13 +1,12 @@
 package net.aurika.data.database.compressor;
 
+import net.aurika.data.compressor.DataCompressor;
 import net.aurika.data.database.dataprovider.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleBlockLocation;
+import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import net.aurika.data.compressor.DataCompressor;
-import top.auspice.data.database.dataprovider.*;
 
 import java.util.Collection;
 import java.util.Map;
@@ -16,15 +15,14 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public final class CompressorDataProvider implements SectionCreatableDataSetter, SectionableDataProvider, SectionableDataSetter {
-    @Nullable
-    private final String name;
-    @NotNull
-    private final DataCompressor compressor;
 
-    public CompressorDataProvider(@Nullable String var1, @NotNull DataCompressor var2) {
-        Objects.requireNonNull(var2, "");
-        this.name = var1;
-        this.compressor = var2;
+    private final @Nullable String name;
+    private final @NotNull DataCompressor compressor;
+
+    public CompressorDataProvider(@Nullable String name, @NotNull DataCompressor dataCompressor) {
+        Objects.requireNonNull(dataCompressor, "dataCompressor");
+        this.name = name;
+        this.compressor = dataCompressor;
     }
 
     public @Nullable String getName() {
@@ -62,7 +60,7 @@ public final class CompressorDataProvider implements SectionCreatableDataSetter,
         this.compressor.compress(value);
     }
 
-    public void setSimpleLocation(@NotNull SimpleBlockLocation value) {
+    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
         if (value == null) {
             this.compressor.compressNull();
         } else {
@@ -70,7 +68,7 @@ public final class CompressorDataProvider implements SectionCreatableDataSetter,
         }
     }
 
-    public void setSimpleChunkLocation(@NotNull SimpleChunkLocation value) {
+    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
         Objects.requireNonNull(value, "");
         this.compressor.compress(value.getWorld()).compress(value.getX()).compress(value.getZ());
     }
@@ -114,7 +112,6 @@ public final class CompressorDataProvider implements SectionCreatableDataSetter,
             for (E var3 : value) {
                 var2.accept(this, var3);
             }
-
         }
     }
 
@@ -129,7 +126,6 @@ public final class CompressorDataProvider implements SectionCreatableDataSetter,
 
                 var2.map(var4, new StringMappedIdSetter((var100) -> new CompressorDataProvider(var100, CompressorDataProvider.this.getCompressor())), var6);
             }
-
         }
     }
 }

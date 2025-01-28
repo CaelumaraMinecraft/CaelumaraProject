@@ -9,7 +9,7 @@ public final class ConditionBranch<T> {
     private final T casing;
 
     public ConditionBranch(@NotNull ConditionCompiler.LogicalOperand condition, T casing) {
-        Checker.Argument.checkNotNull(condition, "condition");
+        Checker.Arg.notNull(condition, "condition");
         this.condition = condition;
         this.casing = casing;
     }

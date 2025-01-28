@@ -17,8 +17,8 @@ public class PermissionKey {
     private final @NotNull String @NotNull [] name;
 
     public PermissionKey(@NotNull String namespace, @NotNull String @NotNull [] name) {
-        Checker.Argument.checkNotNull(namespace, "namespace");
-        Checker.Argument.checkNotNullArray(name, "name");
+        Checker.Arg.notNull(namespace, "namespace");
+        Checker.Arg.nonNullArray(name, "name");
         this.namespace = namespace;
         this.name = name;
     }
@@ -46,21 +46,21 @@ public class PermissionKey {
     }
 
     public static @NotNull PermissionKey fromFullNameArray(@NotNull String @NotNull [] key) {
-        Checker.Argument.checkNotNullArray(key, "key");
+        Checker.Arg.nonNullArray(key, "key");
         String[] nameArr = new String[key.length - 1];
         System.arraycopy(key, 1, nameArr, 0, nameArr.length);
         return PermissionKey.of(key[0], nameArr);
     }
 
     public static @NotNull PermissionKey fromFullName(@NotNull String fullName) {
-        Checker.Argument.checkNotNull(fullName, "fullName");
+        Checker.Arg.notNull(fullName, "fullName");
         String[] key = Strings.splitArray(fullName, STD_SEPARATOR);
         return PermissionKey.fromFullNameArray(key);
     }
 
     public static @NotNull PermissionKey fromEnum(@NotNull String namespace, @NotNull Enum<?> nameEnum) {
-        Checker.Argument.checkNotNull(namespace, "namespace");
-        Checker.Argument.checkNotNull(nameEnum, "nameEnum");
+        Checker.Arg.notNull(namespace, "namespace");
+        Checker.Arg.notNull(nameEnum, "nameEnum");
         String lowerCaseName = nameEnum.name().toLowerCase(Locale.ENGLISH);
         String replacedName = lowerCaseName.replace('_', STD_SEPARATOR).replace('$', '-');
         String[] nameArr = Strings.splitArray(replacedName, STD_SEPARATOR);

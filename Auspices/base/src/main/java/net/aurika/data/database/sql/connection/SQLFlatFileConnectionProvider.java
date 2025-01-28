@@ -3,9 +3,10 @@ package net.aurika.data.database.sql.connection;
 
 import kotlin.collections.ArraysKt;
 import kotlin.jvm.internal.Intrinsics;
-import org.jetbrains.annotations.NotNull;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.sql.H2Tools;
+import net.aurika.utils.Checker;
+import org.jetbrains.annotations.NotNull;
 import top.auspice.dependencies.classpath.IsolatedClassLoader;
 import top.auspice.main.Auspice;
 import top.auspice.utils.logging.AuspiceLogger;
@@ -25,12 +26,12 @@ public class SQLFlatFileConnectionProvider extends SQLConnectionProvider {
     private final @NotNull Path file;
     private NonClosableConnection c;  // lazy
 
-    public SQLFlatFileConnectionProvider(@NotNull DatabaseType databaseType, @NotNull String var2, @NotNull Path var3) {
+    public SQLFlatFileConnectionProvider(@NotNull DatabaseType databaseType, @NotNull String jdbcUrl, @NotNull Path file) {
         super(databaseType);
-        Intrinsics.checkNotNullParameter(var2, "");
-        Intrinsics.checkNotNullParameter(var3, "");
-        this.jdbcUrl = var2;
-        this.file = var3;
+        Checker.Arg.notNull(jdbcUrl, "jdbcUrl");
+        Checker.Arg.notNull(file, "file");
+        this.jdbcUrl = jdbcUrl;
+        this.file = file;
         DatabaseType[] var5 = new DatabaseType[2];
         var5[0] = DatabaseType.SQLite;
         var5[1] = DatabaseType.H2;

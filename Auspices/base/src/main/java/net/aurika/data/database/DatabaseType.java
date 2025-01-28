@@ -3,10 +3,9 @@ package net.aurika.data.database;
 import com.zaxxer.hikari.HikariConfig;
 import kotlin.collections.CollectionsKt;
 import kotlin.text.StringsKt;
+import net.aurika.data.database.sql.DatabaseProperties;
 import net.aurika.data.database.sql.statements.*;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.data.database.sql.DatabaseProperties;
-import top.auspice.data.database.sql.statements.*;
 import top.auspice.dependencies.Dependency;
 
 import java.util.*;

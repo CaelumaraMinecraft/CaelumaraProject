@@ -1,10 +1,5 @@
 package net.aurika.data.centers;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import top.auspice.api.user.AuspiceUser;
-import top.auspice.configs.texts.MessageHandler;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.base.Database;
 import net.aurika.data.database.base.KeyedDatabase;
@@ -18,6 +13,11 @@ import net.aurika.data.object.DataObject;
 import net.aurika.data.object.KeyedDataObject;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.NamespacedMap;
+import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import top.auspice.api.user.AuspiceUser;
+import top.auspice.configs.texts.MessageHandler;
 import top.auspice.scheduler.DelayedRepeatingTask;
 import top.auspice.utils.debug.AuspiceDebug;
 import top.auspice.utils.logging.AuspiceLogger;
@@ -38,7 +38,7 @@ public abstract class DataCenter extends BaseDataManager {
     protected final @Nullable DelayedRepeatingTask autoSaveTask;
 
     @Internal
-    public DataCenter(NSedKey id, DatabaseType databaseType, Duration autoSaveInterval, boolean isCacheStatic, boolean isTemporary, boolean isSmartSaving) {
+    public DataCenter(@NotNull NSedKey id, @NotNull DatabaseType databaseType, @Nullable Duration autoSaveInterval, boolean isCacheStatic, boolean isTemporary, boolean isSmartSaving) {
         super(id, autoSaveInterval, isCacheStatic, isTemporary, isSmartSaving);
         Objects.requireNonNull(databaseType, "databaseType");
         this.databaseType = databaseType;
@@ -69,7 +69,7 @@ public abstract class DataCenter extends BaseDataManager {
         ArrayList<Throwable> errs = new ArrayList<>();
         StringPadder var3 = new StringPadder();
 
-        for (DataManager<?> dataManager : this.getAllDataManagers().stream().sorted(Comparator.comparing((var0) -> var0.getNamespacedKey().asString())).toList()) {
+        for (DataManager<?> dataManager : this.getAllDataManagers().stream().sorted(Comparator.comparing((dataManager) -> dataManager.getNamespacedKey().asString())).toList()) {
             int var6 = dataManager.size();
             long var8 = System.currentTimeMillis();
             int var7 = 0;
@@ -97,7 +97,7 @@ public abstract class DataCenter extends BaseDataManager {
         }
     }
 
-    public NamespacedMap<DataManager<?>> getRegistry() {
+    public @NotNull NamespacedMap<DataManager<?>> getRegistry() {
         return this.registry;
     }
 
@@ -109,7 +109,7 @@ public abstract class DataCenter extends BaseDataManager {
         return (SingularDatabase<T>) this.constructDatabase0(var1, var2, var3);
     }
 
-    public DatabaseType getDatabaseType() {
+    public @NotNull DatabaseType getDatabaseType() {
         return this.databaseType;
     }
 

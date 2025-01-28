@@ -16,8 +16,8 @@ public final class PlaceholderPositionalFunctionInvoker implements PlaceholderFu
     private int d;
 
     public PlaceholderPositionalFunctionInvoker(@NotNull KingdomsPlaceholder placeholder, @NotNull PlaceholderFunctionData function, @NotNull List<String> var3) {
-        Checker.Argument.checkNotNull(placeholder, "placeholder");
-        Checker.Argument.checkNotNull(function, "function");
+        Checker.Arg.notNull(placeholder, "placeholder");
+        Checker.Arg.notNull(function, "function");
         Intrinsics.checkNotNullParameter(var3, "");
         this.placeholder = placeholder;
         this.function = function;
