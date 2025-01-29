@@ -7,6 +7,7 @@ import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.messages.provider.MessageProvider;
 import net.aurika.namespace.NSedKey;
+import top.auspice.main.Auspice;
 
 import java.nio.file.Path;
 import java.util.Locale;
@@ -18,14 +19,14 @@ public class StandardDiversity extends AbstractDiversity implements Diversity {
     /**
      * 简体中文
      */
-    public static final StandardDiversity SIMPLIFIED_CHINESE = new StandardDiversity(NSedKey.auspice("DEFAULT_SIMPLIFIED_CHINESE"), );
+    public static final StandardDiversity SIMPLIFIED_CHINESE = new StandardDiversity(Auspice.namespacedKey("DEFAULT_SIMPLIFIED_CHINESE"), );
 
-    public static final StandardDiversity TRADITIONAL_CHINESE = new StandardDiversity(NSedKey.auspice("DEFAULT_TRADITIONAL_CHINESE"), )
+    public static final StandardDiversity TRADITIONAL_CHINESE = new StandardDiversity(Auspice.namespacedKey("DEFAULT_TRADITIONAL_CHINESE"), )
 
     /**
      * 默认英语
      */
-    public static final StandardDiversity ENGLISH = new StandardDiversity(NSedKey.auspice("DEFAULT_ENGLISH"), );
+    public static final StandardDiversity ENGLISH = new StandardDiversity(Auspice.namespacedKey("DEFAULT_ENGLISH"), );
 
     protected final @NotNull Path pluginFolder;
     protected final @NotNull String folderName;
@@ -84,7 +85,7 @@ public class StandardDiversity extends AbstractDiversity implements Diversity {
 
     @Override
     public Map<ConfigEntry, MessageProvider> getMessages() {
-        return Map.of();
+
     }
 
     @Override
@@ -93,7 +94,7 @@ public class StandardDiversity extends AbstractDiversity implements Diversity {
     }
 
     @Override
-    public @Nullable TextObject getVariable(@Nullable TextPlaceholderProvider placeholderProvider, @Nullable String variable, boolean noDefault) {
+    public @Nullable TextObject getVariable(@Nullable TextPlaceholderProvider context, @Nullable String variable, boolean noDefault) {
         return null;
     }
 

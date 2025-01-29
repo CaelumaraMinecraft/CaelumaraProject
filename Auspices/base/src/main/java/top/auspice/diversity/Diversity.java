@@ -1,18 +1,18 @@
 package top.auspice.diversity;
 
+import net.aurika.namespace.NamespacedKeyContainer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.config.path.ConfigEntry;
+import top.auspice.configs.messages.MessageEntry;
+import top.auspice.configs.messages.provider.MessageProvider;
 import top.auspice.configs.texts.compiler.TextObject;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.configs.messages.provider.MessageProvider;
-import net.aurika.namespace.NSKeyed;
 
 import java.util.Map;
 import java.util.TimeZone;
 
-public interface Diversity extends NSKeyed {
+public interface Diversity extends NamespacedKeyContainer {
 
     /**
      * 获取文件夹命名
@@ -29,7 +29,7 @@ public interface Diversity extends NSKeyed {
     @NotNull String getLowerCaseName();
 
     /**
-     * 获取本地名称, "本地" 指地区
+     * 获取本地名称
      *
      * @return 本地名称, 如 {@code 中国大陆}, {@code English}
      */
@@ -39,14 +39,23 @@ public interface Diversity extends NSKeyed {
 
     @NotNull TimeZone getTimeZone();
 
+    /**
+     * 获取 {@link MessageEntry} 对应的消息
+     *
+     * @param path       消息路径
+     * @param useDefault 当这个 {@linkplain Diversity} 没有配置对应的消息条目时是否使用默认值
+     * @throws IllegalArgumentException 当没有配置对应的消息条目且 useDefault == true 时
+     */
     @Contract("_, true -> !null")
-    @Nullable MessageProvider getMessage(@NotNull ConfigEntry path, boolean useDefault);
+    @Nullable MessageProvider getMessage(@NotNull MessageEntry path, boolean useDefault);
 
-    Map<ConfigEntry, MessageProvider> getMessages();
+    Map<MessageEntry, MessageProvider> getMessages();
 
+    @Deprecated
     TextObject getVariableRaw(@Nullable String name);
 
-    @Nullable TextObject getVariable(@Nullable TextPlaceholderProvider placeholderProvider, @Nullable String variable, boolean noDefault);
+    @Deprecated
+    @Nullable TextObject getVariable(@Nullable TextPlaceholderProvider context, @Nullable String variable, boolean noDefault);
 
     /**
      * 获取全局的默认语言
@@ -58,5 +67,4 @@ public interface Diversity extends NSKeyed {
     static Diversity getDefault() {
         return StandardDiversity.SIMPLIFIED_CHINESE;
     }
-
 }

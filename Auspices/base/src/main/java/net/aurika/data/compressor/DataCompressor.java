@@ -1,6 +1,6 @@
 package net.aurika.data.compressor;
 
-import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NamespacedKeyContainer;
 import net.aurika.namespace.NSedKey;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -123,8 +123,8 @@ public class DataCompressor {
         }
     }
 
-    public final DataCompressor compress(NSKeyed nsKeyed) {
-        return this.compress(nsKeyed.getNamespacedKey());
+    public final DataCompressor compress(NamespacedKeyContainer namespacedKeyContainer) {
+        return this.compress(namespacedKeyContainer.getNamespacedKey());
     }
 
     public final DataCompressor compress(NSedKey nsKey) {

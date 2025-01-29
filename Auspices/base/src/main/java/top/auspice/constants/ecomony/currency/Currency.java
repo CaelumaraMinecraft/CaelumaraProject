@@ -2,9 +2,9 @@ package top.auspice.constants.ecomony.currency;
 
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.ecomony.currency.bill.CurrencyEntry;
-import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NamespacedKeyContainer;
 
-public interface Currency<T, C> extends NSKeyed {
+public interface Currency<T, C> extends NamespacedKeyContainer {
 
 //    private final String key;
 //    private final Class<T> targetClass;                                //用于验证此货币是否可以用于目标对象的

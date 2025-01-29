@@ -20,7 +20,7 @@ public class RawLanguageEntryObjectBuilder implements MessageObjectBuilder {
     private final Function<String, String> b;
 
     public RawLanguageEntryObjectBuilder(EnumDefinedMessenger path, Function<String, String> var2) {
-        this.path = path.getLanguageEntry();
+        this.path = path.getMessageEntry();
         this.b = var2;
     }
 

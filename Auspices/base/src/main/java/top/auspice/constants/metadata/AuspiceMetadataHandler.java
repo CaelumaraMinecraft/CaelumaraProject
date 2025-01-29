@@ -1,14 +1,14 @@
 package top.auspice.constants.metadata;
 
 import net.aurika.data.database.dataprovider.SectionableDataGetter;
-import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NamespacedKeyContainer;
 import net.aurika.namespace.NSedKey;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.base.KeyedAuspiceObject;
 
 import java.util.Objects;
 
-public abstract class AuspiceMetadataHandler implements NSKeyed {
+public abstract class AuspiceMetadataHandler implements NamespacedKeyContainer {
 
     protected final NSedKey id;
 

@@ -1,11 +1,10 @@
 package net.aurika.namespace.nested;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import top.auspice.api.user.AuspiceUser;
 import net.aurika.namespace.NSKey;
 import net.aurika.namespace.nested.exceptions.NestedNamespaceContainsIllegalLevelException;
 import net.aurika.utils.Checker;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import top.auspice.utils.string.Strings;
 
 import java.util.Arrays;
@@ -104,10 +103,5 @@ public final class NestedNamespace {
     @Override
     public int hashCode() {
         return Arrays.hashCode(nesting);
-    }
-
-    public static @NotNull NestedNamespace topOfAuspiceUser(@NotNull AuspiceUser au) {
-        Checker.Arg.notNull(au, "au");
-        return new NestedNamespace(new String[]{au.getNamespace()});
     }
 }

@@ -4,8 +4,13 @@ import com.cryptomorin.xseries.XMaterial;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import net.aurika.config.annotations.Comment;
 import net.aurika.config.path.ConfigEntry;
+import top.auspice.configs.messages.MessageEntry;
 import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
 import top.auspice.configs.texts.messenger.EnumDefinedMessenger;
+import top.auspice.server.command.CommandSender;
+import top.auspice.server.core.Server;
+import top.auspice.server.entity.Player;
+import top.auspice.server.player.OfflinePlayer;
 
 public enum AuspiceLang implements EnumDefinedMessenger {
     PREFIX,
@@ -46,7 +51,7 @@ public enum AuspiceLang implements EnumDefinedMessenger {
     ;
 
     private final String defaultValue;
-    private final ConfigEntry path;
+    private final MessageEntry path;
     public static final AuspiceLang[] VALUES = values();
 
     AuspiceLang(int... group) {
@@ -63,7 +68,7 @@ public enum AuspiceLang implements EnumDefinedMessenger {
         return var0.toString();
     }
 
-    public @NonNull ConfigEntry getLanguageEntry() {
+    public @NonNull MessageEntry getMessageEntry() {
         return this.path;
     }
 
@@ -79,7 +84,7 @@ public enum AuspiceLang implements EnumDefinedMessenger {
     public void sendEveryoneMessage(Object... edits) {
         this.sendConsoleMessage(edits);
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Server.get().getPlayerManager().getOnlinePlayers()) {
             this.sendMessage(player, edits);
         }
 

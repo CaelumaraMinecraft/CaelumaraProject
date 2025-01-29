@@ -3,14 +3,14 @@ package net.aurika.data.managers;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NamespacedKeyContainer;
 import net.aurika.namespace.NSedKey;
 
 import java.io.Closeable;
 import java.time.Duration;
 import java.util.Objects;
 
-public abstract class BaseDataManager implements Closeable, NSKeyed {
+public abstract class BaseDataManager implements Closeable, NamespacedKeyContainer {
 
     private final @NotNull NSedKey id;
     private final @Nullable Duration autoSaveInterval;

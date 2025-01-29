@@ -2,20 +2,21 @@ package top.auspice.configs.texts.messenger;
 
 import kotlin.collections.ArraysKt;
 import kotlin.text.StringsKt;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.config.annotations.AdvancedMessage;
 import net.aurika.config.annotations.Comment;
 import net.aurika.config.annotations.Path;
 import net.aurika.config.annotations.RawPath;
 import net.aurika.config.path.ConfigEntry;
-import top.auspice.configs.texts.AuspiceLang;
-import top.auspice.configs.texts.Locale;
-import top.auspice.configs.texts.LanguageManager;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
+import top.auspice.configs.messages.MessageEntry;
 import top.auspice.configs.messages.provider.MessageProvider;
+import top.auspice.configs.texts.AuspiceLang;
+import top.auspice.configs.texts.LanguageManager;
+import top.auspice.configs.texts.Locale;
+import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import top.auspice.diversity.Diversity;
 import top.auspice.main.Auspice;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
@@ -26,33 +27,33 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public interface EnumDefinedMessenger extends DefinedMessenger, Messenger {
+public interface EnumDefinedMessenger extends DefinedMessenger {
 
-    default @NotNull MessageProvider getProvider(@NotNull Locale locale) {
+    default @NotNull MessageProvider getProvider(@NotNull Diversity locale) {
         Objects.requireNonNull(locale);
-        MessageProvider provider = locale.getMessage(this.getLanguageEntry(), true);
+        MessageProvider provider = locale.getMessage(this.getMessageEntry(), true);
 
         //noinspection ConstantValue
-        assert provider != null : "Language returned null for " + locale + "->" + this.getLanguageEntry();
+        assert provider != null : "Language returned null for " + locale + "->" + this.getMessageEntry();
 
         return provider;
     }
 
-    @NotNull ConfigEntry getLanguageEntry();
+    @NotNull MessageEntry getMessageEntry();
 
     default @Nullable Comment getComment() {
         try {
             return this.getClass().getField(this.name()).getAnnotation(Comment.class);
-        } catch (NoSuchFieldException var2) {
-            throw new RuntimeException(var2);
+        } catch (NoSuchFieldException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
     default @Nullable AdvancedMessage getAdvancedData() {
         try {
             return this.getClass().getField(this.name()).getAnnotation(AdvancedMessage.class);
-        } catch (NoSuchFieldException var2) {
-            throw new RuntimeException(var2);
+        } catch (NoSuchFieldException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -78,7 +79,7 @@ public interface EnumDefinedMessenger extends DefinedMessenger, Messenger {
             {
                 SupportedLanguage var6 = (SupportedLanguage) var4;
                 var5 = StringsKt.replace$default(Auspice.get().getDataFolder().toPath().relativize(var6.getMainLanguageFile()).toString(), ' ', '*', false, 4, (Object) null);
-                Node var10000 = var6.getAdapter().getConfig().findNode(this.getLanguageEntry().getPath());
+                Node var10000 = var6.getAdapter().getConfig().findNode(this.getMessageEntry().getPath());
                 if (var10000 != null) {
                     Mark var7 = var10000.getStartMark();
                     if (var7 != null) {
@@ -93,7 +94,7 @@ public interface EnumDefinedMessenger extends DefinedMessenger, Messenger {
             }
 
             var4 = var8;
-            AuspiceLang.COMMAND_ADMIN_TRACK_TRACKED.getProvider((Locale) var3).send(messageReceiver, (new TextPlaceholderProvider()).parse("path", Strings.join(this.getLanguageEntry().getPath(), " {$sep}-> {$s}")).raw("file", var5).raw("raw", LanguageManager.getRawMessage(this, (SupportedLanguage) var3)).parse("line", var4));
+            AuspiceLang.COMMAND_ADMIN_TRACK_TRACKED.getProvider((Locale) var3).send(messageReceiver, (new TextPlaceholderProvider()).parse("path", Strings.join(this.getMessageEntry().getPath(), " {$sep}-> {$s}")).raw("file", var5).raw("raw", LanguageManager.getRawMessage(this, (SupportedLanguage) var3)).parse("line", var4));
         }
 
         this.getProvider((Locale) var4).send(messageReceiver, textPlaceholderProvider);
@@ -107,7 +108,6 @@ public interface EnumDefinedMessenger extends DefinedMessenger, Messenger {
         } catch (NoSuchFieldException var2) {
             throw new RuntimeException(var2);
         }
-
     }
 
     static boolean isRawPath(@NotNull EnumDefinedMessenger enumDefinedMessenger) {
@@ -135,7 +135,6 @@ public interface EnumDefinedMessenger extends DefinedMessenger, Messenger {
                 } else {
                     var7 = new int[]{1, 2, 3};
                 }
-
             }
 
             try {
@@ -162,5 +161,4 @@ public interface EnumDefinedMessenger extends DefinedMessenger, Messenger {
             }
         }
     }
-
 }

@@ -1,44 +1,43 @@
 package top.auspice.utils.unsafe.string;
 
 import kotlin.collections.CollectionsKt;
-import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.StringsKt;
+import net.aurika.namespace.NSedKey;
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.namespace.NSedKey;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public final class PrettyStringFactory {
 
-    @NotNull
-    public static String toPrettyString(@Nullable Object $this$toPrettyString) {
+    public static @NotNull String toPrettyString(@Nullable Object $this$toPrettyString) {
         PrettyStringContext context = new PrettyStringContext(new StringBuilder(), 0);
         context.delegate($this$toPrettyString);
         return context.getString().toString();
     }
-    
-    @NotNull
-    private static final Map<Class<?>, PrettyString<?>> REGISTRY = new IdentityHashMap<>();
+
+    private static final @NotNull Map<Class<?>, PrettyString<?>> REGISTRY = new IdentityHashMap<>();
 
     private PrettyStringFactory() {
         throw new RuntimeException("Can not get constants of class: " + this.getClass().getName());
     }
 
-    @NotNull
-    public static Map<Class<?>, PrettyString<?>> getRegistry() {
+    public static @NotNull Map<Class<?>, PrettyString<?>> getRegistry() {
         return REGISTRY;
     }
 
-    @Nullable
-    public static PrettyString<?> findSpecialized(@Nullable Class<?> clazz) {
-        if (clazz != null && !Intrinsics.areEqual(clazz, Object.class)) {
+    public static @Nullable PrettyString<?> findSpecialized(@Nullable Class<?> clazz) {
+        if (clazz != null && !Objects.equals(clazz, Object.class)) {
             PrettyString<?> var6 = REGISTRY.get(clazz);
             if (var6 == null) {
                 var6 = findSpecialized(clazz.getSuperclass());
                 if (var6 == null) {
                     Class<?>[] var7 = clazz.getInterfaces();
-                    Objects.requireNonNull(var7, "getInterfaces(...)");
+                    Checker.Expr.notNull(var7, "Class<?>.getInterfaces()");
                     int var2 = 0;
                     int var3 = var7.length;
 
@@ -66,8 +65,8 @@ public final class PrettyStringFactory {
     }
 
     public static <K, V> void associatedArrayMap(@NotNull Map<K, ? extends V> map, @NotNull PrettyStringContext context) {
-        Objects.requireNonNull(map);
-        Objects.requireNonNull(context);
+        Checker.Arg.notNull(map, "map");
+        Checker.Arg.notNull(context, "context");
         StringBuilder builder = context.getString();
         int nestLevel = context.getNestLevel();
         builder.append(map.getClass().getSimpleName()).append('(');
@@ -88,15 +87,13 @@ public final class PrettyStringFactory {
         if (nestLevel > 1) {
             builder.append('\n');
         }
-
     }
 
-    @NotNull
-    public static String toDefaultPrettyString(@Nullable Object any) {
-        return PrettyStringFactory.toPrettyString(any);
+    public static @NotNull String toDefaultPrettyString(@Nullable Object any) {
+        return PrettyStringExtensionKt.toPrettyString(any);
     }
 
-    public static final PrettyString<Map<?, ?>> MAP = new PrettyString<>() {
+    public static final PrettyString<Map<?, ?>> MAP = new PrettyString<Map<?, ?>>() {
         @Override
         public void toPrettyString(Map<?, ?> obj, @NotNull PrettyStringContext context) {
             associatedArrayMap(obj, context);
@@ -127,5 +124,4 @@ public final class PrettyStringFactory {
         REGISTRY.put(NSedKey.class, PrettyStringFactory.NAMESPACE);
         REGISTRY.put(Collection.class, PrettyStringFactory.COLLECTION);
     }
-
 }

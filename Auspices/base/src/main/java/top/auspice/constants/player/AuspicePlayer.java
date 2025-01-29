@@ -1,10 +1,10 @@
 package top.auspice.constants.player;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.annotations.data.LateInit;
 import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
 import net.aurika.config.placeholder.invoking.PlaceholderInvokable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.constants.base.KeyedAuspiceObject;
 import top.auspice.data.AuspiceDataCenter;

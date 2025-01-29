@@ -12,7 +12,7 @@ import net.aurika.data.managers.base.DataManager;
 import net.aurika.data.object.DataObject;
 import net.aurika.data.object.KeyedDataObject;
 import net.aurika.namespace.NSedKey;
-import net.aurika.namespace.NamespacedMap;
+import net.aurika.namespace.NSKeyMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +33,7 @@ import java.util.Objects;
 public abstract class DataCenter extends BaseDataManager {
     protected final @NotNull DatabaseType databaseType;
     protected long lastSignalledSave;
-    protected final @NotNull NamespacedMap<DataManager<?>> registry = new NamespacedMap<>();
+    protected final @NotNull NSKeyMap<DataManager<?>> registry = new NSKeyMap<>();
     protected boolean hasLoadedInitials = false;
     protected final @Nullable DelayedRepeatingTask autoSaveTask;
 
@@ -97,7 +97,7 @@ public abstract class DataCenter extends BaseDataManager {
         }
     }
 
-    public @NotNull NamespacedMap<DataManager<?>> getRegistry() {
+    public @NotNull NSKeyMap<DataManager<?>> getRegistry() {
         return this.registry;
     }
 

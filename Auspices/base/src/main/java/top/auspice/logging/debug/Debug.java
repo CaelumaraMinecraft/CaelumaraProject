@@ -1,7 +1,7 @@
 package top.auspice.logging.debug;
 
-import net.aurika.namespace.NSKeyed;
+import net.aurika.namespace.NamespacedKeyContainer;
 
-public interface Debug extends NSKeyed {
+public interface Debug extends NamespacedKeyContainer {
 
 }

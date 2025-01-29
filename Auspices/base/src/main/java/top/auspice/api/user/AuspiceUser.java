@@ -1,15 +1,16 @@
 package top.auspice.api.user;
 
+import net.aurika.annotations.UtilMethod;
+import net.aurika.namespace.NSKey;
+import net.aurika.namespace.NSedKey;
+import net.aurika.namespace.nested.NestedNamespace;
+import net.aurika.utils.Checker;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.annotations.UtilMethod;
 import top.auspice.configs.texts.LanguageManager;
 import top.auspice.configs.texts.messenger.DefinedMessenger;
 import top.auspice.constants.metadata.AuspiceMetadataRegistry;
 import top.auspice.diversity.Diversity;
-import net.aurika.namespace.NSKey;
-import net.aurika.namespace.NSedKey;
-import net.aurika.namespace.nested.NestedNamespace;
 import top.auspice.scheduler.TaskScheduleProvider;
 
 import java.lang.annotation.*;
@@ -20,51 +21,55 @@ import java.util.Map;
  */
 public interface AuspiceUser {
 
-    public @NotNull @AuspiceUserName String getAuspiceUserName();
+    @NotNull
+    @AuspiceUserName
+    String getAuspiceUserName();
 
-    public @NotNull @NSKey.Namespace String getNamespace();
+    @NotNull
+    @NSKey.Namespace
+    String getNamespace();
 
-    public @NotNull Diversity getDefaultDiversity();
+    @NotNull Diversity getDefaultDiversity();
 
-    public void onLoad();
+    void onLoad();
 
-    public void onEnable();
+    void onEnable();
 
-    public void onReload();
+    void onReload();
 
-    public void onDisable();
+    void onDisable();
 
-    public @NotNull State getState();
+    @NotNull State getState();
 
     @UtilMethod
-    default public void registerAuspiceUser() {
+    default void registerAuspiceUser() {
         AuspiceUserRegistry.register(this);
     }
 
     @UtilMethod
-    default public Map<NSedKey, DefinedMessenger[]> getDefaultMessages() {
+    default Map<NSedKey, DefinedMessenger[]> getDefaultMessages() {
         return LanguageManager.getGroupedDefaultMessages(this);
     }
 
     @UtilMethod
-    default public @NotNull NestedNamespace getTopNestedNamespace() {
-        return NestedNamespace.topOfAuspiceUser(this);
+    default @NotNull NestedNamespace getTopNestedNamespace() {
+        return AuspiceUser.getTopNestedNamespace(this);
     }
 
-    public static AuspiceMetadataRegistry getMetadataRegistry() {
+    static AuspiceMetadataRegistry getMetadataRegistry() {
         return AuspiceMetadataRegistry.INSTANCE;
     }
 
-    public static TaskScheduleProvider taskScheduler() {
+    static TaskScheduleProvider taskScheduler() {
         return Container.taskScheduler;
     }
 
     @ApiStatus.Internal
-    public static void setTaskScheduler(TaskScheduleProvider taskScheduler) {
+    static void setTaskScheduler(TaskScheduleProvider taskScheduler) {
         Container.taskScheduler = taskScheduler;
     }
 
-    public static @NotNull @NSKey.Namespace String getNamespaceChecked(@NotNull AuspiceUser user) {
+    static @NotNull @NSKey.Namespace String getNamespaceChecked(@NotNull AuspiceUser user) {
         String ns = user.getNamespace();
         // noinspection ConstantValue
         if (ns == null) {
@@ -76,7 +81,14 @@ public interface AuspiceUser {
         return ns;
     }
 
-    public static enum State {
+    static @NotNull NestedNamespace getTopNestedNamespace(AuspiceUser au) {
+        Checker.Arg.notNull(au, "au");
+        String ns = au.getNamespace();
+        Checker.Expr.notEmpty(ns, "AuspiceUser.getNamespace()");
+        return new NestedNamespace(new String[]{au.getNamespace()});
+    }
+
+    enum State {
         /**
          * When constructor
          */
@@ -123,6 +135,6 @@ public interface AuspiceUser {
     @Retention(RetentionPolicy.CLASS)
     @Target({ElementType.METHOD, ElementType.PARAMETER})
     @org.intellij.lang.annotations.Pattern("^[A-Za-z0-9_\\.-]+$")
-    public static @interface AuspiceUserName {
+    @interface AuspiceUserName {
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public abstract class NSKedRegistry<C extends NSKeyed> implements NSKeyed {
+public abstract class NSKedRegistry<C extends NamespacedKeyContainer> implements NamespacedKeyContainer {
 
     static final Map<AuspiceUser, Map<NSedKey, NSKedRegistry<?>>> allRegistries = new HashMap<>();
 
@@ -70,7 +70,7 @@ public abstract class NSKedRegistry<C extends NSKeyed> implements NSKeyed {
      * @see NSKedRegistry#getRegisteredNamespaceFromConfigString(String, boolean, boolean, boolean)
      */
     @Nullable
-    public NSKeyed getRegisteredFromConfigString(@NotNull String str, boolean checkAbbreviation, boolean throwExceptionWhenSepNotFound, boolean checkRepeated) {
+    public NamespacedKeyContainer getRegisteredFromConfigString(@NotNull String str, boolean checkAbbreviation, boolean throwExceptionWhenSepNotFound, boolean checkRepeated) {
         NSedKey ns = getRegisteredNamespaceFromConfigString(str, checkAbbreviation, throwExceptionWhenSepNotFound, checkRepeated);
         if (ns != null) {
             return this.registered.get(ns);

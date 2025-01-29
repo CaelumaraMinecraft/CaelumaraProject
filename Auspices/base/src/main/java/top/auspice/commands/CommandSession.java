@@ -5,7 +5,7 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.namespace.NSedKey;
-import net.aurika.namespace.NamespacedMap;
+import net.aurika.namespace.NSKeyMap;
 import top.auspice.configs.texts.AuspiceLang;
 import top.auspice.configs.texts.SimpleMessenger;
 import top.auspice.configs.texts.messenger.Messenger;
@@ -28,7 +28,7 @@ public final class CommandSession extends KingdomsCommand {
     @NotNull
     private static final AtomicInteger a = new AtomicInteger(0);
     @NotNull
-    public static final NamespacedMap<Cache<Integer, Session>> SESSIONS = new NamespacedMap<>();
+    public static final NSKeyMap<Cache<Integer, Session>> SESSIONS = new NSKeyMap<>();
 
     public CommandSession() {
         super("session");

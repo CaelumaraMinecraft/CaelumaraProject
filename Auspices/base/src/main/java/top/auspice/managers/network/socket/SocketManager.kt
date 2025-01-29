@@ -3,7 +3,7 @@ package top.auspice.managers.network.socket
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.aurika.namespace.NSedKey
-import net.aurika.namespace.NSKeyed
+import net.aurika.namespace.NamespacedKeyContainer
 import net.aurika.namespace.NSKedRegistry
 import top.auspice.main.Auspice
 import top.auspice.utils.network.SocketJsonCommunicator
@@ -51,7 +51,7 @@ class SocketManager(val logger: Logger) : NSKedRegistry<SocketHandler>(Auspice.g
 }
 
 abstract class SocketHandler(private val ns: NSedKey, val needsRequestId: Boolean = false) :
-    NSKeyed {
+    NamespacedKeyContainer {
     abstract fun onReceive(session: SocketSession)
     override fun getNamespacedKey() = ns
 
