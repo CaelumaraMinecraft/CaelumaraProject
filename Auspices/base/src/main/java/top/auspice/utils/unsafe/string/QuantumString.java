@@ -1,9 +1,9 @@
 package top.auspice.utils.unsafe.string;
 
+import net.aurika.utils.Checker;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.utils.Checker;
 
 import java.util.Locale;
 import java.util.stream.IntStream;
@@ -27,47 +27,46 @@ public class QuantumString implements CharSequence, Cloneable {
     }
 
     public boolean isQuantum() {
-        return this.original != null;
+        return original != null;
     }
 
     public int hashCode() {
-        return this.quantumValue.hashCode();
+        return quantumValue.hashCode();
     }
 
     public boolean equals(Object obj) {
-        return this == obj || obj instanceof QuantumString && this.quantumValue.equals(((QuantumString) obj).quantumValue);
+        return this == obj || obj instanceof QuantumString && quantumValue.equals(((QuantumString) obj).quantumValue);
     }
 
-    @NotNull
-    public String toString() {
-        return "QuantumString:[quantum= " + this.isQuantum() + ", original=" + this.original + ", quantumValue=" + this.quantumValue + ']';
+    public @NotNull String toString() {
+        return "QuantumString:[quantum= " + isQuantum() + ", original=" + original + ", quantumValue=" + quantumValue + ']';
     }
 
     public int length() {
-        return this.quantumValue.length();
+        return quantumValue.length();
     }
 
     public boolean isEmpty() {
-        return this.quantumValue.isEmpty();
+        return quantumValue.isEmpty();
     }
 
     public char charAt(int index) {
-        return this.getQuantum().charAt(index);
+        return getQuantum().charAt(index);
     }
 
     @NotNull
     public CharSequence subSequence(int start, int end) {
-        return this.getQuantum().subSequence(start, end);
+        return getQuantum().subSequence(start, end);
     }
 
     @NotNull
     public IntStream chars() {
-        return this.getQuantum().chars();
+        return getQuantum().chars();
     }
 
     @NotNull
     public IntStream codePoints() {
-        return this.getQuantum().codePoints();
+        return getQuantum().codePoints();
     }
 
     public Object clone() {
@@ -80,17 +79,17 @@ public class QuantumString implements CharSequence, Cloneable {
 
     @Nullable
     public String getOriginal() {
-        return this.original;
+        return original;
     }
 
     @NonNull
     public String getQuantumValue() {
-        return this.quantumValue;
+        return quantumValue;
     }
 
     @NonNull
     public String getQuantum() {
-        return this.isQuantum() ? this.original : this.quantumValue;
+        return isQuantum() ? original : quantumValue;
     }
 }
 

@@ -1,6 +1,6 @@
 package top.auspice.data;
 
-import net.aurika.data.centers.DataCenter;
+import net.aurika.data.centers.AurikaDataCenter;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.base.Database;
 import net.aurika.data.database.flatfile.json.KeyedJsonDatabase;
@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class AuspiceDataCenter extends DataCenter {
+public class AuspiceDataCenter extends AurikaDataCenter {
 
     protected final AuspicePlayerManager auspicePlayerManager;
     protected final Path dataDirectory;
@@ -71,26 +71,26 @@ public class AuspiceDataCenter extends DataCenter {
     }
 
     @Override
-    protected <T extends DataObject> Database<T> constructDatabase0(String var1, String var2, DataHandler<T> var3) {
+    protected <T extends DataObject> Database<T> constructDatabase0(String var1, String var2, DataHandler<T> dataHandler) {
         Objects.requireNonNull(var1);
         Objects.requireNonNull(var2);
-        Objects.requireNonNull(var3);
-        boolean singular = var3 instanceof SingularDataHandler;
+        Objects.requireNonNull(dataHandler);
+        boolean singular = dataHandler instanceof SingularDataHandler;
         boolean var5 = super.hasLoadedInitials;
         super.hasLoadedInitials = true;
         switch (super.databaseType) {
             case JSON:
                 if (singular) {
-                    return new SingularJsonDatabase<>(this.dataDirectory.resolve(var1 + ".json"), (SingularDataHandler<T>) var3);
+                    return new SingularJsonDatabase<>(this.dataDirectory.resolve(var1 + ".json"), (SingularDataHandler<T>) dataHandler);
                 }
 
-                return new KeyedJsonDatabase<>(this.dataDirectory.resolve(var1), (KeyedDataHandler) var3);
+                return new KeyedJsonDatabase<>(this.dataDirectory.resolve(var1), (KeyedDataHandler) dataHandler);
             case YAML:
                 if (singular) {
-                    return new SingularYamlDatabase<>(this.dataDirectory.resolve(var1 + ".yml"), (SingularDataHandler<T>) var3);
+                    return new SingularYamlDatabase<>(this.dataDirectory.resolve(var1 + ".yml"), (SingularDataHandler<T>) dataHandler);
                 }
 
-                return new KeyedYamlDatabase<>(this.dataDirectory.resolve(var1), (KeyedDataHandler) var3);
+                return new KeyedYamlDatabase<>(this.dataDirectory.resolve(var1), (KeyedDataHandler) dataHandler);
             case MongoDB:
                 if (!var5) {
                     AuspiceLogger.info("Loading Mongo libraries for " + var1 + " database...");
@@ -99,10 +99,10 @@ public class AuspiceDataCenter extends DataCenter {
                 }
 
                 if (singular) {
-                    return SingularMongoDBDatabase.withCollection(var2, (SingularDataHandler<T>) var3);
+                    return SingularMongoDBDatabase.withCollection(var2, (SingularDataHandler<T>) dataHandler);
                 }
 
-                return KeyedMongoDBDatabase.withCollection(var2, (KeyedDataHandler) var3);
+                return KeyedMongoDBDatabase.withCollection(var2, (KeyedDataHandler) dataHandler);
             default:
                 if (!var5) {
                     AuspiceLogger.info("Loading SQL libraries for " + var1 + " database...");
@@ -153,7 +153,7 @@ public class AuspiceDataCenter extends DataCenter {
                 }
 
                 var2 = SQLConnectionProvider.TABLE_PREFIX + var2;
-                return singular ? new SingularSQLDatabase<>(super.databaseType, var2, (SingularDataHandler<T>) var3, this.sqlConnectionProvider) : new KeyedSQLDatabase<>(super.databaseType, var2, (KeyedDataHandler) var3, this.sqlConnectionProvider);
+                return singular ? new SingularSQLDatabase<>(super.databaseType, var2, (SingularDataHandler<T>) dataHandler, this.sqlConnectionProvider) : new KeyedSQLDatabase<>(super.databaseType, var2, (KeyedDataHandler) dataHandler, this.sqlConnectionProvider);
         }
     }
 

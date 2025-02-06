@@ -1,6 +1,6 @@
 package net.aurika.data.managers.base;
 
-import net.aurika.data.centers.DataCenter;
+import net.aurika.data.centers.AurikaDataCenter;
 import net.aurika.data.database.base.SingularDatabase;
 import net.aurika.data.object.DataObject;
 import net.aurika.namespace.NSedKey;
@@ -13,7 +13,7 @@ public abstract class SingularDataManager<T extends DataObject.Impl> extends Dat
     private T a;
     private final SingularDatabase<T> b;
 
-    public SingularDataManager(NSedKey var1, SingularDatabase<T> var2, DataCenter var3) {
+    public SingularDataManager(NSedKey var1, SingularDatabase<T> var2, AurikaDataCenter var3) {
         super(var1, var3);
         this.b = var2;
     }

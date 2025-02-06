@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
- class FoliaBootstrapProvider implements BootstrapProvider {
+class FoliaBootstrapProvider implements BootstrapProvider {
     private final FoliaAuspiceLoader loader;
     private final ReflectionClassPathAppender b;
 

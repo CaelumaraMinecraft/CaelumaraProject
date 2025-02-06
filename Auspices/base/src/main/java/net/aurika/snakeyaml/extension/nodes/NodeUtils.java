@@ -1,7 +1,6 @@
 package net.aurika.snakeyaml.extension.nodes;
 
 import net.aurika.annotations.bookmark.Bookmark;
-import net.aurika.annotations.bookmark.BookmarkType;
 import net.aurika.config.annotations.ImplicitOperateCached;
 import net.aurika.config.yaml.snakeyaml.common.NodeReplacer;
 import net.aurika.utils.Checker;
@@ -176,7 +175,7 @@ public final class NodeUtils {
         return new MappingNode(node.getTag(), true, node.getValue(), node.getFlowStyle(), node.getStartMark(), node.getEndMark());
     }
 
-    @Bookmark(value = {BookmarkType.EXPERIMENTAL}, comment = "我不知道浅拷贝一个 AnchorNode 有啥用")
+    @Bookmark(value = {Bookmark.BookmarkType.EXPERIMENTAL}, comment = "我不知道浅拷贝一个 AnchorNode 有啥用")
     @Contract("_ -> new")
     public static AnchorNode shallowCopyAnchorNode(AnchorNode node) {
         return new AnchorNode(node.getRealNode());

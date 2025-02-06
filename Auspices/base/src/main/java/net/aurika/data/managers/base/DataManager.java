@@ -1,12 +1,12 @@
 package net.aurika.data.managers.base;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.ApiStatus.Internal;
-import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import net.aurika.data.database.base.Database;
 import net.aurika.data.managers.BaseDataManager;
 import net.aurika.data.object.DataObject;
 import net.aurika.namespace.NSedKey;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import java.util.Collection;
 
@@ -49,8 +49,8 @@ public abstract class DataManager<T extends DataObject> extends BaseDataManager 
     public abstract int saveAll(boolean var1);
 
     @MustBeInvokedByOverriders
-    protected T onLoad(T var1) {
-        return var1;
+    protected T onLoad(T obj) {
+        return obj;
     }
 
     public void onDisable() {

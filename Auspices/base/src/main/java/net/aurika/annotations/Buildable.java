@@ -2,6 +2,7 @@ package net.aurika.annotations;
 
 import java.lang.annotation.*;
 
+@Deprecated
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
 @Documented

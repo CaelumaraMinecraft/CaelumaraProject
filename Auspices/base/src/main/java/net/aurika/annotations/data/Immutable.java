@@ -3,11 +3,10 @@ package net.aurika.annotations.data;
 import java.lang.annotation.*;
 
 /**
- * 标识一个不可变类, 类的内容
- * @author Attaccer
+ * 标识一个不可变类
  */
-@Retention(RetentionPolicy.CLASS)
-@Target(ElementType.TYPE)
 @Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
 public @interface Immutable {
 }

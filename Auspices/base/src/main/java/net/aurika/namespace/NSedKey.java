@@ -76,7 +76,7 @@ public final class NSedKey implements DataStringRepresentation {
      */
     public @NonNull String asConfigString(NSKedRegistry<?> module, boolean abbreviate) {
         if (abbreviate) {
-            for (NSedKey ns : module.getRegistered().keySet()) {
+            for (NSedKey ns : module.getRegistry().keySet()) {
                 if (ns != this && ns.getKey().equals(this.getKey())) {       //若找到任何key相同的命名空间
                     return this.namespace + ':' + configString(this.key);
                 }
@@ -89,12 +89,12 @@ public final class NSedKey implements DataStringRepresentation {
 
     @Pure
     public @NonNull String getConfigOptionName() {
-        String keyConfig = configString(this.key);
+        String keyConfig = configString(key);
         return this.namespace + ':' + keyConfig;
     }
 
     public @NotNull String asString() {
-        return this.namespace + ':' + this.key;
+        return namespace + ':' + key;
     }
 
     public static @NotNull NSedKey auspice(@NotNull @NSKey.Key String key) {
@@ -164,7 +164,7 @@ public final class NSedKey implements DataStringRepresentation {
             if (ch == '_') {
                 chars[i] = '-';
             } else {
-                chars[i] = (char) (ch | 32);
+                chars[i] = (char) (ch | 32);  // lower case
             }
         }
 
@@ -181,7 +181,7 @@ public final class NSedKey implements DataStringRepresentation {
             if (ch == '-') {
                 chars[i] = '_';
             } else {
-                chars[i] = (char) (ch & 95);
+                chars[i] = (char) (ch & 95);  // upper case
             }
         }
 

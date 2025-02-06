@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * 这个注解用于注解方法的返回值或形参, 被注解的类需要是一个容器类 (如 {@link java.util.Map}), 当这个容器类实例中的内容被修改时, 这个容器类的使用也应同步更新.
  */
 @Documented
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.TYPE_USE})
-public @interface SyncedData {  // SyncedEncapsulatedData
+public @interface SyncedData {
 }

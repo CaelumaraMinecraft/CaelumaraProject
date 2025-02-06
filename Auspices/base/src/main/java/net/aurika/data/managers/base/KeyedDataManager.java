@@ -5,7 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.data.centers.DataCenter;
+import net.aurika.data.centers.AurikaDataCenter;
 import net.aurika.data.database.base.KeyedDatabase;
 import net.aurika.data.object.KeyedDataObject;
 import net.aurika.namespace.NSedKey;
@@ -26,7 +26,7 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
     protected KeyedDatabase<K, T> database;
     private final boolean a;
 
-    public KeyedDataManager(NSedKey NSedKey,  KeyedDatabase<K, T> database, boolean b, DataCenter kingdomsDataCenter) {
+    public KeyedDataManager(NSedKey NSedKey,  KeyedDatabase<K, T> database, boolean b, AurikaDataCenter kingdomsDataCenter) {
         super(NSedKey, kingdomsDataCenter);
         this.database = database;
         if (b) {
@@ -118,18 +118,18 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
 
     public int saveAll(boolean var1) {
         if (!var1) {
-            Collection<T> var5 = this.cache.values();
-            this.database.save(var5);
-            return var5.size();
-        } else if (!super.savingState) {
+            Collection<T> objects = cache.values();
+            this.database.save(objects);
+            return objects.size();
+        } else if (!savingState) {
             AuspiceLogger.info("Saving state was turned off for " + this + ", skipping saving data...");
             return 0;
         } else {
-            ArrayList<T> objects = new ArrayList<>(this.cache.size());
+            ArrayList<T> objects = new ArrayList<>(cache.size());
 
-            for (T var3 : this.cache.values()) {
-                if (!this.isSmartSaving() || var3.shouldSave()) {
-                    objects.add(var3);
+            for (T obj : cache.values()) {
+                if (!isSmartSaving() || obj.shouldSave()) {
+                    objects.add(obj);
                 }
             }
 
@@ -138,9 +138,9 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
         }
     }
 
-    public void loadAndSave(@NonNull T var1) {
-        this.cache(var1, true);
-        this.database.save(var1);
+    public void loadAndSave(@NonNull T obj) {
+        this.cache(obj, true);
+        this.database.save(obj);
     }
 
     public @Nullable T getOrLoadData(@NonNull K key) {
@@ -162,11 +162,11 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
         this.cache.remove(object.getKey());
     }
 
-    public void cache(@NonNull T object, boolean var2) {
+    public void cache(@NonNull T object, boolean state) {
         K key = object.getKey();
         object = this.onLoad(object);
         this.cache.put(key, object);
-        this.saveObjectState(object, var2);
+        this.saveObjectState(object, state);
         if (this.doesntExist != null) {
             this.doesntExist.remove(key);
         }

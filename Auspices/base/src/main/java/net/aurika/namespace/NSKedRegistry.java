@@ -62,7 +62,7 @@ public abstract class NSKedRegistry<C extends NamespacedKeyContainer> implements
         return this.registered.containsKey(NSedKey);
     }
 
-    public @NotNull @Unmodifiable Map<NSedKey, C> getRegistered() {
+    public @NotNull @Unmodifiable Map<NSedKey, C> getRegistry() {
         return Collections.unmodifiableMap(this.registered);
     }
 
