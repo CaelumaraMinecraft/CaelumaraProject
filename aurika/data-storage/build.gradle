@@ -1,0 +1,13 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+group = "net.aurika.data"
+version = project(":aurika").version
+
+dependencies {
+    implementation(api(project(":aurika:base")))
+    implementation(api(project(":aurika:snakeyaml-ext")))
+    implementation(api(project(":aurika:dependency")))
+}

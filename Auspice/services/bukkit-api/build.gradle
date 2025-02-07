@@ -1,0 +1,16 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.services"
+
+repositories {
+}
+
+subprojects {
+}
+
+dependencies {
+    implementation(api(project(":Auspice:services:api")))
+    compileOnly(libs.server.craftbukkit)
+}

@@ -1,0 +1,14 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+group = "net.aurika"
+version = project(":aurika").version
+
+dependencies {
+    implementation(api(project(":aurika:checker")))
+    api(libs.annotations.jetbrains)
+    api(libs.annotations.checker)
+    api(libs.caffeine)
+}

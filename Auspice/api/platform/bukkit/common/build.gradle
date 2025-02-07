@@ -1,0 +1,29 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice.platform.bukkit"
+
+repositories {
+    mavenLocal()
+
+    // https://github.com/GeyserMC/Cumulus
+    // https://wiki.geysermc.org/geyser/using-geyser-or-floodgate-as-a-dependency/
+    maven {
+        name = "opencollab-release-repo"
+        url = uri("https://repo.opencollab.dev/maven-releases")
+    }
+
+    maven {
+        name = "opencollab-snapshot-repo"
+        url = uri("https://repo.opencollab.dev/maven-snapshots")
+    }
+}
+
+dependencies {
+    compileOnly(project(":Auspice:api:platform"))
+
+    compileOnly("org.spigotmc:spigot:1.20.6-R0.1-SNAPSHOT")
+}

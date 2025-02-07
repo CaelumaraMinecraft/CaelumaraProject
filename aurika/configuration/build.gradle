@@ -1,0 +1,11 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+group = "net.aurika.config"
+version = project(":aurika").version
+
+dependencies {
+    compileOnly(project(":aurika:base"))
+}

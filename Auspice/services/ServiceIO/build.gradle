@@ -1,0 +1,22 @@
+plugins {
+    id("java")
+    alias(libs.plugins.kotlin)
+}
+
+group = "top.auspice.paper.services.serviceio"
+
+repositories {
+    maven {
+        name = "thenextlvlReleases"
+        url = "https://repo.thenextlvl.net/releases"
+    }
+}
+
+dependencies {
+    compileOnly(project(":Auspice:services:bukkit-api"))
+
+    compileOnly("net.thenextlvl.services:service-io:2.2.0")
+    compileOnly(fileTree("$rootDir/libs/plugins/ServiceIO"))
+
+    compileOnly(libs.server.paper)
+}

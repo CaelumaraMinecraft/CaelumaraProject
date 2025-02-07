@@ -11,14 +11,6 @@ include(":v1.17:Supreme-Kingdom")
 include(":v1.17:Trade-Point")
 include(":v1.17:PlaceholderAPI-Bridge")
 
-
-var auspice = project(":v1.17:Auspice")
-var powerfulTerritory = project(":v1.17:Powerful-Territory")
-var props = project(":v1.17:Props")
-var civilizations = project(":v1.17:Civilizations")
-var supremeKingdom = project(":v1.17:Supreme-Kingdom")
-
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -39,5 +31,3 @@ pluginManagement {
         }
     }
 }
-
-

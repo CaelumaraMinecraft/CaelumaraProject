@@ -1,0 +1,14 @@
+plugins {
+    id("java")
+}
+
+group = "top.auspice.craftbukkit.services.mythicmobs_v4"
+
+dependencies {
+    compileOnly(project(":Auspice:services:bukkit-api"))
+
+    // https://mvn.lumine.io/service/rest/repository/browse/maven-public/io/lumine/xikage/MythicMobs/
+//    compileOnly("io.lumine.xikage:MythicMobs:4.12.0")
+    compileOnly(fileTree("libs/"))
+    compileOnly(libs.server.craftbukkit)
+}

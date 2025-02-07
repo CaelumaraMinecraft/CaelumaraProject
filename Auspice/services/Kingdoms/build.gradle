@@ -1,0 +1,11 @@
+plugins {
+    id("java")
+}
+
+group = "top.auspice.services.kingdoms"
+
+dependencies {
+    compileOnly(project(":Auspice:services:bukkit-api"))
+
+    compileOnly(fileTree("$rootDir/libs/plugins/Kingdoms"))
+}

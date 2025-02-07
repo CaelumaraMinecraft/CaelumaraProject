@@ -1,0 +1,23 @@
+plugins {
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm") version("2.0.20-Beta2")
+    id("com.github.johnrengelman.shadow") version("8.1.1")
+}
+
+group = "org.kingdoms.platform.bukkit"
+version = "unspecified"
+
+repositories {
+    maven {
+        url = uri("https://repo.codemc.org/repository/nms/")
+        content {
+            includeGroup("org.spigotmc")
+        }
+    }
+}
+
+dependencies {
+    compileOnly(project(":Auspice:api:platform:bukkit:common"))
+
+    compileOnly("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
+}

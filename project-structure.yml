@@ -1,0 +1,24 @@
+root:
+  "Auspices":
+    'Auspice':
+      'api':
+        description: "包含 server, 配置管理() 等 api"
+      'game':
+        'api': ~
+        'bukkit':
+          'craftbukkit':
+            impls: [ ':Auspice:game:api' ]
+          'spigot':
+          'paper':
+
+  "aurika":
+    'base':
+      depends: [ ':checker' ]
+    'checker': ~
+    'configuration':
+      depends: [ ':checker', ':base' ]
+    'data-storage':
+      depends: [ ':base' ]
+
+  "KingdomsAddons":
+    'Auspice':

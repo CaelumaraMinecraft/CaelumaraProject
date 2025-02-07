@@ -1,0 +1,18 @@
+plugins {
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm") version "2.0.20-Beta2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+}
+
+
+group = "top.auspice.platform.paper"
+version = "unspecified"
+
+
+dependencies {
+    compileOnly(project(":Auspice:api"))
+
+    // https://papermc.io/using-the-api#gradle
+    compileOnly(libs.server.paper)
+//    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+}

@@ -1,0 +1,24 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.spigot.services.essentials"
+
+repositories {
+    maven {
+        name = "essentials-repo"
+        url = "https://repo.essentialsx.net/releases/"
+    }
+
+    maven {
+        name = "essentials-snapshots"
+        url = "https://nexus.scarsz.me/content/groups/public/"
+    }
+}
+
+dependencies {
+    compileOnly(project(":Auspice:services:bukkit-api"))
+    compileOnly(libs.server.spigot)
+    compileOnly("net.essentialsx:EssentialsX:2.20.1")
+//    compileOnly(fileTree("$rootDir/libs/plugins/Essentials"))
+}

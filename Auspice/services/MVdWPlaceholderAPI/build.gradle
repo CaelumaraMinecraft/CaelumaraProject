@@ -1,0 +1,13 @@
+plugins {
+    id("java-library")
+}
+
+group = "top.auspice.craftbukkit.services.mvdwplaceholderapi"
+
+dependencies {
+    compileOnly(project(":Auspice:services:bukkit-api"))
+
+    compileOnly(fileTree("$rootDir/libs/services/mvdwplaceholderapi"))
+
+    compileOnly(libs.server.craftbukkit)
+}

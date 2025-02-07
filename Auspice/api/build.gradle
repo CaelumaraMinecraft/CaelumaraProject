@@ -1,0 +1,115 @@
+//import top.auspice.dependencies.DependenciesVersion
+
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.auspice"
+
+repositories {
+}
+
+dependencies {
+
+
+    implementation(api(project(":Auspice:api:platform")))
+    api(project(":aurika"))
+    implementation(project(":aurika"))
+
+    // Engines
+    implementation(libs.adventure.api)
+    implementation(libs.adventure.text.legacy)
+
+    implementation(libs.adventure.text.gson)
+    implementation(libs.adventure.text.json)
+    implementation(libs.adventure.text.plain)
+    implementation(libs.adventure.text.minimessage)
+
+    implementation(libs.yamlengine)
+    implementation(libs.xseries)
+
+    implementation(libs.asm.asm)
+    implementation(libs.asm.commons)
+
+    implementation(libs.caffeine)
+    implementation(libs.hikari)
+
+//    implementation("com.github.cryptomorin:ReptileYAML:4.0.0")
+
+    implementation(libs.guava)
+    implementation(libs.gson)
+
+    implementation(libs.mongodb.core)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.sync)
+
+    implementation(libs.h2)
+
+    implementation(libs.postgresql)
+
+    implementation(libs.adventure.nbt)
+
+//    compileOnly(fileTree("libs/"))
+
+    compileOnly("commons-io:commons-io:2.15.1")
+
+    compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
+
+
+    // Classpath libs
+    compileOnly(libs.annotations.jetbrains)
+    compileOnly(libs.annotations.checker)
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+
+tasks {
+
+    build {
+        dependsOn("shadowJar")
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = 17
+        }
+    }
+
+    compileJava {
+        options.encoding = "UTF-8"
+
+        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+            options.release.set(targetJavaVersion)
+        }
+    }
+
+    shadowJar {
+
+        enabled = true
+
+        archiveBaseName = "Auspice-base"
+        archiveClassifier = null
+
+        relocate("kotlin", "top.auspice.libs.kotlin")
+        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
+        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
+        relocate("com.google.common", "top.auspice.libs.google.common")
+        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
+        relocate("org.objectweb.asm", "top.auspice.libs.asm")
+    }
+
+    jar {
+        enabled = false
+    }
+}

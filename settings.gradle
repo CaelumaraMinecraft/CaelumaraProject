@@ -99,9 +99,7 @@ pluginManagement {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/groups/public/"
         }
-
     }
-
 }
 
 dependencyResolutionManagement {
@@ -110,13 +108,87 @@ dependencyResolutionManagement {
 
 rootProject.name = "Caelumara"
 
-includeBuild("/commons")
-includeBuild("/commons")
+include(
+        ":aurika",
+        ":aurika:annotations",
+        ":aurika:base",
+        ":aurika:checker",
+        ":aurika:configuration",
+        ":aurika:data-storage",
+        ":aurika:dependency",
+        ":aurika:snakeyaml-ext"
+)
+include(
+        ":Auspice",
 
-includeBuild("/Auspices")
+        ":Auspice:api",
+        ":Auspice:api:platform",
+        ":Auspice:api:platform:bukkit",
+        ":Auspice:api:platform:bukkit:old-bukkit",
+        ":Auspice:api:platform:bukkit:common",
+        ":Auspice:api:platform:common",
+        ":Auspice:api:platform:paper",
+        ":Auspice:api:platform:geyser",
+        ":Auspice:api:platform:folia",
 
-includeBuild("/KingdomsAddons")
+        // services
+        ":Auspice:services",
+        ":Auspice:services:api",
+        ":Auspice:services:bukkit-api",
+        ":Auspice:services:AttributePlus",
+        ":Auspice:services:AuthMe",
+        ":Auspice:services:CMI",
+        ":Auspice:services:Essentials",
+        ":Auspice:services:Kingdoms",
+        ":Auspice:services:LuckPerms",
+        ":Auspice:services:MVdWPlaceholderAPI",
+        ":Auspice:services:MyPet",
+        ":Auspice:services:MythicMobs-v4",
+        ":Auspice:services:MythicMobs-v5",
+        ":Auspice:services:PlaceholderAPI",
+        ":Auspice:services:ProjectKorra",
+        ":Auspice:services:ServiceIO",
+        ":Auspice:services:SimplePets",
+        ":Auspice:services:SkinRestorer",
+        ":Auspice:services:Vault",
+        ":Auspice:services:WorldEdit",
 
-//includeBuild("HiraethRPG")
-//
-//includeBuild("WandsCraftsmanship")
+
+        ":Auspice:game",
+        ":Auspice:game:api",
+//        ":Auspice:game:base",
+
+        ":Auspice:game:bukkit:api",
+//        ":Auspice:game:bukkit:base",
+//        ":Auspice:game:bukkit:common",
+
+        ":Auspice:game:bukkit:craftbukkit",
+        ":Auspice:game:bukkit:craftbukkit:bootstrap",
+        ":Auspice:game:bukkit:spigot",
+        ":Auspice:game:bukkit:paper",
+        ":Auspice:game:bukkit:purpur",
+        ":Auspice:game:bukkit:leaf",
+        ":Auspice:game:bukkit:folia",
+        ":Auspice:game:bukkit:folia:bootstrap",
+
+
+//        ":Auspice:game:fabric",
+//        ":Auspice:game:forge",
+        ":Auspice:game:sponge",
+
+
+        ":Auspice:proxy",
+        ":Auspice:proxy:api",
+//        ":Auspice:proxy:base",
+//        ":Auspice:proxy:common",
+
+        ":Auspice:proxy:bungee",
+//        ":Auspice:proxy:waterfall",
+        ":Auspice:proxy:velocity",
+
+
+)
+
+include (
+        "HiraethRPG"
+)
