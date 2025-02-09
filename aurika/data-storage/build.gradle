@@ -3,11 +3,20 @@ plugins {
     id("maven-publish")
 }
 
-group = "net.aurika.data"
-version = project(":aurika").version
-
 dependencies {
-    implementation(api(project(":aurika:base")))
-    implementation(api(project(":aurika:snakeyaml-ext")))
-    implementation(api(project(":aurika:dependency")))
+    api(project(":aurika:base"))
+    api(project(":aurika:data-api"))
+    api(project(":aurika:dependency"))
+    api(project(":aurika:tasks"))
+    api(project(":aurika:utils:file"))
+    api(project(":aurika:utils:function"))
+    api(project(":aurika:utils:gson"))
+    api(project(":aurika:utils:string"))
+    api(project(":aurika:utils:snakeyaml-ext"))
+    api(libs.gson)
+    api(libs.h2)
+    api(libs.hikari)
+    api(libs.mongodb.bson)
+    api(libs.mongodb.sync)
+    api(libs.mongodb.core)
 }

@@ -1,7 +1,7 @@
 package top.auspice.utils.network;
 
 import com.google.gson.JsonElement;
-import top.auspice.utils.gson.KingdomsGson;
+import net.aurika.utils.gson.AurikaGson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,7 +75,7 @@ public abstract class SocketJsonCommunicator {
             is.read(receivedBytes, 0, len);
             String data = new String(receivedBytes, 0, len);
             log("Received: " + data);
-            return KingdomsGson.fromString(data);
+            return AurikaGson.fromString(data);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -84,7 +84,7 @@ public abstract class SocketJsonCommunicator {
     public void send(JsonElement data) {
         try (OutputStream os = socket.getOutputStream()) {
             // TODO: Somehow disable pretty-printing? But we need a new GSON instance...
-            String jsonStr = KingdomsGson.toString(data);
+            String jsonStr = AurikaGson.toString(data);
             log("Sending: " + jsonStr);
 
             byte[] toSendBytes = jsonStr.getBytes();

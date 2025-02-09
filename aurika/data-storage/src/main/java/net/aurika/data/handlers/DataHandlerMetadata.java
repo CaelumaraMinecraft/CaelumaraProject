@@ -1,7 +1,7 @@
 package net.aurika.data.handlers;
 
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
-import net.aurika.data.database.dataprovider.SectionableDataSetter;
+import net.aurika.data.api.dataprovider.SectionableDataGetter;
+import net.aurika.data.api.dataprovider.SectionableDataSetter;
 import net.aurika.namespace.NSedKey;
 import top.auspice.api.user.AuspiceUser;
 import top.auspice.constants.base.KeyedAuspiceObject;

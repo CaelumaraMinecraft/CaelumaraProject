@@ -2,7 +2,7 @@ package top.auspice.constants.base;
 
 import org.jetbrains.annotations.NotNull;
 import net.aurika.data.object.Keyed;
-import net.aurika.data.object.KeyedDataObject;
+import net.aurika.data.api.KeyedDataObject;
 
 public interface KeyedAuspiceObject<K> extends AuspiceObject, Keyed<K>, KeyedDataObject<K> {
     @NotNull K getKey();

@@ -9,8 +9,8 @@ import com.mongodb.client.model.ReplaceOptions;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.base.Database;
 import net.aurika.data.database.sql.DatabaseProperties;
-import net.aurika.data.handlers.abstraction.DataHandler;
-import net.aurika.data.object.DataObject;
+import net.aurika.data.api.handler.DataHandler;
+import net.aurika.data.api.DataObject;
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.codecs.Codec;
@@ -18,7 +18,6 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 
 import java.util.Objects;
 
@@ -89,7 +88,6 @@ public abstract class MongoDBDatabase<T extends DataObject> implements Database<
         codecRegistries[1] = CodecRegistries.fromCodecs(codecs);
         var10000.codecRegistry(CodecRegistries.fromRegistries(codecRegistries));
         MongoClient var7 = MongoClients.create(var1.build(), null);
-        Objects.requireNonNull(var7, "");
         CLIENT = var7;
         MongoDatabase var8 = var7.getDatabase(var0.getDatabaseName());
         Objects.requireNonNull(var8, "");

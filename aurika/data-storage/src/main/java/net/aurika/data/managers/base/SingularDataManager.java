@@ -2,7 +2,7 @@ package net.aurika.data.managers.base;
 
 import net.aurika.data.centers.AurikaDataCenter;
 import net.aurika.data.database.base.SingularDatabase;
-import net.aurika.data.object.DataObject;
+import net.aurika.data.api.DataObject;
 import net.aurika.namespace.NSedKey;
 import top.auspice.utils.logging.AuspiceLogger;
 

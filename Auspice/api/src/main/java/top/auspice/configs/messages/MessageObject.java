@@ -1,9 +1,9 @@
 package top.auspice.configs.messages;
 
+import net.aurika.checker.Checker;
+import net.aurika.text.TextObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.compiler.TextObject;
-import net.aurika.utils.Checker;
 
 public class MessageObject {
 

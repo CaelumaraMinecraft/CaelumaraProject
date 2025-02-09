@@ -165,12 +165,12 @@ public class Validator {
             } else {
                 StandardSequenceValidator.Type standardList = StandardSequenceValidator.getStandardType(type);
                 if (standardList != null) {
-                    mainValidator = new SequenceValidator(new StandardSequenceValidator(standardList, 0, 0), new net.aurika.snakeyaml.extension.validation.StandardValidator(net.aurika.snakeyaml.extension.validation.StandardValidator.Type.STR, 0, 0));
+                    mainValidator = new SequenceValidator(new StandardSequenceValidator(standardList, 0, 0), new net.aurika.utils.snakeyaml.validation.StandardValidator(net.aurika.utils.snakeyaml.validation.StandardValidator.Type.STR, 0, 0));
                 }
             }
 
             if (mainValidator != null) {
-                return new UnionValidator(new ConfigValidator[]{mainValidator, net.aurika.snakeyaml.extension.validation.StandardValidator.NULL});
+                return new UnionValidator(new ConfigValidator[]{mainValidator, net.aurika.utils.snakeyaml.validation.StandardValidator.NULL});
             }
         } else {
             if (!(option instanceof MappingNode)) {
@@ -220,10 +220,10 @@ public class Validator {
             type = type.substring(0, type.length() - 1);
         }
 
-        net.aurika.snakeyaml.extension.validation.StandardValidator.Type standardType = net.aurika.snakeyaml.extension.validation.StandardValidator.getStandardType(type);
+        net.aurika.utils.snakeyaml.validation.StandardValidator.Type standardType = net.aurika.utils.snakeyaml.validation.StandardValidator.getStandardType(type);
         ConfigValidator validator;
         if (standardType != null) {
-            validator = new net.aurika.snakeyaml.extension.validation.StandardValidator(standardType, minLen, maxLen);
+            validator = new net.aurika.utils.snakeyaml.validation.StandardValidator(standardType, minLen, maxLen);
         } else {
             validator = new top.auspice.config.yaml.snakeyaml.validation.ExternalConfigValidator(type);
         }

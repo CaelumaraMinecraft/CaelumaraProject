@@ -1,6 +1,6 @@
 package top.auspice.hiraeth.folia.domain;
 
-import top.auspice.configs.texts.compiler.TextObject;
+import net.aurika.text.compiler.TextObject;
 import top.auspice.diversity.Diversity;
 
 public interface Domain {

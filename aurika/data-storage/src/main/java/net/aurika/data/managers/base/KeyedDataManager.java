@@ -7,7 +7,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.data.centers.AurikaDataCenter;
 import net.aurika.data.database.base.KeyedDatabase;
-import net.aurika.data.object.KeyedDataObject;
+import net.aurika.data.api.KeyedDataObject;
 import net.aurika.namespace.NSedKey;
 import top.auspice.utils.cache.JavaMapWrapper;
 import top.auspice.utils.cache.PeekableMap;

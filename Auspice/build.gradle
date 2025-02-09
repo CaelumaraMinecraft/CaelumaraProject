@@ -4,29 +4,24 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice"
-
-repositories {
-}
-
 dependencies {
 
 //    implementation(api(project(":base")))
 
-    implementation(api(libs.adventure.event.get()))
+    api(libs.adventure.event)
 
     // Engines
-    implementation(libs.yamlengine)
+    api(libs.yamlengine)
 
-    implementation(libs.caffeine)
-    implementation(libs.guava)
+    api(libs.caffeine)
+    api(libs.guava)
 
     // Classpath libs
     compileOnly(libs.annotations.checker)
 
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -44,11 +39,9 @@ tasks {
     }
 
     compileKotlin {
-
         kotlinOptions {
             jvmTarget = 17
         }
-
     }
 
     compileJava {

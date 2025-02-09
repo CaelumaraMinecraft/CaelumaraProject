@@ -1,12 +1,12 @@
 package net.aurika.data.database.flatfile.yaml;
 
-import kotlin.jvm.internal.Intrinsics;
-import net.aurika.data.database.dataprovider.*;
-import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpretContext;
-import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpreter;
-import net.aurika.snakeyaml.extension.nodes.MapNode;
-import net.aurika.snakeyaml.extension.nodes.NodeUtils;
-import net.aurika.utils.Checker;
+import net.aurika.checker.Checker;
+import net.aurika.data.api.dataprovider.*;
+import net.aurika.utils.function.FloatSupplier;
+import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpretContext;
+import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.utils.snakeyaml.nodes.MapNode;
+import net.aurika.utils.snakeyaml.nodes.NodeUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
@@ -14,8 +14,6 @@ import org.snakeyaml.engine.v2.nodes.*;
 import top.auspice.constants.location.SimpleBlockLocation;
 import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.constants.location.SimpleLocation;
-import top.auspice.utils.function.FloatSupplier;
-import top.auspice.utils.function.TriConsumer;
 import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
@@ -67,9 +65,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     @Override
     public @NotNull DataProvider get(@NotNull String key) {
         Checker.Arg.notNull(key, "key");
-        Node a = this.node;
-        Intrinsics.checkNotNull(a);
-        return new YamlMappingDataProvider(key, new MapNode((MappingNode) a));
+        return new YamlMappingDataProvider(key, new MapNode((MappingNode) this.node));
     }
 
     @Override

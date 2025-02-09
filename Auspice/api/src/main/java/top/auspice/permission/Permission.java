@@ -2,8 +2,8 @@ package top.auspice.permission;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.messenger.StaticMessenger;
+import top.auspice.configs.messages.messenger.Messenger;
+import top.auspice.configs.messages.messenger.StaticMessenger;
 import top.auspice.server.core.Server;
 import top.auspice.server.permissions.Permissible;
 import top.auspice.server.permissions.PermissionManager;

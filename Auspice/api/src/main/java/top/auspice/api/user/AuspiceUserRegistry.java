@@ -25,9 +25,9 @@ public final class AuspiceUserRegistry {
         if (Strings.isNullOrEmpty(user.getAuspiceUserName())) {
             throw new IllegalArgumentException("User name can not be empty");
         }
-        Objects.requireNonNull(user.getNamespace(), "user namespace cannot be null");
+        Objects.requireNonNull(user.namespace(), "user namespace cannot be null");
 
-        if (!NSKey.NAMESPACE_PATTERN.matcher(user.getNamespace()).matches()) {
+        if (!NSKey.NAMESPACE_PATTERN.matcher(user.namespace()).matches()) {
             throw new IllegalArgumentException("namespace of auspice uer dosen't matches pattern: " + NSKey.ALLOWED_NAMESPACE);
         }
 

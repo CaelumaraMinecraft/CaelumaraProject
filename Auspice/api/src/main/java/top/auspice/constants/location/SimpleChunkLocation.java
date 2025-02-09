@@ -1,29 +1,48 @@
 package top.auspice.constants.location;
 
+import net.aurika.data.api.DataStringRepresentation;
+import net.aurika.data.api.structure.DataMetaType;
+import net.aurika.data.api.structure.SimpleData;
+import net.aurika.data.api.structure.SimpleDataObject;
+import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.data.api.structure.entries.MapDataEntry;
+import net.aurika.utils.string.CommaDataSplitStrategy;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.data.object.DataStringRepresentation;
-import net.aurika.data.object.structure.DataStructureObject;
 import top.auspice.server.entity.Entity;
 import top.auspice.server.location.BlockPoint2D;
 import top.auspice.server.location.BlockVector2;
 import top.auspice.server.location.Direction;
 import top.auspice.server.location.Location;
-import top.auspice.utils.string.CommaDataSplitStrategy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, DataStructureObject {
-    private final @NonNull String worldName;
+public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, SimpleDataObject {
+    private final @NonNull String world;
     private final int x;
     private final int z;
 
+    public static final SimpleDataObjectTemplate<SimpleChunkLocation> DATA_TEMPLATE = SimpleDataObjectTemplate.of(
+            SimpleChunkLocation.class,
+            data -> new SimpleChunkLocation(
+                    data.getString("world"),
+                    data.getInt("x"),
+                    data.getInt("z")
+            ),
+            "world", DataMetaType.STRING,
+            "x", DataMetaType.INT,
+            "z", DataMetaType.INT
+    );
+
     public SimpleChunkLocation(@NonNull String var1, int var2, int var3) {
-        this.worldName = Objects.requireNonNull(var1, "Simple chunk location cannot have a null world");
+        this.world = Objects.requireNonNull(var1, "Simple chunk location cannot have a null world");
         this.x = var2;
         this.z = var3;
     }
@@ -71,7 +90,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public SimpleChunkLocation getRelative(int var1, int var2) {
-        return new SimpleChunkLocation(this.worldName, this.x + var1, this.z + var2);
+        return new SimpleChunkLocation(this.world, this.x + var1, this.z + var2);
     }
 
     public SimpleChunkLocation getRelative(Direction var1) {
@@ -84,7 +103,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
 
     public boolean isInChunk(@NonNull SimpleBlockLocation var1) {
         SimpleChunkLocation var2;
-        return (var2 = var1.toSimpleChunkLocation()).x == this.x && var2.z == this.z && Objects.equals(this.worldName, var2.worldName);
+        return (var2 = var1.toSimpleChunkLocation()).x == this.x && var2.z == this.z && Objects.equals(this.world, var2.world);
     }
 
     public boolean isInChunk(org.bukkit.@NonNull Location var1) {
@@ -92,10 +111,10 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public double distance(@NonNull SimpleChunkLocation var1) {
-        if (var1.worldName.equals(this.worldName)) {
+        if (var1.world.equals(this.world)) {
             return this.distanceIgnoreWorld(var1);
         } else {
-            throw new IllegalArgumentException("Cannot measure distance between " + this.worldName + " and " + var1.worldName);
+            throw new IllegalArgumentException("Cannot measure distance between " + this.world + " and " + var1.world);
         }
     }
 
@@ -125,11 +144,11 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     public @NonNull SimpleBlockLocation getSimpleLocation(int var1, int var2, int var3) {
         var1 = this.x << 4 | var1;
         var3 = this.z << 4 | var3;
-        return new SimpleBlockLocation(this.worldName, var1, var2, var3);
+        return new SimpleBlockLocation(this.world, var1, var2, var3);
     }
 
     public @NonNull String getWorld() {
-        return this.worldName;
+        return this.world;
     }
 
     public int getX() {
@@ -153,7 +172,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public int hashCode() {
-        int var1 = 589 + this.worldName.hashCode();
+        int var1 = 589 + this.world.hashCode();
         var1 = var1 * 31 + this.x;
         return var1 * 31 + this.z;
     }
@@ -163,7 +182,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
             return true;
         } else if (var1 instanceof SimpleChunkLocation) {
             var1 = var1;
-            return this.x == var1.b && this.z == var1.c && Objects.equals(this.worldName, var1.a);
+            return this.x == var1.b && this.z == var1.c && Objects.equals(this.world, var1.a);
         } else {
             return false;
         }
@@ -194,7 +213,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
             double var5 = 0.0F;
 
             for (SimpleChunkLocation var7 : var1) {
-                if (!var2 && !var7.worldName.equals(this.worldName)) {
+                if (!var2 && !var7.world.equals(this.world)) {
                     var3 = var7;
                 } else {
                     double var9;
@@ -259,7 +278,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public String toString() {
-        return this.worldName + ", " + this.x + ", " + this.z;
+        return this.world + ", " + this.x + ", " + this.z;
     }
 
     public @NonNull Chunk toChunk() {
@@ -267,7 +286,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     public @NotNull String asDataString() {
-        return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.z});
+        return CommaDataSplitStrategy.toString(new Object[]{this.world, this.x, this.z});
     }
 
     public static SimpleChunkLocation fromDataString(@NotNull String data) {
@@ -283,7 +302,16 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NonNull Map<String, Object> getData() {
-        return Map.of("world", this.worldName, "x", this.x, "z", this.z);
+    public @NonNull SimpleData simpleData() {
+        return SimpleData.of(
+                MapDataEntry.of("world", world),
+                MapDataEntry.of("x", x),
+                MapDataEntry.of("z", z)
+        );
+    }
+
+    @Override
+    public @NotNull SimpleDataObjectTemplate<? extends SimpleChunkLocation> simpleDataTemplate() {
+        return DATA_TEMPLATE;
     }
 }

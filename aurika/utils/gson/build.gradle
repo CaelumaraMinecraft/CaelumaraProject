@@ -1,0 +1,12 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":aurika:checker"))
+
+    api(libs.gson)
+
+    compileOnly(libs.annotations.jetbrains)
+}

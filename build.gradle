@@ -4,12 +4,10 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-def ver = "0.0.1-SNAPSHOT"
-
-this.version = ver
+version = "0.0.1-SNAPSHOT"
 
 allprojects {
-    version = ver
+    group = "net.aurika"
 
     repositories {
         mavenCentral()

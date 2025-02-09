@@ -1,6 +1,6 @@
 package top.auspice.commands;
 
-import top.auspice.configs.texts.messenger.Messenger;
+import top.auspice.configs.messages.messenger.Messenger;
 
 public class CommandUserError extends RuntimeException {
     private final CommandContext context;

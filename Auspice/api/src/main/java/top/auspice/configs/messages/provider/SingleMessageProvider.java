@@ -2,8 +2,7 @@ package top.auspice.configs.messages.provider;
 
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageObject;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.command.CommandSender;
 
 public class SingleMessageProvider implements MessageProvider {
@@ -19,7 +18,7 @@ public class SingleMessageProvider implements MessageProvider {
         return this.message;
     }
 
-    public void send(CommandSender sender, TextPlaceholderProvider provider) {
+    public void send(CommandSender sender, MessagePlaceholderProvider provider) {
         if (this.message != null) {
             sender.sendMessage(this.message);
         }

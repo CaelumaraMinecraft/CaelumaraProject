@@ -6,10 +6,10 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.NSKeyMap;
-import top.auspice.configs.texts.AuspiceLang;
-import top.auspice.configs.texts.SimpleMessenger;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import top.auspice.configs.messages.AuspiceLang;
+import top.auspice.configs.messages.SimpleMessenger;
+import top.auspice.configs.messages.messenger.Messenger;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.entity.Player;
 import top.auspice.utils.PlayerUtils;
 import top.auspice.utils.number.AnyNumber;
@@ -86,7 +86,7 @@ public final class CommandSession extends KingdomsCommand {
 
     @Internal
     @NotNull
-    public static Session addSession(@NotNull Player var0, @NotNull NSedKey var1, @NotNull Duration var2, @NotNull TextPlaceholderProvider var3, @NotNull SessionCallback var4) {
+    public static Session addSession(@NotNull Player var0, @NotNull NSedKey var1, @NotNull Duration var2, @NotNull MessagePlaceholderProvider var3, @NotNull SessionCallback var4) {
         return Companion.addSession(var0, var1, var2, var3, var4);
     }
 
@@ -132,7 +132,7 @@ public final class CommandSession extends KingdomsCommand {
 
         @Internal
         @NotNull
-        public Session addSession(@NotNull Player var1, @NotNull NSedKey var2, @NotNull Duration var3, @NotNull TextPlaceholderProvider var4, @NotNull SessionCallback var5) {
+        public Session addSession(@NotNull Player var1, @NotNull NSedKey var2, @NotNull Duration var3, @NotNull MessagePlaceholderProvider var4, @NotNull SessionCallback var5) {
             Intrinsics.checkNotNullParameter(var1, "");
             Intrinsics.checkNotNullParameter(var2, "");
             Intrinsics.checkNotNullParameter(var3, "");

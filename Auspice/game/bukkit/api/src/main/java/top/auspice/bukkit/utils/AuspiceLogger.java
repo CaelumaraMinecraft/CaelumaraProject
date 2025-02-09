@@ -2,7 +2,7 @@ package top.auspice.bukkit.utils;
 
 import top.auspice.bukkit.loader.PluginAuspiceLoader;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.configs.texts.MessageHandler;
+import top.auspice.configs.messages.MessageHandler;
 import top.auspice.permission.DefaultAuspicePluginPermissions;
 import top.auspice.server.core.Server;
 import top.auspice.utils.debug.DebugNS;

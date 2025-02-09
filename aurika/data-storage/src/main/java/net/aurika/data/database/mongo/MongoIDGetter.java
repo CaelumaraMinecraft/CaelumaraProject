@@ -1,15 +1,12 @@
 package net.aurika.data.database.mongo;
 
-import net.aurika.data.database.dataprovider.DataGetter;
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
+import net.aurika.data.api.dataprovider.DataGetter;
+import net.aurika.data.api.dataprovider.SectionableDataGetter;
+import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.utils.function.FloatSupplier;
+import net.aurika.utils.function.TriConsumer;
+import net.aurika.utils.uuid.FastUUID;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleBlockLocation;
-import top.auspice.constants.location.SimpleChunkLocation;
-import top.auspice.constants.location.SimpleLocation;
-import top.auspice.utils.function.FloatSupplier;
-import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
@@ -38,42 +35,28 @@ public class MongoIDGetter implements DataGetter {
     }
 
     @Override
-    public @Nullable SimpleBlockLocation asSimpleLocation() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public @Nullable SimpleLocation asLocation() {
-        throw new UnsupportedOperationException();
+    public <T> T asObject(SimpleDataObjectTemplate<T> template) {
+        throw new UnsupportedOperationException("Not implemented yet");  // TODO
     }
 
     @Override
     public int asInt(@NotNull IntSupplier def) {
-        Objects.requireNonNull(def, "def");
-        return Integer.parseInt(this.value);
+        return Integer.parseInt(value);
     }
 
     @Override
     public long asLong(@NotNull LongSupplier def) {
-        Objects.requireNonNull(def, "def");
-        return Long.parseLong(this.value);
+        return Long.parseLong(value);
     }
 
     @Override
     public float asFloat(@NotNull FloatSupplier def) {
-        Objects.requireNonNull(def, "def");
-        return Float.parseFloat(this.value);
+        return Float.parseFloat(value);
     }
 
     @Override
     public double asDouble(@NotNull DoubleSupplier def) {
-        Objects.requireNonNull(def, "def");
-        return Double.parseDouble(this.value);
+        return Double.parseDouble(value);
     }
 
     @Override

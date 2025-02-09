@@ -1,20 +1,20 @@
 package net.aurika.data.database.flatfile.json;
 
 import com.google.gson.*;
-import kotlin.jvm.internal.Intrinsics;
-import net.aurika.data.database.dataprovider.*;
-import net.aurika.utils.Checker;
+import net.aurika.checker.Checker;
+import net.aurika.data.api.dataprovider.*;
+import net.aurika.data.api.structure.SimpleData;
+import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.data.api.structure.PlainSimpleDataUtils;
+import net.aurika.utils.function.FloatSupplier;
+import net.aurika.utils.function.TriConsumer;
+import net.aurika.utils.uuid.FastUUID;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleBlockLocation;
-import top.auspice.constants.location.SimpleChunkLocation;
-import top.auspice.constants.location.SimpleLocation;
-import top.auspice.utils.function.FloatSupplier;
-import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.*;
 
@@ -53,10 +53,8 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public @NotNull DataProvider get(@NotNull String key) {
-        Checker.Arg.notNull(key, "");
-        JsonObject jsonObject = this.element.getAsJsonObject();
-        Intrinsics.checkNotNullExpressionValue(jsonObject, "");
-        return new JsonObjectDataProvider(key, jsonObject);
+        Checker.Arg.notNull(key, "key");
+        return new JsonObjectDataProvider(key, element.getAsJsonObject());
     }
 
     @Override
@@ -88,21 +86,10 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public @Nullable SimpleBlockLocation asSimpleLocation() {
+    public <T> T asObject(SimpleDataObjectTemplate<T> template) {
+        Checker.Arg.notNull(template, "template");
         String s = this.asString();
-        return s != null ? SimpleBlockLocation.fromDataString(s) : null;
-    }
-
-    @Override
-    public @Nullable SimpleChunkLocation asSimpleChunkLocation() {
-        String s = this.asString(() -> null);
-        return s != null ? SimpleChunkLocation.fromDataString(s) : null;
-    }
-
-    @Override
-    public @Nullable SimpleLocation asLocation() {
-        String s = this.asString(() -> null);
-        return s != null ? SimpleLocation.fromDataString(s) : null;
+        return s != null ? PlainSimpleDataUtils.serializePlainMapData(s, template) : null;
     }
 
     @Override
@@ -134,32 +121,26 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> var2) {
         Checker.Arg.notNull(c, "c");
         Checker.Arg.notNull(var2, "dataProcessor");
-        JsonElement var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
 
-        for (JsonElement var4 : (JsonArray) var10000) {
-            Intrinsics.checkNotNull(var4);
-            var2.accept(c, new JsonElementDataProvider(var4));
+        for (JsonElement element : (JsonArray) this.element) {
+            Objects.requireNonNull(element);
+            var2.accept(c, new JsonElementDataProvider(element));
         }
 
         return c;
     }
 
     @Override
-    @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+    public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
         Checker.Arg.notNull(m, "m");
         Checker.Arg.notNull(dataProcessor, "dataProcessor");
-        JsonElement var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
 
-        for (Map.Entry<String, JsonElement> stringJsonElementEntry : ((JsonObject) var10000).entrySet()) {
-            Intrinsics.checkNotNull(stringJsonElementEntry);
-            String var5 = stringJsonElementEntry.getKey();
-            JsonElement var6 = stringJsonElementEntry.getValue();
-            JsonElementDataProvider var10002 = new JsonElementDataProvider(new JsonPrimitive(var5));
-            Intrinsics.checkNotNull(var6);
-            dataProcessor.accept(m, var10002, new JsonElementDataProvider(var6));
+        for (Map.Entry<String, JsonElement> entry : ((JsonObject) this.element).entrySet()) {
+            Objects.requireNonNull(entry);
+            String entryKey = entry.getKey();
+            JsonElement entryValue = entry.getValue();
+            JsonElementDataProvider var10002 = new JsonElementDataProvider(new JsonPrimitive(entryKey));
+            dataProcessor.accept(m, var10002, new JsonElementDataProvider(entryValue));
         }
 
         return m;
@@ -181,17 +162,6 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
             return;
         }
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
-        this.setString(value != null ? value.asDataString() : null);
-    }
-
-    @Override
-    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
-        Checker.Arg.notNull(value, "");
-        this.setString(value.asDataString());
     }
 
     @Override
@@ -241,13 +211,14 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public void setLocation(@Nullable SimpleLocation value) {
-        if (value != null) this.setString(value.asDataString());
+    public void setUUID(@Nullable UUID value) {
+        this.setString(FastUUID.toString(value));
     }
 
     @Override
-    public void setUUID(@Nullable UUID value) {
-        this.setString(FastUUID.toString(value));
+    public void setObject(@NotNull SimpleData value) {
+        Checker.Arg.notNull(value, "value");
+        setString(PlainSimpleDataUtils.compressPlainMapData(value));
     }
 }
  

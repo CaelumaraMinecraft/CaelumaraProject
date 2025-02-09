@@ -3,8 +3,8 @@ package top.auspice.diversity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.config.path.ConfigEntry;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.TextObject;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.configs.messages.provider.MessageProvider;
 import net.aurika.namespace.NSedKey;
 import top.auspice.main.Auspice;
@@ -94,7 +94,7 @@ public class StandardDiversity extends AbstractDiversity implements Diversity {
     }
 
     @Override
-    public @Nullable TextObject getVariable(@Nullable TextPlaceholderProvider context, @Nullable String variable, boolean noDefault) {
+    public @Nullable TextObject getVariable(@Nullable MessagePlaceholderProvider context, @Nullable String variable, boolean noDefault) {
         return null;
     }
 

@@ -7,6 +7,8 @@ import org.bson.codecs.Encoder;
 import org.bson.codecs.EncoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SingularMongoIdQueryContainer implements Encoder<SingularMongoIdQueryContainer>, Bson {
     public SingularMongoIdQueryContainer() {
@@ -16,11 +18,11 @@ public class SingularMongoIdQueryContainer implements Encoder<SingularMongoIdQue
         return new BsonDocumentWrapper<>(this, this);
     }
 
-    public void encode(BsonWriter var1, SingularMongoIdQueryContainer container, EncoderContext context) {
-        var1.writeStartDocument();
-        var1.writeName("_id");
-        var1.writeNull();
-        var1.writeEndDocument();
+    public void encode(@NotNull BsonWriter writer, @NotNull SingularMongoIdQueryContainer container, @Nullable EncoderContext context) {
+        writer.writeStartDocument();
+        writer.writeName(MongoDBDatabase.PRIMARY_KEY_ID);
+        writer.writeNull();
+        writer.writeEndDocument();
     }
 
     public Class<SingularMongoIdQueryContainer> getEncoderClass() {

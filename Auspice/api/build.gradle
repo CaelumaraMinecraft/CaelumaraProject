@@ -6,40 +6,30 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice"
-
 repositories {
 }
 
 dependencies {
 
 
-    implementation(api(project(":Auspice:api:platform")))
+    api(project(":Auspice:api:platform"))
     api(project(":aurika"))
-    implementation(project(":aurika"))
 
     // Engines
-    implementation(libs.adventure.api)
-    implementation(libs.adventure.text.legacy)
+    api(libs.adventure.api)
 
-    implementation(libs.adventure.text.gson)
-    implementation(libs.adventure.text.json)
-    implementation(libs.adventure.text.plain)
-    implementation(libs.adventure.text.minimessage)
+    api(libs.yamlengine)
 
-    implementation(libs.yamlengine)
-    implementation(libs.xseries)
+    api(libs.asm.asm)
+    api(libs.asm.commons)
 
-    implementation(libs.asm.asm)
-    implementation(libs.asm.commons)
-
-    implementation(libs.caffeine)
-    implementation(libs.hikari)
+    api(libs.caffeine)
+    api(libs.hikari)
 
 //    implementation("com.github.cryptomorin:ReptileYAML:4.0.0")
 
-    implementation(libs.guava)
-    implementation(libs.gson)
+    api(libs.guava)
+    api(libs.gson)
 
     implementation(libs.mongodb.core)
     implementation(libs.mongodb.bson)
@@ -49,11 +39,9 @@ dependencies {
 
     implementation(libs.postgresql)
 
-    implementation(libs.adventure.nbt)
-
 //    compileOnly(fileTree("libs/"))
 
-    compileOnly("commons-io:commons-io:2.15.1")
+    compileOnly(libs.iocommons)
 
     compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
 
@@ -63,7 +51,7 @@ dependencies {
     compileOnly(libs.annotations.checker)
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion

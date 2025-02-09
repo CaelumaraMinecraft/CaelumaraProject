@@ -9,9 +9,9 @@ import top.auspice.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.configs.messages.MessageObject;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.TextObject;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.configs.messages.provider.AdvanceMessageProvider;
 import top.auspice.configs.messages.provider.SingleMessageProvider;
 import top.auspice.server.command.CommandSender;
@@ -53,7 +53,7 @@ public class BukkitAdvanceMessageProvider extends SingleMessageProvider implemen
         return this;
     }
 
-    public void handleExtraServices(CommandSender messageReceiver, TextPlaceholderProvider placeholderProvider) {
+    public void handleExtraServices(CommandSender messageReceiver, MessagePlaceholderProvider placeholderProvider) {
         if (messageReceiver instanceof Player player) {
             if (this.sound != null) {
                 this.sound.soundPlayer().forPlayers((org.bukkit.entity.Player) player.getRealPlayer()).play();

@@ -1,10 +1,10 @@
 package net.aurika.data.database.mongo;
 
 import com.mongodb.client.MongoCollection;
-import kotlin.jvm.internal.Intrinsics;
+import net.aurika.checker.Checker;
+import net.aurika.data.api.DataObject;
+import net.aurika.data.api.handler.SingularDataHandler;
 import net.aurika.data.database.base.SingularDatabase;
-import net.aurika.data.handlers.abstraction.SingularDataHandler;
-import net.aurika.data.object.DataObject;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,13 +13,12 @@ public class SingularMongoDBDatabase<T extends DataObject> extends MongoDBDataba
 
     private final @NotNull SingularDataHandler<T> dataHandler;
 
-    private SingularMongoDBDatabase(@NotNull SingularDataHandler<T> var1, MongoCollection<Document> var2) {
+    private SingularMongoDBDatabase(@NotNull SingularDataHandler<T> dataHandler, MongoCollection<Document> var2) {
         super(var2);
-        this.dataHandler = var1;
+        this.dataHandler = dataHandler;
     }
 
-    @NotNull
-    protected SingularDataHandler<T> getDataHandler() {
+    protected @NotNull SingularDataHandler<T> getDataHandler() {
         return this.dataHandler;
     }
 
@@ -28,8 +27,8 @@ public class SingularMongoDBDatabase<T extends DataObject> extends MongoDBDataba
     }
 
     public void save(@NotNull T data) {
-        Intrinsics.checkNotNullParameter(data, "");
-        Document var2 = new Document("_id", null);
+        Checker.Arg.notNull(data, "data");
+        Document var2 = new Document(PRIMARY_KEY_ID, null);
         MongoDataProvider var3 = new MongoDataProvider(null, var2);
         this.getDataHandler().save(var3, data);
         this.getCollection().replaceOne(new SingularMongoIdQueryContainer(), var2, MongoDBDatabase.UPSERT);
@@ -46,7 +45,7 @@ public class SingularMongoDBDatabase<T extends DataObject> extends MongoDBDataba
     }
 
     public boolean hasData() {
-        return this.getCollection().find(new SingularMongoIdQueryContainer()).first() != null;
+        return getCollection().find(new SingularMongoIdQueryContainer()).first() != null;
     }
 
     public static <T extends DataObject> @NotNull SingularMongoDBDatabase<T> withCollection(@NotNull String var1, @NotNull SingularDataHandler<T> var2) {

@@ -3,15 +3,15 @@ package net.aurika.data.database.sql.base;
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.base.KeyedDatabase;
-import net.aurika.data.database.dataprovider.IdDataTypeHandler;
+import net.aurika.data.api.dataprovider.IdDataTypeHandler;
 import net.aurika.data.database.sql.SQLDataGetterProvider;
 import net.aurika.data.database.sql.SQLDataSetterProvider;
 import net.aurika.data.database.sql.connection.SQLConnectionProvider;
 import net.aurika.data.database.sql.statements.getters.SimpleResultSetQuery;
 import net.aurika.data.database.sql.statements.setters.PreparedNamedSetterStatement;
 import net.aurika.data.database.sql.statements.setters.RawSimplePreparedStatement;
-import net.aurika.data.handlers.abstraction.KeyedDataHandler;
-import net.aurika.data.object.KeyedDataObject;
+import net.aurika.data.api.handler.KeyedDataHandler;
+import net.aurika.data.api.KeyedDataObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -135,14 +135,14 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
         }
     }
 
-    public void load(@NotNull Collection<K> var1, @NotNull Consumer<T> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public void load(@NotNull Collection<K> keys, @NotNull Consumer<T> var2) {
+        Intrinsics.checkNotNullParameter(keys, "");
         Intrinsics.checkNotNullParameter(var2, "");
-        if (!var1.isEmpty()) {
+        if (!keys.isEmpty()) {
             int var3 = this.getDataHandler().getIdHandler().getColumns().length;
             String var4;
             String var5;
-            Intrinsics.checkNotNull(var5 = var4 = Strings.repeat("(" + this.getDataHandler().getIdHandler().getInClause() + "),", var1.size()));
+            Intrinsics.checkNotNull(var5 = var4 = Strings.repeat("(" + this.getDataHandler().getIdHandler().getInClause() + "),", keys.size()));
             int var49 = var4.length() - 1;
             String var10000 = var5.substring(0, var49);
             Intrinsics.checkNotNullExpressionValue(var10000, "");
@@ -164,7 +164,7 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
 
                     try {
                         var29 = true;
-                        Iterator<K> var45 = var1.iterator();
+                        Iterator<K> var45 = keys.iterator();
                         int var11 = 0;
 
                         while (var45.hasNext()) {
@@ -232,8 +232,8 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
         }
     }
 
-    public void delete(@NotNull K var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public void delete(@NotNull K key) {
+        Intrinsics.checkNotNullParameter(key, "");
         String var2 = "DELETE FROM `" + this.getTable() + "` WHERE " + this.getDataHandler().getIdHandler().getWhereClause();
         SQLDatabase<T> var3 = this;
         var2 = var3.handleQuery(var2);
@@ -251,7 +251,7 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
 
                 try {
                     var20 = true;
-                    this.getDataHandler().getIdHandler().setSQL(new RawSimplePreparedStatement(this.getDatabaseType(), var26), var1);
+                    this.getDataHandler().getIdHandler().setSQL(new RawSimplePreparedStatement(this.getDatabaseType(), var26), key);
                     var26.execute();
                     var20 = false;
                 } catch (Throwable var21) {
@@ -280,8 +280,8 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
         }
     }
 
-    public boolean hasData(@NotNull K var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    public boolean hasData(@NotNull K key) {
+        Intrinsics.checkNotNullParameter(key, "");
         String var2 = "SELECT 1 FROM `" + this.getTable() + "` WHERE " + this.getDataHandler().getIdHandler().getWhereClause();
         SQLDatabase<T> var3 = this;
         var2 = var3.handleQuery(var2);
@@ -300,7 +300,7 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
 
                 try {
                     var20 = true;
-                    this.getDataHandler().getIdHandler().setSQL(new RawSimplePreparedStatement(this.getDatabaseType(), var26), var1);
+                    this.getDataHandler().getIdHandler().setSQL(new RawSimplePreparedStatement(this.getDatabaseType(), var26), key);
                     var27 = var26.executeQuery().next();
                     var20 = false;
                 } catch (Throwable var21) {
@@ -404,7 +404,7 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
     }
 
     @NotNull
-    public Collection<T> loadAllData(@Nullable Predicate<K> var1) {
+    public Collection<T> loadAllData(@Nullable Predicate<K> keyFilter) {
         List<T> var2 = new ArrayList<>(this.b);
 
         String var3 = "SELECT * FROM `" + this.getTable() + '`';
@@ -445,7 +445,7 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
                                 Intrinsics.checkNotNull(var50);
                                 var12 = new SimpleResultSetQuery(var10002, var50);
                                 var13 = this.getDataHandler().getIdHandler().fromSQL(var12);
-                            } while (var1 != null && !var1.test(var13));
+                            } while (keyFilter != null && !keyFilter.test(var13));
 
                             try {
                                 SQLDataGetterProvider var51 = new SQLDataGetterProvider(this.getDatabaseType(), this.getTable(), null, false, false, var12);
@@ -495,9 +495,9 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
         return var2;
     }
 
-    public void save(@NotNull @Unmodifiable Collection<T> var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        if (!var1.isEmpty()) {
+    public void save(@NotNull @Unmodifiable Collection<T> data) {
+        Intrinsics.checkNotNullParameter(data, "");
+        if (!data.isEmpty()) {
             PreparedNamedSetterStatement var2 = new PreparedNamedSetterStatement(this.getDatabaseType(), this.getDataHandler().getSqlProperties().getAssociateNamedData());
 
             try {
@@ -508,7 +508,7 @@ public class KeyedSQLDatabase<K, T extends KeyedDataObject.Impl<K>> extends SQLD
                 try {
                     var11 = true;
                     connection.setAutoCommit(false);
-                    Iterator<? extends T> var15 = var1.iterator();
+                    Iterator<? extends T> var15 = data.iterator();
 
                     while (true) {
                         if (!var15.hasNext()) {

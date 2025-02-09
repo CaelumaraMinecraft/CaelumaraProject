@@ -1,14 +1,14 @@
 package top.auspice.api.user;
 
 import net.aurika.annotations.UtilMethod;
+import net.aurika.checker.Checker;
 import net.aurika.namespace.NSKey;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.nested.NestedNamespace;
-import net.aurika.utils.Checker;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.texts.LanguageManager;
-import top.auspice.configs.texts.messenger.DefinedMessenger;
+import top.auspice.configs.messages.LanguageManager;
+import top.auspice.configs.messages.messenger.DefinedMessenger;
 import top.auspice.constants.metadata.AuspiceMetadataRegistry;
 import top.auspice.diversity.Diversity;
 import top.auspice.scheduler.TaskScheduleProvider;
@@ -27,7 +27,7 @@ public interface AuspiceUser {
 
     @NotNull
     @NSKey.Namespace
-    String getNamespace();
+    String namespace();
 
     @NotNull Diversity getDefaultDiversity();
 
@@ -70,7 +70,7 @@ public interface AuspiceUser {
     }
 
     static @NotNull @NSKey.Namespace String getNamespaceChecked(@NotNull AuspiceUser user) {
-        String ns = user.getNamespace();
+        String ns = user.namespace();
         // noinspection ConstantValue
         if (ns == null) {
             throw new AuspiceUserException("The namespace of auspice user returns null");
@@ -83,9 +83,9 @@ public interface AuspiceUser {
 
     static @NotNull NestedNamespace getTopNestedNamespace(AuspiceUser au) {
         Checker.Arg.notNull(au, "au");
-        String ns = au.getNamespace();
+        String ns = au.namespace();
         Checker.Expr.notEmpty(ns, "AuspiceUser.getNamespace()");
-        return new NestedNamespace(new String[]{au.getNamespace()});
+        return new NestedNamespace(new String[]{au.namespace()});
     }
 
     enum State {

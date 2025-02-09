@@ -1,7 +1,7 @@
 package top.auspice.utils.nonnull;
 
+import net.aurika.checker.Checker;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.utils.Checker;
 
 import java.util.function.Supplier;
 

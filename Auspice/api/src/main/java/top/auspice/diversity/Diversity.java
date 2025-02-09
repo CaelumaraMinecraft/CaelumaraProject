@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageEntry;
 import top.auspice.configs.messages.provider.MessageProvider;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.TextObject;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 
 import java.util.Map;
 import java.util.TimeZone;
@@ -55,7 +55,7 @@ public interface Diversity extends NamespacedKeyContainer {
     TextObject getVariableRaw(@Nullable String name);
 
     @Deprecated
-    @Nullable TextObject getVariable(@Nullable TextPlaceholderProvider context, @Nullable String variable, boolean noDefault);
+    @Nullable TextObject getVariable(@Nullable MessagePlaceholderProvider context, @Nullable String variable, boolean noDefault);
 
     /**
      * 获取全局的默认语言

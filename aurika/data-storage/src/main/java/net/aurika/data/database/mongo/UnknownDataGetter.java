@@ -1,17 +1,14 @@
 package net.aurika.data.database.mongo;
 
-import kotlin.jvm.internal.TypeIntrinsics;
-import kotlin.text.StringsKt;
-import net.aurika.data.database.dataprovider.*;
+import net.aurika.data.api.dataprovider.*;
+import net.aurika.data.api.structure.SimpleData;
+import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.utils.function.FloatSupplier;
+import net.aurika.utils.function.TriConsumer;
+import net.aurika.utils.uuid.FastUUID;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleBlockLocation;
-import top.auspice.constants.location.SimpleChunkLocation;
-import top.auspice.constants.location.SimpleLocation;
-import top.auspice.utils.function.FloatSupplier;
-import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.*;
 import java.util.function.*;
@@ -29,38 +26,56 @@ public class UnknownDataGetter implements DataProvider {
         return new UnsupportedOperationException("Operation unsupported for value: " + this.value);
     }
 
+    @Override
     public @NotNull DataProvider get(@Nullable String key) {
+        throw unsupported();
+    }
+
+    @Override
+    public void setInt(int value) {
+        this.c().add(value);
+    }
+
+    @Override
+    public void setLong(long value) {
+        this.c().add(value);
+    }
+
+    @Override
+    public void setFloat(float value) {
+        this.c().add(value);
+    }
+
+    @Override
+    public void setDouble(double value) {
+        this.c().add(value);
+    }
+
+    @Override
+    public void setBoolean(boolean value) {
         throw this.unsupported();
     }
 
+    @Override
     public void setString(@Nullable String value) {
         if (value != null) {
             this.c().add(value);
         }
     }
 
-    public void setInt(int value) {
-        this.c().add(value);
-    }
-
-    public void setLong(long value) {
-        this.c().add(value);
-    }
-
-    public void setDouble(double value) {
-        this.c().add(value);
-    }
-
-    public void setBoolean(boolean value) {
-        throw this.unsupported();
-    }
-
+    @Override
     public void setUUID(@Nullable UUID value) {
         if (value != null) {
             this.c().add(value);
         }
     }
 
+    @Override
+    public void setObject(@Nullable SimpleData value) {
+        if (value != null) this.c().add(value);
+    }
+
+    @Override
     @NotNull
     public SectionableDataSetter createSection(@NotNull String key) {
         Objects.requireNonNull(key, "");
@@ -70,6 +85,7 @@ public class UnknownDataGetter implements DataProvider {
         return var3;
     }
 
+    @Override
     @NotNull
     public SectionableDataSetter createSection() {
         Document var1 = new Document();
@@ -78,24 +94,9 @@ public class UnknownDataGetter implements DataProvider {
         return var2;
     }
 
-    public void setLocation(@Nullable SimpleLocation value) {
-        throw this.unsupported();
-    }
-
-    public void setSimpleLocation(@Nullable SimpleBlockLocation value) {
-        if (value != null) this.c().add(value);
-    }
-
-    public void setSimpleChunkLocation(@Nullable SimpleChunkLocation value) {
-        if (value != null) this.c().add(value);
-    }
-
-    public void setFloat(float value) {
-        this.c().add(value);
-    }
-
+    @Override
     public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
-        Objects.requireNonNull(value, "");
+        Objects.requireNonNull(value, "value");
         Objects.requireNonNull(var2, "");
         List<Object> var3 = new ArrayList<>();
         UnknownDataGetter var4 = new UnknownDataGetter(var3);
@@ -107,19 +108,22 @@ public class UnknownDataGetter implements DataProvider {
         this.c().add(var3);
     }
 
+    @Override
     public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> var2) {
-        Objects.requireNonNull(value);
+        Objects.requireNonNull(value, "value");
         Objects.requireNonNull(var2);
         Document var3 = new Document();
         (new MongoDataProvider(null, var3)).setMap(value, var2);
         this.c().add(var3);
     }
 
+    @Override
     @NotNull
     public SectionableDataGetter asSection() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     @NotNull
     public String asString(@NotNull Supplier<String> var1) {
         Objects.requireNonNull(var1);
@@ -142,20 +146,12 @@ public class UnknownDataGetter implements DataProvider {
         return var10000;
     }
 
-    public @Nullable SimpleBlockLocation asSimpleLocation() {
-        return SimpleBlockLocation.fromDataString(this.value.toString());
+    @Override
+    public <T> T asObject(SimpleDataObjectTemplate<T> template) {
+        return null;
     }
 
-    @NotNull
-    public SimpleChunkLocation asSimpleChunkLocation() {
-        return SimpleChunkLocation.fromDataString(this.value.toString());
-    }
-
-    @NotNull
-    public SimpleLocation asLocation() {
-        return SimpleLocation.fromDataString(this.value.toString());
-    }
-
+    @Override
     public int asInt(@NotNull IntSupplier def) {
         Objects.requireNonNull(def);
         Number var10000 = this.b();
@@ -166,6 +162,7 @@ public class UnknownDataGetter implements DataProvider {
         return var10000.intValue();
     }
 
+    @Override
     public long asLong(@NotNull LongSupplier def) {
         Objects.requireNonNull(def, "");
         Number var10000 = this.b();
@@ -176,6 +173,7 @@ public class UnknownDataGetter implements DataProvider {
         return var10000.longValue();
     }
 
+    @Override
     public float asFloat(@NotNull FloatSupplier def) {
         Objects.requireNonNull(def, "");
         Number var10000 = this.b();
@@ -186,6 +184,7 @@ public class UnknownDataGetter implements DataProvider {
         return var10000.floatValue();
     }
 
+    @Override
     public double asDouble(@NotNull DoubleSupplier def) {
         Objects.requireNonNull(def, "");
         Number var10000 = this.b();
@@ -196,11 +195,13 @@ public class UnknownDataGetter implements DataProvider {
         return var10000.doubleValue();
     }
 
+    @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
         Objects.requireNonNull(def);
         return (Boolean) this.value;
     }
 
+    @Override
     @NotNull
     public <V, C extends Collection<V>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Objects.requireNonNull(c);
@@ -216,27 +217,31 @@ public class UnknownDataGetter implements DataProvider {
 
     private Number b() {
         Object value = this.value;
-        Number var10000 = value instanceof Number ? (Number) value : null;
-        if (var10000 == null) {
-            String var2 = value instanceof String ? (String) value : null;
-            var10000 = var2 != null ? StringsKt.toDoubleOrNull(var2) : null;
+        if (value instanceof Number number) {
+            return number;
         }
-
-        return var10000;
+        if (value instanceof String string) {
+            try {
+                return Double.valueOf(string);
+            } catch (NumberFormatException ex) {
+                return null;
+            }
+        }
+        return null;
     }
 
-    @NotNull
-    public <K, V, M extends Map<K, V>> M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
+    @Override
+    public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
         throw this.unsupported();
     }
 
     private <T> List<T> c() {
         Object value = this.value;
-        List var10000 = TypeIntrinsics.isMutableList(value) ? (List<?>) value : null;
-        if (var10000 == null) {
+        List<T> list = value instanceof List ? (List<T>) value : null;
+        if (list == null) {
             throw new IllegalStateException("Cannot add to " + this.value + " (" + this.value.getClass().getSimpleName() + ')');
         } else {
-            return var10000;
+            return list;
         }
     }
 }

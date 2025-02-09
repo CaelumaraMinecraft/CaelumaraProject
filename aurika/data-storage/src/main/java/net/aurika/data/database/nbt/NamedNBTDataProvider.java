@@ -1,6 +1,6 @@
 package net.aurika.data.database.nbt;
 
-import net.aurika.data.database.dataprovider.*;
+import net.aurika.data.api.dataprovider.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;

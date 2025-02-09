@@ -1,11 +1,11 @@
 package top.auspice.utils.time;
 
 import com.google.common.base.Strings;
-import top.auspice.configs.texts.AuspiceLang;
-import top.auspice.configs.texts.MessageHandler;
-import top.auspice.configs.texts.compiler.builders.MessageObjectBuilder;
-import top.auspice.configs.texts.compiler.builders.RawLanguageEntryObjectBuilder;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import top.auspice.configs.messages.AuspiceLang;
+import top.auspice.configs.messages.MessageHandler;
+import net.aurika.text.compiler.builders.MessageObjectBuilder;
+import net.aurika.text.compiler.builders.RawLanguageEntryObjectBuilder;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.utils.AuspiceLogger;
 
 import java.time.Duration;
@@ -129,7 +129,7 @@ public class TimeFormatter {
             var1 = "MONTHS";
         }
 
-        TextPlaceholderProvider var2 = (new TextPlaceholderProvider()).raws(this.a());
+        MessagePlaceholderProvider var2 = (new MessagePlaceholderProvider()).raws(this.a());
         return new LanguageEntryWithContext(AuspiceLang.valueOf("TIME_FORMATTER_" + var1), var2);  //TODO
     }
 }

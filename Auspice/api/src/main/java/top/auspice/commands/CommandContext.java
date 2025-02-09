@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.configs.texts.AuspiceLang;
-import top.auspice.configs.texts.SimpleMessenger;
-import top.auspice.configs.texts.messenger.DefaultedMessenger;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.messenger.StaticMessenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import top.auspice.configs.messages.AuspiceLang;
+import top.auspice.configs.messages.SimpleMessenger;
+import top.auspice.configs.messages.messenger.DefaultedMessenger;
+import top.auspice.configs.messages.messenger.Messenger;
+import top.auspice.configs.messages.messenger.StaticMessenger;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.diversity.Diversity;
 import net.aurika.namespace.NSedKey;
@@ -47,7 +47,7 @@ public class CommandContext extends SimpleMessenger {
     private CommandSession.Session d;
 
     public CommandContext(AuspiceLoader var1, KingdomsCommand command, CommandSender var3, String[] var4) {
-        super(var3, (new TextPlaceholderProvider()).withContext(var3));
+        super(var3, (new MessagePlaceholderProvider()).withContext(var3));
         this.loggingLevel = CommandLoggingLevel.ALL;
         this.c = false;
         super.messageSettings.lang(this.isPlayer() ? this.getKingdomPlayer().getDiversity() : Diversity.getDefault());

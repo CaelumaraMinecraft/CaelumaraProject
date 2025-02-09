@@ -20,7 +20,7 @@ import org.snakeyaml.engine.v2.nodes.SequenceNode;
 import net.aurika.config.sections.ConfigSection;
 import net.aurika.config.sections.YamlNodeSection;
 import top.auspice.configs.texts.MessageHandler;
-import top.auspice.configs.texts.placeholders.context.PlaceholderContextBuilder;
+import net.aurika.text.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.craftbukkit.services.base.CraftBukkitService;
 import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.string.Strings;

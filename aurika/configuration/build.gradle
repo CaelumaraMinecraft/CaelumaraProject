@@ -3,9 +3,8 @@ plugins {
     id("maven-publish")
 }
 
-group = "net.aurika.config"
-version = project(":aurika").version
-
 dependencies {
-    compileOnly(project(":aurika:base"))
+    api(project(":aurika:base"))
+    api(project(":aurika:config-api"))
+    api(project(":aurika:utils:snakeyaml-ext"))
 }

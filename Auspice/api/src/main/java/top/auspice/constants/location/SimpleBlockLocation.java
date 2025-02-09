@@ -1,29 +1,48 @@
 package top.auspice.constants.location;
 
+import net.aurika.annotations.data.Immutable;
+import net.aurika.checker.Checker;
+import net.aurika.data.api.DataStringRepresentation;
+import net.aurika.data.api.structure.DataMetaType;
+import net.aurika.data.api.structure.SimpleData;
+import net.aurika.data.api.structure.SimpleDataObject;
+import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.data.api.structure.entries.MapDataEntry;
+import net.aurika.utils.string.CommaDataSplitStrategy;
+import net.kyori.examination.Examinable;
+import net.kyori.examination.ExaminableProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.annotations.data.Immutable;
-import net.aurika.data.object.DataStringRepresentation;
-import net.aurika.data.object.structure.DataStructureObject;
 import top.auspice.server.location.*;
-import net.aurika.utils.Checker;
-import top.auspice.utils.string.CommaDataSplitStrategy;
-import top.auspice.utils.string.Strings;
 
-import javax.annotation.Nonnull;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 @Immutable
-public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, DataStructureObject {
-    private final @NonNull String worldName;
+public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, SimpleDataObject, Examinable {
+    private final @NonNull String world;
     private final int x;
     private final int y;
     private final int z;
 
-    public SimpleBlockLocation(@NonNull String worldName, int x, int y, int z) {
-        this.worldName = Checker.Arg.notNull(worldName, "worldName", "World name cannot be null");
+    public static final SimpleDataObjectTemplate<SimpleBlockLocation> DATA_TEMPLATE = SimpleDataObjectTemplate.of(
+            SimpleBlockLocation.class,
+            data -> new SimpleBlockLocation(
+                    data.getString("world"),
+                    data.getInt("x"),
+                    data.getInt("y"),
+                    data.getInt("z")
+            ),
+            "world", DataMetaType.STRING,
+            "x", DataMetaType.INT,
+            "y", DataMetaType.INT,
+            "z", DataMetaType.INT
+    );
+
+    public SimpleBlockLocation(@NonNull String world, int x, int y, int z) {
+        Checker.Arg.notNull(world, "world", "World name cannot be null");
+        this.world = world;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -44,12 +63,6 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
         return new SimpleBlockLocation(var0.getWorld().getName(), var0.getX(), var0.getY(), var0.getZ());
     }
 
-    public static SimpleBlockLocation of(@NonNull org.bukkit.Location var0) {
-        Objects.requireNonNull(var0, "Cannot get simple location of a null location");
-        World var1 = (World) Objects.requireNonNull(var0.getWorld(), "World of location is null - Either an issue with your world management plugin or the world was deleted.");
-        return new SimpleBlockLocation(var1.getName(), var0.getBlockX(), var0.getBlockY(), var0.getBlockZ());
-    }
-
     public static SimpleBlockLocation of(@NonNull Block var0) {
         Objects.requireNonNull(var0, "Cannot get simple location of a null block");
         return new SimpleBlockLocation(var0.getWorld().getName(), var0.getX(), var0.getY(), var0.getZ());
@@ -57,22 +70,6 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
 
     public BlockVector3 toBlockVector() {
         return BlockVector3.of(this.x, this.y, this.z);
-    }
-
-    public static boolean equalsIgnoreWorld(@Nonnull org.bukkit.Location var0, @Nonnull org.bukkit.Location var1) {
-        if (var0 == var1) {
-            return true;
-        } else {
-            return var0.getX() == var1.getX() && var0.getY() == var1.getY() && var0.getZ() == var1.getY();
-        }
-    }
-
-    public static boolean equalsIgnoreWorld(@Nonnull Block var0, @Nonnull Block var1) {
-        if (var0 == var1) {
-            return true;
-        } else {
-            return var0.getX() == var1.getX() && var0.getY() == var1.getY() && var0.getZ() == var1.getY();
-        }
     }
 
     public static Supplier<SimpleBlockLocation> resolve(Block var0) {
@@ -84,7 +81,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     public @NonNull SimpleChunkLocation toSimpleChunkLocation() {
-        return new SimpleChunkLocation(this.worldName, this.x >> 4, this.z >> 4);
+        return new SimpleChunkLocation(this.world, this.x >> 4, this.z >> 4);
     }
 
     public @NonNull Block getBlock() {
@@ -92,11 +89,11 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     public @NonNull String getWorld() {
-        return this.worldName;
+        return this.world;
     }
 
     public @Nullable World getBukkitWorld() {
-        return (World) Objects.requireNonNull(BukkitWorld.getWorld(this.worldName, this));
+        return (World) Objects.requireNonNull(BukkitWorld.getWorld(this.world, this));
     }
 
     @Override
@@ -124,7 +121,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     public int hashCode() {
-        int var1 = 434 + this.worldName.hashCode();
+        int var1 = 434 + this.world.hashCode();
         var1 = var1 * 31 + this.x;
         var1 = var1 * 31 + this.y;
         return var1 * 31 + this.z;
@@ -133,7 +130,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj instanceof SimpleBlockLocation pos) {
-            return this.x == pos.x && this.y == pos.y && this.z == pos.z && Objects.equals(this.worldName, pos.worldName);
+            return this.x == pos.x && this.y == pos.y && this.z == pos.z && Objects.equals(this.world, pos.world);
         }
         return false;
     }
@@ -143,7 +140,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     public String toString() {
-        return this.worldName + ", " + this.x + ", " + this.y + ", " + this.z;
+        return this.world + ", " + this.x + ", " + this.y + ", " + this.z;
     }
 
     public @NonNull Vector toVector() {
@@ -151,11 +148,11 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     public @NonNull SimpleBlockLocation getRelative(int var1, int var2, int var3) {
-        return new SimpleBlockLocation(this.worldName, this.x + var1, this.y + var2, this.z + var3);
+        return new SimpleBlockLocation(this.world, this.x + var1, this.y + var2, this.z + var3);
     }
 
     public boolean validateWorld() {
-        return !Strings.isNullOrEmpty(this.worldName) && this.getBukkitWorld() != null;
+        return !Strings.isNullOrEmpty(this.world) && this.getBukkitWorld() != null;
     }
 
     public double distanceSquared(@NonNull SimpleBlockLocation var1) {
@@ -164,8 +161,8 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
 
     public double distance(@NonNull SimpleBlockLocation var1) {
         Objects.requireNonNull(var1, "Cannot check distance between a null location");
-        if (!Objects.equals(this.worldName, var1.worldName)) {
-            throw new IllegalArgumentException("Cannot measure distance between " + this.worldName + " and " + var1.worldName);
+        if (!Objects.equals(this.world, var1.world)) {
+            throw new IllegalArgumentException("Cannot measure distance between " + this.world + " and " + var1.world);
         } else {
             return this.distanceIgnoreWorld(var1);
         }
@@ -199,11 +196,29 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
 
     @Override
     public @NotNull String asDataString() {
-        return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.y, this.z});
+        return CommaDataSplitStrategy.toString(new Object[]{this.world, this.x, this.y, this.z});
     }
 
     @Override
-    public @NonNull Map<String, Object> getData() {
-        return Map.of("world", this.worldName, "x", this.x, "y", this.y, "z", this.z);
+    public @NonNull SimpleData simpleData() {
+        return SimpleData.of(
+                MapDataEntry.of("world", world),
+                MapDataEntry.of("x", x),
+                MapDataEntry.of("y", y),
+                MapDataEntry.of("z", z)
+        );
+    }
+
+    @Override
+    public @NotNull SimpleDataObjectTemplate<? extends SimpleBlockLocation> simpleDataTemplate() {
+        return DATA_TEMPLATE;
+    }
+
+    @Override
+    public @NotNull Stream<? extends ExaminableProperty> examinableProperties() {
+        return Stream.concat(
+                Stream.of(ExaminableProperty.of("world", world)),
+                BlockPoint3D.super.examinableProperties()
+        );
     }
 }

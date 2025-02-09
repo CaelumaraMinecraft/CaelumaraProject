@@ -1,6 +1,6 @@
 package top.auspice.gui.objects;
 
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.AuspiceLogger;
 import top.auspice.utils.conditions.ConditionProcessor;
 

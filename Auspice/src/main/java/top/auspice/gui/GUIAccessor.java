@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.gui.objects.GUIObject;
 import top.auspice.configs.texts.Locale;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 
 import java.io.File;
 

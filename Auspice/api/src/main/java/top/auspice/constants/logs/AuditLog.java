@@ -2,12 +2,12 @@ package top.auspice.constants.logs;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.configs.texts.context.provider.TextContextProvider;
-import net.aurika.data.object.serialize.Deserializable;
-import net.aurika.data.object.serialize.Serializable;
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
-import net.aurika.data.database.dataprovider.SectionableDataSetter;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.text.context.provider.TextContextProvider;
+import net.aurika.data.api.serialize.Deserializable;
+import net.aurika.data.api.serialize.Serializable;
+import net.aurika.data.api.dataprovider.SectionableDataGetter;
+import net.aurika.data.api.dataprovider.SectionableDataSetter;
 import top.auspice.utils.time.TimeUtils;
 
 public abstract class AuditLog implements TextContextProvider, Serializable, Deserializable {
@@ -31,12 +31,12 @@ public abstract class AuditLog implements TextContextProvider, Serializable, Des
     }
 
     @MustBeInvokedByOverriders
-    public void addMessageContextEdits(@NonNull TextPlaceholderProvider var1) {
+    public void addMessageContextEdits(@NonNull MessagePlaceholderProvider var1) {
         this.addEdits(var1);
     }
 
     @MustBeInvokedByOverriders
-    public void addEdits(@NonNull TextPlaceholderProvider var1) {
+    public void addEdits(@NonNull MessagePlaceholderProvider var1) {
         StringBuilder var2 = TimeUtils.getDateAndTime(this.time);
         var1.raw("time", var2.toString());
     }

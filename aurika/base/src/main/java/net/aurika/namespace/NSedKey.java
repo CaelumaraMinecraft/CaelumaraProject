@@ -1,7 +1,7 @@
 package net.aurika.namespace;
 
 import net.aurika.data.DataStringRepresentation;
-import net.aurika.utils.checker.Checker;
+import net.aurika.checker.Checker;
 import org.checkerframework.dataflow.qual.Pure;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

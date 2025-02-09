@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.Unmodifiable;
 import net.aurika.config.adapters.YamlWithDefaults;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.compiler.TextObject;
+import net.aurika.text.messenger.Messenger;
+import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import top.auspice.gui.objects.inventory.GUIInventoryConstructor;
 import net.aurika.abstraction.conditional.ConditionChain;
 

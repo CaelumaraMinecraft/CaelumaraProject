@@ -11,7 +11,7 @@ public enum AuspiceDebug implements DebugNS {
     private final NSedKey NSedKey;
 
     AuspiceDebug(String key) {
-        this.NSedKey = new NSedKey(Auspice.get().getNamespace(), key);
+        this.NSedKey = new NSedKey(Auspice.get().namespace(), key);
     }
 
     public @NotNull NSedKey getNamespacedKey() {

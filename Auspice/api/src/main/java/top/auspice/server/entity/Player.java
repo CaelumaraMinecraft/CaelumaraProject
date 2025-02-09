@@ -3,7 +3,7 @@ package top.auspice.server.entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.annotations.ImplDontThrowUnsupported;
-import top.auspice.configs.texts.compiler.TextObject;
+import net.aurika.text.TextObject;
 import top.auspice.server.player.OfflinePlayer;
 
 public interface Player extends Entity, OfflinePlayer {

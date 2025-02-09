@@ -1,7 +1,7 @@
 package net.aurika.data.history;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
+import net.aurika.data.api.dataprovider.SectionableDataGetter;
 
 import java.util.Objects;
 import java.util.function.Consumer;

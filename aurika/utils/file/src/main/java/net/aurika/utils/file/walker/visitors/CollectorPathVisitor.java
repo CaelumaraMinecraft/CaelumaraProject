@@ -1,0 +1,55 @@
+package net.aurika.utils.file.walker.visitors;
+
+import net.aurika.checker.Checker;
+import net.aurika.utils.file.walker.FileTreeWalker;
+import org.jetbrains.annotations.NotNull;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+public class CollectorPathVisitor implements PathVisitor {
+
+    private final @NotNull Path root;
+    private final @NotNull PathVisitor visitor;
+    private final @NotNull List<Path> list;
+
+    public CollectorPathVisitor(@NotNull Path root, @NotNull PathVisitor visitor) {
+        Checker.Arg.notNull(root, "root");
+        Checker.Arg.notNull(visitor, "visitor");
+        this.root = root;
+        this.visitor = visitor;
+        this.list = new ArrayList<>();
+    }
+
+    public @NotNull Path getRoot() {
+        return root;
+    }
+
+    public @NotNull PathVisitor getVisitor() {
+        return visitor;
+    }
+
+    public @NotNull List<Path> getList() {
+        return list;
+    }
+
+    public @NotNull FileVisitResult onVisit(@NotNull PathVisit visit) {
+        Checker.Arg.notNull(visit, "visit");
+        FileVisitResult result = this.visitor.onVisit(visit);
+        switch (result) {
+            case CONTINUE:
+            case SKIP_SIBLINGS:
+                list.add(visit.getPath());
+            default:
+                return result;
+        }
+    }
+
+    public @NotNull List<Path> getFiles() {
+        FileTreeWalker.walkFileTree(this.root, new HashSet<>(), Integer.MAX_VALUE, this);
+        return this.list;
+    }
+}

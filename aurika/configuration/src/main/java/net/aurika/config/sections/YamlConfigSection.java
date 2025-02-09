@@ -1,9 +1,9 @@
 package net.aurika.config.sections;
 
 import net.aurika.config.sections.format.ConfigSectionFormat;
-import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpretContext;
-import net.aurika.snakeyaml.extension.nodes.interpret.NodeInterpreter;
-import net.aurika.snakeyaml.extension.nodes.NodeUtils;
+import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpretContext;
+import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.utils.snakeyaml.nodes.NodeUtils;
 import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -3,14 +3,14 @@ package top.auspice.utils.conditions;
 import net.aurika.abstraction.conditional.ConditionBranch;
 import net.aurika.abstraction.conditional.ConditionChain;
 import net.aurika.config.sections.ConfigSection;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.compiler.PlaceholderTranslationContext;
-import top.auspice.configs.texts.compiler.builders.MessageObjectBuilder;
-import top.auspice.configs.texts.messenger.LanguageEntryMessenger;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.messenger.StaticMessenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.compiler.PlaceholderTranslationContext;
+import net.aurika.text.compiler.builders.MessageObjectBuilder;
+import top.auspice.configs.messages.messenger.LanguageEntryMessenger;
+import top.auspice.configs.messages.messenger.Messenger;
+import top.auspice.configs.messages.messenger.StaticMessenger;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.condition.ConditionVariableTranslator;
 import top.auspice.utils.string.Strings;
@@ -20,11 +20,11 @@ import java.util.Iterator;
 
 public final class ConditionProcessor implements ConditionVariableTranslator {
     private final PlaceholderProvider placeholderProvider;
-    private final TextPlaceholderProvider textPlaceholderProvider;
+    private final MessagePlaceholderProvider textPlaceholderProvider;
 
     public ConditionProcessor(PlaceholderProvider placeholderProvider) {
         this.placeholderProvider = placeholderProvider;
-        this.textPlaceholderProvider = placeholderProvider instanceof TextPlaceholderProvider ? (TextPlaceholderProvider) placeholderProvider : null;
+        this.textPlaceholderProvider = placeholderProvider instanceof MessagePlaceholderProvider ? (MessagePlaceholderProvider) placeholderProvider : null;
     }
 
     public static boolean process(ConditionCompiler.LogicalOperand logicOp, PlaceholderProvider var1) {

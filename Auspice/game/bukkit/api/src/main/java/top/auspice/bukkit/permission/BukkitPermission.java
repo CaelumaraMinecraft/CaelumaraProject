@@ -2,8 +2,8 @@ package top.auspice.bukkit.permission;
 
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.messenger.StaticMessenger;
+import top.auspice.configs.messages.messenger.Messenger;
+import top.auspice.configs.messages.messenger.StaticMessenger;
 import top.auspice.permission.Permission;
 import top.auspice.permission.PermissionDefaultValue;
 import top.auspice.permission.PermissionKey;

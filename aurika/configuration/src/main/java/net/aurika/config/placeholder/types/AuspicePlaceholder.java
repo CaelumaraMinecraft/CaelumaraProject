@@ -3,7 +3,7 @@ package net.aurika.config.placeholder.types;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.placeholders.KingdomsPlaceholderTranslator;
+import net.aurika.text.placeholders.KingdomsPlaceholderTranslator;
 
 /**
  * 占位符主体部分:

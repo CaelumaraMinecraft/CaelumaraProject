@@ -4,14 +4,14 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.config.accessor.ClearlyConfigAccessor;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.configs.texts.context.provider.CascadingTextContextProvider;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.context.provider.CascadingTextContextProvider;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.constants.logs.AuditLog;
 import top.auspice.constants.logs.Loggable;
 import top.auspice.constants.metadata.AuspiceMetadata;
 import top.auspice.constants.metadata.AuspiceMetadataHandler;
 import top.auspice.constants.metadata.Metadatable;
-import net.aurika.data.object.DataObject;
+import net.aurika.data.api.DataObject;
 import top.auspice.utils.ZeroArrays;
 import top.auspice.utils.nonnull.NonNullMap;
 
@@ -25,7 +25,7 @@ import java.util.function.Function;
 public interface AuspiceObject extends DataObject, CascadingTextContextProvider, Loggable, Metadatable {
 
     @Override
-    void addMessageContextEdits(@NotNull TextPlaceholderProvider textPlaceholderProvider);
+    void addMessageContextEdits(@NotNull MessagePlaceholderProvider textPlaceholderProvider);
 
     @Override
     AuspiceMetadata getMetadata(AuspiceMetadataHandler handler);
@@ -65,7 +65,7 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
         }
 
         @Override
-        public void addMessageContextEdits(@NotNull TextPlaceholderProvider textPlaceholderProvider) {
+        public void addMessageContextEdits(@NotNull MessagePlaceholderProvider textPlaceholderProvider) {
         }
 
         @Override
@@ -149,7 +149,7 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
         @NotNull AuspiceObject getWrapped();
 
         @Override
-        default void addMessageContextEdits(@NotNull TextPlaceholderProvider textPlaceholderProvider) {
+        default void addMessageContextEdits(@NotNull MessagePlaceholderProvider textPlaceholderProvider) {
             this.getWrapped().addMessageContextEdits(textPlaceholderProvider);
         }
 

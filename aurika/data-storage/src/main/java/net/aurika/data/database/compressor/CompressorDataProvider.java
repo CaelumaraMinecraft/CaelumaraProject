@@ -1,7 +1,7 @@
 package net.aurika.data.database.compressor;
 
+import net.aurika.data.api.dataprovider.*;
 import net.aurika.data.compressor.DataCompressor;
-import net.aurika.data.database.dataprovider.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;

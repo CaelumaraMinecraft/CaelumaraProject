@@ -2,9 +2,9 @@ package net.aurika.config.translator;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.compiler.TextCompilerSettings;
-import top.auspice.configs.texts.compiler.TextObject;
+import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.compiler.TextCompilerSettings;
+import net.aurika.text.compiler.TextObject;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.math.MathCompiler;
 import top.auspice.utils.number.RomanNumber;

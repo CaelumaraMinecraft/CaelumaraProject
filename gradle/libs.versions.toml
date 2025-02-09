@@ -6,7 +6,7 @@ moddevgradle = "1.0.21"
 forgegradle = "[6.0,6.2)"
 loom = "1.7-SNAPSHOT"
 licenser = "0.6.1"
-kotlin = "2.0.20-Beta2"
+kotlin = "2.1.10"
 
 # Servers
 bukkit_legacy = "1.12.2-R0.1-SNAPSHOT"
@@ -53,6 +53,7 @@ server_velocity = { group = "com.velocitypowered", name = "velocity-api", versio
 
 # Engines
 yamlengine = { group = "org.snakeyaml", name = "snakeyaml-engine", version.ref = "yamlengine" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 adventure_api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure_main" }
 adventure_nbt = { group = "net.kyori", name = "adventure-nbt", version.ref = "adventure_main" }
@@ -71,9 +72,11 @@ xseries = { group = "com.github.cryptomorin", name = "XSeries", version.ref = "x
 asm_asm = { group = "org.ow2.asm", name = "asm", version.ref = "asm" }
 asm_commons = { group = "org.ow2.asm", name = "asm-commons", version.ref = "asm" }
 
+iocommons = "commons-io:commons-io:2.15.1"
+
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
 hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
 
 mongodb_core = { group = "org.mongodb", name = "mongodb-driver-core", version.ref = "mongodb" }
@@ -89,7 +92,3 @@ bungee_chat = { group = "net.md-5", name = "bungeecord-chat", version.ref = "bun
 
 annotations_jetbrains = { group = "org.jetbrains", name = "annotations", version = "26.0.1" }
 annotations_checker = { group = "org.checkerframework", name = "checker-qual", version = "3.46.0" }
-
-#[bundles]
-#asm = ["asm", "asm_commons"]
-#annotations = ["annotations_checker", "annotations_jetbrains"]

@@ -79,7 +79,7 @@ public final class Auspice implements AuspiceUser {
 
     @Override
     @NSKey.Namespace
-    public @NotNull String getNamespace() {
+    public @NotNull String namespace() {
         return NAMESPACE;
     }
 

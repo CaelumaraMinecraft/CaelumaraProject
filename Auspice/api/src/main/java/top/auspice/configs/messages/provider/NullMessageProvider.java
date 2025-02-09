@@ -3,10 +3,10 @@ package top.auspice.configs.messages.provider;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import top.auspice.configs.messages.MessageObject;
 import top.auspice.configs.messages.PrefixProvider;
-import top.auspice.configs.texts.compiler.TextCompilerSettings;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.compiler.pieces.TextPiece;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.compiler.TextCompilerSettings;
+import net.aurika.text.TextObject;
+import net.aurika.text.compiler.pieces.TextPiece;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.command.CommandSender;
 
 public final class NullMessageProvider implements MessageProvider {
@@ -24,7 +24,7 @@ public final class NullMessageProvider implements MessageProvider {
         return nullMessage;
     }
 
-    public void send(CommandSender messageReceiver, TextPlaceholderProvider textPlaceholderProvider) {
+    public void send(CommandSender messageReceiver, MessagePlaceholderProvider textPlaceholderProvider) {
     }
 
     static {

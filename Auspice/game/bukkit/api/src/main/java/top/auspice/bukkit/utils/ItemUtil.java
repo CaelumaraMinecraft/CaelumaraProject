@@ -5,10 +5,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.compiler.pieces.TextPiece;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.TextObject;
+import net.aurika.text.compiler.pieces.TextPiece;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.utils.checker.Checker;
 import net.aurika.utils.string.Strings;
 
@@ -41,7 +41,7 @@ public final class ItemUtil {
         }
     }
 
-    public static void translate(ItemMeta var0, TextPlaceholderProvider var1) {
+    public static void translate(ItemMeta var0, MessagePlaceholderProvider var1) {
         if (var0.hasDisplayName()) {
             TextObject var2 = TextCompiler.compile(var0.getDisplayName());
             var0.setDisplayName(var2.build(var1));

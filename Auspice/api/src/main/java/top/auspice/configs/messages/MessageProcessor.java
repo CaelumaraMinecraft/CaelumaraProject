@@ -1,10 +1,10 @@
 package top.auspice.configs.messages;
 
+import net.aurika.checker.Checker;
+import net.aurika.text.TextObject;
+import net.aurika.text.compiler.TextCompiler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.compiler.TextObject;
-import net.aurika.utils.Checker;
 
 public class MessageProcessor {
     protected final @NotNull String originalString;
@@ -39,7 +39,6 @@ public class MessageProcessor {
         }
     }
 
-
     public @NotNull MessageObject toMessageObject() {
         if (this.textCompiler == null || this.compiledTextObject == null) {
             throw new IllegalStateException("Message compiler was not already compiled");
@@ -50,7 +49,6 @@ public class MessageProcessor {
     public void compile() {
         this.textCompiler = new TextCompiler(this.textCompilerString);
         this.compiledTextObject = this.textCompiler.compileObject();
-
     }
 
     public static @NotNull MessageObject compile(@NotNull String originalString, @NotNull PrefixProvider prefixProvider) {
@@ -58,5 +56,4 @@ public class MessageProcessor {
         messageProcessor.compile();
         return messageProcessor.toMessageObject();
     }
-
 }

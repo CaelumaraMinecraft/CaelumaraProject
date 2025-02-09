@@ -2,7 +2,7 @@ package net.aurika.data.managers.base;
 
 import net.aurika.data.database.base.Database;
 import net.aurika.data.managers.BaseDataManager;
-import net.aurika.data.object.DataObject;
+import net.aurika.data.api.DataObject;
 import net.aurika.namespace.NSedKey;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.ApiStatus.Internal;

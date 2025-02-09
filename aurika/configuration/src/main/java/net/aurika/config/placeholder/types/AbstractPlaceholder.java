@@ -3,7 +3,7 @@ package net.aurika.config.placeholder.types;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.config.placeholder.Placeholder;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 
 import java.util.Objects;
 

@@ -4,15 +4,11 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.sponge"
-
 repositories {
     maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
 }
 
 dependencies {
-    // 向上传递依赖项
-
     compileOnly('org.spongepowered:spongeapi:8.0.0') {
         exclude(module: "configurate-core")
         exclude(module: 'configurate-hocon')

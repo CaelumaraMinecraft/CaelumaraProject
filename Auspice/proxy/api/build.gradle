@@ -2,10 +2,6 @@ plugins {
     id("java-library")
 }
 
-repositories {
-
-}
-
 dependencies {
-
+    implementation(api(project(":Auspice:api")))
 }

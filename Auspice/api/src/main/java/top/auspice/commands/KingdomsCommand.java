@@ -9,15 +9,14 @@ import org.jetbrains.annotations.Unmodifiable;
 import net.aurika.config.path.ConfigPath;
 import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.configs.texts.SupportedLocale;
-import top.auspice.configs.texts.compiler.TextCompilerSettings;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.compiler.pieces.TextPiece;
-import top.auspice.configs.texts.messenger.DefaultedMessenger;
-import top.auspice.configs.texts.messenger.LanguageEntryMessenger;
-import top.auspice.configs.texts.messenger.Messenger;
-import top.auspice.configs.texts.messenger.StaticMessenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.compiler.TextCompilerSettings;
+import net.aurika.text.TextObject;
+import net.aurika.text.compiler.pieces.TextPiece;
+import top.auspice.configs.messages.messenger.DefaultedMessenger;
+import top.auspice.configs.messages.messenger.LanguageEntryMessenger;
+import top.auspice.configs.messages.messenger.Messenger;
+import top.auspice.configs.messages.messenger.StaticMessenger;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.diversity.Diversity;
 import top.auspice.main.Auspice;
@@ -127,14 +126,14 @@ public abstract class KingdomsCommand {
 
                 try {
                     TextObject var19 = this.lang("aliases").getMessageObject(var14);
-                    String var8 = this.getDisplayName().getMessageObject(var14).build(TextPlaceholderProvider.DEFAULT);
+                    String var8 = this.getDisplayName().getMessageObject(var14).build(MessagePlaceholderProvider.DEFAULT);
                     var16.put(var8.toLowerCase(var14.getLocale()), this);
                     if (var14 == Language.getDefault()) {
                         var16.put(var1.toLowerCase(Language.getDefault().getLocale()), this);
                     }
 
                     if (var19 != null) {
-                        String[] var20 = Strings.splitArray(var19.build(TextPlaceholderProvider.DEFAULT), ' ');
+                        String[] var20 = Strings.splitArray(var19.build(MessagePlaceholderProvider.DEFAULT), ' ');
                         this.aliases.put(var14, Arrays.asList(var20));
                         int var21 = (var20 = var20).length;
 
@@ -197,7 +196,7 @@ public abstract class KingdomsCommand {
     @Deprecated
     public static String processTabMessage(String var0) {
         TextObject var1 = MessageCompiler.compile(var0);
-        return COLORIZE_TAB_COMPLETES ? var1.buildPlain(TextPlaceholderProvider.DEFAULT) : var1.buildPlain((new TextPlaceholderProvider()).ignoreColors());
+        return COLORIZE_TAB_COMPLETES ? var1.buildPlain(MessagePlaceholderProvider.DEFAULT) : var1.buildPlain((new MessagePlaceholderProvider()).ignoreColors());
     }
 
     @Deprecated

@@ -1,14 +1,12 @@
 package top.auspice.utils.nonnull;
 
-import kotlin.collections.CollectionsKt;
-import kotlin.jvm.internal.markers.KMutableList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class NonNullList<V> implements List<V>, KMutableList {
-    @NotNull
-    private final List<V> list;
+public class NonNullList<V> implements List<V> {
+
+    private final @NotNull List<V> list;
     private final int size;
 
     public NonNullList(int size) {

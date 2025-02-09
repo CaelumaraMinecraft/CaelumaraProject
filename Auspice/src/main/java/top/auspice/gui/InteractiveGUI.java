@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import top.auspice.gui.objects.GUIObject;
 import top.auspice.gui.objects.GUIOptionBuilder;
 import top.auspice.configs.texts.ContextualMessenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.main.BukkitAuspiceLoader;
 import top.auspice.managers.chat.ChatInputHandler;
 

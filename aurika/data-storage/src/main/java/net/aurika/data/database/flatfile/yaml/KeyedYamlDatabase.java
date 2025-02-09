@@ -3,8 +3,8 @@ package net.aurika.data.database.flatfile.yaml;
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.flatfile.KeyedFlatFileDatabase;
-import net.aurika.data.handlers.abstraction.KeyedDataHandler;
-import net.aurika.data.object.KeyedDataObject;
+import net.aurika.data.api.handler.KeyedDataHandler;
+import net.aurika.data.api.KeyedDataObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;

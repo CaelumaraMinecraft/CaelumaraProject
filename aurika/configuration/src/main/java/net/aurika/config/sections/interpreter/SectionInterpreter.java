@@ -6,7 +6,7 @@ import net.aurika.config.sections.ConditionalConfigSection;
 import net.aurika.config.sections.ConfigSection;
 import net.aurika.config.sections.interpreter.SectionInterpretContext.Result;
 import net.aurika.config.validation.ConfigValidators;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.compiler.math.MathCompiler;
 import top.auspice.utils.math.MathUtils;
 import top.auspice.utils.time.TimeUtils;

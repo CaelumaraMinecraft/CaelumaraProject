@@ -2,9 +2,9 @@ package top.auspice.bukkit.server.entity;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.compiler.TextObject;
+import net.aurika.text.compiler.TextObject;
 import top.auspice.bukkit.server.core.BukkitServer;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import top.auspice.server.core.Server;
 import top.auspice.server.entity.Entity;
 import top.auspice.server.location.Location;

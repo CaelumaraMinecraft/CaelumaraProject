@@ -1,0 +1,13 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    subprojects.forEach {
+        api(it)
+    }
+    api(project(":aurika:checker"))
+    api(libs.annotations.jetbrains)
+    api(libs.annotations.checker)
+}

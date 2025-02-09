@@ -8,9 +8,9 @@ import com.cryptomorin.xseries.profiles.objects.Profileable;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.compiler.TextObject;
+import net.aurika.text.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.reflection.Reflect;
 
 import java.util.ArrayList;

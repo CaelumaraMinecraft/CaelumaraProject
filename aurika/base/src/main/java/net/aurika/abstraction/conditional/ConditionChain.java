@@ -2,7 +2,7 @@ package net.aurika.abstraction.conditional;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import net.aurika.utils.Checker;
 import top.auspice.utils.conditions.ConditionProcessor;
 

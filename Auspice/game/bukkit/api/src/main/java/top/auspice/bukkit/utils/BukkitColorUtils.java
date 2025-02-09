@@ -2,7 +2,7 @@ package top.auspice.bukkit.utils;
 
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.texts.compiler.pieces.TextPiece;
+import net.aurika.text.compiler.pieces.TextPiece;
 import net.aurika.utils.checker.Checker;
 import top.auspice.utils.chat.BaseColorUtils;
 import top.auspice.utils.chat.CodedChatFormats;

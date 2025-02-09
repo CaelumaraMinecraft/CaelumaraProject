@@ -3,9 +3,6 @@ plugins {
     id("maven-publish")
 }
 
-group = "net.aurika.utils.checker"
-version = project(":aurika").version
-
 dependencies {
     implementation(api(project(":aurika:annotations")))
 }

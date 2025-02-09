@@ -1,7 +1,7 @@
 package top.auspice.utils.unsafe.stacktrace;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.texts.MessageHandler;
+import top.auspice.configs.messages.MessageHandler;
 import net.aurika.utils.Checker;
 import top.auspice.utils.cache.caffeine.CacheHandler;
 

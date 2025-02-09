@@ -9,9 +9,9 @@ import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.compiler.TextCompilerSettings;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.compiler.TextCompilerSettings;
+import net.aurika.text.compiler.TextObject;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.math.MathCompiler;
 

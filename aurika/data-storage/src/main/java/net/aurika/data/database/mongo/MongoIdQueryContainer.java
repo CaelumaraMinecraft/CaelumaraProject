@@ -39,7 +39,7 @@ public class MongoIdQueryContainer<K> implements Bson {
         }
 
         public Class<MongoIdQueryContainer<K>> getEncoderClass() {
-            return Fn.cast(MongoIdQueryContainer.class);
+            return MongoIdQueryContainer.class;
         }
     }
 }

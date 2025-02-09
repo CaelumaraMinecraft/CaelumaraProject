@@ -3,8 +3,8 @@ package top.auspice.configs.messages.provider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageObject;
-import top.auspice.configs.texts.compiler.TextObject;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.TextObject;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.command.CommandSender;
 
 import java.util.Arrays;
@@ -19,9 +19,9 @@ public interface MessageProvider {
      */
     @Nullable MessageObject getMessage();
 
-    void send(CommandSender messageReceiver, TextPlaceholderProvider textPlaceholderProvider);
+    void send(CommandSender messageReceiver, MessagePlaceholderProvider textPlaceholderProvider);
 
-    default void handleExtraServices(CommandSender messageReceiver, TextPlaceholderProvider placeholderProvider) {
+    default void handleExtraServices(CommandSender messageReceiver, MessagePlaceholderProvider placeholderProvider) {
     }
 
     static @NotNull MessageProvider combine(@NotNull MessageProvider @NotNull [] providers) {

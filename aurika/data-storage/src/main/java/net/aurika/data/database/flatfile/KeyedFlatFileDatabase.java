@@ -1,14 +1,11 @@
 package net.aurika.data.database.flatfile;
 
-import kotlin.jvm.internal.Intrinsics;
-import kotlin.ranges.RangesKt;
+import net.aurika.data.api.KeyedDataObject;
+import net.aurika.data.api.handler.KeyedDataHandler;
+import net.aurika.data.database.base.KeyedDatabase;
+import net.aurika.utils.file.FSUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.data.database.base.KeyedDatabase;
-import net.aurika.data.handlers.abstraction.KeyedDataHandler;
-import net.aurika.data.object.KeyedDataObject;
-import top.auspice.utils.filesystem.FSUtil;
-import top.auspice.utils.unsafe.CloseableUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -60,9 +57,7 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
 
     private K a(Path var1) {
         String var2 = var1.getFileName().toString();
-        String var10000 = var2.substring(0, var2.length() - this.extension.length() - 1);
-        Intrinsics.checkNotNullExpressionValue(var10000, "");
-        var2 = var10000;
+        var2 = var2.substring(0, var2.length() - this.extension.length() - 1);
 
         try {
             return this.dataHandler.getIdHandler().fromString(var2);
@@ -74,9 +69,7 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
     @NotNull
     public final Path fileFromKey(@NotNull K key) {
         Objects.requireNonNull(key, "key");
-        Path var10000 = this.folder.resolve(this.dataHandler.getIdHandler().toString(key) + '.' + this.extension);
-        Intrinsics.checkNotNullExpressionValue(var10000, "");
-        return var10000;
+        return folder.resolve(this.dataHandler.getIdHandler().toString(key) + '.' + this.extension);
     }
 
     @Nullable
@@ -92,35 +85,21 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Throwable var3 = null;
-            boolean var7 = false;
 
             T var10;
 
-            try {
-                var7 = true;
-                Intrinsics.checkNotNull(var11);
-                var10 = this.load(key, var11);
-                var7 = false;
-            } catch (Throwable var8) {
-                var3 = var8;
-                throw var8;
-            } finally {
-                if (var7) {
-                    CloseableUtils.closeFinally(var11, var3);
-                }
-            }
+            Objects.requireNonNull(var11, "");
+            var10 = this.load(key, var11);
 
-            CloseableUtils.closeFinally(var11, null);
             return var10;
         }
     }
 
-    public final void load(@NotNull Collection<K> var1, @NotNull Consumer<T> var2) {
-        Objects.requireNonNull(var1, "");
+    public final void load(@NotNull Collection<K> keys, @NotNull Consumer<T> var2) {
+        Objects.requireNonNull(keys, "");
         Objects.requireNonNull(var2, "");
 
-        for (K var3 : var1) {
+        for (K var3 : keys) {
             T obj = this.load(var3);
             if (obj != null) {
                 var2.accept(obj);
@@ -162,19 +141,19 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
         }
     }
 
-    public final void delete(@NotNull K var1) {
-        Objects.requireNonNull(var1, "");
+    public final void delete(@NotNull K key) {
+        Objects.requireNonNull(key, "");
 
         try {
-            Files.deleteIfExists(this.fileFromKey(var1));
+            Files.deleteIfExists(this.fileFromKey(key));
         } catch (IOException var2) {
             throw new RuntimeException(var2);
         }
     }
 
-    public final boolean hasData(@NotNull K var1) {
-        Objects.requireNonNull(var1, "");
-        return Files.exists(this.fileFromKey(var1), new LinkOption[0]);
+    public final boolean hasData(@NotNull K key) {
+        Objects.requireNonNull(key, "");
+        return Files.exists(this.fileFromKey(key), new LinkOption[0]);
     }
 
     @NotNull
@@ -183,30 +162,13 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
 
         try {
             DirectoryStream<Path> pathStream = Files.newDirectoryStream(this.folder);
-            Throwable var3 = null;
-            boolean var9 = false;
 
-            try {
-                var9 = true;
-
-                for (Path path : pathStream) {
-                    if (Files.isRegularFile(path, new LinkOption[0])) {
-                        Intrinsics.checkNotNull(path);
-                        var1.add(this.a(path));
-                    }
-                }
-
-                var9 = false;
-            } catch (Throwable var10) {
-                var3 = var10;
-                throw var10;
-            } finally {
-                if (var9) {
-                    CloseableUtils.closeFinally(pathStream, var3);
+            for (Path path : pathStream) {
+                if (Files.isRegularFile(path, new LinkOption[0])) {
+                    Objects.requireNonNull(path);
+                    var1.add(this.a(path));
                 }
             }
-
-            CloseableUtils.closeFinally(pathStream, null);
         } catch (IOException var12) {
             throw new RuntimeException(var12);  // TODO
         }
@@ -227,53 +189,37 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
         return FSUtil.countEntriesOf(this.folder);
     }
 
-    public final @NotNull Collection<T> loadAllData(@Nullable Predicate<K> var1) {
+    public final @NotNull Collection<T> loadAllData(@Nullable Predicate<K> keyFilter) {
         List<T> var2 = new ArrayList<>(this.d);
 
         try {
             DirectoryStream<Path> var3 = Files.newDirectoryStream(this.folder);
-            Throwable var4 = null;
-            boolean var12 = false;
 
-            try {
-                var12 = true;
-
-                for (Path o : var3) {
-                    Path var6;
-                    if (Files.isRegularFile(var6 = o, new LinkOption[0])) {
-                        Intrinsics.checkNotNull(var6);
-                        K var7 = this.a(var6);
-                        if (var1 == null || var1.test(var7)) {
-                            try {
-                                T var10000 = this.load(var7);
-                                if (var10000 == null) {
-                                    StringBuilder sb = (new StringBuilder("Couldn't load bulk data ")).append(var7).append("w -> ").append(var6).append(" -> ");
-                                    LinkOption[] var10004 = new LinkOption[0];
-                                    sb.append(Files.exists(var6, Arrays.copyOf(var10004, var10004.length))).append(" -> ").append(this.fileFromKey(var7)).append(" -> ");
-                                    Path var10003 = this.fileFromKey(var7);
-                                    var10004 = new LinkOption[0];
-                                    throw new IllegalStateException(sb.append(Files.exists(var10003, Arrays.copyOf(var10004, var10004.length))).toString());
-                                }
-
-                                var2.add(var10000);
-                            } catch (Throwable var13) {
-                                throw new RuntimeException("Error while loading " + var7, var13);
+            for (Path o : var3) {
+                Path var6;
+                if (Files.isRegularFile(var6 = o, new LinkOption[0])) {
+                    Objects.requireNonNull(var6);
+                    K var7 = this.a(var6);
+                    if (keyFilter == null || keyFilter.test(var7)) {
+                        try {
+                            T var10000 = this.load(var7);
+                            if (var10000 == null) {
+                                StringBuilder sb = (new StringBuilder("Couldn't load bulk data ")).append(var7).append("w -> ").append(var6).append(" -> ");
+                                LinkOption[] var10004 = new LinkOption[0];
+                                sb.append(Files.exists(var6, Arrays.copyOf(var10004, var10004.length))).append(" -> ").append(this.fileFromKey(var7)).append(" -> ");
+                                Path var10003 = this.fileFromKey(var7);
+                                var10004 = new LinkOption[0];
+                                throw new IllegalStateException(sb.append(Files.exists(var10003, Arrays.copyOf(var10004, var10004.length))).toString());
                             }
+
+                            var2.add(var10000);
+                        } catch (Throwable var13) {
+                            throw new RuntimeException("Error while loading " + var7, var13);
                         }
                     }
                 }
-
-                var12 = false;
-            } catch (Throwable var14) {
-                var4 = var14;
-                throw var14;
-            } finally {
-                if (var12) {
-                    CloseableUtils.closeFinally(var3, var4);
-                }
             }
 
-            CloseableUtils.closeFinally(var3, null);
         } catch (Exception var16) {
             throw new RuntimeException(var16);  // TODO
         }
@@ -282,10 +228,10 @@ public abstract class KeyedFlatFileDatabase<K, T extends KeyedDataObject<K>> imp
         return var2;
     }
 
-    public final void save(@NotNull Collection<T> objects) {
-        Objects.requireNonNull(objects, "");
+    public final void save(@NotNull Collection<T> data) {
+        Objects.requireNonNull(data, "");
 
-        for (T t : objects) {
+        for (T t : data) {
             this.save(t);
         }
     }

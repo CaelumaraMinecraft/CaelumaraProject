@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.texts.AuspiceLang;
 import top.auspice.configs.texts.ContextualMessenger;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
+import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import top.auspice.utils.enumeration.QuickEnumMap;
 
 import java.util.Collection;

@@ -1,0 +1,11 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    subprojects.forEach {
+        implementation(api(it))
+    }
+    compileOnly(libs.annotations.jetbrains)
+}

@@ -2,20 +2,20 @@ package net.aurika.data.database.flatfile.json;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import kotlin.jvm.internal.Intrinsics;
-import net.aurika.data.handlers.abstraction.DataHandler;
-import net.aurika.data.object.DataObject;
-import net.aurika.utils.Checker;
+import net.aurika.checker.Checker;
+import net.aurika.data.api.handler.DataHandler;
+import net.aurika.data.api.DataObject;
+import net.aurika.utils.gson.AurikaGson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.gson.KingdomsGson;
-import top.auspice.utils.logging.AuspiceLogger;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,8 +32,8 @@ public final class JsonDatabase {
         Checker.Arg.notNull(converter, "converter");
 
         try {
-            JsonObject var9 = KingdomsGson.parse(reader);
-            Intrinsics.checkNotNull(var9);
+            JsonObject var9 = AurikaGson.parse(reader);
+            Objects.requireNonNull(var9);
             DataObject var11;
             if ((var11 = converter.apply(var9)) == null) {
                 AuspiceLogger.error("Could not load data for '" + label + "' with adapter " + dataHandler + " JSON:(" + Files.lines(file).collect(Collectors.joining()) + ") Deleting their data...");
@@ -72,7 +72,7 @@ public final class JsonDatabase {
         dataHandler.save(var4, data);
 
         try {
-            KingdomsGson.toJson(var3, writer);
+            AurikaGson.toJson(var3, writer);
         } catch (IOException var5) {
             throw new RuntimeException(var5);
         }

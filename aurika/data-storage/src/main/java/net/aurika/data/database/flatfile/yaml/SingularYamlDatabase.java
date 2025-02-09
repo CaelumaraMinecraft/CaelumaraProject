@@ -2,8 +2,8 @@ package net.aurika.data.database.flatfile.yaml;
 
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.flatfile.SingularFlatFileDatabase;
-import net.aurika.data.handlers.abstraction.SingularDataHandler;
-import net.aurika.data.object.DataObject;
+import net.aurika.data.api.handler.SingularDataHandler;
+import net.aurika.data.api.DataObject;
 import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;
 

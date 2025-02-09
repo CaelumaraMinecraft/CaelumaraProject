@@ -1,23 +1,43 @@
 package top.auspice.constants.location;
 
+import net.aurika.annotations.data.Immutable;
+import net.aurika.checker.Checker;
+import net.aurika.data.api.DataStringRepresentation;
+import net.aurika.data.api.structure.DataMetaType;
+import net.aurika.data.api.structure.SimpleData;
+import net.aurika.data.api.structure.SimpleDataObject;
+import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.data.api.structure.entries.MapDataEntry;
+import net.aurika.utils.string.CommaDataSplitStrategy;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.annotations.data.Immutable;
-import net.aurika.data.object.DataStringRepresentation;
-import net.aurika.data.object.structure.DataStructureObject;
-import net.aurika.utils.Checker;
-import top.auspice.utils.string.CommaDataSplitStrategy;
-
-import java.util.Map;
 
 @Immutable
-public class SimpleLocation implements DataStringRepresentation, DataStructureObject {
+public class SimpleLocation implements DataStringRepresentation, SimpleDataObject {
     private final @NotNull String world;
     private final double x;
     private final double y;
     private final double z;
     private final float yaw;
     private final float pitch;
+
+    public static final SimpleDataObjectTemplate<SimpleLocation> DATA_TEMPLATE = SimpleDataObjectTemplate.of(
+            SimpleLocation.class,
+            data -> new SimpleLocation(
+                    data.getString("world"),
+                    data.getDouble("x"),
+                    data.getDouble("y"),
+                    data.getDouble("z"),
+                    data.getFloat("yaw"),
+                    data.getFloat("pitch")
+            ),
+            "world", DataMetaType.STRING,
+            "x", DataMetaType.DOUBLE,
+            "y", DataMetaType.DOUBLE,
+            "z", DataMetaType.DOUBLE,
+            "yaw", DataMetaType.FLOAT,
+            "pitch", DataMetaType.FLOAT
+    );
 
     public SimpleLocation(@NotNull String worldName, double x, double y, double z) {
         this(worldName, x, y, z, 0.0F, 0.0F);
@@ -79,7 +99,19 @@ public class SimpleLocation implements DataStringRepresentation, DataStructureOb
     }
 
     @Override
-    public @NonNull Map<String, Object> getData() {
-        return Map.of("world", this.world, "x", this.x, "y", this.y, "z", this.z, "yaw", this.yaw, "pitch", this.pitch);
+    public @NonNull SimpleData simpleData() {
+        return SimpleData.of(
+                MapDataEntry.of("world", world),
+                MapDataEntry.of("x", x),
+                MapDataEntry.of("y", y),
+                MapDataEntry.of("z", z),
+                MapDataEntry.of("yaw", yaw),
+                MapDataEntry.of("pitch", pitch)
+        );
+    }
+
+    @Override
+    public @NotNull SimpleDataObjectTemplate<? extends SimpleLocation> simpleDataTemplate() {
+        return DATA_TEMPLATE;
     }
 }

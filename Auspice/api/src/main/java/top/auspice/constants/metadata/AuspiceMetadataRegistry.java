@@ -1,7 +1,7 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.data.object.KeyedDataObject;
+import net.aurika.data.api.KeyedDataObject;
 import net.aurika.namespace.Lockable;
 import net.aurika.namespace.NSKedRegistry;
 import net.aurika.data.managers.base.KeyedDataManager;
@@ -18,7 +18,7 @@ public class AuspiceMetadataRegistry extends NSKedRegistry<AuspiceMetadataHandle
     }
 
     public final void register(@NotNull AuspiceMetadataHandler var1) {
-        if (var1.getNamespacedKey().getNamespace().equals(Auspice.get().getNamespace())) {
+        if (var1.getNamespacedKey().getNamespace().equals(Auspice.get().namespace())) {
             throw new IllegalArgumentException("Cannot register metadata handlers as auspice namespace: " + var1);
         } else {
             super.register(var1);

@@ -1,12 +1,14 @@
 package top.auspice.server.location;
 
-import kotlin.jvm.internal.Intrinsics;
+import net.kyori.examination.Examinable;
+import net.kyori.examination.ExaminableProperty;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-public interface BlockPoint3D extends Comparable<BlockPoint3D> {
+public interface BlockPoint3D extends Comparable<BlockPoint3D>, Examinable {
     int getX();
 
     int getY();
@@ -19,7 +21,7 @@ public interface BlockPoint3D extends Comparable<BlockPoint3D> {
     }
 
     default double distanceSquared(@NotNull BlockPoint3D other) {
-        Objects.requireNonNull(other);
+        Objects.requireNonNull(other, "other");
         double $this$squared$ivf = (double) this.getX() + (double) other.getX();
         double var10000 = $this$squared$ivf * $this$squared$ivf;
         int $this$squared$iv = this.getY() + other.getY();
@@ -31,6 +33,15 @@ public interface BlockPoint3D extends Comparable<BlockPoint3D> {
     default int compareTo(@NotNull BlockPoint3D other) {
         Objects.requireNonNull(other);
         return NaturalComparator.INSTANCE.compare(this, other);
+    }
+
+    @Override
+    default @NotNull Stream<? extends ExaminableProperty> examinableProperties() {
+        return Stream.of(
+                ExaminableProperty.of("x", getX()),
+                ExaminableProperty.of("y", getY()),
+                ExaminableProperty.of("z", getZ())
+        );
     }
 
     final class AxisComparator implements Comparator<BlockPoint3D> {

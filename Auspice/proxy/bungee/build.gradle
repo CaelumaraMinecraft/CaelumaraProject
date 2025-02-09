@@ -4,10 +4,7 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.bungee"
-
 dependencies {
-
 
     api(project(":Auspice:proxy:api"))
 

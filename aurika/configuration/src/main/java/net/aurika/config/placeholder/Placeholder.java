@@ -2,7 +2,7 @@ package net.aurika.config.placeholder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.placeholders.context.PlaceholderProvider;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
 
 /**
  * 占位符对象, 在配置文件中, 每个代表占位符的字符串都应被解析成一个占位符对象.

@@ -6,9 +6,9 @@ import com.cryptomorin.xseries.messages.Titles;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.config.sections.ConfigSection;
-import top.auspice.configs.texts.compiler.TextCompiler;
-import top.auspice.configs.texts.placeholders.context.TextPlaceholderProvider;
-import top.auspice.configs.texts.compiler.TextObject;
+import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.text.TextObject;
 import top.auspice.main.Auspice;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
@@ -50,7 +50,7 @@ public class AdvancedMessageProvider extends SingleMessageProvider {
         return this;
     }
 
-    public void handleExtraServices(CommandSender messageReceiver, TextPlaceholderProvider placeholderProvider) {
+    public void handleExtraServices(CommandSender messageReceiver, MessagePlaceholderProvider placeholderProvider) {
         if (messageReceiver instanceof Player player) {
             if (this.sound != null) {
                 this.sound.soundPlayer().forPlayers(player).play();

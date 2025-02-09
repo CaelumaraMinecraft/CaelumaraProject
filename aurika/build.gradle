@@ -3,12 +3,14 @@ plugins {
     id("maven-publish")
 }
 
-group = "net.aurika"
 version = "0.0.1-pre"
 
+subprojects {
+    it.version = this.version
+}
+
 dependencies {
-    implementation(api(project(":aurika:base")))
-    implementation(api(project(":aurika:checker")))
-    implementation(api(project(":aurika:configuration")))
-    implementation(api(project(":aurika:data-storage")))
+    subprojects.forEach {
+        api(it)
+    }
 }
