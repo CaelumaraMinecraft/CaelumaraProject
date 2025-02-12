@@ -1,5 +1,6 @@
 package net.aurika.util.cache.single;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -10,11 +11,12 @@ public class CachedSupplier<T> implements CacheableObject<T> {
     protected T cached;
     protected Boolean present;
 
-    public CachedSupplier(Supplier<T> supplier) {
-        this.supplier = Objects.requireNonNull(supplier);
+    public CachedSupplier(@NotNull Supplier<T> supplier) {
+        Objects.requireNonNull(supplier, "supplier");
+        this.supplier = supplier;
     }
 
-    public static <T> CachedSupplier<T> of(Supplier<T> supplier) {
+    public static <T> @NotNull CachedSupplier<T> of(@NotNull Supplier<T> supplier) {
         return supplier instanceof CachedSupplier ? (CachedSupplier<T>) supplier : new CachedSupplier<>(supplier);
     }
 

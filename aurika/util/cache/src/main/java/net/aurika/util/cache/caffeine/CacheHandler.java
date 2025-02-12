@@ -2,6 +2,7 @@ package net.aurika.util.cache.caffeine;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Scheduler;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
@@ -11,12 +12,12 @@ public final class CacheHandler {
     private static final ForkJoinPool POOL = new ForkJoinPool();
     private static final Scheduler CACHE_SCHEDULER = Scheduler.forScheduledExecutorService(newScheduler());
 
-    public static Caffeine<Object, Object> newBuilder() {
+    public static @NotNull Caffeine<Object, Object> newBuilder() {
         return Caffeine.newBuilder().executor(POOL);
     }
 
     @SuppressWarnings("unchecked")
-    public static <K, V> Caffeine<K, V> typedBuilder() {
+    public static <K, V> @NotNull Caffeine<K, V> typedBuilder() {
         return (Caffeine<K, V>) newBuilder();
     }
 
@@ -28,7 +29,7 @@ public final class CacheHandler {
         return CACHE_SCHEDULER;
     }
 
-    public static ScheduledExecutorService newScheduler() {
+    public static @NotNull ScheduledExecutorService newScheduler() {
         return Executors.newSingleThreadScheduledExecutor(Executors.defaultThreadFactory());
     }
 }

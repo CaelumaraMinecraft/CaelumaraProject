@@ -1,25 +1,24 @@
 package net.aurika.util.cache.caffeine;
 
-import kotlin.jvm.internal.Intrinsics;
+import net.aurika.checker.Checker;
 import org.jetbrains.annotations.NotNull;
 
 public final class ReferencedExpirableObject<T> implements ExpirableObject {
     private final T reference;
-    @NotNull
-    private final ExpirationStrategy expirationStrategy;
+
+    private final @NotNull ExpirationStrategy expirationStrategy;
 
     public ReferencedExpirableObject(T reference, @NotNull ExpirationStrategy expirationStrategy) {
-        Intrinsics.checkNotNullParameter(expirationStrategy, "expirationStrategy");
+        Checker.Arg.notNull(expirationStrategy, "expirationStrategy");
         this.reference = reference;
         this.expirationStrategy = expirationStrategy;
     }
 
-    public final T getReference() {
+    public T getReference() {
         return this.reference;
     }
 
-    @NotNull
-    public ExpirationStrategy getExpirationStrategy() {
+    public @NotNull ExpirationStrategy getExpirationStrategy() {
         return this.expirationStrategy;
     }
 }

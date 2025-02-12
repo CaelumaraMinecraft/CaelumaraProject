@@ -5,14 +5,13 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Policy;
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
 import com.google.errorprone.annotations.CompatibleWith;
-import kotlin.Pair;
-import kotlin.TuplesKt;
-import kotlin.collections.MapsKt;
-import kotlin.sequences.Sequence;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 
@@ -131,19 +130,16 @@ public final class ExpirableMap<K, V> implements Cache<K, V> {
         return var10000.getReference();
     }
 
-    @NotNull
-    public Map<K, V> getAllPresent(@NotNull Iterable<? extends K> keys) {
+    public @NotNull Map<K, V> getAllPresent(@NotNull Iterable<? extends K> keys) {
         Objects.requireNonNull(keys, "keys");
         Map<K, ReferencedExpirableObject<V>> var10000 = cache.getAllPresent(keys);
 
-        Sequence<Map.Entry<K, ReferencedExpirableObject<V>>> var10 = var10000 != null ? MapsKt.asSequence(var10000) : null;
+        Set<Map.Entry<K, ReferencedExpirableObject<V>>> var10 = var10000 != null ? var10000.entrySet() : null;
         Objects.requireNonNull(var10);
         Map<K, V> destination$iv = (new HashMap<>());
-        Iterator<Map.Entry<K, ReferencedExpirableObject<V>>> var5 = var10.iterator();
 
-        while (var5.hasNext()) {
-            Map.Entry<K, ReferencedExpirableObject<V>> it = var5.next();
-            destination$iv.put(it.getKey(), it.getValue());
+        for (Map.Entry<K, ReferencedExpirableObject<V>> it : var10) {
+            destination$iv.put(it.getKey(), it.getValue().getReference());
         }
 
         return destination$iv;

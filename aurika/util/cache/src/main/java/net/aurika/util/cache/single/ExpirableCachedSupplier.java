@@ -1,6 +1,5 @@
 package net.aurika.util.cache.single;
 
-import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -8,8 +7,8 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class ExpirableCachedSupplier<T> extends CachedSupplier<T> {
-    @NotNull
-    private final Duration cacheTime;
+
+    private final@NotNull Duration cacheTime;
     private long lastChecked;
 
     public ExpirableCachedSupplier(@NotNull Supplier<T> getter, @NotNull Duration cacheTime) {
@@ -29,8 +28,8 @@ public class ExpirableCachedSupplier<T> extends CachedSupplier<T> {
             this.lastChecked = currentTime;
         }
 
-        T var10000 = this.cached;
-        Intrinsics.checkNotNull(var10000);
-        return var10000;
+        T cached = this.cached;
+        Objects.requireNonNull(cached, "cached");
+        return cached;
     }
 }
