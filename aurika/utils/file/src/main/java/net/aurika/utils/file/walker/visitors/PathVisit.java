@@ -24,19 +24,19 @@ public final class PathVisit {
         this.exception = exception;
     }
 
-    public @NotNull Type getVisitType() {
+    public @NotNull Type visitType() {
         return visitType;
     }
 
-    public @NotNull Path getPath() {
+    public @NotNull Path path() {
         return path;
     }
 
-    public @Nullable BasicFileAttributes getAttributes() {
+    public @Nullable BasicFileAttributes attributes() {
         return attributes;
     }
 
-    public @Nullable IOException getException() {
+    public @Nullable IOException exception() {
         return exception;
     }
 

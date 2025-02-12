@@ -24,11 +24,11 @@ public class CollectorPathVisitor implements PathVisitor {
         this.list = new ArrayList<>();
     }
 
-    public @NotNull Path getRoot() {
+    public @NotNull Path root() {
         return root;
     }
 
-    public @NotNull PathVisitor getVisitor() {
+    public @NotNull PathVisitor visitor() {
         return visitor;
     }
 
@@ -42,14 +42,14 @@ public class CollectorPathVisitor implements PathVisitor {
         switch (result) {
             case CONTINUE:
             case SKIP_SIBLINGS:
-                list.add(visit.getPath());
+                list.add(visit.path());
             default:
                 return result;
         }
     }
 
     public @NotNull List<Path> getFiles() {
-        FileTreeWalker.walkFileTree(this.root, new HashSet<>(), Integer.MAX_VALUE, this);
-        return this.list;
+        FileTreeWalker.walkFileTree(root, new HashSet<>(), Integer.MAX_VALUE, this);
+        return list;
     }
 }

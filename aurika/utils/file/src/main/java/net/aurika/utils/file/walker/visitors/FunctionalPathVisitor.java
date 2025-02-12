@@ -131,11 +131,11 @@ public class FunctionalPathVisitor implements PathVisitor {
 
     public @NotNull FileVisitResult onVisit(@NotNull PathVisit visit) {
         Checker.Arg.notNull(visit, "visit");
-        if (Objects.equals(visit.getPath(), this.root)) {
+        if (Objects.equals(visit.path(), this.root)) {
             return FileVisitResult.CONTINUE;
         } else {
             for (ConditionalPathVisitor pathVisitHandle : this.visitors) {
-                if (pathVisitHandle.getPredicate().test(visit.getPath())) {
+                if (pathVisitHandle.getPredicate().test(visit.path())) {
                     return pathVisitHandle.getVisitor().onVisit(visit);
                 }
             }

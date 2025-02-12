@@ -3,6 +3,7 @@ package net.aurika.utils.file.walker;
 import net.aurika.utils.file.walker.visitors.PathVisit;
 import net.aurika.utils.file.walker.visitors.PathVisit.Type;
 import net.aurika.utils.file.walker.visitors.PathVisitor;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class FileTreeWalker implements Closeable, FileWalkerController {
             PathVisit ev = walker.walk(start);
             do {
                 FileVisitResult result;
-                switch (ev.getVisitType()) {
+                switch (ev.visitType()) {
                     case ENTRY: {
                         result = visitor.onVisit(ev);
                         break;
@@ -78,7 +79,7 @@ public class FileTreeWalker implements Closeable, FileWalkerController {
                         break;
                     }
                     default:
-                        throw new AssertionError("Should not get here: " + ev.getVisitType());
+                        throw new AssertionError("Should not get here: " + ev.visitType());
                 }
 
                 if (Objects.requireNonNull(result) != FileVisitResult.CONTINUE) {
@@ -124,7 +125,7 @@ public class FileTreeWalker implements Closeable, FileWalkerController {
      * @throws NullPointerException     if {@code options} is {@code null} or the options
      *                                  array contains a {@code null} element
      */
-    FileTreeWalker(Collection<FileVisitOption> options, int maxDepth) {
+    FileTreeWalker(@NotNull Collection<FileVisitOption> options, int maxDepth) {
         boolean fl = false;
         for (FileVisitOption option : options) {
             // will throw NPE if options contains null
@@ -171,7 +172,7 @@ public class FileTreeWalker implements Closeable, FileWalkerController {
      * Returns true if walking into the given directory would result in a
      * file system loop/cycle.
      */
-    private boolean wouldLoop(Path dir, Object key) {
+    private boolean wouldLoop(@NotNull Path dir, Object key) {
         // if this directory and ancestor has a file key then we compare
         // them; otherwise we use less efficient isSameFile test.
         for (DirectoryNode ancestor : stack) {

@@ -41,10 +41,10 @@ class FileTreeIterator implements Iterator<PathVisit>, Closeable, FileWalkerCont
     FileTreeIterator(Path start, int maxDepth, FileVisitOption... options) throws IOException {
         this.walker = new FileTreeWalker(Arrays.asList(options), maxDepth);
         this.next = walker.walk(start);
-        assert next.getVisitType() == PathVisit.Type.ENTRY ||
-                next.getVisitType() == PathVisit.Type.START_DIRECTORY;
+        assert next.visitType() == PathVisit.Type.ENTRY ||
+                next.visitType() == PathVisit.Type.START_DIRECTORY;
 
-        IOException ioe = next.getException();
+        IOException ioe = next.exception();
         if (ioe != null) throw ioe;
     }
 
@@ -52,12 +52,12 @@ class FileTreeIterator implements Iterator<PathVisit>, Closeable, FileWalkerCont
         if (next == null) {
             PathVisit ev = walker.next();
             while (ev != null) {
-                IOException ioe = ev.getException();
+                IOException ioe = ev.exception();
                 if (ioe != null)
                     throw new UncheckedIOException(ioe);
 
                 // END_DIRECTORY events are ignored
-                if (ev.getVisitType() != PathVisit.Type.END_DIRECTORY) {
+                if (ev.visitType() != PathVisit.Type.END_DIRECTORY) {
                     next = ev;
                     return;
                 }

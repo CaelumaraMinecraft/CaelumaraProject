@@ -1,40 +1,40 @@
-package net.aurika.data.api.structure.quantums;
+package net.aurika.data.api.structure.quantum;
 
 import net.aurika.data.api.structure.DataUnitType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class LongDataQuantum extends DataQuantum {
-    private final long value;
+public class DoubleDataQuantum extends DataQuantum {
+    private final double value;
 
-    public LongDataQuantum(long value) {
+    public DoubleDataQuantum(double value) {
         this.value = value;
     }
 
-    public long value() {
+    public double value() {
         return value;
     }
 
     @Override
     public @NotNull DataUnitType type() {
-        return DataUnitType.LONG;
+        return DataUnitType.FLOAT;
     }
 
     @Override
-    public @NotNull Long valueAsObject() {
+    public @NotNull Double valueAsObject() {
         return value;
     }
 
     @Override
     public @NotNull String valueToString() {
-        return Long.toString(value);
+        return Double.toString(value);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof LongDataQuantum that)) return false;
-        return value == that.value;
+        if (!(o instanceof DoubleDataQuantum that)) return false;
+        return Double.compare(value, that.value) == 0;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.aurika.data.api.structure.quantums;
+package net.aurika.data.api.structure.quantum;
 
 import net.aurika.data.api.structure.DataUnitType;
 import org.jetbrains.annotations.NotNull;
