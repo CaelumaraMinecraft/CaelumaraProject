@@ -1,10 +1,10 @@
 package net.aurika.data.database.mongo;
 
 import net.aurika.checker.Checker;
-import net.aurika.data.api.dataprovider.*;
-import net.aurika.data.api.structure.SimpleData;
-import net.aurika.data.api.structure.SimpleDataObjectTemplate;
-import net.aurika.data.api.structure.entries.MapDataEntry;
+import net.aurika.data.api.structure.DataUnits;
+import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
+import net.aurika.data.api.structure.SimpleMappingDataEntry;
+import net.aurika.data.database.dataprovider.*;
 import net.aurika.utils.function.FloatSupplier;
 import net.aurika.utils.function.TriConsumer;
 import org.bson.Document;
@@ -103,7 +103,7 @@ public class MongoDataProvider implements DataProvider, SectionCreatableDataSett
     }
 
     @Override
-    public <T> T asObject(SimpleDataObjectTemplate<T> template) {
+    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
         return null;
     }
 
@@ -218,10 +218,10 @@ public class MongoDataProvider implements DataProvider, SectionCreatableDataSett
     }
 
     @Override
-    public void setObject(@NotNull SimpleData value) {
+    public void setObject(@NotNull DataUnits value) {
         Checker.Arg.notNull(value, "value");
         Document document = d();
-        for (MapDataEntry entry : value) {
+        for (SimpleMappingDataEntry entry : value) {
             Objects.requireNonNull(entry, "entry");
             String entryKey = entry.key();
             Object entryValue = entry.valueAsObject();
@@ -231,28 +231,28 @@ public class MongoDataProvider implements DataProvider, SectionCreatableDataSett
         }
     }
 
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         Objects.requireNonNull(value, "");
-        Objects.requireNonNull(var2, "");
+        Objects.requireNonNull(handler, "");
         List var3 = new ArrayList<>();
 
         for (V var4 : value) {
-            var2.accept(createProvider$core(var3), var4);
+            handler.accept(createProvider$core(var3), var4);
         }
 
         this.document.append(this.name_notNull(), var3);
     }
 
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> var2) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
         Objects.requireNonNull(value, "");
-        Objects.requireNonNull(var2, "");
+        Objects.requireNonNull(handler, "");
         final Document var3 = new Document();
 
         for (Map.Entry<K, ? extends V> kEntry : value.entrySet()) {
             K var5 = kEntry.getKey();
             V var7 = kEntry.getValue();
 
-            var2.map(var5, new StringMappedIdSetter((s) -> new MongoDataProvider(s, var3)), var7);
+            handler.map(var5, new StringMappedIdSetter((s) -> new MongoDataProvider(s, var3)), var7);
         }
 
         this.document.append(this.name_notNull(), var3);

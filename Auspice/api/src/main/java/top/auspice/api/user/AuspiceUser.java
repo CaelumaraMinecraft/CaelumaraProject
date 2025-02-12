@@ -5,6 +5,8 @@ import net.aurika.checker.Checker;
 import net.aurika.namespace.NSKey;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.nested.NestedNamespace;
+import net.kyori.adventure.key.KeyPattern;
+import net.kyori.adventure.key.Namespaced;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.messages.LanguageManager;
@@ -19,14 +21,14 @@ import java.util.Map;
 /**
  * AuspiceAPI 使用者
  */
-public interface AuspiceUser {
+public interface AuspiceUser extends Namespaced {
 
     @NotNull
     @AuspiceUserName
     String getAuspiceUserName();
 
     @NotNull
-    @NSKey.Namespace
+    @KeyPattern.Namespace
     String namespace();
 
     @NotNull Diversity getDefaultDiversity();

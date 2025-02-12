@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.data.api.dataprovider.*;
+import net.aurika.data.database.dataprovider.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.constants.location.SimpleBlockLocation;
@@ -277,25 +277,25 @@ public class JsonObjectDataProvider implements DataProvider, SectionCreatableDat
     }
 
     @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> biConsumer) {
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         Intrinsics.checkNotNullParameter(value, "");
-        Intrinsics.checkNotNullParameter(biConsumer, "");
+        Intrinsics.checkNotNullParameter(handler, "");
         JsonArray jsonArray = new JsonArray();
         for (V e : value) {
-            biConsumer.accept(new JsonElementDataProvider(jsonArray), e);
+            handler.accept(new JsonElementDataProvider(jsonArray), e);
         }
         this.obj.add(this.b(), jsonArray);
     }
 
     @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> mappingSetterHandler) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
         Intrinsics.checkNotNullParameter(value, "");
-        Intrinsics.checkNotNullParameter(mappingSetterHandler, "");
+        Intrinsics.checkNotNullParameter(handler, "");
         JsonObject jsonObject = new JsonObject();
         for (Map.Entry<K, ? extends V> entry : value.entrySet()) {
             K k = entry.getKey();
             V entry2 = entry.getValue();
-            mappingSetterHandler.map(k, new StringMappedIdSetter(s -> new JsonObjectDataProvider(s, jsonObject)), entry2);
+            handler.map(k, new StringMappedIdSetter(s -> new JsonObjectDataProvider(s, jsonObject)), entry2);
         }
         this.obj.add(this.b(), jsonObject);
     }

@@ -5,8 +5,11 @@ plugins {
 
 dependencies {
     api(project(":aurika:checker"))
+    api(project(":aurika:dependency"))
     api(project(":aurika:utils:function"))
+    api(project(":aurika:utils:math"))
     api(project(":aurika:utils:string"))
+
     api(libs.annotations.jetbrains)
     api(libs.annotations.checker)
 }

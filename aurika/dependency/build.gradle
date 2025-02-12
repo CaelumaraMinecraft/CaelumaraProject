@@ -3,11 +3,9 @@ plugins {
     id("maven-publish")
 }
 
-group = "net.aurika.data"
-version = project(":aurika").version
-
 dependencies {
-    implementation(api(project(":aurika:base")))
-    implementation(libs.asm.asm)
-    implementation(libs.asm.commons)
+    api(project(":aurika:base"))
+
+    api(libs.asm.asm)
+    api(libs.asm.commons)
 }

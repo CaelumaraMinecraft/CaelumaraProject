@@ -5,7 +5,7 @@ import com.cryptomorin.xseries.reflection.minecraft.MinecraftMapping;
 import com.cryptomorin.xseries.reflection.minecraft.MinecraftPackage;
 import org.bukkit.inventory.ItemStack;
 import top.auspice.bukkit.server.adapers.BukkitAdapter;
-import top.auspice.nbt.tag.NBTTagType;
+import net.aurika.nbt.tag.NBTTagType;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -154,7 +154,7 @@ public final class ItemNBT {
      * @param item The ItemStack
      * @return The modified itemStack
      */
-    public static ItemStack setTag(ItemStack item, top.auspice.nbt.tag.NBTTagCompound tag) {
+    public static ItemStack setTag(ItemStack item, net.aurika.nbt.tag.NBTTagCompound tag) {
         Object nbtTag = BukkitAdapter.adapt(tag);
         Object nmsItem = Objects.requireNonNull(asNMSCopy(item), () -> "NMS copy is null for " + item);
 
@@ -178,12 +178,12 @@ public final class ItemNBT {
      * @param item The ItemStack to get the tag for
      * @return The NBTTagCompound of the ItemStack or a new one if it had none or an error occurred
      */
-    public static top.auspice.nbt.tag.NBTTagCompound getTag(ItemStack item) {
+    public static net.aurika.nbt.tag.NBTTagCompound getTag(ItemStack item) {
         Objects.requireNonNull(item, "Cannot get tag of null item");
         Object nmsItem = asNMSCopy(item);
 
         // Happens in older versions for items like AIR
-        if (nmsItem == null) return top.auspice.nbt.tag.NBTTagCompound.empty();
+        if (nmsItem == null) return net.aurika.nbt.tag.NBTTagCompound.empty();
 
         Object tag = null;
         try {
@@ -196,7 +196,7 @@ public final class ItemNBT {
         } catch (Throwable throwable) {
             throw new RuntimeException(throwable);
         }
-        if (tag == null) return top.auspice.nbt.tag.NBTTagCompound.empty();
+        if (tag == null) return net.aurika.nbt.tag.NBTTagCompound.empty();
 
         return BukkitAdapter.adapt(NBTTagType.COMPOUND, tag);
     }

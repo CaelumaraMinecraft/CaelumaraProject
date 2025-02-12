@@ -1,10 +1,13 @@
 package net.aurika.data.api;
 
-import net.aurika.data.api.handler.DataHandler;
+import net.aurika.data.compressor.DataCompressor;
+import net.aurika.data.database.compressor.CompressorDataProvider;
+import net.aurika.data.handler.DataHandler;
+import net.aurika.data.internal.ByteArrayOutputStream;
+import net.aurika.utils.unsafe.fn.Fn;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.ApiStatus.NonExtendable;
 import org.jetbrains.annotations.Nullable;
-
 
 import static net.aurika.data.api.CompressedSmartObject.Impl.*;
 
@@ -61,12 +64,12 @@ public interface CompressedSmartObject extends SmartObject {
         this.ensureObjectExpiration();
         if (this.getObjectState() != a) {
             if (var1) {
-                this.setObjectState(b);
+                setObjectState(b);
             } else if (this.getObjectState() != null) {
                 throw new IllegalStateException("Save meta already set " + this);
             } else {
-                this.setObjectState(a);
-                this.setObjectState(this.getCompressedData());
+                setObjectState(a);
+                setObjectState(getCompressedData());
             }
         }
     }
@@ -75,7 +78,7 @@ public interface CompressedSmartObject extends SmartObject {
     @NonExtendable
     default /*final*/ boolean isObjectStateSaved() {
         this.ensureObjectExpiration();
-        return this.getObjectState() != null;
+        return getObjectState() != null;
     }
 
     @Internal

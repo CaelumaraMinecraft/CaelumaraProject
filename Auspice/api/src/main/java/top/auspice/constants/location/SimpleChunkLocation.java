@@ -1,11 +1,11 @@
 package top.auspice.constants.location;
 
 import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.structure.DataMetaType;
-import net.aurika.data.api.structure.SimpleData;
-import net.aurika.data.api.structure.SimpleDataObject;
-import net.aurika.data.api.structure.SimpleDataObjectTemplate;
-import net.aurika.data.api.structure.entries.MapDataEntry;
+import net.aurika.data.api.structure.DataUnitType;
+import net.aurika.data.api.structure.DataUnits;
+import net.aurika.data.api.structure.DataUnitsLike;
+import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
+import net.aurika.data.api.structure.SimpleMappingDataEntry;
 import net.aurika.utils.string.CommaDataSplitStrategy;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -24,21 +24,21 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, SimpleDataObject {
+public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, DataUnitsLike {
     private final @NonNull String world;
     private final int x;
     private final int z;
 
-    public static final SimpleDataObjectTemplate<SimpleChunkLocation> DATA_TEMPLATE = SimpleDataObjectTemplate.of(
+    public static final SimpleDataMapObjectTemplate<SimpleChunkLocation> DATA_TEMPLATE = SimpleDataMapObjectTemplate.of(
             SimpleChunkLocation.class,
             data -> new SimpleChunkLocation(
                     data.getString("world"),
                     data.getInt("x"),
                     data.getInt("z")
             ),
-            "world", DataMetaType.STRING,
-            "x", DataMetaType.INT,
-            "z", DataMetaType.INT
+            "world", DataUnitType.STRING,
+            "x", DataUnitType.INT,
+            "z", DataUnitType.INT
     );
 
     public SimpleChunkLocation(@NonNull String var1, int var2, int var3) {
@@ -302,16 +302,16 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NonNull SimpleData simpleData() {
-        return SimpleData.of(
-                MapDataEntry.of("world", world),
-                MapDataEntry.of("x", x),
-                MapDataEntry.of("z", z)
+    public @NonNull DataUnits simpleData() {
+        return DataUnits.of(
+                SimpleMappingDataEntry.of("world", world),
+                SimpleMappingDataEntry.of("x", x),
+                SimpleMappingDataEntry.of("z", z)
         );
     }
 
     @Override
-    public @NotNull SimpleDataObjectTemplate<? extends SimpleChunkLocation> simpleDataTemplate() {
+    public @NotNull SimpleDataMapObjectTemplate<? extends SimpleChunkLocation> simpleDataTemplate() {
         return DATA_TEMPLATE;
     }
 }

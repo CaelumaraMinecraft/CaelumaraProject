@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.text.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.constants.base.KeyedAuspiceObject;
-import top.auspice.data.AuspiceDataCenter;
+import top.auspice.data.centers.AuspiceDataCenter;
 import top.auspice.diversity.Diversity;
 import top.auspice.server.player.OfflinePlayer;
 
@@ -51,7 +51,7 @@ public interface AuspicePlayer extends KeyedAuspiceObject<UUID>, PlaceholderInvo
 
         public @Nullable Object providePlaceholderAttribute(@NotNull String attributeName) {
             return switch (attributeName) {
-                case "key", "uuid" -> this.getKey();
+                case "key", "uuid" -> this.dataKey();
 //            case "name" ->
                 default -> null;
             };

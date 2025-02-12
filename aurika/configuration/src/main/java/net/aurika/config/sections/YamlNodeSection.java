@@ -1,9 +1,11 @@
 package net.aurika.config.sections;
 
+import net.aurika.checker.Checker;
 import net.aurika.config.path.ConfigEntry;
 import net.aurika.config.path.ConfigEntryMap;
 import net.aurika.config.sections.format.YamlConfigSectionFormat;
 import net.aurika.config.sections.label.Label;
+import net.aurika.utils.generics.Generics;
 import net.aurika.utils.snakeyaml.nodes.NodeUtils;
 import net.aurika.utils.snakeyaml.nodes.NodesKt;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,9 +18,6 @@ import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
 import org.snakeyaml.engine.v2.exceptions.Mark;
 import org.snakeyaml.engine.v2.nodes.*;
-import top.auspice.utils.Generics;
-import top.auspice.utils.Pair;
-import top.auspice.utils.Validate;
 
 import java.util.*;
 import java.util.function.Function;
@@ -159,19 +158,6 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     protected void changeRoot(@NotNull Node newRoot) {
         this.root = newRoot;
         syncParentNodeData(newRoot);
-    }
-
-    /**
-     * @return 找到的节点, ScalarNode 的值为路径的最后一个值, Node 为找到的节点
-     */
-    public @Nullable Pair<ScalarNode, Node> findNodePairs(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path", PATH_CONTAINS_NULL);
-
-        NodeTuple founded = findTuple(path);
-        if (founded != null) {
-            return Pair.of((founded.getKeyNode() instanceof AnchorNode anchorNode ? ((ScalarNode) anchorNode.getRealNode()) : ((ScalarNode) founded.getKeyNode())), founded.getValueNode());
-        }
-        return null;
     }
 
     @Override
@@ -547,7 +533,6 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @Nullable Long getLong(@NotNull String @NotNull [] path) {
-        Validate.noNullElements(path, "Can not use path contains null String");
         Node node = this.findNode(path);
         return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.longValue() : null;
     }

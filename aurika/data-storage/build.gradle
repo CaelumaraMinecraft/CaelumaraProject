@@ -9,10 +9,16 @@ dependencies {
     api(project(":aurika:dependency"))
     api(project(":aurika:tasks"))
     api(project(":aurika:utils:file"))
+    api(project(":aurika:utils:fn"))
     api(project(":aurika:utils:function"))
     api(project(":aurika:utils:gson"))
     api(project(":aurika:utils:string"))
     api(project(":aurika:utils:snakeyaml-ext"))
+
+    api("de.tr7zw:item-nbt-api:2.14.1")
+
+    api(libs.adventure.key)
+    api(libs.adventure.nbt)
     api(libs.gson)
     api(libs.h2)
     api(libs.hikari)

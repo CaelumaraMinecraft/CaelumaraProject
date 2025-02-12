@@ -22,3 +22,41 @@ root:
 
   "KingdomsAddons":
     'Auspice':
+
+
+
+
+    "minecraft:custom_name": { "extra": [ "", { "color": "dark_red", "text": "某虎私酿" } ], "italic": false, "text": "" },
+    "minecraft:potion_contents":
+      "custom_effects":
+        - "duration": 1
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:instant_health"
+        - "duration": 2400
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:slowness"
+        - "duration": 2400
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:mining_fatigue"
+        - "duration": 2400
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:blindness"
+        - "duration": 2400
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:nausea"
+        - "duration": 2400
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:darkness"
+        - "duration": 2400
+          "amplifier": 4
+          "show_icon": 1
+          "id": "minecraft:weakness"
+      "potion": "minecraft:thick"
+    "minecraft:hide_additional_tooltip": {}
+

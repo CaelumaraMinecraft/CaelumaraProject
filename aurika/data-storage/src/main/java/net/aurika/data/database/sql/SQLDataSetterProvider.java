@@ -3,8 +3,8 @@ package net.aurika.data.database.sql;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.data.api.dataprovider.*;
 import net.aurika.data.database.DatabaseType;
+import net.aurika.data.database.dataprovider.*;
 import net.aurika.data.database.flatfile.json.JsonElementDataProvider;
 import net.aurika.data.database.flatfile.json.JsonObjectDataProvider;
 import net.aurika.data.database.sql.statements.setters.PreparedNamedSetterStatement;
@@ -98,9 +98,9 @@ public class SQLDataSetterProvider extends SQLDataProvider implements Sectionabl
         this.a.setBoolean(this.getNamed$core(), value);
     }
 
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> consumer) {
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         Objects.requireNonNull(value, "c");
-        Objects.requireNonNull(consumer, "consumer");
+        Objects.requireNonNull(handler, "consumer");
         if (value.isEmpty()) {
             this.a.addParameterIfNotExist(this.getNamed$core());
             this.a.setJson(this.getNamed$core(), SQLDataProvider.EMPTY_JSON_ARRAY);
@@ -109,7 +109,7 @@ public class SQLDataSetterProvider extends SQLDataProvider implements Sectionabl
             JsonElementDataProvider var4 = new JsonElementDataProvider(var3);
 
             for (V var5 : value) {
-                consumer.accept(var4, var5);
+                handler.accept(var4, var5);
             }
 
             this.a.setJson(this.getNamed$core(), var3);

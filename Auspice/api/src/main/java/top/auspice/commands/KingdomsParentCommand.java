@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.diversity.Diversity;
 import top.auspice.permission.PermissionDefaultValue;
 import top.auspice.utils.enumeration.QuickEnumMap;
-import top.auspice.utils.unsafe.Fn;
+import net.aurika.utils.unsafe.fn.Fn;
 
 import java.util.Collection;
 import java.util.Collections;

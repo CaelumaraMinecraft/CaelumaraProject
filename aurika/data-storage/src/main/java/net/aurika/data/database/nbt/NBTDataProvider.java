@@ -1,16 +1,12 @@
 package net.aurika.data.database.nbt;
 
-import kotlin.jvm.internal.Intrinsics;
-import net.aurika.data.api.dataprovider.*;
+import net.aurika.data.database.dataprovider.*;
+import net.aurika.utils.function.FloatSupplier;
+import net.aurika.utils.function.TriConsumer;
+import net.aurika.utils.uuid.FastUUID;
+import net.kyori.adventure.nbt.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.location.SimpleBlockLocation;
-import top.auspice.constants.location.SimpleChunkLocation;
-import top.auspice.constants.location.SimpleLocation;
-import top.auspice.nbt.tag.*;
-import top.auspice.utils.function.FloatSupplier;
-import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.util.Collection;
 import java.util.Map;
@@ -20,25 +16,24 @@ import java.util.function.*;
 
 public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter {
 
-    private final @NotNull NBTTag<?> element;
+    private @NotNull BinaryTag element;
 
-    public NBTDataProvider(@NotNull NBTTag<?> element) {
-        Objects.requireNonNull(element);
+    public NBTDataProvider(@NotNull BinaryTag element) {
+        Objects.requireNonNull(element, "element");
         this.element = element;
     }
 
-    public @NotNull NBTTag<?> getElement$core() {
-        return this.element;
+    public @NotNull BinaryTag getElement$core() {
+        return element;
     }
 
     @Override
     public @NotNull DataProvider createSection(@NotNull String key) {
-        Objects.requireNonNull(key);
-        NBTTagCompound var10000 = NBTTagCompound.empty();
-        Intrinsics.checkNotNullExpressionValue(var10000, "");
-        if (this.element instanceof NBTTagCompound) {
-            ((NBTTagCompound) this.element).set(key, (NBTTag) var10000);
-            return new NBTDataProvider(var10000);
+        Objects.requireNonNull(key, "key");
+        CompoundBinaryTag sub = CompoundBinaryTag.empty();
+        if (element instanceof CompoundBinaryTag) {
+            element = ((CompoundBinaryTag) element).put(key, sub);
+            return new NBTDataProvider(sub);
         } else {
             throw new UnsupportedOperationException();
         }
@@ -46,11 +41,10 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public @NotNull SectionableDataSetter createSection() {
-        NBTTagCompound var10000 = NBTTagCompound.empty();
-        Intrinsics.checkNotNullExpressionValue(var10000, "");
-        if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(var10000);
-            return new NamedNBTDataProvider(null, var10000);
+        CompoundBinaryTag e = CompoundBinaryTag.empty();
+        if (element instanceof ListBinaryTag) {
+            element = ((ListBinaryTag) element).add(e);
+            return new NamedNBTDataProvider(null, e);
         } else {
             throw new UnsupportedOperationException();
         }
@@ -58,8 +52,12 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public @NotNull DataProvider get(@NotNull String key) {
-        Objects.requireNonNull(key);
-        return new NamedNBTDataProvider(key, NBTTagType.COMPOUND.cast(this.element));
+        Objects.requireNonNull(key, "key");
+        if (element instanceof CompoundBinaryTag) {
+            return new NamedNBTDataProvider(key, (CompoundBinaryTag) element);
+        } else {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override
@@ -69,19 +67,8 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public @Nullable String asString(@NotNull Supplier<String> def) {
-        Objects.requireNonNull(def);
-        NBTTag<?> var2 = this.element;
-        NBTTagString var10000 = var2 instanceof NBTTagString ? (NBTTagString) var2 : null;
-        String var3;
-        if (var10000 != null) {
-            var3 = var10000.value();
-            if (var3 != null) {
-                return var3;
-            }
-        }
-
-        var3 = def.get();
-        return var3;
+        Objects.requireNonNull(def, "def");
+        return element instanceof StringBinaryTag ? ((StringBinaryTag) element).value() : def.get();
     }
 
     @Override
@@ -110,41 +97,38 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public int asInt(@NotNull IntSupplier def) {
-        return ((NBTTagInt) this.element).valueAsInt();
+        return ((IntBinaryTag) element).value();
     }
 
     @Override
     public long asLong(@NotNull LongSupplier def) {
-        return ((NBTTagLong) this.element).valueAsLong();
+        return ((LongBinaryTag) element).value();
     }
 
     @Override
     public float asFloat(@NotNull FloatSupplier def) {
-        return ((NBTTagFloat) this.element).valueAsFloat();
+        return ((FloatBinaryTag) element).value();
     }
 
     @Override
     public double asDouble(@NotNull DoubleSupplier def) {
         Objects.requireNonNull(def, "def");
-        return ((NBTTagDouble) this.element).valueAsDouble();
+        return ((DoubleBinaryTag) element).value();
     }
 
     @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
         Objects.requireNonNull(def, "def");
-        return ((NBTTagBool) this.element).valueAsBool();
+        return ((ByteBinaryTag) element).value() != 0;
     }
 
     @Override
     public <E, C extends Collection<E>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> dataProcessor) {
         Objects.requireNonNull(c, "c");
         Objects.requireNonNull(dataProcessor, "dataProcessor");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
 
-        for (NBTTag<?> o : ((NBTTagList<?>) var10000).value()) {
-            Intrinsics.checkNotNull(o);
-            dataProcessor.accept(c, new NBTDataProvider(o));
+        for (BinaryTag e : ((ListBinaryTag) element)) {
+            dataProcessor.accept(c, new NBTDataProvider(e));
         }
 
         return c;
@@ -154,22 +138,19 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
     public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> dataProcessor) {
         Objects.requireNonNull(m, "");
         Objects.requireNonNull(dataProcessor, "");
-        NBTTag<?> var10000 = this.element;
-        Intrinsics.checkNotNull(var10000);
-        Map<String, ? extends NBTTag<?>> var6 = ((NBTTagCompound) var10000).value();
-        Intrinsics.checkNotNullExpressionValue(var6, "");
 
-        for (Map.Entry<String, ? extends NBTTag<?>> o : var6.entrySet()) {
-            String var5 = o.getKey();
-            NBTTag<?> var7 = o.getValue();
-            NBTTagString var10004 = NBTTagString.of(var5);
-            Intrinsics.checkNotNullExpressionValue(var10004, "");
-            NBTDataProvider var10002 = new NBTDataProvider(var10004);
-            Intrinsics.checkNotNull(var7);
-            dataProcessor.accept(m, var10002, new NBTDataProvider(var7));
+        for (Map.Entry<String, ? extends BinaryTag> entry : ((CompoundBinaryTag) element)) {
+            dataProcessor.accept(m, new NBTDataProvider(StringBinaryTag.stringBinaryTag(entry.getKey())), new NBTDataProvider(entry.getValue()));
         }
 
         return m;
+    }
+
+    @Override
+    public void setLocation(@Nullable SimpleLocation value) {
+        if (value != null) {
+            this.setString(value.asDataString());
+        }
     }
 
     @Override
@@ -185,8 +166,8 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public void setLong(long value) {
-        if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagLong.of(value));
+        if (element instanceof ListBinaryTag) {
+            element = ((ListBinaryTag) element).add(LongBinaryTag.longBinaryTag(value));
         } else {
             throw new UnsupportedOperationException();
         }
@@ -195,8 +176,8 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
     @Override
     public void setString(@Nullable String value) {
         if (value != null) {
-            if (this.element instanceof NBTTagList) {
-                ((NBTTagList<?>) this.element).addUnknown(NBTTagString.of(value));
+            if (element instanceof ListBinaryTag) {
+                element = ((ListBinaryTag) element).add(StringBinaryTag.stringBinaryTag(value));
             } else {
                 throw new UnsupportedOperationException();
             }
@@ -205,8 +186,8 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public void setInt(int value) {
-        if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagInt.of(value));
+        if (element instanceof ListBinaryTag) {
+            element = ((ListBinaryTag) element).add(IntBinaryTag.intBinaryTag(value));
         } else {
             throw new UnsupportedOperationException();
         }
@@ -214,8 +195,8 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public void setFloat(float value) {
-        if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagFloat.of(value));
+        if (element instanceof ListBinaryTag) {
+            element = ((ListBinaryTag) element).add(FloatBinaryTag.floatBinaryTag(value));
         } else {
             throw new UnsupportedOperationException();
         }
@@ -223,8 +204,8 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public void setDouble(double value) {
-        if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagDouble.of(value));
+        if (element instanceof ListBinaryTag) {
+            element = ((ListBinaryTag) element).add(DoubleBinaryTag.doubleBinaryTag(value));
         } else {
             throw new UnsupportedOperationException();
         }
@@ -232,28 +213,21 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
     @Override
     public void setBoolean(boolean value) {
-        if (this.element instanceof NBTTagList) {
-            ((NBTTagList<?>) this.element).addUnknown(NBTTagBool.of(value));
+        if (element instanceof ListBinaryTag) {
+            element = ((ListBinaryTag) element).add(ByteBinaryTag.byteBinaryTag((byte) (value ? 1 : 0)));
         } else {
             throw new UnsupportedOperationException();
         }
     }
 
     @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> var2) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setLocation(@Nullable SimpleLocation value) {
-        if (value != null) {
-            this.setString(value.asDataString());
-        }
     }
 
     @Override

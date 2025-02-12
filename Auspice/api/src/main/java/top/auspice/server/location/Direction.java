@@ -11,45 +11,27 @@ import java.util.Objects;
 public enum Direction implements Directional {
 
     NORTH(0, 0, -1, Type.CARDINAL),
-
     EAST(1, 0, 0, Type.CARDINAL),
-
     SOUTH(0, 0, 1, Type.CARDINAL),
-
     WEST(-1, 0, 0, Type.CARDINAL),
-
     UP(0, 1, 0, Type.VERTICAL),
-
     DOWN(0, -1, 0, Type.VERTICAL),
-
     NORTH_EAST(NORTH, EAST, Type.ORDINAL),
-
     NORTH_WEST(NORTH, WEST, Type.ORDINAL),
-
     SOUTH_EAST(SOUTH, EAST, Type.ORDINAL),
-
     SOUTH_WEST(SOUTH, WEST, Type.ORDINAL),
-
     WEST_NORTH_WEST(WEST, NORTH_WEST, Type.SECONDARY_ORDINAL),
-
     NORTH_NORTH_WEST(NORTH, NORTH_WEST, Type.SECONDARY_ORDINAL),
-
     NORTH_NORTH_EAST(NORTH, NORTH_EAST, Type.SECONDARY_ORDINAL),
-
     EAST_NORTH_EAST(EAST, NORTH_EAST, Type.SECONDARY_ORDINAL),
-
     EAST_SOUTH_EAST(EAST, SOUTH_EAST, Type.SECONDARY_ORDINAL),
-
     SOUTH_SOUTH_EAST(SOUTH, SOUTH_EAST, Type.SECONDARY_ORDINAL),
-
     SOUTH_SOUTH_WEST(SOUTH, SOUTH_WEST, Type.SECONDARY_ORDINAL),
-
     WEST_SOUTH_WEST(WEST, SOUTH_WEST, Type.SECONDARY_ORDINAL);
-    @NotNull
-    public static final Direction[] VALUES = values();
+
+    public static final Direction @NotNull [] VALUES = values();
     private static final Map<String, Direction> MAPPINGS = Enums.createMapping(values());
-    @NotNull
-    private final Type type;
+    private final @NotNull Type type;
     private final int x;
     private final int y;
     private final int z;
@@ -98,7 +80,6 @@ public enum Direction implements Directional {
             this.yaw = (directional.getYaw() + 180.0F) % (float) 360;
             this.pitch = directional.getPitch();
         }
-
     }
 
     Direction(Direction face1, Direction face2, Type type) {
@@ -203,7 +184,6 @@ public enum Direction implements Directional {
 
             return Direction.NORTH;
         }
-
     }
 
     @NotNull
@@ -255,7 +235,6 @@ public enum Direction implements Directional {
          *
          */
         VERTICAL
-
     }
 }
 

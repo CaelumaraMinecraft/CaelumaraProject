@@ -1,8 +1,8 @@
 package net.aurika.data.database.mongo;
 
-import net.aurika.data.api.dataprovider.*;
-import net.aurika.data.api.structure.SimpleData;
-import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.data.api.structure.DataUnits;
+import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
+import net.aurika.data.database.dataprovider.*;
 import net.aurika.utils.function.FloatSupplier;
 import net.aurika.utils.function.TriConsumer;
 import net.aurika.utils.uuid.FastUUID;
@@ -71,7 +71,7 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @Override
-    public void setObject(@Nullable SimpleData value) {
+    public void setObject(@Nullable DataUnits value) {
         if (value != null) this.c().add(value);
     }
 
@@ -95,25 +95,25 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> var2) {
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         Objects.requireNonNull(value, "value");
-        Objects.requireNonNull(var2, "");
+        Objects.requireNonNull(handler, "");
         List<Object> var3 = new ArrayList<>();
         UnknownDataGetter var4 = new UnknownDataGetter(var3);
 
         for (V var5 : value) {
-            var2.accept(var4, var5);
+            handler.accept(var4, var5);
         }
 
         this.c().add(var3);
     }
 
     @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> var2) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
         Objects.requireNonNull(value, "value");
-        Objects.requireNonNull(var2);
+        Objects.requireNonNull(handler);
         Document var3 = new Document();
-        (new MongoDataProvider(null, var3)).setMap(value, var2);
+        (new MongoDataProvider(null, var3)).setMap(value, handler);
         this.c().add(var3);
     }
 
@@ -147,7 +147,7 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @Override
-    public <T> T asObject(SimpleDataObjectTemplate<T> template) {
+    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
         return null;
     }
 

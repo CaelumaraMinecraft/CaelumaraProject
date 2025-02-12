@@ -4,7 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.data.api.KeyedDataObject;
 import net.aurika.namespace.NSedKey;
-import net.aurika.data.api.dataprovider.SectionableDataGetter;
+import net.aurika.data.database.dataprovider.SectionableDataGetter;
 
 public class StandardAuspiceMetadataHandler extends AuspiceMetadataHandler {
     public StandardAuspiceMetadataHandler(NSedKey NSedKey) {

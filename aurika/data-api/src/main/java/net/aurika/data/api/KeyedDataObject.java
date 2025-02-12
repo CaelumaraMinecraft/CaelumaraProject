@@ -3,7 +3,9 @@ package net.aurika.data.api;
 import org.jetbrains.annotations.NotNull;
 
 public interface KeyedDataObject<K> extends DataObject, Keyed<K> {
-    @NotNull K getKey();
+
+    @Override
+    @NotNull K dataKey();
 
     class Impl<K> extends DataObject.Impl implements KeyedDataObject<K>, Keyed<K> {
         private final @NotNull K key;
@@ -12,18 +14,20 @@ public interface KeyedDataObject<K> extends DataObject, Keyed<K> {
             this.key = key;
         }
 
-        public @NotNull K getKey() {
-            return this.key;
+        @Override
+        public @NotNull K dataKey() {
+            return key;
         }
     }
 
     interface WrapperImpl<K> extends KeyedDataObject<K>, DataObject.WrapperImpl {
 
+        @Override
         @NotNull KeyedDataObject<K> getWrapped();
 
         @Override
-        default @NotNull K getKey() {
-            return this.getWrapped().getKey();
+        default @NotNull K dataKey() {
+            return this.getWrapped().dataKey();
         }
     }
 }

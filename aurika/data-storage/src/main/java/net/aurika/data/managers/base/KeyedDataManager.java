@@ -2,18 +2,18 @@ package net.aurika.data.managers.base;
 
 import com.github.benmanes.caffeine.cache.CacheLoader;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.ApiStatus.Internal;
-import org.jetbrains.annotations.Nullable;
+import net.aurika.data.api.KeyedDataObject;
 import net.aurika.data.centers.AurikaDataCenter;
 import net.aurika.data.database.base.KeyedDatabase;
-import net.aurika.data.api.KeyedDataObject;
-import net.aurika.namespace.NSedKey;
-import top.auspice.utils.cache.JavaMapWrapper;
-import top.auspice.utils.cache.PeekableMap;
-import top.auspice.utils.cache.caffeine.CacheHandler;
-import top.auspice.utils.cache.caffeine.CaffeineWrapper;
-import top.auspice.utils.logging.AuspiceLogger;
+import net.aurika.utils.cache.JavaMapWrapper;
+import net.aurika.utils.cache.PeekableMap;
+import net.aurika.utils.cache.caffeine.CacheHandler;
+import net.aurika.utils.cache.caffeine.CaffeineWrapper;
+import net.kyori.adventure.key.Key;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.*;
@@ -26,13 +26,13 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
     protected KeyedDatabase<K, T> database;
     private final boolean a;
 
-    public KeyedDataManager(NSedKey NSedKey,  KeyedDatabase<K, T> database, boolean b, AurikaDataCenter kingdomsDataCenter) {
-        super(NSedKey, kingdomsDataCenter);
+    public KeyedDataManager(Key id, KeyedDatabase<K, T> database, boolean b, AurikaDataCenter dataCenter) {
+        super(id, dataCenter);
         this.database = database;
         if (b) {
-            this.doesntExist = new HashSet<K>();
+            doesntExist = new HashSet<K>();
         } else {
-            this.doesntExist = null;
+            doesntExist = null;
         }
         final CacheLoader<K, T> cacheLoader = b ? new CacheLoader_1(database) : new CacheLoader_2(database);
         if (this.isCacheStatic()) {
@@ -43,7 +43,7 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
         final Caffeine<Object, Object> builder = CacheHandler.newBuilder();
         final Duration autoSaveInterval;
         Duration duration;
-        if ((autoSaveInterval = this.getAutoSaveInterval()) == null || autoSaveInterval.toMinutes() < 30L) {
+        if ((autoSaveInterval = this.autoSaveInterval()) == null || autoSaveInterval.toMinutes() < 30L) {
             duration = Duration.ofMinutes(30L);
         } else {
             duration = autoSaveInterval.plusMinutes(10L);
@@ -58,25 +58,25 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
         this.unload(object);
         K key = object.getKey();
         this.database.delete(key);
-        if (this.doesntExist != null) {
-            this.doesntExist.add(key);
+        if (doesntExist != null) {
+            doesntExist.add(key);
         }
     }
 
     public void clearCache() {
         this.cache.clear();
-        if (this.doesntExist != null) {
-            this.doesntExist.clear();
+        if (doesntExist != null) {
+            doesntExist.clear();
         }
     }
 
     public KeyedDatabase<K, T> getDatabase() {
-        return this.database;
+        return database;
     }
 
     public void deleteAllData() {
-        this.cache.clear();
-        this.database.deleteAllData();
+        cache.clear();
+        database.deleteAllData();
     }
 
     public void copyAllDataTo(DataManager<T> otherManager) {
@@ -157,9 +157,9 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
         return this.cache.containsKey(key);
     }
 
-    protected void unload(@NonNull T object) {
-        super.unload(object);
-        this.cache.remove(object.getKey());
+    protected void unload(@NonNull @NotNull T data) {
+        super.unload(data);
+        this.cache.remove(data.getKey());
     }
 
     public void cache(@NonNull T object, boolean state) {
@@ -201,14 +201,12 @@ public abstract class KeyedDataManager<K, T extends KeyedDataObject<K>> extends 
         if (this.a) {
             return this.getLoadedData();
         } else {
-            Collection<K> var1 = this.database.getAllDataKeys();
-            ArrayList<T> var2 = new ArrayList<>(var1.size());
+            Collection<K> dataKeys = this.database.getAllDataKeys();
+            ArrayList<T> var2 = new ArrayList<>(dataKeys.size());
             var2.addAll(this.cache.values());
-            HashSet<K> var3 = new HashSet<>(var1);
+            HashSet<K> var3 = new HashSet<>(dataKeys);
             var3.removeAll(this.cache.keySet());
-            KeyedDatabase<K, T> var10000 = this.database;
-            Objects.requireNonNull(var2);
-            var10000.load(var3, var2::add);
+            this.database.load(var3, var2::add);
             return var2;
         }
     }

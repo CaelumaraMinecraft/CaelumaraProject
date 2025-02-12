@@ -5,8 +5,8 @@ import kotlin.collections.CollectionsKt;
 import kotlin.text.StringsKt;
 import net.aurika.data.database.sql.DatabaseProperties;
 import net.aurika.data.database.sql.statements.*;
+import net.aurika.dependency.Dependency;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.dependencies.Dependency;
 
 import java.util.*;
 import java.util.regex.Pattern;

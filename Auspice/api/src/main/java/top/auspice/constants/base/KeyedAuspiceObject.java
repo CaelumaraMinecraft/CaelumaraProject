@@ -1,11 +1,12 @@
 package top.auspice.constants.base;
 
-import org.jetbrains.annotations.NotNull;
-import net.aurika.data.object.Keyed;
+import net.aurika.data.api.Keyed;
 import net.aurika.data.api.KeyedDataObject;
+import org.jetbrains.annotations.NotNull;
 
 public interface KeyedAuspiceObject<K> extends AuspiceObject, Keyed<K>, KeyedDataObject<K> {
-    @NotNull K getKey();
+    @Override
+    @NotNull K dataKey();
 
     abstract class Impl<K> extends AuspiceObject.Impl implements KeyedAuspiceObject<K> {
         private final @NotNull K key;
@@ -14,7 +15,8 @@ public interface KeyedAuspiceObject<K> extends AuspiceObject, Keyed<K>, KeyedDat
             this.key = key;
         }
 
-        public @NotNull K getKey() {
+        @Override
+        public @NotNull K dataKey() {
             return this.key;
         }
     }
@@ -23,8 +25,8 @@ public interface KeyedAuspiceObject<K> extends AuspiceObject, Keyed<K>, KeyedDat
         @NotNull KeyedAuspiceObject<K> getWrapped();
 
         @Override
-        default @NotNull K getKey() {
-            return this.getWrapped().getKey();
+        default @NotNull K dataKey() {
+            return this.getWrapped().dataKey();
         }
     }
 }

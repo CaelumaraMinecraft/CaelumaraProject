@@ -25,9 +25,9 @@ import top.auspice.utils.Pair;
 import top.auspice.utils.Validate;
 import top.auspice.utils.cache.caffeine.CacheHandler;
 import top.auspice.utils.unsafe.arrays.FunctionalList;
-import top.auspice.utils.number.AnyNumber;
-import top.auspice.utils.number.NumberConstraint;
-import top.auspice.utils.number.NumberProcessor;
+import net.aurika.utils.number.AnyNumber;
+import net.aurika.utils.number.NumberConstraint;
+import net.aurika.utils.number.NumberProcessor;
 import top.auspice.utils.string.Strings;
 
 import java.time.Duration;

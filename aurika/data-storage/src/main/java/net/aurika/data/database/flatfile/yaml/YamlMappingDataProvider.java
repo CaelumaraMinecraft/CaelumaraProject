@@ -1,7 +1,7 @@
 package net.aurika.data.database.flatfile.yaml;
 
 import net.aurika.checker.Checker;
-import net.aurika.data.api.dataprovider.*;
+import net.aurika.data.database.dataprovider.*;
 import net.aurika.utils.snakeyaml.nodes.MapNode;
 import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpreter;
 import net.aurika.utils.snakeyaml.nodes.NodeUtils;
@@ -279,27 +279,27 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public <E> void setCollection(@NotNull Collection<? extends E> value, @NotNull BiConsumer<SectionCreatableDataSetter, E> biConsumer) {
+    public <E> void setCollection(@NotNull Collection<? extends E> value, @NotNull BiConsumer<SectionCreatableDataSetter, E> handler) {
         Checker.Arg.notNull(value, "value");
-        Checker.Arg.notNull(biConsumer, "");
+        Checker.Arg.notNull(handler, "");
         if (value.isEmpty()) return;
         SequenceNode sequenceNode = new SequenceNode(Tag.SEQ, new ArrayList<>(), FlowStyle.AUTO);
         for (E e : value) {
-            biConsumer.accept(createProvider$core(sequenceNode), e);
+            handler.accept(createProvider$core(sequenceNode), e);
         }
         this.obj.putNode(this.getKey(), sequenceNode);
     }
 
     @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> mappingSetterHandler) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
         Checker.Arg.notNull(value, "value");
-        Checker.Arg.notNull(mappingSetterHandler, "mappingSetterHandler");
+        Checker.Arg.notNull(handler, "mappingSetterHandler");
         if (value.isEmpty()) return;
         MappingNode mappingNode = NodeUtils.emptyMapping();
         for (Map.Entry<K, ? extends V> entry : value.entrySet()) {
             K k = entry.getKey();
             V v = entry.getValue();
-            mappingSetterHandler.map(k, new StringMappedIdSetter(name -> new YamlMappingDataProvider(name, new MapNode(mappingNode))), v);
+            handler.map(k, new StringMappedIdSetter(name -> new YamlMappingDataProvider(name, new MapNode(mappingNode))), v);
         }
         this.obj.putNode(this.getKey(), mappingNode);
     }

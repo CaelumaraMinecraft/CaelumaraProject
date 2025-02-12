@@ -2,7 +2,7 @@ package net.aurika.data.database.flatfile.json;
 
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.flatfile.KeyedFlatFileDatabase;
-import net.aurika.data.api.handler.KeyedDataHandler;
+import net.aurika.data.handler.KeyedDataHandler;
 import net.aurika.data.api.KeyedDataObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

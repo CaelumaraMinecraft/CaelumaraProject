@@ -28,29 +28,24 @@ import java.util.regex.Pattern;
 @SuppressWarnings("unused")
 public class Strings {
 
-    public static char[] toCharArray(Character[] characters) {
-        char[] chars = new char[characters.length];
-        for (int i = 0; i < characters.length; ++i) {
-            chars[i] = characters[i];
-        }
-        return chars;
-    }
-
-    public static char[] toCharArray(Collection<Character> characters) {
-        return toCharArray(characters.toArray(new Character[0]));
-    }
-
     public static boolean isNullOrEmpty(@Nullable String string) {
         return string == null || string.isEmpty();
     }
 
-    public static String notEmpty(@Nullable String string) {
-        if (isNullOrEmpty(string)) {
-            throw new IllegalArgumentException("String is null or empty");
+    @Deprecated
+    public static boolean isBlank(@NotNull CharSequence cs) {
+        Checker.Arg.notNull(cs, "cs");
+        int l = cs.length();
+        for (int i = 0; i < l; i++) {
+            char c = cs.charAt(i);
+            if (!isWhitespace(c)) {
+                return false;
+            }
         }
-        return string;
+        return true;
     }
 
+    @Deprecated
     public static boolean isWhitespace(char ch) {
         return Character.isWhitespace(ch) || Character.isSpaceChar(ch);
     }
@@ -650,38 +645,35 @@ public class Strings {
     }
 
     @NonNull
-    public static List<String> split(@NotNull String string, char separator, boolean var2) {
-        //noinspection ConstantValue
-        if (string == null) {
-            throw new IllegalArgumentException("Cannot split a null string: " + string);
+    public static List<String> split(@NotNull String string, char separator, boolean keepEmptyString) {
+        Checker.Arg.notNull(string, "string");
+
+        ArrayList<String> var3 = new ArrayList<>();
+        if (string.isEmpty()) {
+            var3.add("");
         } else {
-            ArrayList<String> var3 = new ArrayList<>();
-            if (string.isEmpty()) {
-                var3.add("");
-            } else {
-                boolean var4 = false;
-                int var5 = string.length();
-                int var6 = 0;
+            boolean var4 = false;
+            int var5 = string.length();
+            int var6 = 0;
 
-                for (int var7 = 0; var7 < var5; ++var7) {
-                    if (string.charAt(var7) != separator) {
-                        var4 = true;
-                    } else {
-                        if (var4 || var2) {
-                            var3.add(string.substring(var6, var7));
-                            var4 = false;
-                        }
-
-                        var6 = var7 + 1;
+            for (int i = 0; i < var5; ++i) {
+                if (string.charAt(i) != separator) {
+                    var4 = true;
+                } else {
+                    if (var4 || keepEmptyString) {
+                        var3.add(string.substring(var6, i));
+                        var4 = false;
                     }
-                }
 
-                if (var4 || var2) {
-                    var3.add(string.substring(var6, var5));
+                    var6 = i + 1;
                 }
             }
-            return var3;
+
+            if (var4 || keepEmptyString) {
+                var3.add(string.substring(var6, var5));
+            }
         }
+        return var3;
     }
 
     @NonNull

@@ -2,10 +2,10 @@ package net.aurika.data.database.flatfile.json;
 
 import com.google.gson.*;
 import net.aurika.checker.Checker;
-import net.aurika.data.api.dataprovider.*;
-import net.aurika.data.api.structure.SimpleData;
-import net.aurika.data.api.structure.SimpleDataObjectTemplate;
+import net.aurika.data.api.structure.DataUnits;
+import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
 import net.aurika.data.api.structure.PlainSimpleDataUtils;
+import net.aurika.data.database.dataprovider.*;
 import net.aurika.utils.function.FloatSupplier;
 import net.aurika.utils.function.TriConsumer;
 import net.aurika.utils.uuid.FastUUID;
@@ -86,7 +86,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public <T> T asObject(SimpleDataObjectTemplate<T> template) {
+    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
         Checker.Arg.notNull(template, "template");
         String s = this.asString();
         return s != null ? PlainSimpleDataUtils.serializePlainMapData(s, template) : null;
@@ -201,12 +201,12 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> biConsumer) {
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> mappingSetterHandler) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
         throw new UnsupportedOperationException();
     }
 
@@ -216,7 +216,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public void setObject(@NotNull SimpleData value) {
+    public void setObject(@NotNull DataUnits value) {
         Checker.Arg.notNull(value, "value");
         setString(PlainSimpleDataUtils.compressPlainMapData(value));
     }

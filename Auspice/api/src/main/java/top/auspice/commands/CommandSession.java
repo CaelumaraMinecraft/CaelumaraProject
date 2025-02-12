@@ -12,7 +12,7 @@ import top.auspice.configs.messages.messenger.Messenger;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.entity.Player;
 import top.auspice.utils.PlayerUtils;
-import top.auspice.utils.number.AnyNumber;
+import net.aurika.utils.number.AnyNumber;
 
 import java.time.Duration;
 import java.util.Locale;

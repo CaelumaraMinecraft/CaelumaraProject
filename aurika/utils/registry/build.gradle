@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
     api(project(":aurika:checker"))
-    api(libs.annotations.jetbrains)
-    api(libs.annotations.checker)
+
+    api(libs.adventure.key)
+
+    compileOnly(libs.annotations.jetbrains)
 }

@@ -9,9 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.nbt.NBTConverter;
 import top.auspice.nbt.NBTTagConverterRegistry;
 import top.auspice.nbt.NBTTagId;
-import top.auspice.nbt.tag.NBTTag;
-import top.auspice.nbt.tag.NBTTagCompound;
-import top.auspice.nbt.tag.NBTTagType;
+import net.aurika.nbt.tag.NBTTag;
+import net.aurika.nbt.tag.NBTTagCompound;
+import net.aurika.nbt.tag.NBTTagType;
 import top.auspice.utils.unsafe.Fn;
 
 import java.lang.invoke.MethodHandle;
@@ -147,7 +147,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagEnd implements NBTConverter<top.auspice.nbt.tag.NBTTagEnd, Object> {
+    private static final class NBTTagEnd implements NBTConverter<net.aurika.nbt.tag.NBTTagEnd, Object> {
         private static final Object INSTANCE;
 
         static {
@@ -169,23 +169,23 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagEnd> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagEnd> getType() {
             return NBTTagType.END;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagEnd fromNBT(Object tag) {
-            return top.auspice.nbt.tag.NBTTagEnd.instance();
+        public net.aurika.nbt.tag.NBTTagEnd fromNBT(Object tag) {
+            return net.aurika.nbt.tag.NBTTagEnd.instance();
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagEnd tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagEnd tag) {
             return INSTANCE;
         }
     }
 
-    private static final class NBTTagString implements NBTConverter<top.auspice.nbt.tag.NBTTagString, Object> {
+    private static final class NBTTagString implements NBTConverter<net.aurika.nbt.tag.NBTTagString, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -212,12 +212,12 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagString> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagString> getType() {
             return NBTTagType.STRING;
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagString tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagString tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.value());
             } catch (Throwable throwable) {
@@ -227,16 +227,16 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagString fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagString fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagString.of((String) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagString.of((String) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
     }
 
-    private static final class NBTTagLongArray implements NBTConverter<top.auspice.nbt.tag.NBTTagLongArray, Object> {
+    private static final class NBTTagLongArray implements NBTConverter<net.aurika.nbt.tag.NBTTagLongArray, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -263,22 +263,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagLongArray> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagLongArray> getType() {
             return NBTTagType.LONG_ARRAY;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagLongArray fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagLongArray fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagLongArray.of((long[]) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagLongArray.of((long[]) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagLongArray tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagLongArray tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.value());
             } catch (Throwable throwable) {
@@ -287,7 +287,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagIntArray implements NBTConverter<top.auspice.nbt.tag.NBTTagIntArray, Object> {
+    private static final class NBTTagIntArray implements NBTConverter<net.aurika.nbt.tag.NBTTagIntArray, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -314,22 +314,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagIntArray> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagIntArray> getType() {
             return NBTTagType.INT_ARRAY;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagIntArray fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagIntArray fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagIntArray.of((int[]) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagIntArray.of((int[]) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagIntArray tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagIntArray tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.value());
             } catch (Throwable throwable) {
@@ -338,7 +338,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagList<T extends NBTTag<?>> implements NBTConverter<top.auspice.nbt.tag.NBTTagList<T>, Object> {
+    private static final class NBTTagList<T extends NBTTag<?>> implements NBTConverter<net.aurika.nbt.tag.NBTTagList<T>, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle GET_DATA, SET_DATA;
         private static final MethodHandle GET_TYPE_ID;
@@ -378,13 +378,13 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagList<T>> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagList<T>> getType() {
             return NBTTagType.listOf();
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagList<T> fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagList<T> fromNBT(Object tag) {
             List<?> nbtList;
             try {
                 nbtList = (List<?>) GET_DATA.invoke(tag);
@@ -399,11 +399,11 @@ public final class BukkitNBTAdapter {
                 converted.add(BukkitAdapter.adapt(type, element));
             }
 
-            return top.auspice.nbt.tag.NBTTagList.of(type, converted);
+            return net.aurika.nbt.tag.NBTTagList.of(type, converted);
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagList<T> tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagList<T> tag) {
             try {
                 List<Object> array = new ArrayList<>(tag.value().size());
                 for (T base : tag.value()) array.add(BukkitAdapter.adapt(base));
@@ -422,7 +422,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagDouble implements NBTConverter<top.auspice.nbt.tag.NBTTagDouble, Object> {
+    private static final class NBTTagDouble implements NBTConverter<net.aurika.nbt.tag.NBTTagDouble, Object> {
         @Nullable
         private static final MethodHandle CONSTRUCTOR;
         @Nullable
@@ -454,22 +454,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagDouble> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagDouble> getType() {
             return NBTTagType.DOUBLE;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagDouble fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagDouble fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagDouble.of((double) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagDouble.of((double) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagDouble tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagDouble tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.valueAsDouble());
             } catch (Throwable throwable) {
@@ -478,7 +478,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagInt implements NBTConverter<top.auspice.nbt.tag.NBTTagInt, Object> {
+    private static final class NBTTagInt implements NBTConverter<net.aurika.nbt.tag.NBTTagInt, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -507,22 +507,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagInt> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagInt> getType() {
             return NBTTagType.INT;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagInt fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagInt fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagInt.of((int) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagInt.of((int) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagInt tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagInt tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.valueAsInt());
             } catch (Throwable throwable) {
@@ -531,7 +531,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagByte implements NBTConverter<top.auspice.nbt.tag.NBTTagByte, Object> {
+    private static final class NBTTagByte implements NBTConverter<net.aurika.nbt.tag.NBTTagByte, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -560,22 +560,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagByte> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagByte> getType() {
             return NBTTagType.BYTE;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagByte fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagByte fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagByte.of((byte) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagByte.of((byte) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagByte tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagByte tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.valueAsByte());
             } catch (Throwable throwable) {
@@ -584,7 +584,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagByteArray implements NBTConverter<top.auspice.nbt.tag.NBTTagByteArray, Object> {
+    private static final class NBTTagByteArray implements NBTConverter<net.aurika.nbt.tag.NBTTagByteArray, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -611,24 +611,24 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagByteArray> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagByteArray> getType() {
             return NBTTagType.BYTE_ARRAY;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagByteArray fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagByteArray fromNBT(Object tag) {
             try {
                 return tag == null ?
-                        top.auspice.nbt.tag.NBTTagByteArray.of() :
-                        top.auspice.nbt.tag.NBTTagByteArray.of(((byte[]) NBT_DATA.invoke(tag)));
+                        net.aurika.nbt.tag.NBTTagByteArray.of() :
+                        net.aurika.nbt.tag.NBTTagByteArray.of(((byte[]) NBT_DATA.invoke(tag)));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagByteArray tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagByteArray tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.value());
             } catch (Throwable throwable) {
@@ -637,7 +637,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagShort implements NBTConverter<top.auspice.nbt.tag.NBTTagShort, Object> {
+    private static final class NBTTagShort implements NBTConverter<net.aurika.nbt.tag.NBTTagShort, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -666,22 +666,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagShort> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagShort> getType() {
             return NBTTagType.SHORT;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagShort fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagShort fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagShort.of((short) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagShort.of((short) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagShort tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagShort tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.valueAsShort());
             } catch (Throwable throwable) {
@@ -690,7 +690,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagLong implements NBTConverter<top.auspice.nbt.tag.NBTTagLong, Object> {
+    private static final class NBTTagLong implements NBTConverter<net.aurika.nbt.tag.NBTTagLong, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -717,22 +717,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagLong> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagLong> getType() {
             return NBTTagType.LONG;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagLong fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagLong fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagLong.of((long) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagLong.of((long) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagLong tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagLong tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.valueAsLong());
             } catch (Throwable throwable) {
@@ -741,7 +741,7 @@ public final class BukkitNBTAdapter {
         }
     }
 
-    private static final class NBTTagFloat implements NBTConverter<top.auspice.nbt.tag.NBTTagFloat, Object> {
+    private static final class NBTTagFloat implements NBTConverter<net.aurika.nbt.tag.NBTTagFloat, Object> {
         private static final MethodHandle CONSTRUCTOR;
         private static final MethodHandle NBT_DATA;
 
@@ -768,22 +768,22 @@ public final class BukkitNBTAdapter {
 
         @NotNull
         @Override
-        public NBTTagType<top.auspice.nbt.tag.NBTTagFloat> getType() {
+        public NBTTagType<net.aurika.nbt.tag.NBTTagFloat> getType() {
             return NBTTagType.FLOAT;
         }
 
         @NotNull
         @Override
-        public top.auspice.nbt.tag.NBTTagFloat fromNBT(Object tag) {
+        public net.aurika.nbt.tag.NBTTagFloat fromNBT(Object tag) {
             try {
-                return top.auspice.nbt.tag.NBTTagFloat.of((float) NBT_DATA.invoke(tag));
+                return net.aurika.nbt.tag.NBTTagFloat.of((float) NBT_DATA.invoke(tag));
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
         }
 
         @Override
-        public Object toNBT(@NotNull top.auspice.nbt.tag.NBTTagFloat tag) {
+        public Object toNBT(@NotNull net.aurika.nbt.tag.NBTTagFloat tag) {
             try {
                 return CONSTRUCTOR.invoke(tag.valueAsFloat());
             } catch (Throwable throwable) {

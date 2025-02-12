@@ -1,6 +1,6 @@
 package net.aurika.namespace;
 
-import net.aurika.data.DataStringRepresentation;
+import net.aurika.data.api.DataStringRepresentation;
 import net.aurika.checker.Checker;
 import org.checkerframework.dataflow.qual.Pure;
 import org.jetbrains.annotations.Contract;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 @SuppressWarnings("PatternValidation")
+@Deprecated
 public final class NSedKey implements DataStringRepresentation {
 
     private final @NotNull String namespace;

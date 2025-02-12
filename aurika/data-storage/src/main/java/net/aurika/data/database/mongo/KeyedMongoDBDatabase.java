@@ -5,7 +5,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.BulkWriteOptions;
 import com.mongodb.client.model.ReplaceOneModel;
 import net.aurika.data.api.KeyedDataObject;
-import net.aurika.data.api.handler.KeyedDataHandler;
+import net.aurika.data.handler.KeyedDataHandler;
 import net.aurika.data.database.base.KeyedDatabase;
 import org.bson.BsonDocumentReader;
 import org.bson.Document;

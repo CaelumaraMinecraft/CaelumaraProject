@@ -1,16 +1,18 @@
 package top.auspice.main;
 
+import net.aurika.dependency.DependencyManager;
+import net.aurika.dependency.classpath.BootstrapProvider;
+import net.aurika.namespace.NSKey;
+import net.aurika.namespace.NSedKey;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.KeyPattern;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.api.user.AuspiceUser;
-import top.auspice.data.AuspiceDataCenter;
-import top.auspice.dependencies.DependencyManager;
-import top.auspice.dependencies.classpath.BootstrapProvider;
+import top.auspice.data.centers.AuspiceDataCenter;
 import top.auspice.diversity.Diversity;
 import top.auspice.diversity.StandardDiversity;
-import net.aurika.namespace.NSKey;
-import net.aurika.namespace.NSedKey;
 import top.auspice.loader.AuspiceLoader;
 import top.auspice.permission.DefaultAuspicePluginPermissions;
 
@@ -18,7 +20,7 @@ import java.io.File;
 import java.nio.file.Path;
 
 public final class Auspice implements AuspiceUser {
-    public static final String NAMESPACE = "Auspice";
+    public static final @KeyPattern.Namespace String NAMESPACE = "auspice";
     private static final Auspice INSTANCE = new Auspice();
     private State state;
     private AuspiceLoader loader;
@@ -67,6 +69,7 @@ public final class Auspice implements AuspiceUser {
         return this.state;
     }
 
+    @AuspiceUserName
     @Override
     public @NotNull String getAuspiceUserName() {
         return "Auspice";
@@ -78,7 +81,7 @@ public final class Auspice implements AuspiceUser {
     }
 
     @Override
-    @NSKey.Namespace
+    @KeyPattern.Namespace
     public @NotNull String namespace() {
         return NAMESPACE;
     }
@@ -96,7 +99,7 @@ public final class Auspice implements AuspiceUser {
         this.dependencyManager = dependencyManager;
     }
 
-    public @Nullable("Before initiated Auspice") BootstrapProvider getBootstrapProvider() {
+    public @Nullable BootstrapProvider getBootstrapProvider() {
         return this.bootstrapProvider;
     }
 
@@ -133,6 +136,10 @@ public final class Auspice implements AuspiceUser {
 
     public static @NotNull NSedKey namespacedKey(@NotNull @NSKey.Key String key) {
         return NSedKey.of(NAMESPACE, key);
+    }
+
+    public static @NotNull Key key_advtr(@KeyPattern.Value @NotNull String value) {
+        return Key.key(NAMESPACE, value);
     }
 
     public static void init() {

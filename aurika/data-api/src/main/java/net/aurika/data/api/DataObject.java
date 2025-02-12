@@ -1,8 +1,8 @@
 package net.aurika.data.api;
 
+import net.aurika.data.internal.ByteArrayOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.unsafe.io.ByteArrayOutputStream;
 
 public interface DataObject extends CompressedSmartObject {
     class Impl extends CompressedSmartObject.Impl implements DataObject {

@@ -1,5 +1,8 @@
 package net.aurika.utils.uuid;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
@@ -37,21 +40,22 @@ public final class FastUUID {
         return new UUID(msb, lsb);
     }
 
-    public static boolean equals(UUID first, UUID other) {
+    public static boolean equals(@NotNull UUID first, @NotNull UUID other) {
         return first.getMostSignificantBits() == other.getMostSignificantBits() && first.getLeastSignificantBits() == other.getLeastSignificantBits();
     }
 
-    public static UUID fromString(CharSequence uuid) {
+    @Contract("_ -> new")
+    public static @NotNull UUID fromString(@NotNull CharSequence uuid) {
         try {
             long mostSignificantBits = getHexValueForChar(uuid.charAt(0)) << 60 | getHexValueForChar(uuid.charAt(1)) << 56 | getHexValueForChar(uuid.charAt(2)) << 52 | getHexValueForChar(uuid.charAt(3)) << 48 | getHexValueForChar(uuid.charAt(4)) << 44 | getHexValueForChar(uuid.charAt(5)) << 40 | getHexValueForChar(uuid.charAt(6)) << 36 | getHexValueForChar(uuid.charAt(7)) << 32 | getHexValueForChar(uuid.charAt(9)) << 28 | getHexValueForChar(uuid.charAt(10)) << 24 | getHexValueForChar(uuid.charAt(11)) << 20 | getHexValueForChar(uuid.charAt(12)) << 16 | getHexValueForChar(uuid.charAt(14)) << 12 | getHexValueForChar(uuid.charAt(15)) << 8 | getHexValueForChar(uuid.charAt(16)) << 4 | getHexValueForChar(uuid.charAt(17));
             long leastSignificantBits = getHexValueForChar(uuid.charAt(19)) << 60 | getHexValueForChar(uuid.charAt(20)) << 56 | getHexValueForChar(uuid.charAt(21)) << 52 | getHexValueForChar(uuid.charAt(22)) << 48 | getHexValueForChar(uuid.charAt(24)) << 44 | getHexValueForChar(uuid.charAt(25)) << 40 | getHexValueForChar(uuid.charAt(26)) << 36 | getHexValueForChar(uuid.charAt(27)) << 32 | getHexValueForChar(uuid.charAt(28)) << 28 | getHexValueForChar(uuid.charAt(29)) << 24 | getHexValueForChar(uuid.charAt(30)) << 20 | getHexValueForChar(uuid.charAt(31)) << 16 | getHexValueForChar(uuid.charAt(32)) << 12 | getHexValueForChar(uuid.charAt(33)) << 8 | getHexValueForChar(uuid.charAt(34)) << 4 | getHexValueForChar(uuid.charAt(35));
             return new UUID(mostSignificantBits, leastSignificantBits);
-        } catch (Throwable var5) {
-            throw new MalformedUUIDException(uuid, var5);
+        } catch (Throwable throwable) {
+            throw new MalformedUUIDException(uuid, throwable);
         }
     }
 
-    public static String toString(UUID uuid) {
+    public static @NotNull String toString(@NotNull UUID uuid) {
         if (USE_JDK_UUID_TO_STRING) {
             return uuid.toString();
         } else {

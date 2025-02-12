@@ -1,7 +1,7 @@
 package net.aurika.data.database.flatfile;
 
 import net.aurika.data.api.KeyedDataObject;
-import net.aurika.data.api.handler.KeyedDataHandler;
+import net.aurika.data.handler.KeyedDataHandler;
 import net.aurika.data.database.base.KeyedDatabase;
 import net.aurika.utils.file.FSUtil;
 import org.jetbrains.annotations.NotNull;

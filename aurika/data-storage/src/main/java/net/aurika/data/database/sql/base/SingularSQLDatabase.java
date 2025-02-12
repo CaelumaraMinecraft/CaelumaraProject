@@ -6,7 +6,7 @@ import net.aurika.data.database.base.SingularDatabase;
 import net.aurika.data.database.sql.SQLDataGetterProvider;
 import net.aurika.data.database.sql.connection.SQLConnectionProvider;
 import net.aurika.data.database.sql.statements.getters.SimpleResultSetQuery;
-import net.aurika.data.api.handler.SingularDataHandler;
+import net.aurika.data.handler.SingularDataHandler;
 import net.aurika.data.api.DataObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

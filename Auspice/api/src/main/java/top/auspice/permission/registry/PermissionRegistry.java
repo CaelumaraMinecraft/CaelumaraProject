@@ -4,7 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.permission.Permission;
-import top.auspice.utils.unsafe.Fn;
+import net.aurika.utils.unsafe.fn.Fn;
 
 import java.util.*;
 

@@ -3,7 +3,7 @@ package net.aurika.data.database.flatfile.json;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.aurika.checker.Checker;
-import net.aurika.data.api.handler.DataHandler;
+import net.aurika.data.handler.DataHandler;
 import net.aurika.data.api.DataObject;
 import net.aurika.utils.gson.AurikaGson;
 import org.jetbrains.annotations.NotNull;

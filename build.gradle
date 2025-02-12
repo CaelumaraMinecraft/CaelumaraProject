@@ -76,6 +76,11 @@ allprojects {
             name = "sk89q-repo"
             url = "https://maven.enginehub.org/repo/"
         }
+
+        maven {
+            name = "CodeMC"
+            url = uri("https://repo.codemc.io/repository/maven-public/")
+        }
     }
 }
 

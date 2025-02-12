@@ -1,27 +1,25 @@
 package net.aurika.data.managers.base;
 
+import net.aurika.data.api.DataObject;
 import net.aurika.data.database.base.Database;
 import net.aurika.data.managers.BaseDataManager;
-import net.aurika.data.api.DataObject;
-import net.aurika.namespace.NSedKey;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
 public abstract class DataManager<T extends DataObject> extends BaseDataManager {
-    private final NSedKey id;
     protected boolean savingState = true;
 
-    public DataManager(NSedKey id, BaseDataManager inherited) {
-        super(id, inherited.getAutoSaveInterval(), inherited.isCacheStatic(), inherited.isTemporary(), inherited.isSmartSaving());
-        this.id = id;
+    public DataManager(Key id, @NotNull BaseDataManager inherited) {
+        super(id, inherited.autoSaveInterval(), inherited.isCacheStatic(), inherited.isTemporary(), inherited.isSmartSaving());
     }
 
-    protected void saveObjectState(T object, boolean var2) {
+    protected void saveObjectState(T object, boolean var1) {
         if (object != null && this.isSmartSaving() && !object.isObjectStateSaved()) {
-            object.saveObjectState(var2);
+            object.saveObjectState(var1);
         }
     }
 
@@ -49,16 +47,16 @@ public abstract class DataManager<T extends DataObject> extends BaseDataManager 
     public abstract int saveAll(boolean var1);
 
     @MustBeInvokedByOverriders
-    protected T onLoad(T obj) {
-        return obj;
+    protected T onLoad(T data) {
+        return data;
     }
 
     public void onDisable() {
     }
 
     @MustBeInvokedByOverriders
-    protected void unload(@NonNull T object) {
-        object.invalidateObject();
+    protected void unload(@NotNull T data) {
+        data.invalidateObject();
     }
 
     public abstract int size();
@@ -70,7 +68,7 @@ public abstract class DataManager<T extends DataObject> extends BaseDataManager 
     public abstract Collection<T> peekAllData();
 
     public String toString() {
-        return this.getClass().getSimpleName() + '(' + this.id.asString() + " | " + this.size() + ')';
+        return this.getClass().getSimpleName() + '(' + id.asString() + " | " + size() + ')';
     }
 
     @Internal

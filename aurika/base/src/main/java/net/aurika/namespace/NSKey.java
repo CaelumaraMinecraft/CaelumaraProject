@@ -5,6 +5,7 @@ import org.intellij.lang.annotations.Pattern;
 
 import java.lang.annotation.*;
 
+@Deprecated
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})

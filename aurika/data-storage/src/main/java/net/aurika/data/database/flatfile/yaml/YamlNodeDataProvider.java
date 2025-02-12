@@ -1,7 +1,7 @@
 package net.aurika.data.database.flatfile.yaml;
 
 import net.aurika.checker.Checker;
-import net.aurika.data.api.dataprovider.*;
+import net.aurika.data.database.dataprovider.*;
 import net.aurika.utils.function.FloatSupplier;
 import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpretContext;
 import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpreter;
@@ -242,12 +242,12 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     }
 
     @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> collection, @NotNull BiConsumer<SectionCreatableDataSetter, V> biConsumer) {
+    public <V> void setCollection(@NotNull Collection<? extends V> collection, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> map, @NotNull MappingSetterHandler<K, V> mappingSetterHandler) {
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> map, @NotNull MappingSetterHandler<K, V> handler) {
         throw new UnsupportedOperationException();
     }
 

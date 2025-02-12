@@ -1,9 +1,9 @@
 package top.auspice.utils.unsafe.stacktrace;
 
+import net.aurika.checker.Checker;
+import net.aurika.utils.cache.caffeine.CacheHandler;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.messages.MessageHandler;
-import net.aurika.utils.Checker;
-import top.auspice.utils.cache.caffeine.CacheHandler;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

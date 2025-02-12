@@ -3,7 +3,7 @@ package net.aurika.data.database.mongo;
 import com.mongodb.client.MongoCollection;
 import net.aurika.checker.Checker;
 import net.aurika.data.api.DataObject;
-import net.aurika.data.api.handler.SingularDataHandler;
+import net.aurika.data.handler.SingularDataHandler;
 import net.aurika.data.database.base.SingularDatabase;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;

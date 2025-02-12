@@ -2,7 +2,7 @@ package net.aurika.data.database.flatfile;
 
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.base.SingularDatabase;
-import net.aurika.data.api.handler.SingularDataHandler;
+import net.aurika.data.handler.SingularDataHandler;
 import net.aurika.data.api.DataObject;
 import net.aurika.utils.Checker;
 import org.jetbrains.annotations.NotNull;

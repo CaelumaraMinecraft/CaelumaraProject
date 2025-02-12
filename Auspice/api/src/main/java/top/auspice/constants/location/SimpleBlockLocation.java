@@ -3,11 +3,11 @@ package top.auspice.constants.location;
 import net.aurika.annotations.data.Immutable;
 import net.aurika.checker.Checker;
 import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.structure.DataMetaType;
-import net.aurika.data.api.structure.SimpleData;
-import net.aurika.data.api.structure.SimpleDataObject;
-import net.aurika.data.api.structure.SimpleDataObjectTemplate;
-import net.aurika.data.api.structure.entries.MapDataEntry;
+import net.aurika.data.api.structure.DataUnitType;
+import net.aurika.data.api.structure.DataUnits;
+import net.aurika.data.api.structure.DataUnitsLike;
+import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
+import net.aurika.data.api.structure.SimpleMappingDataEntry;
 import net.aurika.utils.string.CommaDataSplitStrategy;
 import net.kyori.examination.Examinable;
 import net.kyori.examination.ExaminableProperty;
@@ -20,13 +20,13 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Immutable
-public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, SimpleDataObject, Examinable {
+public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, DataUnitsLike, Examinable {
     private final @NonNull String world;
     private final int x;
     private final int y;
     private final int z;
 
-    public static final SimpleDataObjectTemplate<SimpleBlockLocation> DATA_TEMPLATE = SimpleDataObjectTemplate.of(
+    public static final SimpleDataMapObjectTemplate<SimpleBlockLocation> DATA_TEMPLATE = SimpleDataMapObjectTemplate.of(
             SimpleBlockLocation.class,
             data -> new SimpleBlockLocation(
                     data.getString("world"),
@@ -34,10 +34,10 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
                     data.getInt("y"),
                     data.getInt("z")
             ),
-            "world", DataMetaType.STRING,
-            "x", DataMetaType.INT,
-            "y", DataMetaType.INT,
-            "z", DataMetaType.INT
+            "world", DataUnitType.STRING,
+            "x", DataUnitType.INT,
+            "y", DataUnitType.INT,
+            "z", DataUnitType.INT
     );
 
     public SimpleBlockLocation(@NonNull String world, int x, int y, int z) {
@@ -200,17 +200,17 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NonNull SimpleData simpleData() {
-        return SimpleData.of(
-                MapDataEntry.of("world", world),
-                MapDataEntry.of("x", x),
-                MapDataEntry.of("y", y),
-                MapDataEntry.of("z", z)
+    public @NonNull DataUnits simpleData() {
+        return DataUnits.of(
+                SimpleMappingDataEntry.of("world", world),
+                SimpleMappingDataEntry.of("x", x),
+                SimpleMappingDataEntry.of("y", y),
+                SimpleMappingDataEntry.of("z", z)
         );
     }
 
     @Override
-    public @NotNull SimpleDataObjectTemplate<? extends SimpleBlockLocation> simpleDataTemplate() {
+    public @NotNull SimpleDataMapObjectTemplate<? extends SimpleBlockLocation> simpleDataTemplate() {
         return DATA_TEMPLATE;
     }
 
