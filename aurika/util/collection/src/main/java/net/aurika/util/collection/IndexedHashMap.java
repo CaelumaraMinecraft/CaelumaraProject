@@ -1,6 +1,4 @@
-package top.auspice.utils.unsafe.map;
-
-import net.aurika.util.array.UnsafeArrayList;
+package net.aurika.util.collection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +6,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
+@Deprecated
 public class IndexedHashMap<K, V> {
     private final Map<K, V> map = new UnsafeHashMap<>();
     private final UnsafeArrayList<K> list;
 
     public IndexedHashMap(K[] keys) {
-        this.list = UnsafeArrayList.withSize(keys);
+        this.list = UnsafeArrayList.withZeroSize(keys);
     }
 
     public K[] asArray() {

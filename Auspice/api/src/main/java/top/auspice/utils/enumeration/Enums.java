@@ -3,7 +3,7 @@ package top.auspice.utils.enumeration;
 import com.google.common.base.Optional;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.util.collection.nonnull.NonNullMap;
 
 import java.util.Map;
 import java.util.function.Function;

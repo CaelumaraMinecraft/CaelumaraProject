@@ -4,7 +4,7 @@ import net.aurika.checker.Checker;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.utils.unsafe.map.IndexedHashMap;
+import net.aurika.util.collection.IndexedHashMap;
 
 import java.util.*;
 import java.util.function.Predicate;

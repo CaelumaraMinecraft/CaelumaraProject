@@ -28,7 +28,7 @@ import top.auspice.server.entity.Player;
 import top.auspice.utils.Pair;
 import top.auspice.utils.cache.caffeine.CacheHandler;
 import top.auspice.utils.string.Strings;
-import top.auspice.utils.unsafe.arrays.FunctionalList;
+import net.aurika.util.collection.FunctionalList;
 
 import java.time.Duration;
 import java.util.*;

@@ -1,7 +1,6 @@
 @file:JvmName("Nullability")
 
-package top.auspice.utils.nonnull
-
+package net.aurika.util.collection.nonnull
 
 fun <T> Collection<T?>?.assertNonNullElements(): Collection<T> {
     if (this == null) {

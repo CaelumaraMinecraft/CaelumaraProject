@@ -1,20 +1,19 @@
 package net.aurika.util.array;
 
 import net.aurika.checker.Checker;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.common.value.qual.IntRange;
-import org.checkerframework.dataflow.qual.Pure;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Range;
 
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Predicate;
 
+@SuppressWarnings("unchecked")
 public final class ArrayUtils {
-
-    @Pure
-    public static <T> T[] reverse(T[] array) {
+    @Contract(value = "_ -> param1", pure = true)
+    public static <T> T @NotNull [] reverse(T @NotNull [] array) {
+        Checker.Arg.notNull(array, "array");
         for (int i = 0, j = array.length - 1; j > i; i++, j--) {
             T tmp = array[j];
             array[j] = array[i];
@@ -23,7 +22,8 @@ public final class ArrayUtils {
         return array;
     }
 
-    public static <T> T[] require(T[] array, Predicate<T> requirement) {
+    @Contract("_, _ -> param1")
+    public static <T> T[] require(T @NotNull [] array, @NotNull Predicate<T> requirement) {
         for (T element : array) {
             if (!requirement.test(element)) {
                 throw new IllegalStateException("Array element did not pass requirement");
@@ -32,20 +32,7 @@ public final class ArrayUtils {
         return array;
     }
 
-    public static int sizeOfIterator(@NotNull Iterator<?> iterator) {
-        int count = 0;
-        while (iterator.hasNext()) {
-            iterator.next();
-            count++;
-        }
-        return count;
-    }
-
-    public static <T> T getLast(List<T> list) {
-        return list.isEmpty() ? null : list.get(list.size() - 1);
-    }
-
-    public static String[] mergeObjects(Object... objects) {
+    public static String @NotNull [] mergeObjects(Object @NotNull ... objects) {
         List<String> list = new ArrayList<>(objects.length * 2);
         for (Object object : objects) {
             if (object instanceof Object[]) {
@@ -58,21 +45,22 @@ public final class ArrayUtils {
         return list.toArray(new String[0]);
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T[] merge(T[] array1, T[] array2) {
+    public static <T> T[] merge(T @NotNull [] array1, T @NotNull [] array2) {
+        Checker.Arg.notNull(array1, "array1");
+        Checker.Arg.notNull(array2, "array2");
         T[] joinedArray = (T[]) Array.newInstance(array1.getClass().getComponentType(), array1.length + array2.length);
         System.arraycopy(array1, 0, joinedArray, 0, array1.length);
         System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
         return joinedArray;
     }
 
-    public static Object[] shift(Object[] array) {
+    public static Object @NotNull [] shift(Object @NotNull [] array) {
         Object[] result = new Object[array.length - 1];
         System.arraycopy(array, 1, result, 0, result.length);
         return result;
     }
 
-    public static <T> void shuffle(T[] array) {
+    public static <T> void shuffle(T @NotNull [] array) {
         Random rnd = new Random();
         for (int i = array.length - 1; i > 0; i--) {
             int index = rnd.nextInt(i + 1);
@@ -104,13 +92,13 @@ public final class ArrayUtils {
             return collection;
         }
 
-        public T[] toArray(T[] a) {
+        public T @NotNull [] toArray(T[] a) {
             return collection.toArray(a);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T[] malloc(@NonNull T[] initial, @IntRange(from = 1, to = Integer.MAX_VALUE) int length) {
+    public static <T> T @NotNull [] malloc(@NotNull T @NotNull [] initial, @Range(from = 1, to = Integer.MAX_VALUE) int length) {
         if (length <= initial.length) throw new IllegalArgumentException(
                 "Cannot allocate array with the same or smaller size than the initial array " + length + " <= " + initial.length);
 
@@ -122,7 +110,8 @@ public final class ArrayUtils {
     // ========
 
     @Contract("_, _ -> new")
-    public static <T> T[] removePre(T[] array, int count) {
+    public static <T> T[] removePre(T @NotNull [] array, int count) {
+        Checker.Arg.notNull(array, "array");
         if (count > array.length) {
             throw new IllegalArgumentException("Count is better than array length: " + count + " > " + Arrays.toString(array) + ".length");
         }
@@ -154,16 +143,6 @@ public final class ArrayUtils {
         return s;
     }
 
-    @Contract("_, _ -> new")
-    public static String[] merge(String @NotNull [] first, String @NotNull [] second) {
-        Checker.Arg.notNull(first, "first");
-        Checker.Arg.notNull(second, "second");
-        String[] merged = new String[first.length + second.length];
-        System.arraycopy(first, 0, merged, 0, first.length);
-        System.arraycopy(second, 0, merged, first.length, second.length);
-        return merged;
-    }
-
     public static Map<String, Object> stringToObjectSettings(Object[] settings) {
         HashMap<String, Object> var1 = new HashMap<>();
         if (settings.length >= 2) {
@@ -176,7 +155,7 @@ public final class ArrayUtils {
         return var1;
     }
 
-    public static <T> int[] findNullIndexes(T[] array) {
+    public static <T> int @NotNull [] findNullIndexes(T @NotNull [] array) {
         int nulls = 0;
 
         for (T t : array) {
@@ -197,43 +176,6 @@ public final class ArrayUtils {
         }
 
         return indexes;
-    }
-
-    @Contract("_, _, _, _ -> param2")
-    public static <T> List<T> typeFilter(List<?> list, List<T> to, Class<T> elementType, boolean nonNulElement) {
-        for (Object e : list) {
-            if (e == null) {
-                if (nonNulElement) {
-                    continue;
-                }
-            } else {
-                if (!elementType.isInstance(e)) {
-                    continue;
-                }
-            }
-
-            to.add((T) e);
-        }
-
-        return to;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Contract("_, _, _ -> param1")
-    public static <T> List<T> typeFilter(List<?> list, Class<T> elementType, boolean nonNulElement) {
-        for (Object e : list) {
-            if (e == null) {
-                if (nonNulElement) {
-                    list.remove(e);
-                }
-            } else {
-                if (!elementType.isInstance(e)) {
-                    list.remove(e);
-                }
-            }
-        }
-
-        return (List<T>) list;
     }
 
     public static boolean contains(Object @NotNull [] array, Object o) {

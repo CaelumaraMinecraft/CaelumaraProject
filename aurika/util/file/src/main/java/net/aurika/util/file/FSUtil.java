@@ -1,6 +1,6 @@
 package net.aurika.util.file;
 
-import net.aurika.util.array.ArrayUtils;
+import net.aurika.util.collection.CollectionUtils;
 import org.apache.commons.io.function.IORunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +31,7 @@ public final class FSUtil {
         if (!Files.isDirectory(folder))
             throw new IllegalArgumentException("Path is not a folder: " + folder.toAbsolutePath());
         try (DirectoryStream<Path> fs = Files.newDirectoryStream(folder)) {
-            return ArrayUtils.sizeOfIterator(fs.iterator());
+            return CollectionUtils.sizeOfIterator(fs.iterator());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

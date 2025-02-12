@@ -28,7 +28,7 @@ import top.auspice.utils.arrays.ArrayUtils;
 import top.auspice.utils.enumeration.QuickEnumMap;
 import net.aurika.util.unsafe.fn.Fn;
 import top.auspice.utils.logging.AuspiceLogger;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.util.collection.nonnull.NonNullMap;
 import top.auspice.utils.string.Strings;
 import top.auspice.utils.time.TimeUtils;
 

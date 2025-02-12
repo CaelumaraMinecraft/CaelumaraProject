@@ -13,7 +13,7 @@ import top.auspice.constants.metadata.AuspiceMetadataHandler;
 import top.auspice.constants.metadata.Metadatable;
 import net.aurika.data.api.DataObject;
 import top.auspice.utils.ZeroArrays;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.util.collection.nonnull.NonNullMap;
 
 import java.time.Duration;
 import java.util.Iterator;

@@ -1,15 +1,15 @@
-package top.auspice.utils.nonnull;
+package net.aurika.util.collection.nonnull;
 
 import net.aurika.checker.Checker;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public class NonNullConstantSupplier<T> implements Supplier<T> {
+public final class NonNullSupplier<T> implements Supplier<T> {
 
-    private final T value;
+    private final @NotNull T value;
 
-    public NonNullConstantSupplier(T value) {
+    public NonNullSupplier(@NotNull T value) {
         Checker.Arg.notNull(value, "value");
         this.value = value;
     }

@@ -1,4 +1,4 @@
-package top.auspice.utils.unsafe.map;
+package net.aurika.util.collection;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +12,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@Deprecated
 public class UnsafeHashMap<K, V> implements Cloneable, Map<K, V> {
     public static final int DEFAULT_INITIAL_CAPACITY = 16;
     public static final int MAXIMUM_CAPACITY = 1073741824;

@@ -5,7 +5,7 @@ import top.auspice.commands.CommandContext;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
 import net.aurika.util.uuid.FastUUID;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.util.collection.nonnull.NonNullMap;
 
 import java.util.*;
 

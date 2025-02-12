@@ -1,11 +1,13 @@
-package net.aurika.util.array;
+package net.aurika.util.collection;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.aurika.checker.Checker;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Consumer;
 
-@SuppressWarnings({"ReturnOfInnerClass", "NullableProblems"})
+@Deprecated
 public final class UnsafeArrayList<E> extends AbstractCollection<E> implements List<E>, RandomAccess {
     private static final int DEFAULT_CAPACITY = 10;
     private transient E[] array;
@@ -14,29 +16,31 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     private UnsafeArrayList() {
     }
 
-    private UnsafeArrayList(E[] array) {
+    private UnsafeArrayList(E @NotNull [] array) {
+        Checker.Arg.notNull(array, "array");
         this.array = array;
         this.size = array.length;
     }
 
-    public static <E> UnsafeArrayList<E> withSize(E[] array) {
+    public static <E> @NotNull UnsafeArrayList<E> withZeroSize(E[] array) {
         UnsafeArrayList<E> list = new UnsafeArrayList<>();
         list.array = array;
         return list;
     }
 
     @SafeVarargs
-    public static <E> UnsafeArrayList<E> of(E... elements) {
+    public static <E> @NotNull UnsafeArrayList<E> of(E... elements) {
         return new UnsafeArrayList<>(elements);
     }
 
+    @Contract("_ -> new")
     @SafeVarargs
-    public static <E> UnsafeArrayList<E> copyOf(E... elements) {
+    public static <E> @NotNull UnsafeArrayList<E> copyOf(E... elements) {
         return new UnsafeArrayList<>(Arrays.copyOf(elements, elements.length));
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         if (isEmpty()) return "UnsafeArrayList:[]";
         int iMax = size - 1;
 
@@ -59,7 +63,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     }
 
     public void resetPointer() {
-        this.size = 0;
+        size = 0;
     }
 
     @Override
@@ -72,9 +76,8 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
         return indexOf(o) != -1;
     }
 
-    @NonNull
     @Override
-    public Iterator<E> iterator() {
+    public @NotNull Iterator<E> iterator() {
         return new Itr(0);
     }
 
@@ -91,7 +94,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
         return -1;
     }
 
-    public void setArray(E[] elements) {
+    public void setArray(E @NotNull [] elements) {
         this.array = elements;
         this.size = elements.length;
     }
@@ -100,7 +103,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
      * Warning: Make sure to check for nulls and terminate if you use this.
      */
     public E[] getArray() {
-        return this.array;
+        return array;
     }
 
     @Override
@@ -108,21 +111,18 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
         return lastIndexOfRange(o, 0, size);
     }
 
-    @NonNull
     @Override
-    public ListIterator<E> listIterator() {
+    public @NotNull ListIterator<E> listIterator() {
         return listIterator(0);
     }
 
-    @NonNull
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public @NotNull ListIterator<E> listIterator(int index) {
         return new Itr(index);
     }
 
-    @NonNull
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public @NotNull List<E> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
     }
 
@@ -135,14 +135,13 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     }
 
     @Override
-    public E[] toArray() {
+    public E @NotNull [] toArray() {
         return Arrays.copyOf(array, size);
     }
 
     @SuppressWarnings({"unchecked", "ConstantConditions", "SuspiciousSystemArraycopy"})
-    @NonNull
     @Override
-    public <T> T[] toArray(@NonNull T[] a) {
+    public <T> T @NotNull [] toArray(T @NotNull [] a) {
         if (a.length < size) return (T[]) Arrays.copyOf(array, size, a.getClass());
         System.arraycopy(array, 0, a, 0, size);
         if (a.length > size) a[size] = null;
@@ -249,7 +248,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     }
 
     @Override
-    public boolean containsAll(@NonNull Collection<?> collection) {
+    public boolean containsAll(@NotNull Collection<?> collection) {
         for (Object e : collection)
             if (!contains(e))
                 return false;
@@ -313,17 +312,17 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     }
 
     @Override
-    public boolean removeAll(@NonNull Collection<?> c) {
+    public boolean removeAll(@NotNull Collection<?> c) {
         return batchRemove(c, false, 0, size);
     }
 
     @Override
-    public boolean retainAll(@NonNull Collection<?> c) {
+    public boolean retainAll(@NotNull Collection<?> c) {
         return batchRemove(c, true, 0, size);
     }
 
     @Override
-    public void forEach(@NonNull Consumer<? super E> action) {
+    public void forEach(@NotNull Consumer<? super E> action) {
         for (E element : array) action.accept(element);
     }
 
