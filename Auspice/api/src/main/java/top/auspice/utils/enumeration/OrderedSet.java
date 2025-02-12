@@ -2,7 +2,7 @@ package top.auspice.utils.enumeration;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.*;
 

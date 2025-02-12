@@ -1,11 +1,11 @@
 package net.aurika.config.sections.format;
 
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
 import org.snakeyaml.engine.v2.nodes.*;
-import net.aurika.utils.snakeyaml.nodes.NodeUtils;
+import net.aurika.util.snakeyaml.nodes.NodeUtils;
 
 public enum YamlConfigSectionFormat implements ConfigSectionFormat {
     /**

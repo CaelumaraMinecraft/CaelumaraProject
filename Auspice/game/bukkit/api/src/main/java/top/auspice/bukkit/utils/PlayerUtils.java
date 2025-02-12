@@ -94,14 +94,14 @@ public final class PlayerUtils {
         Player var2 = Bukkit.getPlayerExact(var0);
         if (!var1 && var2 == null) {
             int var7;
-            if ((var7 = (var0 = net.aurika.utils.string.Strings.toLatinLowerCase(var0)).length()) > 16) {
+            if ((var7 = (var0 = net.aurika.util.string.Strings.toLatinLowerCase(var0)).length()) > 16) {
                 return null;
             } else {
                 int var3 = Integer.MAX_VALUE;
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     Player var5;
-                    if (net.aurika.utils.string.Strings.toLatinLowerCase((var5 = player).getName()).startsWith(var0)) {
+                    if (net.aurika.util.string.Strings.toLatinLowerCase((var5 = player).getName()).startsWith(var0)) {
                         int var6;
                         if ((var6 = Math.abs(var5.getName().length() - var7)) < var3) {
                             var2 = var5;

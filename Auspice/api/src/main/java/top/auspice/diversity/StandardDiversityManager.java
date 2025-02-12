@@ -1,7 +1,7 @@
 package top.auspice.diversity;
 
 import net.aurika.namespace.NSedKey;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.messages.messenger.DefinedMessenger;
 

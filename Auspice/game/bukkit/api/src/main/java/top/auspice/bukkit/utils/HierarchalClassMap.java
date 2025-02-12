@@ -2,9 +2,9 @@ package top.auspice.bukkit.utils;
 
 import kotlin.NotImplementedError;
 import kotlin.jvm.internal.markers.KMutableMap;
+import net.aurika.util.reflection.ClassHierarchyWalker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.unsafe.reflection.ClassHierarchyWalker;
 
 import java.util.*;
 import java.util.function.Function;

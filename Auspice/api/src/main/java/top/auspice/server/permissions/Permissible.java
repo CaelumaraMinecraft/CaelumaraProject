@@ -3,7 +3,7 @@ package top.auspice.server.permissions;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.permission.Permission;
 import top.auspice.permission.PermissionKey;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 public interface Permissible extends ServerOperator {
 

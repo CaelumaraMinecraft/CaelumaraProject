@@ -4,7 +4,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.Tag;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.math.BigInteger;
 import java.util.Collection;

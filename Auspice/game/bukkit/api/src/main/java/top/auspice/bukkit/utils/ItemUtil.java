@@ -9,8 +9,8 @@ import net.aurika.text.compiler.TextCompiler;
 import net.aurika.text.TextObject;
 import net.aurika.text.compiler.pieces.TextPiece;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
-import net.aurika.utils.checker.Checker;
-import net.aurika.utils.string.Strings;
+import net.aurika.util.checker.Checker;
+import net.aurika.util.string.Strings;
 
 import java.util.ArrayList;
 import java.util.Iterator;

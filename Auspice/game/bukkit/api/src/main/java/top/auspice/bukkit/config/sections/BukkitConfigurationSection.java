@@ -11,7 +11,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.config.sections.ConfigSection;
-import net.aurika.utils.string.Strings;
+import net.aurika.util.string.Strings;
 
 import java.util.HashSet;
 import java.util.List;

@@ -3,7 +3,7 @@ package top.auspice.config;
 import net.aurika.config.CompleteConfigPath;
 import net.aurika.config.scope.ConfigScope;
 import net.aurika.namespace.nested.NestedNamespace;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.api.user.AuspiceUser;
 

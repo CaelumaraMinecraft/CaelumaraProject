@@ -1,7 +1,7 @@
 package top.auspice.bukkit.utils.cache.single;
 
 import top.auspice.server.core.Server;
-import net.aurika.utils.cache.single.CacheableObject;
+import net.aurika.util.cache.single.CacheableObject;
 
 public class TickedCache<T> implements CacheableObject<T> {
     private T value;

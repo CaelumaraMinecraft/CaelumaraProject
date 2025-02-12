@@ -1,6 +1,12 @@
 package top.auspice.commands;
 
 import com.github.benmanes.caffeine.cache.Cache;
+import net.aurika.checker.Checker;
+import net.aurika.namespace.NSedKey;
+import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.util.number.AnyNumber;
+import net.aurika.util.number.NumberConstraint;
+import net.aurika.util.number.NumberProcessor;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -13,22 +19,16 @@ import top.auspice.configs.messages.SimpleMessenger;
 import top.auspice.configs.messages.messenger.DefaultedMessenger;
 import top.auspice.configs.messages.messenger.Messenger;
 import top.auspice.configs.messages.messenger.StaticMessenger;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.diversity.Diversity;
-import net.aurika.namespace.NSedKey;
 import top.auspice.loader.AuspiceLoader;
 import top.auspice.platform.bukkit.entity.OfflinePlayer;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;
 import top.auspice.utils.Pair;
-import top.auspice.utils.Validate;
 import top.auspice.utils.cache.caffeine.CacheHandler;
-import top.auspice.utils.unsafe.arrays.FunctionalList;
-import net.aurika.utils.number.AnyNumber;
-import net.aurika.utils.number.NumberConstraint;
-import net.aurika.utils.number.NumberProcessor;
 import top.auspice.utils.string.Strings;
+import top.auspice.utils.unsafe.arrays.FunctionalList;
 
 import java.time.Duration;
 import java.util.*;
@@ -426,7 +426,7 @@ public class CommandContext extends SimpleMessenger {
     }
 
     public boolean isAtCurrentParameter() {
-        Validate.isTrue(this.c, "Next argument is not ready for " + this.argPosition);
+        Checker.Arg.require(this.c, "Next argument is not ready for " + this.argPosition);
         this.c = false;
         return this.isAtArg(this.argPosition - 1);
     }

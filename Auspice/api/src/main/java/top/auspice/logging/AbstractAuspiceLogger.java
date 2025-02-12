@@ -3,7 +3,7 @@ package top.auspice.logging;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.logging.debug.Debug;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.logging.Logger;
 

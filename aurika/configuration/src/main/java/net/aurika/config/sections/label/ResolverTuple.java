@@ -1,7 +1,7 @@
 package net.aurika.config.sections.label;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.regex.Pattern;
 

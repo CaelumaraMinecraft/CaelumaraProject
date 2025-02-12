@@ -4,7 +4,7 @@ import net.aurika.data.compressor.DataCompressor;
 import net.aurika.data.database.compressor.CompressorDataProvider;
 import net.aurika.data.handler.DataHandler;
 import net.aurika.data.internal.ByteArrayOutputStream;
-import net.aurika.utils.unsafe.fn.Fn;
+import net.aurika.util.unsafe.fn.Fn;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.ApiStatus.NonExtendable;
 import org.jetbrains.annotations.Nullable;

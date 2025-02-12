@@ -1,6 +1,6 @@
 package top.auspice.configs.messages;
 
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.diversity.MessengerManageKey;

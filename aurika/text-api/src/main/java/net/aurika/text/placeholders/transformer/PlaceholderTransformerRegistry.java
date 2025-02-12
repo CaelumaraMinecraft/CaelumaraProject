@@ -10,7 +10,7 @@ import top.auspice.constants.location.SimpleChunkLocation;
 import top.auspice.server.location.BlockPoint3D;
 import top.auspice.server.location.Location;
 import top.auspice.server.player.OfflinePlayer;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.map.HierarchalClassMap;
 import top.auspice.utils.ItemUtil;
 import top.auspice.utils.compiler.base.Expression;

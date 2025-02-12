@@ -1,9 +1,9 @@
 package net.aurika.data.database.nbt;
 
 import net.aurika.data.database.dataprovider.*;
-import net.aurika.utils.function.FloatSupplier;
-import net.aurika.utils.function.TriConsumer;
-import net.aurika.utils.uuid.FastUUID;
+import net.aurika.util.function.FloatSupplier;
+import net.aurika.util.function.TriConsumer;
+import net.aurika.util.uuid.FastUUID;
 import net.kyori.adventure.nbt.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

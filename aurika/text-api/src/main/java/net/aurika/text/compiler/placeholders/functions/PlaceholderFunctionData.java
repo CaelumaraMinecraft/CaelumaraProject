@@ -2,7 +2,7 @@ package net.aurika.text.compiler.placeholders.functions;
 
 import org.jetbrains.annotations.NotNull;
 import net.aurika.text.compiler.placeholders.types.KingdomsPlaceholder;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 public class PlaceholderFunctionData {
     private final @NotNull String functionName;

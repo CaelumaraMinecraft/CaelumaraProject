@@ -1,7 +1,7 @@
 package top.auspice.utils.network;
 
 import com.google.gson.JsonElement;
-import net.aurika.utils.gson.AurikaGson;
+import net.aurika.util.gson.AurikaGson;
 
 import java.io.IOException;
 import java.io.InputStream;

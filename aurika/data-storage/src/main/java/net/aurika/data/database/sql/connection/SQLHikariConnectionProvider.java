@@ -3,7 +3,7 @@ package net.aurika.data.database.sql.connection;
 import com.zaxxer.hikari.HikariDataSource;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.sql.DatabaseProperties;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.utils.logging.AuspiceLogger;

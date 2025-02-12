@@ -4,5 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(api(project(":aurika:annotations")))
+    api(project(":aurika:annotations"))
+    api(project(":aurika:util:function"))
+
+    compileOnly(libs.annotations.jetbrains)
 }

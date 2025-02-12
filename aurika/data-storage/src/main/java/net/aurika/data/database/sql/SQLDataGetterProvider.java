@@ -10,7 +10,7 @@ import net.aurika.data.database.dataprovider.DataGetter;
 import net.aurika.data.database.dataprovider.SectionableDataGetter;
 import net.aurika.data.database.flatfile.json.JsonElementDataProvider;
 import net.aurika.data.database.sql.statements.getters.SimpleResultSetQuery;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

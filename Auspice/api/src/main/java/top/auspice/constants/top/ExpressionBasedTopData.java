@@ -1,18 +1,18 @@
 package top.auspice.constants.top;
 
 import com.google.common.base.Strings;
-import org.jetbrains.annotations.Nullable;
+import net.aurika.checker.Checker;
 import net.aurika.config.sections.ConfigSection;
-import top.auspice.configs.messages.AuspiceLang;
 import net.aurika.text.compiler.TextCompiler;
+import net.aurika.text.placeholders.context.PlaceholderProvider;
+import org.jetbrains.annotations.Nullable;
+import top.auspice.configs.messages.AuspiceLang;
 import top.auspice.configs.messages.messenger.Messenger;
 import top.auspice.configs.messages.messenger.StaticMessenger;
-import net.aurika.text.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.math.MathCompiler;
-import top.auspice.utils.math.MathUtils;
-import top.auspice.utils.Validate;
 import top.auspice.utils.conditions.ConditionProcessor;
+import top.auspice.utils.math.MathUtils;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -27,11 +27,11 @@ public abstract class ExpressionBasedTopData<K, V> extends IndexedTopData<K, V> 
     private final Messenger displayName;
     private final Messenger description;
 
-    public ExpressionBasedTopData(MathCompiler.Expression var1, ConditionCompiler.LogicalOperand var2, String var3, Messenger var4, Messenger var5) {
+    public ExpressionBasedTopData(MathCompiler.Expression var1, ConditionCompiler.LogicalOperand var2, String dataName, Messenger var4, Messenger var5) {
         this.equation = Objects.requireNonNull(var1);
         this.filter = var2;
         this.predicate = var2 == null ? null : (var2x) -> ConditionProcessor.process(var2, this.getPlaceholderProvider(var2x));
-        this.dataName = Validate.notEmpty(var3);
+        this.dataName = Checker.Arg.notEmpty(dataName, "dataName");
         this.displayName = Objects.requireNonNull(var4);
         this.description = Objects.requireNonNull(var5);
     }
@@ -41,8 +41,8 @@ public abstract class ExpressionBasedTopData<K, V> extends IndexedTopData<K, V> 
     public static <TOP extends ExpressionBasedTopData<?, ?>> void parse(ConfigSection var0, Creator<TOP> var1, Map<String, TOP> var2) {
         Iterator<String> var3 = var0.getKeys(false).iterator();
 
-        while(true) {
-            while(var3.hasNext()) {
+        while (true) {
+            while (var3.hasNext()) {
                 String var4 = var3.next();
                 ConfigSection var5 = var0.getSection(new String[]{var4});
                 MathCompiler.Expression var6 = var5.getMath(new String[]{"equation"});

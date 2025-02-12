@@ -7,7 +7,7 @@ import net.aurika.text.TextObject;
 import net.aurika.text.compiler.builders.context.ComplexTextBuilderContextProvider;
 import net.aurika.text.compiler.pieces.TextPiece;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 public class AuspiceComponentDecoder implements ComponentDecoder<TextObject, TextComponent> {
     public static final AuspiceComponentDecoder INSTANCE = new AuspiceComponentDecoder();

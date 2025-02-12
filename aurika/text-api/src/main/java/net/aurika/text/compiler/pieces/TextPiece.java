@@ -21,7 +21,7 @@ import net.aurika.text.compiler.builders.context.TextBuilderContextProvider;
 import net.aurika.text.compiler.placeholders.Placeholder;
 import net.aurika.text.placeholders.context.PlaceholderContextBuilder;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.Pair;
 import top.auspice.utils.chat.BaseColorUtils;
 import top.auspice.utils.chat.CodedChatFormats;

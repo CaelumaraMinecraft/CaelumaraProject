@@ -3,7 +3,7 @@ package net.aurika.config.path;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.abstraction.BuildableObject;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.Arrays;
 import java.util.Collections;

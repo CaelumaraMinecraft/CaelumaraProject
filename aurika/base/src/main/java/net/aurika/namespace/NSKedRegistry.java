@@ -5,7 +5,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import top.auspice.api.user.AuspiceUser;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.Collections;
 import java.util.HashMap;

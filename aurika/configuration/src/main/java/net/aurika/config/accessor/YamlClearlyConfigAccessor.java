@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.config.path.ConfigEntry;
 import net.aurika.config.path.ConfigPath;
 import net.aurika.config.sections.YamlNodeSection;
-import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpreter;
-import net.aurika.utils.Checker;
+import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.util.Checker;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.math.MathCompiler;
 

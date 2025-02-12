@@ -7,7 +7,7 @@ import top.auspice.configs.messages.messenger.StaticMessenger;
 import top.auspice.permission.Permission;
 import top.auspice.permission.PermissionDefaultValue;
 import top.auspice.permission.PermissionKey;
-import net.aurika.utils.checker.Checker;
+import net.aurika.util.checker.Checker;
 
 import java.util.Arrays;
 

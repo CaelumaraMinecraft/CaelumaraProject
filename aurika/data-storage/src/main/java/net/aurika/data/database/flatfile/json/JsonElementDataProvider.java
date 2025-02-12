@@ -2,13 +2,13 @@ package net.aurika.data.database.flatfile.json;
 
 import com.google.gson.*;
 import net.aurika.checker.Checker;
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
-import net.aurika.data.api.structure.PlainSimpleDataUtils;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.DataBundleSchema;
+import net.aurika.data.api.bundles.PlainSimpleDataUtils;
 import net.aurika.data.database.dataprovider.*;
-import net.aurika.utils.function.FloatSupplier;
-import net.aurika.utils.function.TriConsumer;
-import net.aurika.utils.uuid.FastUUID;
+import net.aurika.util.function.FloatSupplier;
+import net.aurika.util.function.TriConsumer;
+import net.aurika.util.uuid.FastUUID;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -86,7 +86,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
+    public <T> T asObject(DataBundleSchema<T> template) {
         Checker.Arg.notNull(template, "template");
         String s = this.asString();
         return s != null ? PlainSimpleDataUtils.serializePlainMapData(s, template) : null;
@@ -216,7 +216,7 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public void setObject(@NotNull DataUnits value) {
+    public void setObject(@NotNull BundledData value) {
         Checker.Arg.notNull(value, "value");
         setString(PlainSimpleDataUtils.compressPlainMapData(value));
     }

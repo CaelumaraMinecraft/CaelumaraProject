@@ -3,7 +3,7 @@ package net.aurika.config.yaml.snakeyaml.common;
 import org.snakeyaml.engine.v2.common.Anchor;
 import org.snakeyaml.engine.v2.nodes.*;
 import net.aurika.config.yaml.snakeyaml.common.NodeReference.Type;
-import net.aurika.utils.snakeyaml.nodes.NodeUtils;
+import net.aurika.util.snakeyaml.nodes.NodeUtils;
 
 import java.util.*;
 import java.util.function.Predicate;

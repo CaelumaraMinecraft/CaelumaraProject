@@ -1,6 +1,6 @@
 package net.aurika.data.database.compressor;
 
-import net.aurika.data.api.structure.DataUnits;
+import net.aurika.data.api.bundles.BundledData;
 import net.aurika.data.compressor.DataCompressor;
 import net.aurika.data.database.dataprovider.*;
 import org.jetbrains.annotations.NotNull;
@@ -90,7 +90,7 @@ public final class CompressorDataProvider implements SectionCreatableDataSetter,
     }
 
     @Override
-    public void setObject(@Nullable DataUnits value) {
+    public void setObject(@Nullable BundledData value) {
         compressor.compress(value);
     }
 

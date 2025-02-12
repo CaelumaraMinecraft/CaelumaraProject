@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.Node;
 import org.snakeyaml.engine.v2.nodes.Tag;
 import net.aurika.config.accessor.YamlClearlyConfigAccessor;
-import net.aurika.utils.unsafe.fn.Fn;
-import net.aurika.utils.string.Strings;
+import net.aurika.util.unsafe.fn.Fn;
+import net.aurika.util.string.Strings;
 
 import java.util.*;
 

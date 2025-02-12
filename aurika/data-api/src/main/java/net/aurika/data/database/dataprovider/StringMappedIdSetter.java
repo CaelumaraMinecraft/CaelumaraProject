@@ -1,8 +1,8 @@
 package net.aurika.data.database.dataprovider;
 
 import net.aurika.checker.Checker;
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.utils.uuid.FastUUID;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.util.uuid.FastUUID;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,7 +72,7 @@ public class StringMappedIdSetter implements MappedIdSetter {  // SimpleData   C
     }
 
     @Override
-    public void setObject(@Nullable DataUnits value) {
+    public void setObject(@Nullable BundledData value) {
 //        str = value != null ? value.asPlainDataString() : null;
     }
 

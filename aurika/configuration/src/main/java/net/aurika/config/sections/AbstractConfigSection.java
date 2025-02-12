@@ -12,7 +12,7 @@ import net.aurika.text.compiler.TextCompiler;
 import net.aurika.text.compiler.TextCompilerSettings;
 import net.aurika.text.compiler.TextObject;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.Generics;
 import top.auspice.utils.arrays.ArrayUtils;
 import top.auspice.utils.compiler.condition.ConditionCompiler;

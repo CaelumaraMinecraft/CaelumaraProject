@@ -1,8 +1,8 @@
 package net.aurika.data.database.dataprovider;
 
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
-import net.aurika.utils.function.FloatSupplier;
-import net.aurika.utils.function.TriConsumer;
+import net.aurika.data.api.bundles.DataBundleSchema;
+import net.aurika.util.function.FloatSupplier;
+import net.aurika.util.function.TriConsumer;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +52,7 @@ public interface DataGetter {
 
     @Nullable UUID asUUID();
 
-    <T> T asObject(SimpleDataMapObjectTemplate<T> template);
+    <T> T asObject(DataBundleSchema<T> template);
 
     /**
      * @param c             存储数据的集合

@@ -1,12 +1,12 @@
 package net.aurika.data.database.mongo;
 
 import net.aurika.checker.Checker;
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
-import net.aurika.data.api.structure.SimpleMappingDataEntry;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.DataBundleSchema;
+import net.aurika.data.api.bundles.SimpleMappingDataEntry;
 import net.aurika.data.database.dataprovider.*;
-import net.aurika.utils.function.FloatSupplier;
-import net.aurika.utils.function.TriConsumer;
+import net.aurika.util.function.FloatSupplier;
+import net.aurika.util.function.TriConsumer;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -103,7 +103,7 @@ public class MongoDataProvider implements DataProvider, SectionCreatableDataSett
     }
 
     @Override
-    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
+    public <T> T asObject(DataBundleSchema<T> template) {
         return null;
     }
 
@@ -218,7 +218,7 @@ public class MongoDataProvider implements DataProvider, SectionCreatableDataSett
     }
 
     @Override
-    public void setObject(@NotNull DataUnits value) {
+    public void setObject(@NotNull BundledData value) {
         Checker.Arg.notNull(value, "value");
         Document document = d();
         for (SimpleMappingDataEntry entry : value) {

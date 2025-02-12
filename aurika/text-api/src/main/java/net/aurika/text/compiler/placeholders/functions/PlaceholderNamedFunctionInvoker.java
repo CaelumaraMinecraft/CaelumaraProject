@@ -4,7 +4,7 @@ import kotlin.text.StringsKt;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.text.compiler.placeholders.types.KingdomsPlaceholder;
 import net.aurika.text.compiler.placeholders.types.PlaceholderTranslationException;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.Map;
 import java.util.Objects;

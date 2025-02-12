@@ -1,9 +1,0 @@
-plugins {
-    id("java-library")
-    id("maven-publish")
-}
-
-dependencies {
-    implementation(api(project(":aurika:base")))
-    api(libs.yamlengine)
-}

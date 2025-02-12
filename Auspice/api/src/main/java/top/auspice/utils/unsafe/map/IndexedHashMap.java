@@ -1,6 +1,6 @@
 package top.auspice.utils.unsafe.map;
 
-import top.auspice.utils.unsafe.arrays.UnsafeArrayList;
+import net.aurika.util.array.UnsafeArrayList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ public class IndexedHashMap<K, V> {
     private final Map<K, V> map = new UnsafeHashMap<>();
     private final UnsafeArrayList<K> list;
 
-    public IndexedHashMap(K[] ks) {
-        this.list = UnsafeArrayList.withSize(ks);
+    public IndexedHashMap(K[] keys) {
+        this.list = UnsafeArrayList.withSize(keys);
     }
 
     public K[] asArray() {
@@ -29,7 +29,7 @@ public class IndexedHashMap<K, V> {
     }
 
     public K at(int index) {
-        return index < this.list.size ? this.list.getArray()[index] : null;
+        return index < this.list.size() ? this.list.getArray()[index] : null;
     }
 
     public V get(K key, V value) {
@@ -37,7 +37,7 @@ public class IndexedHashMap<K, V> {
     }
 
     public int size() {
-        return this.list.size;
+        return this.list.size();
     }
 
     public void add(K key, V value) {
@@ -45,26 +45,26 @@ public class IndexedHashMap<K, V> {
         this.list.add(key);
     }
 
-    public void set(K[] var1, IntFunction<V> var2) {
+    public void set(K[] keys, IntFunction<V> values) {
         this.clear();
-        this.list.setArray(var1);
+        this.list.setArray(keys);
 
-        for (int var3 = 0; var3 < var1.length; ++var3) {
-            this.map.put(var1[var3], var2.apply(var3));
+        for (int var3 = 0; var3 < keys.length; ++var3) {
+            this.map.put(keys[var3], values.apply(var3));
         }
     }
 
-    public <U> List<U> subList(int from, int to, Function<K, U> var3) {
-        if (from >= this.list.size) {
+    public <U> List<U> subList(int from, int to, Function<K, U> keyToSubKey) {
+        if (from >= this.list.size()) {
             return new ArrayList<>();
         } else {
             ArrayList<U> var4 = new ArrayList<>(to);
             int var5 = 0;
             int var6 = 0;
 
-            while (var5 - from <= to && var6 < this.list.size) {
-                U var7;
-                if ((var7 = var3.apply(this.list.getArray()[var6++])) != null) {
+            while (var5 - from <= to && var6 < this.list.size()) {
+                U var7 = keyToSubKey.apply(this.list.getArray()[var6++]);
+                if (var7 != null) {
                     ++var5;
                     if (var5 > from) {
                         var4.add(var7);

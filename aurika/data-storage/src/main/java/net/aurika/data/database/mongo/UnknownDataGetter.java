@@ -1,11 +1,11 @@
 package net.aurika.data.database.mongo;
 
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.DataBundleSchema;
 import net.aurika.data.database.dataprovider.*;
-import net.aurika.utils.function.FloatSupplier;
-import net.aurika.utils.function.TriConsumer;
-import net.aurika.utils.uuid.FastUUID;
+import net.aurika.util.function.FloatSupplier;
+import net.aurika.util.function.TriConsumer;
+import net.aurika.util.uuid.FastUUID;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -71,7 +71,7 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @Override
-    public void setObject(@Nullable DataUnits value) {
+    public void setObject(@Nullable BundledData value) {
         if (value != null) this.c().add(value);
     }
 
@@ -147,7 +147,7 @@ public class UnknownDataGetter implements DataProvider {
     }
 
     @Override
-    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
+    public <T> T asObject(DataBundleSchema<T> template) {
         return null;
     }
 

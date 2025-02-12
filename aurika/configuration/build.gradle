@@ -6,6 +6,6 @@ plugins {
 dependencies {
     api(project(":aurika:base"))
     api(project(":aurika:config-api"))
-    api(project(":aurika:utils:snakeyaml-ext"))
-    api(project(":aurika:utils:generics"))
+    api(project(":aurika:util:snakeyaml-ext"))
+    api(project(":aurika:util:generics"))
 }

@@ -1,8 +1,8 @@
 package net.aurika.data.database.dataprovider;
 
 import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.DataUnitsLike;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.BundledDataLike;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -31,12 +31,12 @@ public interface DataSetter {
 
     void setUUID(@NotNull UUID value);
 
-    default void setObject(@NotNull DataUnitsLike value) {
+    default void setObject(@NotNull BundledDataLike value) {
         Objects.requireNonNull(value, "value");
         setObject(value.simpleData());
     }
 
-    void setObject(@NotNull DataUnits value);
+    void setObject(@NotNull BundledData value);
 
     <E> void setCollection(@NotNull Collection<? extends E> value, @NotNull BiConsumer<SectionCreatableDataSetter, E> handler);
 

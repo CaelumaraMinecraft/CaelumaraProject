@@ -1,7 +1,7 @@
 package net.aurika.abstraction.conditional;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 
 public final class ConditionBranch<T> {

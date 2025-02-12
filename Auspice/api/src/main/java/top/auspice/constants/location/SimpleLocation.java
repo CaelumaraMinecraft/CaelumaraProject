@@ -3,17 +3,17 @@ package top.auspice.constants.location;
 import net.aurika.annotations.data.Immutable;
 import net.aurika.checker.Checker;
 import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.structure.DataUnitType;
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.DataUnitsLike;
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
-import net.aurika.data.api.structure.SimpleMappingDataEntry;
-import net.aurika.utils.string.CommaDataSplitStrategy;
+import net.aurika.data.api.bundles.scalars.DataScalarType;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.BundledDataLike;
+import net.aurika.data.api.bundles.DataBundleSchema;
+import net.aurika.data.api.bundles.SimpleMappingDataEntry;
+import net.aurika.util.string.CommaDataSplitStrategy;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 @Immutable
-public class SimpleLocation implements DataStringRepresentation, DataUnitsLike {
+public class SimpleLocation implements DataStringRepresentation, BundledDataLike {
     private final @NotNull String world;
     private final double x;
     private final double y;
@@ -21,7 +21,7 @@ public class SimpleLocation implements DataStringRepresentation, DataUnitsLike {
     private final float yaw;
     private final float pitch;
 
-    public static final SimpleDataMapObjectTemplate<SimpleLocation> DATA_TEMPLATE = SimpleDataMapObjectTemplate.of(
+    public static final DataBundleSchema<SimpleLocation> DATA_TEMPLATE = DataBundleSchema.of(
             SimpleLocation.class,
             data -> new SimpleLocation(
                     data.getString("world"),
@@ -31,12 +31,12 @@ public class SimpleLocation implements DataStringRepresentation, DataUnitsLike {
                     data.getFloat("yaw"),
                     data.getFloat("pitch")
             ),
-            "world", DataUnitType.STRING,
-            "x", DataUnitType.DOUBLE,
-            "y", DataUnitType.DOUBLE,
-            "z", DataUnitType.DOUBLE,
-            "yaw", DataUnitType.FLOAT,
-            "pitch", DataUnitType.FLOAT
+            "world", DataScalarType.STRING,
+            "x", DataScalarType.DOUBLE,
+            "y", DataScalarType.DOUBLE,
+            "z", DataScalarType.DOUBLE,
+            "yaw", DataScalarType.FLOAT,
+            "pitch", DataScalarType.FLOAT
     );
 
     public SimpleLocation(@NotNull String worldName, double x, double y, double z) {
@@ -99,8 +99,8 @@ public class SimpleLocation implements DataStringRepresentation, DataUnitsLike {
     }
 
     @Override
-    public @NonNull DataUnits simpleData() {
-        return DataUnits.of(
+    public @NonNull BundledData simpleData() {
+        return BundledData.of(
                 SimpleMappingDataEntry.of("world", world),
                 SimpleMappingDataEntry.of("x", x),
                 SimpleMappingDataEntry.of("y", y),
@@ -111,7 +111,7 @@ public class SimpleLocation implements DataStringRepresentation, DataUnitsLike {
     }
 
     @Override
-    public @NotNull SimpleDataMapObjectTemplate<? extends SimpleLocation> simpleDataTemplate() {
+    public @NotNull DataBundleSchema<? extends SimpleLocation> simpleDataTemplate() {
         return DATA_TEMPLATE;
     }
 }

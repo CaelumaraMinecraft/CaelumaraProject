@@ -1,7 +1,7 @@
 package net.aurika.data.compressor;
 
-import net.aurika.utils.math.Avg;
-import net.aurika.utils.unsafe.fn.Fn;
+import net.aurika.util.math.Avg;
+import net.aurika.util.unsafe.fn.Fn;
 import top.auspice.utils.HierarchalClassMap;
 
 import java.awt.*;

@@ -1,8 +1,8 @@
 package net.aurika.data.compressor;
 
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.DataUnitsLike;
-import net.aurika.data.api.structure.SimpleMappingDataEntry;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.BundledDataLike;
+import net.aurika.data.api.bundles.SimpleMappingDataEntry;
 import net.aurika.data.internal.ByteArrayOutputStream;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.NamespacedKeyContainer;
@@ -124,11 +124,11 @@ public class DataCompressor {
     }
 
     @ApiStatus.Experimental
-    public final DataCompressor compress(DataUnitsLike simpleDataObject) {
+    public final DataCompressor compress(BundledDataLike simpleDataObject) {
         return simpleDataObject == null ? compressNull() : compress(simpleDataObject.simpleData());
     }
 
-    public final DataCompressor compress(DataUnits simpleData) {
+    public final DataCompressor compress(BundledData simpleData) {
         if (simpleData == null) {
             return this.compressNull();
         } else {

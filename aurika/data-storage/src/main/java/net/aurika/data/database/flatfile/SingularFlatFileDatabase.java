@@ -4,7 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.base.SingularDatabase;
 import net.aurika.data.handler.SingularDataHandler;
 import net.aurika.data.api.DataObject;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.filesystem.FSUtil;

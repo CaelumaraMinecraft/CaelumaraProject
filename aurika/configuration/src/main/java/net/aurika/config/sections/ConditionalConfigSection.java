@@ -14,7 +14,7 @@ import net.aurika.config.sections.label.Label;
 import net.aurika.text.compiler.TextCompilerSettings;
 import net.aurika.text.compiler.TextObject;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.compiler.condition.ConditionCompiler;
 import top.auspice.utils.compiler.condition.ConditionVariableTranslator;
 import top.auspice.utils.compiler.math.MathCompiler;

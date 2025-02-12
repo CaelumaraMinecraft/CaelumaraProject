@@ -1,0 +1,13 @@
+
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":aurika:base"))
+
+    api(libs.yamlengine)
+
+    compileOnly(libs.annotations.jetbrains)
+}

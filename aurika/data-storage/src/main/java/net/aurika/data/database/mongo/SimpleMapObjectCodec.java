@@ -1,13 +1,13 @@
 package net.aurika.data.database.mongo;
 
 import net.aurika.checker.Checker;
-import net.aurika.data.api.structure.DataUnitType;
-import net.aurika.data.api.structure.DataUnits;
-import net.aurika.data.api.structure.DataUnitsLike;
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
-import net.aurika.data.api.structure.entries.BooleanEntry;
-import net.aurika.data.api.structure.entries.IntEntry;
-import net.aurika.data.api.structure.SimpleMappingDataEntry;
+import net.aurika.data.api.bundles.scalars.DataScalarType;
+import net.aurika.data.api.bundles.BundledData;
+import net.aurika.data.api.bundles.BundledDataLike;
+import net.aurika.data.api.bundles.DataBundleSchema;
+import net.aurika.data.api.bundles.entries.BooleanEntry;
+import net.aurika.data.api.bundles.entries.IntEntry;
+import net.aurika.data.api.bundles.SimpleMappingDataEntry;
 import org.bson.BsonReader;
 import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class SimpleMapObjectCodec<T extends DataUnitsLike> implements Codec<T> {
-    private static final Map<SimpleDataMapObjectTemplate<?>, SimpleMapObjectCodec<?>> REGISTRY = new HashMap<>();
+public class SimpleMapObjectCodec<T extends BundledDataLike> implements Codec<T> {
+    private static final Map<DataBundleSchema<?>, SimpleMapObjectCodec<?>> REGISTRY = new HashMap<>();
 
-    private final SimpleDataMapObjectTemplate<T> template;
+    private final DataBundleSchema<T> template;
 
-    protected SimpleMapObjectCodec(@NotNull SimpleDataMapObjectTemplate<T> template) {
+    protected SimpleMapObjectCodec(@NotNull DataBundleSchema<T> template) {
         Checker.Arg.notNull(template, "template");
         this.template = template;
     }
@@ -34,7 +34,7 @@ public class SimpleMapObjectCodec<T extends DataUnitsLike> implements Codec<T> {
     public void encode(@NotNull BsonWriter writer, @NotNull T value, @Nullable EncoderContext encoderContext) {
         Checker.Arg.notNull(writer, "writer");
         Checker.Arg.notNull(value, "value");
-        DataUnits data = value.simpleData();
+        BundledData data = value.simpleData();
         Objects.requireNonNull(data, "data");
         writer.writeStartDocument();
         for (SimpleMappingDataEntry entry : data) {
@@ -49,12 +49,12 @@ public class SimpleMapObjectCodec<T extends DataUnitsLike> implements Codec<T> {
         reader.readStartDocument();
         SimpleMappingDataEntry[] entries = new SimpleMappingDataEntry[template.size()];
         int i = 0;
-        for (Map.Entry<String, DataUnitType> templateEntry : template.templateMap().entrySet()) {
+        for (Map.Entry<String, DataScalarType> templateEntry : template.templateMap().entrySet()) {
             entries[i] = readEntry(reader, templateEntry.getKey(), templateEntry.getValue());
             i++;
         }
         reader.readEndDocument();
-        return template.toObject(DataUnits.of(entries));
+        return template.toObject(BundledData.of(entries));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SimpleMapObjectCodec<T extends DataUnitsLike> implements Codec<T> {
         return template.type();
     }
 
-    public SimpleDataMapObjectTemplate<T> template() {
+    public DataBundleSchema<T> template() {
         return template;
     }
 
@@ -77,7 +77,7 @@ public class SimpleMapObjectCodec<T extends DataUnitsLike> implements Codec<T> {
         }
     }
 
-    private static SimpleMappingDataEntry readEntry(@NotNull BsonReader reader, @NotNull String key, @NotNull DataUnitType type) {
+    private static SimpleMappingDataEntry readEntry(@NotNull BsonReader reader, @NotNull String key, @NotNull DataScalarType type) {
         return switch (type) {
             case INT -> SimpleMappingDataEntry.of(key, reader.readInt32(key));
             case LONG -> SimpleMappingDataEntry.of(key, reader.readInt64(key));
@@ -87,9 +87,9 @@ public class SimpleMapObjectCodec<T extends DataUnitsLike> implements Codec<T> {
         };
     }
 
-    public static <T extends DataUnitsLike> SimpleMapObjectCodec<T> getEncoder(@NotNull T simpleDataObject) {
+    public static <T extends BundledDataLike> SimpleMapObjectCodec<T> getEncoder(@NotNull T simpleDataObject) {
         Checker.Arg.notNull(simpleDataObject, "simpleDataObject");
-        SimpleDataMapObjectTemplate<T> template = (SimpleDataMapObjectTemplate<T>) simpleDataObject.simpleDataTemplate();
+        DataBundleSchema<T> template = (DataBundleSchema<T>) simpleDataObject.simpleDataTemplate();
         var encoder = REGISTRY.get(template);
         if (encoder == null) {
             encoder = new SimpleMapObjectCodec<>(template);

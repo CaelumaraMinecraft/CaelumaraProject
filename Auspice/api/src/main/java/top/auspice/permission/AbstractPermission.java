@@ -1,7 +1,7 @@
 package top.auspice.permission;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 public class AbstractPermission implements Permission {
     private final PermissionKey key;

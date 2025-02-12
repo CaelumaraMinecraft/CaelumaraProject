@@ -8,12 +8,12 @@ dependencies {
     api(project(":aurika:data-api"))
     api(project(":aurika:dependency"))
     api(project(":aurika:tasks"))
-    api(project(":aurika:utils:file"))
-    api(project(":aurika:utils:fn"))
-    api(project(":aurika:utils:function"))
-    api(project(":aurika:utils:gson"))
-    api(project(":aurika:utils:string"))
-    api(project(":aurika:utils:snakeyaml-ext"))
+    api(project(":aurika:util:file"))
+    api(project(":aurika:util:fn"))
+    api(project(":aurika:util:function"))
+    api(project(":aurika:util:gson"))
+    api(project(":aurika:util:string"))
+    api(project(":aurika:util:snakeyaml-ext"))
 
     api("de.tr7zw:item-nbt-api:2.14.1")
 

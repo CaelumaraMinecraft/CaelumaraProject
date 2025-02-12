@@ -8,7 +8,7 @@ import net.aurika.text.compiler.PlaceholderTranslationContext;
 import net.aurika.text.compiler.placeholders.modifiers.PlaceholderModifier;
 import net.aurika.text.compiler.placeholders.Placeholder;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.List;
 import java.util.Objects;

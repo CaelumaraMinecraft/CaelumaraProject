@@ -13,9 +13,9 @@ import top.auspice.configs.messages.messenger.DefaultedMessenger;
 import top.auspice.configs.messages.messenger.Messenger;
 import top.auspice.configs.messages.messenger.StaticMessenger;
 import top.auspice.utils.unsafe.functional.SecondarySupplier;
-import net.aurika.utils.string.QuantumString;
-import net.aurika.utils.number.AnyNumber;
-import net.aurika.utils.number.NumberConstraint;
+import net.aurika.util.string.QuantumString;
+import net.aurika.util.number.AnyNumber;
+import net.aurika.util.number.NumberConstraint;
 import top.auspice.utils.string.Strings;
 
 import java.util.*;

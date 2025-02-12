@@ -5,9 +5,11 @@ plugins {
 
 dependencies {
     api(project(":aurika:checker"))
-    api(project(":aurika:utils"))
-    api(libs.annotations.jetbrains)
-    api(libs.annotations.checker)
+    api(project(":aurika:util"))
+
     api(libs.caffeine)
     api(libs.adventure.api)
+
+    compileOnly(libs.annotations.jetbrains)
+    compileOnly(libs.annotations.checker)
 }

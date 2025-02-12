@@ -16,9 +16,9 @@ import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.importers.YamlDeclarationNotFoundException;
 import net.aurika.config.yaml.importers.YamlImporter;
 import net.aurika.config.yaml.importers.YamlModuleLoader;
-import net.aurika.utils.snakeyaml.constructor.AuspiceConstructor;
-import net.aurika.utils.snakeyaml.validation.NodeValidator;
-import net.aurika.utils.snakeyaml.validation.Validator;
+import net.aurika.util.snakeyaml.constructor.AuspiceConstructor;
+import net.aurika.util.snakeyaml.validation.NodeValidator;
+import net.aurika.util.snakeyaml.validation.Validator;
 import top.auspice.main.Auspice;
 
 import java.io.File;

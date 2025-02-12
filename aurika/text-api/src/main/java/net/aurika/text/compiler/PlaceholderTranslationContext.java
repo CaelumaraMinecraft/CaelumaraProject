@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Contract;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.text.placeholders.transformer.PlaceholderTransformerRegistry;
 import net.aurika.text.messenger.Messenger;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 public final class PlaceholderTranslationContext {
     private final Object value;

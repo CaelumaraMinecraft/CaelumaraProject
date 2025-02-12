@@ -1,7 +1,7 @@
 package top.auspice.configs.messages;
 
 import net.aurika.text.TextObject;
-import net.aurika.utils.string.Strings;
+import net.aurika.util.string.Strings;
 import org.jetbrains.annotations.Contract;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.text.placeholders.StandardKingdomsPlaceholder;

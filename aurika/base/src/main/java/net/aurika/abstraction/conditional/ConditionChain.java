@@ -3,7 +3,7 @@ package net.aurika.abstraction.conditional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.conditions.ConditionProcessor;
 
 import java.util.Collections;

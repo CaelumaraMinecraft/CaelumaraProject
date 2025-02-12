@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.Style.Merge;
 import org.jetbrains.annotations.Unmodifiable;
 import net.aurika.text.compiler.pieces.TextPiece;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 
 import java.util.LinkedList;
 import java.util.List;

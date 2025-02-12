@@ -7,7 +7,7 @@ import kotlin.ranges.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.string.Strings;
 import top.auspice.utils.time.TimeUtils;
 

@@ -2,9 +2,9 @@ package net.aurika.config.sections;
 
 import net.aurika.checker.Checker;
 import net.aurika.config.sections.format.ConfigSectionFormat;
-import net.aurika.utils.snakeyaml.nodes.NodeUtils;
-import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpretContext;
-import net.aurika.utils.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.util.snakeyaml.nodes.NodeUtils;
+import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpretContext;
+import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpreter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.MappingNode;

@@ -1,7 +1,7 @@
 package net.aurika.data.compressor;
 
-import net.aurika.utils.reflection.Reflect;
-import net.aurika.utils.unsafe.fn.Fn;
+import net.aurika.util.reflection.Reflect;
+import net.aurika.util.unsafe.fn.Fn;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

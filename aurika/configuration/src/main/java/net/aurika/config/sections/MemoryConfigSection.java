@@ -12,7 +12,7 @@ import net.aurika.config.sections.format.StandardConfigSectionFormat;
 import net.aurika.config.validation.ConfigValidator;
 import net.aurika.config.validation.ConfigValidators;
 import net.aurika.config.validation.ValidationContext;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import top.auspice.utils.Validate;
 import top.auspice.utils.unsafe.Fn;
 import top.auspice.utils.number.Numbers;

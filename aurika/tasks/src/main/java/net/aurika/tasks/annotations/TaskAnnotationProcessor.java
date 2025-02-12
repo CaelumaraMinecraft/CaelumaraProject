@@ -14,7 +14,7 @@ import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.EnumPriority;
 import net.aurika.tasks.priority.PriorityPhase;
 import net.aurika.tasks.priority.RelativePriority;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.enumeration.QuickEnumSet;

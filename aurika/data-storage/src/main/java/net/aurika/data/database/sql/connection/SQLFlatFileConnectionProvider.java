@@ -5,7 +5,7 @@ import kotlin.collections.ArraysKt;
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.database.sql.H2Tools;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.dependencies.classpath.IsolatedClassLoader;
 import top.auspice.main.Auspice;

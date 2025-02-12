@@ -3,7 +3,7 @@ package net.aurika.data.database.sql.statements;
 import net.aurika.data.database.DatabaseType;
 import net.aurika.data.history.SQLAssociatedStatement;
 import net.aurika.data.managers.base.DataManager;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class SQLStatement {

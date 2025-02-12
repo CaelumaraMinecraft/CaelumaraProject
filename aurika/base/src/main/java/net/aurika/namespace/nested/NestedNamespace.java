@@ -2,7 +2,7 @@ package net.aurika.namespace.nested;
 
 import net.aurika.namespace.NSKey;
 import net.aurika.namespace.nested.exceptions.NestedNamespaceContainsIllegalLevelException;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.utils.string.Strings;

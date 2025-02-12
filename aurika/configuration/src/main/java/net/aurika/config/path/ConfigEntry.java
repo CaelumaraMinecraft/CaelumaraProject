@@ -2,7 +2,7 @@ package net.aurika.config.path;
 
 import net.aurika.abstraction.BuildableObject;
 import net.aurika.annotations.data.Immutable;
-import net.aurika.utils.Checker;
+import net.aurika.util.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,9 +1,9 @@
 package top.auspice.constants.top;
 
+import net.aurika.checker.Checker;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.utils.Validate;
 import top.auspice.utils.unsafe.map.IndexedHashMap;
 
 import java.util.*;
@@ -17,9 +17,9 @@ public abstract class IndexedTopData<K, V> implements TopData<V> {
     }
 
     public Optional<V> getTopPosition(int var1) {
-        Validate.isTrue(var1 > 0, "Kingdom top positions start at 1");
-        K var2;
-        return (var2 = this.a.at(var1 - 1)) == null ? Optional.empty() : Optional.ofNullable(this.fetchData(var2));
+        Checker.Arg.require(var1 > 0, "Kingdom top positions start at 1");
+        K var2 = this.a.at(var1 - 1);
+        return var2 == null ? Optional.empty() : Optional.ofNullable(this.fetchData(var2));
     }
 
     public @IntRange(from = 1L) Optional<Integer> getPositionOf(@NotNull V var1) {

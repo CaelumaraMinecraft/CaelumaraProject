@@ -2,10 +2,10 @@ package net.aurika.data.database.mongo;
 
 import net.aurika.data.database.dataprovider.DataGetter;
 import net.aurika.data.database.dataprovider.SectionableDataGetter;
-import net.aurika.data.api.structure.SimpleDataMapObjectTemplate;
-import net.aurika.utils.function.FloatSupplier;
-import net.aurika.utils.function.TriConsumer;
-import net.aurika.utils.uuid.FastUUID;
+import net.aurika.data.api.bundles.DataBundleSchema;
+import net.aurika.util.function.FloatSupplier;
+import net.aurika.util.function.TriConsumer;
+import net.aurika.util.uuid.FastUUID;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -35,7 +35,7 @@ public class MongoIDGetter implements DataGetter {
     }
 
     @Override
-    public <T> T asObject(SimpleDataMapObjectTemplate<T> template) {
+    public <T> T asObject(DataBundleSchema<T> template) {
         throw new UnsupportedOperationException("Not implemented yet");  // TODO
     }
 
