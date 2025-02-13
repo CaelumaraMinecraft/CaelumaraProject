@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageEntry;
 import top.auspice.configs.messages.provider.MessageProvider;
 import net.aurika.text.TextObject;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 
 import java.util.Map;
 import java.util.TimeZone;

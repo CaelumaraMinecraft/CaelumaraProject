@@ -1,6 +1,6 @@
 package net.aurika.namespace;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
@@ -26,9 +26,9 @@ public abstract class NSKedRegistry<C extends NamespacedKeyContainer> implements
     }
 
     protected NSKedRegistry(@NotNull AuspiceUser provider, @NotNull @NSKey.Key String module, @NotNull Map<NSedKey, C> registry) {
-        Checker.Arg.notNull(provider, "provider");
-        Checker.Arg.notNull(module, "module");
-        Checker.Arg.notNull(registry, "registry");
+        Validate.Arg.notNull(provider, "provider");
+        Validate.Arg.notNull(module, "module");
+        Validate.Arg.notNull(registry, "registry");
 
         if (!NSKey.KEY_PATTERN.matcher(module).matches()) {
             throw new IllegalArgumentException("Invalid module: '" + module + "': doesnt match: " + NSKey.ALLOWED_KEY);
@@ -45,7 +45,7 @@ public abstract class NSKedRegistry<C extends NamespacedKeyContainer> implements
     }
 
     public void register(@NotNull C value) {
-        Checker.Arg.notNull(value, "value", "Cannot register null object");
+        Validate.Arg.notNull(value, "value", "Cannot register null object");
         NSedKey NSedKey = value.getNamespacedKey();
         Objects.requireNonNull(NSedKey, "Cannot register object provides null namespaced key");
         C prev = this.registered.putIfAbsent(NSedKey, value);

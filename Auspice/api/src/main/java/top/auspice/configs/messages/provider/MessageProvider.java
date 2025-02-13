@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageObject;
 import net.aurika.text.TextObject;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.command.CommandSender;
 
 import java.util.Arrays;

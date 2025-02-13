@@ -1,6 +1,6 @@
 package top.auspice.configs.messages;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.text.TextObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,8 +12,8 @@ public class MessageObject {
     protected @Nullable Boolean usePrefix;
 
     public MessageObject(@NotNull TextObject text, @NotNull PrefixProvider prefixProvider, @Nullable Boolean usePrefix) {
-        Checker.Arg.notNull(text, "text");
-        Checker.Arg.notNull(prefixProvider, "prefixProvider");
+        Validate.Arg.notNull(text, "text");
+        Validate.Arg.notNull(prefixProvider, "prefixProvider");
         this.text = text;
         this.prefixProvider = prefixProvider;
         this.usePrefix = usePrefix;
@@ -36,7 +36,7 @@ public class MessageObject {
     }
 
     public static @Nullable("messages.length == 0") MessageObject combine(@NotNull MessageObject @NotNull ... messages) {
-        Checker.Arg.nonNullArray(messages, "messages");
+        Validate.Arg.nonNullArray(messages, "messages");
         int length = messages.length;
         if (length == 0) {
             return null;

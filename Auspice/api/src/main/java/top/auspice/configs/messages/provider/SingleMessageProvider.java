@@ -2,7 +2,7 @@ package top.auspice.configs.messages.provider;
 
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageObject;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.command.CommandSender;
 
 public class SingleMessageProvider implements MessageProvider {

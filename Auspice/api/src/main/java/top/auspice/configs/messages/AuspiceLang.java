@@ -3,7 +3,7 @@ package top.auspice.configs.messages;
 import com.cryptomorin.xseries.XMaterial;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import net.aurika.config.annotations.Comment;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.configs.messages.messenger.EnumDefinedMessenger;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.core.Server;

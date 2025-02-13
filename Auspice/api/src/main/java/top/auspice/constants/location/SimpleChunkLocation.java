@@ -1,11 +1,11 @@
 package top.auspice.constants.location;
 
-import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.bundles.scalars.DataScalarType;
-import net.aurika.data.api.bundles.BundledData;
-import net.aurika.data.api.bundles.BundledDataLike;
-import net.aurika.data.api.bundles.DataBundleSchema;
-import net.aurika.data.api.bundles.SimpleMappingDataEntry;
+import net.aurika.ecliptor.api.DataStringRepresentation;
+import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
+import net.aurika.ecliptor.api.structured.StructuredData;
+import net.aurika.ecliptor.api.structured.StructuredDataObject;
+import net.aurika.ecliptor.api.structured.scalars.DataScalar;
+import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
 import net.aurika.util.string.CommaDataSplitStrategy;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -16,26 +16,25 @@ import top.auspice.server.location.BlockVector2;
 import top.auspice.server.location.Direction;
 import top.auspice.server.location.Location;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, BundledDataLike {
+public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, StructuredDataObject {
     private final @NonNull String world;
     private final int x;
     private final int z;
 
-    public static final DataBundleSchema<SimpleChunkLocation> DATA_TEMPLATE = DataBundleSchema.of(
+    public static final FunctionsDataStructSchema<SimpleChunkLocation> DATA_SCHEMA = FunctionsDataStructSchema.of(
             SimpleChunkLocation.class,
             data -> new SimpleChunkLocation(
                     data.getString("world"),
                     data.getInt("x"),
                     data.getInt("z")
             ),
+            SimpleChunkLocation::fromDataString,
+            SimpleChunkLocation::asDataString,
             "world", DataScalarType.STRING,
             "x", DataScalarType.INT,
             "z", DataScalarType.INT
@@ -302,16 +301,18 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NonNull BundledData simpleData() {
-        return BundledData.of(
-                SimpleMappingDataEntry.of("world", world),
-                SimpleMappingDataEntry.of("x", x),
-                SimpleMappingDataEntry.of("z", z)
+    public @NonNull StructuredData structuredData() {
+        return StructuredData.structuredData(
+                Map.of(
+                        "world", DataScalar.stringDataScalar(world),
+                        "x", DataScalar.intDataScalar(x),
+                        "z", DataScalar.intDataScalar(z)
+                )
         );
     }
 
     @Override
-    public @NotNull DataBundleSchema<? extends SimpleChunkLocation> simpleDataTemplate() {
-        return DATA_TEMPLATE;
+    public @NotNull FunctionsDataStructSchema<? extends SimpleChunkLocation> DataStructSchema() {
+        return DATA_SCHEMA;
     }
 }

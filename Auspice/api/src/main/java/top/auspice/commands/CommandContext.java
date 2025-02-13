@@ -1,9 +1,9 @@
 package top.auspice.commands;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.namespace.NSedKey;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.util.number.AnyNumber;
 import net.aurika.util.number.NumberConstraint;
 import net.aurika.util.number.NumberProcessor;
@@ -426,7 +426,7 @@ public class CommandContext extends SimpleMessenger {
     }
 
     public boolean isAtCurrentParameter() {
-        Checker.Arg.require(this.c, "Next argument is not ready for " + this.argPosition);
+        Validate.Arg.require(this.c, "Next argument is not ready for " + this.argPosition);
         this.c = false;
         return this.isAtArg(this.argPosition - 1);
     }

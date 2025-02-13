@@ -3,7 +3,7 @@ package net.aurika.tasks.priority;
 import net.aurika.namespace.NSedKey;
 import net.aurika.tasks.Task;
 import net.aurika.tasks.TaskRegistry;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,8 +15,8 @@ public class RelativePriority implements Priority {
     private final @NotNull NSedKey targetTaskID;
 
     public RelativePriority(@NotNull Type type, @NotNull NSedKey targetTaskNS) {
-        Checker.Arg.notNull(type, "type");
-        Checker.Arg.notNull(targetTaskNS, "targetTaskNS");
+        Validate.Arg.notNull(type, "type");
+        Validate.Arg.notNull(targetTaskNS, "targetTaskNS");
         this.type = type;
         this.targetTaskID = targetTaskNS;
     }
@@ -30,13 +30,13 @@ public class RelativePriority implements Priority {
     }
 
     public @Nullable String validateFor(@NotNull Task<?> task) {
-        Checker.Arg.notNull(task, "task");
+        Validate.Arg.notNull(task, "task");
         return Objects.equals(task.getNamespacedKey(), this.targetTaskID) ? "Circular task priority" : null;
     }
 
     public int compareTo(@NotNull Task<?> second, @NotNull TaskRegistry<?, ?> registry) {
-        Checker.Arg.notNull(second, "second");
-        Checker.Arg.notNull(registry, "registry");
+        Validate.Arg.notNull(second, "second");
+        Validate.Arg.notNull(registry, "registry");
         int var10000;
         if (Objects.equals(second.getNamespacedKey(), this.targetTaskID)) {
             var10000 = switch (this.type) {

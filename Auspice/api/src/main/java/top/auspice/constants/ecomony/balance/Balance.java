@@ -2,7 +2,7 @@ package top.auspice.constants.ecomony.balance;
 
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.ecomony.currency.NumberCurrency;
-import net.aurika.data.object.DataStringRepresentation;
+import net.aurika.ecliptor.object.DataStringRepresentation;
 
 import java.util.Objects;
 

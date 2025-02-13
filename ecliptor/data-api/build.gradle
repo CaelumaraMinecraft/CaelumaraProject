@@ -1,0 +1,25 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":validate"))
+    api(project(":aurika:dependency"))
+    api(project(":util:function"))
+    api(project(":util:math"))
+    api(project(":util:string"))
+
+    api(libs.adventure.key)
+    api(libs.adventure.nbt)
+    api(libs.gson)
+    api(libs.h2)
+    api(libs.hikari)
+    api(libs.postgresql)
+    api(libs.mongodb.bson)
+    api(libs.mongodb.sync)
+    api(libs.mongodb.core)
+
+    compileOnly(libs.annotations.jetbrains)
+    compileOnly(libs.annotations.checker)
+}

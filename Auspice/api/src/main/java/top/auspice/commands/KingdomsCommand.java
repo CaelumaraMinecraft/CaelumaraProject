@@ -16,7 +16,7 @@ import top.auspice.configs.messages.messenger.DefaultedMessenger;
 import top.auspice.configs.messages.messenger.LanguageEntryMessenger;
 import top.auspice.configs.messages.messenger.Messenger;
 import top.auspice.configs.messages.messenger.StaticMessenger;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.constants.player.AuspicePlayer;
 import top.auspice.diversity.Diversity;
 import top.auspice.main.Auspice;

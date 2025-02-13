@@ -2,11 +2,11 @@ package top.auspice.data.handlers;
 
 import org.jetbrains.annotations.NotNull;
 import top.auspice.constants.player.AuspicePlayer;
-import net.aurika.data.database.dataprovider.SQLDataHandlerProperties;
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
-import net.aurika.data.database.dataprovider.SectionableDataSetter;
-import net.aurika.data.database.dataprovider.StdIdDataType;
-import net.aurika.data.handler.KeyedDataHandler;
+import net.aurika.ecliptor.database.dataprovider.SQLDataHandlerProperties;
+import net.aurika.ecliptor.database.dataprovider.SectionableDataGetter;
+import net.aurika.ecliptor.database.dataprovider.SectionableDataSetter;
+import net.aurika.ecliptor.database.dataprovider.StdIdDataType;
+import net.aurika.ecliptor.handler.KeyedDataHandler;
 import top.auspice.diversity.Diversity;
 import top.auspice.diversity.DiversityRegistry;
 import net.aurika.namespace.NSedKey;

@@ -14,7 +14,7 @@ import net.aurika.text.compiler.builders.context.HTMLTextBuilderContextProvider;
 import net.aurika.text.compiler.builders.context.PlainTextBuilderContextProvider;
 import net.aurika.text.compiler.pieces.TextPiece;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import top.auspice.utils.unsafe.arrays.UnsafeArrayList;
 
 import java.util.ArrayList;
@@ -110,7 +110,7 @@ public class TextObject implements MessageObjectBuilder {
      * @return 合并过后的 {@linkplain TextObject}
      */
     public static @Nullable("texts.length == 0") TextObject combine(@NotNull TextObject @NotNull ... texts) {
-        Checker.Arg.nonNullArray(texts, "texts");
+        Validate.Arg.nonNullArray(texts, "texts");
         if (texts.length == 0) {
             return null;
         } else if (texts.length == 1) {
@@ -136,7 +136,7 @@ public class TextObject implements MessageObjectBuilder {
     }
 
     public TextObject filter(Predicate<TextPiece> msgPieceFilter) {
-        Checker.Arg.notNull(msgPieceFilter, "msgPieceFilter");
+        Validate.Arg.notNull(msgPieceFilter, "msgPieceFilter");
         TextPiece[] var2 = Arrays.stream(this.pieces).filter(msgPieceFilter).toArray(TextPiece[]::new);
         return new TextObject(var2, this.usePrefix, this.settings);
     }

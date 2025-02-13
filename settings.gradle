@@ -109,37 +109,44 @@ dependencyResolutionManagement {
 rootProject.name = "Caelumara"
 
 include(
+        ":validate",
+
+        ":util",
+        ":util:cache",
+        ":util:collection",
+        ":util:enumeration",
+        ":util:file",
+        ":util:fn",
+        ":util:function",
+        ":util:generics",
+        ":util:gson",
+        ":util:number",
+        ":util:math",
+        ":util:nbt",
+        ":util:reflection",
+        ":util:registry",
+        ":util:snakeyaml-ext",
+        ":util:string",
+        ":util:uuid",
+)
+
+include(
+        "ecliptor:annotations",
+        "ecliptor:data-api",
+        "ecliptor:data-storage",
+)
+
+include(
         ":aurika",
         ":aurika:annotations",
         ":aurika:base",
-        ":aurika:checker",
         ":aurika:config-api",
         ":aurika:configuration",
-        ":aurika:data-api",
-        ":aurika:data-storage",
         ":aurika:dependency",
-        ":aurika:examination",
         ":aurika:logging",
         ":aurika:nbt",
         ":aurika:tasks",
         ":aurika:text-api",
-        ":aurika:util",
-        ":aurika:util:cache",
-        ":aurika:util:collection",
-        ":aurika:util:enumeration",
-        ":aurika:util:file",
-        ":aurika:util:fn",
-        ":aurika:util:function",
-        ":aurika:util:generics",
-        ":aurika:util:gson",
-        ":aurika:util:number",
-        ":aurika:util:math",
-        ":aurika:util:nbt",
-        ":aurika:util:reflection",
-        ":aurika:util:registry",
-        ":aurika:util:snakeyaml-ext",
-        ":aurika:util:string",
-        ":aurika:util:uuid",
 )
 include(
         ":Auspice",

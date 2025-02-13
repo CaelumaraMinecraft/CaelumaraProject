@@ -1,6 +1,6 @@
 package top.auspice.constants.top;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -17,7 +17,7 @@ public abstract class IndexedTopData<K, V> implements TopData<V> {
     }
 
     public Optional<V> getTopPosition(int var1) {
-        Checker.Arg.require(var1 > 0, "Kingdom top positions start at 1");
+        Validate.Arg.require(var1 > 0, "Kingdom top positions start at 1");
         K var2 = this.a.at(var1 - 1);
         return var2 == null ? Optional.empty() : Optional.ofNullable(this.fetchData(var2));
     }

@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+description = "A minecraft library"
+
 dependencies {
 
 //    implementation(api(project(":base")))

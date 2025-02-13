@@ -5,13 +5,13 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.config.accessor.ClearlyConfigAccessor;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.text.context.provider.CascadingTextContextProvider;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.constants.logs.AuditLog;
 import top.auspice.constants.logs.Loggable;
 import top.auspice.constants.metadata.AuspiceMetadata;
 import top.auspice.constants.metadata.AuspiceMetadataHandler;
 import top.auspice.constants.metadata.Metadatable;
-import net.aurika.data.api.DataObject;
+import net.aurika.ecliptor.api.DataObject;
 import top.auspice.utils.ZeroArrays;
 import net.aurika.util.collection.nonnull.NonNullMap;
 

@@ -1,0 +1,11 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":validate"))
+    api(project(":ecliptor:data-api"))
+
+    compileOnly(libs.annotations.jetbrains)
+}

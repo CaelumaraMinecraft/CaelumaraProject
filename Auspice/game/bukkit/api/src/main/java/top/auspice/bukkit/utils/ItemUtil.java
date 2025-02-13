@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import net.aurika.text.compiler.TextCompiler;
 import net.aurika.text.TextObject;
 import net.aurika.text.compiler.pieces.TextPiece;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.util.checker.Checker;
 import net.aurika.util.string.Strings;
 

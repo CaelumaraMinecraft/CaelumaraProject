@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.text.TextObject;
 import net.aurika.text.compiler.builders.context.ComplexTextBuilderContextProvider;
 import net.aurika.text.compiler.pieces.TextPiece;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.util.Checker;
 
 public class AuspiceComponentDecoder implements ComponentDecoder<TextObject, TextComponent> {

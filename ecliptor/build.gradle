@@ -1,0 +1,12 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+description = "一个多数据库类型的数据存取 API"
+
+dependencies {
+    subprojects {
+        this.dependencies.api(it);
+    }
+}

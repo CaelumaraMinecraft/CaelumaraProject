@@ -1,6 +1,6 @@
 package net.aurika.config.sections;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.config.path.ConfigEntry;
 import net.aurika.config.path.ConfigEntryMap;
 import net.aurika.config.sections.format.YamlConfigSectionFormat;
@@ -60,8 +60,8 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
      */
     public YamlNodeSection(@NotNull ConfigSection parent, @NotNull ScalarNode key, @NotNull Node root) {
         super(parent, Objects.requireNonNull(key, "Key node must be provided.").getValue(), standardTagToLabel(root.getTag()));
-        Checker.Arg.notNull(key, "key", "Key node must be provided.");
-        Checker.Arg.notNull(root, "root", "Root node must be provided.");
+        Validate.Arg.notNull(key, "key", "Key node must be provided.");
+        Validate.Arg.notNull(root, "root", "Root node must be provided.");
         this.key = key;
         this.root = root;
     }
@@ -143,7 +143,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     }
 
     protected void syncParentNodeData(@NotNull Node data) {
-        Checker.Arg.notNull(data, "data");
+        Validate.Arg.notNull(data, "data");
         ConfigSection parent = getParent();
         if (parent instanceof YamlNodeSection yamlParent) {
             Node prentNode = yamlParent.root;
@@ -162,7 +162,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @Nullable YamlNodeSection getSubSection(@NotNull String key) {
-        Checker.Arg.notNull(key, "key");
+        Validate.Arg.notNull(key, "key");
         MappingNode mappingNode = this.getMapRoot();
         if (mappingNode != null) {
             Node subNode = NodeUtils.getNode(mappingNode, key);
@@ -175,7 +175,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @NotNull YamlNodeSection set(@NotNull String key, @Nullable Object parsed) {
-        Checker.Arg.notNull(key, "key", "SubSection key must be provided");
+        Validate.Arg.notNull(key, "key", "SubSection key must be provided");
         Node rootNode = this.root;
         if (rootNode instanceof MappingNode mappingRoot) {
 
@@ -234,7 +234,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @Nullable YamlNodeSection getSection(@NonNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path", "The path cannot contains null value.");
+        Validate.Arg.nonNullArray(path, "path", "The path cannot contains null value.");
         return $$getSection(this, path, 0);
     }
 
@@ -263,7 +263,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @NotNull YamlNodeSection createSection(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path", PATH_CONTAINS_NULL);
+        Validate.Arg.nonNullArray(path, "path", PATH_CONTAINS_NULL);
         int length = path.length;
         YamlNodeSection section = this;
 
@@ -735,8 +735,8 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     protected static @Nullable <N extends Number> List<N> getNumberList(@Nullable Node node, @NotNull Class<N> type, @NotNull Function<Number, N> toNumber, @Nullable Tag tag) {
         if (node == null) return null;
-        Checker.Arg.notNull(type, "type");
-        Checker.Arg.notNull(toNumber, "toNumber");
+        Validate.Arg.notNull(type, "type");
+        Validate.Arg.notNull(toNumber, "toNumber");
         if (node instanceof SequenceNode seqNode) {
             List<Number> numberList = NodeUtils.getParsedListWithElementFilter(seqNode, Number.class, tag);
             if (numberList == null) return null;

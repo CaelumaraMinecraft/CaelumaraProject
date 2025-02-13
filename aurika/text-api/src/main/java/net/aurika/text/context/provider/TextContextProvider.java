@@ -4,5 +4,5 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
 
 public interface TextContextProvider {
-    @NotNull MessagePlaceholderProvider getTextContext();
+    @NotNull MessagePlaceholderProvider getTextContext();   //ecliptor
 }

@@ -9,7 +9,7 @@ import net.aurika.namespace.NSKeyMap;
 import top.auspice.configs.messages.AuspiceLang;
 import top.auspice.configs.messages.SimpleMessenger;
 import top.auspice.configs.messages.messenger.Messenger;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.entity.Player;
 import top.auspice.utils.PlayerUtils;
 import net.aurika.util.number.AnyNumber;

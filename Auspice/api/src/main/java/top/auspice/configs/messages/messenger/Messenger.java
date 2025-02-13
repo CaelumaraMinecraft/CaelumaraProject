@@ -1,8 +1,8 @@
 package top.auspice.configs.messages.messenger;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.text.TextObject;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +45,7 @@ public interface Messenger {
     @Nullable MessageProvider getProvider(@NotNull Diversity diversity);
 
     default MessageObject getMessageObject(@NotNull Diversity diversity) {
-        Checker.Arg.notNull(diversity, "diversity");
+        Validate.Arg.notNull(diversity, "diversity");
         MessageProvider msgProvider = this.getProvider(diversity);
         return msgProvider == null ? null : msgProvider.getMessage();
     }

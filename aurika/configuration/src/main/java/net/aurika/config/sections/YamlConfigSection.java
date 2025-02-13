@@ -1,6 +1,6 @@
 package net.aurika.config.sections;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.config.sections.format.ConfigSectionFormat;
 import net.aurika.util.snakeyaml.nodes.NodeUtils;
 import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpretContext;
@@ -168,8 +168,8 @@ public interface YamlConfigSection extends ConfigSection {
     }
 
     static @Nullable NodeTuple findTuple(@NotNull Node node, @NotNull String @NotNull [] path) {
-        Checker.Arg.notNull(node, "node");
-        Checker.Arg.nonNullArray(path, "path", PATH_CONTAINS_NULL);
+        Validate.Arg.notNull(node, "node");
+        Validate.Arg.nonNullArray(path, "path", PATH_CONTAINS_NULL);
         int length = path.length;
         int index = 0;
 

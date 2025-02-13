@@ -1,8 +1,8 @@
 package top.auspice.configs.messages;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.text.context.provider.TextContextProvider;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import org.jetbrains.annotations.ApiStatus.NonExtendable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -43,21 +43,21 @@ public interface ContextualMessenger extends TextContextProvider {
 
     @NonExtendable
     default void sendMessage(@NotNull Messenger messenger, @NotNull Object... edits) {
-        Checker.Arg.notNull(messenger, "messenger");
+        Validate.Arg.notNull(messenger, "messenger");
         Objects.requireNonNull(edits);
         this.sendMessage(this.getMessageReceiver(), messenger, Arrays.copyOf(edits, edits.length));
     }
 
     @NonExtendable
     default void sendMessage(@NotNull Messenger messenger, @NotNull MessagePlaceholderProvider textPlaceholderProvider) {
-        Checker.Arg.notNull(messenger, "messenger");
-        Checker.Arg.notNull(textPlaceholderProvider, "messagePlaceholderProvider");
+        Validate.Arg.notNull(messenger, "messenger");
+        Validate.Arg.notNull(textPlaceholderProvider, "messagePlaceholderProvider");
         messenger.sendMessage(this.getMessageReceiver(), textPlaceholderProvider);
     }
 
     default void sendMessage(@NotNull CommandSender messageReceiver, @NotNull Messenger messenger, @NotNull Object... edits) {
-        Checker.Arg.notNull(messageReceiver, "messageReceiver");
-        Checker.Arg.notNull(messenger, "messenger");
+        Validate.Arg.notNull(messageReceiver, "messageReceiver");
+        Validate.Arg.notNull(messenger, "messenger");
         Objects.requireNonNull(edits);
         if (edits.length != 0) {
             this.getTextContext().placeholders(Arrays.copyOf(edits, edits.length));

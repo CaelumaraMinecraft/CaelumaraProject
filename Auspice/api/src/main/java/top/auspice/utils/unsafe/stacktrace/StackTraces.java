@@ -1,6 +1,6 @@
 package top.auspice.utils.unsafe.stacktrace;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.util.cache.caffeine.CacheHandler;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.messages.MessageHandler;
@@ -32,7 +32,7 @@ public final class StackTraces {
     }
 
     public static @NotNull List<Throwable> getCausationChain(@NotNull Throwable throwable) {
-        Checker.Arg.notNull(throwable, "throwable");
+        Validate.Arg.notNull(throwable, "throwable");
         ArrayList<Throwable> chain = new ArrayList<>(5);
         Set<Throwable> var2 = Collections.newSetFromMap(new IdentityHashMap<>(5));
         Throwable var3 = throwable;

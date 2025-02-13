@@ -1,7 +1,7 @@
 package top.auspice.constants.base;
 
-import net.aurika.data.api.Keyed;
-import net.aurika.data.api.KeyedDataObject;
+import net.aurika.ecliptor.api.Keyed;
+import net.aurika.ecliptor.api.KeyedDataObject;
 import org.jetbrains.annotations.NotNull;
 
 public interface KeyedAuspiceObject<K> extends AuspiceObject, Keyed<K>, KeyedDataObject<K> {

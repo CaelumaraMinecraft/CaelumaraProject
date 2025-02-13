@@ -1,6 +1,6 @@
 package top.auspice.configs.messages;
 
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.server.command.CommandSender;
 import top.auspice.server.entity.Player;

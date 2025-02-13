@@ -1,32 +1,33 @@
 package top.auspice.constants.location;
 
 import net.aurika.annotations.data.Immutable;
-import net.aurika.checker.Checker;
-import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.bundles.scalars.DataScalarType;
-import net.aurika.data.api.bundles.BundledData;
-import net.aurika.data.api.bundles.BundledDataLike;
-import net.aurika.data.api.bundles.DataBundleSchema;
-import net.aurika.data.api.bundles.SimpleMappingDataEntry;
+import net.aurika.ecliptor.api.DataStringRepresentation;
+import net.aurika.ecliptor.api.structured.StructuredData;
+import net.aurika.ecliptor.api.structured.StructuredDataObject;
+import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
+import net.aurika.ecliptor.api.structured.scalars.DataScalar;
+import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
 import net.aurika.util.string.CommaDataSplitStrategy;
+import net.aurika.validate.Validate;
 import net.kyori.examination.Examinable;
 import net.kyori.examination.ExaminableProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.server.location.*;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Immutable
-public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, BundledDataLike, Examinable {
+public class SimpleBlockLocation implements Cloneable, DataStringRepresentation, BlockPoint3D, StructuredDataObject, Examinable {
     private final @NonNull String world;
     private final int x;
     private final int y;
     private final int z;
 
-    public static final DataBundleSchema<SimpleBlockLocation> DATA_TEMPLATE = DataBundleSchema.of(
+    public static final FunctionsDataStructSchema<SimpleBlockLocation> DATA_SCHEMA = FunctionsDataStructSchema.of(
             SimpleBlockLocation.class,
             data -> new SimpleBlockLocation(
                     data.getString("world"),
@@ -34,6 +35,11 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
                     data.getInt("y"),
                     data.getInt("z")
             ),
+            plain -> {
+                CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(plain, 4);
+                return new SimpleBlockLocation(splitter.nextString(), splitter.nextInt(), splitter.nextInt(), splitter.nextInt());
+            },
+            o -> CommaDataSplitStrategy.toString()
             "world", DataScalarType.STRING,
             "x", DataScalarType.INT,
             "y", DataScalarType.INT,
@@ -41,7 +47,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     );
 
     public SimpleBlockLocation(@NonNull String world, int x, int y, int z) {
-        Checker.Arg.notNull(world, "world", "World name cannot be null");
+        Validate.Arg.notNull(world, "world", "World name cannot be null");
         this.world = world;
         this.x = x;
         this.y = y;
@@ -49,7 +55,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     public static SimpleBlockLocation of(@NonNull String worldName, @NonNull BlockVector3 var1) {
-        Checker.Arg.notNull(worldName, "worldName", "Cannot get simple location of a null location");
+        Validate.Arg.notNull(worldName, "worldName", "Cannot get simple location of a null location");
         return new SimpleBlockLocation(worldName, var1.getX(), var1.getY(), var1.getZ());
     }
 
@@ -200,18 +206,20 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NonNull BundledData simpleData() {
-        return BundledData.of(
-                SimpleMappingDataEntry.of("world", world),
-                SimpleMappingDataEntry.of("x", x),
-                SimpleMappingDataEntry.of("y", y),
-                SimpleMappingDataEntry.of("z", z)
+    public @NonNull StructuredData structuredData() {
+        return StructuredData.structuredData(
+                Map.of(
+                        "world", DataScalar.stringDataScalar(world),
+                        "x", DataScalar.intDataScalar(x),
+                        "y", DataScalar.intDataScalar(y),
+                        "z", DataScalar.intDataScalar(z)
+                )
         );
     }
 
     @Override
-    public @NotNull DataBundleSchema<? extends SimpleBlockLocation> simpleDataTemplate() {
-        return DATA_TEMPLATE;
+    public @NotNull FunctionsDataStructSchema<? extends SimpleBlockLocation> DataStructSchema() {
+        return DATA_SCHEMA;
     }
 
     @Override

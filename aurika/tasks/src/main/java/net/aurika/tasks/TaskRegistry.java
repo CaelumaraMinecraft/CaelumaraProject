@@ -20,7 +20,7 @@ import top.auspice.main.Auspice;
 import java.util.*;
 import java.util.function.Consumer;
 
-public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extends NSKedRegistry<T> {
+public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extends NSKedRegistry<T> {  //lephyr
 
     private final @Nullable ParentTask<C> parentTask;
     private final @NotNull LinkedList<T> usableList;

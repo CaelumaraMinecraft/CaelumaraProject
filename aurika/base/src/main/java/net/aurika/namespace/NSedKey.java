@@ -1,7 +1,7 @@
 package net.aurika.namespace;
 
-import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.checker.Checker;
+import net.aurika.ecliptor.api.DataStringRepresentation;
+import net.aurika.validate.Validate;
 import org.checkerframework.dataflow.qual.Pure;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +27,8 @@ public final class NSedKey implements DataStringRepresentation {
     private NSedKey(@NSKey.Namespace @NotNull String namespace,
                     @NSKey.Key @NotNull String key,
                     int hashCode) {
-        Checker.Arg.notNull(namespace, "namespace", "Namespace cannot be null");
-        Checker.Arg.notNull(key, "key", "Key cannot be null");
+        Validate.Arg.notNull(namespace, "namespace", "Namespace cannot be null");
+        Validate.Arg.notNull(key, "key", "Key cannot be null");
 
         if (!NSKey.KEY_PATTERN.matcher(key).matches()) {
             throw new IllegalStateException("Key string '" + key + "' doesn't match: " + NSKey.ALLOWED_KEY);
@@ -41,7 +41,7 @@ public final class NSedKey implements DataStringRepresentation {
 
     @Pure
     public static NSedKey fromString(@NSKey @NotNull String str) {
-        Checker.Arg.notNull(str, "str");
+        Validate.Arg.notNull(str, "str");
         int sep = str.indexOf(':');
         String key = str.substring(sep + 1);
         if (sep == -1) {
@@ -96,7 +96,7 @@ public final class NSedKey implements DataStringRepresentation {
     }
 
     public static @NotNull NSedKey minecraft(@NotNull @NSKey.Key String key) {
-        Checker.Arg.notNull(key, "key");
+        Validate.Arg.notNull(key, "key");
         return new NSedKey("minecraft", key);
     }
 

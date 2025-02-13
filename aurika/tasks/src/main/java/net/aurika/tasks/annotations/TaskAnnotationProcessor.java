@@ -3,7 +3,7 @@ package net.aurika.tasks.annotations;
 import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.jvm.internal.Ref;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.namespace.NSedKey;
 import net.aurika.tasks.*;
 import net.aurika.tasks.container.ConditionalLocalTaskSession;
@@ -182,9 +182,9 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
         private final @NotNull NSedKey id;
 
         public ProcessedTaskAnnotations(@NotNull TaskState implicitReturnState, boolean taskStatesInclude, @Nullable Set<TaskState> taskStates, @NotNull net.aurika.tasks.priority.Priority priority, @NotNull NSedKey id) {
-            Checker.Arg.notNull(implicitReturnState, "implicitReturnState");
-            Checker.Arg.notNull(priority, "priority");
-            Checker.Arg.notNull(id, "id");
+            Validate.Arg.notNull(implicitReturnState, "implicitReturnState");
+            Validate.Arg.notNull(priority, "priority");
+            Validate.Arg.notNull(id, "id");
             this.implicitReturnState = implicitReturnState;
             this.taskStatesInclude = taskStatesInclude;
             this.taskStates = taskStates;

@@ -1,6 +1,6 @@
 package top.auspice.constants.metadata;
 
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
+import net.aurika.ecliptor.database.dataprovider.SectionableDataGetter;
 import net.aurika.namespace.NamespacedKeyContainer;
 import net.aurika.namespace.NSedKey;
 import org.jetbrains.annotations.NotNull;

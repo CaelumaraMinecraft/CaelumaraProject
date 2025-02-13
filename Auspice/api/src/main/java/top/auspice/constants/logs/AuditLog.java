@@ -2,12 +2,12 @@ package top.auspice.constants.logs;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.text.context.provider.TextContextProvider;
-import net.aurika.data.api.serialize.Deserializable;
-import net.aurika.data.api.serialize.Serializable;
-import net.aurika.data.database.dataprovider.SectionableDataGetter;
-import net.aurika.data.database.dataprovider.SectionableDataSetter;
+import net.aurika.ecliptor.api.serialize.Deserializable;
+import net.aurika.ecliptor.api.serialize.Serializable;
+import net.aurika.ecliptor.database.dataprovider.SectionableDataGetter;
+import net.aurika.ecliptor.database.dataprovider.SectionableDataSetter;
 import top.auspice.utils.time.TimeUtils;
 
 public abstract class AuditLog implements TextContextProvider, Serializable, Deserializable {

@@ -5,7 +5,7 @@ import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
 import net.aurika.config.placeholder.invoking.PlaceholderInvokable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.text.placeholders.context.PlaceholderContextBuilder;
+import net.aurika.config.placeholders.context.PlaceholderContextBuilder;
 import top.auspice.constants.base.KeyedAuspiceObject;
 import top.auspice.data.centers.AuspiceDataCenter;
 import top.auspice.diversity.Diversity;

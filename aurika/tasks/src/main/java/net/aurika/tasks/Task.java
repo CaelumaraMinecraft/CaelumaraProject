@@ -1,6 +1,6 @@
 package net.aurika.tasks;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.namespace.NamespacedKeyContainer;
 import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.Priority;
@@ -19,8 +19,8 @@ public interface Task<C extends TaskContext> extends NamespacedKeyContainer {
     boolean equals(@Nullable Object obj);
 
     default int compareTo(@NotNull Task<?> other, @NotNull TaskRegistry<?, ?> registry) {
-        Checker.Arg.notNull(other, "other");
-        Checker.Arg.notNull(registry, "registry");
+        Validate.Arg.notNull(other, "other");
+        Validate.Arg.notNull(registry, "registry");
         int compared = this.getPriority().compareTo(other, registry);
         if (compared == Integer.MAX_VALUE) {
             compared = other.getPriority().compareTo(this, registry);

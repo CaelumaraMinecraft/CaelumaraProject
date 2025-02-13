@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.config.sections.ConfigSection;
 import net.aurika.text.compiler.TextCompiler;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import net.aurika.text.TextObject;
 import top.auspice.main.Auspice;
 import top.auspice.server.command.CommandSender;

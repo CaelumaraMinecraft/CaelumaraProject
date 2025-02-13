@@ -11,7 +11,7 @@ import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.configs.messages.MessageObject;
 import net.aurika.text.compiler.TextCompiler;
 import net.aurika.text.TextObject;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.configs.messages.provider.AdvanceMessageProvider;
 import top.auspice.configs.messages.provider.SingleMessageProvider;
 import top.auspice.server.command.CommandSender;

@@ -2,7 +2,7 @@ package net.aurika.tasks.context;
 
 import net.aurika.tasks.TaskState;
 import net.aurika.tasks.container.TaskSession;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractTaskContext implements TaskContext {
@@ -11,7 +11,7 @@ public abstract class AbstractTaskContext implements TaskContext {
     private @NotNull TaskState state;
 
     public AbstractTaskContext(@NotNull TaskSession session) {
-        Checker.Arg.notNull(session, "session");
+        Validate.Arg.notNull(session, "session");
         this.session = session;
         this.state = TaskState.CONTINUE;
     }
@@ -25,7 +25,7 @@ public abstract class AbstractTaskContext implements TaskContext {
     }
 
     public void setState(@NotNull TaskState state) {
-        Checker.Arg.notNull(state, "state");
+        Validate.Arg.notNull(state, "state");
         this.state = state;
     }
 }

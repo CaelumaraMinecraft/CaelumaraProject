@@ -2,9 +2,9 @@ package top.auspice.data.managers;
 
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.constants.player.AuspicePlayer;
-import net.aurika.data.centers.AurikaDataCenter;
+import net.aurika.ecliptor.centers.AurikaDataCenter;
 import top.auspice.data.handlers.DataHandlerAuspicePlayer;
-import net.aurika.data.managers.base.KeyedDataManager;
+import net.aurika.ecliptor.managers.base.KeyedDataManager;
 import top.auspice.main.Auspice;
 
 import java.util.UUID;

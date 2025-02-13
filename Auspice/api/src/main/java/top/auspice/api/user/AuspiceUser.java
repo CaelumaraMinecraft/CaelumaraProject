@@ -1,7 +1,7 @@
 package top.auspice.api.user;
 
 import net.aurika.annotations.UtilMethod;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.namespace.NSKey;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.nested.NestedNamespace;
@@ -84,9 +84,9 @@ public interface AuspiceUser extends Namespaced {
     }
 
     static @NotNull NestedNamespace getTopNestedNamespace(AuspiceUser au) {
-        Checker.Arg.notNull(au, "au");
+        Validate.Arg.notNull(au, "au");
         String ns = au.namespace();
-        Checker.Expr.notEmpty(ns, "AuspiceUser.getNamespace()");
+        Validate.Expr.notEmpty(ns, "AuspiceUser.getNamespace()");
         return new NestedNamespace(new String[]{au.namespace()});
     }
 

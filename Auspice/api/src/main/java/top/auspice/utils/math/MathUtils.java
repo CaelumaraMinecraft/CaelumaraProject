@@ -1,7 +1,7 @@
 package top.auspice.utils.math;
 
 import net.aurika.text.compiler.PlaceholderTranslationContext;
-import net.aurika.text.placeholders.context.PlaceholderProvider;
+import net.aurika.config.placeholders.context.PlaceholderProvider;
 import top.auspice.utils.compiler.math.MathExpression;
 
 import java.text.DecimalFormat;

@@ -3,7 +3,7 @@ package net.aurika.tasks;
 import net.aurika.namespace.NSedKey;
 import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.Priority;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,8 +16,8 @@ public abstract class AbstractTask<C extends TaskContext> implements Task<C> {
     private final @Nullable Task<C> parent;
 
     public AbstractTask(@NotNull Priority priority, @NotNull NSedKey id, @Nullable Task<C> parent) {
-        Checker.Arg.notNull(priority, "priority");
-        Checker.Arg.notNull(id, "id");
+        Validate.Arg.notNull(priority, "priority");
+        Validate.Arg.notNull(id, "id");
         this.priority = priority;
         this.id = id;
         this.parent = parent;

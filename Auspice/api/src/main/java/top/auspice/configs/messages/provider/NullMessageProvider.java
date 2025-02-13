@@ -6,7 +6,7 @@ import top.auspice.configs.messages.PrefixProvider;
 import net.aurika.text.compiler.TextCompilerSettings;
 import net.aurika.text.TextObject;
 import net.aurika.text.compiler.pieces.TextPiece;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.server.command.CommandSender;
 
 public final class NullMessageProvider implements MessageProvider {

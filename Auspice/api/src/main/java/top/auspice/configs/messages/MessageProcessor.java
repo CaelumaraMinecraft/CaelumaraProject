@@ -1,6 +1,6 @@
 package top.auspice.configs.messages;
 
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.text.TextObject;
 import net.aurika.text.compiler.TextCompiler;
 import org.jetbrains.annotations.NotNull;
@@ -20,10 +20,10 @@ public class MessageProcessor {
     }
 
     public MessageProcessor(@NotNull String originalString, @NotNull PrefixProvider prefixProvider, @NotNull String usePrefixSign, @NotNull String noPrefixSign) {
-        Checker.Arg.notNull(originalString, "originalString");
-        Checker.Arg.notNull(prefixProvider, "prefixProvider");
-        Checker.Arg.notNull(usePrefixSign, "usePrefixSign");
-        Checker.Arg.notNull(noPrefixSign, "noPrefixSign");
+        Validate.Arg.notNull(originalString, "originalString");
+        Validate.Arg.notNull(prefixProvider, "prefixProvider");
+        Validate.Arg.notNull(usePrefixSign, "usePrefixSign");
+        Validate.Arg.notNull(noPrefixSign, "noPrefixSign");
 
         this.originalString = originalString;
         this.prefixProvider = prefixProvider;

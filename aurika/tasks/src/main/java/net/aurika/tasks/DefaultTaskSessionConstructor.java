@@ -3,7 +3,7 @@ package net.aurika.tasks;
 import net.aurika.tasks.annotations.TaskSessionConstructor;
 import net.aurika.tasks.container.LocalTaskSession;
 import net.aurika.tasks.context.TaskContext;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.util.reflection.Reflect;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +20,7 @@ public final class DefaultTaskSessionConstructor<C extends TaskContext> implemen
     public DefaultTaskSessionConstructor(@NotNull Class<? extends LocalTaskSession> clazz1) {
         Objects.requireNonNull(clazz1);
         Class<?>[] var10000 = Reflect.getClassHierarchy(clazz1, true);
-        Checker.Expr.notNull(var10000, "getClassHierarchy(...)");
+        Validate.Expr.notNull(var10000, "getClassHierarchy(...)");
         int var6 = 0;
 
         for (int var7 = var10000.length; var6 < var7; ++var6) {
@@ -60,7 +60,7 @@ public final class DefaultTaskSessionConstructor<C extends TaskContext> implemen
     }
 
     public @NotNull LocalTaskSession createSession(@NotNull C context) {
-        Checker.Arg.notNull(context, "context");
+        Validate.Arg.notNull(context, "context");
         LocalTaskSession lastInstance = null;
         Class<?> enclosing = null;
 

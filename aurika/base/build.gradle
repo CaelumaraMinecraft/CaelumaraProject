@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":aurika:checker"))
-    api(project(":aurika:util"))
+    api(project(":validate"))
+    api(project(":util"))
 
     api(libs.caffeine)
     api(libs.adventure.api)

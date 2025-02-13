@@ -1,19 +1,22 @@
 package top.auspice.constants.location;
 
 import net.aurika.annotations.data.Immutable;
-import net.aurika.checker.Checker;
-import net.aurika.data.api.DataStringRepresentation;
-import net.aurika.data.api.bundles.scalars.DataScalarType;
-import net.aurika.data.api.bundles.BundledData;
-import net.aurika.data.api.bundles.BundledDataLike;
-import net.aurika.data.api.bundles.DataBundleSchema;
-import net.aurika.data.api.bundles.SimpleMappingDataEntry;
+import net.aurika.ecliptor.api.DataStringRepresentation;
+import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
+import net.aurika.ecliptor.api.structured.StructuredData;
+import net.aurika.ecliptor.api.structured.StructuredDataObject;
+import net.aurika.ecliptor.api.structured.scalars.DataScalar;
+import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
 import net.aurika.util.string.CommaDataSplitStrategy;
+import net.aurika.validate.Validate;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 @Immutable
-public class SimpleLocation implements DataStringRepresentation, BundledDataLike {
+public class SimpleLocation implements DataStringRepresentation, StructuredDataObject {
     private final @NotNull String world;
     private final double x;
     private final double y;
@@ -21,7 +24,7 @@ public class SimpleLocation implements DataStringRepresentation, BundledDataLike
     private final float yaw;
     private final float pitch;
 
-    public static final DataBundleSchema<SimpleLocation> DATA_TEMPLATE = DataBundleSchema.of(
+    public static final FunctionsDataStructSchema<SimpleLocation> DATA_TEMPLATE = FunctionsDataStructSchema.of(
             SimpleLocation.class,
             data -> new SimpleLocation(
                     data.getString("world"),
@@ -31,6 +34,8 @@ public class SimpleLocation implements DataStringRepresentation, BundledDataLike
                     data.getFloat("yaw"),
                     data.getFloat("pitch")
             ),
+            SimpleLocation::fromDataString,
+            SimpleLocation::asDataString,
             "world", DataScalarType.STRING,
             "x", DataScalarType.DOUBLE,
             "y", DataScalarType.DOUBLE,
@@ -44,7 +49,7 @@ public class SimpleLocation implements DataStringRepresentation, BundledDataLike
     }
 
     public SimpleLocation(@NotNull String worldName, double x, double y, double z, float yaw, float pitch) {
-        Checker.Arg.notNull(worldName, "worldName");
+        Validate.Arg.notNull(worldName, "worldName");
         this.world = worldName;
         this.x = x;
         this.y = y;
@@ -81,13 +86,14 @@ public class SimpleLocation implements DataStringRepresentation, BundledDataLike
         return fromDataString(str);
     }
 
-    public static SimpleLocation fromDataString(String data) {
-        Checker.Arg.notNull(data, "data");
+    @Contract("_ -> new")
+    public static @NotNull SimpleLocation fromDataString(@NotNull String data) {
+        Validate.Arg.notNull(data, "data");
         CommaDataSplitStrategy splitter = new CommaDataSplitStrategy(data, 6);
         String worldName = splitter.nextString();
-        int x = splitter.nextInt();
-        int y = splitter.nextInt();
-        int z = splitter.nextInt();
+        double x = splitter.nextDouble();
+        double y = splitter.nextDouble();
+        double z = splitter.nextDouble();
         float yaw = splitter.nextFloat();
         float pitch = splitter.nextFloat();
         return new SimpleLocation(worldName, x, y, z, yaw, pitch);
@@ -99,19 +105,21 @@ public class SimpleLocation implements DataStringRepresentation, BundledDataLike
     }
 
     @Override
-    public @NonNull BundledData simpleData() {
-        return BundledData.of(
-                SimpleMappingDataEntry.of("world", world),
-                SimpleMappingDataEntry.of("x", x),
-                SimpleMappingDataEntry.of("y", y),
-                SimpleMappingDataEntry.of("z", z),
-                SimpleMappingDataEntry.of("yaw", yaw),
-                SimpleMappingDataEntry.of("pitch", pitch)
+    public @NonNull StructuredData structuredData() {
+        return StructuredData.structuredData(
+                Map.of(
+                        "world", DataScalar.stringDataScalar(world),
+                        "x", DataScalar.doubleDataScalar(x),
+                        "y", DataScalar.doubleDataScalar(y),
+                        "z", DataScalar.doubleDataScalar(z),
+                        "yaw", DataScalar.floatDataScalar(yaw),
+                        "pitch", DataScalar.floatDataScalar(pitch)
+                )
         );
     }
 
     @Override
-    public @NotNull DataBundleSchema<? extends SimpleLocation> simpleDataTemplate() {
+    public @NotNull FunctionsDataStructSchema<? extends SimpleLocation> DataStructSchema() {
         return DATA_TEMPLATE;
     }
 }

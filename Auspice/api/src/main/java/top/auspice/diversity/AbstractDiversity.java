@@ -1,13 +1,13 @@
 package top.auspice.diversity;
 
 import net.aurika.namespace.NSedKey;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.MessageEntry;
 import top.auspice.configs.messages.provider.MessageProvider;
 import net.aurika.text.TextObject;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 
 import java.util.Locale;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class AbstractDiversity implements Diversity {
     protected final @NotNull TimeZone timeZone;
 
     public AbstractDiversity(@NotNull NSedKey id) {
-        Checker.Arg.notNull(id, "id");
+        Validate.Arg.notNull(id, "id");
         this.id = id;
     }
 

@@ -1,10 +1,10 @@
 package top.auspice.constants.top;
 
 import com.google.common.base.Strings;
-import net.aurika.checker.Checker;
+import net.aurika.validate.Validate;
 import net.aurika.config.sections.ConfigSection;
 import net.aurika.text.compiler.TextCompiler;
-import net.aurika.text.placeholders.context.PlaceholderProvider;
+import net.aurika.config.placeholders.context.PlaceholderProvider;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.configs.messages.AuspiceLang;
 import top.auspice.configs.messages.messenger.Messenger;
@@ -31,7 +31,7 @@ public abstract class ExpressionBasedTopData<K, V> extends IndexedTopData<K, V> 
         this.equation = Objects.requireNonNull(var1);
         this.filter = var2;
         this.predicate = var2 == null ? null : (var2x) -> ConditionProcessor.process(var2, this.getPlaceholderProvider(var2x));
-        this.dataName = Checker.Arg.notEmpty(dataName, "dataName");
+        this.dataName = Validate.Arg.notEmpty(dataName, "dataName");
         this.displayName = Objects.requireNonNull(var4);
         this.description = Objects.requireNonNull(var5);
     }

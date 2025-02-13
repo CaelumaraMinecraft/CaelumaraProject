@@ -14,7 +14,7 @@ import top.auspice.configs.messages.MessageEntry;
 import top.auspice.configs.messages.provider.MessageProvider;
 import net.aurika.text.AuspiceLang;
 import top.auspice.configs.messages.LanguageManager;
-import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
+import net.aurika.config.placeholders.context.MessagePlaceholderProvider;
 import top.auspice.diversity.Diversity;
 import top.auspice.main.Auspice;
 import top.auspice.server.command.CommandSender;

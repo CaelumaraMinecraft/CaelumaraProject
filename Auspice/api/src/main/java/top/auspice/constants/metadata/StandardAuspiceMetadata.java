@@ -1,8 +1,8 @@
 package top.auspice.constants.metadata;
 
 import org.jetbrains.annotations.NotNull;
-import net.aurika.data.api.KeyedDataObject;
-import net.aurika.data.database.dataprovider.SectionCreatableDataSetter;
+import net.aurika.ecliptor.api.KeyedDataObject;
+import net.aurika.ecliptor.database.dataprovider.SectionCreatableDataSetter;
 
 import java.util.Objects;
 

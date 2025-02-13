@@ -1,4 +1,5 @@
 plugins {
+    id("java-library")
     alias(libs.plugins.blossom)
     alias(libs.plugins.shadow)
 }
@@ -8,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":Auspice:proxy:api"))
+    api(project(":Auspice:proxy:api"))
 
     compileOnly(libs.server.velocity)
     annotationProcessor(libs.server.velocity)
