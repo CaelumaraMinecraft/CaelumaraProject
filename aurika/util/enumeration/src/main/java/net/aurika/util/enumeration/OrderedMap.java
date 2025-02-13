@@ -1,4 +1,4 @@
-package top.auspice.utils.enumeration;
+package net.aurika.util.enumeration;
 
 import kotlin.NotImplementedError;
 import org.jetbrains.annotations.NotNull;

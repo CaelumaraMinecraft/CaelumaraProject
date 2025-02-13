@@ -1,4 +1,4 @@
-package top.auspice.utils.enumeration;
+package net.aurika.util.enumeration;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,4 +1,4 @@
-package net.aurika.util.iterator;
+package net.aurika.util.collection;
 
 import net.aurika.checker.Checker;
 import org.jetbrains.annotations.NotNull;

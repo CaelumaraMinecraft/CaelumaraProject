@@ -1,6 +1,4 @@
-package net.aurika.util.iterator;
-
-import net.aurika.util.array.ArrayIterator;
+package net.aurika.util.collection;
 
 import java.util.*;
 import java.util.function.Function;

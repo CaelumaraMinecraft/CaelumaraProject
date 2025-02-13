@@ -2,7 +2,7 @@ package top.auspice.server.location;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.enumeration.Enums;
+import net.aurika.util.enumeration.Enums;
 
 import java.util.Collection;
 import java.util.Map;

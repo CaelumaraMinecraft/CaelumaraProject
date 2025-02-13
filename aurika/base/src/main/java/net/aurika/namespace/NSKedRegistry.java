@@ -1,11 +1,11 @@
 package net.aurika.namespace;
 
+import net.aurika.checker.Checker;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import top.auspice.api.user.AuspiceUser;
-import net.aurika.util.Checker;
 
 import java.util.Collections;
 import java.util.HashMap;

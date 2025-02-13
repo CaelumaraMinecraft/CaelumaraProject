@@ -1,4 +1,4 @@
-package top.auspice.utils.enumeration;
+package net.aurika.util.enumeration;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;

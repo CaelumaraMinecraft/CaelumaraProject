@@ -5,5 +5,7 @@ plugins {
 
 dependencies {
     api(project(":aurika:base"))
+    api(project(":aurika:util:reflection"))
+
     api(libs.annotations.jetbrains)
 }

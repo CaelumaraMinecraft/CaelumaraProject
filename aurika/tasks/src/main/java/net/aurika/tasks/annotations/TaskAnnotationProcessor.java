@@ -3,6 +3,7 @@ package net.aurika.tasks.annotations;
 import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.jvm.internal.Ref;
+import net.aurika.checker.Checker;
 import net.aurika.namespace.NSedKey;
 import net.aurika.tasks.*;
 import net.aurika.tasks.container.ConditionalLocalTaskSession;
@@ -14,11 +15,11 @@ import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.EnumPriority;
 import net.aurika.tasks.priority.PriorityPhase;
 import net.aurika.tasks.priority.RelativePriority;
-import net.aurika.util.Checker;
+import net.aurika.util.enumeration.QuickEnumSet;
+import net.aurika.util.reflection.AnnotationContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.enumeration.QuickEnumSet;
-import top.auspice.utils.reflection.AnnotationContainer;
+
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -29,10 +30,9 @@ import java.util.Objects;
 import java.util.Set;
 
 public final class TaskAnnotationProcessor<C extends TaskContext> {
-    @NotNull
-    private final Class<? extends LocalTaskSession> container;
-    @NotNull
-    private final TaskSessionConstructor<C> constructor;
+
+    private final@NotNull Class<? extends LocalTaskSession> container;
+    private final@NotNull TaskSessionConstructor<C> constructor;
     @Nullable
     private final ParentTask<C> parentTask;
 
@@ -192,11 +192,11 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
             this.id = id;
         }
 
-        public @NotNull TaskState getImplicitReturnState() {
+        public @NotNull TaskState implicitReturnState() {
             return this.implicitReturnState;
         }
 
-        public boolean getTaskStatesInclude() {
+        public boolean taskStatesInclude() {
             return this.taskStatesInclude;
         }
 
@@ -230,7 +230,7 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
                 if (context.getState() == TaskState.SHOULD_STOP || context.getState() == TaskState.MUST_STOP) {
                     return;
                 }
-            } else if (this.settings.getTaskStatesInclude() != this.settings.getTaskStates().contains(context.getState())) {
+            } else if (this.settings.taskStatesInclude() != this.settings.getTaskStates().contains(context.getState())) {
                 return;
             }
 
@@ -273,7 +273,7 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
                 if (context.getState().shouldStop()) {
                     return;
                 }
-            } else if (this.settings.getTaskStatesInclude() != this.settings.getTaskStates().contains(context.getState())) {
+            } else if (this.settings.taskStatesInclude() != this.settings.getTaskStates().contains(context.getState())) {
                 return;
             }
 
@@ -303,7 +303,7 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
             }
 
             if (this.hasReturnValue && result != null) {
-                context.setState(this.settings.getImplicitReturnState());
+                context.setState(this.settings.implicitReturnState());
             }
         }
     }

@@ -1,4 +1,8 @@
-package net.aurika.util.array;
+package net.aurika.util.collection;
+
+import net.aurika.checker.Checker;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -8,17 +12,19 @@ import java.util.Objects;
  * There are many ways to do this with the standard library, but this is the most direct and efficient method.
  */
 public final class ArrayIterator<E> implements Iterator<E> {
-    private final E[] array;
+    private final E @NotNull [] array;
     private final int end;
     private int index;
 
-    private ArrayIterator(E[] array, int start, int end) {
+    private ArrayIterator(E @NotNull [] array, int start, int end) {
+        Checker.Arg.notNull(array, "array");
         this.array = array;
         this.index = start;
         this.end = end;
     }
 
-    public static <E> ArrayIterator<E> of(E[] array, int start, int end) {
+    @Contract("_, _, _ -> new")
+    public static <E> @NotNull ArrayIterator<E> of(E[] array, int start, int end) {
         Objects.requireNonNull(array, "Array is null");
 
         if (end > array.length)
@@ -31,8 +37,9 @@ public final class ArrayIterator<E> implements Iterator<E> {
         return new ArrayIterator<>(array, 0, array.length);
     }
 
-    public static <E> ArrayIterator<E> of(E[] array) {
-        Objects.requireNonNull(array, "Array is null");
+    @Contract("_ -> new")
+    public static <E> @NotNull ArrayIterator<E> of(E @NotNull [] array) {
+        Checker.Arg.notNull(array, "array");
         return new ArrayIterator<>(array, 0, array.length);
     }
 

@@ -1,4 +1,4 @@
-package net.aurika.util.iterator;
+package net.aurika.util.collection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

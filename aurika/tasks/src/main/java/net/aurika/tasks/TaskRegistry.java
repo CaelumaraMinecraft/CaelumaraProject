@@ -35,7 +35,7 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
 
     @Override
     public void register(@NotNull T task) {
-        Objects.requireNonNull(task);
+        Objects.requireNonNull(task, "task");
         NSedKey NSedKey = task.getNamespacedKey();
         Objects.requireNonNull(NSedKey, "Cannot register task with null namespace");
         if (this.parentTask != null && !Objects.equals(task.getParent(), this.parentTask)) {
@@ -53,19 +53,19 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
     }
 
     public @NotNull @Unmodifiable List<T> getUsableList() {
-        if (this.needsUpdating) {
-            CollectionsKt.sortWith(this.usableList, new TaskComparator());
-            this.needsUpdating = false;
+        if (needsUpdating) {
+            usableList.sort(new TaskComparator());
+            needsUpdating = false;
         }
 
-        return Collections.unmodifiableList(this.usableList);
+        return Collections.unmodifiableList(usableList);
     }
 
     public <I, O> @NotNull TaskContext executeTasks(I input, @NotNull Consumer<O> onOutput) {
         Objects.requireNonNull(onOutput);
         TaskSession session = new AbstractTaskSession();
         IOTaskContext<I, O> context = new AbstractIOTaskContext<>(input, session);
-        this.executeDefinedTasks(context, onOutput);
+        executeDefinedTasks(context, onOutput);
         return context;
     }
 
@@ -73,7 +73,7 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
         Objects.requireNonNull(context);
         Objects.requireNonNull(onOutput);
 
-        for (T task : this.getUsableList()) {
+        for (T task : getUsableList()) {
             IOTaskContext<I, O> subContext = context.createNew();
             Objects.requireNonNull(subContext, "null cannot be cast to non-null type top.auspice.tasks.context.IOTaskContext<I of top.auspice.tasks.TaskRegistry.executeDefinedTasks, O of top.auspice.tasks.TaskRegistry.executeDefinedTasks>");
 
@@ -98,7 +98,7 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
 
     public void register(@NotNull Class<? extends LocalTaskSession> container) {
         Objects.requireNonNull(container);
-        this.register(container, new DefaultTaskSessionConstructor<>(container));
+        register(container, new DefaultTaskSessionConstructor<>(container));
     }
 
     public void register(@NotNull Class<? extends LocalTaskSession> container, @NotNull TaskSessionConstructor<C> constructor) {
@@ -110,7 +110,7 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
         for (Task<C> element$iv : $this$forEach$iv) {
             T it = (T) element$iv;
             Intrinsics.checkNotNull(it, "null cannot be cast to non-null type T of top.auspice.tasks.TaskRegistry.register$lambda$1");
-            this.register(it);
+            register(it);
         }
     }
 

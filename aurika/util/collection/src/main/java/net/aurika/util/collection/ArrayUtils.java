@@ -1,4 +1,4 @@
-package net.aurika.util.array;
+package net.aurika.util.collection;
 
 import net.aurika.checker.Checker;
 import org.jetbrains.annotations.Contract;
@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 @SuppressWarnings("unchecked")
 public final class ArrayUtils {
-    @Contract(value = "_ -> param1", pure = true)
+    @Contract(value = "_ -> param1")
     public static <T> T @NotNull [] reverse(T @NotNull [] array) {
         Checker.Arg.notNull(array, "array");
         for (int i = 0, j = array.length - 1; j > i; i++, j--) {

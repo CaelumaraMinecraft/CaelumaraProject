@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     api(project(":aurika:checker"))
-    api(project(":aurika:util:array"))
+    api(project(":aurika:util:collection"))
 
     compileOnly(libs.annotations.jetbrains)
 }

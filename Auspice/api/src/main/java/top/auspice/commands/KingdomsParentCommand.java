@@ -4,7 +4,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.Nullable;
 import top.auspice.diversity.Diversity;
 import top.auspice.permission.PermissionDefaultValue;
-import top.auspice.utils.enumeration.QuickEnumMap;
+import net.aurika.util.enumeration.QuickEnumMap;
 import net.aurika.util.unsafe.fn.Fn;
 
 import java.util.Collection;

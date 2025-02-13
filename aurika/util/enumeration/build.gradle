@@ -5,6 +5,9 @@ plugins {
 
 dependencies {
     api(project(":aurika:checker"))
+    api(project(":aurika:util:collection"))
+
+    api(libs.guava)
 
     compileOnly(libs.annotations.jetbrains)
     compileOnly(libs.annotations.checker)

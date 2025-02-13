@@ -1,46 +1,52 @@
 package net.aurika.util.reflection;
 
-import net.aurika.util.array.ArrayUtils;
+import net.aurika.util.collection.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
+/**
+ * A class for reflecting on your behavior and morals of committing API evasion and using the dreaded NMS.
+ */
 public final class Reflect {
-    private Reflect() {
-    }
-
-    public static boolean classExists(String className) {
+    /**
+     * @param className to autocomplete the class name + package you can use Ctrl+Alt+Space for IntelliJ on Windows.
+     */
+    public static boolean classExists(@NotNull String className) {
         try {
+            // Prevent static initialization
             Class.forName(className, false, Reflect.class.getClassLoader());
             return true;
-        } catch (NoClassDefFoundError | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | NoClassDefFoundError e) {
             return false;
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        } catch (Throwable e) {
+            // Not sure if this'd happen, but some server software like silencing errors for some reasons.
+            e.printStackTrace();
             return true;
         }
     }
 
-    public static Field getDeclaredField(Class<?> clazz, String... names) throws NoSuchFieldException {
+    public static Field getDeclaredField(@NotNull Class<?> clazz, String @NotNull ... names) throws NoSuchFieldException {
         NoSuchFieldException error = null;
-        int var5 = 0;
 
-        while (var5 < names.length) {
-            String name = names[var5];
-
+        for (String name : names) {
             try {
+                /* 1.20.6-36 The fuck??????
+                 * Caused by: java.lang.NullPointerException: Cannot invoke "java.lang.Class.name()" because "clazz" is null
+                 *         at io.papermc.paper.pluginremap.reflect.PaperReflection.mapDeclaredFieldName(PaperReflection.java:77) ~[paper-1.20.6.jar:git-Paper-36]
+                 *         at io.papermc.reflectionrewriter.runtime.AbstractDefaultRulesReflectionProxy.getDeclaredField(AbstractDefaultRulesReflectionProxy.java:90) ~[reflection-rewriter-runtime-0.0.1.jar:?]
+                 *         at io.papermc.paper.pluginremap.reflect.PaperReflectionHolder.getDeclaredField(Unknown Source) ~[paper-1.20.6.jar:git-Paper-36]
+                 *         at KingdomsX-1.16.20.5.jar/org.kingdoms.utils.internal.reflection.Reflect.getDeclaredField(Reflect.java:31) ~[KingdomsX-1.16.20.5.jar:?]
+                 */
                 return clazz.getDeclaredField(name);
-            } catch (NoSuchFieldException var8) {
-                if (error == null) {
+            } catch (NoSuchFieldException ex) {
+                if (error == null)
                     error = new NoSuchFieldException("Couldn't find any of the fields " + Arrays.toString(names) + " in class: " + clazz);
-                }
-
-                error.addSuppressed(var8);
-                ++var5;
+                error.addSuppressed(ex);
             }
         }
 
@@ -50,47 +56,38 @@ public final class Reflect {
     public static Class<?>[] getClassHierarchy(Class<?> clazz, boolean allowAnonymous) {
         List<Class<?>> classes = new ArrayList<>();
 
-        for (Class<?> lastUpperClass = clazz; (lastUpperClass = allowAnonymous ? lastUpperClass.getEnclosingClass() : lastUpperClass.getDeclaringClass()) != null; classes.add(lastUpperClass)) {
-            if (classes.isEmpty()) {
-                classes.add(clazz);
-            }
+        Class<?> lastUpperClass = clazz;
+        while ((lastUpperClass = (allowAnonymous ? lastUpperClass.getEnclosingClass() : lastUpperClass.getDeclaringClass())) != null) {
+            if (classes.isEmpty()) classes.add(clazz);
+            classes.add(lastUpperClass);
         }
 
-        if (classes.isEmpty()) {
-            return new Class[]{clazz};
-        } else {
-            Class<?>[] reversed = classes.toArray(new Class[0]);
-            ArrayUtils.reverse(reversed);
-            return reversed;
-        }
+        if (classes.isEmpty()) return new Class[]{clazz};
+
+        return ArrayUtils.reverse(classes.toArray(new Class[0]));
     }
 
     public static List<Field> getFields(Class<?> clazz) {
         List<Field> fields = new ArrayList<>();
-        Class<?>[] var2 = getClassHierarchy(clazz, false);
-
-        for (Class<?> hierarchy : var2) {
+        for (Class<?> hierarchy : getClassHierarchy(clazz, false)) {
             fields.addAll(Arrays.asList(hierarchy.getDeclaredFields()));
         }
-
         return fields;
     }
 
     public static String toString(Object obj) {
         Class<?> clazz = obj.getClass();
         List<Field> fields = getFields(clazz);
-        StringBuilder string = (new StringBuilder(clazz.getSimpleName())).append('{');
+        StringBuilder string = new StringBuilder(clazz.getSimpleName()).append('{');
         StringJoiner joiner = new StringJoiner(", ");
 
         for (Field field : fields) {
-            if (!Modifier.isStatic(field.getModifiers())) {
-                field.setAccessible(true);
-
-                try {
-                    joiner.add(field.getName() + '=' + field.get(obj));
-                } catch (IllegalAccessException var8) {
-                    throw new RuntimeException(var8);
-                }
+            if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) continue;
+            field.setAccessible(true);
+            try {
+                joiner.add(field.getName() + '=' + field.get(obj));
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
 

@@ -25,7 +25,7 @@ import top.auspice.permission.Permission;
 import top.auspice.permission.PermissionDefaultValue;
 import top.auspice.server.entity.Player;
 import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.enumeration.QuickEnumMap;
+import net.aurika.util.enumeration.QuickEnumMap;
 import net.aurika.util.unsafe.fn.Fn;
 import top.auspice.utils.logging.AuspiceLogger;
 import net.aurika.util.collection.nonnull.NonNullMap;

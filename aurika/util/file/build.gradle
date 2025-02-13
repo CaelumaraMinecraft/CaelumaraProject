@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     api(project(":aurika:checker"))
-    api(project(":aurika:util:array"))
     api(project(":aurika:util:collection"))
     api(project(":aurika:util:string"))
 
