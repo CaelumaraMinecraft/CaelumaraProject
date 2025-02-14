@@ -1,6 +1,0 @@
-name: KingdomsUninvade
-version: '0.2-SNAPSHOT'
-main: top.mckingdom.uninvade.UninvadeAddon
-api-version: '1.13'
-depend: [Kingdoms]
-

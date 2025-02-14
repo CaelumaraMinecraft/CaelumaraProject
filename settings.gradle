@@ -223,3 +223,17 @@ include(
 include (
         "HiraethRPG"
 )
+
+include(
+//        ":KingdomsAddons",
+        ":KingdomsAddons:Auspice",
+        ":KingdomsAddons:Civilizations",
+        ":KingdomsAddons:PlaceholderAPI-Bridge",
+        ":KingdomsAddons:Powerful-Territory",
+        ":KingdomsAddons:Props",
+        ":KingdomsAddons:Trade-Point",
+)
+
+include(
+        "WandsCraftsmanship",
+)

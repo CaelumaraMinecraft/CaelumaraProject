@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-version = "0.0.1-SNAPSHOT"
-
 allprojects {
     group = "net.aurika"
 
@@ -82,26 +80,4 @@ allprojects {
             url = uri("https://repo.codemc.io/repository/maven-public/")
         }
     }
-}
-
-
-tasks {
-
-
-//    shadowJar {
-//
-//        enabled = true
-//
-//        archiveBaseName = "Auspice"
-//        archiveClassifier = null
-//        archiveVersion = ver
-//
-//        relocate("kotlin", "top.auspice.libs.kotlin")
-//        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
-//        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
-//        relocate("com.google.common", "top.auspice.libs.google.common")
-//        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
-//
-//
-//    }
 }

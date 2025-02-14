@@ -57,6 +57,9 @@ server_legacy_craftbukkit = { group = "org.bukkit", name = "bukkit", version.ref
 server_bungee = { group = "net.md-5", name = "bungeecord-api", version.ref = "bungee" }
 server_velocity = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
 
+# Services
+service_placeholderapi = { group = "me.clip", name = "placeholderapi", version = "2.11.6" }
+
 # Engines
 yamlengine = { group = "org.snakeyaml", name = "snakeyaml-engine", version.ref = "yamlengine" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }

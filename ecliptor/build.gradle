@@ -3,10 +3,15 @@ plugins {
     id("maven-publish")
 }
 
+version = "0.0.1-pre"
 description = "一个多数据库类型的数据存取 API"
 
+subprojects {
+    it.version = this.version
+}
+
 dependencies {
-    subprojects {
-        this.dependencies.api(it);
+    subprojects.forEach {
+        this.dependencies.api(it)
     }
 }

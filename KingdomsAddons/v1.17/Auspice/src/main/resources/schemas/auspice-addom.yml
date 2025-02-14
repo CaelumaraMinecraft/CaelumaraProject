@@ -1,8 +1,0 @@
-member-transfer:
-  enabled: bool
-
-land-contractions:
-  enabled: bool
-  can-allocate-other-kingdom: bool
-
-test: Bill

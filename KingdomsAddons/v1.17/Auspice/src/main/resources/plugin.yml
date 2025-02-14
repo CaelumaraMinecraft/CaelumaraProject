@@ -1,9 +1,0 @@
-name: Kingdoms-Addon-Auspice
-version: '${version}'
-main: top.mckingdom.auspice.AuspiceAddon
-api-version: '1.13'
-depend: [ Kingdoms ]
-softdepend: [ Vault, PlaceholderAPI ]
-authors: [ Attaccer and DuoDuoJuZi ]
-description: 为KingdomsX制作的一个Addon,包含了一些有用的API
-load: POSTWORLD

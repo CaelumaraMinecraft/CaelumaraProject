@@ -1,0 +1,14 @@
+name: str
+type: PropType   #TODO: unknown Tag
+buy: Costs              #TODO
+sell: Costs
+max-level: Math
+cooldown: Math
+using:
+  method: list
+  entities:
+    whitelist: bool
+    list:
+      (type): set
+      (elements): Enum<org.bukkit.entity.EntityType>
+upgrade-cost: Math

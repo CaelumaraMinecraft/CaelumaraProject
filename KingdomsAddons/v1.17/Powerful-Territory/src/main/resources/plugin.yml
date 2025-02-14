@@ -1,6 +1,0 @@
-name: Kingdoms-Addon-Powerful-Territory
-version: '0.2-SNAPSHOT'
-main: top.mckingdom.powerful_territory.PowerfulTerritory
-api-version: '1.20'
-depend: [Kingdoms, Kingdoms-Addon-Auspice]
-

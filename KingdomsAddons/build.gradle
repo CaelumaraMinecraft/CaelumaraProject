@@ -1,0 +1,80 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin) apply false
+    alias(libs.plugins.shadow) apply false
+}
+
+group = "top.mckingdom"
+version = "1.0.2"
+
+subprojects {
+
+    group = this.group
+    version = this.version
+
+    def _name = name
+
+    apply {
+        plugins.apply("java-library")
+        plugins.apply(libs.plugins.kotlin.get().pluginId)
+        plugins.apply(libs.plugins.shadow.get().pluginId)
+    }
+
+    dependencies {
+        api(project(":validate"))
+        compileOnly(libs.server.spigot)
+        compileOnly(fileTree("$rootDir/libs/plugins/Kingdoms"))
+    }
+
+    tasks {
+
+        build {
+            dependsOn(shadowJar)
+        }
+
+        compileKotlin {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+
+        jar {
+            enabled = false
+        }
+
+        shadowJar {
+            archiveBaseName = "Kingdoms-Addon-$_name"
+            archiveClassifier = null
+
+            relocate("kotlin", "org.kingdoms.libs.kotlin")
+            relocate("net.aurika", "top.mckingdom.libs.aurika")
+
+            include {
+                project(":validate")
+            }
+
+//            exclude(
+//                    "kotlin-stdlib-2.0.20-Beta2.jar",
+//                    "annotations-13.0.jar",
+//                    "checker-qual-3.46.0.jar"
+//            )
+        }
+
+        processResources {
+            def props = [version: version]
+            inputs.properties props
+            filteringCharset "UTF-8"
+            filesMatching("plugin.yml") {
+                expand props
+            }
+        }
+    }
+
+    java {
+        withSourcesJar()
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+}

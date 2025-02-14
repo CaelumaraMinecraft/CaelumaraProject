@@ -1,4 +1,0 @@
-name: Kingdoms-Addon-Trade-Point
-version: '0.1-SNAPSHOT'
-main: top.mckingdom.trade_point.TradePointAddon
-api-version: '1.13'
