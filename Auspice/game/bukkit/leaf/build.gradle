@@ -4,16 +4,6 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.leaf"
-
-//repositories {
-//
-//}
-
-//subprojects {
-//
-//}
-
 dependencies {
 
     // 向外传递 API
@@ -33,7 +23,7 @@ dependencies {
 
 
     //Classpath libs
-    compileOnly(libs.server.leaf) { transitive = true }
+    compileOnly(libs.server.leaf)
     compileOnly(libs.bungee.chat)
 
     compileOnly(libs.annotations.checker)
@@ -110,10 +100,4 @@ processResources {
     filesMatching("plugin.yml") {
         expand props
     }
-}
-
-
-println("Project leaf repos: ")
-this.repositories.forEach {
-    println(it.name)
 }

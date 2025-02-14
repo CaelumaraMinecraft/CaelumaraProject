@@ -4,24 +4,6 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.paper"
-
-//repositories {
-//    maven {
-//        name = "PaperMC-repo"
-//        url = "https://repo.papermc.io/repository/maven-public/"
-//    }
-//
-//    maven {
-//        name = "sonatype"
-//        url = "https://oss.sonatype.org/content/groups/public/"
-//    }
-//}
-
-//subprojects {
-//
-//}
-
 dependencies {
 
 
@@ -120,10 +102,4 @@ processResources {
     filesMatching("plugin.yml") {
         expand props
     }
-}
-
-
-println("Paper Project Repos:")
-this.repositories.forEach {
-    println("    " + it.name)
 }
