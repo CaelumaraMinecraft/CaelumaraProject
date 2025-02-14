@@ -17,8 +17,12 @@ velocity = "3.1.1"
 
 # Engines
 yamlengine = "2.9"
+
 adventure_main = "4.18.0"
 adventure_platform = "4.3.4"
+indra = "3.1.3"
+examination = "1.3.0"
+
 xseries = "11.3.0"
 asm = "9.7"
 gson = "2.11.0"
@@ -57,23 +61,32 @@ server_velocity = { group = "com.velocitypowered", name = "velocity-api", versio
 yamlengine = { group = "org.snakeyaml", name = "snakeyaml-engine", version.ref = "yamlengine" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
-adventure_key = { group = "net.kyori", name = "adventure-key", version.ref = "adventure_main" }
-adventure_api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure_main" }
-adventure_nbt = { group = "net.kyori", name = "adventure-nbt", version.ref = "adventure_main" }
-adventure_text_bungee = { group = "net.kyori", name = "adventure-text-serializer-bungeecord", version.ref = "adventure_platform" }
-adventure_text_gson = { group = "net.kyori", name = "adventure-text-serializer-gson", version.ref = "adventure_main" }
-adventure_text_json = { group = "net.kyori", name = "adventure-text-serializer-json", version.ref = "adventure_main" }
-adventure_text_plain = { group = "net.kyori", name = "adventure-text-serializer-plain", version.ref = "adventure_main" }
-adventure_text_legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure_main" }
-adventure_text_minimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure_main" }
-adventure_platform_bukkit = { group = "nei.kyori", name = "adventure-platform-bukkit", version.ref = "adventure_platform" }
-adventure_platform_bungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventure_platform" }
-adventure_event = { group = "net.kyori", name = "event-api", version = "3.0.0" }
+kyori_advntr_key = { group = "net.kyori", name = "adventure-key", version.ref = "adventure_main" }
+kyori_advntr_api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure_main" }
+kyori_advntr_nbt = { group = "net.kyori", name = "adventure-nbt", version.ref = "adventure_main" }
+kyori_advntr_text_bungee = { group = "net.kyori", name = "adventure-text-serializer-bungeecord", version.ref = "adventure_platform" }
+kyori_advntr_text_gson = { group = "net.kyori", name = "adventure-text-serializer-gson", version.ref = "adventure_main" }
+kyori_advntr_text_json = { group = "net.kyori", name = "adventure-text-serializer-json", version.ref = "adventure_main" }
+kyori_advntr_text_plain = { group = "net.kyori", name = "adventure-text-serializer-plain", version.ref = "adventure_main" }
+kyori_advntr_text_legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure_main" }
+kyori_advntr_text_minimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure_main" }
+kyori_advntr_platform_bukkit = { group = "nei.kyori", name = "adventure-platform-bukkit", version.ref = "adventure_platform" }
+kyori_advntr_platform_bungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventure_platform" }
+kyori_advntr_event = { group = "net.kyori", name = "event-api", version = "3.0.0" }
+
+kyori_examination_api = { group = "net.kyori", name = "examination-api", version.ref = "examination" }
+kyori_examination_string = { group = "net.kyori", name = "examination-string", version.ref = "examination" }
+
+kyori_mammoth = { group = "net.kyori", name = "mammoth", version = "1.4.0" }
+kyori_indra_common = { group = "net.kyori", name = "indra-common", version.ref = "indra" }
+kyori_lunar = { group = "net.ktori", name = "lunar", version = "1.0.6" }
 
 xseries = { group = "com.github.cryptomorin", name = "XSeries", version.ref = "xseries" }
 
 asm_asm = { group = "org.ow2.asm", name = "asm", version.ref = "asm" }
 asm_commons = { group = "org.ow2.asm", name = "asm-commons", version.ref = "asm" }
+
+kryo = { group = "com.esotericsoftware", name = "kyro", version = "5.2.0" }
 
 iocommons = "commons-io:commons-io:2.15.1"
 

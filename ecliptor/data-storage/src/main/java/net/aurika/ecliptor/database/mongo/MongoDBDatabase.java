@@ -68,9 +68,9 @@ public abstract class MongoDBDatabase<T extends DataObject> implements Database<
         if ((var4 = databaseUri) != null && !var4.isEmpty()) {
             var2.applyConnectionString(new ConnectionString(databaseUri));
         } else if ((var4 = AuspiceGlobalConfig.DATABASE_USERNAME.getString()) != null && !var4.isEmpty()) {
-            String var10001 = var0.getUser();
-            String var10002 = var0.getDatabaseName();
-            char[] var10003 = var0.getPassword().toCharArray();
+            String var10001 = var0.user();
+            String var10002 = var0.databaseName();
+            char[] var10003 = var0.password().toCharArray();
             Objects.requireNonNull(var10003, "");
             var2.credential(MongoCredential.createCredential(var10001, var10002, var10003));
         }
@@ -89,7 +89,7 @@ public abstract class MongoDBDatabase<T extends DataObject> implements Database<
         var10000.codecRegistry(CodecRegistries.fromRegistries(codecRegistries));
         MongoClient var7 = MongoClients.create(var1.build(), null);
         CLIENT = var7;
-        MongoDatabase var8 = var7.getDatabase(var0.getDatabaseName());
+        MongoDatabase var8 = var7.getDatabase(var0.databaseName());
         Objects.requireNonNull(var8, "");
         DATABASE = var8;
     }

@@ -1,16 +1,15 @@
 package net.aurika.ecliptor.history;
 
-import org.jetbrains.annotations.NotNull;
 import net.aurika.ecliptor.database.sql.statements.SQLStatement;
 import net.aurika.ecliptor.managers.base.DataManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class SQLAssociatedStatement {
-    @NotNull
-    private final DataManager<?> dataManager;
-    @NotNull
-    private final SQLStatement statement;
+
+    private final @NotNull DataManager<?> dataManager;
+    private final @NotNull SQLStatement statement;
 
     public SQLAssociatedStatement(@NotNull DataManager<?> dataManager, @NotNull SQLStatement statement) {
         Objects.requireNonNull(dataManager, "dataManager");

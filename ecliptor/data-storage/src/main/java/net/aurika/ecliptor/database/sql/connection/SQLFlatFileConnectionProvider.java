@@ -1,16 +1,13 @@
-
 package net.aurika.ecliptor.database.sql.connection;
 
 import kotlin.collections.ArraysKt;
 import kotlin.jvm.internal.Intrinsics;
+import net.aurika.dependency.classpath.IsolatedClassLoader;
 import net.aurika.ecliptor.database.DatabaseType;
 import net.aurika.ecliptor.database.sql.H2Tools;
-import net.aurika.util.Checker;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.dependencies.classpath.IsolatedClassLoader;
-import top.auspice.main.Auspice;
-import top.auspice.utils.logging.AuspiceLogger;
-import top.auspice.utils.unsafe.AutoCloseableUtils;
+
 
 import java.lang.reflect.Constructor;
 import java.nio.file.Path;
@@ -24,20 +21,17 @@ public class SQLFlatFileConnectionProvider extends SQLConnectionProvider {
 
     private final @NotNull String jdbcUrl;
     private final @NotNull Path file;
-    private NonClosableConnection c;  // lazy
+    private      NonClosableConnection connection;  // lazy
 
     public SQLFlatFileConnectionProvider(@NotNull DatabaseType databaseType, @NotNull String jdbcUrl, @NotNull Path file) {
         super(databaseType);
-        Checker.Arg.notNull(jdbcUrl, "jdbcUrl");
-        Checker.Arg.notNull(file, "file");
+        Validate.Arg.notNull(jdbcUrl, "jdbcUrl");
+        Validate.Arg.notNull(file, "file");
         this.jdbcUrl = jdbcUrl;
         this.file = file;
-        DatabaseType[] var5 = new DatabaseType[2];
-        var5[0] = DatabaseType.SQLite;
-        var5[1] = DatabaseType.H2;
+        DatabaseType[] var5 = new DatabaseType[]{DatabaseType.SQLite, DatabaseType.H2};;
         if (!ArraysKt.contains(var5, databaseType)) {
-            String var4 = "Invalid SQL type for flat file: " + databaseType;
-            throw new IllegalArgumentException(var4);
+            throw new IllegalArgumentException("Invalid SQL type for flat file: " + databaseType);
         } else {
             this.testTemporaryLibCreation$core(databaseType);
         }
@@ -53,17 +47,16 @@ public class SQLFlatFileConnectionProvider extends SQLConnectionProvider {
 
     public void connect() {
         String var2;
-        if (this.c != null) {
+        if (this.connection != null) {
             var2 = "Already connected";
             throw new IllegalArgumentException(var2);
         } else {
-            IsolatedClassLoader var10000 = Auspice.get().getDependencyManager().obtainClassLoaderWith(EnumSet.of((Enum) ArraysKt.first(this.getDatabaseType().getDependencies())));
+            IsolatedClassLoader var10000 = Auspice.get().getDependencyManager().obtainClassLoaderWith(EnumSet.of((Enum) (this.getDatabaseType().dependencies())[0]));
             Intrinsics.checkNotNullExpressionValue(var10000, "");
-            IsolatedClassLoader var1 = var10000;
 
             try {
                 var2 = this.getDatabaseType() == DatabaseType.SQLite ? "org.sqlite.jdbc4.JDBC4Connection" : "org.h2.jdbc.JdbcConnection";
-                Class<?> var14 = var1.loadClass(var2);
+                Class<?> var14 = var10000.loadClass(var2);
                 Intrinsics.checkNotNullExpressionValue(var14, "");
                 SQLFlatFileConnectionProvider var15 = this;
                 Class<?>[] params;
@@ -123,7 +116,7 @@ public class SQLFlatFileConnectionProvider extends SQLConnectionProvider {
                 }
 
                 Connection var11 = var18;
-                var15.c = new NonClosableConnection(var11);
+                var15.connection = new NonClosableConnection(var11);
             } catch (ReflectiveOperationException var6) {
                 throw new RuntimeException(var6);
             }
@@ -131,7 +124,7 @@ public class SQLFlatFileConnectionProvider extends SQLConnectionProvider {
     }
 
     public @NotNull Connection getConnection() {
-        NonClosableConnection var10000 = this.c;
+        NonClosableConnection var10000 = this.connection;
         if (var10000 == null) {
             Intrinsics.throwUninitializedPropertyAccessException("");
             var10000 = null;
@@ -144,58 +137,26 @@ public class SQLFlatFileConnectionProvider extends SQLConnectionProvider {
         try {
             NonClosableConnection var10000;
             if (this.getDatabaseType() == DatabaseType.H2) {
-                var10000 = this.c;
+                var10000 = this.connection;
                 if (var10000 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("");
+                    Intrinsics.throwUninitializedPropertyAccessException("connection");
                     var10000 = null;
                 }
 
                 if (!var10000.isClosed()) {
-                    var10000 = this.c;
+                    var10000 = this.connection;
                     if (var10000 == null) {
                         Intrinsics.throwUninitializedPropertyAccessException("");
                         var10000 = null;
                     }
 
                     NonClosableConnection var1 = var10000;
-                    Throwable var2 = null;
-                    boolean var10 = false;
-
-                    try {
-                        var10 = true;
-                        Statement var20 = var1.createStatement();
-                        Throwable var4 = null;
-                        boolean var15 = false;
-
-                        try {
-                            var15 = true;
-                            var20.execute("SHUTDOWN");
-                            var15 = false;
-                        } catch (Throwable var16) {
-                            var4 = var16;
-                            throw var16;
-                        } finally {
-                            if (var15) {
-                                AutoCloseableUtils.closeFinally(var20, var4);
-                            }
-                        }
-
-                        AutoCloseableUtils.closeFinally(var20, (Throwable) null);
-                        var10 = false;
-                    } catch (Throwable var18) {
-                        var2 = var18;
-                        throw var18;
-                    } finally {
-                        if (var10) {
-                            AutoCloseableUtils.closeFinally(var1, var2);
-                        }
-                    }
-
-                    AutoCloseableUtils.closeFinally(var1, (Throwable) null);
+                    Statement var20 = var1.createStatement();
+                    var20.execute("SHUTDOWN");
                 }
             }
 
-            var10000 = this.c;
+            var10000 = this.connection;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("");
                 var10000 = null;

@@ -312,7 +312,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NotNull FunctionsDataStructSchema<? extends SimpleChunkLocation> DataStructSchema() {
+    public @NotNull FunctionsDataStructSchema<? extends SimpleChunkLocation> dataStructSchema() {
         return DATA_SCHEMA;
     }
 }

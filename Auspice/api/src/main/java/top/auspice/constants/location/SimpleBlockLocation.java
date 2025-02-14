@@ -218,7 +218,7 @@ public class SimpleBlockLocation implements Cloneable, DataStringRepresentation,
     }
 
     @Override
-    public @NotNull FunctionsDataStructSchema<? extends SimpleBlockLocation> DataStructSchema() {
+    public @NotNull FunctionsDataStructSchema<? extends SimpleBlockLocation> dataStructSchema() {
         return DATA_SCHEMA;
     }
 

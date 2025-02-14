@@ -8,38 +8,47 @@ import org.bson.codecs.Encoder;
 import org.bson.codecs.EncoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class MongoIdQueryContainer<K> implements Bson {
-    private final K a;
-    private final Class<K> b;
+public final class MongoIdQueryContainer<K> implements Bson {
+    private final K obj;
+    private final Class<K> type;
 
-    public MongoIdQueryContainer(K var1, Class<K> var2) {
-        this.a = var1;
-        this.b = var2;
+    public MongoIdQueryContainer(K obj, Class<K> type) {
+        super();
+        this.obj = obj;
+        this.type = type;
     }
 
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> var1, CodecRegistry var2) {
-        return new BsonDocumentWrapper<>(this, new a(var2));
+    @Override
+    public <TDocument> BsonDocument toBsonDocument(final Class<TDocument> clazz, final CodecRegistry codecRegistry) {
+        return new BsonDocumentWrapper<>(this, new a(codecRegistry));
     }
 
-    public String toString() {
-        return this.getClass().getSimpleName() + '[' + this.a + ']';
+    @Override
+    public @NotNull String toString() {
+        return this.getClass().getSimpleName() + '[' + this.obj + ']';
     }
 
     private final class a implements Encoder<MongoIdQueryContainer<K>> {
-        private final CodecRegistry a;
+        private final CodecRegistry codecRegistry;
 
-        private a(CodecRegistry var2) {
-            this.a = var2;
+        private a(final CodecRegistry codecRegistry) {
+            this.codecRegistry = codecRegistry;
         }
 
         @Override
-        public void encode(BsonWriter bsonWriter, MongoIdQueryContainer<K> kMongoIdQueryContainer, EncoderContext encoderContext) {
-
-        }
-
         public Class<MongoIdQueryContainer<K>> getEncoderClass() {
             return Fn.cast(MongoIdQueryContainer.class);
+        }
+
+        @Override
+        public void encode(@NotNull BsonWriter bsonWriter, @NotNull MongoIdQueryContainer<K> value, @Nullable EncoderContext encoderContext) {
+            bsonWriter.writeStartDocument();
+            bsonWriter.writeName("_id");
+            encoderContext.encodeWithChildContext(this.codecRegistry.get(value.type), bsonWriter, value.obj);
+            bsonWriter.writeEndDocument();
         }
     }
 }

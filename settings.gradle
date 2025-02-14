@@ -109,6 +109,8 @@ dependencyResolutionManagement {
 rootProject.name = "Caelumara"
 
 include(
+        ":annotation",
+        ":property",
         ":validate",
 
         ":util",
@@ -138,7 +140,6 @@ include(
 
 include(
         ":aurika",
-        ":aurika:annotations",
         ":aurika:base",
         ":aurika:config-api",
         ":aurika:configuration",

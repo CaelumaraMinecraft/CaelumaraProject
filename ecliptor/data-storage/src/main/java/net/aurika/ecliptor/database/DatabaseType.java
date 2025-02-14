@@ -6,17 +6,18 @@ import kotlin.text.StringsKt;
 import net.aurika.dependency.Dependency;
 import net.aurika.ecliptor.database.sql.DatabaseProperties;
 import net.aurika.ecliptor.database.sql.statements.*;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 public enum DatabaseType {
-    SQLite(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "net.aurika.auspice.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
+    SQLite(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "net.aurika.ecliptor.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
-            Objects.requireNonNull(hikariConfig);
-            Objects.requireNonNull(props);
+            Validate.Arg.notNull(hikariConfig, "hikariConfig");
+            Validate.Arg.notNull(props, "props");
             props.add("cachePrepStmts", Boolean.TRUE);
             props.add("prepStmtCacheSize", 250);
             props.add("prepStmtCacheSqlLimit", 2048);
@@ -33,14 +34,14 @@ public enum DatabaseType {
 
         @Override
         public @NotNull String processCommands(@NotNull String commands) {
-            Objects.requireNonNull(commands, "");
+            Validate.Arg.notNull(commands, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
 
         @Override
         public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
-            Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(value, "");
+            Validate.Arg.notNull(statement, "");
+            Validate.Arg.notNull(value, "");
             if (statement instanceof SQLUpsert) {
                 return "REPLACE INTO `" + value + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             }
@@ -59,15 +60,15 @@ public enum DatabaseType {
     H2(0, new Dependency[]{Dependency.H2_DRIVER}, "org.h2.jdbcx.JdbcDataSource", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
-            Objects.requireNonNull(hikariConfig, "");
-            Objects.requireNonNull(props, "");
+            Validate.Arg.notNull(hikariConfig, "");
+            Validate.Arg.notNull(props, "");
             throw new UnsupportedOperationException();
         }
 
         @Override
         public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
-            Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(value, "");
+            Validate.Arg.notNull(statement, "");
+            Validate.Arg.notNull(value, "");
             if (statement instanceof SQLUpsert) {
                 return "MERGE INTO `" + value + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             } else if (statement instanceof SQLColumnRemove) {
@@ -90,18 +91,18 @@ public enum DatabaseType {
 
         @Override
         public @NotNull String processCommands(@NotNull String commands) {
-            Objects.requireNonNull(commands, "");
+            Validate.Arg.notNull(commands, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "LONG", "BIGINT", false), "FLOAT", "REAL", false), "DOUBLE", "DOUBLE PRECISION", false), "NVARCHAR", "VARCHAR", false), "STRICT", "", false);
         }
     },
-    MariaDB(3306, new Dependency[]{Dependency.MARIADB_DRIVER}, "net.aurika.auspice.libs.mariadb.MariaDbDataSource", '`') {
+    MariaDB(3306, new Dependency[]{Dependency.MARIADB_DRIVER}, "net.aurika.ecliptor.libs.mariadb.MariaDbDataSource", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
-            Objects.requireNonNull(hikariConfig, "");
-            Objects.requireNonNull(props, "");
+            Validate.Arg.notNull(hikariConfig, "");
+            Validate.Arg.notNull(props, "");
             String string;
-            if (props.getOthers().isEmpty()) {
-                Map<String, Object> others = props.getOthers();
+            if (props.others().isEmpty()) {
+                Map<String, Object> others = props.others();
                 Collection<String> collection = new ArrayList<>((others).size());
                 for (Map.Entry<String, Object> entry : others.entrySet()) {
                     collection.add(entry.getKey() + '=' + entry.getValue());
@@ -110,15 +111,15 @@ public enum DatabaseType {
             } else {
                 string = "";
             }
-            hikariConfig.addDataSourceProperty("url", "jdbc:mariadb://" + props.getAddress() + ':' + props.getPort() + '/' + props.getDatabaseName() + string);
-            hikariConfig.addDataSourceProperty("user", props.getUser());
-            hikariConfig.addDataSourceProperty("password", props.getPassword());
+            hikariConfig.addDataSourceProperty("url", "jdbc:mariadb://" + props.address() + ':' + props.port() + '/' + props.databaseName() + string);
+            hikariConfig.addDataSourceProperty("user", props.user());
+            hikariConfig.addDataSourceProperty("password", props.password());
         }
 
         @Override
         public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
-            Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(value, "");
+            Validate.Arg.notNull(statement, "");
+            Validate.Arg.notNull(value, "");
             if (statement instanceof SQLUpsert) {
                 return "REPLACE INTO " + value + " (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             }
@@ -136,15 +137,15 @@ public enum DatabaseType {
 
         @Override
         public @NotNull String processCommands(@NotNull String commands) {
-            Objects.requireNonNull(commands, "");
+            Validate.Arg.notNull(commands, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
     },
-    MySQL(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "org.kingdoms.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
+    MySQL(3306, new Dependency[]{Dependency.MYSQL_DRIVER}, "net.aurika.ecliptor.libs.mysql.cj.jdbc.MysqlDataSource", '`') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
-            Objects.requireNonNull(hikariConfig, "");
-            Objects.requireNonNull(props, "");
+            Validate.Arg.notNull(hikariConfig, "");
+            Validate.Arg.notNull(props, "");
             props.add("cachePrepStmts", Boolean.TRUE);
             props.add("prepStmtCacheSize", 250);
             props.add("prepStmtCacheSqlLimit", 2048);
@@ -164,14 +165,14 @@ public enum DatabaseType {
 
         @Override
         public @NotNull String processCommands(@NotNull String commands) {
-            Objects.requireNonNull(commands, "");
+            Validate.Arg.notNull(commands, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "UUID", "BINARY(16)", false), "LONG", "BIGINT", false), "STRICT", "", false);
         }
 
         @Override
         public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
-            Objects.requireNonNull(statement, "statement");
-            Objects.requireNonNull(value, "");
+            Validate.Arg.notNull(statement, "statement");
+            Validate.Arg.notNull(value, "");
             if (statement instanceof SQLUpsert) {
                 return "REPLACE INTO `" + value + "` (" + ((SQLUpsert) statement).getParameters() + ") VALUES(" + ((SQLUpsert) statement).getPreparedValues() + ')';
             }
@@ -187,11 +188,11 @@ public enum DatabaseType {
             throw new UnsupportedOperationException(statement.toString());
         }
     },
-    PostgreSQL(5432, new Dependency[]{Dependency.POSTGRESQL_DRIVER}, "org.kingdoms.libs.postgresql.ds.PGSimpleDataSource", '\"') {
+    PostgreSQL(5432, new Dependency[]{Dependency.POSTGRESQL_DRIVER}, "net.aurika.ecliptor.libs.postgresql.ds.PGSimpleDataSource", '\"') {
         @Override
         public void applyProperties(@NotNull HikariConfig hikariConfig, @NotNull DatabaseProperties props) {
-            Objects.requireNonNull(hikariConfig);
-            Objects.requireNonNull(props);
+            Validate.Arg.notNull(hikariConfig);
+            Validate.Arg.notNull(props);
             String[] array = new String[]{"verifyServerCertificate", "allowPublicKeyRetrieval", "useSSL", "useUnicode", "characterEncoding", "port"};
             props.ignore(array);
             props.useStandardDataSourcePropertyAppendar(hikariConfig);
@@ -199,16 +200,16 @@ public enum DatabaseType {
 
         @Override
         public @NotNull String processCommands(@NotNull String commands) {
-            Objects.requireNonNull(commands, "");
+            Validate.Arg.notNull(commands, "");
             return StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(StringsKt.replace(commands, "NVARCHAR", "VARCHAR", false), "LONG", "BIGINT", false), "DOUBLE", "DOUBLE PRECISION", false), "STRICT", "", false), '`', '\"', false);
         }
 
         @Override
         public @NotNull String createStatement(@NotNull SQLStatement statement, @NotNull String value) {
-            Objects.requireNonNull(statement, "");
-            Objects.requireNonNull(value, "");
+            Validate.Arg.notNull(statement, "");
+            Validate.Arg.notNull(value, "");
             if (statement instanceof SQLUpsert) {
-                String replace$default = StringsKt.replace(((SQLUpsert) statement).getParameters(), '`', this.getSystemIdentifierEscapeChar(), false);
+                String replace$default = StringsKt.replace(((SQLUpsert) statement).getParameters(), '`', this.systemIdentifierEscapeChar(), false);
                 StringBuilder append = new StringBuilder("INSERT INTO \"").append(value).append("\" (").append(replace$default).append(") VALUES(").append(((SQLUpsert) statement).getPreparedValues()).append(") ON CONFLICT ON CONSTRAINT \"").append(value).append("_pkey\" DO UPDATE SET (").append(replace$default).append(") = (");
                 List<String> iterable = StringsKt.split(replace$default, new String[]{","}, false, 0);
                 Collection<Object> collection = new ArrayList<>(10);
@@ -286,7 +287,11 @@ public enum DatabaseType {
     public static final @NotNull Pattern SQLITE_TEXT_AFFINITY = Pattern.compile("(N)?(VAR)?CHAR\\(\\d+\\)");
     public static final @NotNull Pattern SQLITE_BLOB_AFFINITY = Pattern.compile("BINARY\\(\\d+\\)");
 
-    DatabaseType(int defaultPort, @NotNull Dependency @NotNull [] dependencies, @NotNull String dataSourceClassName, char systemIdentifierEscapeChar) {
+    DatabaseType(int defaultPort,
+                 @NotNull Dependency @NotNull [] dependencies,
+                 @NotNull String dataSourceClassName,
+                 char systemIdentifierEscapeChar
+    ) {
         this.defaultPort = defaultPort;
         this.dependencies = dependencies;
         this.dataSourceClassName = dataSourceClassName;
@@ -297,15 +302,15 @@ public enum DatabaseType {
         return this.defaultPort;
     }
 
-    public @NotNull Dependency @NotNull [] getDependencies() {
-        return this.dependencies;
+    public @NotNull Dependency @NotNull [] dependencies() {
+        return this.dependencies.clone();
     }
 
-    public @NotNull String getDataSourceClassName() {
+    public @NotNull String dataSourceClassName() {
         return this.dataSourceClassName;
     }
 
-    public char getSystemIdentifierEscapeChar() {
+    public char systemIdentifierEscapeChar() {
         return this.systemIdentifierEscapeChar;
     }
 

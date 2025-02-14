@@ -5,7 +5,6 @@ import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.ecliptor.database.dataprovider.*;
 import net.aurika.util.function.FloatSupplier;
 import net.aurika.util.function.TriConsumer;
-import net.aurika.util.snakeyaml.nodes.MapNode;
 import net.aurika.util.snakeyaml.nodes.NodeUtils;
 import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpreter;
 import net.aurika.util.unsafe.fn.Fn;
@@ -24,51 +23,45 @@ import java.util.function.*;
 public class YamlMappingDataProvider implements DataProvider, SectionCreatableDataSetter, YamlDataProvider {
 
     private @Nullable String name;
-    private @NotNull MapNode obj;
+    private @NotNull MappingNode obj;
 
-    public YamlMappingDataProvider(@Nullable String name, @NotNull MapNode obj) {
+    public YamlMappingDataProvider(@Nullable String name, @NotNull MappingNode obj) {
         Validate.Arg.notNull(obj, "obj");
         this.name = name;
         this.obj = obj;
     }
 
-    @Nullable
-    public final String getName$core() {
+    public final @Nullable String getName$core() {
         return this.name;
     }
 
-    public final void setName$core(@Nullable String string) {
-        this.name = string;
+    public final void setName$core(@Nullable String name) {
+        this.name = name;
     }
 
     public final @NotNull MappingNode getObj$core() {
-        return this.obj.getNode();
+        return this.obj;
     }
 
-    public final void setObj$core(@NotNull MappingNode MappingNode) {
-        Validate.Arg.notNull(MappingNode, "mappingNode");
-        this.obj = new MapNode(MappingNode);
+    public final void setObj$core(@NotNull MappingNode obj) {
+        Validate.Arg.notNull(obj, "obj");
+        this.obj = obj;
     }
 
-    private @NotNull MapNode a() {
-        String setKey = this.name;
-        if (setKey == null) {
+    private @NotNull MappingNode __root() {
+        String _name = this.name;
+        if (_name == null) {
             return this.obj;
         }
-        Node node = this.obj.getNode(setKey);
-        if (!(node instanceof MappingNode)) {
-            node = NodeUtils.emptyMapping();
-            this.obj.putNode(setKey, node);
+        Node root = NodeUtils.getNode(this.obj, _name);
+        if (!(root instanceof MappingNode)) {
+            root = NodeUtils.emptyMapping();
+            NodeUtils.putNode(this.obj, _name, root);
         }
-        return new MapNode((MappingNode) node);
+        return (MappingNode) root;
     }
 
-    @Override
-    public @NotNull Node getNode() {
-        return this.obj.getNode();
-    }
-
-    private @NotNull String getKey() {
+    private @NotNull String __require_name() {
         String string = this.name;
         if (string == null) {
             throw new IllegalStateException("No key name set");
@@ -77,20 +70,25 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
+    public @NotNull MappingNode getNode() {
+        return this.obj;
+    }
+
+    @Override
     public @NotNull YamlMappingDataProvider get(@NotNull String key) {
         Validate.Arg.notNull(key, "key");
-        return new YamlMappingDataProvider(key, this.a());
+        return new YamlMappingDataProvider(key, this.__root());
     }
 
     @Override
     public @NotNull YamlMappingDataProvider asSection() {
-        return new YamlMappingDataProvider(null, this.a());
+        return new YamlMappingDataProvider(null, this.__root());
     }
 
     @Override
     public @Nullable String asString(@NotNull Supplier<String> def) {
         Validate.Arg.notNull(def, "def");
-        String s = NodeInterpreter.STRING.parse(this.obj.getNode(this.getKey()));
+        String s = NodeInterpreter.STRING.parse(NodeUtils.getNode(this.obj, __require_name()));
         return s == null ? def.get() : s;
     }
 
@@ -113,49 +111,48 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     @Override
     public int asInt(@NotNull IntSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Integer i = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.INT, null);
+        Integer i = NodeInterpreter.INT.parse(NodeUtils.getNode(obj, __require_name()));
         return i != null ? i : def.getAsInt();
     }
 
     @Override
     public long asLong(@NotNull LongSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Long l = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.LONG, null);
+        Long l = NodeInterpreter.LONG.parse(NodeUtils.getNode(obj, __require_name()));
         return l != null ? l : def.getAsLong();
     }
 
     @Override
     public float asFloat(@NotNull FloatSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Float f = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.FLOAT, null);
+        Float f = NodeInterpreter.FLOAT.parse(NodeUtils.getNode(obj, __require_name()));
         return f != null ? f : def.getAsFloat();
     }
 
     @Override
     public double asDouble(@NotNull DoubleSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Double d = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.DOUBLE, null);
+        Double d = NodeInterpreter.DOUBLE.parse(NodeUtils.getNode(obj, __require_name()));
         return d != null ? d : def.getAsDouble();
     }
 
     @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Boolean b = this.obj.getAndInterpret(this.getKey(), NodeInterpreter.BOOLEAN, null);
+        Boolean b = NodeInterpreter.BOOLEAN.parse(NodeUtils.getNode(obj, __require_name()));
         return b != null ? b : def.getAsBoolean();
     }
 
     @Override
     public @NotNull <E, C extends Collection<E>> C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> handler) {
         Validate.Arg.notNull(c, "c");
-        Validate.Arg.notNull(handler, "dataProcessor");
-        Node node = this.obj.getNode(this.getKey());
-        SequenceNode sequenceNode = node instanceof SequenceNode ? (SequenceNode) node : null;
-        if (sequenceNode == null) {
-            return c;
-        }
-        for (Node e : sequenceNode.getValue()) {
-            handler.accept(c, new YamlNodeDataProvider(e));
+        Validate.Arg.notNull(handler, "handler");
+        Node root = NodeUtils.getNode(obj, __require_name());
+        SequenceNode seqRoot = root instanceof SequenceNode ? (SequenceNode) root : null;
+        if (seqRoot != null) {
+            for (Node rootElement : seqRoot.getValue()) {
+                handler.accept(c, new YamlNodeDataProvider(rootElement));
+            }
         }
         return c;
     }
@@ -163,30 +160,29 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     @Override
     public <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull M m, @NotNull TriConsumer<M, DataGetter, SectionableDataGetter> handler) {
         Validate.Arg.notNull(m, "m");
-        Validate.Arg.notNull(handler, "triConsumer");
-        Node object2 = this.obj.getNode(this.getKey());
-        MappingNode mappingNode = object2 instanceof MappingNode ? (MappingNode) object2 : null;
-        if (mappingNode == null) {
-            return m;
-        }
-        for (NodeTuple nodePair : mappingNode.getValue()) {
-            ScalarNode keyNode = (ScalarNode) nodePair.getKeyNode();
-            YamlNodeDataProvider keyData = new YamlNodeDataProvider(keyNode);
-            Node valueNode = nodePair.getValueNode();
-            YamlNodeDataProvider valueData = new YamlNodeDataProvider(valueNode);
-            handler.accept(m, keyData, valueData);
+        Validate.Arg.notNull(handler, "handler");
+        Node root = NodeUtils.getNode(obj, __require_name());
+        MappingNode mappingRoot = root instanceof MappingNode ? (MappingNode) root : null;
+        if (mappingRoot != null) {
+            for (NodeTuple tuple : mappingRoot.getValue()) {
+                handler.accept(
+                        m,
+                        new YamlNodeDataProvider(tuple.getKeyNode()),
+                        new YamlNodeDataProvider(tuple.getValueNode())
+                );
+            }
         }
         return m;
     }
 
     private void setPlain(Tag tag, Serializable serializable) {
-        this.obj.putNode(this.getKey(), YamlNodeDataProvider.plainNode(tag, serializable));
+        NodeUtils.putNode(obj, __require_name(), YamlNodeDataProvider.plainNode(tag, serializable));
     }
 
     @Override
     public void setString(@Nullable String value) {
         if (value == null) return;
-        this.obj.putNode(this.getKey(), new ScalarNode(Tag.STR, value, ScalarStyle.DOUBLE_QUOTED));
+        NodeUtils.putNode(obj, __require_name(), new ScalarNode(Tag.STR, value, ScalarStyle.DOUBLE_QUOTED));
     }
 
     @Override
@@ -223,7 +219,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
     @Override
     public void setStruct(@Nullable StructuredDataObject value) {
         if (value != null) {
-            DataStructSchema<?> schema = value.DataStructSchema();
+            DataStructSchema<?> schema = value.dataStructSchema();
             setString(schema.objectToPlain(Fn.cast(value)));
         }
     }
@@ -237,7 +233,7 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
         for (E e : value) {
             handler.accept(createProvider$core(sequenceNode), e);
         }
-        this.obj.putNode(this.getKey(), sequenceNode);
+        NodeUtils.putNode(obj, __require_name(), sequenceNode);
     }
 
     @Override
@@ -249,34 +245,34 @@ public class YamlMappingDataProvider implements DataProvider, SectionCreatableDa
         for (Map.Entry<K, ? extends V> entry : value.entrySet()) {
             K k = entry.getKey();
             V v = entry.getValue();
-            handler.map(k, new StringMappedIdSetter(name -> new YamlMappingDataProvider(name, new MapNode(mappingNode))), v);
+            handler.map(k, new StringMappedIdSetter(name -> new YamlMappingDataProvider(name, new MappingNode(mappingNode))), v);
         }
-        this.obj.putNode(this.getKey(), mappingNode);
+        this.obj.putNode(__require_name(), mappingNode);
     }
 
     @Override
     public @NotNull YamlMappingDataProvider createSection() {
         MappingNode mappingNode = NodeUtils.emptyMapping();
-        this.obj.putNode(this.getKey(), mappingNode);
-        return new YamlMappingDataProvider(null, new MapNode(mappingNode));
+        NodeUtils.putNode(obj, this.__require_name(), mappingNode);
+        return new YamlMappingDataProvider(null, mappingNode);
     }
 
     @Override
     public @NotNull SectionableDataSetter createSection(@NotNull String key) {
         Validate.Arg.notNull(key, "key");
-        if (this.name != null) {
+        if (name != null) {
             throw new IllegalStateException("Previous name not handled: " + this.name + " -> " + key);
         }
         MappingNode mappingNode = NodeUtils.emptyMapping();
-        this.obj.putNode(key, mappingNode);
-        return new YamlMappingDataProvider(null, new MapNode(mappingNode));
+        NodeUtils.putNode(obj, key, mappingNode);
+        return new YamlMappingDataProvider(null,  mappingNode);
     }
 
     public static @NotNull DataProvider createProvider$core(@NotNull Node node) {
         Validate.Arg.notNull(node, "node");
         if (node instanceof MappingNode) {
             List<NodeTuple> value = new ArrayList<>(((MappingNode) node).getValue());
-            return new YamlMappingDataProvider(null, new MapNode(new MappingNode(Tag.MAP, value, FlowStyle.BLOCK)));
+            return new YamlMappingDataProvider(null, new MappingNode(Tag.MAP, value, FlowStyle.BLOCK));
         }
         return new YamlNodeDataProvider(node);
     }

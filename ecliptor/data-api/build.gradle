@@ -4,14 +4,17 @@ plugins {
 }
 
 dependencies {
-    api(project(":validate"))
+    api(project(":annotation"))
     api(project(":aurika:dependency"))
+    api(project(":property"))
+    api(project(":validate"))
     api(project(":util:function"))
     api(project(":util:math"))
     api(project(":util:string"))
 
-    api(libs.adventure.key)
-    api(libs.adventure.nbt)
+    api(libs.kyro)
+    api(libs.kyori.advntr.key)
+    api(libs.kyori.advntr.nbt)
     api(libs.gson)
     api(libs.h2)
     api(libs.hikari)

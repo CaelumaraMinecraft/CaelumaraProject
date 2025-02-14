@@ -4,9 +4,9 @@ import kotlin.text.MatchGroup;
 import kotlin.text.MatchGroupCollection;
 import kotlin.text.Regex;
 import net.aurika.ecliptor.database.DatabaseType;
+import net.aurika.util.string.Strings;
 import org.intellij.lang.annotations.Language;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.utils.string.Strings;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +43,7 @@ public final class SQLSchemaProcessor {
                             var3 = null;
                         }
 
-                        var5 = Strings.replace(var5, "{PREFIX}", AuspiceGlobalConfig.DATABASE_TABLE_PREFIX.getString() + '_');
+                        var5 = Strings.replace(var5, "{PREFIX}", ((String) AuspiceGlobalConfig.DATABASE_TABLE_PREFIX.getString() + '_'));
                         var5 = a(LOCATION, var5, "world WORLD", "x DOUBLE", "y DOUBLE", "z DOUBLE", "yaw FLOAT", "pitch FLOAT");
                         var5 = a(BLOCK_LOCATION, var5, "world WORLD", "x INT", "y INT", "z INT");
                         var5 = Strings.replace(Strings.replace(Strings.replace(Strings.replace(a(CHUNK_LOCATION, var5, "world WORLD", "x INT", "z INT"), "WORLD", "VARCHAR(64)"), "RANK_NODE", "VARCHAR(50)"), "RANK_NAME", "NVARCHAR(100)"), "COLOR", "VARCHAR(30)");
@@ -91,19 +91,19 @@ public final class SQLSchemaProcessor {
         return new Regex(Pattern.compile("(?<!\\w)" + var0 + "( +(?:NOT )?NULL)?"));
     }
 
-    private static String a(Regex var0, String var1, String... var2) {
-        return var0.replace(var1, (var1x) -> {
-            MatchGroupCollection var7 = var1x.getGroups();
+    private static @NotNull String a(@NotNull Regex var0, @NotNull String var1, String @NotNull ... var2) {
+        return var0.replace(var1, (result) -> {
+            MatchGroupCollection var7 = result.getGroups();
             String var2x = var7.get(1).getValue();
             MatchGroup var8 = var7.get(2);
             String var9 = var8 == null ? "" : var8.getValue();
-            StringJoiner var3 = new StringJoiner(", ");
+            StringJoiner joiner = new StringJoiner(", ");
 
             for (String var6 : var2) {
-                var3.add(var2x + '_' + var6 + var9);
+                joiner.add(var2x + '_' + var6 + var9);
             }
 
-            return var3.toString();
+            return joiner.toString();
         });
     }
 }

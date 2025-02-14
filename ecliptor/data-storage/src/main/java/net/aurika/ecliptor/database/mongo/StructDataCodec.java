@@ -86,7 +86,7 @@ public class StructDataCodec<T extends StructuredDataObject> implements Codec<T>
 
     public static <T extends StructuredDataObject> StructDataCodec<T> getCodec(@NotNull T struct) {
         Validate.Arg.notNull(struct, "struct");
-        FunctionsDataStructSchema<T> template = (FunctionsDataStructSchema<T>) struct.DataStructSchema();
+        FunctionsDataStructSchema<T> template = (FunctionsDataStructSchema<T>) struct.dataStructSchema();
         var encoder = REGISTRY.get(template);
         if (encoder == null) {
             encoder = new StructDataCodec<>(template);

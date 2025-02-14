@@ -16,7 +16,7 @@ dependencies {
     api(project(":aurika"))
 
     // Engines
-    api(libs.adventure.api)
+    api(libs.kyori.advntr.api)
 
     api(libs.yamlengine)
 

@@ -18,5 +18,5 @@ public interface StructuredDataObject {
      */
     @NotNull StructuredData structuredData();
 
-    @NotNull DataStructSchema<? extends StructuredDataObject> DataStructSchema();
+    @NotNull DataStructSchema<? extends StructuredDataObject> dataStructSchema();
 }

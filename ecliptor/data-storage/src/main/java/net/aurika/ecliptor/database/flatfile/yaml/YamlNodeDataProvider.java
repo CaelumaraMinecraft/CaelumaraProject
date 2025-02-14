@@ -5,7 +5,6 @@ import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.ecliptor.database.dataprovider.*;
 import net.aurika.util.function.FloatSupplier;
 import net.aurika.util.function.TriConsumer;
-import net.aurika.util.snakeyaml.nodes.MapNode;
 import net.aurika.util.snakeyaml.nodes.NodeUtils;
 import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpretContext;
 import net.aurika.util.snakeyaml.nodes.interpret.NodeInterpreter;
@@ -40,16 +39,16 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     }
 
     @Override
-    public @NotNull DataProvider createSection(@NotNull String s) {
+    public @NotNull DataProvider createSection(@NotNull String key) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public @NotNull SectionableDataSetter createSection() {
-        MappingNode mappingNode = NodeUtils.emptyMapping();
+        MappingNode element = NodeUtils.emptyMapping();
         if (this.node instanceof SequenceNode) {
-            ((SequenceNode) this.node).getValue().add(mappingNode);
-            return new YamlMappingDataProvider(null, new MapNode(mappingNode));
+            ((SequenceNode) this.node).getValue().add(element);
+            return new YamlMappingDataProvider(null, element);
         }
         throw new UnsupportedOperationException();
     }
@@ -59,14 +58,22 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
         return this.node;
     }
 
-    private <T> T interpret(NodeInterpreter<T> nodeInterpreter) {
-        return nodeInterpreter.parse(new NodeInterpretContext<>(this.node));
+    private <T> T __interpret(@NotNull NodeInterpreter<T> interpreter) {
+        return interpreter.parse(new NodeInterpretContext<>(node));
+    }
+
+    private void __add_element(@NotNull Node node) {
+        if (this.node instanceof SequenceNode) {
+            ((SequenceNode) this.node).getValue().add(node);
+            return;
+        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public @NotNull DataProvider get(@NotNull String key) {
         Validate.Arg.notNull(key, "key");
-        return new YamlMappingDataProvider(key, new MapNode((MappingNode) this.node));
+        return new YamlMappingDataProvider(key, (MappingNode) this.node);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     @Override
     public String asString(@NotNull Supplier<String> def) {
         Validate.Arg.notNull(def, "def");
-        String s = this.interpret(NodeInterpreter.STRING);
+        String s = this.__interpret(NodeInterpreter.STRING);
         return s == null ? def.get() : s;
     }
 
@@ -97,47 +104,35 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     @Override
     public int asInt(@NotNull IntSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Integer i = this.interpret(NodeInterpreter.INT);
-        if (i != null) {
-            return i;
-        }
-        return def.getAsInt();
+        Integer i = this.__interpret(NodeInterpreter.INT);
+        return i != null ? i : def.getAsInt();
     }
 
     @Override
-    public long asLong(@NotNull LongSupplier function0) {
-        Validate.Arg.notNull(function0, "def");
-        Long l = this.interpret(NodeInterpreter.LONG);
-        if (l != null) {
-            return l;
-        }
-        return function0.getAsLong();
+    public long asLong(@NotNull LongSupplier def) {
+        Validate.Arg.notNull(def, "def");
+        Long l = this.__interpret(NodeInterpreter.LONG);
+        return l != null ? l : def.getAsLong();
     }
 
     @Override
-    public float asFloat(@NotNull FloatSupplier function0) {
-        Validate.Arg.notNull(function0, "def");
-        Float f = this.interpret(NodeInterpreter.FLOAT);
-        if (f != null) {
-            return f;
-        }
-        return function0.getAsFloat();
+    public float asFloat(@NotNull FloatSupplier def) {
+        Validate.Arg.notNull(def, "def");
+        Float f = this.__interpret(NodeInterpreter.FLOAT);
+        return f != null ? f : def.getAsFloat();
     }
 
     @Override
     public double asDouble(@NotNull DoubleSupplier function0) {
         Validate.Arg.notNull(function0, "def");
-        Double d = this.interpret(NodeInterpreter.DOUBLE);
-        if (d != null) {
-            return d;
-        }
-        return function0.getAsDouble();
+        Double d = this.__interpret(NodeInterpreter.DOUBLE);
+        return d != null ? d : function0.getAsDouble();
     }
 
     @Override
     public boolean asBoolean(@NotNull BooleanSupplier def) {
         Validate.Arg.notNull(def, "def");
-        Boolean b = this.interpret(NodeInterpreter.BOOLEAN);
+        Boolean b = this.__interpret(NodeInterpreter.BOOLEAN);
         if (b != null) {
             return b;
         }
@@ -167,53 +162,35 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
         return m;
     }
 
-    private void a(Node node) {
-        if (this.node instanceof SequenceNode) {
-            ((SequenceNode) this.node).getValue().add(node);
-            return;
-        }
-        throw new UnsupportedOperationException();
+    @Override
+    public void setInt(int value) {
+        this.__add_element(YamlNodeDataProvider.plainNode(Tag.INT, value));
+    }
+
+    @Override
+    public void setLong(long value) {
+        __add_element(YamlNodeDataProvider.plainNode(Tag.INT, value));
+    }
+
+    @Override
+    public void setFloat(float value) {
+        __add_element(YamlNodeDataProvider.plainNode(Tag.FLOAT, value));
+    }
+
+    @Override
+    public void setDouble(double value) {
+        __add_element(YamlNodeDataProvider.plainNode(Tag.FLOAT, value));
+    }
+
+    @Override
+    public void setBoolean(boolean value) {
+        __add_element(YamlNodeDataProvider.plainNode(Tag.BOOL, value));
     }
 
     @Override
     public void setString(@NotNull String value) {
         Objects.requireNonNull(value, "value");
-        this.a(new ScalarNode(Tag.STR, value, ScalarStyle.DOUBLE_QUOTED));
-    }
-
-    @Override
-    public void setInt(int value) {
-        this.a(YamlNodeDataProvider.plainNode(Tag.INT, value));
-    }
-
-    @Override
-    public void setLong(long value) {
-        this.a(YamlNodeDataProvider.plainNode(Tag.INT, value));
-    }
-
-    @Override
-    public void setFloat(float value) {
-        this.a(YamlNodeDataProvider.plainNode(Tag.FLOAT, value));
-    }
-
-    @Override
-    public void setDouble(double value) {
-        this.a(YamlNodeDataProvider.plainNode(Tag.FLOAT, value));
-    }
-
-    @Override
-    public void setBoolean(boolean value) {
-        this.a(YamlNodeDataProvider.plainNode(Tag.BOOL, value));
-    }
-
-    @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> collection, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> map, @NotNull MappingSetterHandler<K, V> handler) {
-        throw new UnsupportedOperationException();
+        __add_element(new ScalarNode(Tag.STR, value, ScalarStyle.DOUBLE_QUOTED));
     }
 
     @Override
@@ -224,9 +201,19 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
     @Override
     public void setStruct(@NotNull StructuredDataObject value) {
         Validate.Arg.notNull(value, "value");
-        DataStructSchema<?> schema = value.DataStructSchema();
+        DataStructSchema<?> schema = value.dataStructSchema();
         Objects.requireNonNull(schema, "schema");
         setString(schema.objectToPlain(Fn.cast(value)));
+    }
+
+    @Override
+    public <V> void setCollection(@NotNull Collection<? extends V> collection, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> map, @NotNull MappingSetterHandler<K, V> handler) {
+        throw new UnsupportedOperationException();
     }
 
     public static @NotNull ScalarNode plainNode(@NotNull Tag tag, @NotNull Object obj) {

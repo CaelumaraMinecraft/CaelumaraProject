@@ -18,16 +18,19 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.*;
 
+/**
+ * 作为 Collection 或 只读的 Map键或值 使用
+ */
 public class JsonElementDataProvider implements DataProvider, SectionCreatableDataSetter, JsonDataProvider {
 
-    private final @NotNull JsonElement element;
+    private final @NotNull JsonElement element;  // The root
 
-    public JsonElementDataProvider(@NotNull JsonElement jsonElement) {
-        Validate.Arg.notNull(jsonElement, "");
-        this.element = jsonElement;
+    public JsonElementDataProvider(@NotNull JsonElement element) {
+        Validate.Arg.notNull(element, "element");
+        this.element = element;
     }
 
-    public JsonElement getElement$core() {
+    public final @NotNull JsonElement getElement$core() {
         return this.element;
     }
 
@@ -38,16 +41,17 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
 
     @Override
     public @NotNull SectionableDataSetter createSection() {
-        JsonObject jsonObject = new JsonObject();
-        if (!(this.element instanceof JsonArray)) {
+        if (this.element instanceof JsonArray) {
+            JsonObject arrElement = new JsonObject();
+            ((JsonArray) this.element).add(arrElement);
+            return new JsonObjectDataProvider(null, arrElement);
+        } else {
             throw new UnsupportedOperationException();
         }
-        ((JsonArray) this.element).add(jsonObject);
-        return new JsonObjectDataProvider(null, jsonObject);
     }
 
     @Override
-    public @NotNull JsonElement getElement() {
+    public @NotNull JsonElement jsonElement() {
         return this.element;
     }
 
@@ -60,36 +64,9 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     @Override
     public @NotNull DataProvider asSection() {
         if (!(this.element instanceof JsonObject)) {
-            String string = "Failed requirement.";
-            throw new IllegalArgumentException(string);
+            throw new IllegalArgumentException("Failed requirement, the element is not a JsonObject: " + element.getClass().getSimpleName());
         }
         return this;
-    }
-
-    @Override
-    public String asString(@NotNull Supplier<String> def) {
-        Validate.Arg.notNull(def, "");
-        if (this.element instanceof JsonNull) {
-            return null;
-        }
-        String string = this.element.getAsString();
-        if (string == null) {
-            string = def.get();
-        }
-        return string;
-    }
-
-    @Override
-    public @Nullable UUID asUUID() {
-        String s = this.asString();
-        return s == null ? null : FastUUID.fromString(s);
-    }
-
-    @Override
-    public <T extends StructuredDataObject> T asStruct(@NotNull DataStructSchema<T> template) {
-        Validate.Arg.notNull(template, "template");
-        String s = this.asString();
-        return s != null ? template.plainToObject(s) : null;
     }
 
     @Override
@@ -118,13 +95,36 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
+    public String asString(@NotNull Supplier<String> def) {
+        Validate.Arg.notNull(def, "def");
+        if (this.element instanceof JsonNull) {
+            return null;
+        }
+        String string = this.element.getAsString();
+        return string != null ? string : def.get();
+    }
+
+    @Override
+    public @Nullable UUID asUUID() {
+        String s = this.asString();
+        return s == null ? null : FastUUID.fromString(s);
+    }
+
+    @Override
+    public <T extends StructuredDataObject> T asStruct(@NotNull DataStructSchema<T> template) {
+        Validate.Arg.notNull(template, "template");
+        String s = this.asString();
+        return s != null ? template.plainToObject(s) : null;
+    }
+
+    @Override
     public <V, C extends Collection<V>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> handler) {
         Validate.Arg.notNull(c, "c");
         Validate.Arg.notNull(handler, "handler");
 
-        for (JsonElement element : (JsonArray) this.element) {
-            Objects.requireNonNull(element);
-            handler.accept(c, new JsonElementDataProvider(element));
+        for (JsonElement arrElement : this.element.getAsJsonArray()) {
+            Objects.requireNonNull(arrElement);
+            handler.accept(c, new JsonElementDataProvider(arrElement));
         }
 
         return c;
@@ -144,15 +144,6 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
         }
 
         return m;
-    }
-
-    @Override
-    public void setString(@Nullable String value) {
-        if (this.element instanceof JsonArray) {
-            ((JsonArray) this.element).add(value);
-            return;
-        }
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -201,12 +192,11 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     }
 
     @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
+    public void setString(@Nullable String value) {
+        if (this.element instanceof JsonArray) {
+            ((JsonArray) this.element).add(value);
+            return;
+        }
         throw new UnsupportedOperationException();
     }
 
@@ -218,9 +208,19 @@ public class JsonElementDataProvider implements DataProvider, SectionCreatableDa
     @Override
     public void setStruct(@NotNull StructuredDataObject value) {
         Validate.Arg.notNull(value, "value");
-        DataStructSchema<?> schema = value.DataStructSchema();
+        DataStructSchema<?> schema = value.dataStructSchema();
         Objects.requireNonNull(schema, "schema");
         setString(schema.objectToPlain(Fn.cast(value)));
+    }
+
+    @Override
+    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
+        throw new UnsupportedOperationException();
     }
 }
  

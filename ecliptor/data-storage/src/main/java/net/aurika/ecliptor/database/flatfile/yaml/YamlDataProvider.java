@@ -8,7 +8,7 @@ public interface YamlDataProvider extends ObjectDataProvider {
     @NotNull Node getNode();
 
     @Override
-    default @NotNull Object getRawDataObject() {
+    default @NotNull Object rawDataObject() {
         return this.getNode();
     }
 }

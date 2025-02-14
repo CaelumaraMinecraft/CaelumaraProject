@@ -2,14 +2,15 @@ package net.aurika.ecliptor.database.sql.statements.setters;
 
 import com.google.gson.JsonElement;
 import kotlin.jvm.internal.Intrinsics;
+import net.aurika.annotations.data.LateInit;
+import net.aurika.ecliptor.database.DatabaseType;
+import net.aurika.ecliptor.database.sql.base.SQLDatabase;
+import net.aurika.ecliptor.database.sql.statements.SQLUpsert;
 import net.aurika.util.gson.AurikaGson;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.postgresql.util.PGobject;
-import net.aurika.ecliptor.database.DatabaseType;
-import net.aurika.ecliptor.database.sql.base.SQLDatabase;
-import net.aurika.ecliptor.database.sql.statements.SQLUpsert;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -21,9 +22,9 @@ import java.util.function.Consumer;
 
 public class PreparedNamedSetterStatement implements SimplePreparedStatement {
 
-    private final @NotNull DatabaseType a;
+    private final @NotNull DatabaseType databaseType;
     private final @NotNull List<a> b;
-    public PreparedStatement statement;
+    public @LateInit PreparedStatement statement;
     private boolean c;
     private boolean d;
     private final @NotNull Map<String, Integer> e;
@@ -32,7 +33,7 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
     public PreparedNamedSetterStatement(@NotNull DatabaseType var1, @NotNull Map<String, Integer> var2) {
         Validate.Arg.notNull(var1, "");
         Validate.Arg.notNull(var2, "");
-        this.a = var1;
+        this.databaseType = var1;
         this.b = new ArrayList<>(30);
         this.e = new LinkedHashMap<>(var2);
         this.f = new HashSet<>();
@@ -43,7 +44,7 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
         if (var10000 != null) {
             return var10000;
         } else {
-            Intrinsics.throwUninitializedPropertyAccessException("");
+            Intrinsics.throwUninitializedPropertyAccessException("statement");
             return null;
         }
     }
@@ -113,7 +114,7 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
             Intrinsics.checkNotNullExpressionValue(var10003, "");
             String var10004 = var4.toString();
             Intrinsics.checkNotNullExpressionValue(var10004, "");
-            String var9 = this.a.createStatement(new SQLUpsert(var10003, var10004), var1);
+            String var9 = this.databaseType.createStatement(new SQLUpsert(var10003, var10004), var1);
 
             try {
                 PreparedStatement var10001 = var2.prepareStatement(var9);
@@ -156,7 +157,6 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
         } catch (Throwable t) {
             throw new RuntimeException(t);
         }
-
     }
 
     private void c() {
@@ -193,22 +193,22 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
         this.d = true;
     }
 
-    public void setString(@NotNull String key, @Nullable String var2) {
+    public void setString(@NotNull String key, @Nullable String value) {
         Validate.Arg.notNull(key, "");
         this.a(key, (i) -> {
             try {
-                PreparedNamedSetterStatement.this.getStatement().setString(i, var2);
+                PreparedNamedSetterStatement.this.getStatement().setString(i, value);
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);
             }
         });
     }
 
-    public void setInt(@NotNull String key, int var2) {
+    public void setInt(@NotNull String key, int value) {
         Validate.Arg.notNull(key, "");
         this.a(key, (i) -> {
             try {
-                PreparedNamedSetterStatement.this.getStatement().setInt(i, var2);
+                PreparedNamedSetterStatement.this.getStatement().setInt(i, value);
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);
             }
@@ -217,7 +217,7 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
 
     public void setJson(@NotNull String var1, @Nullable JsonElement element) {
         Validate.Arg.notNull(var1, "");
-        switch (this.a) {
+        switch (this.databaseType) {
             case H2:
                 this.a(var1, i -> {
                     PreparedStatement var10000 = PreparedNamedSetterStatement.this.getStatement();
@@ -270,59 +270,59 @@ public class PreparedNamedSetterStatement implements SimplePreparedStatement {
         }
     }
 
-    public void setFloat(@NotNull String key, float var2) {
+    public void setFloat(@NotNull String key, float value) {
         Validate.Arg.notNull(key, "");
         this.a(key, (i) -> {
             try {
-                PreparedNamedSetterStatement.this.getStatement().setFloat(i, var2);
+                PreparedNamedSetterStatement.this.getStatement().setFloat(i, value);
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);
             }
         });
     }
 
-    public void setLong(@NotNull String var1, long var2) {
-        Validate.Arg.notNull(var1, "");
-        this.a(var1, (i) -> {
+    public void setLong(@NotNull String key, long value) {
+        Validate.Arg.notNull(key, "");
+        this.a(key, (i) -> {
             try {
-                PreparedNamedSetterStatement.this.getStatement().setLong(i, var2);
+                PreparedNamedSetterStatement.this.getStatement().setLong(i, value);
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);
             }
         });
     }
 
-    public void setBoolean(@NotNull String var1, boolean var2) {
-        Validate.Arg.notNull(var1, "");
-        this.a(var1, (i) -> {
+    public void setBoolean(@NotNull String key, boolean value) {
+        Validate.Arg.notNull(key, "");
+        this.a(key, (i) -> {
             try {
-                PreparedNamedSetterStatement.this.getStatement().setBoolean(i, var2);
+                PreparedNamedSetterStatement.this.getStatement().setBoolean(i, value);
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);
             }
         });
     }
 
-    public void setDouble(@NotNull String var1, double var2) {
-        Validate.Arg.notNull(var1, "");
-        this.a(var1, (i) -> {
+    public void setDouble(@NotNull String key, double value) {
+        Validate.Arg.notNull(key, "");
+        this.a(key, (i) -> {
             try {
-                PreparedNamedSetterStatement.this.getStatement().setDouble(i, var2);
+                PreparedNamedSetterStatement.this.getStatement().setDouble(i, value);
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);
             }
         });
     }
 
-    public void setUUID(@NotNull String var1, @Nullable UUID var2) {
-        Validate.Arg.notNull(var1, "");
-        this.a(var1, i -> {
+    public void setUUID(@NotNull String key, @Nullable UUID value) {
+        Validate.Arg.notNull(key, "");
+        this.a(key, i -> {
             try {
 
-                if (PreparedNamedSetterStatement.this.a == DatabaseType.PostgreSQL) {
-                    PreparedNamedSetterStatement.this.getStatement().setObject(i, var2);
+                if (PreparedNamedSetterStatement.this.databaseType == DatabaseType.PostgreSQL) {
+                    PreparedNamedSetterStatement.this.getStatement().setObject(i, value);
                 } else {
-                    PreparedNamedSetterStatement.this.getStatement().setBytes(i, var2 == null ? null : SQLDatabase.asBytes(var2));
+                    PreparedNamedSetterStatement.this.getStatement().setBytes(i, value == null ? null : SQLDatabase.asBytes(value));
                 }
             } catch (SQLException ex) {  // TODO
                 throw new RuntimeException(ex);

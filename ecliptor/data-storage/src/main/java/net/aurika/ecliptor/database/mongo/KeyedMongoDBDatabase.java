@@ -33,7 +33,7 @@ public class KeyedMongoDBDatabase<K, T extends KeyedDataObject<K>> extends Mongo
     }
 
     protected @NotNull KeyedDataHandler<K, T> getDataHandler() {
-        return this.dataHandler;
+        return dataHandler;
     }
 
     private @NotNull MongoIdQueryContainer<K> a(@NotNull K dataKey) {

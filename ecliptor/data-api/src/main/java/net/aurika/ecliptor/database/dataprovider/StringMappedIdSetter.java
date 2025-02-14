@@ -1,7 +1,9 @@
 package net.aurika.ecliptor.database.dataprovider;
 
-import net.aurika.validate.Validate;
+import net.aurika.ecliptor.api.structured.StructuredDataObject;
+import net.aurika.util.unsafe.fn.Fn;
 import net.aurika.util.uuid.FastUUID;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -71,8 +73,8 @@ public class StringMappedIdSetter implements MappedIdSetter {  // SimpleData   C
     }
 
     @Override
-    public void setObject(@Nullable SetStructuredData value) {
-//        str = value != null ? value.asPlainDataString() : null;
+    public void setStruct(@Nullable StructuredDataObject value) {
+        str = value != null ? value.dataStructSchema().objectToPlain(Fn.cast(value)) : null;
     }
 
     @Override

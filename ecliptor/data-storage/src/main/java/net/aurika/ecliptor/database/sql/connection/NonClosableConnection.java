@@ -13,229 +13,283 @@ public class NonClosableConnection implements Connection {
 
     private final @NotNull Connection connection;
 
-    public NonClosableConnection(@NotNull Connection var1) {
-        Objects.requireNonNull(var1, "");
-        this.connection = var1;
+    public NonClosableConnection(@NotNull Connection connection) {
+        Objects.requireNonNull(connection, "connection");
+        this.connection = connection;
     }
 
-    public void abort(Executor var1) throws SQLException {
-        this.connection.abort(var1);
+    @Override
+    public void abort(Executor executor) throws SQLException {
+        this.connection.abort(executor);
     }
 
+    @Override
     public void clearWarnings() throws SQLException {
         this.connection.clearWarnings();
     }
 
+    @Override
     public void commit() throws SQLException {
         this.connection.commit();
     }
 
-    public Array createArrayOf(String var1, Object[] var2) throws SQLException {
-        return this.connection.createArrayOf(var1, var2);
+    @Override
+    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+        return this.connection.createArrayOf(typeName, elements);
     }
 
+    @Override
     public Blob createBlob() throws SQLException {
         return this.connection.createBlob();
     }
 
+    @Override
     public Clob createClob() throws SQLException {
         return this.connection.createClob();
     }
 
+    @Override
     public NClob createNClob() throws SQLException {
         return this.connection.createNClob();
     }
 
+    @Override
     public SQLXML createSQLXML() throws SQLException {
         return this.connection.createSQLXML();
     }
 
+    @Override
     public Statement createStatement() throws SQLException {
         return this.connection.createStatement();
     }
 
-    public Statement createStatement(int var1, int var2) throws SQLException {
-        return this.connection.createStatement(var1, var2);
+    @Override
+    public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+        return this.connection.createStatement(resultSetType, resultSetConcurrency);
     }
 
-    public Statement createStatement(int var1, int var2, int var3) throws SQLException {
-        return this.connection.createStatement(var1, var2, var3);
+    @Override
+    public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return this.connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
-    public Struct createStruct(String var1, Object[] var2) throws SQLException {
-        return this.connection.createStruct(var1, var2);
+    @Override
+    public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+        return this.connection.createStruct(typeName, attributes);
     }
 
+    @Override
     public boolean getAutoCommit() throws SQLException {
         return this.connection.getAutoCommit();
     }
 
+    @Override
     public String getCatalog() throws SQLException {
         return this.connection.getCatalog();
     }
 
+    @Override
     public Properties getClientInfo() throws SQLException {
         return this.connection.getClientInfo();
     }
 
-    public String getClientInfo(String var1) throws SQLException {
-        return this.connection.getClientInfo(var1);
+    @Override
+    public String getClientInfo(String name) throws SQLException {
+        return this.connection.getClientInfo(name);
     }
 
+    @Override
     public int getHoldability() throws SQLException {
         return this.connection.getHoldability();
     }
 
+    @Override
     public DatabaseMetaData getMetaData() throws SQLException {
         return this.connection.getMetaData();
     }
 
+    @Override
     public int getNetworkTimeout() throws SQLException {
         return this.connection.getNetworkTimeout();
     }
 
+    @Override
     public String getSchema() throws SQLException {
         return this.connection.getSchema();
     }
 
+    @Override
     public int getTransactionIsolation() throws SQLException {
         return this.connection.getTransactionIsolation();
     }
 
+    @Override
     public Map<String, Class<?>> getTypeMap() throws SQLException {
         return this.connection.getTypeMap();
     }
 
+    @Override
     public SQLWarning getWarnings() throws SQLException {
         return this.connection.getWarnings();
     }
 
+    @Override
     public boolean isClosed() throws SQLException {
         return this.connection.isClosed();
     }
 
+    @Override
     public boolean isReadOnly() throws SQLException {
         return this.connection.isReadOnly();
     }
 
-    public boolean isValid(int var1) throws SQLException {
-        return this.connection.isValid(var1);
+    @Override
+    public boolean isValid(int timeout) throws SQLException {
+        return this.connection.isValid(timeout);
     }
 
-    public String nativeSQL(String var1) throws SQLException {
-        return this.connection.nativeSQL(var1);
+    @Override
+    public String nativeSQL(String sql) throws SQLException {
+        return this.connection.nativeSQL(sql);
     }
 
-    public CallableStatement prepareCall(String var1) throws SQLException {
-        return this.connection.prepareCall(var1);
+    @Override
+    public CallableStatement prepareCall(String sql) throws SQLException {
+        return this.connection.prepareCall(sql);
     }
 
-    public CallableStatement prepareCall(String var1, int var2, int var3) throws SQLException {
-        return this.connection.prepareCall(var1, var2, var3);
+    @Override
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        return this.connection.prepareCall(sql, resultSetType, resultSetConcurrency);
     }
 
-    public CallableStatement prepareCall(String var1, int var2, int var3, int var4) throws SQLException {
-        return this.connection.prepareCall(var1, var2, var3, var4);
+    @Override
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return this.connection.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
-    public PreparedStatement prepareStatement(String var1) throws SQLException {
-        return this.connection.prepareStatement(var1);
+    @Override
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        return this.connection.prepareStatement(sql);
     }
 
-    public PreparedStatement prepareStatement(String var1, String[] var2) throws SQLException {
-        return this.connection.prepareStatement(var1, var2);
+    @Override
+    public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
+        return this.connection.prepareStatement(sql, columnNames);
     }
 
-    public PreparedStatement prepareStatement(String var1, int var2) throws SQLException {
-        return this.connection.prepareStatement(var1, var2);
+    @Override
+    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
+        return this.connection.prepareStatement(sql, autoGeneratedKeys);
     }
 
-    public PreparedStatement prepareStatement(String var1, int var2, int var3) throws SQLException {
-        return this.connection.prepareStatement(var1, var2, var3);
+    @Override
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        return this.connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
     }
 
-    public PreparedStatement prepareStatement(String var1, int var2, int var3, int var4) throws SQLException {
-        return this.connection.prepareStatement(var1, var2, var3, var4);
+    @Override
+    public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return this.connection.prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
-    public PreparedStatement prepareStatement(String var1, int[] var2) throws SQLException {
-        return this.connection.prepareStatement(var1, var2);
+    @Override
+    public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+        return this.connection.prepareStatement(sql, columnIndexes);
     }
 
-    public void releaseSavepoint(Savepoint var1) throws SQLException {
-        this.connection.releaseSavepoint(var1);
+    @Override
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+        this.connection.releaseSavepoint(savepoint);
     }
 
+    @Override
     public void rollback() throws SQLException {
         this.connection.rollback();
     }
 
-    public void rollback(Savepoint var1) throws SQLException {
-        this.connection.rollback(var1);
+    @Override
+    public void rollback(Savepoint savepoint) throws SQLException {
+        this.connection.rollback(savepoint);
     }
 
-    public void setAutoCommit(boolean var1) throws SQLException {
-        this.connection.setAutoCommit(var1);
+    @Override
+    public void setAutoCommit(boolean b) throws SQLException {
+        this.connection.setAutoCommit(b);
     }
 
-    public void setCatalog(String var1) throws SQLException {
-        this.connection.setCatalog(var1);
+    @Override
+    public void setCatalog(String sql) throws SQLException {
+        this.connection.setCatalog(sql);
     }
 
-    public void setClientInfo(Properties var1) throws SQLClientInfoException {
-        this.connection.setClientInfo(var1);
+    @Override
+    public void setClientInfo(Properties properties) throws SQLClientInfoException {
+        this.connection.setClientInfo(properties);
     }
 
-    public void setClientInfo(String var1, String var2) throws SQLClientInfoException {
-        this.connection.setClientInfo(var1, var2);
+    @Override
+    public void setClientInfo(String name, String value) throws SQLClientInfoException {
+        this.connection.setClientInfo(name, value);
     }
 
-    public void setHoldability(int var1) throws SQLException {
-        this.connection.setHoldability(var1);
+    @Override
+    public void setHoldability(int i) throws SQLException {
+        this.connection.setHoldability(i);
     }
 
-    public void setNetworkTimeout(Executor var1, int var2) throws SQLException {
-        this.connection.setNetworkTimeout(var1, var2);
+    @Override
+    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+        this.connection.setNetworkTimeout(executor, milliseconds);
     }
 
-    public void setReadOnly(boolean var1) throws SQLException {
-        this.connection.setReadOnly(var1);
+    @Override
+    public void setReadOnly(boolean b) throws SQLException {
+        this.connection.setReadOnly(b);
     }
 
+    @Override
     public Savepoint setSavepoint() throws SQLException {
         return this.connection.setSavepoint();
     }
 
-    public Savepoint setSavepoint(String var1) throws SQLException {
-        return this.connection.setSavepoint(var1);
+    @Override
+    public Savepoint setSavepoint(String name) throws SQLException {
+        return this.connection.setSavepoint(name);
     }
 
-    public void setSchema(String var1) throws SQLException {
-        this.connection.setSchema(var1);
+    @Override
+    public void setSchema(String s) throws SQLException {
+        this.connection.setSchema(s);
     }
 
-    public void setTransactionIsolation(int var1) throws SQLException {
-        this.connection.setTransactionIsolation(var1);
+    @Override
+    public void setTransactionIsolation(int level) throws SQLException {
+        this.connection.setTransactionIsolation(level);
     }
 
-    public void setTypeMap(Map<String, Class<?>> var1) throws SQLException {
-        this.connection.setTypeMap(var1);
+    @Override
+    public void setTypeMap(Map<String, Class<?>> stringClassMap) throws SQLException {
+        this.connection.setTypeMap(stringClassMap);
     }
 
     public void shutdown() throws SQLException {
         this.connection.close();
     }
 
+    @Override
     @Pure
     public void close() throws SQLException {
     }
 
+    @Override
     @Pure
     public boolean isWrapperFor(@NotNull Class<?> var1) throws SQLException {
         Objects.requireNonNull(var1);
         return var1.isInstance(this.connection) || this.connection.isWrapperFor(var1);
     }
 
+    @Override
     public <T> T unwrap(@NotNull Class<T> clazz) throws SQLException {
         Objects.requireNonNull(clazz);
         return clazz.isInstance(this.connection) ? (T) this.connection : this.connection.unwrap(clazz);

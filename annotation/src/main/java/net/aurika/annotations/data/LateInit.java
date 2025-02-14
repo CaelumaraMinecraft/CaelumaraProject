@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 标志被注解的字段为延迟初始化.
  */
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.CLASS)
 @Target(ElementType.FIELD)
 public @interface LateInit {
     /**

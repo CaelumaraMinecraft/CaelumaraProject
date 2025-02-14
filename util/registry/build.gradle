@@ -6,7 +6,7 @@ plugins {
 dependencies {
     api(project(":validate"))
 
-    api(libs.adventure.key)
+    api(libs.kyori.advntr.key)
 
     compileOnly(libs.annotations.jetbrains)
 }

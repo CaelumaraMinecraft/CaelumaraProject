@@ -1,15 +1,17 @@
 package net.aurika.dependency.classpath;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 
 public final class IsolatedClassLoader extends URLClassLoader {
-    public IsolatedClassLoader(URL[] urls) {
+    public IsolatedClassLoader(@NotNull URL @NotNull [] urls) {
         super(urls, ClassLoader.getSystemClassLoader().getParent());
     }
 
-    public String toString() {
+    public @NotNull String toString() {
         return "IsolatedClassLoader[" + Arrays.toString(this.getURLs()) + ']';
     }
 

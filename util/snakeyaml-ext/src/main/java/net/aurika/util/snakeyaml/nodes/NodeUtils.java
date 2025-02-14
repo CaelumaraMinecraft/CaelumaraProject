@@ -1,9 +1,10 @@
 package net.aurika.util.snakeyaml.nodes;
 
 import net.aurika.annotations.bookmark.Bookmark;
-import net.aurika.config.annotations.ImplicitOperateCached;
-import net.aurika.config.yaml.snakeyaml.common.NodeReplacer;
-import net.aurika.util.Checker;
+import net.aurika.util.function.TriConsumer;
+import net.aurika.util.generics.Generics;
+import net.aurika.util.unsafe.fn.Fn;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,9 +17,6 @@ import org.snakeyaml.engine.v2.constructor.StandardConstructor;
 import org.snakeyaml.engine.v2.nodes.*;
 import org.snakeyaml.engine.v2.representer.BaseRepresenter;
 import org.snakeyaml.engine.v2.representer.StandardRepresenter;
-import top.auspice.utils.Generics;
-import top.auspice.utils.function.TriConsumer;
-import top.auspice.utils.unsafe.Fn;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -90,7 +88,8 @@ public final class NodeUtils {
 
     public static boolean isEmptyNode(Node node) {
         if (node == null) return true;
-        if (node instanceof ScalarNode && (node.getTag().equals(Tag.NULL) || ((ScalarNode) node).getValue().isEmpty())) return true;
+        if (node instanceof ScalarNode && (node.getTag().equals(Tag.NULL) || ((ScalarNode) node).getValue().isEmpty()))
+            return true;
         if (node instanceof CollectionNode<?> && ((CollectionNode<?>) node).getValue().isEmpty()) return true;
         return false;
     }
@@ -187,13 +186,13 @@ public final class NodeUtils {
     }
 
     public static boolean hasNode(@NotNull MappingNode mappingNode, @NotNull String key) {
-        Checker.Arg.notNull(mappingNode, "mappingNode");
+        Validate.Arg.notNull(mappingNode, "mappingNode");
         return hasNode(mappingNode.getValue(), key);
     }
 
     public static boolean hasNode(@NotNull List<NodeTuple> tupleList, @NotNull String key) {
-        Checker.Arg.notNull(tupleList, "tupleList");
-        Checker.Arg.notNull(key, "key");
+        Validate.Arg.notNull(tupleList, "tupleList");
+        Validate.Arg.notNull(key, "key");
         for (NodeTuple tuple : tupleList) {
             Node keyNode = tuple.getKeyNode();
             if (equalsScalarValue(keyNode, key)) {
@@ -207,14 +206,14 @@ public final class NodeUtils {
      * @return 之前存在的键相同的节点
      */
     public static @Nullable Node putNode(@NotNull MappingNode mappingNode, @NotNull String key, @NotNull Node value) {
-        Checker.Arg.notNull(mappingNode, "mappingNode");
+        Validate.Arg.notNull(mappingNode, "mappingNode");
         return putNode(mappingNode.getValue(), key, value);
     }
 
     public static @Nullable Node putNode(@NotNull List<NodeTuple> tupleList, @NotNull String key, @NotNull Node value) {
-        Checker.Arg.notNull(tupleList, "tupleList");
-        Checker.Arg.notNull(key, "key");
-        Checker.Arg.notNull(value, "value");
+        Validate.Arg.notNull(tupleList, "tupleList");
+        Validate.Arg.notNull(key, "key");
+        Validate.Arg.notNull(value, "value");
         Node keyNode = null;
         for (NodeTuple tuple : tupleList) {  // Search for existent node
             keyNode = tuple.getKeyNode();
@@ -235,7 +234,7 @@ public final class NodeUtils {
     }
 
     public static @Nullable Node getNode(@NotNull List<NodeTuple> tupleList, String key) {
-        Checker.Arg.notNull(tupleList, "tupleList");
+        Validate.Arg.notNull(tupleList, "tupleList");
         for (NodeTuple tuple : tupleList) {
             Node keyNode = tuple.getKeyNode();
             if (equalsScalarValue(keyNode, key)) {
@@ -246,12 +245,12 @@ public final class NodeUtils {
     }
 
     public static @Nullable NodeTuple getTuple(@NotNull MappingNode mappingNode, String key) {
-        Checker.Arg.notNull(mappingNode, "mappingNode");
+        Validate.Arg.notNull(mappingNode, "mappingNode");
         return getTuple(mappingNode.getValue(), key);
     }
 
     public static @Nullable NodeTuple getTuple(@NotNull List<NodeTuple> tupleList, String key) {
-        Checker.Arg.notNull(tupleList, "tupleList");
+        Validate.Arg.notNull(tupleList, "tupleList");
         for (NodeTuple tuple : tupleList) {
             Node keyNode = tuple.getKeyNode();
             keyNode = unpackAnchor(keyNode);
@@ -263,12 +262,12 @@ public final class NodeUtils {
     }
 
     public static @Nullable Node removeNode(@NotNull MappingNode mappingNode, String key) {
-        Checker.Arg.notNull(mappingNode, "mappingNode");
+        Validate.Arg.notNull(mappingNode, "mappingNode");
         return removeNode(mappingNode.getValue(), key);
     }
 
     public static @Nullable Node removeNode(@NotNull List<NodeTuple> tupleList, String key) {
-        Checker.Arg.notNull(tupleList, "tupleList");
+        Validate.Arg.notNull(tupleList, "tupleList");
         AtomicReference<Node> removed = new AtomicReference<>();
         consumeWhenFindTuple(tupleList, key, ((tuple, index) -> {
             tupleList.remove(index);
@@ -283,8 +282,8 @@ public final class NodeUtils {
      * @param tupleAndIndexConsumer 处理器, 将会接收寻找到的 {@link NodeTuple} 和其对应的在 tupleList 中的位置
      */
     public static void consumeWhenFindTuple(@NotNull List<NodeTuple> tupleList, String key, @NotNull ObjIntConsumer<NodeTuple> tupleAndIndexConsumer) {
-        Checker.Arg.notNull(tupleList, "tupleList");
-        Checker.Arg.notNull(tupleAndIndexConsumer, "tupleAndIndexConsumer");
+        Validate.Arg.notNull(tupleList, "tupleList");
+        Validate.Arg.notNull(tupleAndIndexConsumer, "tupleAndIndexConsumer");
         for (int i = 0, tupleListSize = tupleList.size(); i < tupleListSize; i++) {
             NodeTuple tuple = tupleList.get(i);
             Node keyNode = tuple.getKeyNode();
@@ -384,8 +383,8 @@ public final class NodeUtils {
     }
 
     public static <K, V, M extends Map<K, V>> @NotNull M asMap(@NotNull MappingNode mappingNode, @NotNull M map, TriConsumer<M, Node, Node> consumeKeyValueNode) {
-        Checker.Arg.notNull(mappingNode, "mappingNode");
-        Checker.Arg.notNull(map, "map");
+        Validate.Arg.notNull(mappingNode, "mappingNode");
+        Validate.Arg.notNull(map, "map");
         for (NodeTuple tuple : mappingNode.getValue()) {
             if (consumeKeyValueNode != null) consumeKeyValueNode.accept(map, tuple.getKeyNode(), tuple.getValueNode());
         }
@@ -401,7 +400,7 @@ public final class NodeUtils {
     }
 
     static @NotNull ScalarNode key(@NotNull String key) {
-        Checker.Arg.notNull(key, "key");
+        Validate.Arg.notNull(key, "key");
         if (key.contains(" ") || key.contains(":")) {
             return new ScalarNode(Tag.STR, key, ScalarStyle.SINGLE_QUOTED);
         }

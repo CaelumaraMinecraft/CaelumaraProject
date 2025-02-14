@@ -295,10 +295,10 @@ public class MongoDataProvider implements DataProvider, SectionCreatableDataSett
     @Override
     @NotNull
     public DataProvider createSection(@NotNull String key) {
-        Objects.requireNonNull(key, "");
-        Document var2 = new Document();
-        this.d().append(key, var2);
-        return new MongoDataProvider(null, var2);
+        Objects.requireNonNull(key, "key");
+        Document sub = new Document();
+        this.d().append(key, sub);
+        return new MongoDataProvider(null, sub);
     }
 
     @Override

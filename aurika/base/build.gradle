@@ -8,7 +8,11 @@ dependencies {
     api(project(":util"))
 
     api(libs.caffeine)
-    api(libs.adventure.api)
+    api(libs.kyori.advntr.api)
+
+    compileOnly(libs.kyori.indra.common)
+    compileOnly(libs.kyori.lunar)
+    compileOnly(libs.kyori.mammoth)
 
     compileOnly(libs.annotations.jetbrains)
     compileOnly(libs.annotations.checker)

@@ -1,15 +1,15 @@
 package net.aurika.ecliptor.database.flatfile.json;
 
 import com.google.gson.JsonElement;
-import org.jetbrains.annotations.NotNull;
 import net.aurika.ecliptor.database.flatfile.ObjectDataProvider;
+import org.jetbrains.annotations.NotNull;
 
 public interface JsonDataProvider extends ObjectDataProvider {
-    @NotNull JsonElement getElement();
+    @NotNull JsonElement jsonElement();
 
     @Override
-    default @NotNull Object getRawDataObject() {
-        return this.getElement();
+    default @NotNull Object rawDataObject() {
+        return this.jsonElement();
     }
 }
  

@@ -9,13 +9,13 @@ dependencies {
     api(project(":Auspice:proxy:api"))
 
     compileOnly(libs.server.bungee)
-    compileOnly(libs.adventure.platform.bungee) {
+    compileOnly(libs.kyori.advntr.platform.bungee) {
         exclude(module: "adventure-bom")
         exclude(module: "adventure-api")
         exclude(module: "adventure-nbt")
     }
 
-    compileOnly(libs.adventure.text.bungee)
+    compileOnly(libs.kyori.advntr.text.bungee)
 
 //    compileOnly("com.imaginarycode.minecraft:RedisBungee:0.4")
     compileOnly(libs.annotations.jetbrains)

@@ -1,0 +1,10 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+version = "0.0.1-pre"
+
+dependencies {
+    compileOnly(libs.annotations.jetbrains)
+}

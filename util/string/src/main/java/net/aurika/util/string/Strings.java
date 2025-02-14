@@ -1097,11 +1097,11 @@ public class Strings {
         return replace(var0, var1, var2, 1);
     }
 
-    public static String replace(String string, String oldPart, String newPart) {
+    public static @NotNull String replace(@NotNull String string, @NotNull String oldPart, @Nullable String newPart) {
         return replace(string, oldPart, newPart, -1);
     }
 
-    public static String replace(String string, String oldPart, String newPart, int limit) {
+    public static @NotNull String replace(@NotNull String string, @NotNull String oldPart, @Nullable String newPart, int limit) {
         if (!string.isEmpty() && !oldPart.isEmpty() && newPart != null && limit != 0) {
             int var4 = 0;
             int var5 = string.indexOf(oldPart);

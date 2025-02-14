@@ -4,9 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.ecliptor.database.DatabaseType;
+import net.aurika.util.reflection.Reflect;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.reflection.Reflect;
 
 public abstract class SQLDataProvider {
 
@@ -15,22 +15,26 @@ public abstract class SQLDataProvider {
 
     private final @NotNull DatabaseType databaseType;
     private final @NotNull String table;
-    private final @Nullable String c;
-    private final boolean d;
+    private final @Nullable String name;
+    private final boolean isInsideSingularEntity;
     private final boolean nameIsSection;
 
-    public SQLDataProvider(@NotNull DatabaseType var1, @NotNull String var2, @Nullable String var3, boolean var4, boolean var5) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
-        this.databaseType = var1;
-        this.table = var2;
-        this.c = var3;
-        this.d = var4;
-        this.nameIsSection = var5;
+    public SQLDataProvider(@NotNull DatabaseType databaseType,
+                           @NotNull String table,
+                           @Nullable String name,
+                           boolean isInsideSingularEntity,
+                           boolean nameIsSection
+    ) {
+        Intrinsics.checkNotNullParameter(databaseType, "databaseType");
+        Intrinsics.checkNotNullParameter(table, "");
+        this.databaseType = databaseType;
+        this.table = table;
+        this.name = name;
+        this.isInsideSingularEntity = isInsideSingularEntity;
+        this.nameIsSection = nameIsSection;
     }
 
-    @NotNull
-    public final DatabaseType getDatabaseType$core() {
+    public final @NotNull DatabaseType getDatabaseType$core() {
         return this.databaseType;
     }
 
@@ -39,20 +43,19 @@ public abstract class SQLDataProvider {
     }
 
     public final @Nullable String getName$core() {
-        return this.c;
+        return this.name;
     }
 
     public final boolean isInsideSingularEntity$core() {
-        return this.d;
+        return this.isInsideSingularEntity;
     }
 
     public final boolean getNameIsSection$core() {
         return this.nameIsSection;
     }
 
-    @NotNull
-    public final String getNamed$core() {
-        String var10000 = this.c;
+    public final @NotNull String getNamed$core() {
+        String var10000 = this.name;
         if (var10000 == null) {
             throw new IllegalStateException("No name set: " + Reflect.toString(this));
         } else {
@@ -60,9 +63,8 @@ public abstract class SQLDataProvider {
         }
     }
 
-    @NotNull
-    public final String nameSepOrEmpty$core() {
-        String var10000 = this.c;
+    public final @NotNull String nameSepOrEmpty$core() {
+        String var10000 = this.name;
         if (var10000 != null) {
             String var1 = var10000;
             var10000 = var1 + '_';

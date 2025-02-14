@@ -10,7 +10,7 @@ dependencies {
 
 //    implementation(api(project(":base")))
 
-    api(libs.adventure.event)
+    api(libs.kyori.advntr.event)
 
     // Engines
     api(libs.yamlengine)

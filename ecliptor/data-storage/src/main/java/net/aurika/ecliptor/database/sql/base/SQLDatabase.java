@@ -1,8 +1,9 @@
 package net.aurika.ecliptor.database.sql.base;
 
 import kotlin.jvm.internal.InlineMarker;
-import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.StringsKt;
+import net.aurika.ecliptor.api.DataObject;
+import net.aurika.ecliptor.api.Keyed;
 import net.aurika.ecliptor.database.DatabaseType;
 import net.aurika.ecliptor.database.base.Database;
 import net.aurika.ecliptor.database.dataprovider.IdDataTypeHandler;
@@ -13,10 +14,8 @@ import net.aurika.ecliptor.database.sql.statements.setters.PreparedNamedSetterSt
 import net.aurika.ecliptor.database.sql.statements.setters.SimplePreparedStatement;
 import net.aurika.ecliptor.handler.DataHandler;
 import net.aurika.ecliptor.handler.KeyedDataHandler;
-import net.aurika.ecliptor.api.DataObject;
-import net.aurika.ecliptor.api.Keyed;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import top.auspice.utils.unsafe.AutoCloseableUtils;
 
 import java.nio.ByteBuffer;
@@ -51,10 +50,10 @@ public abstract class SQLDatabase<T extends DataObject> implements Database<T> {
         return this.connectionProvider;
     }
 
-    protected final @NotNull String handleQuery(@NotNull String var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+    protected final @NotNull String handleQuery(@NotNull String query) {
+        Validate.Arg.notNull(query, "query");
         char var2;
-        return (var2 = this.databaseType.getSystemIdentifierEscapeChar()) != '`' ? StringsKt.replace(var1, '`', var2, false) : var1;
+        return (var2 = this.databaseType.systemIdentifierEscapeChar()) != '`' ? StringsKt.replace(query, '`', var2, false) : query;
     }
 
     public @NotNull DatabaseType getDatabaseType() {
@@ -68,24 +67,19 @@ public abstract class SQLDatabase<T extends DataObject> implements Database<T> {
     protected abstract DataHandler<T> getDataHandler();
 
     public void save(@NotNull T data) {
-        Objects.requireNonNull(data, "obj");
+        Objects.requireNonNull(data, "data");
         DataHandler<T> dataHandler = this.getDataHandler();
         PreparedNamedSetterStatement var3 = new PreparedNamedSetterStatement(this.databaseType, dataHandler.getSqlProperties().getAssociateNamedData());
 
-        try {
-            Connection connection = this.getConnection();
-            Throwable var5 = null;
-            boolean var11 = false;
-
-            try {
-                var11 = true;
+        try (Connection connection = this.getConnection()) {
+            try (connection) {
                 SQLDataSetterProvider var7 = new SQLDataSetterProvider(this.databaseType, this.table, null, false, false, var3);
                 if (dataHandler instanceof KeyedDataHandler) {
                     IdDataTypeHandler var10000 = ((KeyedDataHandler) dataHandler).getIdHandler();
                     SimplePreparedStatement var10001 = var3;
-                    Object var10002 = ((Keyed) data).getKey();
-                    Intrinsics.checkNotNullExpressionValue(var10002, "");
-                    var10000.setSQL(var10001, var10002);
+                    Object key = ((Keyed) data).dataKey();
+                    Objects.requireNonNull(key, "dataKey");
+                    var10000.setSQL(var10001, key);
                 } else {
                     var7.setBoolean("id", true);
                 }
@@ -93,17 +87,7 @@ public abstract class SQLDatabase<T extends DataObject> implements Database<T> {
                 dataHandler.save(var7, data);
                 var3.buildStatement(this.table, connection);
                 var3.execute();
-                var11 = false;
-            } catch (Throwable var12) {
-                var5 = var12;
-                throw var12;
-            } finally {
-                if (var11) {
-                    AutoCloseableUtils.closeFinally(connection, var5);
-                }
             }
-
-            AutoCloseableUtils.closeFinally(connection, null);
         } catch (Throwable var14) {
             throw new RuntimeException("Error while saving data " + data + " (" + data.getClass() + ')', var14);
         }
@@ -114,8 +98,8 @@ public abstract class SQLDatabase<T extends DataObject> implements Database<T> {
     }
 
     protected final <A> A prepareStatement(@NotNull String var1, @NotNull Function<? super PreparedStatement, ? extends A> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
+        Validate.Arg.notNull(var1, "");
+        Validate.Arg.notNull(var2, "");
         var1 = this.handleQuery(var1);
 
         try {
@@ -171,25 +155,25 @@ public abstract class SQLDatabase<T extends DataObject> implements Database<T> {
     }
 
     protected final <A> A executeStatement(@NotNull String var1, @NotNull Function<? super ResultSet, ? extends A> var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
+        Validate.Arg.notNull(var1, "");
+        Validate.Arg.notNull(var2, "");
         var1 = this.handleQuery(var1);
 
-        try {
-            Connection connection = this.getConnection();
+        try (Connection connection = this.getConnection()) {
+
             Throwable var4 = null;
             boolean var16 = false;
 
             A var40;
-            try {
+            try (Statement var41 = connection.createStatement()) {
                 var16 = true;
-                Statement var41 = connection.createStatement();
+
                 Throwable var6 = null;
                 boolean var24 = false;
 
-                try {
+                try (ResultSet var42 = var41.executeQuery(var1)) {
                     var24 = true;
-                    ResultSet var42 = var41.executeQuery(var1);
+
                     Throwable var8 = null;
                     boolean var32 = false;
 
@@ -248,78 +232,38 @@ public abstract class SQLDatabase<T extends DataObject> implements Database<T> {
     }
 
     public final void executeStatement(@NotNull SQLStatement var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
+        Validate.Arg.notNull(var1, "");
         this.executeStatement(this.databaseType.createStatement(var1, this.table));
     }
 
-    public final void executeStatement(@NotNull String var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        var1 = this.handleQuery(var1);
+    public final void executeStatement(@NotNull String query) {
+        Validate.Arg.notNull(query, "query");
+        query = this.handleQuery(query);
 
-        try {
-            Connection connection = this.getConnection();
-            Throwable var3 = null;
-            boolean var12 = false;
-
-            try {
-                var12 = true;
-                Statement var24 = connection.createStatement();
-                Throwable var5 = null;
-                boolean var18 = false;
-
-                try {
-                    var18 = true;
-                    var24.execute(var1);
-                    var18 = false;
-                } catch (Throwable var19) {
-                    var5 = var19;
-                    throw var19;
-                } finally {
-                    if (var18) {
-                        AutoCloseableUtils.closeFinally(var24, var5);
-                    }
-                }
-
-                AutoCloseableUtils.closeFinally(var24, null);
-                var12 = false;
-            } catch (Throwable var21) {
-                var3 = var21;
-                throw var21;
-            } finally {
-                if (var12) {
-                    AutoCloseableUtils.closeFinally(connection, var3);
-                }
-            }
-
-            AutoCloseableUtils.closeFinally(connection, null);
+        try (Connection connection = this.getConnection()) {
+            connection.createStatement().execute(query);
         } catch (Throwable var23) {
-            throw new RuntimeException("Error while handling data with query: " + var1 + " with " + this.connectionProvider.getMetaString(), var23);
+            throw new RuntimeException("Error while handling data with query: " + query + " with " + this.connectionProvider.getMetaString(), var23);
         }
     }
 
     public void close() {
-        this.connectionProvider.close();
+        connectionProvider.close();
     }
 
-    public static byte @Nullable [] asBytes(@Nullable UUID uuid) {
-        if (uuid == null) {
-            return null;
-        } else {
-            ByteBuffer buf = ByteBuffer.wrap(new byte[16]);
-            buf.putLong(uuid.getMostSignificantBits());
-            buf.putLong(uuid.getLeastSignificantBits());
-            return buf.array();
-        }
+    public static byte @NotNull [] asBytes(@NotNull UUID uuid) {
+        Validate.Arg.notNull(uuid, "uuid");
+        ByteBuffer buf = ByteBuffer.wrap(new byte[16]);
+        buf.putLong(uuid.getMostSignificantBits());
+        buf.putLong(uuid.getLeastSignificantBits());
+        return buf.array();
     }
 
-    public static @Nullable UUID asUUID(byte @Nullable [] bytes) {
-        if (bytes == null) {
-            return null;
-        } else {
-            ByteBuffer buf = ByteBuffer.wrap(bytes);
-            long var3 = buf.getLong();
-            long var5 = buf.getLong();
-            return new UUID(var3, var5);
-        }
+    public static @NotNull UUID asUUID(byte @NotNull [] bytes) {
+        Validate.Arg.notNull(bytes, "bytes");
+        ByteBuffer buf = ByteBuffer.wrap(bytes);
+        long mostSigBits = buf.getLong();
+        long leastSigBits = buf.getLong();
+        return new UUID(mostSigBits, leastSigBits);
     }
 }

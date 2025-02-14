@@ -8,6 +8,7 @@ import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.Regex;
 import net.aurika.ecliptor.database.DatabaseType;
 import net.aurika.ecliptor.database.sql.schema.SQLSchemaProcessor;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import top.auspice.main.Auspice;
@@ -27,23 +28,20 @@ import java.util.List;
 import java.util.ListIterator;
 
 public abstract class SQLConnectionProvider implements Closeable {
-    @NotNull
-    private final DatabaseType a;
-    @NotNull
-    public static final String TABLE_PREFIX;
 
-    public SQLConnectionProvider(@NotNull DatabaseType var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        this.a = var1;
+    private final @NotNull DatabaseType databaseType;
+    public static final @NotNull String TABLE_PREFIX;
+
+    public SQLConnectionProvider(@NotNull DatabaseType databaseType) {
+        Validate.Arg.notNull(databaseType, "databaseType");
+        this.databaseType = databaseType;
     }
 
-    @NotNull
-    public final DatabaseType getDatabaseType() {
-        return this.a;
+    public final @NotNull DatabaseType getDatabaseType() {
+        return this.databaseType;
     }
 
-    @NotNull
-    public abstract Connection getConnection();
+    public abstract @NotNull Connection getConnection();
 
     public abstract void connect();
 
@@ -52,34 +50,19 @@ public abstract class SQLConnectionProvider implements Closeable {
     public final void runSchema() {
         this.printMeta();
         InputStream var1 = Auspice.get().getResource("schema.sql");  // TODO
-        SQLSchemaProcessor.runSchema(this.a, var1, SQLConnectionProvider::a);
+        SQLSchemaProcessor.runSchema(this.databaseType, var1, SQLConnectionProvider::a);
     }
 
     public final @NotNull String getMetaString() {
         try {
-            Connection var1 = this.getConnection();
-            Throwable var2 = null;
-            boolean var7 = false;
+            DatabaseMetaData var11 = this.getConnection().getMetaData();
 
-            String var12;
-            try {
-                var7 = true;
-                DatabaseMetaData var11 = var1.getMetaData();
-                var12 = "Running " + this.a.name() + " SQL Database:\n   | Driver: " + var11.getDriverName() + " (" + var11.getCatalogTerm() + ") / " + var11.getDriverVersion() + "\n   | Product: " + var11.getDatabaseProductName() + " / " + var11.getDatabaseProductVersion() + "\n   | JDBC: " + var11.getJDBCMajorVersion() + '.' + var11.getJDBCMinorVersion();
-                var7 = false;
-            } catch (Throwable var8) {
-                var2 = var8;
-                throw var8;
-            } finally {
-                if (var7) {
-                    AutoCloseableUtils.closeFinally(var1, var2);
-                }
-            }
-
-            AutoCloseableUtils.closeFinally(var1, (Throwable) null);
-            return var12;
-        } catch (SQLException var10) {
-            throw new RuntimeException("Failed to retrieve meta information for SQL: " + this.a, var10);
+            return "Running " + this.databaseType.name() + " SQL Database:" +
+                    "\n   | Driver: " + var11.getDriverName() + " (" + var11.getCatalogTerm() + ") / " + var11.getDriverVersion() +
+                    "\n   | Product: " + var11.getDatabaseProductName() + " / " + var11.getDatabaseProductVersion() +
+                    "\n   | JDBC: " + var11.getJDBCMajorVersion() + '.' + var11.getJDBCMinorVersion();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Failed to retrieve meta information for SQL: " + this.databaseType, ex);
         }
     }
 
@@ -118,31 +101,31 @@ public abstract class SQLConnectionProvider implements Closeable {
         Arrays.stream(((Collection) var10000).toArray(new String[0])).forEach(SQLConnectionProvider::a);
     }
 
-    public final void testTemporaryLibCreation$core(@NotNull DatabaseType var1) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        DatabaseType[] var2;
-        (var2 = new DatabaseType[2])[0] = DatabaseType.SQLite;
+    public final void testTemporaryLibCreation$core(@NotNull DatabaseType databaseType) {
+        Validate.Arg.notNull(databaseType, "databaseType");
+        DatabaseType[] var2 = new DatabaseType[2];
+        var2[0] = DatabaseType.SQLite;
         var2[1] = DatabaseType.H2;
-        File var3;
-        if (ArraysKt.contains(var2, var1) && (!(var3 = new File(System.getProperty("java.io.tmpdir"))).exists() || !var3.isDirectory() || !var3.canRead() || !var3.canWrite())) {
+        File var3 = new File(System.getProperty("java.io.tmpdir"));
+        if (ArraysKt.contains(var2, databaseType) && (!var3.exists() || !var3.isDirectory() || !var3.canRead() || !var3.canWrite())) {
             AuspiceLogger.error("A problem has occurred for with java.io.tmpdir " + var3.exists() + " | " + var3.isDirectory() + " | " + var3.canRead() + " | " + var3.canWrite());
         }
     }
 
     private static Connection a(SQLConnectionProvider var0) {
-        Intrinsics.checkNotNullParameter(var0, "");
+        Validate.Arg.notNull(var0, "");
         return var0.getConnection();
     }
 
     private static void a(Function1 var0, Object var1) {
-        Intrinsics.checkNotNullParameter(var0, "");
+        Validate.Arg.notNull(var0, "");
         var0.invoke(var1);
     }
 
     @NotNull
     public static SQLConnectionProvider getProvider(@NotNull Path var1, @NotNull DatabaseType var2) {
-        Intrinsics.checkNotNullParameter(var1, "");
-        Intrinsics.checkNotNullParameter(var2, "");
+        Validate.Arg.notNull(var1, "");
+        Validate.Arg.notNull(var2, "");
         if (var2 != DatabaseType.SQLite && var2 != DatabaseType.H2) {
             return new SQLHikariConnectionProvider(var2, new HikariDataSource());
         } else {

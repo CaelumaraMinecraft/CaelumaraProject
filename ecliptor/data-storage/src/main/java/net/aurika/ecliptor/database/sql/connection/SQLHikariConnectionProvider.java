@@ -20,7 +20,7 @@ public class SQLHikariConnectionProvider extends SQLConnectionProvider {
         super(databaseType);
         Checker.Arg.notNull(hikariDataSource, "");
         this.a = hikariDataSource;
-        this.a.setDataSourceClassName(databaseType.getDataSourceClassName());
+        this.a.setDataSourceClassName(databaseType.dataSourceClassName());
         databaseType.applyProperties(this.a, DatabaseProperties.defaults(databaseType));
         HikariDataSource var3 = this.a;
         if (AuspiceLogger.isDebugging()) {

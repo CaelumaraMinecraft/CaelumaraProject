@@ -119,7 +119,7 @@ public class SimpleLocation implements DataStringRepresentation, StructuredDataO
     }
 
     @Override
-    public @NotNull FunctionsDataStructSchema<? extends SimpleLocation> DataStructSchema() {
+    public @NotNull FunctionsDataStructSchema<? extends SimpleLocation> dataStructSchema() {
         return DATA_TEMPLATE;
     }
 }

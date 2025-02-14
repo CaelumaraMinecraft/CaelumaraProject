@@ -67,7 +67,7 @@ public final class Reflect {
         return ArrayUtils.reverse(classes.toArray(new Class[0]));
     }
 
-    public static List<Field> getFields(Class<?> clazz) {
+    public static @NotNull List<Field> getFields(@NotNull Class<?> clazz) {
         List<Field> fields = new ArrayList<>();
         for (Class<?> hierarchy : getClassHierarchy(clazz, false)) {
             fields.addAll(Arrays.asList(hierarchy.getDeclaredFields()));
@@ -75,7 +75,7 @@ public final class Reflect {
         return fields;
     }
 
-    public static String toString(Object obj) {
+    public static @NotNull String toString(@NotNull Object obj) {
         Class<?> clazz = obj.getClass();
         List<Field> fields = getFields(clazz);
         StringBuilder string = new StringBuilder(clazz.getSimpleName()).append('{');

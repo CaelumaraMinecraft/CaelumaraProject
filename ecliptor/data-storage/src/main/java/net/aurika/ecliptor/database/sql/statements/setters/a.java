@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 final class a {
-
     private final @NotNull String a;
     private final @NotNull Consumer<Integer> b;
     private final @NotNull RuntimeException c;
