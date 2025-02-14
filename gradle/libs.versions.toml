@@ -79,7 +79,7 @@ kyori_examination_string = { group = "net.kyori", name = "examination-string", v
 
 kyori_mammoth = { group = "net.kyori", name = "mammoth", version = "1.4.0" }
 kyori_indra_common = { group = "net.kyori", name = "indra-common", version.ref = "indra" }
-kyori_lunar = { group = "net.ktori", name = "lunar", version = "1.0.6" }
+kyori_lunar = { group = "net.kyori", name = "lunar", version = "1.0.6" }
 
 xseries = { group = "com.github.cryptomorin", name = "XSeries", version.ref = "xseries" }
 

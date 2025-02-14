@@ -1,6 +1,8 @@
 package net.aurika.property;
 
-public interface BaseProperty {
+import java.io.Serializable;
+
+public interface BaseProperty extends Serializable {
     String name();
 
     boolean isSet();
