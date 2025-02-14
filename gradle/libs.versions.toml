@@ -45,10 +45,10 @@ ideagradle = { id = "org.jetbrains.gradle.plugin.idea-ext", version.ref = "ideag
 [libraries]
 # Servers
 server_craftbukkit = { group = "org.bukkit", name = "bukkit", version = "1.21.4-R0.1-SNAPSHOT" }
-server_spigot = { group = "org.spigotmc", name = "spigot", version = "1.21.4" }
-server_paper = { module = "io.papermc.paper:paper-api", version = "1.21.4-R0.1-SNAPSHOT" }  # TODO version
-server_purpur = { group = "org.purpurmc.purpur", name = "purpur-api", version = "1.21.4-R0.1-SNAPSHOT" }  # TODO version
-server_leaf = "cn.dreeam.leaf:leaf-api:1.21.4-R0.1-SNAPSHOT"  # TODO version
+server_spigot = { group = "org.spigotmc", name = "spigot-api", version = "1.21.4-R0.1-SNAPSHOT" }
+server_paper = { module = "io.papermc.paper:paper-api", version = "1.21.4-R0.1-SNAPSHOT" }
+server_purpur = { group = "org.purpurmc.purpur", name = "purpur-api", version = "1.21.4-R0.1-SNAPSHOT" }
+server_leaf = "cn.dreeam.leaf:leaf-api:1.21.4-R0.1-SNAPSHOT"
 server_folia = { group = "dev.folia", name = "folia-api", version = "1.20.1-R0.1-SNAPSHOT" }
 
 server_legacy_spigot = { group = "org.spigotmc", name = "spigot", version.ref = "bukkit_legacy" }

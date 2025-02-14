@@ -26,10 +26,10 @@ enum class PowerfulTerritoryPlaceholders(
     }),
 
     KINGDOM_LANDS_OF_CATEGORY(0, object : FunctionalPlaceholder() {
-        @PlaceholderFunction
+        @PhFn
         fun of(
             context: KingdomsPlaceholderTranslationContext,
-            @PlaceholderParameter(name = "category") category: String
+            @PhParam(name = "category") category: String
         ): Any {
             val kingdom = context.getKingdom()
             var amount = 0

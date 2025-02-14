@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.internal.AbstractDependencyFilter
+
 plugins {
     id("java-library")
     alias(libs.plugins.kotlin) apply false
@@ -6,6 +8,8 @@ plugins {
 
 group = "top.mckingdom"
 version = "1.0.2"
+
+def targetJavaVersion = 21
 
 subprojects {
 
@@ -23,7 +27,18 @@ subprojects {
     dependencies {
         api(project(":validate"))
         compileOnly(libs.server.spigot)
+        compileOnly(libs.annotations.checker)
         compileOnly(fileTree("$rootDir/libs/plugins/Kingdoms"))
+    }
+
+    java {
+        withSourcesJar()
+        JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+        if (JavaVersion.current() < javaVersion) {
+            toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+        }
     }
 
     tasks {
@@ -34,7 +49,7 @@ subprojects {
 
         compileKotlin {
             kotlinOptions {
-                jvmTarget = "17"
+                jvmTarget = targetJavaVersion
             }
         }
 
@@ -46,12 +61,20 @@ subprojects {
             archiveBaseName = "Kingdoms-Addon-$_name"
             archiveClassifier = null
 
+            minimize()
+
             relocate("kotlin", "org.kingdoms.libs.kotlin")
             relocate("net.aurika", "top.mckingdom.libs.aurika")
+
+//            exclude("/**/*.jar")
 
             include {
                 project(":validate")
             }
+
+            println(includedDependencies.files)
+            println(excludes)
+
 
 //            exclude(
 //                    "kotlin-stdlib-2.0.20-Beta2.jar",
@@ -69,12 +92,19 @@ subprojects {
             }
         }
     }
+}
 
-    java {
-        withSourcesJar()
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
+class DependencyFilter extends AbstractDependencyFilter {
+    DependencyFilter(Project project) {
+        super(project)
     }
 
+    @Override
+    protected void resolve(
+            Set<ResolvedDependency> dependencies,
+            Set<ResolvedDependency> includedDependencies,
+            Set<ResolvedDependency> excludedDependencies
+    ) {
+
+    }
 }
