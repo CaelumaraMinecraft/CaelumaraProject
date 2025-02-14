@@ -12,7 +12,6 @@ dependencies {
     api(project(":util:math"))
     api(project(":util:string"))
 
-    api(libs.kyro)
     api(libs.kyori.advntr.key)
     api(libs.kyori.advntr.nbt)
     api(libs.gson)
