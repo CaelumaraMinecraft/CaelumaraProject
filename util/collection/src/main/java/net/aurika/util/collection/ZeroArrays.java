@@ -31,6 +31,7 @@ public final class ZeroArrays {
     private ZeroArrays() {
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> @NotNull T @NotNull [] getZeroArray(@NotNull Class<T> type) {
         Validate.Arg.notNull(type, "type");
         return (T[]) Array.newInstance(type, 0);

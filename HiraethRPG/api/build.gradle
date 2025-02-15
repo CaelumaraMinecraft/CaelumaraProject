@@ -1,0 +1,73 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+group = "top.mckingdom"
+version = "0.0.1-pre"
+
+def targetJavaVersion = 21
+
+subprojects {
+
+    group = this.group
+    version = this.version
+
+    def _name = name
+
+
+    plugins.apply("java-library")
+    plugins.apply(libs.plugins.kotlin.get().pluginId)
+    plugins.apply(libs.plugins.shadow.get().pluginId)
+
+
+    java {
+        withSourcesJar()
+        JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+        if (JavaVersion.current() < javaVersion) {
+            toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+        }
+    }
+
+    tasks {
+
+        build {
+            dependsOn(shadowJar)
+        }
+
+        compileKotlin {
+            kotlinOptions {
+                jvmTarget = targetJavaVersion
+            }
+        }
+
+        jar {
+            enabled = false
+        }
+
+        shadowJar {
+            archiveBaseName = "Kingdoms-Addon-$_name"
+            archiveClassifier = null
+
+            minimize()
+
+            relocate("kotlin", "org.kingdoms.libs.kotlin")
+            relocate("net.aurika", "top.mckingdom.libs.aurika")
+
+            exclude("**/kotlin-stdlib**")
+            exclude("**/annotations**")
+        }
+
+        processResources {
+            def props = [version: version]
+            inputs.properties props
+            filteringCharset = "UTF-8"
+            filesMatching("plugin.yml") {
+                expand(props)
+            }
+        }
+    }
+}

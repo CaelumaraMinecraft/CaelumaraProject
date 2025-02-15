@@ -106,7 +106,7 @@ dependencyResolutionManagement {
     repositoriesMode = RepositoriesMode.PREFER_PROJECT
 }
 
-rootProject.name = "Caelumara"
+rootProject.name = "Aurika"
 
 include(
         ":annotation",
@@ -149,6 +149,7 @@ include(
         ":aurika:tasks",
         ":aurika:text-api",
 )
+
 include(
         ":Auspice",
 
@@ -221,7 +222,21 @@ include(
 )
 
 include (
-        "HiraethRPG"
+        ":HiraethRPG",
+        ":HiraethRPG:api",
+
+        ":HiraethRPG:game",
+        ":HiraethRPG:game:api",
+
+        ":HiraethRPG:game:bukkit",
+        ":HiraethRPG:game:bukkit:api",
+
+        ":HiraethRPG:game:bukkit:paper",
+        ":HiraethRPG:game:bukkit:folia",
+
+
+        ":HiraethRPG:proxy",
+        ":HiraethRPG:proxy:api",
 )
 
 include(
