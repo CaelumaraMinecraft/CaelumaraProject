@@ -32,6 +32,20 @@ public interface Property<T> extends BaseProperty {
     }
 
     /**
+     * Create a not initialized boolean property.
+     */
+    static @NotNull CharProperty charProperty(@NotNull String name) {
+        return new CharPropertyImpl(name);
+    }
+
+    /**
+     * Create an initialized boolean property.
+     */
+    static @NotNull CharProperty charProperty(@NotNull String name, char value) {
+        return new CharPropertyImpl(name, value);
+    }
+
+    /**
      * Create a not initialized int property.
      */
     static @NotNull IntProperty intProperty(@NotNull String name) {
