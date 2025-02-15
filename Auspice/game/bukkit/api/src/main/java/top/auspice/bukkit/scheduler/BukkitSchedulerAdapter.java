@@ -1,12 +1,13 @@
 package top.auspice.bukkit.scheduler;
 
+import net.aurika.util.scheduler.*;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.api.user.AuspiceUser;
 import top.auspice.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.dependency.classpath.BootstrapProvider;
 import top.auspice.scheduler.*;
-import top.auspice.scheduler.Task.ExecutionContextType;
+import net.aurika.util.scheduler.Task.ExecutionContextType;
 import top.auspice.utils.unsafe.time.TickTemporalUnit;
 
 import java.time.Duration;

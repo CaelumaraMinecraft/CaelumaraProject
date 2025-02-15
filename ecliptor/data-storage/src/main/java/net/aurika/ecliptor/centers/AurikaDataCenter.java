@@ -13,6 +13,7 @@ import net.aurika.ecliptor.api.DataObject;
 import net.aurika.ecliptor.api.KeyedDataObject;
 import net.aurika.namespace.NSedKey;
 import net.aurika.namespace.NSKeyMap;
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +39,7 @@ public abstract class AurikaDataCenter extends BaseDataManager {
     protected final @Nullable DelayedRepeatingTask autoSaveTask;
 
     @Internal
-    public AurikaDataCenter(@NotNull NSedKey id, @NotNull DatabaseType databaseType, @Nullable Duration autoSaveInterval, boolean isCacheStatic, boolean isTemporary, boolean isSmartSaving) {
+    public AurikaDataCenter(@NotNull Key id, @NotNull DatabaseType databaseType, @Nullable Duration autoSaveInterval, boolean isCacheStatic, boolean isTemporary, boolean isSmartSaving) {
         super(id, autoSaveInterval, isCacheStatic, isTemporary, isSmartSaving);
         Objects.requireNonNull(databaseType, "databaseType");
         this.databaseType = databaseType;

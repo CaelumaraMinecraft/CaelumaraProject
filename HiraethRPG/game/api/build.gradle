@@ -1,15 +1,8 @@
-import com.github.jengelman.gradle.plugins.shadow.internal.AbstractDependencyFilter
-
 plugins {
     id("java-library")
-    alias(libs.plugins.kotlin) apply false
-    alias(libs.plugins.shadow) apply false
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
 }
-
-group = "top.mckingdom"
-version = "0.0.1-pre"
-
-def targetJavaVersion = 21
 
 subprojects {
 
@@ -17,6 +10,7 @@ subprojects {
     version = this.version
 
     def _name = name
+
 
     plugins.apply("java-library")
     plugins.apply(libs.plugins.kotlin.get().pluginId)

@@ -13,7 +13,7 @@ import top.auspice.configs.messages.LanguageManager;
 import top.auspice.configs.messages.messenger.DefinedMessenger;
 import top.auspice.constants.metadata.AuspiceMetadataRegistry;
 import top.auspice.diversity.Diversity;
-import top.auspice.scheduler.TaskScheduleProvider;
+import net.aurika.util.scheduler.TaskScheduleProvider;
 
 import java.lang.annotation.*;
 import java.util.Map;

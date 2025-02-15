@@ -1,10 +1,11 @@
 package top.auspice.scheduler;
 
+import net.aurika.dependency.classpath.BootstrapProvider;
+import net.aurika.util.scheduler.*;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.dependencies.classpath.BootstrapProvider;
-import top.auspice.scheduler.Task.ExecutionContextType;
-import top.auspice.utils.unsafe.stacktrace.StackTraces;
+import net.aurika.util.scheduler.Task.ExecutionContextType;
+import net.aurika.util.stacktrace.StackTraces;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractJavaScheduler implements TaskScheduleProvider {
     private final BootstrapProvider a;
     private final ScheduledThreadPoolExecutor b;
-    private final ForkJoinPool c;
+    private final ForkJoinPool pool;
     private final b d;
     private boolean e;
 
@@ -31,7 +32,7 @@ public abstract class AbstractJavaScheduler implements TaskScheduleProvider {
         this.b.setRemoveOnCancelPolicy(true);
         this.b.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
         this.b.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
-        this.c = new ForkJoinPool(16, new e(), new d(), false);
+        this.pool = new ForkJoinPool(16, new e(), new d(), false);
         this.d = new b();
     }
 
@@ -50,7 +51,7 @@ public abstract class AbstractJavaScheduler implements TaskScheduleProvider {
         } else {
             this.e = true;
             this.a(this.b, "-scheduler", "scheduler");
-            this.a(this.c, "-worker-", "worker thread pool");
+            this.a(this.pool, "-worker-", "worker thread pool");
         }
     }
 
@@ -61,7 +62,7 @@ public abstract class AbstractJavaScheduler implements TaskScheduleProvider {
             if (!var1.awaitTermination(1L, TimeUnit.MINUTES)) {
                 this.a.getLogger().severe("Timed out waiting for the " + var3 + " to terminate");
                 this.a((var1x) -> {
-                    return var1x.getName().startsWith("kingdoms" + var2);
+                    return var1x.getName().startsWith("auspice" + var2);
                 });
             }
 
@@ -119,18 +120,18 @@ public abstract class AbstractJavaScheduler implements TaskScheduleProvider {
         }
 
         public @NotNull Executor getExecutor() {
-            return AbstractJavaScheduler.this.c;
+            return AbstractJavaScheduler.this.pool;
         }
 
         public @NotNull Task execute(@NotNull Runnable var1) {
-            AbstractJavaScheduler.this.c.execute(new TracedRunnable(var1));
+            AbstractJavaScheduler.this.pool.execute(new TracedRunnable(var1));
             return new AbstractTask(this.getExecutionContextType(), var1);
         }
 
         public @NotNull DelayedTask delayed(@NotNull Duration delay, @NotNull Runnable runnable) {
             TracedRunnable var3 = new TracedRunnable(runnable);
             ScheduledFuture<?> var4 = AbstractJavaScheduler.this.b.schedule(() -> {
-                AbstractJavaScheduler.this.c.execute(var3);
+                AbstractJavaScheduler.this.pool.execute(var3);
             }, delay.toMillis(), TimeUnit.MILLISECONDS);
             return new a(runnable, delay, this.getExecutionContextType(), var4);
         }
@@ -138,7 +139,7 @@ public abstract class AbstractJavaScheduler implements TaskScheduleProvider {
         public @NotNull DelayedRepeatingTask repeating(@NotNull Duration var1, @NotNull Duration var2, @NotNull Runnable var3) {
             TracedRunnable var4 = new TracedRunnable(var3);
             ScheduledFuture<?> var5 = AbstractJavaScheduler.this.b.scheduleAtFixedRate(() -> {
-                AbstractJavaScheduler.this.c.execute(var4);
+                AbstractJavaScheduler.this.pool.execute(var4);
             }, var1.toMillis(), var2.toMillis(), TimeUnit.MILLISECONDS);
             return new c(var3, var1, var2, this.getExecutionContextType(), var5);
         }

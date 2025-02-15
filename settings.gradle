@@ -127,7 +127,9 @@ include(
         ":util:nbt",
         ":util:reflection",
         ":util:registry",
+        ":util:scheduler",
         ":util:snakeyaml-ext",
+        ":util:stacktrace",
         ":util:string",
         ":util:uuid",
 )
@@ -136,6 +138,10 @@ include(
         "ecliptor:annotations",
         "ecliptor:data-api",
         "ecliptor:data-storage",
+)
+
+include(
+        ":dyanasis",
 )
 
 include(
@@ -240,7 +246,6 @@ include (
 )
 
 include(
-//        ":KingdomsAddons",
         ":KingdomsAddons:Auspice",
         ":KingdomsAddons:Civilizations",
         ":KingdomsAddons:PlaceholderAPI-Bridge",

@@ -9,7 +9,7 @@ import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.nodes.*;
 import net.aurika.config.sections.ConfigSection;
 import top.auspice.configs.messages.MessageHandler;
-import top.auspice.utils.unsafe.stacktrace.StackTraces;
+import net.aurika.util.stacktrace.StackTraces;
 
 import java.util.*;
 import java.util.stream.Collectors;
