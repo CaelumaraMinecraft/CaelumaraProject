@@ -1,5 +1,7 @@
 package top.auspice.trigger;
 
-public interface Trigger {
+import net.kyori.adventure.key.Keyed;
+
+public interface Trigger extends Keyed {
 
 }
