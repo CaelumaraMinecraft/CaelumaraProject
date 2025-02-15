@@ -3,6 +3,7 @@ package net.aurika.property;
 import org.jetbrains.annotations.NotNull;
 
 public interface Property<T> extends BaseProperty {
+
     /**
      * Create a not initialized property.
      */
@@ -32,17 +33,45 @@ public interface Property<T> extends BaseProperty {
     }
 
     /**
-     * Create a not initialized boolean property.
+     * Create a not initialized char property.
      */
     static @NotNull CharProperty charProperty(@NotNull String name) {
         return new CharPropertyImpl(name);
     }
 
     /**
-     * Create an initialized boolean property.
+     * Create an initialized char property.
      */
     static @NotNull CharProperty charProperty(@NotNull String name, char value) {
         return new CharPropertyImpl(name, value);
+    }
+
+    /**
+     * Create a not initialized byte property.
+     */
+    static @NotNull ByteProperty byteProperty(@NotNull String name) {
+        return new BytePropertyImpl(name);
+    }
+
+    /**
+     * Create an initialized byte property.
+     */
+    static @NotNull ByteProperty byteProperty(@NotNull String name, byte value) {
+        return new BytePropertyImpl(name, value);
+    }
+
+    /**
+     * Create a not initialized short property.
+     */
+    static @NotNull ShortProperty shortProperty(@NotNull String name) {
+        return new ShortPropertyImpl(name);
+    }
+
+    /**
+     * Create an initialized short property.
+     */
+    static @NotNull ShortProperty shortProperty(@NotNull String name, short value) {
+        return new ShortPropertyImpl(name, value);
     }
 
     /**
@@ -73,8 +102,38 @@ public interface Property<T> extends BaseProperty {
         return new LongPropertyImpl(name, value);
     }
 
+    /**
+     * Create a not initialized float property.
+     */
+    static @NotNull FloatProperty floatProperty(@NotNull String name) {
+        return new FloatPropertyImpl(name);
+    }
+
+    /**
+     * Create an initialized float property.
+     */
+    static @NotNull FloatProperty floatProperty(@NotNull String name, float value) {
+        return new FloatPropertyImpl(name, value);
+    }
+
+    /**
+     * Create a not initialized long property.
+     */
+    static @NotNull DoubleProperty doubleProperty(@NotNull String name) {
+        return new DoublePropertyImpl(name);
+    }
+
+    /**
+     * Create an initialized long property.
+     */
+    static @NotNull DoubleProperty doubleProperty(@NotNull String name, double value) {
+        return new DoublePropertyImpl(name, value);
+    }
+
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     T get() throws PropertyNotInitializedException;
@@ -82,33 +141,20 @@ public interface Property<T> extends BaseProperty {
     void set(T value);
 }
 
-class PropertyImpl<T> implements Property<T> {
-    private final String name;
+class PropertyImpl<T> extends BasePropertyImpl implements Property<T> {
     private T value;
-    private boolean set;
 
     PropertyImpl(String name) {
-        this(name, null, false);
+        this(name, false, null);
     }
 
     PropertyImpl(String name, T value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private PropertyImpl(String name, T value, boolean set) {
-        this.name = name;
+    private PropertyImpl(String name, boolean set, T value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

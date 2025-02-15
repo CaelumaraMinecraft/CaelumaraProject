@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface ShortProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     short get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface ShortProperty extends BaseProperty {
     void set(short value);
 }
 
-class ShortPropertyImpl implements ShortProperty {
-    private final String name;
+class ShortPropertyImpl extends BasePropertyImpl implements ShortProperty {
     private short value;
-    private boolean set;
 
     ShortPropertyImpl(String name) {
-        this(name, (short) 0, false);
+        this(name, false, (short) 0);
     }
 
     ShortPropertyImpl(String name, short value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private ShortPropertyImpl(String name, short value, boolean set) {
-        this.name = name;
+    private ShortPropertyImpl(String name, boolean set, short value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

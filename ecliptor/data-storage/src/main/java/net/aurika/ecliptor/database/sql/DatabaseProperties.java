@@ -143,17 +143,17 @@ public class DatabaseProperties {
         a(this, hikariConfig, "allowPublicKeyRetrieval", this.allowPublicKeyRetrieval());
         a(this, hikariConfig, "socketTimeout", this.socketTimeout());
 
-        for (Map.Entry<String, Object> var3 : this.others.entrySet()) {
-            a(this, hikariConfig, var3.getKey(), var3.getValue());
+        for (Map.Entry<String, Object> other : this.others.entrySet()) {
+            a(this, hikariConfig, other.getKey(), other.getValue());
         }
     }
 
     public @NotNull Properties asJavaProperties() {
-        Properties properties = new Properties();
+        Properties props = new Properties();
         for (Map.Entry<String, Object> entry : this.others.entrySet()) {
-            properties.setProperty(entry.getKey(), entry.getValue().toString());
+            props.setProperty(entry.getKey(), entry.getValue().toString());
         }
-        return properties;
+        return props;
     }
 
     private static void a(@NotNull DatabaseProperties var0, @NotNull HikariConfig hikariConfig, @NotNull String propertyName, Object value) {

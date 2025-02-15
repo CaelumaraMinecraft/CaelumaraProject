@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface IntProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     int get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface IntProperty extends BaseProperty {
     void set(int value);
 }
 
-class IntPropertyImpl implements IntProperty {
-    private final String name;
+class IntPropertyImpl extends BasePropertyImpl implements IntProperty {
     private int value;
-    private boolean set;
 
     IntPropertyImpl(String name) {
-        this(name, 0, false);
+        this(name, false, 0);
     }
 
     IntPropertyImpl(String name, int value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private IntPropertyImpl(String name, int value, boolean set) {
-        this.name = name;
+    private IntPropertyImpl(String name, boolean set, int value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface FloatProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     float get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface FloatProperty extends BaseProperty {
     void set(float value);
 }
 
-class FloatPropertyImpl implements FloatProperty {
-    private final String name;
+class FloatPropertyImpl extends BasePropertyImpl implements FloatProperty {
     private float value;
-    private boolean set;
 
     FloatPropertyImpl(String name) {
-        this(name, 0, false);
+        this(name, false, 0.0F);
     }
 
     FloatPropertyImpl(String name, float value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private FloatPropertyImpl(String name, float value, boolean set) {
-        this.name = name;
+    private FloatPropertyImpl(String name, boolean set, float value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

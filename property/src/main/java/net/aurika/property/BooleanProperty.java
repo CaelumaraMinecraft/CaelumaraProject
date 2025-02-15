@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface BooleanProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     boolean get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface BooleanProperty extends BaseProperty {
     void set(boolean value);
 }
 
-class BooleanPropertyImpl implements BooleanProperty {
-    private final String name;
+class BooleanPropertyImpl extends BasePropertyImpl implements BooleanProperty {
     private boolean value;
-    private boolean set;
 
     BooleanPropertyImpl(String name) {
         this(name, false, false);
     }
 
     BooleanPropertyImpl(String name, boolean value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private BooleanPropertyImpl(String name, boolean value, boolean set) {
-        this.name = name;
+    private BooleanPropertyImpl(String name, boolean set, boolean value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

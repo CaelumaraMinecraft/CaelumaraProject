@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface DoubleProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     double get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface DoubleProperty extends BaseProperty {
     void set(double value);
 }
 
-class DoublePropertyImpl implements DoubleProperty {
-    private final String name;
+class DoublePropertyImpl extends BasePropertyImpl implements DoubleProperty {
     private double value;
-    private boolean set;
 
     DoublePropertyImpl(String name) {
-        this(name, 0, false);
+        this(name, false, 0.0);
     }
 
     DoublePropertyImpl(String name, double value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private DoublePropertyImpl(String name, double value, boolean set) {
-        this.name = name;
+    private DoublePropertyImpl(String name, boolean set, double value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

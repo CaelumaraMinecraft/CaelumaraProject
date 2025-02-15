@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface LongProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     long get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface LongProperty extends BaseProperty {
     void set(long value);
 }
 
-class LongPropertyImpl implements LongProperty {
-    private final String name;
+class LongPropertyImpl extends BasePropertyImpl implements LongProperty {
     private long value;
-    private boolean set;
 
     LongPropertyImpl(String name) {
-        this(name, 0, false);
+        this(name, false, 0L);
     }
 
     LongPropertyImpl(String name, long value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private LongPropertyImpl(String name, long value, boolean set) {
-        this.name = name;
+    private LongPropertyImpl(String name, boolean set, long value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override

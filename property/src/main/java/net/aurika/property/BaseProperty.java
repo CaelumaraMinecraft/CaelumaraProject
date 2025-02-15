@@ -2,15 +2,29 @@ package net.aurika.property;
 
 import java.io.Serializable;
 
+/**
+ * A property API for lazy initialization.
+ */
 public interface BaseProperty extends Serializable {
+    /**
+     * Get the property name.
+     */
     String name();
 
+    /**
+     * Get whether this property has been set.
+     */
     boolean isSet();
+
+    /**
+     * Unset the property.
+     */
+    void unset();
 }
 
 abstract class BasePropertyImpl implements BaseProperty {
-    private final String name;
-    private boolean set;
+    protected final String name;
+    protected boolean set;
 
     protected BasePropertyImpl(String name, boolean set) {
         this.name = name;
@@ -27,7 +41,8 @@ abstract class BasePropertyImpl implements BaseProperty {
         return set;
     }
 
-    protected void unset() {
+    @Override
+    public void unset() {
         set = false;
     }
 }

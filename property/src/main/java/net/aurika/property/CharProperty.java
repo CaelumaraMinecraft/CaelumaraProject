@@ -2,8 +2,10 @@ package net.aurika.property;
 
 public interface CharProperty extends BaseProperty {
 
+    @Override
     String name();
 
+    @Override
     boolean isSet();
 
     char get() throws PropertyNotInitializedException;
@@ -11,33 +13,20 @@ public interface CharProperty extends BaseProperty {
     void set(char value);
 }
 
-class CharPropertyImpl implements CharProperty {
-    private final String name;
+class CharPropertyImpl extends BasePropertyImpl implements CharProperty {
     private char value;
-    private boolean set;
 
     CharPropertyImpl(String name) {
-        this(name, (char) 0, false);
+        this(name, false, (char) 0);
     }
 
     CharPropertyImpl(String name, char value) {
-        this(name, value, true);
+        this(name, true, value);
     }
 
-    private CharPropertyImpl(String name, char value, boolean set) {
-        this.name = name;
+    private CharPropertyImpl(String name, boolean set, char value) {
+        super(name, set);
         this.value = value;
-        this.set = set;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public boolean isSet() {
-        return set;
     }
 
     @Override
