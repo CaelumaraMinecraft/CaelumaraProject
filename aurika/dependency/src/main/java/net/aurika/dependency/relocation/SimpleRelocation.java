@@ -3,7 +3,7 @@ package net.aurika.dependency.relocation;
 import java.util.Objects;
 
 public final class SimpleRelocation {
-    private static final String RELOCATION_PREFIX = "top.auspice.libs.";
+    private static final String RELOCATION_PREFIX = "net.aurika.libs.";
     private final String pattern;
     private final String relocatedPattern;
 

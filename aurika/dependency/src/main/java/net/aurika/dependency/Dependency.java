@@ -1,6 +1,7 @@
 package net.aurika.dependency;
 
 import net.aurika.dependency.relocation.SimpleRelocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -136,12 +137,12 @@ public enum Dependency {
             SimpleRelocation.of("hikari", "com{}zaxxer{}hikari")
     );
 
-    private final List<SimpleRelocation> relocations;
+    private final @NotNull List<SimpleRelocation> relocations;
     private static final String MAVEN_FORMAT = "%s/%s/%s/%s-%s.jar";
-    private final String groupId;
-    private final String artifactId;
-    private final Map<String, DependencyVersion> versions;
-    private String defaultVersion;
+    private final @NotNull String groupId;
+    private final @NotNull String artifactId;
+    private final @NotNull Map<String, DependencyVersion> versions;
+    private @NotNull String defaultVersion;
 
     Dependency(String groupId, String artifactId, String version, String checksum, SimpleRelocation... relocations) {
         this(groupId, artifactId, Collections.singletonList(DependencyVersion.of(version, checksum)), relocations);
@@ -152,22 +153,22 @@ public enum Dependency {
         this.artifactId = rewriteEscaping(artifactId);
         this.relocations = Arrays.asList(relocations);
         this.versions = versions.stream().collect(Collectors.toMap(DependencyVersion::getVersion, (ver) -> ver));
-        this.defaultVersion = versions.iterator().next().getVersion();
+        this.defaultVersion = versions.getFirst().getVersion();
     }
 
-    private static String rewriteEscaping(String s) {
+    private static @NotNull String rewriteEscaping(@NotNull String s) {
         return s.replace("{}", ".");
     }
 
-    public void setDefaultVersion(String defaultVersion) {
+    public void defaultVersion(@NotNull String defaultVersion) {
         this.defaultVersion = defaultVersion;
     }
 
-    public String getGroupId() {
+    public @NotNull String getGroupId() {
         return this.groupId;
     }
 
-    public String getArtifactId() {
+    public @NotNull String getArtifactId() {
         return this.artifactId;
     }
 
@@ -179,14 +180,14 @@ public enum Dependency {
 
     String getMavenRepoPath() {
         String version = this.getDefaultVersion().getVersion();
-        return String.format("%s/%s/%s/%s-%s.jar", this.groupId.replace(".", "/"), this.artifactId, version, this.artifactId, version);
+        return String.format(MAVEN_FORMAT, this.groupId.replace(".", "/"), this.artifactId, version, this.artifactId, version);
     }
 
     public DependencyVersion getDefaultVersion() {
         return Objects.requireNonNull(this.versions.get(this.defaultVersion), () -> "Cannot find default version " + this.defaultVersion + " for " + this);
     }
 
-    public List<SimpleRelocation> getRelocations() {
+    public @NotNull List<SimpleRelocation> getRelocations() {
         return this.relocations;
     }
 
