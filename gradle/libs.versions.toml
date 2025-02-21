@@ -1,6 +1,6 @@
 [versions]
 # Plugins
-shadow = "8.3.0"
+shadow = "8.3.3"
 blossom = "2.1.0"
 moddevgradle = "1.0.21"
 forgegradle = "[6.0,6.2)"

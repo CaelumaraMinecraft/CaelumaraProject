@@ -9,18 +9,20 @@ import org.jetbrains.annotations.NotNull;
 public interface AuspiceMetadata {
 
     /**
-     * Get the value.
+     * Gets the value.
+     *
      * @return Value of this metadata
      */
     @Getter
     Object value();
 
     /**
-     * Set the value.
+     * Sets the value.
+     *
      * @param value New value of this metadata
      */
     @Setter
-    void setValue(Object value);
+    void value(Object value);
 
     void serialize(@NotNull KeyedAuspiceObject<?> auspiceObject, @NotNull SectionCreatableDataSetter dataSetter);
 

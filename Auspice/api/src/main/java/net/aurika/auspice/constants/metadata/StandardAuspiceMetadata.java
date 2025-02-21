@@ -21,7 +21,7 @@ public final class StandardAuspiceMetadata implements AuspiceMetadata {
     }
 
     @Override
-    public void setValue(Object value) {
+    public void value(Object value) {
         Objects.requireNonNull(value);
         this.value = value;
     }

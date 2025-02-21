@@ -1,21 +1,14 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
-    id("java-library")
+    id("aurika.repos")
 }
 
 repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        name = "placeholderapi"
-        url = "https://repo.extendedclip.com/releases/"
-    }
+    AurikaExtReposKt.placeholderAPI(it)
 }
 
 dependencies {
     compileOnly(project(":Auspice:service-api:bukkit-api"))
-
     compileOnly("me.clip:placeholderapi:2.11.6")
-    compileOnly(fileTree("$rootDir/libs/services/placeholderapi"))
-
-    compileOnly(libs.server.craftbukkit)
 }

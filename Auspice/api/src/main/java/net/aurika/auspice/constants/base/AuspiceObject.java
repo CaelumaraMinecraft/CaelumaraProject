@@ -1,19 +1,19 @@
 package net.aurika.auspice.constants.base;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
-import net.aurika.config.accessor.ClearlyConfigAccessor;
 import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import net.aurika.auspice.text.context.provider.CascadingTextContextProvider;
-import net.aurika.auspice.configs.messages.context.MessageContextImpl;
+import net.aurika.auspice.configs.messages.context.MessageContext;
 import net.aurika.auspice.constants.logs.AuditLog;
 import net.aurika.auspice.constants.logs.Loggable;
 import net.aurika.auspice.constants.metadata.AuspiceMetadata;
 import net.aurika.auspice.constants.metadata.AuspiceMetadataHandler;
 import net.aurika.auspice.constants.metadata.Metadatable;
+import net.aurika.auspice.configs.messages.context.CascadingMessageContextProvider;
+import net.aurika.config.accessor.ClearlyConfigAccessor;
 import net.aurika.ecliptor.api.DataObject;
-import top.auspice.utils.ZeroArrays;
+import net.aurika.util.collection.ZeroArrays;
 import net.aurika.util.collection.nonnull.NonNullMap;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.Iterator;
@@ -22,10 +22,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
-public interface AuspiceObject extends DataObject, CascadingTextContextProvider, Loggable, Metadatable {
+public interface AuspiceObject extends DataObject, CascadingMessageContextProvider, Loggable, Metadatable {
 
     @Override
-    void addMessageContextEdits(@NotNull MessageContextImpl textPlaceholderProvider);
+    void addMessageContextEdits(@NotNull MessageContext textPlaceholderProvider);
 
     @Override
     AuspiceMetadata getMetadata(AuspiceMetadataHandler handler);
@@ -46,8 +46,8 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
 
     abstract class Impl implements
             AuspiceObject,
-            DataObject, CascadingTextContextProvider, Loggable, Metadatable,
-            DataObject.WrapperImpl {
+            DataObject, CascadingMessageContextProvider, Loggable, Metadatable,
+            DataObject.Wrapper {
 
         private final DataObject wrapped = new DataObject.Impl();
 
@@ -65,7 +65,7 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
         }
 
         @Override
-        public void addMessageContextEdits(@NotNull MessageContextImpl textPlaceholderProvider) {
+        public void addMessageContextEdits(@NotNull MessageContext textPlaceholderProvider) {
         }
 
         @Override
@@ -115,7 +115,7 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
 
                 while (var6.hasNext()) {
                     AuditLog nextLog = var6.next();
-                    Long var8 = var5.get(new String[]{nextLog.constructor().getNamespacedKey().getConfigOptionName()}).getLong(ZeroArrays.STRING);  // TODO replace to getTimeMillis()
+                    Long var8 = var5.get(new String[]{nextLog.constructor().ident().asDataString()}).getLong(ZeroArrays.STRING);  // TODO replace to getTimeMillis()
                     if (var8 == null) {
                         var8 = def;
                     }
@@ -134,7 +134,7 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
         @Override
         public void log(@NotNull AuditLog log) {
             this.ensureObjectExpiration();
-            if (!AuspiceGlobalConfig.AUDIT_LOGS_DISABLED.getStringList().contains(log.constructor().getNamespacedKey().getConfigOptionName())) {
+            if (!AuspiceGlobalConfig.AUDIT_LOGS_DISABLED.getStringList().contains(log.constructor().ident().asDataString())) {
                 this.logs.add(log);
             }
         }
@@ -145,11 +145,11 @@ public interface AuspiceObject extends DataObject, CascadingTextContextProvider,
         }
     }
 
-    interface WrapperImpl extends AuspiceObject, DataObject.WrapperImpl {
+    interface WrapperImpl extends AuspiceObject, DataObject.Wrapper {
         @NotNull AuspiceObject getWrapped();
 
         @Override
-        default void addMessageContextEdits(@NotNull MessageContextImpl textPlaceholderProvider) {
+        default void addMessageContextEdits(@NotNull MessageContext textPlaceholderProvider) {
             this.getWrapped().addMessageContextEdits(textPlaceholderProvider);
         }
 
