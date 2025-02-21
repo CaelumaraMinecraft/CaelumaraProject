@@ -23,7 +23,7 @@ public class MessengerUtil {
     /**
      * Create a new DefinedMessenger object
      *
-     * @param path The Path of Language, it will ignore case, such as {@code new String[]{"permissions", "JAIL"}} will make a path "permissions/jail"
+     * @param path The Path of Language, it will ignore case, such as {@code new String[]{"permission", "JAIL"}} will make a path "permission/jail"
      */
     public static DefinedMessenger createMessenger(String[] path, String defaultValue) {
 

@@ -1,0 +1,3 @@
+dependencies {
+    compileOnlyApi(fileTree("$rootDir/libs/plugins/SkinsRestorer"))
+}

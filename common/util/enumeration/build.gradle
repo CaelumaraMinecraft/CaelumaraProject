@@ -1,0 +1,14 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":common:validate"))
+    api(project(":common:util:collection"))
+
+    api(libs.guava)
+
+    compileOnlyApi(libs.annotations.jetbrains)
+    compileOnlyApi(libs.annotations.checker)
+}

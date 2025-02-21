@@ -3,7 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(api(project(":Auspice:api:platform:bukkit")))
-    implementation(api(project(":Auspice:api:platform:folia")))
-    implementation(api(project(":Auspice:api:platform:geyser")))
+    api(project(":Auspice:api:platform:geyser"))
 }

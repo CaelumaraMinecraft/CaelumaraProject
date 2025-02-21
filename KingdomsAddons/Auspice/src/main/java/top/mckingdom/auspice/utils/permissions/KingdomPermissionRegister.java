@@ -31,7 +31,7 @@ public final class KingdomPermissionRegister {
 
     public static XKingdomPermission register(String namespace, String keyword, String defaultMessage, String defaultLore) {
         Namespace ns = new Namespace(namespace, keyword);
-        DefinedMessenger m = MessengerUtil.createMessenger(new String[]{"permissions", keyword}, defaultMessage);
+        DefinedMessenger m = MessengerUtil.createMessenger(new String[]{"permission", keyword}, defaultMessage);
         return register(ns, m, defaultMessage, defaultLore);
     }
 

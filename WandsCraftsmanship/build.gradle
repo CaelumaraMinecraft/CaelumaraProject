@@ -23,7 +23,7 @@ repositories {
 dependencies {
     compileOnly(libs.server.craftbukkit)
 
-    compileOnly(project(":Auspice:game:bukkit:api"))  // 这个 addon 仅适用于 CraftBukkit 及其下游分支平台
+    compileOnly(project(":Auspice:game:bukkit-api"))  // 这个 addon 仅适用于 CraftBukkit 及其下游分支平台
 }
 
 def targetJavaVersion = 21

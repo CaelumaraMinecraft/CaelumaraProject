@@ -1,6 +1,6 @@
 package net.aurika.config.sections;
 
-import net.aurika.annotations.data.LateInit;
+import net.aurika.common.annotations.data.LateInit;
 import net.aurika.config.path.ConfigEntryMap;
 import net.aurika.config.sections.label.Label;
 import net.aurika.util.snakeyaml.nodes.NodeUtils;

@@ -4,11 +4,11 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+group = "net.aurika.auspice"
+version = "0.0.1-pre"
 description = "A minecraft library"
 
 dependencies {
-
-//    implementation(api(project(":base")))
 
     api(libs.kyori.advntr.event)
 
@@ -19,7 +19,7 @@ dependencies {
     api(libs.guava)
 
     // Classpath libs
-    compileOnly(libs.annotations.checker)
+    compileOnlyApi(libs.annotations.checker)
 
 }
 
@@ -86,9 +86,9 @@ tasks {
 
 processResources {
     def props = [version: version]
-    inputs.properties props
-    filteringCharset "UTF-8"
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
     filesMatching("plugin.yml") {
-        expand props
+        expand(props)
     }
 }

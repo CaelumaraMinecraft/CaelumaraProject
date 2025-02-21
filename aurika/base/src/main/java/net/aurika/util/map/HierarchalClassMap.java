@@ -8,6 +8,7 @@ import top.auspice.utils.unsafe.reflection.ClassHierarchyWalker;
 import java.util.*;
 import java.util.function.Function;
 
+@Deprecated
 @SuppressWarnings("OptionalAssignedToNull")
 public class HierarchalClassMap<V> implements Map<Class<?>, V> {
 

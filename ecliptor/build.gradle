@@ -3,15 +3,51 @@ plugins {
     id("maven-publish")
 }
 
+group = "net.aurika.ecliptor"
 version = "0.0.1-pre"
 description = "一个多数据库类型的数据存取 API"
 
-subprojects {
-    it.version = this.version
-}
+//subprojects {
+//    it.group = this.group
+//    it.version = this.version
+//}
 
 dependencies {
-    subprojects.forEach {
-        this.dependencies.api(it)
-    }
+
+    api(project(":aurika:base"))
+    api(project(":ecliptor:data-api"))
+    api(project(":common:dependency"))
+    api(project(":common:function"))
+    api(project(":common:nbt"))
+    api(project(":common:task"))
+    api(project(":common:snakeyaml"))
+    api(project(":common:scheduler"))
+    api(project(":common:util:file"))
+    api(project(":common:util:functional"))
+    api(project(":common:util:gson"))
+    api(project(":common:util:string"))
+    api(project(":common:annotation"))
+    api(project(":common:data-api"))
+    api(project(":common:property"))
+    api(project(":common:validate"))
+    api(project(":common:util:math"))
+
+    api("de.tr7zw:item-nbt-api:2.14.1")  // TODO
+
+    api(libs.kyori.advntr.key)
+    api(libs.kyori.advntr.nbt)
+    api(libs.gson)
+    api(libs.h2)
+    api(libs.hikari)
+    api(libs.postgresql)
+    api(libs.mongodb.bson)
+    api(libs.mongodb.sync)
+    api(libs.mongodb.core)
+
+    api(libs.annotations.jetbrains)
+    api(libs.annotations.checker)
+
+//    subprojects.forEach {
+//        this.dependencies.api(it)
+//    }
 }

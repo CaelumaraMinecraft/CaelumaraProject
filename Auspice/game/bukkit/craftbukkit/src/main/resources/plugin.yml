@@ -3,5 +3,5 @@ authors:
   - Attaccer
   - McKingdom
 version: '${version}'
-main: top.auspice.craftbukkit.loader.BukkitAuspiceLoader
+main: loader.craftbukkit.net.aurika.auspice.BukkitAuspiceLoader
 api-version: '1.13'

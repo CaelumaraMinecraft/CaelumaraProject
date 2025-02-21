@@ -1,0 +1,18 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+repositories {
+    maven {
+        name = "sk89q-repo"
+        url = "https://maven.enginehub.org/repo/"
+    }
+}
+
+dependencies {
+    api(project(":Auspice:service-api:bukkit-api"))
+    // WorldEdit
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.2.9")
+}

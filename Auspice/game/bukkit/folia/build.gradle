@@ -4,27 +4,12 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.folia"
-
-repositories {
-}
-
 dependencies {
-    implementation(api(project(":Auspice:game:bukkit:api")))
-    implementation(api(project(":Auspice:game:bukkit:folia:bootstrap")))
-
-    // Engines
-    implementation(libs.xseries)
-    implementation(libs.yamlengine)
-    implementation(libs.caffeine)
-    implementation(libs.guava)
-
-    // ClassPath Libs
+    api(project(":Auspice:game:bukkit-api"))
 
     // https://github.com/PaperMC/Folia/blob/master/README.md#the-new-rules
     // https://github.com/PaperMC/Folia
     compileOnly(libs.server.folia)
-    compileOnly(libs.annotations.jetbrains)
 }
 
 def targetJavaVersion = 21

@@ -5,8 +5,8 @@ import net.aurika.abstraction.ScopedObject;
 import net.aurika.config.functional.ConfigFunctional;
 import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
 import net.aurika.config.scope.ConfigScope;
-import net.aurika.namespace.nested.NamespaceNested;
-import net.aurika.namespace.nested.NestedNamespace;
+import net.aurika.common.key.namespace.nested.NamespaceNested;
+import net.aurika.common.key.namespace.nested.NestedNamespace;
 
 public interface ConfigMacro extends ConfigFunctional, ScopedObject, NamespaceNested {
 

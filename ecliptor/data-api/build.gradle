@@ -4,13 +4,14 @@ plugins {
 }
 
 dependencies {
-    api(project(":annotation"))
-    api(project(":aurika:dependency"))
-    api(project(":property"))
-    api(project(":validate"))
-    api(project(":util:function"))
-    api(project(":util:math"))
-    api(project(":util:string"))
+    api(project(":common:annotation"))
+    api(project(":common:data-api"))
+    api(project(":common:dependency"))
+    api(project(":common:property"))
+    api(project(":common:validate"))
+    api(project(":common:function"))
+    api(project(":common:util:math"))
+    api(project(":common:util:string"))
 
     api(libs.kyori.advntr.key)
     api(libs.kyori.advntr.nbt)

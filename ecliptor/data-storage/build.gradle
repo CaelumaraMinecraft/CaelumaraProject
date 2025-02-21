@@ -6,17 +6,18 @@ plugins {
 dependencies {
     api(project(":aurika:base"))
     api(project(":ecliptor:data-api"))
-    api(project(":aurika:dependency"))
-    api(project(":aurika:tasks"))
-    api(project(":util:file"))
-    api(project(":util:fn"))
-    api(project(":util:function"))
-    api(project(":util:gson"))
-    api(project(":util:string"))
-    api(project(":util:snakeyaml-ext"))
+    api(project(":common:dependency"))
+    api(project(":common:function"))
+    api(project(":common:nbt"))
+    api(project(":common:task"))
+    api(project(":common:snakeyaml"))
+    api(project(":common:util:file"))
+    api(project(":common:util:functional"))
+    api(project(":common:util:gson"))
+    api(project(":common:util:string"))
 
     api("de.tr7zw:item-nbt-api:2.14.1")  // TODO
 
-    compileOnly(libs.annotations.jetbrains)
-    compileOnly(libs.annotations.checker)
+    api(libs.annotations.jetbrains)
+    api(libs.annotations.checker)
 }

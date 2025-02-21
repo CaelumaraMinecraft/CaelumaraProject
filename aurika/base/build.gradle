@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":validate"))
-    api(project(":util"))
+    api(project(":common:validate"))
+    api(project(":common:util"))
 
     api(libs.caffeine)
     api(libs.kyori.advntr.api)

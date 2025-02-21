@@ -3,12 +3,16 @@ package top.mckingdom.auspice;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.addons.Addon;
+import org.kingdoms.commands.admin.CommandAdmin;
 import org.kingdoms.constants.metadata.KingdomMetadataHandler;
 import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.locale.LanguageManager;
 import org.kingdoms.main.Kingdoms;
+import top.mckingdom.auspice.commands.admin.relation.CommandAdminRelation;
 import top.mckingdom.auspice.configs.AuspiceLang;
 import top.mckingdom.auspice.configs.AuspicePlaceholder;
 import top.mckingdom.auspice.configs.CustomConfigValidators;
@@ -28,7 +32,6 @@ public final class AuspiceAddon extends JavaPlugin implements Addon {
     private static AuspiceAddon instance;
 
     private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();   // Land 的元数据存储器
-
 
     private static boolean enabled = false;
 
@@ -58,7 +61,6 @@ public final class AuspiceAddon extends JavaPlugin implements Addon {
 
         getLogger().info("Addon is loading...");
     }
-
 
     @Override
     public void onEnable() {
@@ -135,24 +137,28 @@ public final class AuspiceAddon extends JavaPlugin implements Addon {
         return super.getFile();
     }
 
-
     private void registerAllCommands() {
+        CommandAdmin ca = CommandAdmin.getInstance();
+
+        new CommandAdminRelation(ca);
     }
 
-
-    public static AuspiceAddon get() {
-        return instance;
+    public static @NotNull AuspiceAddon get() {
+        if (instance == null) {
+            throw new IllegalStateException("AuspiceAddon is not initialized yet.");
+        } else {
+            return instance;
+        }
     }
 
     public static boolean isAuspiceAddonEnabled() {
         return enabled;
     }
 
-
     /**
-     * Only use for this addon
+     * Builds a {@linkplain Namespace} for Auspice addon.
      */
-    public static Namespace buildNS(String s) {
+    public static @NotNull Namespace buildNS(String s) {
         return new Namespace("AuspiceAddon", s);
     }
 }

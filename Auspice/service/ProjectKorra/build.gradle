@@ -1,0 +1,12 @@
+plugins {
+    id("java")
+    alias(libs.plugins.kotlin)
+}
+
+dependencies {
+    compileOnly(project(":Auspice:service-api:bukkit-api"))
+
+    compileOnly(libs.server.craftbukkit)
+
+    compileOnly(fileTree("$rootDir/libs/plugins/ProjectKorra"))
+}

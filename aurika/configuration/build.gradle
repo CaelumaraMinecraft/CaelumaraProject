@@ -4,9 +4,10 @@ plugins {
 }
 
 dependencies {
-    api(project(":validate"))
+    api(project(":common:validate"))
     api(project(":aurika:base"))
+    api(project(":common:key"))
     api(project(":aurika:config-api"))
-    api(project(":util:snakeyaml-ext"))
-    api(project(":util:generics"))
+    api(project(":common:snakeyaml"))
+    api(project(":common:util:generics"))
 }

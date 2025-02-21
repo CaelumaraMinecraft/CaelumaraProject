@@ -1,7 +1,7 @@
 package net.aurika;
 
-import net.aurika.namespace.NSKey;
-import net.aurika.namespace.NSedKey;
+import net.aurika.common.key.namespace.NSKey;
+import net.aurika.common.key.namespace.NSedKey;
 import org.jetbrains.annotations.NotNull;
 
 public final class Aurika {

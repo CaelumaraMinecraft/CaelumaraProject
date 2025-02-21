@@ -1,0 +1,11 @@
+plugins {
+    id("java-library")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
+}
+
+dependencies {
+    api(project(":Auspice:game-api"))
+    api(libs.xseries)
+    compileOnly(libs.server.craftbukkit)
+}

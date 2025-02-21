@@ -8,7 +8,7 @@ dependencies {
 
 
     // 向外传递 API
-    implementation(api(project(":Auspice:game:bukkit:api")))
+    implementation(api(project(":Auspice:game:bukkit-api")))
 
 //    implementation(api(project(":Auspice:services:ServicesIO")))
 

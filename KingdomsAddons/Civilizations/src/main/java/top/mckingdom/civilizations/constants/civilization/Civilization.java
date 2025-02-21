@@ -3,6 +3,7 @@ package top.mckingdom.civilizations.constants.civilization;
 import org.bukkit.Location;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.base.KeyedKingdomsObject;
 import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.Nation;
@@ -19,40 +20,37 @@ import top.mckingdom.civilizations.data.managers.CivilizationManager;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public final class Civilization extends KeyedKingdomsObject<UUID> {
+public class Civilization extends KeyedKingdomsObject<UUID> {
 
 
     //======== Id =========
 
-    private UUID dataKey;
+    private final UUID dataKey;
 
     @Override
     public @NonNull UUID getKey() {
         return this.dataKey;
     }
 
-    public void setKey(UUID dataKey) {
-        this.dataKey = dataKey;
-    }
-
 
     //====================   Name   =====================
 
+    private@NotNull String name;
 
-    private String name;
+    @NotNull
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
+        Objects.requireNonNull(name, "name");
         this.name = name;
     }
-
 
 
     //====================   Tag   =====================
 
     private String tag;
-
 
     public String getTag() {
         return tag;
@@ -64,12 +62,15 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
 
     //=====================   Cores   =====================
     private Set<SimpleLocation> cores;
+
     public Set<SimpleLocation> getCores() {
         return cores;
     }
+
     public void setCores(Set<SimpleLocation> cores) {
         this.cores = cores;
     }
+
     /**
      * @param ignoreLimit 如果为true,则忽略文明的的核心上限强制添加
      */
@@ -82,64 +83,69 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
         this.cores.add(location);
     }
 
-
     private int maxCores;
+
     public int getMaxCores() {
         return maxCores;
     }
+
     public void setMaxCores(int maxCores) {
         this.maxCores = maxCores;
     }
 
 
-
     //=============   Nodes   =====================
 
     private Set<SimpleLocation> nodes;
+
     public Set<SimpleLocation> getNodes() {
         return nodes;
     }
+
     public void setNodes(Set<SimpleLocation> nodes) {
         this.nodes = nodes;
     }
 
     private int maxNodes;
+
     public int getMaxNodes() {
         return this.maxNodes;
     }
+
     public void setMaxNodes(int maxNodes) {
         this.maxNodes = maxNodes;
     }
 
 
-
-
     //====================   Lands   ======================
 
     private Set<SimpleChunkLocation> lands;
+
     public Set<SimpleChunkLocation> getLands() {
         return lands;
     }
+
     public void setLands(Set<SimpleChunkLocation> lands) {
         this.lands = lands;
     }
+
     public void addLand(SimpleChunkLocation location) {
         this.lands.add(location);
     }
 
     private int maxLands;
+
     public int getMaxLands() {
         return this.maxLands;
     }
+
     public void setMaxLands(int maxLands) {
         this.maxLands = maxLands;
     }
 
-
-
-
-//===========================   Homes   ===========================
+    //===========================   Homes   ===========================
     private Set<Location> homes;
+
     public Set<Location> getHomes() {
         return this.homes;
     }
@@ -147,6 +153,7 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
     public void setHomes(Set<Location> homes) {
         this.homes = homes;
     }
+
     /**
      * @param ignoreLimit 如果为true,则忽略文明的的home上限强制添加
      */
@@ -159,7 +166,9 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
             }
         }
     }
+
     private int maxHomes;
+
     public int getMaxHomes() {
         return maxHomes;
     }
@@ -169,14 +178,14 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
     }
 
 
-
     //=======================   Level   =====================
 
-
     private int level;
+
     public int getLevel() {
         return level;
     }
+
     public void setLevel(int level) {
         this.level = level;
     }
@@ -201,11 +210,9 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
 
     //=====================   Members   =====================
 
-
     private final Set<CivilizationMember<?>> topMembers;
 
     private int maxMembers;
-
 
     public Set<CivilizationMember<?>> unsafeGetMembers() {
         return this.topMembers;
@@ -225,7 +232,6 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
         return null;
     }
 
-
     public boolean isTopMember(MarkingCivilizationMember<?> m) {
         return this.topMembers.contains(m);
     }
@@ -235,7 +241,6 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
     }
 
     /**
-     *
      * @param o A civilization member object or a object included in civilization member
      */
     @Nullable
@@ -289,8 +294,6 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
         this.maxMembers = maxMembers;
     }
 
-
-
     //=============   Since   ======================
     private long since;
 
@@ -303,10 +306,7 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
     }
 
 
-
-
     //============== main =====================
-
 
     /**
      * 数据库已有的
@@ -342,10 +342,8 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
         this.since = since;
     }
 
-
     /**
      * new
-     *
      */
     public Civilization(String name) {
         this.dataKey = UUID.randomUUID();
@@ -387,12 +385,8 @@ public final class Civilization extends KeyedKingdomsObject<UUID> {
 
     }
 
-
     public static Civilization getCivilization(UUID uuid) {
         Objects.requireNonNull(uuid, "Civilization ID can not be null");
         return CivilizationManager.INSTANCE.getData(uuid);
     }
-
-
-
 }

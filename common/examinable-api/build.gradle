@@ -1,0 +1,10 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":common:validate"))
+    api(libs.kyori.examination.api)
+    compileOnlyApi(libs.annotations.jetbrains)
+}

@@ -1,0 +1,3 @@
+dependencies {
+    compileOnly(project(":Auspice:service-api:bukkit-api"))
+}

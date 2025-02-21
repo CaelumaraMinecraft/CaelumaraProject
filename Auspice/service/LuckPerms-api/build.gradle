@@ -1,0 +1,4 @@
+dependencies {
+//    compileOnlyApi("")  // TODO luckPerms api
+    compileOnlyApi(libs.yamlengine)  // TODO
+}

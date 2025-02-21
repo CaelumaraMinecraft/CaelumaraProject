@@ -1,9 +1,0 @@
-plugins {
-    id("java-library")
-}
-
-group = "top.auspice.folia.bootstrap"
-
-dependencies {
-    implementation(api(project(":Auspice:game:bukkit:api")))
-}

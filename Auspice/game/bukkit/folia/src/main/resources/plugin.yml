@@ -1,0 +1,6 @@
+name: Auspice
+author: Attaccer & McKingdom
+version: '${version}'
+main: loader.folia.net.aurika.auspice.FoliaAuspiceLoader
+api-version: '1.20.1'
+folia-supported: true

@@ -6,23 +6,9 @@ plugins {
 
 group = "top.auspice.spigot"
 
-repositories {
-}
-
-subprojects {
-}
-
 dependencies {
 
-    implementation(api(project(":Auspice:game:bukkit:craftbukkit")))  // Craftbukkit 的 API 适用于 Spigot
-
-    // Engines
-    implementation(libs.xseries)
-    implementation(libs.yamlengine)
-
-    implementation(libs.caffeine)
-    implementation(libs.guava)
-
+    api(project(":Auspice:game:bukkit:craftbukkit"))  // Craftbukkit 的 API 适用于 Spigot
 
     //Classpath libs
     compileOnly(libs.server.spigot)

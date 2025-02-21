@@ -4,12 +4,8 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-repositories {
-    maven { url 'https://repo.papermc.io/repository/maven-public/' }
-}
-
 dependencies {
-    api(project(":Auspice:proxy:api"))
+    api(project(":Auspice:proxy-api"))
 
     compileOnly(libs.server.velocity)
     annotationProcessor(libs.server.velocity)

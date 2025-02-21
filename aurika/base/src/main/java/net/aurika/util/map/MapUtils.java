@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Contract;
 
 import java.util.Map;
 
+@Deprecated
 public class MapUtils {
 
     @SuppressWarnings("unchecked")

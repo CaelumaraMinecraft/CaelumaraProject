@@ -1,0 +1,5 @@
+
+dependencies {
+    compileOnly(project(":Auspice:service-api:bukkit-api"))
+    compileOnly(fileTree("$rootDir/libs/services/CMI"))
+}

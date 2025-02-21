@@ -6,15 +6,9 @@ plugins {
 
 group = "top.auspice.purpur"
 
-//repositories {
-//
-//}
-
-//subprojects {
-//
-//}
-
 dependencies {
+
+    api(project(":Auspice:game:bukkit-api"))
 
     // 向外传递 API
     implementation(api(project(":Auspice:game:bukkit:paper")))  // Paper 的 API 均适用于 PurPur

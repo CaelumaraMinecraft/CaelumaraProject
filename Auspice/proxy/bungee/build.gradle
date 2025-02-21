@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
 
-    api(project(":Auspice:proxy:api"))
+    api(project(":Auspice:proxy-api"))
 
     compileOnly(libs.server.bungee)
     compileOnly(libs.kyori.advntr.platform.bungee) {

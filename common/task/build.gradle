@@ -1,0 +1,10 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":aurika:base"))
+    api(project(":common:util:reflection"))
+    compileOnlyApi(libs.annotations.jetbrains)
+}

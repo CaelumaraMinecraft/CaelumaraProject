@@ -1,0 +1,11 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":aurika:base"))  // TODO delete
+    api(project(":common:key"))
+    api(libs.asm.asm)
+    api(libs.asm.commons)
+}

@@ -1,0 +1,7 @@
+subprojects {
+    dependencies {
+        api(project(":Auspice:service:SkinsRestorer-api"))
+//        compileOnly("net.skinsrestorer:skinsrestorer-api:15.1.0")
+        compileOnly(fileTree("$rootDir/libs/plugins/SkinsRestorer"))
+    }
+}

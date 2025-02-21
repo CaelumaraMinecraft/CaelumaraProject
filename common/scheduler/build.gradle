@@ -1,0 +1,12 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":common:validate"))
+    api(project(":common:util:collection"))
+    api(project(":common:util:stacktrace"))
+    api(libs.kyori.advntr.key)
+    compileOnlyApi(libs.annotations.jetbrains)
+}

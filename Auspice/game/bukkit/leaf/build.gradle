@@ -7,7 +7,7 @@ plugins {
 dependencies {
 
     // 向外传递 API
-    implementation(api(project(":Auspice:game:bukkit:api")))
+    implementation(api(project(":Auspice:game:bukkit-api")))
 
     implementation(api(project(":Auspice:game:bukkit:paper")))  // Paper 的 API 均适用于 Leaf
 //    implementation(api(project(":Auspice:bukkit:spigot")))  // Spigot 的 API 均适用于 Leaf

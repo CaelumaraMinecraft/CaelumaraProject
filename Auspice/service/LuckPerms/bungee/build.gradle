@@ -1,0 +1,8 @@
+plugins {
+    alias(libs.plugins.kotlin)
+}
+
+dependencies {
+    compileOnly(project(":Auspice:service-api:bungee-api"))
+    compileOnly(fileTree("$rootDir/libs/plugins/LuckPerms-Bungee"))
+}

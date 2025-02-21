@@ -1,14 +1,29 @@
 package top.mckingdom.auspice.configs;
 
 import org.kingdoms.config.annotations.Comment;
+import org.kingdoms.constants.group.model.relationships.KingdomRelation;
 import org.kingdoms.locale.LanguageEntry;
 import org.kingdoms.locale.messenger.DefinedMessenger;
 
 public enum AuspiceLang implements DefinedMessenger {
-    COMMAND_ADMIN_DOMAIN_NAME("constants", 1, 2, 3),
-    COMMAND_ADMIN_DOMAIN_ALIASES("terra auspiceLand", 1, 2, 3),
-    COMMAND_ADMIN_DOMAIN_DESCRIPTION("{$s}Manage anything related to constants from auspice addon.", 1, 2, 3),
 
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_NOTFOUND_RELATION(MsgConst.E_COLOR + "Can not find relation attribute %relation_str%", 1, 2, 3, 4, 5),
+    /**
+     * When try to edit attributes for {@linkplain KingdomRelation#SELF} relation.
+     */
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_SELF_RELATION(MsgConst.E_COLOR + "Can not edit relation attribute for self relation", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_NOTFOUND_GROUP(MsgConst.E_COLOR + "Can not found group for: %name%", 1, 2, 3, 4, 5),
+
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_SINGLE_KINGDOM(MsgConst.P_COLOR + "Successfully set the relation attribute for kingdom %group-name% for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_SINGLE_NATION(MsgConst.P_COLOR + "Successfully set the relation attribute for nation %group-name% for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
+    @Deprecated
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_GROUP(MsgConst.P_COLOR + "Successfully set the relation attribute for all groups for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_KINGDOM(MsgConst.P_COLOR + "Successfully set the relation attribute for all kingdoms for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_NATION(MsgConst.P_COLOR + "Successfully set the relation attribute for all nations for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
+
+    COMMAND_ADMIN_DOMAIN_NAME("terra", 1, 2, 3),
+    COMMAND_ADMIN_DOMAIN_ALIASES("terra auspiceLand", 1, 2, 3),
+    COMMAND_ADMIN_DOMAIN_DESCRIPTION("Manage anything related to constants from auspice addon.", 1, 2, 3),
 
     COMMAND_ADMIN_DOMAIN_CATEGORY_NAME("category", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_CATEGORY_DESCRIPTION("{$s}Manage constants categories.", 1, 2, 3, 4),
@@ -18,14 +33,13 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_ADMIN_DOMAIN_CATEGORY_SET_SUCCESS("{$p}The constants category of constants %location% has been changed from %old-category% to %new-category%.", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_DOMAIN_CATEGORY_SET_FAILED_NOT_CLAIMED("{$e}The constants is not claimed, you can't set category of this constants.", 1, 2, 3, 4, 5, 6),
 
-
     COMMAND_ADMIN_DOMAIN_CONTRACTION_NAME("contraction", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_DESCRIPTION("{$s}Manage constants categories.", 1, 2, 3, 4),
 
     COMMAND_ADMIN_DOMAIN_CONTRACTION_GET_SUCCESS_HEAD("{$sep}&l-------=( {$sep}%kingdom% {$p}Land contractions {$sep})=-------", 1, 2, 3, 4, 5, 6),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_GET_SUCCESS_BODY(
             "  {$s}%contraction%:" +
-            "\n    &7%players%",
+                    "\n    &7%players%",
             1, 2, 3, 4, 5, 6
     ),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_GET_SUCCESS_END("{$p}&l---------------------------------------------------", 1, 2, 3, 4, 5, 6),
@@ -33,13 +47,9 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_ADMIN_DOMAIN_CONTRACTION_SET_SUCCESS("{$p}The constants contractions of constants %location% has been changed from %old-contraction% to %new-contraction%.", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_SET_FAILED_NOT_CLAIMED("{$e}The constants is not claimed, you can't allocate contractions of this constants.", 1, 2, 3, 4, 5, 6),
 
-
-
-
     COMMAND_DOMAIN_NAME("constants", 1, 2),
     COMMAND_DOMAIN_ALIASES("terra landControl", 1, 2),
     COMMAND_DOMAIN_DESCRIPTION("{$s}Control the anything of a constants.", 1, 2),
-
 
     COMMAND_DOMAIN_CATEGORY_NAME("category", 1, 2, 3),
     COMMAND_DOMAIN_CATEGORY_ALIASES("category", 1, 2, 3),
@@ -58,7 +68,6 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_DOMAIN_CATEGORY_SET_FAILED_OTHER_KINGDOM("{$e}Cat not change other kingdom's constants category.", 1, 2, 3, 4, 5),
     COMMAND_DOMAIN_CATEGORY_SET_FAILED_NOT_CLAIMED("{$e}Cat not change constants category in not claimed constants.", 1, 2, 3, 4, 5),
 
-
     COMMAND_DOMAIN_CONTRACTION_NAME("contraction", 1, 2, 3),
     COMMAND_DOMAIN_CONTRACTION_DESCRIPTION("{$s}Manage constants contractions.", 1, 2, 3),
     COMMAND_DOMAIN_CONTRACTION_GET_ALIASES("see", 1, 2, 3, 4),
@@ -67,7 +76,7 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_DOMAIN_CONTRACTION_GET_SUCCESS_HEAD("{$sep}-------=( {$p}Land contractions {$sep})=-------", 1, 2, 3, 4, 5),
     COMMAND_DOMAIN_CONTRACTION_GET_SUCCESS_BODY(
             "  {$s}%contraction%: " +
-            "\n    &7%players%",
+                    "\n    &7%players%",
             1, 2, 3, 4, 5
     ),
     COMMAND_DOMAIN_CONTRACTION_GET_SUCCESS_END("{$p}+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+", 1, 2, 3, 4, 5),
@@ -82,8 +91,6 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_DOMAIN_CONTRACTION_SET_FAILED_OTHER_KINGDOM("{$e}You can not allocation contractions for other kingdom's constants!", 1, 2, 3, 4),
     COMMAND_DOMAIN_CONTRACTION_SET_FAILED_NOT_CLAIMED("{$e}This constants isn't claimed!", 1, 2, 3, 4),
 
-
-
     COMMAND_TRANSFER_MEMBER_DESCRIPTION("{$s}Transfer members of your kingdom to another kingdom.", 1, 3),
     COMMAND_TRANSFER_MEMBER_USAGE("{$usage}transferMember <YourKingdomMember> <Kingdom>", 1, 3),
     COMMAND_TRANSFER_MEMBER_FAILED_OTHER_KINGDOM("{$e}You cannot transfer members of other kingdom.", 1, 3, 4),
@@ -94,11 +101,8 @@ public enum AuspiceLang implements DefinedMessenger {
 
     LANDS_ELYTRA_PROTECTION("{$e}You can't fly with elytra in this kingdom's constants", 1),
 
-
     SENDER_ONLY_CONSOLE("{$e}This command can only be executed from the console."),
-    SENDER_ONLY_PLAYER("{$e}This command can only be executed from a player.")
-
-    ;
+    SENDER_ONLY_PLAYER("{$e}This command can only be executed from a player.");
 
     private final LanguageEntry languageEntry;
     private final String defaultValue;

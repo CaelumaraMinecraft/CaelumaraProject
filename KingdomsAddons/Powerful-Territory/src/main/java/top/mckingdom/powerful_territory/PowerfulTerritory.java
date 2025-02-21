@@ -13,21 +13,20 @@ import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.locale.LanguageManager;
 import org.kingdoms.main.Kingdoms;
-import top.mckingdom.auspice.commands.admin.relation_attribute.CommandAdminRelationAttribute;
 import top.mckingdom.powerful_territory.commands.admin.land.CommandAdminLand;
 import top.mckingdom.powerful_territory.commands.general.land.CommandLand;
 import top.mckingdom.powerful_territory.configs.PowerfulTerritoryConfig;
 import top.mckingdom.powerful_territory.configs.PowerfulTerritoryLang;
 import top.mckingdom.powerful_territory.configs.PowerfulTerritoryPlaceholders;
-import top.mckingdom.powerful_territory.data.Categories;
-import top.mckingdom.powerful_territory.data.Contractions;
-import top.mckingdom.powerful_territory.data.LandCategoryMetaHandler;
-import top.mckingdom.powerful_territory.data.LandContractionsMetaHandler;
 import top.mckingdom.powerful_territory.constants.invade_protection.StandardInvadeProtection;
 import top.mckingdom.powerful_territory.constants.land_categories.LandCategoryRegistry;
 import top.mckingdom.powerful_territory.constants.land_categories.StandardLandCategory;
 import top.mckingdom.powerful_territory.constants.land_contractions.LandContractionRegistry;
 import top.mckingdom.powerful_territory.constants.land_contractions.std.StandardLandContraction;
+import top.mckingdom.powerful_territory.data.Categories;
+import top.mckingdom.powerful_territory.data.Contractions;
+import top.mckingdom.powerful_territory.data.LandCategoryMetaHandler;
+import top.mckingdom.powerful_territory.data.LandContractionsMetaHandler;
 import top.mckingdom.powerful_territory.managers.BeaconEffectsManager;
 import top.mckingdom.powerful_territory.managers.BoatUseManager;
 import top.mckingdom.powerful_territory.managers.ElytraManager;
@@ -68,7 +67,6 @@ public final class PowerfulTerritory extends JavaPlugin implements Addon {
         StandardInvadeProtection.init();
         StandardLandCategory.init();
         StandardLandContraction.init();
-
     }
 
     @Override
@@ -100,16 +98,11 @@ public final class PowerfulTerritory extends JavaPlugin implements Addon {
         return "powerful-territory";
     }
 
-
     @NotNull
     @Override
     public File getFile() {
         return super.getFile();
     }
-
-
-
-
 
     public void registerAllEvents() {
 
@@ -122,7 +115,7 @@ public final class PowerfulTerritory extends JavaPlugin implements Addon {
         }
         if (
                 KingdomsConfig.Claims.BEACON_PROTECTED_EFFECTS.getManager().getBoolean()
-                && PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS.getManager().getBoolean()
+                        && PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS.getManager().getBoolean()
         ) {
             registerEvents(new BeaconEffectsManager());
             EntityPotionEffectEvent.getHandlerList().unregister(Kingdoms.get());
@@ -130,7 +123,6 @@ public final class PowerfulTerritory extends JavaPlugin implements Addon {
         if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT.getManager().getBoolean()) {
             registerEvents(new BoatUseManager());
         }
-
     }
 
     private void registerEvents(Listener listener) {
@@ -142,13 +134,9 @@ public final class PowerfulTerritory extends JavaPlugin implements Addon {
         Categories.initialize();
         Contractions.initialize();
 
-
-        new CommandAdminRelationAttribute(CommandAdmin.getInstance());
         new CommandLand();
         new CommandAdminLand(CommandAdmin.getInstance());
-
     }
-
 
     public void registerAllMetadataHandlers() {
         KingdomMetadataRegistry mr = Kingdoms.get().getMetadataRegistry();
@@ -158,22 +146,20 @@ public final class PowerfulTerritory extends JavaPlugin implements Addon {
                 LandContractionsMetaHandler.INSTANCE
         ));
         landMetadataHandlers.forEach(mr::register);
-
     }
 
-
-
-
-
-    public LandCategoryRegistry getLandCategoryRegistry() {
+    public @NotNull LandCategoryRegistry getLandCategoryRegistry() {
         return this.landCategoryRegistry;
     }
-    public LandContractionRegistry getLandContractionRegistry() {
-        return landContractionRegistry;
+
+    public @NotNull LandContractionRegistry getLandContractionRegistry() {
+        return this.landContractionRegistry;
     }
 
-    public static PowerfulTerritory get() {
+    public static @NotNull PowerfulTerritory get() {
+        if (instance == null) {
+            throw new IllegalStateException("PowerfulTerritory has not been initialized yet.");
+        }
         return instance;
     }
-
 }

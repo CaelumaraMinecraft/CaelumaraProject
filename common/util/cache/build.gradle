@@ -1,0 +1,10 @@
+plugins {
+    id("java-library")
+    id("maven-publish")
+}
+
+dependencies {
+    api(project(":common:validate"))
+    api(libs.caffeine)
+    compileOnlyApi(libs.annotations.jetbrains)
+}

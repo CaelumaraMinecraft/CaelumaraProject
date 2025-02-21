@@ -4,9 +4,9 @@ plugins {
 //    alias(libs.plugins.shadow)
 }
 
-description = "一个占位符 API, 拥有强大的上下文系统"
+description = "一个占位符 API, 上下文系统"
 
 dependencies {
-    api(project(":validate"))
+    api(project(":common:validate"))
     compileOnly(libs.annotations.checker)
 }

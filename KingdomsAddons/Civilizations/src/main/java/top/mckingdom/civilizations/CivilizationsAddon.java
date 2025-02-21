@@ -6,8 +6,6 @@ import org.kingdoms.addons.Addon;
 import org.kingdoms.constants.namespace.Namespace;
 import top.mckingdom.civilizations.config.CivilizationsAddonConfig;
 import top.mckingdom.civilizations.constants.civilization.member.CivilizationMemberTypeRegistry;
-import top.mckingdom.civilizations.constants.civilization.member.types.CivilizationMemberTypeNation;
-import top.mckingdom.civilizations.constants.civilization.permission.StandardCivilizationPermission;
 import top.mckingdom.civilizations.constants.civilization.relation.StandardCivilizationRelation;
 
 import java.io.File;
@@ -65,7 +63,7 @@ public class CivilizationsAddon extends JavaPlugin implements Addon {
 
     private static void init() {
         CivilizationMemberTypeRegistry.registerDefaults();
-        CivilizationsKP.init();
+        GroupExt.init();
     }
     private static void reloadConfigurationThings() {
         StandardCivilizationRelation.init();
