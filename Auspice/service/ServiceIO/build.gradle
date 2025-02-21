@@ -1,13 +1,12 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
-    id("java")
+    id("aurika.repos")
     alias(libs.plugins.kotlin)
 }
 
 repositories {
-    maven {
-        name = "thenextlvlReleases"
-        url = "https://repo.thenextlvl.net/releases"
-    }
+    AurikaExtReposKt.thenextlvl_releases(it)
 }
 
 dependencies {

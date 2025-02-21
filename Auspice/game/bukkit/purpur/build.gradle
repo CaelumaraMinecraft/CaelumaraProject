@@ -1,10 +1,15 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
+    id("aurika.repos")
     id("java-library")
     alias(libs.plugins.kotlin)
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.purpur"
+repositories {
+    AurikaExtReposKt.PurpurMC_snapshots(it)
+}
 
 dependencies {
 
@@ -17,8 +22,7 @@ dependencies {
 
 
     // Engines
-    implementation(libs.xseries)
-    implementation(libs.yamlengine)
+    compileOnly(libs.xseries)
 
     implementation(libs.caffeine)
     implementation(libs.guava)
@@ -28,13 +32,8 @@ dependencies {
     compileOnly(libs.server.purpur)
     compileOnly(libs.bungee.chat)
 
-//    compileOnly("org.purpurmc.purpur:purpur-api:1.21.4-R0.1-SNAPSHOT")
-
-    compileOnly(fileTree("$rootDir/libs/servers/purpur"))
-
-    compileOnly(libs.annotations.checker)
-    compileOnly(libs.annotations.jetbrains)
-
+    compileOnlyApi(libs.annotations.checker)
+    compileOnlyApi(libs.annotations.jetbrains)
 }
 
 def targetJavaVersion = 21
@@ -59,7 +58,6 @@ tasks {
         kotlinOptions {
             jvmTarget = 17
         }
-
     }
 
     compileJava {
@@ -90,13 +88,11 @@ tasks {
 //                "checker-qual-3.46.0.jar",
 //                "snakeyaml-2.2.jar"
 //        )
-
     }
 
     jar {
         enabled = false
     }
-
 }
 
 processResources {

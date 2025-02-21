@@ -1,22 +1,16 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
+    id("aurika.repos")
     id("java-library")
 }
 
 repositories {
-    maven {
-        name = "essentials-repo"
-        url = "https://repo.essentialsx.net/releases/"
-    }
-
-    maven {
-        name = "essentials-snapshots"
-        url = "https://nexus.scarsz.me/content/groups/public/"
-    }
+    AurikaExtReposKt.essentials_releases(it)
+    AurikaExtReposKt.essentials_snapshots(it)
 }
 
 dependencies {
     compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly(libs.server.spigot)
     compileOnly("net.essentialsx:EssentialsX:2.20.1")
-//    compileOnly(fileTree("$rootDir/libs/plugins/Essentials"))
 }

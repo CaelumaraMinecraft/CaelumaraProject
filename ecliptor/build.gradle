@@ -32,8 +32,6 @@ dependencies {
     api(project(":common:validate"))
     api(project(":common:util:math"))
 
-    api("de.tr7zw:item-nbt-api:2.14.1")  // TODO
-
     api(libs.kyori.advntr.key)
     api(libs.kyori.advntr.nbt)
     api(libs.gson)

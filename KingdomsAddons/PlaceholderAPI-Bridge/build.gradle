@@ -1,4 +1,3 @@
-
 dependencies {
     compileOnly(project(":KingdomsAddons:Auspice"))
     compileOnly(libs.service.placeholderapi)

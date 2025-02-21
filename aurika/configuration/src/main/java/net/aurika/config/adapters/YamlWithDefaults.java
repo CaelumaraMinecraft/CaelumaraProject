@@ -13,11 +13,11 @@ import net.aurika.config.accessor.YamlClearlyConfigAccessor;
 import net.aurika.config.profile.managers.ConfigManager;
 import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.importers.YamlImporter;
-import net.aurika.util.snakeyaml.common.SimpleWriter;
-import net.aurika.util.snakeyaml.validation.CustomNodeValidators;
-import net.aurika.util.snakeyaml.validation.NodeValidator;
-import net.aurika.util.snakeyaml.validation.ValidationFailure;
-import net.aurika.util.snakeyaml.validation.Validator;
+import net.aurika.common.snakeyaml.common.SimpleWriter;
+import net.aurika.common.snakeyaml.validation.CustomNodeValidators;
+import net.aurika.common.snakeyaml.validation.NodeValidator;
+import net.aurika.common.snakeyaml.validation.ValidationFailure;
+import net.aurika.common.snakeyaml.validation.Validator;
 import top.auspice.utils.AuspiceLogger;
 
 import java.io.*;

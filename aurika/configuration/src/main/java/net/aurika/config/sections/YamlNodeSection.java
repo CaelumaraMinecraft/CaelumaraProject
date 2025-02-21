@@ -1,13 +1,13 @@
 package net.aurika.config.sections;
 
+import net.aurika.common.snakeyaml.nodes.NodesKt;
 import net.aurika.validate.Validate;
 import net.aurika.config.path.ConfigEntry;
 import net.aurika.config.path.ConfigEntryMap;
 import net.aurika.config.sections.format.YamlConfigSectionFormat;
 import net.aurika.config.sections.label.Label;
 import net.aurika.util.generics.Generics;
-import net.aurika.util.snakeyaml.nodes.NodeUtils;
-import net.aurika.util.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.nodes.NodeUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.Contract;
@@ -185,7 +185,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
                 NodeUtils.putNode(mappingRoot, key, subNode);
             }
 
-            Object this_parsed = NodesKt.getParsed(rootNode);
+            Object this_parsed = NodesKt.parsed(rootNode);
             if (this_parsed instanceof Map) {
                 ((Map<String, Object>) this_parsed).put(key, parsed);
             }
@@ -334,7 +334,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
             for (NodeTuple tuple : mappingNode.getValue()) {
                 String key = NodeUtils.getScalarValue(tuple.getKeyNode());
                 if (key != null) {
-                    sets.put(key, NodesKt.getParsed(tuple.getValueNode()));
+                    sets.put(key, NodesKt.parsed(tuple.getValueNode()));
                 }
             }
         }
@@ -354,7 +354,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
                     for (NodeTuple tuple : ((MappingNode) node).getValue()) {
                         String key = NodeUtils.getScalarValue(tuple.getKeyNode());
                         if (key != null) {
-                            container.put(key, NodesKt.getParsed(tuple.getValueNode()));   // put(!null, nullable)
+                            container.put(key, NodesKt.parsed(tuple.getValueNode()));   // put(!null, nullable)
                             $$get_sets(container, tuple.getValueNode(), depthCount - 1);
                         }
                     }
@@ -374,7 +374,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
         if (index < path.length) {
             if (node != null) {
                 if (index + 1 == path.length) {
-                    return NodesKt.getParsed(node);
+                    return NodesKt.parsed(node);
                 }
 
                 if (node instanceof MappingNode) {
@@ -414,7 +414,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
                 if (key != null) {
                     path = path.append(key);
                     node = tuple.getValueNode();
-                    values.put(path, NodesKt.getParsed(node));
+                    values.put(path, NodesKt.parsed(node));
                 }
             }
         }
@@ -429,7 +429,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     @Override
     public @Nullable Object getParsed(@NonNull String @NotNull [] path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node);
+        return node == null ? null : NodesKt.parsed(node);
     }
 
     @Override
@@ -510,48 +510,48 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     @Override
     public @Nullable Boolean getBoolean(String @NotNull ... path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Boolean b ? b : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Boolean b ? b : null;
     }
 
     @Override
     public @Nullable Byte getByte(String @NotNull ... path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.byteValue() : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Number b ? b.byteValue() : null;
     }
 
     @Override
     public @Nullable Short getShort(String @NotNull ... path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.shortValue() : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Number b ? b.shortValue() : null;
     }
 
     @Override
     public @Nullable Integer getInteger(String @NotNull ... path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.intValue() : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Number b ? b.intValue() : null;
     }
 
     @Override
     public @Nullable Long getLong(@NotNull String @NotNull [] path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.longValue() : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Number b ? b.longValue() : null;
     }
 
     @Override
     public @Nullable Float getFloat(@NotNull String @NotNull [] path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.floatValue() : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Number b ? b.floatValue() : null;
     }
 
     @Override
     public @Nullable Double getDouble(@NotNull String @NotNull [] path) {
         Node node = this.findNode(path);
-        return node == null ? null : NodesKt.getParsed(node) instanceof Number b ? b.doubleValue() : null;
+        return node == null ? null : NodesKt.parsed(node) instanceof Number b ? b.doubleValue() : null;
     }
 
     @Override
     public @Nullable Boolean getBoolean() {
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Boolean ? (Boolean) parsed : null;
     }
 
@@ -573,31 +573,31 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @Nullable Short getShort() {
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Number ? ((Number) parsed).shortValue() : null;
     }
 
     @Override
     public @Nullable Integer getInteger() {
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Number ? ((Number) parsed).intValue() : null;
     }
 
     @Override
     public @Nullable Long getLong() {
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Number ? ((Number) parsed).longValue() : null;
     }
 
     @Override
     public @Nullable Float getFloat() {
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Number ? ((Number) parsed).floatValue() : null;
     }
 
     @Override
     public @Nullable Double getDouble() {
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Number ? ((Number) parsed).doubleValue() : null;
     }
 
@@ -611,7 +611,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
         if (this.root instanceof SequenceNode seqRoot) {
             return NodeUtils.deepGetParsed(seqRoot);
         }
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof List ? (List<?>) parsed : null;
     }
 
@@ -620,7 +620,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
         if (this.root instanceof MappingNode mapRoot) {
             return NodeUtils.deepGetParsed(mapRoot);
         }
-        Object parsed = NodesKt.getParsed(this.root);
+        Object parsed = NodesKt.parsed(this.root);
         return parsed instanceof Map ? (Map<?, ?>) parsed : null;
     }
 
@@ -648,7 +648,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     @Override
     public @Nullable Object getParsedValue() {
-        return NodesKt.getParsed(this.root);
+        return NodesKt.parsed(this.root);
     }
 
     @Override
@@ -793,14 +793,14 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
             List<Object> parsed = new ArrayList<>();
 
             for (Node value : seqNode.getValue()) {
-                parsed.add(NodesKt.getParsed(value));
+                parsed.add(NodesKt.parsed(value));
             }
 
             return new MemoryConfigSection(currentPath, parent, parsed);
         }
 
         if (node instanceof ScalarNode scaNode) {
-            return new MemoryConfigSection(currentPath, parent, NodesKt.getParsed(scaNode), scaNode.getValue());
+            return new MemoryConfigSection(currentPath, parent, NodesKt.parsed(scaNode), scaNode.getValue());
         }
 
         if (node instanceof AnchorNode anchorNode) {

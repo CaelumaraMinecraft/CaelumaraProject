@@ -16,8 +16,6 @@ dependencies {
     api(project(":common:util:gson"))
     api(project(":common:util:string"))
 
-    api("de.tr7zw:item-nbt-api:2.14.1")  // TODO
-
     api(libs.annotations.jetbrains)
     api(libs.annotations.checker)
 }

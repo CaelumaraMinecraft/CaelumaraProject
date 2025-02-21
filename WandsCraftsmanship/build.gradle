@@ -1,4 +1,7 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
+    id("aurika.repos")
     id("java-library")
     alias(libs.plugins.shadow)
     alias(libs.plugins.kotlin)
@@ -10,19 +13,14 @@ description = "Wands plugin"
 
 repositories {
     mavenCentral()
-    maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-    }
-    maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
-    }
+    mavenLocal()
+    AurikaExtReposKt.sonatype(it)
+    AurikaExtReposKt.SpigotMC_snapshots(it)
+    AurikaExtReposKt.CodeMC(it)
 }
 
 dependencies {
     compileOnly(libs.server.craftbukkit)
-
     compileOnly(project(":Auspice:game:bukkit-api"))  // 这个 addon 仅适用于 CraftBukkit 及其下游分支平台
 }
 
@@ -46,19 +44,17 @@ tasks {
         }
     }
 
-
-    jar {
-        destinationDirectory = file("$rootDir/output")
-    }
-
+//    jar {
+//        destinationDirectory = file("$rootDir/output")
+//    }
 }
 
 
 processResources {
     def props = [version: version]
-    inputs.properties props
-    filteringCharset "UTF-8"
+    inputs.properties(props)
+    filteringCharset("UTF-8")
     filesMatching("plugin.yml") {
-        expand props
+        expand(props)
     }
 }

@@ -1,4 +1,5 @@
 plugins {
+    id("aurika.repos")
     id("java-library")
     alias(libs.plugins.kotlin)
     alias(libs.plugins.shadow)
@@ -13,22 +14,7 @@ allprojects {
         gradlePluginPortal()
 
         maven {
-            name = "SpigotMC-snapshots"
-            url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-        }
-
-        maven {
-            name = "PaperMC-repo"
-            url = "https://repo.papermc.io/repository/maven-public/"
-        }
-
-        maven {
-            name = "PurpurMC-snapshots"
-            url = "https://repo.purpurmc.org/snapshots"
-        }
-
-        maven {
-            name = "nostal-ink-snapshots"
+            name = "nostal-snapshots"
             url = "https://maven.nostal.ink/repository/maven-snapshots/"
         }
 
@@ -43,11 +29,6 @@ allprojects {
         }
 
         maven {
-            name = "essentials"
-            url = "https://repo.essentialsx.net/releases/"
-        }
-
-        maven {
             name = "rosewood-dev"
             url = "https://repo.rosewooddev.io/repository/public/"
         }
@@ -58,21 +39,11 @@ allprojects {
         }
 
         maven {
-            name = "auxilor"
-            url = ("https://repo.auxilor.io/repository/maven-public/")
-        }
-
-        maven {
             name = "jitpack-io"
             url = "https://jitpack.io"
             content {
                 includeGroupByRegex("com\\.github\\..*")
             }
-        }
-
-        maven {
-            name = "CodeMC"
-            url = uri("https://repo.codemc.io/repository/maven-public/")
         }
     }
 }

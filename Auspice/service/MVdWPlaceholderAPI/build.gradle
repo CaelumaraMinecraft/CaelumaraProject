@@ -1,3 +1,13 @@
+import net.aurika.gradle.AurikaExtReposKt
+
+plugins {
+    id("aurika.repos")
+}
+
+repositories {
+    AurikaExtReposKt.mvdw_software(it)
+}
+
 dependencies {
     compileOnly(project(":Auspice:service-api:bukkit-api"))
 //    compileOnly("be.maximvdw:MVdWPlaceholderAPI:3.1.1")

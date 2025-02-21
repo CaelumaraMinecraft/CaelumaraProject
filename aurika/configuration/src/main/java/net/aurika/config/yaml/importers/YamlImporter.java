@@ -6,7 +6,7 @@ import net.aurika.config.adapters.YamlContainer;
 import net.aurika.config.adapters.YamlImportDeclaration;
 import net.aurika.config.adapters.YamlModule;
 import net.aurika.config.yaml.snakeyaml.common.NodeReplacer;
-import net.aurika.util.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.nodes.NodeUtils;
 
 import java.util.Map;
 

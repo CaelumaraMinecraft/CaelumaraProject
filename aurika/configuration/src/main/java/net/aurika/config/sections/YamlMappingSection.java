@@ -1,10 +1,10 @@
 package net.aurika.config.sections;
 
 import net.aurika.common.annotations.data.LateInit;
+import net.aurika.common.snakeyaml.nodes.NodesKt;
 import net.aurika.config.path.ConfigEntryMap;
 import net.aurika.config.sections.label.Label;
-import net.aurika.util.snakeyaml.nodes.NodeUtils;
-import net.aurika.util.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.nodes.NodeUtils;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -154,7 +154,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
     @Override
     public @Nullable Object getSet(@NotNull String @NotNull [] path) {
         Node found = findNode(path);
-        return found != null ? NodesKt.getParsed(found) : null;
+        return found != null ? NodesKt.parsed(found) : null;
     }
 
     @Override
@@ -175,7 +175,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
     @Override
     public Object getParsedValue() {
         Node root = getRootNode();
-        return root != null ? NodesKt.getParsed(root) : null;
+        return root != null ? NodesKt.parsed(root) : null;
     }
 
     @Override
@@ -205,7 +205,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
     @Override
     public @Nullable Object getParsed(@NotNull String @NotNull [] path) {
         Node found = findNode(path);
-        return found != null ? NodesKt.getParsed(found) : null;
+        return found != null ? NodesKt.parsed(found) : null;
     }
 
     @Override
@@ -213,7 +213,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
         Node found = findNode(path);
         Object parsed;
         if (found != null) {
-            parsed = NodesKt.getParsed(found);
+            parsed = NodesKt.parsed(found);
             if (type.isInstance(parsed)) {
                 return type.cast(parsed);
             }

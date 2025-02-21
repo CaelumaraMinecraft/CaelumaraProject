@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.internal.AbstractDependencyFilter
-
 plugins {
     id("java-library")
     alias(libs.plugins.kotlin) apply false
@@ -78,19 +76,5 @@ subprojects {
                 expand(props)
             }
         }
-    }
-}
-
-class DependencyFilter extends AbstractDependencyFilter {
-    DependencyFilter(Project project) {
-        super(project)
-    }
-
-    @Override
-    protected void resolve(
-            Set<ResolvedDependency> dependencies,
-            Set<ResolvedDependency> includedDependencies,
-            Set<ResolvedDependency> excludedDependencies
-    ) {
     }
 }

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
 import org.snakeyaml.engine.v2.nodes.*;
-import net.aurika.util.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.nodes.NodeUtils;
 
 public enum YamlConfigSectionFormat implements ConfigSectionFormat {
     /**
