@@ -9,6 +9,6 @@ repositories {
 }
 
 dependencies {
-    compileOnlyApi("net.skinsrestorer:skinsrestorer-api:15.5.2")
+//    compileOnlyApi("net.skinsrestorer:skinsrestorer-api:15.5.2")  TODO
     compileOnlyApi(fileTree("$rootDir/libs/plugins/SkinsRestorer"))
 }

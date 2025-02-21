@@ -1,4 +1,8 @@
 dependencies {
+
+}
+
+dependencies {
     compileOnly(project(":Auspice:service-api:bukkit-api"))
     compileOnly("io.th0rgal:Oraxen:1.127.0")
 }
