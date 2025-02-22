@@ -26,14 +26,14 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_KINGDOM(P_COLOR + "Successfully set the relation attribute for all kingdoms for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_NATION(P_COLOR + "Successfully set the relation attribute for all nations for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
 
-    COMMAND_ADMIN_REGISTRY_LOCK_FAILED_NOT_LOCKABLE(E_COLOR + "The registry is not lockable."),
-    COMMAND_ADMIN_REGISTRY_LOCK_FAILED_EXCEPTION(E_COLOR + "Error when lock the registry."),
-    COMMAND_ADMIN_REGISTRY_LOCK_SUCCESS(P_COLOR + "Successful lock the registry."),
+    COMMAND_ADMIN_REGISTRY_LOCK_FAILED_NOT_LOCKABLE(E_COLOR + "The registry is not lockable.", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_LOCK_FAILED_EXCEPTION(E_COLOR + "Error when lock the registry.", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_LOCK_SUCCESS(P_COLOR + "Successful lock the registry.", 1, 2, 3, 4),
 
-    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NOT_UNREGISTERABLE(E_COLOR + "Registry cannot unregister."),
-    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NO_KEY(E_COLOR + "Cannot find key: '" + VAR_KEY + "' in this registry."),
-    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY(E_COLOR + "Wrong key: '" + VAR_KEY + "'."),
-    COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS(P_COLOR + "Success unregister entry: '" + VAR_KEY + "' in this registry."),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NOT_UNREGISTERABLE(E_COLOR + "Registry cannot unregister.", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NO_KEY(E_COLOR + "Cannot find key: '" + VAR_KEY + "' in this registry.", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY(E_COLOR + "Wrong key: '" + VAR_KEY + "'.", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS(P_COLOR + "Success unregister entry: '" + VAR_KEY + "' in this registry.", 1, 2, 3, 4),
 
     COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_NOOP(E_COLOR + "Lose registry operator.", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_UNKNOWN_OP(E_COLOR + "Unknown registry operator: %" + VAR_OP + "%.", 1, 2, 3, 4, 5),
