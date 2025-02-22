@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils;
+package top.mckingdom.auspice.util;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import static top.mckingdom.auspice.utils.MessengerUtil.Companion.constants;
+import static top.mckingdom.auspice.util.MessengerUtil.Companion.constants;
 
 public class MessengerUtil {
 

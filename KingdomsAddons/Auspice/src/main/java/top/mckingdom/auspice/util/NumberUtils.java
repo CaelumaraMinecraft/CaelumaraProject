@@ -1,7 +1,4 @@
-package top.mckingdom.auspice.utils;
-
-import org.kingdoms.constants.group.Kingdom;
-import top.mckingdom.auspice.costs.statistics.CurrencyEntry;
+package top.mckingdom.auspice.util;
 
 public class NumberUtils {
 

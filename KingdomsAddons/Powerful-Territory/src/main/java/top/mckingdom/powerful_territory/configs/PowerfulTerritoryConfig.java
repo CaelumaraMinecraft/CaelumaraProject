@@ -9,7 +9,7 @@ import org.kingdoms.main.Kingdoms;
 import org.kingdoms.utils.config.ConfigPath;
 import org.kingdoms.utils.config.adapters.YamlResource;
 import org.kingdoms.utils.string.Strings;
-import top.mckingdom.powerful_territory.PowerfulTerritory;
+import top.mckingdom.powerful_territory.PowerfulTerritoryAddon;
 
 public enum PowerfulTerritoryConfig implements EnumConfig {
 
@@ -30,7 +30,7 @@ public enum PowerfulTerritoryConfig implements EnumConfig {
     ;
 
     public static final YamlResource POWERFUL_TERRITORY =
-            new YamlResource(PowerfulTerritory.get(),
+            new YamlResource(PowerfulTerritoryAddon.get(),
                     Kingdoms.getPath("powerful-territory.yml").toFile(),
                     "powerful-territory.yml").load();
 

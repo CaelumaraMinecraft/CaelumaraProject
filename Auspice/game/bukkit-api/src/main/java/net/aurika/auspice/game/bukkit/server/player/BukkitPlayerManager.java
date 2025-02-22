@@ -4,11 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.annotations.data.SyncedData;
-import top.auspice.bukkit.server.core.BukkitServer;
-import top.auspice.platform.bukkit.entity.BukkitPlayer;
-import top.auspice.server.player.PlayerManager;
-import top.auspice.utils.nonnull.NonNullMap;
-import top.auspice.utils.typemapping.TypeMappingCollection;
+import net.aurika.auspice.bukkit.server.core.BukkitServer;
+import net.aurika.auspice.platform.bukkit.entity.BukkitPlayer;
+import net.aurika.auspice.server.player.PlayerManager;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.utils.typemapping.TypeMappingCollection;
 
 import java.util.*;
 

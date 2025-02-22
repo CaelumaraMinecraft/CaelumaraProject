@@ -11,7 +11,7 @@ import org.snakeyaml.engine.v2.parser.ParserImpl;
 import org.snakeyaml.engine.v2.scanner.StreamReader;
 import net.aurika.config.sections.ConfigSection;
 import net.aurika.config.sections.YamlNodeSection;
-import top.auspice.utils.Validate;
+import net.aurika.auspice.utils.Validate;
 
 import java.io.File;
 import java.io.FileInputStream;

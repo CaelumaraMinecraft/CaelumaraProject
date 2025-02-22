@@ -2,8 +2,8 @@ package net.aurika.util.map;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.nonnull.NonNullMap;
-import top.auspice.utils.unsafe.reflection.ClassHierarchyWalker;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.utils.unsafe.reflection.ClassHierarchyWalker;
 
 import java.util.*;
 import java.util.function.Function;

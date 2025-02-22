@@ -1,9 +1,9 @@
 package net.aurika.auspice.wandscraftsmanship.constants.spells.types;
 
-import top.auspice.config.sections.interpreter.MapInterpreter;
-import top.auspice.config.sections.interpreter.SectionInterpreter;
-import top.auspice.config.translator.NamespaceTranslator;
-import top.auspice.key.NSedKey;
+import net.aurika.auspice.config.sections.interpreter.MapInterpreter;
+import net.aurika.auspice.config.sections.interpreter.SectionInterpreter;
+import net.aurika.auspice.config.translator.NamespaceTranslator;
+import net.aurika.auspice.key.NSedKey;
 import net.aurika.auspice.wandscraftsmanship.configs.WandsGlobalConfig;
 
 import java.util.Map;

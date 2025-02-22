@@ -3,9 +3,9 @@ package net.aurika.auspice.game.bukkit.server.location;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.bukkit.server.core.BukkitServer;
-import top.auspice.server.location.WorldRegistry;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.bukkit.server.core.BukkitServer;
+import net.aurika.auspice.server.location.WorldRegistry;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
 
 import java.util.ArrayList;
 import java.util.List;

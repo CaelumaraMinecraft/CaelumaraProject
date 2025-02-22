@@ -1,9 +1,9 @@
 package net.aurika.auspice.craftbukkit.loader;
 
-import top.auspice.api.user.AuspiceUser;
-import top.auspice.dependencies.classpath.BootstrapProvider;
-import top.auspice.dependencies.classpath.ClassPathAppender;
-import top.auspice.dependencies.classpath.ReflectionClassPathAppender;
+import net.aurika.auspice.api.user.AuspiceUser;
+import net.aurika.auspice.dependencies.classpath.BootstrapProvider;
+import net.aurika.auspice.dependencies.classpath.ClassPathAppender;
+import net.aurika.auspice.dependencies.classpath.ReflectionClassPathAppender;
 
 import java.nio.file.Path;
 import java.time.Duration;

@@ -14,7 +14,7 @@ import net.kyori.examination.Examinable;
 import net.kyori.examination.ExaminableProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.server.location.*;
+import net.aurika.auspice.server.location.*;
 
 import java.util.Map;
 import java.util.Objects;

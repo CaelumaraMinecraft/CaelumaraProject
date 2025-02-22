@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.auspice.game.bukkit.api.BukkitPluginAuspiceUser;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.diversity.StandardDiversity;
-import top.auspice.key.NSKey;
+import net.aurika.auspice.key.NSKey;
 
 public final class WandsCraftsmanship extends JavaPlugin implements BukkitPluginAuspiceUser {
     private static WandsCraftsmanship instance;

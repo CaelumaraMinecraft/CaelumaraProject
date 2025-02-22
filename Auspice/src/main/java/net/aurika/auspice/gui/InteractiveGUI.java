@@ -14,11 +14,11 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.auspice.gui.objects.GUIObject;
 import net.aurika.auspice.gui.objects.GUIOptionBuilder;
-import top.auspice.configs.texts.ContextualMessenger;
+import net.aurika.auspice.configs.texts.ContextualMessenger;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import top.auspice.main.BukkitAuspiceLoader;
-import top.auspice.managers.chat.ChatInputHandler;
+import net.aurika.auspice.main.BukkitAuspiceLoader;
+import net.aurika.auspice.managers.chat.ChatInputHandler;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -10,10 +10,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.configs.texts.AuspiceLang;
-import top.auspice.configs.texts.ContextualMessenger;
+import net.aurika.auspice.configs.texts.AuspiceLang;
+import net.aurika.auspice.configs.texts.ContextualMessenger;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
-import top.auspice.utils.enumeration.QuickEnumMap;
+import net.aurika.auspice.utils.enumeration.QuickEnumMap;
 
 import java.util.Collection;
 import java.util.Map;

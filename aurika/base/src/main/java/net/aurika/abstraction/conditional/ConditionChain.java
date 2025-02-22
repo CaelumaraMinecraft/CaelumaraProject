@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
 import net.aurika.util.Checker;
-import top.auspice.utils.conditions.ConditionProcessor;
+import net.aurika.auspice.utils.conditions.ConditionProcessor;
 
 import java.util.Collections;
 import java.util.Iterator;

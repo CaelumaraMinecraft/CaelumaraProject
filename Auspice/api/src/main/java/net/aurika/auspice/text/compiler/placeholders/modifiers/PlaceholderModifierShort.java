@@ -3,7 +3,7 @@ package net.aurika.auspice.text.compiler.placeholders.modifiers;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
-import top.auspice.utils.math.MathUtils;
+import net.aurika.auspice.utils.math.MathUtils;
 
 import java.util.Objects;
 

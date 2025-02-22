@@ -108,7 +108,7 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
 
         for (Task<C> element$iv : $this$forEach$iv) {
             T it = (T) element$iv;
-            Intrinsics.checkNotNull(it, "null cannot be cast to non-null type T of top.auspice.tasks.TaskRegistry.register$lambda$1");
+            Intrinsics.checkNotNull(it, "null cannot be cast to non-null type T of net.aurika.auspice.tasks.TaskRegistry.register$lambda$1");
             register(it);
         }
     }

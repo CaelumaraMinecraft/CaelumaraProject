@@ -5,8 +5,8 @@ import org.jetbrains.annotations.Nullable;
 import net.aurika.config.adapters.YamlImportDeclaration;
 import net.aurika.config.adapters.YamlModule;
 import net.aurika.config.adapters.YamlResource;
-import top.auspice.diversity.Diversity;
-import top.auspice.main.Auspice;
+import net.aurika.auspice.diversity.Diversity;
+import net.aurika.auspice.main.Auspice;
 
 import java.io.File;
 import java.util.Objects;

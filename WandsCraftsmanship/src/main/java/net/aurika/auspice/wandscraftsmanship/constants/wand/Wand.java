@@ -1,7 +1,7 @@
 package net.aurika.auspice.wandscraftsmanship.constants.wand;
 
 import org.bukkit.inventory.ItemStack;
-import top.auspice.data.Serializable;
+import net.aurika.auspice.data.Serializable;
 import net.aurika.auspice.wandscraftsmanship.constants.spells.objects.SpellObject;
 
 public interface Wand extends Serializable {

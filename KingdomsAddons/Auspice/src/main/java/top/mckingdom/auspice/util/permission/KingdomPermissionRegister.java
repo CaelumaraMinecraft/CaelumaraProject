@@ -1,9 +1,9 @@
-package top.mckingdom.auspice.utils.permissions;
+package top.mckingdom.auspice.util.permission;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.locale.messenger.DefinedMessenger;
-import top.mckingdom.auspice.utils.MessengerUtil;
+import top.mckingdom.auspice.util.MessengerUtil;
 
 public final class KingdomPermissionRegister {
 

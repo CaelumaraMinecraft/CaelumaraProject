@@ -3,7 +3,7 @@ package net.aurika.config.placeholder;
 import kotlin.collections.ArraysKt;
 import kotlin.ranges.RangesKt;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 /**
  * 分析占位符包围内的字符串 ("%%"内)

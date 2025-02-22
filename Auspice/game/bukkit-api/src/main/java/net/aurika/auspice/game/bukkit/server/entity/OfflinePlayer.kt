@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
 
-package top.auspice.bukkit.server.entity
+package net.aurika.auspice.bukkit.server.entity
 
 import org.bukkit.*
 import org.bukkit.OfflinePlayer

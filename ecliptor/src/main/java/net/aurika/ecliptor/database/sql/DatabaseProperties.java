@@ -14,7 +14,7 @@ import net.aurika.property.Property;
 import net.aurika.util.string.Strings;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
+import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
 
 import java.time.Duration;
 import java.util.*;

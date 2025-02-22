@@ -1,7 +1,7 @@
 package net.aurika.util.enumeration;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import top.auspice.utils.Pair;
+import net.aurika.auspice.utils.Pair;
 
 import java.util.*;
 

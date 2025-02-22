@@ -10,7 +10,7 @@ import net.aurika.config.profile.managers.ConfigManager;
 import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.config.yaml.importers.YamlImporter;
 import net.aurika.common.snakeyaml.common.SimpleWriter;
-import top.auspice.utils.AuspiceLogger;
+import net.aurika.auspice.utils.AuspiceLogger;
 
 import java.io.BufferedWriter;
 import java.io.File;

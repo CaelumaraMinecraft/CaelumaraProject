@@ -2,7 +2,7 @@ package net.aurika.auspice.server.player;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.checkerframework.annotations.SyncedData;
+import net.aurika.auspice.checkerframework.annotations.SyncedData;
 import net.aurika.auspice.server.entity.Player;
 
 import java.util.Collection;

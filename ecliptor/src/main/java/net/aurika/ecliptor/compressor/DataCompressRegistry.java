@@ -2,7 +2,7 @@ package net.aurika.ecliptor.compressor;
 
 import net.aurika.util.math.Avg;
 import net.aurika.util.unsafe.fn.Fn;
-import top.auspice.utils.HierarchalClassMap;
+import net.aurika.auspice.utils.HierarchalClassMap;
 
 import java.awt.*;
 import java.nio.ByteBuffer;

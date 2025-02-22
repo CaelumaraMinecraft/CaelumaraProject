@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils.permissions;
+package top.mckingdom.auspice.util.permission;
 
 import org.bukkit.entity.Player;
 import org.kingdoms.config.KingdomsConfig;

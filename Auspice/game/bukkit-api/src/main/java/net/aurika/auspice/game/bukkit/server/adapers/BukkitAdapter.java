@@ -6,12 +6,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.nbt.NBTConverter;
-import top.auspice.nbt.NBTTagConverterRegistry;
+import net.aurika.auspice.nbt.NBTConverter;
+import net.aurika.auspice.nbt.NBTTagConverterRegistry;
 import net.aurika.nbt.tag.NBTTag;
 import net.aurika.nbt.tag.NBTTagType;
-import top.auspice.platform.bukkit.location.BukkitWorld;
-import top.auspice.utils.unsafe.Fn;
+import net.aurika.auspice.platform.bukkit.location.BukkitWorld;
+import net.aurika.auspice.utils.unsafe.Fn;
 
 import java.util.Objects;
 

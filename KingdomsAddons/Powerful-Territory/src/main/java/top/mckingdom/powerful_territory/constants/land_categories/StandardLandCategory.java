@@ -6,8 +6,8 @@ import org.kingdoms.locale.Language;
 import org.kingdoms.locale.messenger.DefinedMessenger;
 import org.kingdoms.locale.messenger.Messenger;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
-import top.mckingdom.auspice.utils.MessengerUtil;
-import top.mckingdom.powerful_territory.PowerfulTerritory;
+import top.mckingdom.auspice.util.MessengerUtil;
+import top.mckingdom.powerful_territory.PowerfulTerritoryAddon;
 
 import java.util.Locale;
 
@@ -54,7 +54,7 @@ public class StandardLandCategory extends LandCategory {
     }
 
     private static LandCategory reg(String key, boolean editable) {
-        return register(PowerfulTerritory.buildNS(key), editable);
+        return register(PowerfulTerritoryAddon.buildNS(key), editable);
     }
 
     public static StandardLandCategory register(Namespace ns, boolean editable) {
@@ -70,7 +70,7 @@ public class StandardLandCategory extends LandCategory {
 
     protected static StandardLandCategory register(Namespace ns, boolean editable, DefinedMessenger nameMessenger, DefinedMessenger descriptionMessenger, DefinedMessenger loreMessenger) {
         StandardLandCategory landCategory = new StandardLandCategory(ns, editable, nameMessenger, descriptionMessenger, loreMessenger);
-        PowerfulTerritory.get().getLandCategoryRegistry().register(landCategory);
+        PowerfulTerritoryAddon.get().getLandCategoryRegistry().register(landCategory);
         return landCategory;
     }
 

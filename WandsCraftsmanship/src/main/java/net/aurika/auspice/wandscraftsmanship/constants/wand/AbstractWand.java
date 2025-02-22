@@ -2,7 +2,7 @@ package net.aurika.auspice.wandscraftsmanship.constants.wand;
 
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.data.database.dataprovider.SectionableDataSetter;
+import net.aurika.auspice.data.database.dataprovider.SectionableDataSetter;
 import net.aurika.auspice.wandscraftsmanship.constants.spells.objects.SpellObject;
 
 public abstract class AbstractWand implements Wand {

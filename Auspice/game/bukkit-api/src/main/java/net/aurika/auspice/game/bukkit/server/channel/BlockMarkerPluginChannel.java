@@ -1,7 +1,7 @@
 package net.aurika.auspice.game.bukkit.server.channel;
 
 import org.jetbrains.annotations.Unmodifiable;
-import top.auspice.server.location.BlockVector3;
+import net.aurika.auspice.server.location.BlockVector3;
 
 import java.util.Collections;
 import java.util.Map;

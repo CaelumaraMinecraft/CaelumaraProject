@@ -5,7 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.gui.objects.GUIObject;
-import top.auspice.configs.texts.Locale;
+import net.aurika.auspice.configs.texts.Locale;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 
 import java.io.File;

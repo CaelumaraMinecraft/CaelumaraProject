@@ -4,7 +4,7 @@ import jline.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.auspice.text.compiler.builders.TextObjectBuilder;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
-import top.auspice.utils.time.TimeFormatter;
+import net.aurika.auspice.utils.time.TimeFormatter;
 
 import java.util.Objects;
 

@@ -5,8 +5,8 @@ import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.Nation;
 import org.kingdoms.peacetreaties.data.WarPoint;
 import top.mckingdom.auspice.costs.statistics.CurrencyEntry;
-import top.mckingdom.auspice.utils.NumberUtils;
-import top.mckingdom.auspice.utils.RelatedKingdoms;
+import top.mckingdom.auspice.util.NumberUtils;
+import top.mckingdom.auspice.util.RelatedKingdoms;
 
 public final class StandardCurrencies {
     public static final KingdomBankCurrency KINGDOM_BANK = new KingdomBankCurrency();

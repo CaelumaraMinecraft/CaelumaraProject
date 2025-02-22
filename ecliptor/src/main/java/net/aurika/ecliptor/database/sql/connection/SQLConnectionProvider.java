@@ -10,10 +10,10 @@ import net.aurika.ecliptor.database.DatabaseType;
 import net.aurika.ecliptor.database.sql.schema.SQLSchemaProcessor;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.main.Auspice;
-import top.auspice.utils.logging.AuspiceLogger;
-import top.auspice.utils.unsafe.AutoCloseableUtils;
+import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
+import net.aurika.auspice.main.Auspice;
+import net.aurika.auspice.utils.logging.AuspiceLogger;
+import net.aurika.auspice.utils.unsafe.AutoCloseableUtils;
 
 import java.io.Closeable;
 import java.io.File;

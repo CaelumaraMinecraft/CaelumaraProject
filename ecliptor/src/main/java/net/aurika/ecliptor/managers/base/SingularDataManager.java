@@ -4,7 +4,7 @@ import net.aurika.ecliptor.centers.AurikaDataCenter;
 import net.aurika.ecliptor.database.base.SingularDatabase;
 import net.aurika.ecliptor.api.DataObject;
 import net.aurika.common.key.namespace.NSedKey;
-import top.auspice.utils.logging.AuspiceLogger;
+import net.aurika.auspice.utils.logging.AuspiceLogger;
 
 import java.util.Collection;
 import java.util.Collections;

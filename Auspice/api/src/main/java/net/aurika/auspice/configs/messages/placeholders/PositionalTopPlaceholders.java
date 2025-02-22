@@ -3,7 +3,7 @@ package net.aurika.auspice.configs.messages.placeholders;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.constants.top.TopData;
+import net.aurika.auspice.constants.top.TopData;
 import net.aurika.text.AuspiceLang;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
 import net.aurika.auspice.text.compiler.placeholders.PlaceholderParser;

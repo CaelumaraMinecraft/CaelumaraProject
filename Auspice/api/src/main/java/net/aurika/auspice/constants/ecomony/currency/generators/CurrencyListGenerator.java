@@ -1,7 +1,7 @@
 package net.aurika.auspice.constants.ecomony.currency.generators;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.config.sections.old.test_02.ConfigSection;
+import net.aurika.auspice.config.sections.old.test_02.ConfigSection;
 import net.aurika.auspice.constants.ecomony.currency.CurrencyType;
 import net.aurika.auspice.constants.ecomony.currency.CurrencyRegistry;
 import net.aurika.auspice.constants.ecomony.currency.bill.CurrencyEntryList;

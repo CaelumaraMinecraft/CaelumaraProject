@@ -13,9 +13,9 @@ import net.aurika.config.validation.ConfigValidator;
 import net.aurika.config.validation.ConfigValidators;
 import net.aurika.config.validation.ValidationContext;
 import net.aurika.util.Checker;
-import top.auspice.utils.Validate;
-import top.auspice.utils.unsafe.Fn;
-import top.auspice.utils.number.Numbers;
+import net.aurika.auspice.utils.Validate;
+import net.aurika.auspice.utils.unsafe.Fn;
+import net.aurika.auspice.utils.number.Numbers;
 
 import java.util.*;
 

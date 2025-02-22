@@ -225,7 +225,7 @@ public class Validator {
         if (standardType != null) {
             validator = new net.aurika.common.snakeyaml.validation.StandardValidator(standardType, minLen, maxLen);
         } else {
-            validator = new top.auspice.config.yaml.snakeyaml.validation.ExternalConfigValidator(type);
+            validator = new net.aurika.auspice.config.yaml.snakeyaml.validation.ExternalConfigValidator(type);
         }
 
         return new UnionValidator(new ConfigValidator[]{validator, StandardValidator.NULL});

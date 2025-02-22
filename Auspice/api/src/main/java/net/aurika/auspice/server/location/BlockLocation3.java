@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.ecliptor.object.DataStringRepresentation;
 import net.aurika.auspice.server.core.Server;
-import top.auspice.utils.string.CommaDataSplitStrategy;
+import net.aurika.auspice.utils.string.CommaDataSplitStrategy;
 
 import java.util.Objects;
 

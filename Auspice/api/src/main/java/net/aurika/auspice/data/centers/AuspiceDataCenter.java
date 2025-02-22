@@ -21,11 +21,11 @@ import net.aurika.ecliptor.api.DataObject;
 import net.aurika.common.key.namespace.NSedKey;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.dependencies.Dependency;
+import net.aurika.auspice.dependencies.Dependency;
 import net.aurika.auspice.main.Auspice;
-import top.auspice.utils.ZeroArrays;
+import net.aurika.auspice.utils.ZeroArrays;
 import net.aurika.auspice.utils.logging.AuspiceLogger;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.io.BufferedReader;
 import java.io.IOException;

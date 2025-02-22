@@ -1,10 +1,10 @@
 package net.aurika.auspice.text.compiler.container;
 
-import top.auspice.utils.Pair;
+import net.aurika.auspice.utils.Pair;
 import net.aurika.auspice.text.TextObject;
 import net.aurika.text.placeholders.context.MessagePlaceholderProvider;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.conditions.ConditionProcessor;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.conditions.ConditionProcessor;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils;
+package top.mckingdom.auspice.util;
 
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;

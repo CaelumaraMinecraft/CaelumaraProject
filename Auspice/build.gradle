@@ -13,9 +13,10 @@ description = "A minecraft library"
 
 subprojects {
     repositories {
+        AurikaExtReposKt.sonatype(it)
+        AurikaExtReposKt.minecraft(it)
         AurikaExtReposKt.SpigotMC_snapshots(it)
         AurikaExtReposKt.PaperMC_repo(it)
-        AurikaExtReposKt.PurpurMC_snapshots(it)
     }
 }
 
@@ -71,11 +72,11 @@ tasks {
         archiveBaseName = "Auspice-MultiPlatform"
         archiveClassifier = null
 
-        relocate("kotlin", "top.auspice.libs.kotlin")
-        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
-        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
-        relocate("com.google.common", "top.auspice.libs.google.common")
-        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
+        relocate("kotlin", "net.aurika.auspice.libs.kotlin")
+        relocate("com.github.benmanes.caffeine", "net.aurika.auspice.libs.caffeine")
+        relocate("org.snakeyaml.engine", "net.aurika.auspice.libs.snakeyaml")
+        relocate("com.google.common", "net.aurika.auspice.libs.google.common")
+        relocate("com.cryptomorin.xseries", "net.aurika.auspice.libs.xserise")
 
 
 //        exclude(

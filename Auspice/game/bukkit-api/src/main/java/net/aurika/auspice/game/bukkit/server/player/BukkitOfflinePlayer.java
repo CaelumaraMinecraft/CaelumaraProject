@@ -7,7 +7,7 @@ import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.server.player.OfflinePlayer;
+import net.aurika.auspice.server.player.OfflinePlayer;
 
 import java.time.Duration;
 import java.time.Instant;

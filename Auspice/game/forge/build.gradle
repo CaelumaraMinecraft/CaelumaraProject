@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.forge"
+group = "net.aurika.auspice.forge"
 
 repositories {
 }

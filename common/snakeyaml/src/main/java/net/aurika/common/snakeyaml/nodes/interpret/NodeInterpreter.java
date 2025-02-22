@@ -7,9 +7,9 @@ import org.snakeyaml.engine.v2.common.ScalarStyle;
 import org.snakeyaml.engine.v2.nodes.Node;
 import org.snakeyaml.engine.v2.nodes.ScalarNode;
 import org.snakeyaml.engine.v2.nodes.SequenceNode;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.compiler.math.MathCompiler;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.ArrayList;
 import java.util.List;

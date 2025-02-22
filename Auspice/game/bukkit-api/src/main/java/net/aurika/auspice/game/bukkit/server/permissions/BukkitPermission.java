@@ -1,9 +1,9 @@
 package net.aurika.auspice.game.bukkit.server.permissions;
 
 import org.jetbrains.annotations.NotNull;
-import top.auspice.permission.AbstractPermission;
-import top.auspice.permission.Permission;
-import top.auspice.permission.PermissionDefaultValue;
+import net.aurika.auspice.permission.AbstractPermission;
+import net.aurika.auspice.permission.Permission;
+import net.aurika.auspice.permission.PermissionDefaultValue;
 
 public class BukkitPermission extends AbstractPermission implements Permission {
     public BukkitPermission(@NotNull String namespace, @NotNull String[] name, @NotNull PermissionDefaultValue defaultValue) {

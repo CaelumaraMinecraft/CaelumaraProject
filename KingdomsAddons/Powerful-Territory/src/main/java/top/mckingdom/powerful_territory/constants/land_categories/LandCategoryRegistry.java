@@ -26,7 +26,7 @@ public class LandCategoryRegistry extends NamespacedRegistry<LandCategory> imple
     @Override
     public final void register(LandCategory landCategory) {
         super.register(landCategory);
-        a.put(landCategory.getConfigName(), landCategory);
+        a.put(landCategory.toConfigKey(), landCategory);
 //        StandardLandCategory.class.cast(null);
     }
 

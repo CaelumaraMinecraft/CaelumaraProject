@@ -1,8 +1,16 @@
-dependencies {
+import net.aurika.gradle.AurikaExtReposKt
 
+plugins {
+    id("aurika.repos")
+}
+
+repositories {
+    AurikaExtReposKt.oraxen_releases(it)
+    AurikaExtReposKt.oraxen_snapshots(it)
 }
 
 dependencies {
     compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly("io.th0rgal:Oraxen:1.127.0")
+//    compileOnly("io.th0rgal:Oraxen:1.189.0")
+    compileOnlyApi(fileTree("$rootDir/libs/plugins/Oraxen"))
 }

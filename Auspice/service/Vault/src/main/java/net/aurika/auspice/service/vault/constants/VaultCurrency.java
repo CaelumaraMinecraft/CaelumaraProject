@@ -2,11 +2,11 @@ package net.aurika.auspice.service.vault.constants;
 
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.constants.ecomony.currency.AbstractNumberCurrency;
-import top.auspice.constants.ecomony.currency.bill.CurrencyEntry;
+import net.aurika.auspice.constants.ecomony.currency.AbstractNumberCurrency;
+import net.aurika.auspice.constants.ecomony.currency.bill.CurrencyEntry;
 import net.aurika.namespace.NSedKey;
 import net.aurika.auspice.service.vault.ServiceVault;
-import top.auspice.utils.math.MathUtils;
+import net.aurika.auspice.utils.math.MathUtils;
 
 public final class VaultCurrency extends AbstractNumberCurrency<OfflinePlayer> {
     @NotNull

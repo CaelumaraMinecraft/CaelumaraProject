@@ -3,7 +3,7 @@ package top.mckingdom.powerful_territory;
 import java.util.logging.Logger;
 
 public class PowerfulTerritoryLogger {
-    private static Logger logger = PowerfulTerritory.get().getLogger();
+    private static Logger logger = PowerfulTerritoryAddon.get().getLogger();
 
     public static void error(Object o) {
         logger.severe(o.toString());

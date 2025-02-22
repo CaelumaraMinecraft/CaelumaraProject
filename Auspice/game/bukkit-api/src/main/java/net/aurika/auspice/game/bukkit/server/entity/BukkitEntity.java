@@ -3,11 +3,11 @@ package net.aurika.auspice.game.bukkit.server.entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.text.compiler.TextObject;
-import top.auspice.bukkit.server.core.BukkitServer;
+import net.aurika.auspice.bukkit.server.core.BukkitServer;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
-import top.auspice.server.core.Server;
-import top.auspice.server.entity.Entity;
-import top.auspice.server.location.Location;
+import net.aurika.auspice.server.core.Server;
+import net.aurika.auspice.server.entity.Entity;
+import net.aurika.auspice.server.location.Location;
 
 import java.util.Objects;
 import java.util.UUID;

@@ -11,7 +11,7 @@ import net.aurika.auspice.configs.messages.SimpleMessenger;
 import net.aurika.auspice.translation.messenger.Messenger;
 import net.aurika.auspice.configs.messages.context.MessageContextImpl;
 import net.aurika.auspice.server.entity.Player;
-import top.auspice.utils.PlayerUtils;
+import net.aurika.auspice.utils.PlayerUtils;
 import net.aurika.util.number.AnyNumber;
 
 import java.time.Duration;

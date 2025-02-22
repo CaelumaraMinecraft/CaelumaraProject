@@ -1,7 +1,7 @@
 package top.mckingdom.civilizations;
 
-import top.mckingdom.auspice.utils.permissions.KingdomPermissionRegister;
-import top.mckingdom.auspice.utils.permissions.XKingdomPermission;
+import top.mckingdom.auspice.util.permission.KingdomPermissionRegister;
+import top.mckingdom.auspice.util.permission.XKingdomPermission;
 
 public final class GroupExt {
 

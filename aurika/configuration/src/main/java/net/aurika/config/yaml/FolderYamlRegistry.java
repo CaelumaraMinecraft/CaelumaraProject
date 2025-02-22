@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.config.adapters.YamlContainer;
 import net.aurika.config.adapters.YamlFile;
 import net.aurika.config.adapters.YamlResource;
-import top.auspice.utils.Pair;
-import top.auspice.main.Auspice;
-import top.auspice.utils.filesystem.FolderRegistry;
+import net.aurika.auspice.utils.Pair;
+import net.aurika.auspice.main.Auspice;
+import net.aurika.auspice.utils.filesystem.FolderRegistry;
 
 import java.io.File;
 import java.net.URI;

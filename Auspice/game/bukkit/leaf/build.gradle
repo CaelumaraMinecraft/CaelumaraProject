@@ -1,7 +1,14 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
+    id("aurika.repos")
     id("java-library")
     alias(libs.plugins.kotlin)
     alias(libs.plugins.shadow)
+}
+
+repositories {
+    AurikaExtReposKt.nostal_snapshots(it)
 }
 
 dependencies {
@@ -71,12 +78,12 @@ tasks {
         archiveBaseName = "Auspice-Leaf"
         archiveClassifier = null
 
-        relocate("kotlin", "top.auspice.libs.kotlin")
-        relocate("com.github.benmanes.caffeine", "top.auspice.libs.caffeine")
-        relocate("org.snakeyaml.engine", "top.auspice.libs.snakeyaml")
-        relocate("com.google.common", "top.auspice.libs.google.common")
-        relocate("com.cryptomorin.xseries", "top.auspice.libs.xserise")
-        relocate("org.objectweb.asm", "top.auspice.libs.asm")
+        relocate("kotlin", "net.aurika.auspice.libs.kotlin")
+        relocate("com.github.benmanes.caffeine", "net.aurika.auspice.libs.caffeine")
+        relocate("org.snakeyaml.engine", "net.aurika.auspice.libs.snakeyaml")
+        relocate("com.google.common", "net.aurika.auspice.libs.google.common")
+        relocate("com.cryptomorin.xseries", "net.aurika.auspice.libs.xserise")
+        relocate("org.objectweb.asm", "net.aurika.auspice.libs.asm")
 
 //        exclude(
 //                "kotlin-stdlib-2.0.20-Beta2.jar",

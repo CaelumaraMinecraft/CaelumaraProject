@@ -5,10 +5,10 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.common.annotations.data.Immutable;
-import top.auspice.utils.Pair;
-import top.auspice.utils.Validate;
-import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.Pair;
+import net.aurika.auspice.utils.Validate;
+import net.aurika.auspice.utils.arrays.ArrayUtils;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.*;
 

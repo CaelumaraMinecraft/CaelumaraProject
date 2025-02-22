@@ -19,11 +19,6 @@ allprojects {
         }
 
         maven {
-            name = "minecraft-repo"
-            url = "https://libraries.minecraft.net"
-        }
-
-        maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/groups/public/"
         }

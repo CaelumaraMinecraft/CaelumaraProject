@@ -27,27 +27,27 @@ shadowJar {
     archiveFileName = 'Auspice-sponge'
 
     dependencies {
-//        include(dependency('top.auspice:.*'))
+//        include(dependency('net.aurika.auspice:.*'))
     }
 
-    relocate "net.kyori.adventure", "top.auspice.libs.adventure"
-    relocate 'net.kyori.event', 'top.auspice.libs.eventbus'
-    relocate 'com.github.benmanes.caffeine', 'top.auspice.libs.caffeine'
-    relocate 'okio', 'top.auspice.libs.okio'
-    relocate 'okhttp3', 'top.auspice.libs.okhttp3'
-    relocate 'net.bytebuddy', 'top.auspice.libs.bytebuddy'
-    relocate 'me.lucko.commodore', 'top.auspice.libs.commodore'
-    relocate 'org.mariadb.jdbc', 'top.auspice.libs.mariadb'
-    relocate 'com.mysql', 'top.auspice.libs.mysql'
-    relocate 'org.postgresql', 'top.auspice.libs.postgresql'
-    relocate 'com.zaxxer.hikari', 'top.auspice.libs.hikari'
-    relocate 'com.mongodb', 'top.auspice.libs.mongodb'
-    relocate 'org.bson', 'top.auspice.libs.bson'
-    relocate 'redis.clients.jedis', 'top.auspice.libs.jedis'
-    relocate 'io.nats.client', 'top.auspice.libs.nats'
-    relocate 'com.rabbitmq', 'top.auspice.libs.rabbitmq'
-    relocate 'org.apache.commons.pool2', 'top.auspice.libs.commonspool2'
-    relocate 'ninja.leaping.configurate', 'top.auspice.libs.configurate'
+    relocate "net.kyori.adventure", "net.aurika.auspice.libs.adventure"
+    relocate 'net.kyori.event', 'net.aurika.auspice.libs.eventbus'
+    relocate 'com.github.benmanes.caffeine', 'net.aurika.auspice.libs.caffeine'
+    relocate 'okio', 'net.aurika.auspice.libs.okio'
+    relocate 'okhttp3', 'net.aurika.auspice.libs.okhttp3'
+    relocate 'net.bytebuddy', 'net.aurika.auspice.libs.bytebuddy'
+    relocate 'me.lucko.commodore', 'net.aurika.auspice.libs.commodore'
+    relocate 'org.mariadb.jdbc', 'net.aurika.auspice.libs.mariadb'
+    relocate 'com.mysql', 'net.aurika.auspice.libs.mysql'
+    relocate 'org.postgresql', 'net.aurika.auspice.libs.postgresql'
+    relocate 'com.zaxxer.hikari', 'net.aurika.auspice.libs.hikari'
+    relocate 'com.mongodb', 'net.aurika.auspice.libs.mongodb'
+    relocate 'org.bson', 'net.aurika.auspice.libs.bson'
+    relocate 'redis.clients.jedis', 'net.aurika.auspice.libs.jedis'
+    relocate 'io.nats.client', 'net.aurika.auspice.libs.nats'
+    relocate 'com.rabbitmq', 'net.aurika.auspice.libs.rabbitmq'
+    relocate 'org.apache.commons.pool2', 'net.aurika.auspice.libs.commonspool2'
+    relocate 'ninja.leaping.configurate', 'net.aurika.auspice.libs.configurate'
 }
 
 artifacts {

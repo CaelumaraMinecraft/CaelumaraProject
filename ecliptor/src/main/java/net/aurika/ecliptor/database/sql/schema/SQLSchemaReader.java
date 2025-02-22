@@ -1,7 +1,7 @@
 package net.aurika.ecliptor.database.sql.schema;
 
-import top.auspice.utils.nonnull.NonNullList;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.utils.nonnull.NonNullList;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
 
 import java.io.BufferedReader;
 import java.io.IOException;

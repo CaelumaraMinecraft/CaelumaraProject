@@ -18,7 +18,7 @@ import net.aurika.common.snakeyaml.validation.CustomNodeValidators;
 import net.aurika.common.snakeyaml.validation.NodeValidator;
 import net.aurika.common.snakeyaml.validation.ValidationFailure;
 import net.aurika.common.snakeyaml.validation.Validator;
-import top.auspice.utils.AuspiceLogger;
+import net.aurika.auspice.utils.AuspiceLogger;
 
 import java.io.*;
 import java.nio.file.Files;

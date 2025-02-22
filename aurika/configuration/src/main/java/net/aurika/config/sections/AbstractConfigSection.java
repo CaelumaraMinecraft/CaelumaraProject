@@ -13,11 +13,11 @@ import net.aurika.auspice.text.compiler.TextCompilerSettings;
 import net.aurika.auspice.text.compiler.TextObject;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
 import net.aurika.util.Checker;
-import top.auspice.utils.Generics;
-import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.compiler.math.MathCompiler;
-import top.auspice.utils.map.MapUtils;
+import net.aurika.auspice.utils.Generics;
+import net.aurika.auspice.utils.arrays.ArrayUtils;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.map.MapUtils;
 
 import java.time.Duration;
 import java.util.*;

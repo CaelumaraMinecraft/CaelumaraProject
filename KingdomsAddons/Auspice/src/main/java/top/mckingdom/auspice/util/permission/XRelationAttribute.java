@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils.permissions;
+package top.mckingdom.auspice.util.permission;
 
 import org.kingdoms.constants.group.Group;
 import org.kingdoms.constants.group.Kingdom;

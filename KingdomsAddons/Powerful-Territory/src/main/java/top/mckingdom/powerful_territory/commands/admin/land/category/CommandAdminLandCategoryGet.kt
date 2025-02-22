@@ -7,7 +7,7 @@ import org.kingdoms.commands.KingdomsParentCommand
 import org.kingdoms.constants.land.Land
 import org.kingdoms.constants.player.KingdomPlayer
 import top.mckingdom.powerful_territory.configs.PowerfulTerritoryLang
-import top.mckingdom.powerful_territory.data.getCategory
+import top.mckingdom.powerful_territory.data.category
 
 class CommandAdminLandCategoryGet(parent: KingdomsParentCommand) : KingdomsCommand("get", parent) {
     override fun execute(context: CommandContext): CommandResult {
@@ -23,10 +23,11 @@ class CommandAdminLandCategoryGet(parent: KingdomsParentCommand) : KingdomsComma
         }
         val x = land.location.x
         val z = land.location.z
-        PowerfulTerritoryLang.COMMAND_ADMIN_DOMAIN_CATEGORY_GET_SUCCESS.sendMessage(player,
+        PowerfulTerritoryLang.COMMAND_ADMIN_DOMAIN_CATEGORY_GET_SUCCESS.sendMessage(
+            player,
             "location", "$x $z",
-            "category", land.getCategory()!!.getName(KingdomPlayer.getKingdomPlayer(player).language)
-            )
+            "category", land.category?.getName(KingdomPlayer.getKingdomPlayer(player).language)
+        )
 
         return CommandResult.FAILED
     }

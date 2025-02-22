@@ -10,9 +10,9 @@ import net.aurika.config.sections.ConfigSection;
 import net.aurika.common.snakeyaml.validation.ValidationFailure;
 import net.aurika.common.snakeyaml.validation.ValidationFailure.Severity;
 import net.aurika.common.snakeyaml.validation.Validator;
-import top.auspice.configs.texts.AuspiceLang;
-import top.auspice.main.Auspice;
-import top.auspice.utils.AuspiceLogger;
+import net.aurika.auspice.configs.texts.AuspiceLang;
+import net.aurika.auspice.main.Auspice;
+import net.aurika.auspice.utils.AuspiceLogger;
 
 import java.io.File;
 import java.io.IOException;

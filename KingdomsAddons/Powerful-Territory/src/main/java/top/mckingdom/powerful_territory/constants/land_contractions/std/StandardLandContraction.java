@@ -8,8 +8,8 @@ import org.kingdoms.data.database.dataprovider.SectionableDataGetter;
 import org.kingdoms.locale.Language;
 import org.kingdoms.locale.messenger.DefinedMessenger;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
-import top.mckingdom.auspice.utils.MessengerUtil;
-import top.mckingdom.powerful_territory.PowerfulTerritory;
+import top.mckingdom.auspice.util.MessengerUtil;
+import top.mckingdom.powerful_territory.PowerfulTerritoryAddon;
 import top.mckingdom.powerful_territory.constants.land_contractions.ContractionLandProperties;
 import top.mckingdom.powerful_territory.constants.land_contractions.LandContraction;
 
@@ -19,11 +19,11 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 public class StandardLandContraction extends LandContraction {
 
-    public static final StandardLandContraction MANAGE_CONTRACTIONS = register(PowerfulTerritory.buildNS("MANAGE_CONTRACTIONS"), (x) -> null);
-    public static final StandardLandContraction LAND_RULES = register(PowerfulTerritory.buildNS("LAND_RULES"), (x) -> null);
-    public static final StandardLandContraction TURRETS = register(PowerfulTerritory.buildNS("TURRETS"), (x) -> null);
-    public static final StandardLandContraction FARMING = register(PowerfulTerritory.buildNS("FARMING"), (x) -> null);
-    public static final StandardLandContraction BUILD = register(PowerfulTerritory.buildNS("BUILD"), (x) -> null);
+    public static final StandardLandContraction MANAGE_CONTRACTIONS = register(PowerfulTerritoryAddon.buildNS("MANAGE_CONTRACTIONS"), (x) -> null);
+    public static final StandardLandContraction LAND_RULES = register(PowerfulTerritoryAddon.buildNS("LAND_RULES"), (x) -> null);
+    public static final StandardLandContraction TURRETS = register(PowerfulTerritoryAddon.buildNS("TURRETS"), (x) -> null);
+    public static final StandardLandContraction FARMING = register(PowerfulTerritoryAddon.buildNS("FARMING"), (x) -> null);
+    public static final StandardLandContraction BUILD = register(PowerfulTerritoryAddon.buildNS("BUILD"), (x) -> null);
     public static final StandardLandContraction SHOP;
 
 
@@ -52,7 +52,7 @@ public class StandardLandContraction extends LandContraction {
     public static StandardLandContraction register(Namespace ns, Function<SectionableDataGetter, ContractionLandProperties> deserializeProperties) {
         String key = ns.getKey().toLowerCase(Locale.ENGLISH).replace('_', '-');
         StandardLandContraction c = new StandardLandContraction(ns, MessengerUtil.createMessenger(new String[]{"powerful-territory", "constants-contraction", key}, key), deserializeProperties);
-        PowerfulTerritory.get().getLandContractionRegistry().register(c);
+        PowerfulTerritoryAddon.get().getLandContractionRegistry().register(c);
         return c;
     }
 
@@ -62,7 +62,7 @@ public class StandardLandContraction extends LandContraction {
 
     static {
         if (Bukkit.getPluginManager().getPlugin("QuickShop") != null) {
-            SHOP = register(PowerfulTerritory.buildNS("SHOP"), (x) -> null);
+            SHOP = register(PowerfulTerritoryAddon.buildNS("SHOP"), (x) -> null);
         } else {
             SHOP = null;
         }

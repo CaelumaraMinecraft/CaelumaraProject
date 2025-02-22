@@ -6,13 +6,13 @@ import com.cryptomorin.xseries.reflection.minecraft.MinecraftMapping;
 import com.cryptomorin.xseries.reflection.minecraft.MinecraftPackage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.nbt.NBTConverter;
-import top.auspice.nbt.NBTTagConverterRegistry;
-import top.auspice.nbt.NBTTagId;
+import net.aurika.auspice.nbt.NBTConverter;
+import net.aurika.auspice.nbt.NBTTagConverterRegistry;
+import net.aurika.auspice.nbt.NBTTagId;
 import net.aurika.nbt.tag.NBTTag;
 import net.aurika.nbt.tag.NBTTagCompound;
 import net.aurika.nbt.tag.NBTTagType;
-import top.auspice.utils.unsafe.Fn;
+import net.aurika.auspice.utils.unsafe.Fn;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -22,7 +22,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static top.auspice.utils.reflection.Reflect.getDeclaredField;
+import static net.aurika.auspice.utils.reflection.Reflect.getDeclaredField;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public final class BukkitNBTAdapter {

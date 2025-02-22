@@ -2,10 +2,10 @@ package net.aurika.auspice.service.api;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.configs.texts.MessageHandler;
-import top.auspice.utils.logging.AuspiceLogger;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
+import net.aurika.auspice.configs.texts.MessageHandler;
+import net.aurika.auspice.utils.logging.AuspiceLogger;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.Arrays;
 import java.util.function.Supplier;

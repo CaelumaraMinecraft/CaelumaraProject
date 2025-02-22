@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform;
 
-import top.auspice.utils.reflection.Reflect;
+import net.aurika.auspice.utils.reflection.Reflect;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
-import top.auspice.utils.number.RomanNumber;
+import net.aurika.auspice.utils.number.RomanNumber;
 
 public final class PlaceholderModifierRoman implements PlaceholderModifier {
     @NotNull

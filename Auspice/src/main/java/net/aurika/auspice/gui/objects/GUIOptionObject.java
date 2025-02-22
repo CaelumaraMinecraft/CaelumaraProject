@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import net.aurika.auspice.text.compiler.TextObject;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import top.auspice.utils.reflection.Reflect;
+import net.aurika.auspice.utils.reflection.Reflect;
 
 import java.util.ArrayList;
 import java.util.List;

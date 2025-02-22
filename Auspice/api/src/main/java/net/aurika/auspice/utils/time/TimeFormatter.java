@@ -6,7 +6,7 @@ import net.aurika.auspice.configs.messages.MessageHandler;
 import net.aurika.auspice.text.compiler.builders.TextObjectBuilder;
 import net.aurika.auspice.text.compiler.builders.RawLanguageEntryObjectBuilder;
 import net.aurika.auspice.configs.messages.context.MessageContextImpl;
-import top.auspice.utils.AuspiceLogger;
+import net.aurika.auspice.utils.AuspiceLogger;
 
 import java.time.Duration;
 import java.time.Instant;

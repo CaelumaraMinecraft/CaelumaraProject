@@ -7,9 +7,9 @@ import net.aurika.config.sections.ConfigSection;
 import net.aurika.config.sections.interpreter.SectionInterpretContext.Result;
 import net.aurika.config.validation.ConfigValidators;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import top.auspice.utils.compiler.math.MathCompiler;
-import top.auspice.utils.math.MathUtils;
-import top.auspice.utils.time.TimeUtils;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.math.MathUtils;
+import net.aurika.auspice.utils.time.TimeUtils;
 
 import java.awt.*;
 import java.time.Duration;

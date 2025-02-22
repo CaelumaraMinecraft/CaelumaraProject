@@ -3,7 +3,7 @@ package net.aurika.config.adapters;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.config.yaml.importers.YamlImporter;
-import top.auspice.main.Auspice;
+import net.aurika.auspice.main.Auspice;
 
 import java.io.File;
 import java.io.InputStream;

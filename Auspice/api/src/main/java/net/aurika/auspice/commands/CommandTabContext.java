@@ -16,7 +16,7 @@ import net.aurika.auspice.utils.unsafe.functional.SecondarySupplier;
 import net.aurika.util.string.QuantumString;
 import net.aurika.util.number.AnyNumber;
 import net.aurika.util.number.NumberConstraint;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.*;
 import java.util.function.Predicate;

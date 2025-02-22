@@ -7,10 +7,9 @@ import org.kingdoms.constants.player.KingdomPlayer
 import top.mckingdom.powerful_territory.GroupExt
 import top.mckingdom.powerful_territory.configs.PowerfulTerritoryLang
 import top.mckingdom.powerful_territory.data.Categories
-import top.mckingdom.powerful_territory.data.getCategory
-import top.mckingdom.powerful_territory.data.setCategory
+import top.mckingdom.powerful_territory.data.category
 
-class CommandLandCategorySet(parent: KingdomsParentCommand): KingdomsCommand("set", parent) {
+class CommandLandCategorySet(parent: KingdomsParentCommand) : KingdomsCommand("set", parent) {
     override fun execute(context: CommandContext): CommandResult {
         val sender = context.getMessageReceiver()
         if (sender !is Player) {
@@ -43,14 +42,15 @@ class CommandLandCategorySet(parent: KingdomsParentCommand): KingdomsCommand("se
         if (kp.hasPermission(GroupExt.PERMISSION_MANAGE_LAND_CATEGORIES)
 
 
-            ) {
-            val oldCategory = land.getCategory()
-            land.setCategory(category)
-            PowerfulTerritoryLang.COMMAND_DOMAIN_CATEGORY_SET_SUCCESS.sendMessage(sender,
+        ) {
+            val oldCategory = land.category
+            land.category = category
+            PowerfulTerritoryLang.COMMAND_DOMAIN_CATEGORY_SET_SUCCESS.sendMessage(
+                sender,
                 "location", "$x $z",
                 "old-category", oldCategory!!.getName(lang),
                 "new-category", category.getName(lang)
-                )
+            )
         }
 
         println("++++++++++++++++++++++出现了意外的情况! 请联系插件作者(Attaccer)============================")
@@ -67,6 +67,4 @@ class CommandLandCategorySet(parent: KingdomsParentCommand): KingdomsCommand("se
         }
         return emptyList()
     }
-
-
 }

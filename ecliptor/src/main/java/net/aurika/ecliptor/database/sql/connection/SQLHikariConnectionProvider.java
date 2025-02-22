@@ -5,8 +5,8 @@ import net.aurika.ecliptor.database.DatabaseType;
 import net.aurika.ecliptor.database.sql.DatabaseProperties;
 import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.globalconfig.AuspiceGlobalConfig;
-import top.auspice.utils.logging.AuspiceLogger;
+import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
+import net.aurika.auspice.utils.logging.AuspiceLogger;
 
 import java.sql.Connection;
 import java.sql.SQLException;

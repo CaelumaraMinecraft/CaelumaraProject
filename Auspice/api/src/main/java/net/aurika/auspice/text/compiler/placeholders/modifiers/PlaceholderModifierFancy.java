@@ -4,7 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 public final class PlaceholderModifierFancy implements PlaceholderModifier {
     @NotNull

@@ -1,11 +1,11 @@
 package net.aurika.auspice.game.bukkit.server.event;
 
 import org.bukkit.event.EventHandler;
-import top.auspice.server.core.Server;
-import top.auspice.server.event.EntityDismountEvent;
-import top.auspice.server.event.EntityMountEvent;
-import top.auspice.server.event.EventPropagator;
-import top.auspice.utils.reflection.Reflect;
+import net.aurika.auspice.server.core.Server;
+import net.aurika.auspice.server.event.EntityDismountEvent;
+import net.aurika.auspice.server.event.EntityMountEvent;
+import net.aurika.auspice.server.event.EventPropagator;
+import net.aurika.auspice.utils.reflection.Reflect;
 
 import java.net.http.WebSocket;
 
@@ -20,7 +20,7 @@ public final class LatestEventPropagator {
 
         @EventHandler
         public void onEntityDismount(EntityMountEvent event) {
-            top.auspice.server.event.EntityMountEvent delegate = new top.auspice.server.event.EntityMountEvent(event.getEntity(), event.getMount());
+            net.aurika.auspice.server.event.EntityMountEvent delegate = new net.aurika.auspice.server.event.EntityMountEvent(event.getEntity(), event.getMount());
             Server.get().getEventHandler().callEvent(delegate);
         }
 

@@ -17,70 +17,103 @@ import org.kingdoms.data.database.dataprovider.SectionCreatableDataSetter
 import org.kingdoms.data.database.dataprovider.SectionableDataGetter
 import org.kingdoms.locale.Language
 import org.kingdoms.locale.SupportedLanguage
-import top.mckingdom.powerful_territory.PowerfulTerritory
+import top.mckingdom.powerful_territory.PowerfulTerritoryAddon
+import top.mckingdom.powerful_territory.PowerfulTerritoryLogger
 import top.mckingdom.powerful_territory.constants.land_categories.LandCategory
 import top.mckingdom.powerful_territory.constants.land_categories.StandardLandCategory
-import top.mckingdom.powerful_territory.PowerfulTerritoryLogger
 
-@JvmName("setCategory")
-fun Chunk.setCategory(landCategory: LandCategory) {
-    Land.getLand(this)?.setCategory(landCategory)
-}
+var SimpleChunkLocation.category: LandCategory?
+    get() = this.land?.category
+    set(category) {
+        this.land?.category = category
+    }
 
-@JvmName("setCategory")
-fun SimpleChunkLocation.setCategory(landCategory: LandCategory) {
-    this.getLand()?.setCategory(landCategory)
-}
-
-@JvmName("setCategory")
-fun Land.setCategory(landCategory: LandCategory) {
-    this.getMetadata().put(LandCategoryMetaHandler.INSTANCE, LandCategoryMeta(landCategory))
-}
+var Chunk.category: LandCategory?
+    get() = Land.getLand(this)?.category
+    set(category) {
+        Land.getLand(this)?.category = category
+    }
 
 @JvmName("getCategory")
 fun Location.getCategory(): LandCategory? {
-    return (SimpleChunkLocation.of(this)).getCategory()
+    return (SimpleChunkLocation.of(this)).category
 }
 
-@JvmName("getCategory")
-fun Chunk.getCategory(): LandCategory? {
-    return SimpleChunkLocation.of(this).land?.getCategory()
-}
-
-@JvmName("getCategory")
-fun SimpleChunkLocation.getCategory(): LandCategory? {
-    return this.land?.getCategory()
-}
-
-
-/**
- * Get the category of a constants
- * If this constants is not claimed, it will also return null
- * If this constants is claimed, it will return a not null value
- */
-@JvmName("getCategory")
-fun Land.getCategory(): LandCategory? {
-    if (this.isClaimed()) {
-        return this.getCategoryData() ?: return StandardLandCategory.NONE
-    } else {
-        return null
+@get:JvmName("getCategory")
+@set:JvmName("setCategory")
+var Land.category: LandCategory?
+    get() {
+        if (this.isClaimed()) {
+            return this.getCategoryRaw() ?: return StandardLandCategory.NONE
+        } else {
+            return null
+        }
     }
-}
-
+    set(category) {
+        if (category != null) {
+            this.metadata.put(LandCategoryMetaHandler.INSTANCE, LandCategoryMeta(category))
+        } else {
+            this.metadata.remove(LandCategoryMetaHandler.INSTANCE)
+        }
+    }
 
 /**
- * Get the data from the metadata,
- * You shouldn't use it except you know how to use this function
+ * Get the raw category data from the [this] land metadata.
  */
-@JvmName("getCategoryData")
-fun Land.getCategoryData(): LandCategory? {
+fun Land.getCategoryRaw(): LandCategory? {
     return this.getMetadata().get(LandCategoryMetaHandler.INSTANCE)?.getValue() as? LandCategory
 }
 
-
-@JvmName("clearCategoryData")
 fun Land.clearCategoryData() {
     this.metadata.remove(LandCategoryMetaHandler.INSTANCE)
+}
+
+class LandCategoryMeta(private var landCategory: LandCategory) : KingdomMetadata {
+    override fun getValue(): Any {
+        return this.landCategory
+    }
+
+    override fun setValue(o: Any) {
+        this.landCategory = o as LandCategory
+    }
+
+    override fun serialize(
+        container: KeyedKingdomsObject<*>,
+        context: SerializationContext<SectionCreatableDataSetter>
+    ) {
+        context.getDataProvider().setString(landCategory.getNamespace().asString())
+    }
+
+    override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {
+        return container is Land
+    }
+}
+
+class LandCategoryMetaHandler private constructor() :
+    KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("LAND_CATEGORY")) {
+    override fun deserialize(
+        container: KeyedKingdomsObject<*>,
+        dataGetter: DeserializationContext<SectionableDataGetter>
+    ): KingdomMetadata {
+        val chunkTypeNS = Namespace.fromString(dataGetter.getDataProvider().asString())
+        val landCategory = PowerfulTerritoryAddon.get().getLandCategoryRegistry().getRegistered(chunkTypeNS)
+        if (landCategory == null) {
+            PowerfulTerritoryLogger.warn(
+                "Unknown land category: " + dataGetter.getDataProvider().asString() + ", ignore it"
+            )
+            return LandCategoryMeta(StandardLandCategory.NONE)
+        }
+        return LandCategoryMeta(landCategory)
+    }
+
+    companion object {
+        @JvmField
+        val INSTANCE = LandCategoryMetaHandler()
+    }
+}
+
+fun registerLandCategoryExternalMessageContextEdit() {
+    top.mckingdom.auspice.util.land.addExtMessageContextEdit("category") { land -> land.category }
 }
 
 /**
@@ -92,7 +125,7 @@ object Categories {
         SupportedLanguage.entries.forEach { lang ->
             if (lang.isLoaded()) {
                 categoriesString.put(lang, HashMap<String, LandCategory>().also {
-                    PowerfulTerritory.get().getLandCategoryRegistry().getRegistry().forEach { _, category ->
+                    PowerfulTerritoryAddon.get().getLandCategoryRegistry().getRegistry().forEach { _, category ->
                         it.put(category.getName(lang), category)
                     }
                 })
@@ -128,49 +161,5 @@ object Categories {
             }
         }
         return out
-    }
-}
-
-class LandCategoryMeta(private var landCategory: LandCategory) : KingdomMetadata {
-    override fun getValue(): Any {
-        return this.landCategory
-    }
-
-    override fun setValue(o: Any) {
-        this.landCategory = o as LandCategory
-    }
-
-    override fun serialize(
-        container: KeyedKingdomsObject<*>,
-        context: SerializationContext<SectionCreatableDataSetter>
-    ) {
-        context.getDataProvider().setString(landCategory.getNamespace().asString())
-    }
-
-    override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {
-        return container is Land
-    }
-}
-
-class LandCategoryMetaHandler private constructor() :
-    KingdomMetadataHandler(Namespace("PowerfulTerritory", "LAND_CATEGORY")) {
-    override fun deserialize(
-        container: KeyedKingdomsObject<*>,
-        dataGetter: DeserializationContext<SectionableDataGetter>
-    ): KingdomMetadata {
-        val chunkTypeNS = Namespace.fromString(dataGetter.getDataProvider().asString())
-        val landCategory = PowerfulTerritory.get().getLandCategoryRegistry().getRegistered(chunkTypeNS)
-        if (landCategory == null) {
-            PowerfulTerritoryLogger.warn(
-                "Unknown land category: " + dataGetter.getDataProvider().asString() + ", ignore it"
-            )
-            return LandCategoryMeta(StandardLandCategory.NONE)
-        }
-        return LandCategoryMeta(landCategory)
-    }
-
-    companion object {
-        @JvmField
-        val INSTANCE = LandCategoryMetaHandler()
     }
 }

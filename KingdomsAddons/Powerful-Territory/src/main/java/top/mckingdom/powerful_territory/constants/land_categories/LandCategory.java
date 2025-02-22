@@ -6,18 +6,37 @@ import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.locale.Language;
 
 public abstract class LandCategory implements Namespaced {
-    private int hash;
     private final @NotNull Namespace namespace;
     private final boolean editable;
+    private int hash;
 
     public LandCategory(@NotNull Namespace namespace, boolean editable) {
         this.namespace = namespace;
         this.editable = editable;
     }
 
+    /**
+     * Gets this {@linkplain LandCategory} as a config key.
+     *
+     * @return the config key
+     */
+    public final @NotNull String toConfigKey() {
+        return this.namespace.getConfigOptionName();
+    }
+
+    public abstract @NotNull String getName(@NotNull Language lang);
+
+    public boolean isEditable() {
+        return editable;
+    }
+
     @Override
-    public @NotNull Namespace getNamespace() {
+    public final @NotNull Namespace getNamespace() {
         return this.namespace;
+    }
+
+    public @NotNull String asString() {
+        return this.namespace.asString();
     }
 
     @Override
@@ -34,28 +53,8 @@ public abstract class LandCategory implements Namespaced {
         }
     }
 
-    public @NotNull String asString() {
-        return this.namespace.asString();
-    }
-
-
-    /**
-     * 用于语言文件等场景
-     *
-     * @return 返回这个土地类型的关键字的小写英文名
-     */
-    public @NotNull String getConfigName() {
-        return this.namespace.getKey().toLowerCase().replace('_', '-');
-    }
-
     @Override
     public String toString() {
-        return "LandCategory:{" + this.getConfigName() + '}';
-    }
-
-    public abstract @NotNull String getName(@NotNull Language lang);
-
-    public boolean isEditable() {
-        return editable;
+        return "LandCategory:{" + this.toConfigKey() + '}';
     }
 }

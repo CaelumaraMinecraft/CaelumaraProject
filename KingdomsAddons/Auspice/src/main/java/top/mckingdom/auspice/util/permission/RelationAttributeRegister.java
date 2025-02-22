@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils.permissions;
+package top.mckingdom.auspice.util.permission;
 
 import org.kingdoms.constants.group.model.relationships.RelationAttribute;
 import org.kingdoms.constants.namespace.Namespace;

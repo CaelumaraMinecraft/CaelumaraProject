@@ -2,8 +2,8 @@ package net.aurika.common.key.namespace;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.nonnull.NonNullMap;
-import top.auspice.utils.unsafe.string.PrettyStringFactory;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.utils.unsafe.string.PrettyStringFactory;
 
 import java.util.Collection;
 import java.util.Map;

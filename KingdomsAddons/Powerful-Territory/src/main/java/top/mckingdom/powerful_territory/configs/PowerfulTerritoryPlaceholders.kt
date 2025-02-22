@@ -4,7 +4,7 @@ import org.kingdoms.constants.land.Land
 import org.kingdoms.locale.placeholders.*
 import top.mckingdom.powerful_territory.constants.land_categories.LandCategoryRegistry
 import top.mckingdom.powerful_territory.constants.land_categories.StandardLandCategory
-import top.mckingdom.powerful_territory.data.getCategory
+import top.mckingdom.powerful_territory.data.category
 import java.util.*
 import java.util.function.Function
 
@@ -12,13 +12,10 @@ enum class PowerfulTerritoryPlaceholders(
     private val default: Any,
     private val translator: Function<KingdomsPlaceholderTranslationContext, Any?>
 ) : EnumKingdomsPlaceholderTranslator {
-
-    LAND_CATEGORY(StandardLandCategory.NONE, { context -> context.getLand().getCategory() }),
-
     KINGDOM_LANDS_OF_CATEGORY_NONE(0, { context ->
         var amount = 0
         context.kingdom.lands.forEach { land ->
-            if (land.getCategory() == StandardLandCategory.NONE) {
+            if (land.category == StandardLandCategory.NONE) {
                 amount++
             }
         }
@@ -36,7 +33,7 @@ enum class PowerfulTerritoryPlaceholders(
             val category1 = LandCategoryRegistry.getLandCategoryFromConfigName(category) ?: return 0
 
             kingdom.lands.forEach { land: Land ->
-                if (land.getCategory() == category1) {
+                if (land.category == category1) {
                     amount++
                 }
             }

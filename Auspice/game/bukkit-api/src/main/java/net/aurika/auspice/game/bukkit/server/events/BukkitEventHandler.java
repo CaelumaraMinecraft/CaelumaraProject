@@ -4,12 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.platform.annotations.MeansType;
-import top.auspice.bukkit.server.core.BukkitServer;
-import top.auspice.platform.bukkit.old.event.OldEventPropagator;
-import top.auspice.server.event.EventHandler;
-import top.auspice.server.event.EventPropagator;
-import top.auspice.bukkit.server.event.LatestEventPropagator;
+import net.aurika.auspice.platform.annotations.MeansType;
+import net.aurika.auspice.bukkit.server.core.BukkitServer;
+import net.aurika.auspice.platform.bukkit.old.event.OldEventPropagator;
+import net.aurika.auspice.server.event.EventHandler;
+import net.aurika.auspice.server.event.EventPropagator;
+import net.aurika.auspice.bukkit.server.event.LatestEventPropagator;
 
 import java.util.Objects;
 import java.util.stream.Stream;

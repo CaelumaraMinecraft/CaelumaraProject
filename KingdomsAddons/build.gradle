@@ -1,4 +1,7 @@
+import net.aurika.gradle.AurikaExtReposKt
+
 plugins {
+    id("aurika.repos")
     id("java-library")
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.shadow) apply false
@@ -14,12 +17,17 @@ subprojects {
     group = this.group
     version = this.version
 
-    def _name = name
+    def _name = it.name
 
     apply {
+        plugins.apply("aurika.repos")
         plugins.apply("java-library")
         plugins.apply(libs.plugins.kotlin.get().pluginId)
         plugins.apply(libs.plugins.shadow.get().pluginId)
+    }
+
+    repositories {
+        AurikaExtReposKt.SpigotMC_snapshots(it)
     }
 
     dependencies {
@@ -70,7 +78,7 @@ subprojects {
 
         processResources {
             def props = [version: version]
-            inputs.properties props
+            inputs.properties(props)
             filteringCharset = "UTF-8"
             filesMatching("plugin.yml") {
                 expand(props)

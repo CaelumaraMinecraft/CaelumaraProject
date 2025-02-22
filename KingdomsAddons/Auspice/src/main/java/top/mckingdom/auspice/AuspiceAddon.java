@@ -1,11 +1,6 @@
 package top.mckingdom.auspice;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.kingdoms.addons.Addon;
 import org.kingdoms.commands.admin.CommandAdmin;
 import org.kingdoms.constants.metadata.KingdomMetadataHandler;
 import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
@@ -17,31 +12,44 @@ import top.mckingdom.auspice.configs.AuspiceLang;
 import top.mckingdom.auspice.configs.AuspicePlaceholder;
 import top.mckingdom.auspice.configs.CustomConfigValidators;
 import top.mckingdom.auspice.costs.CurrencyRegistry;
-import top.mckingdom.auspice.services.ServiceBStats;
-import top.mckingdom.auspice.utils.permissions.KingdomPermissionRegister;
-import top.mckingdom.auspice.utils.permissions.RelationAttributeRegister;
+import top.mckingdom.auspice.util.permission.KingdomPermissionRegister;
+import top.mckingdom.auspice.util.permission.RelationAttributeRegister;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class AuspiceAddon extends JavaPlugin implements Addon {
-
-    public static ServiceBStats B_STATS;
+public final class AuspiceAddon extends AddonTemplate {
     private static AuspiceAddon instance;
+
+    public static @NotNull AuspiceAddon get() {
+        if (instance == null) {
+            throw new IllegalStateException("AuspiceAddon is not initialized yet.");
+        } else {
+            return instance;
+        }
+    }
+
+    /**
+     * Builds a {@linkplain Namespace} for Auspice addon.
+     */
+    public static @NotNull Namespace buildNS(@NotNull String key) {
+        return new Namespace("AuspiceAddon", key);
+    }
 
     private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();   // Land 的元数据存储器
 
-    private static boolean enabled = false;
-
     public AuspiceAddon() {
+        super();
+    }
+
+    @Override
+    protected void onInit0() {
         instance = this;
     }
 
     @Override
-    public void onLoad() {
-        if (!isKingdomsLoaded()) return;
+    public void onLoad0() {
 
         landMetadataHandlers.addAll(Arrays.asList(
 
@@ -58,53 +66,35 @@ public final class AuspiceAddon extends JavaPlugin implements Addon {
         CurrencyRegistry.init();
 
         CustomConfigValidators.init();
-
-        getLogger().info("Addon is loading...");
     }
 
     @Override
-    public void onEnable() {
-
-        if (!isKingdomsEnabled()) {
-            getLogger().severe("Kingdoms plugin didn't load correctly, disabling...");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-
-//        B_STATS = new ServiceBStats(this, 22764);
-
-
-        getLogger().info("Addon is enabling...");
-
+    public void onEnable0() {
         getLogger().info("Registering event listeners...");
+        // TODO is have event listeners
 
         getLogger().info("Registering commands...");
         registerAllCommands();
 
         AuspicePlaceholder.init();
-
-        registerAddon();
-
-        enabled = true;
     }
 
     @Override
-    public void onDisable() {
-        getLogger().info("Addon is disabling...");
-//        B_STATS.shutdown();
-        signalDisable();
+    public void onDisable0() {
+
     }
 
     @Override
-    public void reloadAddon() {
+    public void reloadAddon0() {
         getLogger().info("Registering event listeners...");
+        // TODO
 
         getLogger().info("Registering commands...");
         registerAllCommands();
     }
 
     @Override
-    public void uninstall() {
+    public void uninstall0() {
         getLogger().info("Removing auspice addon metadata...");
         KingdomMetadataRegistry.removeMetadata(Kingdoms.get().getDataCenter().getLandManager(), landMetadataHandlers);
 
@@ -117,48 +107,17 @@ public final class AuspiceAddon extends JavaPlugin implements Addon {
             kingdom.getRanks().forEach(rank -> {
                 rank.getPermissions().remove(KingdomPermissionRegister.PERMISSION_TRANSFER_MEMBERS);
             });
-
-            ;
         });
-
-        //TODO get all lands of the server
-
-
     }
 
     @Override
-    public String getAddonName() {
+    public @NotNull String getAddonName() {
         return "auspice";
-    }
-
-    @NonNull
-    @Override
-    public File getFile() {
-        return super.getFile();
     }
 
     private void registerAllCommands() {
         CommandAdmin ca = CommandAdmin.getInstance();
 
         new CommandAdminRelation(ca);
-    }
-
-    public static @NotNull AuspiceAddon get() {
-        if (instance == null) {
-            throw new IllegalStateException("AuspiceAddon is not initialized yet.");
-        } else {
-            return instance;
-        }
-    }
-
-    public static boolean isAuspiceAddonEnabled() {
-        return enabled;
-    }
-
-    /**
-     * Builds a {@linkplain Namespace} for Auspice addon.
-     */
-    public static @NotNull Namespace buildNS(String s) {
-        return new Namespace("AuspiceAddon", s);
     }
 }

@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.bukkitlegacy.server"
+group = "net.aurika.auspice.bukkitlegacy.server"
 
 dependencies {
     compileOnly(project(":base"))

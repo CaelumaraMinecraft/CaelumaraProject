@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils.building;
+package top.mckingdom.auspice.util.building;
 
 import org.bukkit.Location;
 import org.kingdoms.constants.land.Land;

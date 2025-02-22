@@ -9,9 +9,9 @@ import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpretContext;
 import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpreter;
 import net.aurika.util.Checker;
-import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.arrays.ArrayUtils;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
 
 import java.util.HashSet;
 import java.util.List;

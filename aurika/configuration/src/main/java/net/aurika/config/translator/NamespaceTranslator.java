@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.common.key.namespace.NSedKey;
 import net.aurika.common.key.namespace.NSKedRegistry;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 public class NamespaceTranslator implements Translator<NSedKey> {
     public static final NamespaceTranslator INSTANCE = new NamespaceTranslator();

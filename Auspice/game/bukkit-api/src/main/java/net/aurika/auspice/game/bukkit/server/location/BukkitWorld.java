@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.server.location.World;
+import net.aurika.auspice.server.location.World;
 
 import java.util.Objects;
 import java.util.UUID;

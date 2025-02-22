@@ -1,4 +1,4 @@
-package top.mckingdom.auspice.utils;
+package top.mckingdom.auspice.util;
 
 import org.kingdoms.gui.GUIPathContainer;
 import org.kingdoms.libs.xseries.XMaterial;

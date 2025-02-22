@@ -1,6 +1,6 @@
 package net.aurika.auspice.text.compiler;
 
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.ArrayList;
 import java.util.Collection;

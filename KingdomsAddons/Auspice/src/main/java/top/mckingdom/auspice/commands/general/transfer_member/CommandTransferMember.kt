@@ -11,8 +11,8 @@ import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.events.members.LeaveReason
 import org.kingdoms.locale.KingdomsLang
 import top.mckingdom.auspice.configs.AuspiceLang
-import top.mckingdom.auspice.utils.permissions.KingdomPermissionRegister
-import top.mckingdom.auspice.utils.permissions.RelationAttributeRegister
+import top.mckingdom.auspice.util.permission.KingdomPermissionRegister
+import top.mckingdom.auspice.util.permission.RelationAttributeRegister
 import java.util.*
 
 class CommandTransferMember : KingdomsParentCommand("transferMember", true) {

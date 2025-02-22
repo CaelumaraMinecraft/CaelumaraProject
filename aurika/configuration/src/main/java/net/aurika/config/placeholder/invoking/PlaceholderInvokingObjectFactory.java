@@ -3,7 +3,7 @@ package net.aurika.config.placeholder.invoking;
 import org.jetbrains.annotations.NotNull;
 import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
 import net.aurika.text.placeholders.context.PlaceholderContextBuilder;
-import top.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
 
 import java.util.HashMap;
 import java.util.Map;

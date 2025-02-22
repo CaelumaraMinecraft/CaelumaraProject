@@ -3,7 +3,7 @@ package net.aurika.config.sections.interpreter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.aurika.config.sections.ConfigSection;
-import top.auspice.utils.unsafe.Fn;
+import net.aurika.auspice.utils.unsafe.Fn;
 
 import java.util.Objects;
 import java.util.function.Supplier;

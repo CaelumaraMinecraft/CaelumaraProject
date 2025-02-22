@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.bukkit.server.core.BukkitServer;
+import net.aurika.auspice.bukkit.server.core.BukkitServer;
 
 import net.aurika.auspice.game.bukkit.server.location.BukkitWorld;
-import top.auspice.server.entity.Player;
+import net.aurika.auspice.server.entity.Player;
 
 import java.util.Objects;
 import java.util.UUID;

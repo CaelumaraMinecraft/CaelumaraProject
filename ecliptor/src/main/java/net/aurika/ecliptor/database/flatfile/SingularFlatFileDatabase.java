@@ -7,8 +7,8 @@ import net.aurika.ecliptor.api.DataObject;
 import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.filesystem.FSUtil;
-import top.auspice.utils.unsafe.CloseableUtils;
+import net.aurika.auspice.utils.filesystem.FSUtil;
+import net.aurika.auspice.utils.unsafe.CloseableUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

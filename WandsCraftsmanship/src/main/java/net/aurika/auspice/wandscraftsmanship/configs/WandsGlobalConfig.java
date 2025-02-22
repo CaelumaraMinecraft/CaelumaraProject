@@ -1,10 +1,10 @@
 package net.aurika.auspice.wandscraftsmanship.configs;
 
-import top.auspice.config.accessor.UndefinedPathConfigAccessor;
-import top.auspice.config.accessor.YamlUndefinedPathConfigAccessor;
-import top.auspice.config.adapters.YamlResource;
-import top.auspice.config.path.ConfigPath;
-import top.auspice.config.yaml.importers.YamlGlobalImporter;
+import net.aurika.auspice.config.accessor.UndefinedPathConfigAccessor;
+import net.aurika.auspice.config.accessor.YamlUndefinedPathConfigAccessor;
+import net.aurika.auspice.config.adapters.YamlResource;
+import net.aurika.auspice.config.path.ConfigPath;
+import net.aurika.auspice.config.yaml.importers.YamlGlobalImporter;
 import net.aurika.auspice.configs.globalconfig.accessor.EnumGlobalConfig;
 import net.aurika.auspice.wandscraftsmanship.main.WandsCraftsmanship;
 

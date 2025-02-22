@@ -45,6 +45,6 @@ public class ASMEventExecutorGenerator {
 
     public static @NotNull String generateName() {
         int id = EVENT_ID_GEN.getAndIncrement();
-        return "top.auspice.generated.GeneratedExecutor" + id;
+        return "net.aurika.auspice.generated.GeneratedExecutor" + id;
     }
 }

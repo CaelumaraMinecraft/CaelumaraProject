@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-group = "top.auspice.platform.geyser"
+group = "net.aurika.auspice.platform.geyser"
 version = "unspecified"
 
 repositories {

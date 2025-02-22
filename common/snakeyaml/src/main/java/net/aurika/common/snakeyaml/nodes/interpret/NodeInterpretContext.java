@@ -4,7 +4,7 @@ import net.aurika.util.Checker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.Node;
-import top.auspice.utils.unsafe.Fn;
+import net.aurika.auspice.utils.unsafe.Fn;
 
 import java.util.function.Supplier;
 

@@ -1,8 +1,8 @@
 package net.aurika.config.accessor;
 
 import com.google.common.base.Enums;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
 
 import java.util.List;
 

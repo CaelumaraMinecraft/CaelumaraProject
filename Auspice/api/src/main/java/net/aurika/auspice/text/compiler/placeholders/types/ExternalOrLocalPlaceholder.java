@@ -14,7 +14,7 @@ import net.aurika.text.placeholders.context.LocalPlaceholderProvider;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
 import net.aurika.text.placeholders.target.BasePlaceholderTargetProvider;
 import net.aurika.text.placeholders.target.PlaceholderTargetProvider;
-import top.auspice.services.managers.SoftService;
+import net.aurika.auspice.services.managers.SoftService;
 
 import java.util.List;
 import java.util.Objects;

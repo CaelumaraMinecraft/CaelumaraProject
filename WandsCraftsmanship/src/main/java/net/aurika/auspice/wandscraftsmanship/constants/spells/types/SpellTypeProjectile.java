@@ -1,6 +1,6 @@
 package net.aurika.auspice.wandscraftsmanship.constants.spells.types;
 
-import top.auspice.key.NSedKey;
+import net.aurika.auspice.key.NSedKey;
 
 /**
  * 投射物法术

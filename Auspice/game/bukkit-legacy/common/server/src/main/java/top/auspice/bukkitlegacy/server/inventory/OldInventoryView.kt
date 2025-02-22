@@ -1,10 +1,10 @@
-package top.auspice.bukkitlegacy.server.inventory
+package net.aurika.auspice.bukkitlegacy.server.inventory
 
 import org.bukkit.entity.HumanEntity
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import top.auspice.server.inventory.BukkitInventoryView
+import net.aurika.auspice.server.inventory.BukkitInventoryView
 
 class OldInventoryView(view: Any) : BukkitInventoryView {
     val view: org.bukkit.inventory.InventoryView = view as org.bukkit.inventory.InventoryView

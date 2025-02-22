@@ -2,8 +2,8 @@ package net.aurika.auspice.service.mythicmobs.v4;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import top.auspice.craftbukkit.services.mythicmobs.ServiceMythicMobs;
-import top.auspice.craftbukkit.services.mythicmobs.UnknownMythicMobException;
+import net.aurika.auspice.craftbukkit.services.mythicmobs.ServiceMythicMobs;
+import net.aurika.auspice.craftbukkit.services.mythicmobs.UnknownMythicMobException;
 
 public final class ServiceMythicMobFour implements ServiceMythicMobs {
     public Entity spawnMythicMob(Location location, String mob, int level) {

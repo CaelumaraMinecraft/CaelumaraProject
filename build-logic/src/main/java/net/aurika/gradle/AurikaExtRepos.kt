@@ -32,11 +32,25 @@ val RepositoryHandler.PurpurMC_snapshots: MavenArtifactRepository
         name = "PurpurMC-snapshots"
     }
 
+@get:JvmName("minecraft")
+val RepositoryHandler.minecraft: MavenArtifactRepository
+    get() = this.maven {
+        name = "minecraft"
+        url = URI.create("https://libraries.minecraft.net")
+    }
+
 @get:JvmName("CodeMC")
 val RepositoryHandler.CodeMC: MavenArtifactRepository
     get() = maven {
         url = URI.create("https://repo.codemc.io/repository/maven-public/")
         name = "CodeMC"
+    }
+
+@get:JvmName("nostal_snapshots")
+val RepositoryHandler.nostal_snapshots: MavenArtifactRepository
+    get() = maven {
+        url = URI.create("https://maven.nostal.ink/repository/maven-snapshots/")
+        name = "nostal-snapshots"
     }
 
 @get:JvmName("sq89_repo")
@@ -46,8 +60,8 @@ val RepositoryHandler.sq89_repo: MavenArtifactRepository
         name = "sq89-repo"
     }
 
-@get:JvmName("auxilor_repo")
-val RepositoryHandler.auxilor_repo: MavenArtifactRepository
+@get:JvmName("auxilor")
+val RepositoryHandler.auxilor: MavenArtifactRepository
     get() = maven {
         name = "auxilor-repo"
         url = URI.create("https://repo.auxilor.io/repository/maven-public/")
@@ -58,13 +72,6 @@ val RepositoryHandler.thenextlvl_releases: MavenArtifactRepository
     get() = maven {
         url = URI.create("https://repo.thenextlvl.net/releases")
         name = "thenextlvl-releases"
-    }
-
-@get:JvmName("placeholderAPI")
-val RepositoryHandler.placeholderAPI: MavenArtifactRepository
-    get() = this.maven {
-        url = URI.create("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-        name = "placeholderAPI"
     }
 
 @get:JvmName("essentials_releases")
@@ -80,6 +87,28 @@ val RepositoryHandler.essentials_snapshots: MavenArtifactRepository
         url = URI.create("https://nexus.scarsz.me/content/groups/public/")
         name = "essentials-snapshots"
     }
+
+@get:JvmName("oraxen_releases")
+val RepositoryHandler.oraxen_releases: MavenArtifactRepository
+    get() = this.maven {
+        url = URI.create("https://repo.oraxen.com/releases")
+        name = "oraxen-releases"
+    }
+
+@get:JvmName("oraxen_snapshots")
+val RepositoryHandler.oraxen_snapshots: MavenArtifactRepository
+    get() = this.maven {
+        url = URI.create("https://repo.oraxen.com/snapshots")
+        name = "oraxen-snapshots"
+    }
+
+@get:JvmName("placeholderAPI")
+val RepositoryHandler.placeholderAPI: MavenArtifactRepository
+    get() = this.maven {
+        url = URI.create("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        name = "placeholderAPI"
+    }
+
 
 @get:JvmName("mvdw_software")
 val RepositoryHandler.mvdw_software: MavenArtifactRepository

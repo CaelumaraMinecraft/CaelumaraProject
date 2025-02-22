@@ -2,7 +2,7 @@ package net.aurika.auspice.server.location;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.string.CommaDataSplitStrategy;
+import net.aurika.auspice.utils.string.CommaDataSplitStrategy;
 
 import java.util.Objects;
 

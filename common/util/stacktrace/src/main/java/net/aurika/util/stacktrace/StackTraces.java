@@ -3,7 +3,7 @@ package net.aurika.util.stacktrace;
 import net.aurika.validate.Validate;
 import net.aurika.util.cache.caffeine.CacheHandler;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.configs.messages.MessageHandler;
+import net.aurika.auspice.configs.messages.MessageHandler;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

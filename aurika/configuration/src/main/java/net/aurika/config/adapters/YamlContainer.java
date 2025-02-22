@@ -19,7 +19,7 @@ import net.aurika.config.yaml.importers.YamlModuleLoader;
 import net.aurika.common.snakeyaml.constructor.AuspiceConstructor;
 import net.aurika.common.snakeyaml.validation.NodeValidator;
 import net.aurika.common.snakeyaml.validation.Validator;
-import top.auspice.main.Auspice;
+import net.aurika.auspice.main.Auspice;
 
 import java.io.File;
 import java.io.IOException;

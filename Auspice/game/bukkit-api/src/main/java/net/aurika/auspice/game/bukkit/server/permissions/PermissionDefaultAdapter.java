@@ -2,7 +2,7 @@ package net.aurika.auspice.game.bukkit.server.permissions;
 
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.permission.PermissionDefaultValue;
+import net.aurika.auspice.permission.PermissionDefaultValue;
 import net.aurika.util.Checker;
 
 public final class PermissionDefaultAdapter {

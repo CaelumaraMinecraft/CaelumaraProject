@@ -5,9 +5,9 @@ import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.text.compiler.TextCompilerSettings;
 import net.aurika.auspice.text.compiler.TextObject;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.compiler.math.MathCompiler;
-import top.auspice.utils.number.RomanNumber;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.number.RomanNumber;
 
 public interface Translator<O> {
 

@@ -9,7 +9,7 @@
       "id": "auspice",
       "name": "Auspice",
       "version": "${pluginVersion}",
-      "entrypoint": "top.auspice.sponge.loader",
+      "entrypoint": "net.aurika.auspice.sponge.loader",
       "description": "A library plugin",
       "links": {
         "homepage": "https://luckperms.net"

@@ -1,8 +1,8 @@
 package net.aurika.auspice.gui.objects;
 
 import net.aurika.text.placeholders.context.PlaceholderProvider;
-import top.auspice.utils.AuspiceLogger;
-import top.auspice.utils.conditions.ConditionProcessor;
+import net.aurika.auspice.utils.AuspiceLogger;
+import net.aurika.auspice.utils.conditions.ConditionProcessor;
 
 import java.util.Objects;
 

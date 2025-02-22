@@ -2,8 +2,8 @@ package net.aurika.config.path;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.Pair;
-import top.auspice.utils.Validate;
+import net.aurika.auspice.utils.Pair;
+import net.aurika.auspice.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.List;

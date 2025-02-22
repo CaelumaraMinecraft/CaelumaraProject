@@ -24,12 +24,12 @@ import net.aurika.auspice.server.command.CommandSender;
 import net.aurika.auspice.permission.Permission;
 import net.aurika.auspice.permission.PermissionDefaultValue;
 import net.aurika.auspice.server.entity.Player;
-import top.auspice.utils.arrays.ArrayUtils;
+import net.aurika.auspice.utils.arrays.ArrayUtils;
 import net.aurika.util.enumeration.QuickEnumMap;
 import net.aurika.util.unsafe.fn.Fn;
 import net.aurika.auspice.utils.logging.AuspiceLogger;
 import net.aurika.util.collection.nonnull.NonNullMap;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 import net.aurika.auspice.utils.time.TimeUtils;
 
 import java.util.*;

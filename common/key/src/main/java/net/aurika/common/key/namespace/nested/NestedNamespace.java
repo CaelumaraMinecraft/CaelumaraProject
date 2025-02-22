@@ -5,7 +5,7 @@ import net.aurika.common.key.namespace.nested.exceptions.NestedNamespaceContains
 import net.aurika.util.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.Arrays;
 import java.util.Objects;

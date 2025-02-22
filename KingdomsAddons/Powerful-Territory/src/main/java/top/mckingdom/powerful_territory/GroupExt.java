@@ -1,10 +1,9 @@
 package top.mckingdom.powerful_territory;
 
 import org.kingdoms.constants.group.model.relationships.RelationAttribute;
-import org.kingdoms.constants.player.KingdomPermission;
-import top.mckingdom.auspice.utils.permissions.KingdomPermissionRegister;
-import top.mckingdom.auspice.utils.permissions.RelationAttributeRegister;
-import top.mckingdom.auspice.utils.permissions.XKingdomPermission;
+import top.mckingdom.auspice.util.permission.KingdomPermissionRegister;
+import top.mckingdom.auspice.util.permission.RelationAttributeRegister;
+import top.mckingdom.auspice.util.permission.XKingdomPermission;
 
 public class GroupExt {
 

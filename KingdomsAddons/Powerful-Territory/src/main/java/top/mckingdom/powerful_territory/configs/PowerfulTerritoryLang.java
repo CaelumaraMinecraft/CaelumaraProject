@@ -1,5 +1,6 @@
 package top.mckingdom.powerful_territory.configs;
 
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.config.annotations.Comment;
 import org.kingdoms.locale.LanguageEntry;
 import org.kingdoms.locale.messenger.DefinedMessenger;
@@ -9,7 +10,6 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
     COMMAND_ADMIN_DOMAIN_ALIASES("terra territory", 1, 2, 3),
     COMMAND_ADMIN_DOMAIN_DESCRIPTION("{$s}Manage anything related to land from auspice addon.", 1, 2, 3),
 
-
     COMMAND_ADMIN_DOMAIN_CATEGORY_NAME("category", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_CATEGORY_DESCRIPTION("{$s}Manage land categories.", 1, 2, 3, 4),
 
@@ -18,14 +18,13 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
     COMMAND_ADMIN_DOMAIN_CATEGORY_SET_SUCCESS("{$p}The land category of land %location% has been changed from %old-category% to %new-category%.", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_DOMAIN_CATEGORY_SET_FAILED_NOT_CLAIMED("{$e}The land is not claimed, you can't set category of this land.", 1, 2, 3, 4, 5, 6),
 
-
     COMMAND_ADMIN_DOMAIN_CONTRACTION_NAME("contraction", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_DESCRIPTION("{$s}Manage land categories.", 1, 2, 3, 4),
 
     COMMAND_ADMIN_DOMAIN_CONTRACTION_GET_SUCCESS_HEAD("{$sep}&l-------=( {$sep}%kingdom% {$p}Land contractions {$sep})=-------", 1, 2, 3, 4, 5, 6),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_GET_SUCCESS_BODY(
             "  {$s}%contraction%:" +
-            "\n    &7%players%",
+                    "\n    &7%players%",
             1, 2, 3, 4, 5, 6
     ),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_GET_SUCCESS_END("{$p}&l---------------------------------------------------", 1, 2, 3, 4, 5, 6),
@@ -33,13 +32,9 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
     COMMAND_ADMIN_DOMAIN_CONTRACTION_SET_SUCCESS("{$p}The land contractions of land %location% has been changed from %old-contraction% to %new-contraction%.", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_DOMAIN_CONTRACTION_SET_FAILED_NOT_CLAIMED("{$e}The land is not claimed, you can't allocate contractions of this land.", 1, 2, 3, 4, 5, 6),
 
-
-
-
     COMMAND_DOMAIN_NAME("land", 1, 2),
     COMMAND_DOMAIN_ALIASES("terra landControl", 1, 2),
     COMMAND_DOMAIN_DESCRIPTION("{$s}Control the anything of a land.", 1, 2),
-
 
     COMMAND_DOMAIN_CATEGORY_NAME("category", 1, 2, 3),
     COMMAND_DOMAIN_CATEGORY_ALIASES("category", 1, 2, 3),
@@ -58,12 +53,8 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
     COMMAND_DOMAIN_CATEGORY_SET_FAILED_OTHER_KINGDOM("{$e}Cat not change other kingdom's land category.", 1, 2, 3, 4, 5),
     COMMAND_DOMAIN_CATEGORY_SET_FAILED_NOT_CLAIMED("{$e}Cat not change land category in not claimed land.", 1, 2, 3, 4, 5),
 
-
     COMMAND_DOMAIN_CONTRACTION_NAME("contraction", 1, 2, 3),
     COMMAND_DOMAIN_CONTRACTION_DESCRIPTION("{$s}Manage land contractions.", 1, 2, 3),
-
-
-
 
     COMMAND_DOMAIN_CONTRACTION_GET_ALIASES("see", 1, 2, 3, 4),
     COMMAND_DOMAIN_CONTRACTION_GET_DESCRIPTION("{$s}Get all the contractions of the land you stand on.", 1, 2, 3, 4),
@@ -71,7 +62,7 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
     COMMAND_DOMAIN_CONTRACTION_GET_SUCCESS_HEAD("{$sep}-------=( {$p}Land contractions {$sep})=-------", 1, 2, 3, 4, 5),
     COMMAND_DOMAIN_CONTRACTION_GET_SUCCESS_BODY(
             "  {$s}%contraction%: " +
-            "\n    &7%players%",
+                    "\n    &7%players%",
             1, 2, 3, 4, 5
     ),
     COMMAND_DOMAIN_CONTRACTION_GET_SUCCESS_END("{$p}+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+", 1, 2, 3, 4, 5),
@@ -97,13 +88,9 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
     COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_FAILED_OTHER_KINGDOM("{$e}You can't manage other kingdom's land contraction.", 1, 2, 3, 4, 5),
     COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_FAILED_OTHER_ALLOCATOR("{$e}You can't deallocate other allocators' allocation.", 1, 2, 3, 4, 5),
 
-
-
     COMMAND_ADMIN_DOMAIN_CLEARDATA_NAME("clearData", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_CLEARDATA_SUCCESS("{$p}Successful clear land data %type%", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_CLEARDATA_FAILED_NULL_LAND("{$e}The land is null!", 1, 2, 3, 4),
-
-
 
     COMMAND_ADMIN_DOMAIN_INVADEPROTECTION_NAME("invade-protection", 1, 2, 3, 4),
     COMMAND_ADMIN_DOMAIN_INVADEPROTECTION_ALIASES("uninvade", 1, 2, 3, 4),
@@ -122,30 +109,25 @@ public enum PowerfulTerritoryLang implements DefinedMessenger {
 
     POWERFUL_TERRITORY_INVADE_PROTECTION("{$e}This land has a invade protection, you can't invade this land", 2),
 
-
     POWERFUL_TERRITORY_ELYTRA_PROTECTION("{$e}You can't fly with elytra in this kingdom's land", 2),
-
 
     SENDER_ONLY_CONSOLE("{$e}This command can only be executed from the console."),
     SENDER_ONLY_PLAYER("{$e}This command can only be executed from a player."),
 
 
-
     ;
 
+    private final @NotNull LanguageEntry entry;
+    private final @NotNull String defaultValue;
 
-
-    private final LanguageEntry languageEntry;
-    private final String defaultValue;
-
-    PowerfulTerritoryLang(String defaultValue, int... grouped) {
+    PowerfulTerritoryLang(@NotNull String defaultValue, int @NotNull ... grouped) {
         this.defaultValue = defaultValue;
-        this.languageEntry = DefinedMessenger.getEntry(null, this, grouped);
+        this.entry = DefinedMessenger.getEntry(null, this, grouped);
     }
 
     @Override
     public LanguageEntry getLanguageEntry() {
-        return languageEntry;
+        return entry;
     }
 
     @Override

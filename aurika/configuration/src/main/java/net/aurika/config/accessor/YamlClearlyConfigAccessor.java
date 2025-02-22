@@ -6,8 +6,8 @@ import net.aurika.config.path.ConfigPath;
 import net.aurika.config.sections.YamlNodeSection;
 import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpreter;
 import net.aurika.util.Checker;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
-import top.auspice.utils.compiler.math.MathCompiler;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.math.MathCompiler;
 
 import java.util.List;
 import java.util.Map;

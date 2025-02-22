@@ -2,7 +2,7 @@ package net.aurika.abstraction.conditional;
 
 import org.jetbrains.annotations.NotNull;
 import net.aurika.util.Checker;
-import top.auspice.utils.compiler.condition.ConditionCompiler;
+import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 
 public final class ConditionBranch<T> {
     private final @NotNull ConditionCompiler.LogicalOperand condition;

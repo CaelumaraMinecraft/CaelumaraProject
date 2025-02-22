@@ -9,9 +9,9 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.resources.MinecraftKey;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.server.location.BlockVector3;
-import top.auspice.utils.nonnull.NonNullMap;
-import top.auspice.utils.reflection.Reflect;
+import net.aurika.auspice.server.location.BlockVector3;
+import net.aurika.auspice.utils.nonnull.NonNullMap;
+import net.aurika.auspice.utils.reflection.Reflect;
 
 import java.awt.*;
 import java.lang.invoke.MethodHandle;

@@ -210,7 +210,7 @@ include(
         ":Auspice:service:MyPet",
         ":Auspice:service:MythicMobs-v4",
         ":Auspice:service:MythicMobs-v5",
-//        ":Auspice:service:Oraxen",
+        ":Auspice:service:Oraxen",
         ":Auspice:service:PlaceholderAPI",
         ":Auspice:service:ProjectKorra",
         ":Auspice:service:ServiceIO",

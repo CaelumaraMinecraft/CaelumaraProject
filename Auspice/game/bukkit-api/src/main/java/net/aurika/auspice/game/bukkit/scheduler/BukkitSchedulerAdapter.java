@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import net.aurika.auspice.api.user.AuspiceUser;
 import net.aurika.auspice.game.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.common.dependency.classpath.BootstrapProvider;
-import top.auspice.scheduler.*;
+import net.aurika.auspice.scheduler.*;
 import net.aurika.util.scheduler.Task.ExecutionContextType;
 import net.aurika.auspice.utils.unsafe.time.TickTemporalUnit;
 

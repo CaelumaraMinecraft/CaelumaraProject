@@ -2,10 +2,10 @@ package net.aurika.ecliptor.database.dataprovider;
 
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.constants.location.SimpleChunkLocation;
+import net.aurika.auspice.constants.location.SimpleChunkLocation;
 import net.aurika.ecliptor.database.sql.statements.getters.SimpleResultSetQuery;
 import net.aurika.ecliptor.database.sql.statements.setters.SimplePreparedStatement;
-import top.auspice.utils.unsafe.uuid.FastUUID;
+import net.aurika.auspice.utils.unsafe.uuid.FastUUID;
 
 import java.sql.SQLException;
 import java.util.Objects;

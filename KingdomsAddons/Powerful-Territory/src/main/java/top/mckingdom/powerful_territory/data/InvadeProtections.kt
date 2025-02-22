@@ -14,7 +14,7 @@ import org.kingdoms.constants.metadata.StandardKingdomMetadata
 import org.kingdoms.constants.namespace.Namespace
 import org.kingdoms.data.database.dataprovider.SectionCreatableDataSetter
 import org.kingdoms.data.database.dataprovider.SectionableDataGetter
-import top.mckingdom.powerful_territory.PowerfulTerritory
+import top.mckingdom.powerful_territory.PowerfulTerritoryAddon
 import top.mckingdom.powerful_territory.constants.invade_protection.InvadeProtection
 import top.mckingdom.powerful_territory.constants.invade_protection.InvadeProtectionRegistry
 import top.mckingdom.powerful_territory.constants.invade_protection.StandardInvadeProtection
@@ -76,7 +76,7 @@ class InvadeProtectionMeta(private var value: InvadeProtection): KingdomMetadata
     }
 }
 
-class InvadeProtectionMetaHandler private constructor(): KingdomMetadataHandler(PowerfulTerritory.buildNS("INVADE_PROTECTION")) {
+class InvadeProtectionMetaHandler private constructor(): KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("INVADE_PROTECTION")) {
     override fun deserialize(
         container: KeyedKingdomsObject<*>,
         context: DeserializationContext<SectionableDataGetter>

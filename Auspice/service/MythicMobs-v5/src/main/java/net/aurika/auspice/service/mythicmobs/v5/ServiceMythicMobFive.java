@@ -9,8 +9,8 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.craftbukkit.services.mythicmobs.ServiceMythicMobs;
-import top.auspice.craftbukkit.services.mythicmobs.UnknownMythicMobException;
+import net.aurika.auspice.craftbukkit.services.mythicmobs.ServiceMythicMobs;
+import net.aurika.auspice.craftbukkit.services.mythicmobs.UnknownMythicMobException;
 
 import java.util.Optional;
 

@@ -8,7 +8,7 @@ import net.aurika.auspice.game.bukkit.server.adapers.BukkitNBTAdapter;
 import net.aurika.auspice.game.bukkit.server.events.BukkitEventHandler;
 import net.aurika.auspice.game.bukkit.server.location.BukkitWorldRegistry;
 import net.aurika.auspice.game.bukkit.server.player.BukkitPlayerManager;
-import top.auspice.server.core.Server;
+import net.aurika.auspice.server.core.Server;
 
 /**
  * 单例模式

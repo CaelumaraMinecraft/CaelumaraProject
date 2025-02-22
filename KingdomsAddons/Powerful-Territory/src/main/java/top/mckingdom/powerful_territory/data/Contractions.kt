@@ -16,7 +16,7 @@ import org.kingdoms.data.database.dataprovider.SectionableDataGetter
 import org.kingdoms.data.database.dataprovider.SectionableDataSetter
 import org.kingdoms.locale.Language
 import org.kingdoms.locale.SupportedLanguage
-import top.mckingdom.powerful_territory.PowerfulTerritory
+import top.mckingdom.powerful_territory.PowerfulTerritoryAddon
 import top.mckingdom.powerful_territory.configs.PowerfulTerritoryConfig
 import top.mckingdom.powerful_territory.constants.land_contractions.ContractionLandProperties
 import top.mckingdom.powerful_territory.constants.land_contractions.LandContraction
@@ -187,7 +187,7 @@ object Contractions {
         SupportedLanguage.entries.forEach { lang ->
             if (lang.isLoaded()) {
                 contractionsString.put(lang, HashMap<String, LandContraction>().also {
-                    PowerfulTerritory.get().getLandContractionRegistry().getRegistry().forEach { _, contraction ->
+                    PowerfulTerritoryAddon.get().getLandContractionRegistry().getRegistry().forEach { _, contraction ->
                         it.put(contraction.getName(lang), contraction)
                     }
                 })
@@ -338,7 +338,7 @@ class LandContractionsMeta(private var landContractions: LandContractionsData): 
 
 */
 
-class LandContractionsMetaHandler private constructor(): KingdomMetadataHandler(PowerfulTerritory.buildNS("LAND_CONTRACTION")) {
+class LandContractionsMetaHandler private constructor(): KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("LAND_CONTRACTION")) {
     override fun deserialize(
         container: KeyedKingdomsObject<*>,
         context: DeserializationContext<SectionableDataGetter>
@@ -348,7 +348,7 @@ class LandContractionsMetaHandler private constructor(): KingdomMetadataHandler(
         return LandContractionsMeta(
             LandContractionsData(
                 provider.get("contractions").asMap(HashMap()) { contractionsMap, contractionNamespace, contractionLandData ->
-                    val contraction = PowerfulTerritory.get().getLandContractionRegistry().getRegistered(Namespace.fromString(contractionNamespace.asString()))
+                    val contraction = PowerfulTerritoryAddon.get().getLandContractionRegistry().getRegistered(Namespace.fromString(contractionNamespace.asString()))
                     if (contraction != null) {
                         contractionsMap.put(
                             contraction, ContractionLandData(

@@ -7,10 +7,10 @@ import net.aurika.auspice.text.compiler.placeholders.modifiers.PlaceholderModifi
 import net.aurika.text.placeholders.context.PlaceholderProvider;
 import net.aurika.text.placeholders.target.BasePlaceholderTargetProvider;
 import net.aurika.text.placeholders.target.PlaceholderTargetProvider;
-import top.auspice.permission.Permission;
-import top.auspice.permission.PermissionDefaultValue;
-import top.auspice.permission.registry.PermissionRegistry;
-import top.auspice.server.entity.Player;
+import net.aurika.auspice.permission.Permission;
+import net.aurika.auspice.permission.PermissionDefaultValue;
+import net.aurika.auspice.permission.registry.PermissionRegistry;
+import net.aurika.auspice.server.entity.Player;
 
 import java.util.List;
 import java.util.Objects;

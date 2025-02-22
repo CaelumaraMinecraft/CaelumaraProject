@@ -3,13 +3,13 @@ package net.aurika.auspice.craftbukkit.loader;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.api.user.AuspiceUser;
+import net.aurika.auspice.api.user.AuspiceUser;
 import net.aurika.auspice.game.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.auspice.game.bukkit.scheduler.BukkitSchedulerAdapter;
 import net.aurika.namespace.NSedKey;
-import top.auspice.dependencies.DependencyManager;
-import top.auspice.main.Auspice;
-import top.auspice.permission.DefaultAuspicePluginPermissions;
+import net.aurika.auspice.dependencies.DependencyManager;
+import net.aurika.auspice.main.Auspice;
+import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
 
 
 import java.nio.file.Path;

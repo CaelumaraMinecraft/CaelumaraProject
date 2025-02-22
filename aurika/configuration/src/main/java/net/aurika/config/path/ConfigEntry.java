@@ -6,8 +6,8 @@ import net.aurika.util.Checker;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.auspice.utils.arrays.ArrayUtils;
-import top.auspice.utils.string.Strings;
+import net.aurika.auspice.utils.arrays.ArrayUtils;
+import net.aurika.auspice.utils.string.Strings;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
