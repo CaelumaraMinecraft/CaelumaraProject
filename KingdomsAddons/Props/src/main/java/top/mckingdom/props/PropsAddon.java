@@ -3,14 +3,14 @@ package top.mckingdom.props;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.addons.Addon;
-import top.mckingdom.auspice.util.permission.KingdomPermissionRegister;
+import top.mckingdom.auspice.util.permission.XKingdomPermissionFactory;
 import top.mckingdom.auspice.util.permission.XKingdomPermission;
 
 import java.io.File;
 
 public class PropsAddon extends JavaPlugin implements Addon {
 
-    public static final XKingdomPermission PERMISSION_USE_PROPS = KingdomPermissionRegister.register("PropsAddon", "USE_PROPS");
+    public static final XKingdomPermission PERMISSION_USE_PROPS = XKingdomPermissionFactory.create("PropsAddon", "USE_PROPS");
 
 
     @Override

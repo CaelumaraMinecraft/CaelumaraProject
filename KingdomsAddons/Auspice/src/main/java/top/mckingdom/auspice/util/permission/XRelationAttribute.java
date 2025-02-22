@@ -1,5 +1,6 @@
 package top.mckingdom.auspice.util.permission;
 
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.group.Group;
 import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.model.relationships.RelationAttribute;
@@ -10,16 +11,19 @@ import org.kingdoms.main.Kingdoms;
 public class XRelationAttribute extends RelationAttribute {
 
     private final String defaultLore;
-    public XRelationAttribute(Namespace namespace, String defaultLore) {
+
+    public XRelationAttribute(@NotNull Namespace namespace, String defaultLore) {
         super(namespace);
         this.defaultLore = defaultLore;
     }
+
     static XRelationAttribute reg(Namespace namespace, String defaultLore, int hash) {
         XRelationAttribute attr = new XRelationAttribute(namespace, defaultLore);
         attr.setHash(hash);
         Kingdoms.get().getRelationAttributeRegistry().register(attr);
         return attr;
     }
+
     @Override
     public boolean hasAttribute(Group group, Group group1) {
         return StandardRelationAttribute.hasAttribute(this, group, group1);

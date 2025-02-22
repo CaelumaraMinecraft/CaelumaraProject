@@ -3,7 +3,7 @@ package top.mckingdom.auspice.util.permission;
 import org.kingdoms.constants.group.model.relationships.RelationAttribute;
 import org.kingdoms.constants.namespace.Namespace;
 
-public class RelationAttributeRegister {
+public class XRelationAttributeFactory {
 
     private static int hashCount = 80;
 

@@ -15,38 +15,7 @@ import java.util.Locale;
 import java.util.function.Function;
 
 public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
-    KINGDOM_LANDS_COUNT(0, new FunctionalPlaceholder() {
-        @PhFn
-        public @Nullable Integer byFilter(KingdomsPlaceholderTranslationContext context, @PhParam(name = "filter", optional = false) String filterStr) {
-            if (filterStr == null || filterStr.isEmpty()) {
-                return null;
-            }
-            Kingdom kingdom = context.getKingdom();
-            if (kingdom == null) {
-                return null;
-            }
-            ConditionalCompiler.LogicalOperand filter;
-            try {
-                filter = ConditionalCompiler.compile(filterStr).evaluate();
-            } catch (Exception e) {
-                return null;
-            }
-
-            @NotNull List<Land> lands = kingdom.getLands();
-            int count = 0;
-            for (Land land : lands) {
-                if (land == null) continue;
-                MessagePlaceholderProvider landContext = context.asMessaegeBuilder().clone();
-                landContext.setPrimaryTarget(land);
-                LandUtil.addMessageContextEntries(land, landContext);
-                ConditionProcessor landVariableProcessor = new ConditionProcessor(landContext);
-                if (Boolean.TRUE.equals(filter.eval(landVariableProcessor))) {
-                    count++;
-                }
-            }
-            return count;
-        }
-    });
+    KINGDOM_LANDS_COUNT(0, new KingdomLandsCountTranslator());  // This way can access the byFilter() method from external packages.
 
     private final @NotNull Function<KingdomsPlaceholderTranslationContext, Object> translator;
     private final @NotNull Object defaultValue;
@@ -84,5 +53,39 @@ public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
     }
 
     public static void init() {
+    }
+
+    // Needs public access flag, but access flag of anonymous object is package-private, that cannot be accessed from org.kingdoms.locale.placeholders package
+    public static class KingdomLandsCountTranslator extends FunctionalPlaceholder {
+        @PhFn
+        public @Nullable Object byFilter(KingdomsPlaceholderTranslationContext context, @PhParam(name = "filter") String filterStr) {
+            if (filterStr == null || filterStr.isEmpty()) {
+                return null;
+            }
+            Kingdom kingdom = context.getKingdom();
+            if (kingdom == null) {
+                return null;
+            }
+            ConditionalCompiler.LogicalOperand filter;
+            try {
+                filter = ConditionalCompiler.compile(filterStr).evaluate();
+            } catch (Exception e) {
+                return null;
+            }
+
+            @NotNull List<Land> lands = kingdom.getLands();
+            int count = 0;
+            for (Land land : lands) {
+                if (land == null) continue;
+                MessagePlaceholderProvider landContext = context.asMessaegeBuilder().clone();
+                landContext.setPrimaryTarget(land);
+                LandUtil.addMessageContextEntries(land, landContext);
+                ConditionProcessor landVariableProcessor = new ConditionProcessor(landContext);
+                if (Boolean.TRUE.equals(filter.eval(landVariableProcessor))) {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }

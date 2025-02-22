@@ -5,6 +5,9 @@ import org.kingdoms.constants.group.model.relationships.KingdomRelation;
 import org.kingdoms.locale.LanguageEntry;
 import org.kingdoms.locale.messenger.DefinedMessenger;
 
+import static top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandForeach.VAR_OP;
+import static top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandList.VAR_LIST_ENTRY;
+import static top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandUnregister.VAR_KEY;
 import static top.mckingdom.auspice.configs.MsgConst.*;
 
 public enum AuspiceLang implements DefinedMessenger {
@@ -22,6 +25,22 @@ public enum AuspiceLang implements DefinedMessenger {
     COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_GROUP(P_COLOR + "Successfully set the relation attribute for all groups for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_KINGDOM(P_COLOR + "Successfully set the relation attribute for all kingdoms for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
     COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_NATION(P_COLOR + "Successfully set the relation attribute for all nations for relation: %relation% , attribute %attribute% to %value%", 1, 2, 3, 4, 5),
+
+    COMMAND_ADMIN_REGISTRY_LOCK_FAILED_NOT_LOCKABLE(E_COLOR + "The registry is not lockable."),
+    COMMAND_ADMIN_REGISTRY_LOCK_FAILED_EXCEPTION(E_COLOR + "Error when lock the registry."),
+    COMMAND_ADMIN_REGISTRY_LOCK_SUCCESS(P_COLOR + "Successful lock the registry."),
+
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NOT_UNREGISTERABLE(E_COLOR + "Registry cannot unregister."),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NO_KEY(E_COLOR + "Cannot find key: '" + VAR_KEY + "' in this registry."),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY(E_COLOR + "Wrong key: '" + VAR_KEY + "'."),
+    COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS(P_COLOR + "Success unregister entry: '" + VAR_KEY + "' in this registry."),
+
+    COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_NOOP(E_COLOR + "Lose registry operator.", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_UNKNOWN_OP(E_COLOR + "Unknown registry operator: %" + VAR_OP + "%.", 1, 2, 3, 4, 5),
+
+    COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_HEAD("[", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_ENTRY("  %" + VAR_LIST_ENTRY + "%,", 1, 2, 3, 4, 5),
+    COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_END("]", 1, 2, 3, 4, 5),
 
     COMMAND_TRANSFER_MEMBER_DESCRIPTION(S_COLOR + "Transfer members of your kingdom to another kingdom.", 1, 3),
     COMMAND_TRANSFER_MEMBER_USAGE(USAGE + "transferMember <YourKingdomMember> <Kingdom>", 1, 3),

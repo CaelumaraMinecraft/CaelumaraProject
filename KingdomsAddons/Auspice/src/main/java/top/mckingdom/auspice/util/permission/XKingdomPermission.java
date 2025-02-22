@@ -1,6 +1,7 @@
 package top.mckingdom.auspice.util.permission;
 
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.config.KingdomsConfig;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.constants.player.KingdomPermission;
@@ -11,14 +12,16 @@ public class XKingdomPermission extends KingdomPermission {
     private final DefinedMessenger deniedMessage;
     private final String defaultMessage;
     private final String defaultLore;
-    public XKingdomPermission(Namespace namespace, DefinedMessenger deniedMessage, String defaultMessage, String defaultLore) {
+
+
+    protected XKingdomPermission(@NotNull Namespace namespace, DefinedMessenger deniedMessage, String defaultMessage, String defaultLore) {
         super(namespace);
         this.deniedMessage = deniedMessage;
         this.defaultMessage = defaultMessage;
         this.defaultLore = defaultLore;
     }
 
-    protected static XKingdomPermission reg(Namespace namespace, DefinedMessenger messenger, String defaultMessage, String defaultLore, int hash) {
+    static XKingdomPermission create(Namespace namespace, DefinedMessenger messenger, String defaultMessage, String defaultLore, int hash) {
         XKingdomPermission perm = new XKingdomPermission(namespace, messenger, defaultMessage, defaultLore);
         perm.setHash(hash);
         Kingdoms.get().getPermissionRegistery().register(perm);
