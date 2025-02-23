@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class RegistryOperatorCommandUnregister<T extends Namespaced, R extends NamespacedRegistry<T>> extends RegistryOperatorCommand<T, R> {
+public class RegistryOperatorCommandUnregister<T extends Namespaced, R extends NamespacedRegistry<T> & UnregistrableNamespaceRegistry<T>> extends RegistryOperatorCommand<T, R> {
     public static final String VAR_KEY = "key";  // TODO inline
 
     protected final Messenger failed_not_unregisterable = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "not-unregisterable"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NOT_UNREGISTERABLE));
@@ -32,7 +32,12 @@ public class RegistryOperatorCommandUnregister<T extends Namespaced, R extends N
     protected final Messenger failed_wrong_key = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "wrong-key"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY));
     protected final Messenger success = new LazyMessenger(() -> new DefaultedMessenger(this.lang("success"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS));
 
-    public RegistryOperatorCommandUnregister(@CommandName final @NotNull String name, @Nullable KingdomsParentCommand parent, @Nullable PermissionDefault permissionDefault, @NotNull R registry, @NotNull Class<T> valueType) {
+    public RegistryOperatorCommandUnregister(@CommandName final @NotNull String name,
+                                             @Nullable KingdomsParentCommand parent,
+                                             @Nullable PermissionDefault permissionDefault,
+                                             @NotNull R registry,
+                                             @NotNull Class<T> valueType
+    ) {
         super(name, parent, permissionDefault, registry, valueType);
     }
 

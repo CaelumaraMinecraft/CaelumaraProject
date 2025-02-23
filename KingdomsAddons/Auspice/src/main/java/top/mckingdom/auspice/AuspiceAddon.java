@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class AuspiceAddon extends AddonTemplate {
+    public static final String NAMESPACE = "Auspice";
+
     private static AuspiceAddon instance;
 
     public static @NotNull AuspiceAddon get() {
@@ -36,7 +38,7 @@ public final class AuspiceAddon extends AddonTemplate {
      * Builds a {@linkplain Namespace} for Auspice addon.
      */
     public static @NotNull Namespace buildNS(@NotNull String key) {
-        return new Namespace("AuspiceAddon", key);
+        return new Namespace(NAMESPACE, key);
     }
 
     private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();   // Land 的元数据存储器
@@ -65,11 +67,15 @@ public final class AuspiceAddon extends AddonTemplate {
         XKingdomPermissionFactory.init();
         XRelationAttributeFactory.init();
 
+        GroupExt.init();
+
         CurrencyRegistry.init();
 
         CustomConfigValidators.init();
 
         LandUtil.init();
+
+        AuspicePlaceholder.init();
     }
 
     @Override
@@ -79,8 +85,6 @@ public final class AuspiceAddon extends AddonTemplate {
 
         getLogger().info("Registering commands...");
         registerAllCommands();
-
-        AuspicePlaceholder.init();
     }
 
     @Override

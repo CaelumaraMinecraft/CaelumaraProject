@@ -69,6 +69,18 @@ public abstract class RegistryOperatorCommandList<T extends Namespaced, R extend
 
     protected abstract @NotNull Map<String, ? extends ListOperation> availableOperations();
 
+    public class Info extends ListOperation {
+
+        public Info() {
+            super("info");
+        }
+
+        @Override
+        public String execute(@NotNull Namespace ns, T obj, CommandContext commandContext) {
+            return obj.getClass().getSimpleName() + "{ namespace=" + obj.getNamespace().asString() + ", hashCode=" + obj.hashCode() + " }";
+        }
+    }
+
     public class KeyToConfigString extends ListOperation {
 
         public KeyToConfigString() {
@@ -105,16 +117,27 @@ public abstract class RegistryOperatorCommandList<T extends Namespaced, R extend
         }
     }
 
+    public class ValueHashCode extends ListOperation {
 
-    public class HashCode extends ListOperation {
-
-        public HashCode() {
-            super("hashcode");
+        public ValueHashCode() {
+            super("value-hashcode");
         }
 
         @Override
         public String execute(@NotNull Namespace ns, T obj, CommandContext commandContext) {
             return String.valueOf(obj.hashCode());
+        }
+    }
+
+    public class ValueToString extends ListOperation {
+
+        public ValueToString() {
+            super("value-to-string");
+        }
+
+        @Override
+        public String execute(@NotNull Namespace ns, T obj, CommandContext commandContext) {
+            return obj.toString();
         }
     }
 

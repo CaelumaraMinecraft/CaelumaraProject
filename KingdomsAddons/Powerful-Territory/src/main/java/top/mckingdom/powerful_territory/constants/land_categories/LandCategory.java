@@ -6,13 +6,21 @@ import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.locale.Language;
 
 public abstract class LandCategory implements Namespaced {
+
+    private static int hashCount = 0;
+
     private final @NotNull Namespace namespace;
     private final boolean editable;
-    private int hash;
+    private final int hash;
 
-    public LandCategory(@NotNull Namespace namespace, boolean editable) {
+    protected LandCategory(@NotNull Namespace namespace, boolean editable) {
         this.namespace = namespace;
         this.editable = editable;
+        this.hash = hash();
+    }
+
+    private synchronized static int hash() {
+        return hashCount++;
     }
 
     /**
@@ -54,7 +62,7 @@ public abstract class LandCategory implements Namespaced {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "LandCategory:{" + this.toConfigKey() + '}';
     }
 }
