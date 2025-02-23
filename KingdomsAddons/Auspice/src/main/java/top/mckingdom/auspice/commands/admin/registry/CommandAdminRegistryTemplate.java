@@ -23,11 +23,13 @@ public abstract class CommandAdminRegistryTemplate<T extends Namespaced, R exten
                                         @NotNull Class<T> valueType
     ) {
         super(name, parent, permissionDefault);
-        if (registry instanceof Lockable lockableRegistry) {
-            new RegistryOperatorCommandLock<>("lock", this, permissionDefault, (R & Lockable) registry, valueType);
+        if (registry instanceof Lockable) {
+            // generics hack
+            new RegistryOperatorCommandLock("lock", this, permissionDefault, registry, valueType);
         }
-        if (registry instanceof UnregistrableNamespaceRegistry<?> unregistrableRegistry) {
-            new RegistryOperatorCommandUnregister<>("unregister", this, permissionDefault, (R & UnregistrableNamespaceRegistry<T>) unregistrableRegistry, valueType);
+        if (registry instanceof UnregistrableNamespaceRegistry<?>) {
+            // generics hack
+            new RegistryOperatorCommandUnregister("unregister", this, permissionDefault, registry, valueType);
         }
         new RegistryOperatorCommandList<>("list", this, permissionDefault, registry, valueType) {
 

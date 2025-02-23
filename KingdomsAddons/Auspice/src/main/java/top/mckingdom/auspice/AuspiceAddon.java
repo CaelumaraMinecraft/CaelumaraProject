@@ -13,9 +13,8 @@ import top.mckingdom.auspice.configs.AuspiceLang;
 import top.mckingdom.auspice.configs.AuspicePlaceholder;
 import top.mckingdom.auspice.configs.CustomConfigValidators;
 import top.mckingdom.auspice.costs.CurrencyRegistry;
+import top.mckingdom.auspice.util.GroupExt;
 import top.mckingdom.auspice.util.land.LandUtil;
-import top.mckingdom.auspice.util.permission.XKingdomPermissionFactory;
-import top.mckingdom.auspice.util.permission.XRelationAttributeFactory;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -64,9 +63,6 @@ public final class AuspiceAddon extends AddonTemplate {
 
         LanguageManager.registerMessenger(AuspiceLang.class);
 
-        XKingdomPermissionFactory.init();
-        XRelationAttributeFactory.init();
-
         GroupExt.init();
 
         CurrencyRegistry.init();
@@ -109,11 +105,11 @@ public final class AuspiceAddon extends AddonTemplate {
         Kingdoms.get().getDataCenter().getKingdomManager().getKingdoms().forEach(kingdom -> {
 
             kingdom.getGroup().getAttributes().values().forEach(attrSet -> {
-                attrSet.remove(XRelationAttributeFactory.DIRECTLY_TRANSFER_MEMBERS);
+                attrSet.remove(GroupExt.DIRECTLY_TRANSFER_MEMBERS);
             });
 
             kingdom.getRanks().forEach(rank -> {
-                rank.getPermissions().remove(XKingdomPermissionFactory.PERMISSION_TRANSFER_MEMBERS);
+                rank.getPermissions().remove(GroupExt.PERMISSION_TRANSFER_MEMBERS);
             });
         });
     }

@@ -10,9 +10,8 @@ import org.kingdoms.constants.group.Nation
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.events.members.LeaveReason
 import org.kingdoms.locale.KingdomsLang
+import top.mckingdom.auspice.util.GroupExt
 import top.mckingdom.auspice.configs.AuspiceLang
-import top.mckingdom.auspice.util.permission.XKingdomPermissionFactory
-import top.mckingdom.auspice.util.permission.XRelationAttributeFactory
 import java.util.*
 
 class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
@@ -23,13 +22,13 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
         val senderKP = context.kingdomPlayer ?: return CommandResult.FAILED
         val senderKingdom = senderKP.kingdom ?: return CommandResult.FAILED
         val offlinePlayer = context.getOfflinePlayer(0)
-        if (!senderKP.hasPermission(XKingdomPermissionFactory.PERMISSION_TRANSFER_MEMBERS)) {
-            XKingdomPermissionFactory.PERMISSION_TRANSFER_MEMBERS.sendDeniedMessage(offlinePlayer.player)
+        if (!senderKP.hasPermission(GroupExt.PERMISSION_TRANSFER_MEMBERS)) {
+            GroupExt.PERMISSION_TRANSFER_MEMBERS.sendDeniedMessage(offlinePlayer.player!!)  // TODO
             return CommandResult.FAILED
         }
         val kPlayer = KingdomPlayer.getKingdomPlayer(offlinePlayer)
         val takerKingdom = context.getKingdom(1)
-        if (!senderKingdom.hasAttribute(kPlayer.kingdom, XRelationAttributeFactory.DIRECTLY_TRANSFER_MEMBERS)) {
+        if (!senderKingdom.hasAttribute(kPlayer.kingdom, GroupExt.DIRECTLY_TRANSFER_MEMBERS)) {
             context.getPlayer(0).sendMessage("转移成员请求功能未实现")
             //TODO 转移成员申请
         } else {
@@ -80,8 +79,8 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
         @Deprecated("代码不稳定")
         @JvmStatic
         fun directlyTransfer(kingdom: Kingdom, sender: KingdomPlayer, taker: Nation): Boolean {
-            val kp : Int = kingdom.king.nationRank.priority
-            val sp : Int = sender.nationRank.priority
+            val kp: Int = kingdom.king.nationRank.priority
+            val sp: Int = sender.nationRank.priority
 
             if (sp >= kp) {
                 AuspiceLang.COMMAND_TRANSFER_MEMBER_FAILED_RANK_PRIORITY.sendError(sender.player)
@@ -95,9 +94,6 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
             Bukkit.getPluginManager().callEvent(kingdom.leaveNation(LeaveReason.CUSTOM)) //让被送出去的玩家离开原先王国
             kingdom.joinNation(taker, sender)
             return true
-
-
         }
-
     }
 }

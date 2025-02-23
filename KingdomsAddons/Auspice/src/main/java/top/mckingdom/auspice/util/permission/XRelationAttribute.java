@@ -1,39 +1,97 @@
 package top.mckingdom.auspice.util.permission;
 
+import net.aurika.validate.Validate;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.group.Group;
-import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.model.relationships.RelationAttribute;
 import org.kingdoms.constants.group.model.relationships.StandardRelationAttribute;
 import org.kingdoms.constants.namespace.Namespace;
+import org.kingdoms.locale.LanguageEntry;
+import org.kingdoms.locale.messenger.DefaultedMessenger;
+import org.kingdoms.locale.messenger.LanguageEntryMessenger;
+import org.kingdoms.locale.messenger.Messenger;
+import org.kingdoms.locale.messenger.StaticMessenger;
 import org.kingdoms.main.Kingdoms;
 
 public class XRelationAttribute extends RelationAttribute {
 
-    private final String defaultLore;
+    private static int hashCounter = 800;
 
-    public XRelationAttribute(@NotNull Namespace namespace, String defaultLore) {
-        super(namespace);
-        this.defaultLore = defaultLore;
+    private static synchronized int increaseHashCounter() {
+        return hashCounter++;
     }
 
-    static XRelationAttribute reg(Namespace namespace, String defaultLore, int hash) {
-        XRelationAttribute attr = new XRelationAttribute(namespace, defaultLore);
-        attr.setHash(hash);
+    private final Messenger name;
+    private final Messenger description;
+
+    private static final String[] a = new String[]{"relation-attribute", null, null};
+
+    @Contract(value = "_, _ -> new", pure = true)
+    protected static @NotNull String @NotNull [] componentPath(@NotNull Namespace ns, @NotNull String sec) {
+        String[] _a = a.clone();
+        _a[1] = ns.getConfigOptionName();
+        _a[2] = sec;
+        return _a;
+    }
+
+    protected static @NotNull LanguageEntry componentEntry(@NotNull Namespace ns, @NotNull String sec) {
+        return new LanguageEntry(componentPath(ns, sec));
+    }
+
+    public static @NotNull XRelationAttribute create(@NotNull Namespace namespace,
+                                                     @NotNull String name,
+                                                     @NotNull String description
+    ) {
+        return create(
+                namespace,
+                new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "name")), () -> new StaticMessenger(name)),
+                new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "description")), () -> new StaticMessenger(description))
+        );
+    }
+
+    public static @NotNull XRelationAttribute create(@NotNull Namespace namespace,
+                                                     @NotNull Messenger name,
+                                                     @NotNull Messenger description
+    ) {
+        XRelationAttribute attr = new XRelationAttribute(namespace, name, description);
         Kingdoms.get().getRelationAttributeRegistry().register(attr);
         return attr;
     }
 
+    /**
+     * Create.
+     * It will automatically set a unique hash.
+     */
+    protected XRelationAttribute(@NotNull Namespace namespace, @NotNull Messenger name, @NotNull Messenger description) {
+        super(namespace);
+        Validate.Arg.notNull(name, "name");
+        Validate.Arg.notNull(description, "description");
+        this.name = name;
+        this.description = description;
+        setHash(increaseHashCounter());
+    }
+
     @Override
-    public boolean hasAttribute(Group group, Group group1) {
-        return StandardRelationAttribute.hasAttribute(this, group, group1);
+    public boolean hasAttribute(Group primary, Group secondary) {
+        return StandardRelationAttribute.hasAttribute(this, primary, secondary);
     }
 
-    public boolean hasAttribute(Kingdom kingdom, Kingdom kingdom1) {
-        return StandardRelationAttribute.hasAttribute(this, kingdom, kingdom1);
+    /**
+     * Gets the name messenger.
+     *
+     * @return the name messenger
+     */
+    public final @NotNull Messenger name() {
+        return this.name;
     }
 
-    public String getDefaultLore() {
-        return defaultLore;
+    /**
+     * Gets the description messenger.
+     *
+     * @return the description messenger
+     */
+    public final @NotNull Messenger description() {
+        return this.description;
     }
 }

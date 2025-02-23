@@ -1,52 +1,78 @@
 package top.mckingdom.props;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
-import org.kingdoms.addons.Addon;
-import top.mckingdom.auspice.util.permission.XKingdomPermissionFactory;
+import org.kingdoms.constants.namespace.Namespace;
+import top.mckingdom.auspice.AddonTemplate;
 import top.mckingdom.auspice.util.permission.XKingdomPermission;
 
-import java.io.File;
+import static top.mckingdom.auspice.configs.MsgConst.E_COLOR;
+import static top.mckingdom.auspice.configs.MsgConst.S_COLOR;
 
-public class PropsAddon extends JavaPlugin implements Addon {
+public class PropsAddon extends AddonTemplate {
 
-    public static final XKingdomPermission PERMISSION_USE_PROPS = XKingdomPermissionFactory.create("PropsAddon", "USE_PROPS");
+    private static PropsAddon instance;
 
+    public static final String NAMESPACE = "Props";
+
+    public static final XKingdomPermission PERMISSION_USE_PROPS = XKingdomPermission.create(
+            buildNS("USE_PROPS"),
+            "Props",
+            S_COLOR + "Permission of using props.",
+            E_COLOR + "You don't have permission to use kingdom props."
+    );
+
+    public static @NotNull PropsAddon get() {
+        if (instance == null) {
+            throw new IllegalStateException("Props Addon instance has not been initialized.");
+        } else {
+            return instance;
+        }
+    }
+
+    public static @NotNull Namespace buildNS(@Pattern("[A-Z0-9_]{3,100}") final @NotNull String key) {
+        return new Namespace(NAMESPACE, key);
+    }
+
+    public PropsAddon() {
+        super();
+    }
 
     @Override
-    public void onLoad() {
+    protected void onInit0() {
+        instance = this;
+    }
+
+    @Override
+    public void onLoad0() {
 
     }
 
-    public void onEnable() {
-
-    }
-
-
-    @Override
-    public void reloadAddon() {
+    public void onEnable0() {
 
     }
 
     @Override
-    public void uninstall() {
+    protected void onDisable0() {
 
     }
 
     @Override
-    public String getAddonName() {
+    public void reloadAddon0() {
+
+    }
+
+    @Override
+    public void uninstall0() {
+
+    }
+
+    @Override
+    public @NotNull String getAddonName() {
         return "PropsAddon";
     }
 
-    @NotNull
-    @Override
-    public File getFile() {
-        return super.getFile();
-    }
-
-
-    public void registerHandlers() {
+    public void registerEventHandlers() {
 
     }
-
 }
