@@ -14,11 +14,11 @@ import org.kingdoms.locale.messenger.StaticMessenger;
 import org.kingdoms.main.Kingdoms;
 
 public class XKingdomPermission extends KingdomPermission {
-    private static int hashCounter = 180;
-
-    private static synchronized int increaseHashCounter() {
-        return hashCounter++;
-    }
+//    private static int hashCounter = 180;
+//
+//    private static synchronized int increaseHashCounter() {
+//        return hashCounter++;
+//    }
 
     private final @NotNull Messenger name;
     private final @NotNull Messenger description;
@@ -73,7 +73,7 @@ public class XKingdomPermission extends KingdomPermission {
         this.name = name;
         this.description = description;
         this.deniedMessage = deniedMessage;
-        setHash(increaseHashCounter());
+//        setHash(increaseHashCounter()); // fixed in KingdomsX 1.17.10-BETA
     }
 
     public final void sendDeniedMessage(@NotNull Player player) {

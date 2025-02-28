@@ -16,11 +16,11 @@ import org.kingdoms.main.Kingdoms;
 
 public class XRelationAttribute extends RelationAttribute {
 
-    private static int hashCounter = 800;
-
-    private static synchronized int increaseHashCounter() {
-        return hashCounter++;
-    }
+//    private static int hashCounter = 800;
+//
+//    private static synchronized int increaseHashCounter() {
+//        return hashCounter++;
+//    }
 
     private final @NotNull Messenger name;
     private final @NotNull Messenger description;
@@ -69,7 +69,7 @@ public class XRelationAttribute extends RelationAttribute {
         Validate.Arg.notNull(description, "description");
         this.name = name;
         this.description = description;
-        setHash(increaseHashCounter());
+//        setHash(increaseHashCounter());
     }
 
     @Override
