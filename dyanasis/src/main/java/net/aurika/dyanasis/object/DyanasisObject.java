@@ -1,43 +1,38 @@
 package net.aurika.dyanasis.object;
 
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
+import net.aurika.dyanasis.declaration.doc.DyanasisDocOwner;
+import net.aurika.dyanasis.declaration.doc.DyanasisDocProvider;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionOwner;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionsProvider;
+import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisPropertiesProvider;
-import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisPropertyOwner;
-import net.aurika.dyanasis.object.standard.StandardDyanasisObjectBool;
-import net.aurika.dyanasis.object.standard.StandardDyanasisObjectNull;
+import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
-public interface DyanasisObject extends DyanasisPropertiesProvider, DyanasisFunctionsProvider, DyanasisPropertyOwner, DyanasisFunctionOwner {
-    static @NotNull StandardDyanasisObjectNull dyNull() {
-        return StandardDyanasisObjectNull.INSTANCE;
-    }
-
-    static @NotNull StandardDyanasisObjectBool dyTrue() {
-        return StandardDyanasisObjectBool.TRUE;
-    }
-
-    static @NotNull StandardDyanasisObjectBool dyFalse() {
-        return StandardDyanasisObjectBool.FALSE;
-    }
+public interface DyanasisObject extends
+        DyanasisPropertiesProvider, DyanasisPropertyOwner,
+        DyanasisFunctionsProvider, DyanasisFunctionOwner,
+        DyanasisDocProvider, DyanasisDocOwner {
 
     @Override
-    @NotNull Map<String, ? extends DyanasisProperty> dyanasisProperties();
+    @NotNull DyanasisProperties dyanasisProperties();
 
     @Override
-    @NotNull Map<DyanasisFunctionKey, ? extends DyanasisFunction> dyanasisFunctions();
+    @NotNull DyanasisFunctions dyanasisFunctions();
 
-    boolean equals(@NotNull String str);
+    /**
+     * 将这个 {@linkplain DyanasisObject} 与一个配置中的字符串相比较.
+     *
+     * @param cfgStr 配置字符串
+     * @return 是否相同
+     */
+    boolean equals(@NotNull String cfgStr);
 
     /**
      * Gets the value as a java object.
      *
      * @return the value
      */
-    @NotNull Object value();
+    @NotNull Object valueAsJava();
 }

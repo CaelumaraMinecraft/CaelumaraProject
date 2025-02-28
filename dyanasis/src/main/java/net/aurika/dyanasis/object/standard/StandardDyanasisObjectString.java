@@ -1,13 +1,10 @@
 package net.aurika.dyanasis.object.standard;
 
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
+import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import net.aurika.dyanasis.object.DyanasisObject;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 public class StandardDyanasisObjectString implements DyanasisObject {
 
@@ -19,22 +16,22 @@ public class StandardDyanasisObjectString implements DyanasisObject {
     }
 
     @Override
-    public @NotNull Map<String, ? extends DyanasisProperty> dyanasisProperties() {
+    public @NotNull DyanasisProperties dyanasisProperties() {
         TODO
     }
 
     @Override
-    public @NotNull Map<DyanasisFunctionKey, ? extends DyanasisFunction> dyanasisFunctions() {
+    public @NotNull DyanasisFunctions dyanasisFunctions() {
         TODO
     }
 
     @Override
-    public boolean equals(@NotNull String str) {
-        return value.equals(str);
+    public boolean equals(@NotNull String cfgStr) {
+        return value.equals(cfgStr);
     }
 
     @Override
-    public @NotNull String value() {
+    public @NotNull String valueAsJava() {
         return value;
     }
 }

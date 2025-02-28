@@ -1,14 +1,11 @@
 package net.aurika.dyanasis.object.standard;
 
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
+import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import net.aurika.dyanasis.object.DyanasisObject;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Collections;
-import java.util.Map;
 
 public class StandardDyanasisObjectNull implements DyanasisObject {
     public static final StandardDyanasisObjectNull INSTANCE = new StandardDyanasisObjectNull();
@@ -17,22 +14,22 @@ public class StandardDyanasisObjectNull implements DyanasisObject {
     }
 
     @Override
-    public @NotNull @Unmodifiable Map<String, ? extends DyanasisProperty> dyanasisProperties() {
+    public @NotNull DyanasisProperties dyanasisProperties() {
         return Collections.emptyMap();
     }
 
     @Override
-    public @NotNull Map<DyanasisFunctionKey, ? extends DyanasisFunction> dyanasisFunctions() {
+    public @NotNull DyanasisFunctions dyanasisFunctions() {
         return Collections.emptyMap();
     }
 
     @Override
-    public boolean equals(@NotNull String str) {
-        return str.equals("null");
+    public boolean equals(@NotNull String cfgStr) {
+        return cfgStr.equals("null");
     }
 
     @Override
-    public @NotNull Void value() {
+    public @NotNull Void valueAsJava() {
         return null;
     }
 

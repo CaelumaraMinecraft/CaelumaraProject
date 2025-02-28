@@ -4,13 +4,12 @@ import net.aurika.dyanasis.NamingContract;
 import net.aurika.dyanasis.declaration.DyanasisDeclaration;
 import net.aurika.dyanasis.declaration.doc.DyanasisDocOwner;
 import net.aurika.dyanasis.declaration.doc.DyanasisDocProvider;
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionOwner;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionsProvider;
+import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisPropertiesProvider;
-import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisPropertyOwner;
+import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,8 +60,8 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     @NotNull Map<String, ? extends DyanasisNamespace> children();
 
     @Override
-    @NotNull Map<String, ? extends DyanasisProperty> dyanasisProperties();
+    @NotNull DyanasisProperties dyanasisProperties();
 
     @Override
-    @NotNull Map<DyanasisFunctionKey, ? extends DyanasisFunction> dyanasisFunctions();
+    @NotNull DyanasisFunctions dyanasisFunctions();
 }

@@ -3,19 +3,19 @@ package net.aurika.dyanasis.object;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionOwner;
+import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 public abstract class AbstractDyanasisObject implements DyanasisObject {
 
     @Override
-    public abstract @NotNull Map<String, ? extends DyanasisProperty> dyanasisProperties();
+    public abstract @NotNull DyanasisProperties dyanasisProperties();
 
     @Override
-    public abstract @NotNull Map<DyanasisFunctionKey, ? extends DyanasisFunction> dyanasisFunctions();
+    public abstract @NotNull DyanasisFunctions dyanasisFunctions();
 
     public abstract class Property implements DyanasisProperty {
 

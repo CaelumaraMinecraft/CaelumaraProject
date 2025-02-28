@@ -1,13 +1,11 @@
 package net.aurika.dyanasis.object.standard;
 
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
+import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import net.aurika.dyanasis.object.DyanasisObjectBool;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
-import java.util.Map;
 
 public class StandardDyanasisObjectBool implements DyanasisObjectBool {
 
@@ -21,19 +19,19 @@ public class StandardDyanasisObjectBool implements DyanasisObjectBool {
     }
 
     @Override
-    public @NotNull Map<String, ? extends DyanasisProperty> dyanasisProperties() {
+    public @NotNull DyanasisProperties dyanasisProperties() {
         return Collections.emptyMap();
     }
 
     @Override
-    public @NotNull Map<DyanasisFunctionKey, ? extends DyanasisFunction> dyanasisFunctions() {
+    public @NotNull DyanasisFunctions dyanasisFunctions() {
         return Collections.emptyMap();
     }
 
     @SuppressWarnings("PointlessBooleanExpression")
     @Override
-    public boolean equals(@NotNull String str) {
-        return switch (str) {
+    public boolean equals(@NotNull String cfgStr) {
+        return switch (cfgStr) {
             case "true" -> value == true;
             case "false" -> value == false;
             default -> false;
@@ -41,7 +39,7 @@ public class StandardDyanasisObjectBool implements DyanasisObjectBool {
     }
 
     @Override
-    public @NotNull Boolean value() {
+    public @NotNull Boolean valueAsJava() {
         return value ? Boolean.TRUE : Boolean.FALSE;
     }
 }
