@@ -31,7 +31,7 @@ dependencies {
     api(libs.caffeine)
     api(libs.guava)
 
-    api(libs.iocommons)
+    api(libs.apache.commons.io)
 
 //    implementation("com.github.cryptomorin:ReptileYAML:4.0.0")
 
@@ -42,11 +42,24 @@ dependencies {
     api(libs.h2)
     api(libs.postgresql)
 
-    compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
 
     // Classpath libs
     api(libs.annotations.jetbrains)
     api(libs.annotations.checker)
+
+    // TODO
+    compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
+    compileOnly(libs.fastutil)
+    compileOnly(libs.apache.commons.lang)
+    compileOnly(libs.apache.commons.math)
+    compileOnly(libs.apache.commons.text)
+    compileOnly(libs.apache.commons.compress)
+    compileOnly(libs.apache.commons.config)
+    compileOnly(libs.apache.commons.collections)
+    compileOnly(libs.apache.commons.exec)
+
+
+
 }
 
 

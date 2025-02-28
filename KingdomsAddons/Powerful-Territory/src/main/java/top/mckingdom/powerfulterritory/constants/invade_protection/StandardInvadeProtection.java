@@ -8,11 +8,11 @@ import org.kingdoms.locale.Language;
 import org.kingdoms.locale.messenger.Messenger;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
 import top.mckingdom.auspice.util.MessengerUtil;
+import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon;
 
 import java.util.Locale;
 
 public class StandardInvadeProtection implements InvadeProtection {
-
 
     public static final StandardInvadeProtection VISIBLE_PROTECTION = a(true, "VISIBLE_PROTECTION", "可见保护");
     public static final StandardInvadeProtection INVISIBLE_PROTECTION = a(true, "INVISIBLE_PROTECTION", "隐形保护");
@@ -25,7 +25,7 @@ public class StandardInvadeProtection implements InvadeProtection {
     private static StandardInvadeProtection a(boolean b, String nsKey, String defaultName) {
         StandardInvadeProtection a = new StandardInvadeProtection(
                 b,
-                MessengerUtil.createMessenger(new String[]{"powerful-territory", "invade-protection-name", nsKey.toLowerCase(Locale.ENGLISH).replace('_', '-')}, defaultName),
+                MessengerUtil.createMessenger(new String[]{PowerfulTerritoryAddon.CONFIG_HEAD, "invade-protection-name", nsKey.toLowerCase(Locale.ENGLISH).replace('_', '-')}, defaultName),
                 new Namespace("PowerfulTerritory", nsKey)
         );
         InvadeProtectionRegistry.get().register(a);

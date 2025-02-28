@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 public class CommandUtil {
 
     //   give #P DuoDuoJuZi 1
@@ -60,7 +61,6 @@ public class CommandUtil {
     /**
      *
      */
-
     public static @NotNull Operation<Group, String> selector(CommandContext context, boolean targetNation) {
         Operation<Group, String> out = new Operation<>();
         String playerTag = KingdomsLang.COMMANDS_TAGS_IDENTIFIER_PLAYERS.parse(context.getMessageReceiver());

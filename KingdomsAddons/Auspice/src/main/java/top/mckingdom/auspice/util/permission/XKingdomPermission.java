@@ -20,9 +20,9 @@ public class XKingdomPermission extends KingdomPermission {
         return hashCounter++;
     }
 
-    private final Messenger name;
-    private final Messenger description;
-    private final Messenger deniedMessage;
+    private final @NotNull Messenger name;
+    private final @NotNull Messenger description;
+    private final @NotNull Messenger deniedMessage;
 
     private static final String[] a = new String[]{"kingdom-permission", null, null};
 

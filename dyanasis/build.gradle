@@ -1,12 +1,12 @@
 plugins {
     id("java-library")
-//    alias(libs.plugins.kotlin)
-//    alias(libs.plugins.shadow)
+    alias(libs.plugins.kotlin)
 }
 
-description = "一个占位符 API, 上下文系统"
+description = "A dynamic, based on string placeholder system"
 
 dependencies {
     api(project(":common:validate"))
-    compileOnly(libs.annotations.checker)
+    compileOnlyApi(libs.annotations.jetbrains)
+    compileOnlyApi(libs.annotations.checker)
 }

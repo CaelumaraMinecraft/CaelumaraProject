@@ -1,6 +1,5 @@
 package top.mckingdom.powerfulterritory.util;
 
-import org.kingdoms.constants.group.model.relationships.RelationAttribute;
 import top.mckingdom.auspice.util.permission.XKingdomPermission;
 import top.mckingdom.auspice.util.permission.XRelationAttribute;
 
@@ -15,17 +14,16 @@ public class GroupExt {
             "Elytra",
             S_COLOR + "Relation attribute to fly with elytra in other kingdoms."
     );
-    public static final RelationAttribute BEACON_EFFECTS = XRelationAttribute.create(
+    public static final XRelationAttribute BEACON_EFFECTS = XRelationAttribute.create(
             buildNS("BEACON_EFFECTS"),
             "Beacon effects",
             S_COLOR + "Relation attribute to receive beacon effects in other kingdoms."
     );
-    public static final RelationAttribute ENDER_PEARL_TELEPORT = XRelationAttribute.create(
+    public static final XRelationAttribute ENDER_PEARL_TELEPORT = XRelationAttribute.create(
             buildNS("ENDER_PEARL_TELEPORT"),
             "Ender pearl teleport",
             S_COLOR + "Relation attribute to teleport to other kingdoms by ender pearl."
     );
-
     public static final XKingdomPermission PERMISSION_USE_BOATS = XKingdomPermission.create(
             buildNS("USE_BOATS"),
             "Use boats",

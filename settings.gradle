@@ -199,7 +199,7 @@ include(
         ":Auspice:service:AuthMe",
         ":Auspice:service:CMI",
         ":Auspice:service:Essentials",
-//        ":Auspice:service:ItemsAdder",
+        ":Auspice:service:ItemsAdder",
         ":Auspice:service:Kingdoms",
         ":Auspice:service:LuckPerms-api",
         ":Auspice:service:LuckPerms",

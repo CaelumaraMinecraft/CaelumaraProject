@@ -3,7 +3,7 @@ package top.mckingdom.props;
 import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.namespace.Namespace;
-import top.mckingdom.auspice.AddonTemplate;
+import top.mckingdom.auspice.util.AddonTemplate;
 import top.mckingdom.auspice.util.permission.XKingdomPermission;
 
 import static top.mckingdom.auspice.configs.MsgConst.E_COLOR;

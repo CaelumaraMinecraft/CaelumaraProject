@@ -88,6 +88,17 @@ val RepositoryHandler.essentials_snapshots: MavenArtifactRepository
         name = "essentials-snapshots"
     }
 
+/**
+ * The matteodex repository. Used for
+ * ItemsAdder.
+ */
+@get:JvmName("matteodev")
+val RepositoryHandler.matteodev: MavenArtifactRepository
+    get() = this.maven {
+        url = URI.create("https://maven.devs.beer/")
+        name = "matteodev"
+    }
+
 @get:JvmName("oraxen_releases")
 val RepositoryHandler.oraxen_releases: MavenArtifactRepository
     get() = this.maven {

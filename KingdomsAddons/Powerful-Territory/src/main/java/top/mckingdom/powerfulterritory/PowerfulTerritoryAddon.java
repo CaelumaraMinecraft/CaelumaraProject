@@ -11,7 +11,7 @@ import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.locale.LanguageManager;
 import org.kingdoms.main.Kingdoms;
-import top.mckingdom.auspice.AddonTemplate;
+import top.mckingdom.auspice.util.AddonTemplate;
 import top.mckingdom.auspice.commands.admin.registry.CommandAdminRegistry;
 import top.mckingdom.powerfulterritory.commands.admin.land.CommandAdminLand;
 import top.mckingdom.powerfulterritory.commands.admin.registry.CommandAdminRegistryLandCategory;
@@ -38,6 +38,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class PowerfulTerritoryAddon extends AddonTemplate {
+
+    public static final String CONFIG_HEAD = "powerful-territory";
+
     private static PowerfulTerritoryAddon instance;
 
     public static @NotNull Namespace buildNS(@NotNull String key) {

@@ -13,6 +13,7 @@ import top.mckingdom.auspice.configs.AuspiceLang;
 import top.mckingdom.auspice.configs.AuspicePlaceholder;
 import top.mckingdom.auspice.configs.CustomConfigValidators;
 import top.mckingdom.auspice.costs.CurrencyRegistry;
+import top.mckingdom.auspice.util.AddonTemplate;
 import top.mckingdom.auspice.util.GroupExt;
 import top.mckingdom.auspice.util.land.LandUtil;
 

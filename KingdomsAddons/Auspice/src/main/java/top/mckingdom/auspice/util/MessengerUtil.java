@@ -19,12 +19,12 @@ import static top.mckingdom.auspice.util.MessengerUtil.Companion.constants;
 
 public class MessengerUtil {
 
-
     /**
      * Create a new DefinedMessenger object
      *
      * @param path The Path of Language, it will ignore case, such as {@code new String[]{"permission", "JAIL"}} will make a path "permission/jail"
      */
+    @Deprecated
     public static DefinedMessenger createMessenger(String[] path, String defaultValue) {
 
         if (!AuspiceAddon.get().isKingdomsLoaded()) {

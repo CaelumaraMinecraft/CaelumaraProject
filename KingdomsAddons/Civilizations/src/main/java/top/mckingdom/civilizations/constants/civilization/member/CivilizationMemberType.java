@@ -14,11 +14,9 @@ public abstract class CivilizationMemberType<T, M extends CivilizationMember<T>>
         this.type = type;
     }
 
-
     public final MarkingCivilizationMember<T> deserializeMarkingMember(SectionableDataGetter section) {
         return this.deserializeFromIdentData(section.get("ident"));
     }
-
 
     public final CivilizationMember<T> deserializeIntactMember(SectionableDataGetter section) {
         CivilizationMember<T> member = (CivilizationMember<T>) this.deserializeMarkingMember(section);
@@ -56,5 +54,4 @@ public abstract class CivilizationMemberType<T, M extends CivilizationMember<T>>
         }
         return null;
     }
-
 }

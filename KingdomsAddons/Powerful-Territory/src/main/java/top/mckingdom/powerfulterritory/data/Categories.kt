@@ -114,6 +114,7 @@ class LandCategoryMetaHandler private constructor() :
 
 fun registerLandCategoryExternalMessageContextEdit() {
     top.mckingdom.auspice.util.land.addExtMessageContextEdit("category") { land -> land.category }
+    top.mckingdom.auspice.util.land.addExtMessageContextEdit("category-key") { land -> land.category?.namespace?.asString() }
 }
 
 /**

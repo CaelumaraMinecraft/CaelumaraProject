@@ -22,8 +22,8 @@ public class XRelationAttribute extends RelationAttribute {
         return hashCounter++;
     }
 
-    private final Messenger name;
-    private final Messenger description;
+    private final @NotNull Messenger name;
+    private final @NotNull Messenger description;
 
     private static final String[] a = new String[]{"relation-attribute", null, null};
 

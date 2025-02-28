@@ -16,6 +16,8 @@ import top.mckingdom.powerfulterritory.constants.land_contractions.LandContracti
 import java.util.Locale;
 import java.util.function.Function;
 
+import static top.mckingdom.powerfulterritory.PowerfulTerritoryAddon.CONFIG_HEAD;
+
 @SuppressWarnings("unused")
 public class StandardLandContraction extends LandContraction {
 
@@ -26,7 +28,6 @@ public class StandardLandContraction extends LandContraction {
     public static final StandardLandContraction BUILD = register(PowerfulTerritoryAddon.buildNS("BUILD"), (x) -> null);
     public static final StandardLandContraction SHOP;
 
-
     private final DefinedMessenger nameMessenger;
     private final Function<SectionableDataGetter, ContractionLandProperties> deserializeProperties;
 
@@ -35,7 +36,6 @@ public class StandardLandContraction extends LandContraction {
         this.nameMessenger = nameMessenger;
         this.deserializeProperties = deserializeProperties;
     }
-
 
     @Nullable
     @Override
@@ -51,7 +51,7 @@ public class StandardLandContraction extends LandContraction {
 
     public static StandardLandContraction register(Namespace ns, Function<SectionableDataGetter, ContractionLandProperties> deserializeProperties) {
         String key = ns.getKey().toLowerCase(Locale.ENGLISH).replace('_', '-');
-        StandardLandContraction c = new StandardLandContraction(ns, MessengerUtil.createMessenger(new String[]{"powerful-territory", "constants-contraction", key}, key), deserializeProperties);
+        StandardLandContraction c = new StandardLandContraction(ns, MessengerUtil.createMessenger(new String[]{CONFIG_HEAD, "land-contraction", key}, key), deserializeProperties);
         PowerfulTerritoryAddon.get().getLandContractionRegistry().register(c);
         return c;
     }
@@ -67,6 +67,4 @@ public class StandardLandContraction extends LandContraction {
             SHOP = null;
         }
     }
-
-
 }

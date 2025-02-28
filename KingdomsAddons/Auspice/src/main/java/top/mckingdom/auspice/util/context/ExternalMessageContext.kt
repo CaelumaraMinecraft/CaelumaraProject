@@ -25,14 +25,17 @@ fun <T> getExternalMessageContextEditsFactory(type: Class<T>): ExternalMessageCo
  */
 inline fun <reified T> getExternalMessageContextEditsFactory() = getExternalMessageContextEditsFactory(T::class.java)
 
+/**
+ * A class to resolve the problem of some class don't have message context edits.
+ */
 open class ExternalMessageContextEditsFactory<T>(val type: Class<T>) {
     protected val extMessageContextEdits: MutableMap<String, Function<T, Any?>> = HashMap()
 
-    fun addExtMessageContextEdit(name: String, editProvider: Function<T, Any?>) {
+    open fun addExtMessageContextEdit(name: String, editProvider: Function<T, Any?>) {
         extMessageContextEdits[name] = editProvider
     }
 
-    fun removeExtMessageContextEdit(name: String) {
+    open fun removeExtMessageContextEdit(name: String) {
         extMessageContextEdits.remove(name)
     }
 
@@ -42,7 +45,7 @@ open class ExternalMessageContextEditsFactory<T>(val type: Class<T>) {
      * This will add the external edits and the default implemented edits [CascadingMessageContextProvider.addMessageContextEdits].
      * Note: the external message context edits will be overridden by the default implementation [CascadingMessageContextProvider.addMessageContextEdits].
      */
-    fun addMessageContextEntries(obj: T, messageContext: MessagePlaceholderProvider) {
+    open fun addMessageContextEntries(obj: T, messageContext: MessagePlaceholderProvider) {
         for (edit in extMessageContextEdits) {
             messageContext.raw(edit.key, edit.value.apply(obj))
         }
@@ -54,7 +57,7 @@ open class ExternalMessageContextEditsFactory<T>(val type: Class<T>) {
         }
     }
 
-    fun addMessageContextEntry(obj: T, messageContext: MessagePlaceholderProvider, editName: String) {
+    open fun addMessageContextEntry(obj: T, messageContext: MessagePlaceholderProvider, editName: String) {
         val editProvider = extMessageContextEdits[editName]
         if (editProvider != null) {
             messageContext.raw(editName, editProvider.apply(obj))

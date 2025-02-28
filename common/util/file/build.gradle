@@ -7,7 +7,7 @@ dependencies {
     api(project(":common:validate"))
     api(project(":common:util:collection"))
     api(project(":common:util:string"))
-    api(libs.iocommons)
+    api(libs.apache.commons.io)
     compileOnlyApi(libs.annotations.jetbrains)
     compileOnlyApi(libs.annotations.checker)
 }
