@@ -21,7 +21,6 @@ public class DyanasisLexerException extends RuntimeException {
     public static @NotNull String message(@NotNull String original, int errStart, int errEnd, @NotNull String problem) {
         Validate.Arg.notNull(original, "original");
         Validate.Arg.notNull(problem, "problem");
-
     }
 
     public @NotNull String original() {

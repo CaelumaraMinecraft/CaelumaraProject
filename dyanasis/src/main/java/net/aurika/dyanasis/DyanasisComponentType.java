@@ -2,8 +2,8 @@ package net.aurika.dyanasis;
 
 import net.aurika.dyanasis.declaration.doc.DyanasisDoc;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.declaration.namespace.DyanasisNamespace;
 
 public enum DyanasisComponentType {
     /**

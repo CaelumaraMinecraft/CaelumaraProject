@@ -18,8 +18,7 @@ import java.util.Map;
 public interface DyanasisNamespace extends DyanasisDeclaration,
         DyanasisPropertiesProvider, DyanasisPropertyOwner,
         DyanasisFunctionsProvider, DyanasisFunctionOwner,
-        DyanasisDocProvider, DyanasisDocOwner
-{
+        DyanasisDocProvider, DyanasisDocOwner {
     /**
      * Gets the dyanasis namespace name.
      *
