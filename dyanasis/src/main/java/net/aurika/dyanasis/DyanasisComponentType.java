@@ -1,5 +1,6 @@
 package net.aurika.dyanasis;
 
+import net.aurika.dyanasis.declaration.doc.DyanasisDoc;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
 import net.aurika.dyanasis.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.declaration.invokable.property.DyanasisProperty;
@@ -8,15 +9,19 @@ public enum DyanasisComponentType {
     /**
      * @see DyanasisNamespace
      */
-    NAMESPACE(),
+    NAMESPACE(DyanasisNamespace.class),
     /**
      * @see DyanasisFunction
      */
-    FUNCTION(),
+    FUNCTION(DyanasisFunction.class),
     /**
      * @see DyanasisProperty
      */
-    PROPERTY(),
+    PROPERTY(DyanasisProperty.class),
+    /**
+     * @see DyanasisDoc
+     */
+    DOC(DyanasisDoc.class),
     ;
     private final Object[] value;
 

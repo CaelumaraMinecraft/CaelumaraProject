@@ -24,6 +24,7 @@ public interface DyanasisObjectSupport extends DyanasisObject {
             this.type = type;
         }
 
+        @ApiStatus.Experimental
         public @NotNull Class<? extends DyanasisObjectSupport> type() {
             return type;
         }

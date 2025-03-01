@@ -7,4 +7,7 @@ public interface DyanasisObjectString extends DyanasisObjectSupport {
     default @NotNull SupportType supportType() {
         return SupportType.STRING;
     }
+
+    @Override
+    @NotNull CharSequence valueAsJava();
 }

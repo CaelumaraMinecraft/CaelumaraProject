@@ -7,4 +7,7 @@ public interface DyanasisObjectBool extends DyanasisObjectSupport {
     default @NotNull SupportType supportType() {
         return SupportType.BOOL;
     }
+
+    @Override
+    @NotNull Boolean valueAsJava();
 }

@@ -7,4 +7,7 @@ public interface DyanasisObjectNumber extends DyanasisObjectSupport {
     default @NotNull SupportType supportType() {
         return SupportType.NUMBER;
     }
+
+    @Override
+    @NotNull Number valueAsJava();
 }

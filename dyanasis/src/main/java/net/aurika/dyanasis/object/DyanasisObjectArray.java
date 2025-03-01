@@ -7,4 +7,7 @@ public interface DyanasisObjectArray extends DyanasisObjectSupport {
     default @NotNull SupportType supportType() {
         return SupportType.ARRAY;
     }
+
+    @Override
+    @NotNull Object valueAsJava();
 }

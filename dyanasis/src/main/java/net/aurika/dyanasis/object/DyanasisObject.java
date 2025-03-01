@@ -11,9 +11,9 @@ import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProp
 import org.jetbrains.annotations.NotNull;
 
 public interface DyanasisObject extends
-        DyanasisPropertiesProvider, DyanasisPropertyOwner,
-        DyanasisFunctionsProvider, DyanasisFunctionOwner,
-        DyanasisDocProvider, DyanasisDocOwner {
+        DyanasisPropertiesProvider, DyanasisPropertyOwner,  // property
+        DyanasisFunctionsProvider, DyanasisFunctionOwner,   // function
+        DyanasisDocProvider, DyanasisDocOwner {             // doc
 
     @Override
     @NotNull DyanasisProperties dyanasisProperties();

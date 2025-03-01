@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class StandardDyanasisObjectNumber implements DyanasisObject {
     private final @NotNull Number value;
+    private final @NotNull DyanasisProperties properties;
+    private final @NotNull DyanasisFunctions functions;
 
     public StandardDyanasisObjectNumber(@NotNull Number value) {
         Validate.Arg.notNull(value, "value");

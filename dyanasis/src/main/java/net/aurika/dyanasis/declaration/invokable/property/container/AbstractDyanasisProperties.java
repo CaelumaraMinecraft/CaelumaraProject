@@ -23,13 +23,17 @@ public class AbstractDyanasisProperties implements DyanasisProperties {
     }
 
     @Override
+    public boolean hasProperty(@NotNull String name) {
+        return properties.containsKey(name);
+    }
+
+    @Override
     public @Nullable DyanasisProperty getProperty(@NotNull String name) {
         return properties.get(name);
     }
 
     @Override
-    @Unmodifiable
-    public @NotNull Map<String, DyanasisProperty> allProperties() {
+    public @Unmodifiable @NotNull Map<String, DyanasisProperty> allProperties() {
         return Collections.unmodifiableMap(properties);
     }
 }

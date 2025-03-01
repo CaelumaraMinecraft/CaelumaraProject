@@ -21,6 +21,14 @@ public interface DyanasisFunctions {
     }
 
     /**
+     * Returns {@code true} if this has function that has the same {@code key}.
+     *
+     * @param key the function key
+     * @return {@code true} if it has the function
+     */
+    boolean hasFunction(@NotNull DyanasisFunctionKey key);
+
+    /**
      * Gets a dyanasis function by the {@code key}.
      *
      * @param key the function key

@@ -7,4 +7,9 @@ public interface DyanasisObjectNull extends DyanasisObjectSupport {
     default @NotNull SupportType supportType() {
         return SupportType.NULL;
     }
+
+    @Override
+    default @NotNull Void valueAsJava() {
+        return null;
+    }
 }
