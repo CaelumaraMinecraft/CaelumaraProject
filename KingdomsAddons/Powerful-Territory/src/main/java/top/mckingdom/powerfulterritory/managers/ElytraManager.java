@@ -11,8 +11,8 @@ import org.kingdoms.constants.land.Land;
 import org.kingdoms.constants.player.KingdomPlayer;
 import org.kingdoms.events.lands.LandChangeEvent;
 import top.mckingdom.auspice.AuspiceAddon;
-import top.mckingdom.powerfulterritory.util.GroupExt;
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang;
+import top.mckingdom.powerfulterritory.util.GroupExt;
 
 public class ElytraManager implements Listener {
 

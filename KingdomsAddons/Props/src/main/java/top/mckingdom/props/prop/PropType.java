@@ -9,7 +9,6 @@ public abstract class PropType {
 
     public abstract void active(PropActiveContext context);
 
-
     public String getName() {
         return this.name;
     }

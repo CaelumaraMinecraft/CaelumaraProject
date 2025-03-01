@@ -6,6 +6,4 @@ public abstract class StructureCivilizationLinker extends StructureType {
     public StructureCivilizationLinker(String s) {
         super(s);
     }
-    
-    
 }

@@ -11,8 +11,8 @@ import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.locale.LanguageManager;
 import org.kingdoms.main.Kingdoms;
-import top.mckingdom.auspice.util.AddonTemplate;
 import top.mckingdom.auspice.commands.admin.registry.CommandAdminRegistry;
+import top.mckingdom.auspice.util.AddonTemplate;
 import top.mckingdom.powerfulterritory.commands.admin.land.CommandAdminLand;
 import top.mckingdom.powerfulterritory.commands.admin.registry.CommandAdminRegistryLandCategory;
 import top.mckingdom.powerfulterritory.commands.admin.registry.CommandAdminRegistryLandContraction;
@@ -137,7 +137,6 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
         CommandAdminRegistry command_admin_registry = CommandAdminRegistry.getInstance();
         new CommandAdminRegistryLandCategory(command_admin_registry);
         new CommandAdminRegistryLandContraction(command_admin_registry);
-
     }
 
     public void registerAllMetadataHandlers() {

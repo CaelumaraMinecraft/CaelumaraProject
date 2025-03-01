@@ -2,11 +2,7 @@ package top.mckingdom.auspice.costs.generators
 
 import org.kingdoms.constants.group.Kingdom
 import org.kingdoms.utils.config.ConfigSection
-import top.mckingdom.auspice.costs.Currency
-import top.mckingdom.auspice.costs.CurrencyRegistry
-import top.mckingdom.auspice.costs.statistics.CurrencyEntry
 import top.mckingdom.auspice.costs.statistics.CurrencyEntryList
-import top.mckingdom.auspice.costs.statistics.CurrencyEntryList.TradeType
 
 class KingdomCurrencyListGenerator : CurrencyListGenerator<Kingdom> {
     override fun generate(section: ConfigSection): CurrencyEntryList<Kingdom> {
@@ -15,6 +11,7 @@ class KingdomCurrencyListGenerator : CurrencyListGenerator<Kingdom> {
 
     companion object {
         private val instance = KingdomCurrencyListGenerator()
+
         @JvmStatic
         fun get(): KingdomCurrencyListGenerator {
             return instance

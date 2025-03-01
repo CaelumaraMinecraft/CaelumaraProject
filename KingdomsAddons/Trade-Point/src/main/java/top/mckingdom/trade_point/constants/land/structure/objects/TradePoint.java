@@ -1,6 +1,5 @@
 package top.mckingdom.trade_point.constants.land.structure.objects;
 
-import kotlin.annotation.MustBeDocumented;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.land.FuelContainer;
@@ -10,7 +9,6 @@ import org.kingdoms.constants.land.structures.StructureStyle;
 import org.kingdoms.data.database.dataprovider.SectionableDataSetter;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,7 +31,6 @@ public class TradePoint extends Structure implements FuelContainer {
         return super.addMessageContextEdits(messagePlaceholderProvider, kingdom);
     }
 
-
     public boolean hasOwner() {
         return this.owner != null;
     }
@@ -46,7 +43,6 @@ public class TradePoint extends Structure implements FuelContainer {
     public void setOwner(@Nullable Kingdom owner) {
         this.owner = owner;
     }
-
 
     @Override
     public double getFuel() {

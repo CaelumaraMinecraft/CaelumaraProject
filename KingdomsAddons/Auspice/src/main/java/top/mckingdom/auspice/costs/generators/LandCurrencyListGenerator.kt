@@ -11,6 +11,7 @@ class LandCurrencyListGenerator : CurrencyListGenerator<Land> {
 
     companion object {
         private val instance = LandCurrencyListGenerator()
+
         @JvmStatic
         fun get() = instance
     }

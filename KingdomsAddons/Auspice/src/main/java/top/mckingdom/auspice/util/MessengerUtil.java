@@ -48,7 +48,6 @@ public class MessengerUtil {
         return dynamicLanguage;
     }
 
-
     public static class Companion {
         static final Set<DynamicLanguage> constants = new HashSet<>();
     }

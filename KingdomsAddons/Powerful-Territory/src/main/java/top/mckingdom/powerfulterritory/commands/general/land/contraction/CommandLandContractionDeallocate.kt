@@ -6,14 +6,14 @@ import org.kingdoms.constants.land.Land
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.locale.Language
 import org.kingdoms.utils.PlayerUtils
+import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryConfig
+import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
 import top.mckingdom.powerfulterritory.constants.land_contractions.LandContraction
 import top.mckingdom.powerfulterritory.data.Contractions
 import top.mckingdom.powerfulterritory.data.getContractions
 import top.mckingdom.powerfulterritory.util.GroupExt
-import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryConfig
-import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
 
-class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsCommand("deallocate", parent) {
+class CommandLandContractionDeallocate(parent: KingdomsParentCommand) : KingdomsCommand("deallocate", parent) {
     override fun execute(context: CommandContext): CommandResult {
         val sender = context.getMessageReceiver()
         if (context.assertPlayer()) {
@@ -57,7 +57,8 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
 
                     land.getContractions()?.get(contraction)?.allocationReceivers?.get(receiver)?.deallocate(allocator)
 
-                    PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_SUCCESS_SINGLE_ALLOCATOR.sendMessage(sender,
+                    PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_SUCCESS_SINGLE_ALLOCATOR.sendMessage(
+                        sender,
                         "contraction", contraction.getName(lang),
                         "receiver", receiver.getOfflinePlayer().getName() ?: "",
                         "location", "${land.location.world} ${land.location.x} ${land.location.z}",
@@ -97,18 +98,17 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
                         }
                     }
                 }
-
             }
 
             if (kSender.isAdmin()) {
                 land.getContractions()?.get(contraction)?.deallocateAll(receiver)
-                PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_SUCCESS_ALL_ALLOCATOR.sendMessage(sender,
+                PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_SUCCESS_ALL_ALLOCATOR.sendMessage(
+                    sender,
                     "contraction", contraction.getName(lang),
                     "receiver", receiver.getOfflinePlayer().getName() ?: "",
                     "location", "${land.location.world} ${land.location.x} ${land.location.z}"
                 )
                 return CommandResult.SUCCESS
-
             }
 
             if (!land.isClaimed()) {
@@ -122,23 +122,22 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
 
             if (
                 kSender.hasPermission(GroupExt.PERMISSION_MANAGE_LAND_CONTRACTIONS)
-                || (land.getClaimer() == kSender && PowerfulTerritoryConfig.LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS.getManager().getBoolean())
+                || (land.getClaimer() == kSender && PowerfulTerritoryConfig.LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS.getManager()
+                    .getBoolean())
             ) {
                 land.getContractions()?.get(contraction)?.deallocateAll(receiver)
-                PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_SUCCESS_ALL_ALLOCATOR.sendMessage(sender,
+                PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_DEALLOCATE_SUCCESS_ALL_ALLOCATOR.sendMessage(
+                    sender,
                     "contraction", contraction.getName(lang),
                     "receiver", receiver.getOfflinePlayer().getName() ?: "",
                     "location", "${land.location.world} ${land.location.x} ${land.location.z}"
                 )
                 return CommandResult.SUCCESS
             }
-
-
         }
 
 
         return CommandResult.FAILED
-
     }
 
     override fun tabComplete(context: CommandTabContext): List<String> {
@@ -158,11 +157,11 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
         }
         if (
             kSender.hasPermission(GroupExt.PERMISSION_MANAGE_LAND_CONTRACTIONS)
-            || (land.getClaimer() == kSender && PowerfulTerritoryConfig.LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS.getManager().getBoolean())
-            ) {
+            || (land.getClaimer() == kSender && PowerfulTerritoryConfig.LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS.getManager()
+                .getBoolean())
+        ) {
 
             return allPermissionOut(context, land, out, lang)
-
         } else {
 
             if (context.isAtArg(0)) {
@@ -171,7 +170,8 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
                 }
             }
             if (context.isAtArg(1)) {
-                val contraction: LandContraction = Contractions.getContraction(context.arg(0), lang) ?: return emptyList()
+                val contraction: LandContraction =
+                    Contractions.getContraction(context.arg(0), lang) ?: return emptyList()
                 land.getContractions()?.get(contraction)?.allocationReceivers?.forEach { entry ->
                     if (entry.value.hasAllocator(kSender)) {                //如果由kSender分配, 则增加接受者的名字
                         entry.key.getOfflinePlayer().getName()?.let { out.add(it) }
@@ -179,10 +179,7 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
                 }
             }
             return out
-
-
         }
-
     }
 
     private fun allPermissionOut(
@@ -205,10 +202,10 @@ class CommandLandContractionDeallocate(parent: KingdomsParentCommand): KingdomsC
         val receiver = PlayerUtils.getOfflinePlayer(context.arg(1))?.let { KingdomPlayer.getKingdomPlayer(it) }
             ?: return emptyList()
         if (context.isAtArg(2)) {
-            return land.getContractions()?.get(contraction)?.allocationReceivers?.get(receiver)?.getAllocatorsName() ?: emptyList()
+            return land.getContractions()?.get(contraction)?.allocationReceivers?.get(receiver)?.getAllocatorsName()
+                ?: emptyList()
         }
 
         return out
     }
-
 }

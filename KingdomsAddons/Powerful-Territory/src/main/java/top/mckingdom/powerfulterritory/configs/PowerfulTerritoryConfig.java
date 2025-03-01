@@ -19,15 +19,12 @@ public enum PowerfulTerritoryConfig implements EnumConfig {
 
     METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT(3, 5),
 
-
     LAND_CONTRACTION_ENABLED(2),
     LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS(2),
     LAND_CONTRACTION_ALLOCATE_OTHER_KINGDOMS(2, 3),
     LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION(2, 3),
 
-    LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT(2, 5)
-
-    ;
+    LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT(2, 5);
 
     public static final YamlResource POWERFUL_TERRITORY =
             new YamlResource(PowerfulTerritoryAddon.get(),
@@ -40,11 +37,13 @@ public enum PowerfulTerritoryConfig implements EnumConfig {
             ConfigWatcher.reload(POWERFUL_TERRITORY, "powerful-territory.yml");
         });
     }
+
     private final ConfigPath option;
 
     PowerfulTerritoryConfig() {
         this.option = new ConfigPath(Strings.configOption(this));
     }
+
     PowerfulTerritoryConfig(int... grouped) {
         this.option = new ConfigPath(this.name(), grouped);
     }
@@ -57,5 +56,4 @@ public enum PowerfulTerritoryConfig implements EnumConfig {
     public static YamlResource getConfig() {
         return POWERFUL_TERRITORY;
     }
-
 }

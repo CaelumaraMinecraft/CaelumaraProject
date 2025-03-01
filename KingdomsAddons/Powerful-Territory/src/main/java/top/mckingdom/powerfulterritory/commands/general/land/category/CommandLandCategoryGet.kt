@@ -7,9 +7,9 @@ import org.kingdoms.commands.KingdomsParentCommand
 import org.kingdoms.constants.land.Land
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.locale.Language
-import top.mckingdom.powerfulterritory.util.GroupExt
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
 import top.mckingdom.powerfulterritory.data.category
+import top.mckingdom.powerfulterritory.util.GroupExt
 
 class CommandLandCategoryGet(parent: KingdomsParentCommand) : KingdomsCommand("get", parent) {
     override fun execute(context: CommandContext): CommandResult {

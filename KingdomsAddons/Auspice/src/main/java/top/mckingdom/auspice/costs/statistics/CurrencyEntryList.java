@@ -27,6 +27,7 @@ public class CurrencyEntryList<T> extends LinkedList<CurrencyEntry<T, ?>> {
      * 可以通过返回值是否为null判断是否流通成功
      * 如果返回非null则代表能够流通并流通过了
      * 如果返回null则代表无法流通
+     *
      * @return If null, that means it can't circulate.
      */
     public @Nullable CurrencyFlowRecord<T> circulate(T target) {
@@ -36,7 +37,6 @@ public class CurrencyEntryList<T> extends LinkedList<CurrencyEntry<T, ?>> {
             return null;
         }
     }
-
 
     public @NotNull CurrencyFlowRecord<T> forceCirculate(T target) {
         this.forEach((e) -> {
@@ -63,5 +63,4 @@ public class CurrencyEntryList<T> extends LinkedList<CurrencyEntry<T, ?>> {
         INCOME,  //收入
         ;
     }
-
 }

@@ -30,7 +30,6 @@ public abstract sealed class MarkingCivilizationMember<T> extends KeyedKingdomsO
         return this.key;
     }
 
-
     @NotNull
     public CivilizationMemberType<T, CivilizationMember<T>> getType() {
         return this.type;
@@ -51,8 +50,8 @@ public abstract sealed class MarkingCivilizationMember<T> extends KeyedKingdomsO
     /**
      * It will serialize a section like:
      * {
-     *     "type": String;
-     *     "ident": {}
+     * "type": String;
+     * "ident": {}
      * }
      */
     public void serialize(SectionableDataSetter section, boolean ignore) {
@@ -62,12 +61,8 @@ public abstract sealed class MarkingCivilizationMember<T> extends KeyedKingdomsO
         DataHandlerMetadata.serializeMetadata(section, this);   //TODO metadata
     }
 
-
     /**
      * @param section A section for storing identification information of civilization member.
      */
     protected abstract void serializeIndentData(SectionableDataSetter section);   //比如Kingdom的key UUID
-
-
-
 }

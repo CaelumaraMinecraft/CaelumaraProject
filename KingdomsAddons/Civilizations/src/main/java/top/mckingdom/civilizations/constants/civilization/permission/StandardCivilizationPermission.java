@@ -33,5 +33,4 @@ public class StandardCivilizationPermission extends CivilizationPermission {
     private static class Companion {
         private static ArrayList<CivilizationPermission> permissions = new ArrayList<>();
     }
-
 }

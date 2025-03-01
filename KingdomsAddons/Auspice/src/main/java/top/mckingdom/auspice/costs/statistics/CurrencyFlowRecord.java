@@ -5,12 +5,9 @@ public class CurrencyFlowRecord<T> {
     public long circulateTime;
     private final CurrencyEntryList<T> entries;
 
-
     public CurrencyFlowRecord(CurrencyEntryList<T> entries, T target) {
         this.entries = entries;
         this.circulateTime = System.currentTimeMillis();
         this.target = target;
     }
-
-
 }

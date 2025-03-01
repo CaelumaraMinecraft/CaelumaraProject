@@ -1,6 +1,5 @@
 package top.mckingdom.civilizations.constants.civilization.member;
 
-import org.checkerframework.checker.lock.qual.NewObject;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.namespace.Namespace;
@@ -18,13 +17,12 @@ public class CivilizationMemberTypeRegistry extends NamespacedRegistry<Civilizat
     }
 
     /**
-     *
      * @param section A section like: {@code
-     * {
-     *     "type": String;
-     *     "ident": {}
-     * }
-     * }
+     *                {
+     *                "type": String;
+     *                "ident": {}
+     *                }
+     *                }
      */
     @Contract("_ -> new")
     public static MarkingCivilizationMember<?> deserializeMarkingMember(@NotNull SectionableDataGetter section) {
@@ -35,19 +33,17 @@ public class CivilizationMemberTypeRegistry extends NamespacedRegistry<Civilizat
         } else {
             return type.deserializeMarkingMember(section);
         }
-
     }
 
     /**
-     *
      * @param section A section like: {@code
-     * {
-     *     "type": String;
-     *     "ident": {};
-     *     "subordinates": [];
-     *     "metadata": {}
-     * }
-     * }
+     *                {
+     *                "type": String;
+     *                "ident": {};
+     *                "subordinates": [];
+     *                "metadata": {}
+     *                }
+     *                }
      */
     @Contract("_ -> new")
     public static CivilizationMember<?> deserializeIntactMember(@NotNull SectionableDataGetter section) {
@@ -58,13 +54,10 @@ public class CivilizationMemberTypeRegistry extends NamespacedRegistry<Civilizat
         } else {
             return type.deserializeIntactMember(section);
         }
-
     }
-
 
     public static void registerDefaults() {
         get().register(CivilizationMemberTypeNation.get());
         get().register(CivilizationMemberTypeKingdom.get());
     }
-
 }

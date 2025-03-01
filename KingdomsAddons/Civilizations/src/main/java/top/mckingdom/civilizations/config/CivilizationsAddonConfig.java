@@ -18,12 +18,9 @@ import org.kingdoms.utils.config.adapters.YamlResource;
 import org.kingdoms.utils.string.Strings;
 import top.mckingdom.civilizations.CivilizationsAddon;
 
-
 public enum CivilizationsAddonConfig implements EnumConfig {
 
-
     CIVILIZATION_NAME_CASE_SENSITIVE(2),
-
 
     POSITION_MAX_LAYERS(1),
     POSITION_MAX_SUBORDINATES(1),
@@ -32,7 +29,6 @@ public enum CivilizationsAddonConfig implements EnumConfig {
     POSITION_MANAGE_RELATIONSHIP_KINGDOM_KINGDOM(1, 3),
     POSITION_MANAGE_RELATIONSHIP_NATION_NATION(1, 3),
     POSITION_MANAGE_RELATIONSHIP_NATION_KINGDOM(1, 3),
-
 
 
     ;
@@ -45,20 +41,17 @@ public enum CivilizationsAddonConfig implements EnumConfig {
         return NodeInterpreter.BOOLEAN.parse(this.getNode());
     }
 
-    public static class Companion{
+    public static class Companion {
         public static final YamlResource CIVILIZATION_MAIN =
                 new YamlResource(
                         CivilizationsAddon.get(),
                         Kingdoms.getPath("civilizations.yml").toFile(), "civilizations.yml").load();
-
     }
 
-
-
     static {
-        ConfigWatcher.register(Companion. CIVILIZATION_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
+        ConfigWatcher.register(Companion.CIVILIZATION_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
         ConfigManager.registerNormalWatcher("Civilizations-Addon", (event) -> {
-            ConfigWatcher.reload(Companion. CIVILIZATION_MAIN, "civilizations.yml");
+            ConfigWatcher.reload(Companion.CIVILIZATION_MAIN, "civilizations.yml");
         });
     }
 
@@ -92,17 +85,13 @@ public enum CivilizationsAddonConfig implements EnumConfig {
         return new KeyedYamlConfigAccessor(Companion.CIVILIZATION_MAIN, option);
     }
 
-
     public static YamlResource getConfig() {
-        return Companion. CIVILIZATION_MAIN;
+        return Companion.CIVILIZATION_MAIN;
     }
-
 
     public static void errorSound(Player player) {
         XSound.play(KingdomsConfig.ERROR_SOUND.getString(), (var1) -> {
             var1.forPlayers(player);
         });
     }
-
-
 }

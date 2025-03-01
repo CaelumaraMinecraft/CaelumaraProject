@@ -89,8 +89,7 @@ val RepositoryHandler.essentials_snapshots: MavenArtifactRepository
     }
 
 /**
- * The matteodex repository. Used for
- * ItemsAdder.
+ * Used for ItemsAdder.
  */
 @get:JvmName("matteodev")
 val RepositoryHandler.matteodev: MavenArtifactRepository
@@ -126,4 +125,14 @@ val RepositoryHandler.mvdw_software: MavenArtifactRepository
     get() = this.maven {
         url = URI.create("https://repo.mvdw-software.be/content/groups/public")
         name = "mvdw-software"
+    }
+
+/**
+ * Used for fairy.
+ */
+@get:JvmName("imanity")
+val RepositoryHandler.imanity: MavenArtifactRepository
+    get() = this.maven {
+        url = URI.create("https://repo.imanity.dev/imanity-libraries")
+        name = "imanity"
     }

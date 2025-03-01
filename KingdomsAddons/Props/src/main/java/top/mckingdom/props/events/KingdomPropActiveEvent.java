@@ -12,7 +12,6 @@ public class KingdomPropActiveEvent extends KingdomPropEvent implements Cancella
     private boolean cancelled;
     private ActiveType activeType;
 
-
     public KingdomPropActiveEvent(PropStyle style, ActiveType activeType) {
         super(style);
         this.activeType = activeType;
@@ -21,6 +20,7 @@ public class KingdomPropActiveEvent extends KingdomPropEvent implements Cancella
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -43,6 +43,4 @@ public class KingdomPropActiveEvent extends KingdomPropEvent implements Cancella
     public void setCancelled(boolean b) {
         this.cancelled = b;
     }
-
-
 }

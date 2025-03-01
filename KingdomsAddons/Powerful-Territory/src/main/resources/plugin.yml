@@ -2,5 +2,5 @@ name: Kingdoms-Addon-Powerful-Territory
 version: ${version}
 main: top.mckingdom.powerfulterritory.PowerfulTerritoryAddon
 api-version: '1.20'
-depend: [Kingdoms, Kingdoms-Addon-Auspice]
+depend: [ Kingdoms, Kingdoms-Addon-Auspice ]
 

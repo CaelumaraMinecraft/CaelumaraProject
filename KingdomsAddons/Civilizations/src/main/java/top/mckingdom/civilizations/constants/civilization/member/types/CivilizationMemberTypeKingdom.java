@@ -10,6 +10,7 @@ import top.mckingdom.civilizations.constants.civilization.member.objects.Civiliz
 public class CivilizationMemberTypeKingdom extends CivilizationMemberType<Kingdom, CivilizationMember<Kingdom>> {
 
     public static final CivilizationMemberTypeKingdom INSTANCE = new CivilizationMemberTypeKingdom();
+
     protected CivilizationMemberTypeKingdom() {
         super(CivilizationsAddon.buildNS("KINGDOM"), Kingdom.class);
     }
@@ -31,5 +32,4 @@ public class CivilizationMemberTypeKingdom extends CivilizationMemberType<Kingdo
     public static CivilizationMemberTypeKingdom get() {
         return INSTANCE;
     }
-
 }

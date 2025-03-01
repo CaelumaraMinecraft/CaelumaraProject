@@ -23,14 +23,11 @@ public class CustomConfigValidators {
         public ValidationFailure validate(ValidationContext context) {
 
             Tag var2 = context.getNode().getTag();
-            if (var2  == BILL) {
+            if (var2 == BILL) {
                 return null;
             } else {
                 return context.getNode().getNodeType() != NodeType.MAPPING ? context.err("Expected an bill, instead got " + var2) : b.validate(context);
             }
-
         }
     }
-
-
 }

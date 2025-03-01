@@ -21,5 +21,4 @@ public class StructureCivilizationNode extends StructureType {
     public Structure build(KingdomItemBuilder<Structure, StructureStyle, StructureType> kingdomItemBuilder) {
         return super.build(kingdomItemBuilder);
     }
-
 }

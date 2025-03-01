@@ -18,9 +18,9 @@ import org.kingdoms.data.database.dataprovider.SectionableDataGetter
 import org.kingdoms.locale.Language
 import org.kingdoms.locale.SupportedLanguage
 import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon
-import top.mckingdom.powerfulterritory.util.PowerfulTerritoryLogger
 import top.mckingdom.powerfulterritory.constants.land_categories.LandCategory
 import top.mckingdom.powerfulterritory.constants.land_categories.StandardLandCategory
+import top.mckingdom.powerfulterritory.util.PowerfulTerritoryLogger
 
 var SimpleChunkLocation.category: LandCategory?
     get() = this.land?.category

@@ -36,7 +36,6 @@ public class CivilizationPermission implements Namespaced {
         }
     }
 
-
     @Override
     public String toString() {
         return "CivilizationPermission{" +
@@ -54,7 +53,6 @@ public class CivilizationPermission implements Namespaced {
         return scope;
     }
 
-
     /**
      * 决定了一个文明成员在将这个权限设置为true的时候，要经过哪些成员的同意
      * <p>
@@ -66,15 +64,11 @@ public class CivilizationPermission implements Namespaced {
      * <p>
      * SUBORDINATE:
      * 该成员的所有下属及该成员自己，都会受到这个权限的作用，因此这个权限可以由这个成员的上级进行设置。
-     *
-     *
      */
     public enum Scope {
 
         CIVILIZATION,
         ROOT_MEMBER,
         SUBORDINATES,
-
     }
-
 }

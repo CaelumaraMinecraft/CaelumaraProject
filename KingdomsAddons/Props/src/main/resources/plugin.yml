@@ -2,5 +2,5 @@ name: Kingdoms-Addon-Props
 version: '0.2-SNAPSHOT'
 main: top.mckingdom.props.PropsAddon
 api-version: '1.20.6'
-depend: [Kingdoms]
+depend: [ Kingdoms ]
 

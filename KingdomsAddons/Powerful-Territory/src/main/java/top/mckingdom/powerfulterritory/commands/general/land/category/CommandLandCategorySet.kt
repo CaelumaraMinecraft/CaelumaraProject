@@ -4,10 +4,10 @@ import org.bukkit.entity.Player
 import org.kingdoms.commands.*
 import org.kingdoms.constants.land.Land
 import org.kingdoms.constants.player.KingdomPlayer
-import top.mckingdom.powerfulterritory.util.GroupExt
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
 import top.mckingdom.powerfulterritory.data.Categories
 import top.mckingdom.powerfulterritory.data.category
+import top.mckingdom.powerfulterritory.util.GroupExt
 
 class CommandLandCategorySet(parent: KingdomsParentCommand) : KingdomsCommand("set", parent) {
     override fun execute(context: CommandContext): CommandResult {

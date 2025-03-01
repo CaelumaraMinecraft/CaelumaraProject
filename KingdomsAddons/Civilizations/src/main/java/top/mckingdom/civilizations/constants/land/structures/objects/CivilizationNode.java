@@ -11,6 +11,4 @@ public class CivilizationNode extends CivilizationLinker {
     public CivilizationNode(String world, int x, int y, int z, StructureStyle style, @NotNull Civilization civilization, @NotNull CivilizationMember<?> owner) {
         super(world, x, y, z, style, civilization, owner);
     }
-
-
 }

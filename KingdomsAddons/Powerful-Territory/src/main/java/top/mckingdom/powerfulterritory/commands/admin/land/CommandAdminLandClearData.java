@@ -20,6 +20,7 @@ public class CommandAdminLandClearData extends KingdomsCommand {
     public CommandAdminLandClearData(KingdomsParentCommand parent) {
         super("cleardata", parent);
     }
+
     private static final HashMap<String, Consumer<Land>> a = new HashMap<>();
 
     public static void register(String key, Consumer<Land> consumer) {
@@ -29,7 +30,6 @@ public class CommandAdminLandClearData extends KingdomsCommand {
         if ((r = a.put(key, consumer)) != null) {
             PowerfulTerritoryLogger.warn("data cleaner naming conflicts: " + key);
         }
-
     }
 
     static {

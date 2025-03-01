@@ -7,6 +7,7 @@ import top.mckingdom.powerfulterritory.commands.admin.land.invade_protection.Com
 public class CommandAdminLand extends KingdomsParentCommand {
 
     private static CommandAdminLand instance;
+
     public CommandAdminLand(KingdomsParentCommand parent) {
         super("domain", parent);
         new CommandAdminLandCategory(this);

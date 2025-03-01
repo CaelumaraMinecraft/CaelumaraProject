@@ -8,18 +8,20 @@ import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.locale.Language
 import org.kingdoms.locale.LanguageManager
 import org.kingdoms.utils.PlayerUtils
-import top.mckingdom.powerfulterritory.util.GroupExt
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryConfig
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
+import top.mckingdom.powerfulterritory.constants.land_contractions.LandContraction
+import top.mckingdom.powerfulterritory.constants.land_contractions.std.StandardLandContraction
 import top.mckingdom.powerfulterritory.data.Contractions
 import top.mckingdom.powerfulterritory.data.Contractions.contractionsString
 import top.mckingdom.powerfulterritory.data.allocate
 import top.mckingdom.powerfulterritory.data.hasLandContraction
-import top.mckingdom.powerfulterritory.constants.land_contractions.LandContraction
-import top.mckingdom.powerfulterritory.constants.land_contractions.std.StandardLandContraction
+import top.mckingdom.powerfulterritory.util.GroupExt
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.time.*
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
+import kotlin.time.toKotlinDuration
 
 class CommandLandContractionAllocate(parent: KingdomsParentCommand) : KingdomsCommand("allocate", parent) {
     override fun execute(context: CommandContext): CommandResult {
@@ -69,12 +71,18 @@ class CommandLandContractionAllocate(parent: KingdomsParentCommand) : KingdomsCo
                             } else {
                                 if (
                                     kSender.hasPermission(GroupExt.PERMISSION_MANAGE_LAND_CONTRACTIONS)                                                                                                           //如果分配者有"管理所有土地分配"王国权限
-                                    || kSender.hasLandContraction(land, StandardLandContraction.MANAGE_CONTRACTIONS)                                                                                       //如果分配者被分配到了"管理承包"承包项目
-                                    || (land.getClaimer() == kSender && PowerfulTerritoryConfig.LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS.getManager().getBoolean())                                    //如果土地由此人占领
+                                    || kSender.hasLandContraction(
+                                        land,
+                                        StandardLandContraction.MANAGE_CONTRACTIONS
+                                    )                                                                                       //如果分配者被分配到了"管理承包"承包项目
+                                    || (land.getClaimer() == kSender && PowerfulTerritoryConfig.LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS.getManager()
+                                        .getBoolean())                                    //如果土地由此人占领
                                 ) {                                                                                                                                                                    //如果分配土地的人有任一权限, 即可进行分配
                                     return a(receiver, land, contraction, duration, kSender, sender, lang)
                                 } else {
-                                    PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_ALLOCATE_FAILED_NO_PERMISSION.sendError(sender)
+                                    PowerfulTerritoryLang.COMMAND_DOMAIN_CONTRACTION_ALLOCATE_FAILED_NO_PERMISSION.sendError(
+                                        sender
+                                    )
                                     return CommandResult.FAILED
                                 }
                             }
@@ -105,7 +113,6 @@ class CommandLandContractionAllocate(parent: KingdomsParentCommand) : KingdomsCo
         return CommandResult.SUCCESS
     }
 
-
     override fun tabComplete(context: CommandTabContext): List<String> {
         val lang = KingdomPlayer.getKingdomPlayer(context.senderAsPlayer()).getLanguage()
         if (context.isAtArg(0)) {
@@ -134,5 +141,4 @@ class CommandLandContractionAllocate(parent: KingdomsParentCommand) : KingdomsCo
         }
         return emptyList()
     }
-
 }

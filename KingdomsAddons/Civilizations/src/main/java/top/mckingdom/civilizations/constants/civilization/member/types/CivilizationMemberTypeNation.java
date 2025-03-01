@@ -9,6 +9,7 @@ import top.mckingdom.civilizations.constants.civilization.member.objects.Civiliz
 
 public class CivilizationMemberTypeNation extends CivilizationMemberType<Nation, CivilizationMember<Nation>> {
     public static final CivilizationMemberTypeNation INSTANCE = new CivilizationMemberTypeNation();
+
     protected CivilizationMemberTypeNation() {
         super(CivilizationsAddon.buildNS("NATION"), Nation.class);
     }
@@ -30,5 +31,4 @@ public class CivilizationMemberTypeNation extends CivilizationMemberType<Nation,
     public static CivilizationMemberTypeNation get() {
         return INSTANCE;
     }
-
 }

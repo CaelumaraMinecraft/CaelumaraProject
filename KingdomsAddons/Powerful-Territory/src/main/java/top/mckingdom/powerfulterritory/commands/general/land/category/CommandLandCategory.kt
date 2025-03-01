@@ -7,5 +7,4 @@ class CommandLandCategory(parent: KingdomsParentCommand) : KingdomsParentCommand
         CommandLandCategoryGet(this)
         CommandLandCategorySet(this)
     }
-
 }

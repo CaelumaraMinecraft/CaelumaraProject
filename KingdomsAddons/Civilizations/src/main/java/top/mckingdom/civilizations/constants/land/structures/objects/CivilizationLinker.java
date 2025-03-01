@@ -56,7 +56,6 @@ public abstract class CivilizationLinker extends Structure {
         this.owner = CivilizationMemberTypeRegistry.deserializeMarkingMember(ownerSec);
     }
 
-
     public void setCivilization(@NotNull Civilization civilization) {
         this.civilization = civilization;
     }
@@ -69,5 +68,4 @@ public abstract class CivilizationLinker extends Structure {
     public void setOwner(@NotNull CivilizationMember<?> owner) {
         this.owner = owner;
     }
-
 }

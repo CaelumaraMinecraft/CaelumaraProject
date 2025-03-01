@@ -8,6 +8,4 @@ public class CommandAdminLandInvadeProtection extends KingdomsParentCommand {
         new CommandAdminLandInvadeProtectionSet(this);
         new CommandAdminLandInvadeProtectionGet(this);
     }
-
-
 }

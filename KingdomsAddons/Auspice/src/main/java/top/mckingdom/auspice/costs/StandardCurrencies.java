@@ -18,7 +18,6 @@ public final class StandardCurrencies {
 
     public static final RelatedKingdomsWarPoints RELATED_KINGDOMS_WAR_POINTS = new RelatedKingdomsWarPoints();
 
-
     public static class KingdomBankCurrency implements Currency<Kingdom, Long> {
 
         @NotNull
@@ -73,7 +72,6 @@ public final class StandardCurrencies {
         public KingdomResourcePointsCurrency() {
             super();
         }
-
 
         @NotNull
         @Override
@@ -135,7 +133,6 @@ public final class StandardCurrencies {
         public Class<Kingdom> getTargetClass() {
             return Kingdom.class;
         }
-
 
         @Override
         public CurrencyEntry<Kingdom, Integer> getAmount(String amountString) {

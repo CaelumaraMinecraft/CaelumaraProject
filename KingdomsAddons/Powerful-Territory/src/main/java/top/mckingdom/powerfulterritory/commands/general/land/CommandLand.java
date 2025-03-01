@@ -7,6 +7,7 @@ import top.mckingdom.powerfulterritory.commands.general.land.contraction.Command
 public class CommandLand extends KingdomsParentCommand {
 
     private static CommandLand instance;
+
     public CommandLand() {
         super("domain", true);
         new CommandLandCategory(this);

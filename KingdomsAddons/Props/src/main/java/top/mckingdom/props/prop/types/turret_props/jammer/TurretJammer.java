@@ -6,5 +6,4 @@ public abstract class TurretJammer extends PropType {
     public TurretJammer(String name) {
         super(name);
     }
-
 }

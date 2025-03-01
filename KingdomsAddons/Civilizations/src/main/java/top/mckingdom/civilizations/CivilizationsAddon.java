@@ -23,7 +23,6 @@ public class CivilizationsAddon extends JavaPlugin implements Addon {
         CivilizationsAddonConfig.init();
         init();
         reloadConfigurationThings();
-
     }
 
     @Override
@@ -65,13 +64,12 @@ public class CivilizationsAddon extends JavaPlugin implements Addon {
         CivilizationMemberTypeRegistry.registerDefaults();
         GroupExt.init();
     }
+
     private static void reloadConfigurationThings() {
         StandardCivilizationRelation.init();
     }
 
-
     public static CivilizationsAddon get() {
         return instance;
     }
-
 }

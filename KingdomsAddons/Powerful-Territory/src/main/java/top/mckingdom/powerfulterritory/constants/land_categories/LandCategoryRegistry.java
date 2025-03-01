@@ -18,7 +18,6 @@ public class LandCategoryRegistry extends NamespacedRegistry<LandCategory> imple
 
     static final Map<String, LandCategory> a = new HashMap<>();
 
-
     protected final Map<Namespace, LandCategory> getRawRegistry() {
         return this.registry;
     }

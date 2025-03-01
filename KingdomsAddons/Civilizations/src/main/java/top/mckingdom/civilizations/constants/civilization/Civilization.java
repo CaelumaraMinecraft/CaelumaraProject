@@ -35,7 +35,7 @@ public class Civilization extends KeyedKingdomsObject<UUID> {
 
     //====================   Name   =====================
 
-    private@NotNull String name;
+    private @NotNull String name;
 
     @NotNull
     public String getName() {

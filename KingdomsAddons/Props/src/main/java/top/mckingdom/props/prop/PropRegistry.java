@@ -34,7 +34,6 @@ public final class PropRegistry {
     private static final NodeValidator SCHEMA = YamlContainer.parseValidator("Prop Schema", "schemas/Props/prop.yml");
     public static final Path PROPS_PATH = Kingdoms.getPath("Props");
 
-
     public PropType registerType(PropType type) {
         Objects.requireNonNull(type, "Cannot register structures type with null type");
         String var2 = Strings.deleteWhitespace(type.getName().toLowerCase(Locale.ENGLISH));
@@ -50,6 +49,7 @@ public final class PropRegistry {
     public static void validate(String styleName, YamlContainer yaml) {
         ConfigManager.warnAboutValidation("Props/" + styleName, Validator.validate(yaml.getConfig().getNode(), SCHEMA, CustomConfigValidators.getValidators()));
     }
+
     public static PropRegistry get() {
         return INSTANCE;
     }
@@ -98,5 +98,4 @@ public final class PropRegistry {
 
         return null;        //TODO
     }
-
 }

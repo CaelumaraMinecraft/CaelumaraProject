@@ -10,8 +10,8 @@ import org.kingdoms.constants.group.Nation
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.events.members.LeaveReason
 import org.kingdoms.locale.KingdomsLang
-import top.mckingdom.auspice.util.GroupExt
 import top.mckingdom.auspice.configs.AuspiceLang
+import top.mckingdom.auspice.util.GroupExt
 import java.util.*
 
 class CommandTransferMember : KingdomsParentCommand("transferMember", true) {

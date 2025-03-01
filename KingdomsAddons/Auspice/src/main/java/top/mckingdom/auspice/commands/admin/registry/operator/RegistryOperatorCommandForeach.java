@@ -24,7 +24,7 @@ import java.util.Map;
 
 public abstract class RegistryOperatorCommandForeach<T extends Namespaced, R extends NamespacedRegistry<T>> extends RegistryOperatorCommand<T, R> {
 
-   public static final String VAR_OP = "op";
+    public static final String VAR_OP = "op";
 
     protected final @NotNull Messenger failed_noop = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "noop"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_NOOP));
     protected final @NotNull Messenger failed_unknown_op = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "unknown-op"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_UNKNOWN_OP));
@@ -37,7 +37,7 @@ public abstract class RegistryOperatorCommandForeach<T extends Namespaced, R ext
     public @NotNull CommandResult execute(@NotNull CommandContext commandContext) {
         Validate.Arg.notNull(commandContext, "commandContext");
         CommandSender messageReceiver = commandContext.getMessageReceiver();
-        if (commandContext.args.length <1) {
+        if (commandContext.args.length < 1) {
             failed_noop.sendError(messageReceiver);
             return CommandResult.FAILED;
         }

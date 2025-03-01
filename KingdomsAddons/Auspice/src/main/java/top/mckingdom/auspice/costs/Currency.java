@@ -33,15 +33,16 @@ public interface Currency<T, C> {
      * 则返回null
      */
     CurrencyEntry<T, C> getAmount(String amountString);
+
     CurrencyEntry<T, C> getAmount(Object amount);
 
-
     boolean canExpend(T target, C amount);
+
     void forceExpend(T target, C amount);
 
     boolean canRefund(T target, C amount);
-    void forceRefund(T target, C amount);
 
+    void forceRefund(T target, C amount);
 }
 
 

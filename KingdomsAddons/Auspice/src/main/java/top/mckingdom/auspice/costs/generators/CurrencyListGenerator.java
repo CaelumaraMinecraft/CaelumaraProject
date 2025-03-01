@@ -1,12 +1,10 @@
 package top.mckingdom.auspice.costs.generators;
 
 import org.jetbrains.annotations.NotNull;
-import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.utils.config.ConfigSection;
 import top.mckingdom.auspice.costs.Currency;
 import top.mckingdom.auspice.costs.CurrencyRegistry;
 import top.mckingdom.auspice.costs.statistics.CurrencyEntryList;
-import top.mckingdom.auspice.costs.statistics.CurrencyFlowRecord;
 
 public interface CurrencyListGenerator<T> {
 
@@ -34,5 +32,4 @@ public interface CurrencyListGenerator<T> {
         }
         return out;
     }
-
 }

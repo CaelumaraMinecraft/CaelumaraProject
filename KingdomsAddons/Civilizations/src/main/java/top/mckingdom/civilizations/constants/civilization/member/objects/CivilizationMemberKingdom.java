@@ -11,7 +11,6 @@ public class CivilizationMemberKingdom extends CivilizationMember<Kingdom> {
         super(kingdom, CivilizationMemberTypeKingdom.INSTANCE);
     }
 
-
     public void serializeIndentData(SectionableDataSetter setter) {
         setter.get("key").setUUID(this.getKey().getKey());
     }

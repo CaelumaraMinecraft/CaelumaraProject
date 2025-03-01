@@ -14,7 +14,6 @@ public class PropChampionLeash extends PropType {
         KingdomPlayer player = context.getPlayer();
         if (player != null) {
             player.getInvasion().getChampion();               //TODO: 还是废稿
-
         }
     }
 }

@@ -19,7 +19,6 @@ public class CurrencyRegistry {
         return currencies.get(s);
     }
 
-
     public static void init() {
         register(StandardCurrencies.KINGDOM_BANK);
         register(StandardCurrencies.KINGDOM_RESOURCE_POINTS);
@@ -34,5 +33,4 @@ public class CurrencyRegistry {
     private CurrencyRegistry() {
 
     }
-
 }

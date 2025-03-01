@@ -44,8 +44,6 @@ public class CivilizationMemberLeaveEvent extends KingdomsEvent {
     public enum Reason {
         ADMIN,
 
-
         CUSTOM,
     }
-
 }

@@ -14,7 +14,6 @@ import org.kingdoms.locale.Language;
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang;
 import top.mckingdom.powerfulterritory.data.InvadeProtections;
 
-
 public class CommandAdminLandInvadeProtectionGet extends KingdomsCommand {
     public CommandAdminLandInvadeProtectionGet(KingdomsParentCommand parent) {
         super("get", parent);
@@ -50,7 +49,4 @@ public class CommandAdminLandInvadeProtectionGet extends KingdomsCommand {
 
         return CommandResult.SUCCESS;
     }
-
-
-
 }

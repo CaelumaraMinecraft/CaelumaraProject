@@ -4,7 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-
 public class ItemUtil {
 
     public static boolean hasItem(Inventory inv, Material material, int amount) {
@@ -43,6 +42,4 @@ public class ItemUtil {
 //        }
 
     }
-
-
 }

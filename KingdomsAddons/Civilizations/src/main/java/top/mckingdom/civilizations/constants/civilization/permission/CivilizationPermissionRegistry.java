@@ -8,7 +8,7 @@ public class CivilizationPermissionRegistry extends NamespacedRegistry<Civilizat
 
     @Override
     public final void register(CivilizationPermission permission) {
-            super.register(permission);
+        super.register(permission);
     }
 
     @Override

@@ -54,9 +54,7 @@ public class CommandUtil {
         }
 
         return out;
-
     }
-
 
     /**
      *
@@ -87,8 +85,6 @@ public class CommandUtil {
     }
 
 
-
-
     //若操作的对象为null, 则操作也为null
     // null, null
     // not null, null
@@ -105,7 +101,6 @@ public class CommandUtil {
             } else {
                 this.operation = null;
             }
-
         }
 
         public Operation() {
@@ -113,18 +108,18 @@ public class CommandUtil {
             this.operation = null;         //我犯神经了 这两个其实默认值就是null
         }
 
-
         public T getTarget() {
             return target;
         }
+
         public void setTarget(T target) {
             this.target = target;
         }
 
-
         public O getOperation() {
             return operation;
         }
+
         public boolean setOperation(O operation) {
             if (this.target == null) {
                 return false;
@@ -133,8 +128,5 @@ public class CommandUtil {
                 return true;
             }
         }
-
-
     }
-
 }

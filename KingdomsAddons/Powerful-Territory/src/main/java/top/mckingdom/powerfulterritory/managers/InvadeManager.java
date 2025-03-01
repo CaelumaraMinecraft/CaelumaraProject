@@ -7,7 +7,6 @@ import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang;
 import top.mckingdom.powerfulterritory.constants.invade_protection.InvadeProtection;
 import top.mckingdom.powerfulterritory.data.InvadeProtections;
 
-
 public class InvadeManager implements Listener {
 
     @EventHandler(ignoreCancelled = true)

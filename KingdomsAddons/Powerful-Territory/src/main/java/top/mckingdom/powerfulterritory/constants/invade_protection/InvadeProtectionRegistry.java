@@ -8,5 +8,4 @@ public class InvadeProtectionRegistry extends NamespacedRegistry<InvadeProtectio
     public static InvadeProtectionRegistry get() {
         return INSTANCE;
     }
-
 }

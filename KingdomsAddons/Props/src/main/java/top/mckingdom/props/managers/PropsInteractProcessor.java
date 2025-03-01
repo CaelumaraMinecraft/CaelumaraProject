@@ -10,8 +10,6 @@ import org.kingdoms.nbt.tag.NBTTagCompound;
 import org.kingdoms.nbt.tag.NBTTagType;
 import org.kingdoms.platform.bukkit.item.ItemNBT;
 
-import java.util.Objects;
-
 public class PropsInteractProcessor extends AbstractKingdomsProcessor {
 
     private final PlayerInteractEvent event;

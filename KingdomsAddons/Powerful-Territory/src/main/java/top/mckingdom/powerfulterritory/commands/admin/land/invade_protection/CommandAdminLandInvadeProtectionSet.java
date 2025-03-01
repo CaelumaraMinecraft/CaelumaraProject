@@ -9,9 +9,9 @@ import org.kingdoms.constants.land.location.SimpleChunkLocation;
 import org.kingdoms.constants.player.KingdomPlayer;
 import org.kingdoms.locale.Language;
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang;
-import top.mckingdom.powerfulterritory.data.InvadeProtections;
 import top.mckingdom.powerfulterritory.constants.invade_protection.InvadeProtection;
 import top.mckingdom.powerfulterritory.constants.invade_protection.InvadeProtectionRegistry;
+import top.mckingdom.powerfulterritory.data.InvadeProtections;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class CommandAdminLandInvadeProtectionSet extends KingdomsCommand {
             land = Land.getLand(new SimpleChunkLocation(player.getWorld().getName(), x, z));
         } else if (context.isAtArg(0)) {
             land = Land.getLand(player.getLocation());
-        } else  {
+        } else {
             PowerfulTerritoryLang.COMMAND_ADMIN_DOMAIN_INVADEPROTECTION_SET_USAGES.sendMessage(player);
             return CommandResult.FAILED;
         }
@@ -70,7 +70,6 @@ public class CommandAdminLandInvadeProtectionSet extends KingdomsCommand {
             PowerfulTerritoryLang.COMMAND_ADMIN_DOMAIN_INVADEPROTECTION_SET_FAILED_UNKNOWN_STATUS.sendError(player);
             return CommandResult.FAILED;
         }
-
     }
 
     @Override
@@ -94,6 +93,4 @@ public class CommandAdminLandInvadeProtectionSet extends KingdomsCommand {
 
         return Collections.emptyList();
     }
-
-
 }

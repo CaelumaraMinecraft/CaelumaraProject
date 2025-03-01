@@ -72,7 +72,6 @@ public final class PropActiveContext {
         blockFace = cause.getPlayer().getFacing().getOppositeFace();   //TODO: 不确定
     }
 
-
     public PropActiveContext(Event cause, KingdomPlayer player, ItemStack item, ActiveType activeType) {
         this((Event) cause);
         this.player = player;
@@ -80,10 +79,10 @@ public final class PropActiveContext {
         this.activeType = activeType;
     }
 
-
     public @Nullable Event getCause() {
         return this.event;
     }
+
     public void setCause(@Nullable Event cause) {
         this.event = cause;
     }
@@ -91,6 +90,7 @@ public final class PropActiveContext {
     public @Nullable KingdomPlayer getPlayer() {
         return player;
     }
+
     public void setPlayer(@Nullable KingdomPlayer player) {
         this.player = player;
     }
@@ -98,6 +98,7 @@ public final class PropActiveContext {
     public @Nullable ItemStack getItem() {
         return item;
     }
+
     public void setItem(@Nullable ItemStack item) {
         this.item = item;
     }
@@ -105,6 +106,7 @@ public final class PropActiveContext {
     public @Nullable ActiveType getActiveType() {
         return activeType;
     }
+
     public void setActiveType(@Nullable ActiveType activeType) {
         this.activeType = activeType;
     }
@@ -132,9 +134,6 @@ public final class PropActiveContext {
     public void setOption(KeyedConfigAccessor option) {
         this.option = option;
     }
-
-
-
 
     public PropActiveContext dontCallEvent() {
         this.modifier = PropActiveContext::a;

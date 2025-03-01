@@ -10,12 +10,14 @@ public abstract class KingdomPropEvent extends KingdomsEvent {
         super();
         this.style = style;
     }
+
     private PropStyle style;
+
     public @NotNull PropStyle getPropStyle() {
         return this.style;
     }
+
     public void setPropStyle(PropStyle style) {
         this.style = style;
     }
-
 }

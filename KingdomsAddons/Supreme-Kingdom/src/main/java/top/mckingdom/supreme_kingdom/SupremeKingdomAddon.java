@@ -8,7 +8,6 @@ import java.io.File;
 
 public class SupremeKingdomAddon extends JavaPlugin implements Addon {
 
-
     @Override
     public void onLoad() {
 
@@ -17,7 +16,6 @@ public class SupremeKingdomAddon extends JavaPlugin implements Addon {
     public void onEnable() {
 
     }
-
 
     @Override
     public void reloadAddon() {
@@ -40,9 +38,7 @@ public class SupremeKingdomAddon extends JavaPlugin implements Addon {
         return super.getFile();
     }
 
-
     public void registerHandlers() {
 
     }
-
 }

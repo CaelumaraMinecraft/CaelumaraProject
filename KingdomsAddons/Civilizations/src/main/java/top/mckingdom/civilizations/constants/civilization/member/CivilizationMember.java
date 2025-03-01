@@ -21,7 +21,6 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
     @NotNull
     protected final Set<CivilizationPermission> permissions;
 
-
     public CivilizationMember(T key, CivilizationMemberType<T, CivilizationMember<T>> type) {
         this(key, type, null, new HashSet<>(), new HashSet<>());
     }
@@ -41,13 +40,11 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
         this.permissions = permissions;
     }
 
-
     public void addMessageContextEdits(@NotNull MessagePlaceholderProvider provider) {
         super.addMessageContextEdits(provider);
         provider.setPrimaryTarget(this.key);
         provider.raw("type", this.type).raw("type_key", this.key);                  //TODO
     }
-
 
     @OverridingMethodsMustInvokeSuper
     public void serialize(SectionableDataSetter section, boolean serializeIntactData) {
@@ -76,7 +73,6 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
         this.superior = newSuperior;
     }
 
-
     public CivilizationMember<?> findSuperior(MarkingCivilizationMember<?> target) {
         if (this.superior != null) {
             if (this.superior.equals(target)) {
@@ -87,7 +83,6 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
         }
         return null;
     }
-
 
     public CivilizationMember<?> findSuperior(MarkingCivilizationMember<?> target, int traverseDepth) {
         if (this.superior != null && traverseDepth > 0) {
@@ -167,7 +162,4 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
     public Set<CivilizationPermission> getPermissions() {
         return this.permissions;
     }
-
-
-
 }

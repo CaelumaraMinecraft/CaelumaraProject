@@ -4,7 +4,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.addons.Addon;
 import org.kingdoms.constants.namespace.Namespace;
-import org.kingdoms.nbt.NBTTagId;
 
 import java.io.File;
 
@@ -44,6 +43,4 @@ public final class TradePointAddon extends JavaPlugin implements Addon {
     public static Namespace buildNS(String key) {
         return new Namespace("TradePoint", key);
     }
-
-
 }

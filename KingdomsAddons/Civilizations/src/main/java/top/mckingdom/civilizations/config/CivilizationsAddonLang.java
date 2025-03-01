@@ -13,10 +13,7 @@ public enum CivilizationsAddonLang implements DefinedMessenger {
     CIVILIZATION_DISBAND_VOTE("A civilization{$es}%name% was dissolved due to the vote of its root members.", 1, 2),
     CIVILIZATION_DISBAND_TAX("{$e}A civilization has been disbanded due to not being able to pay the taxes{$sep}: {$es}$%tax%", 1, 2),
 
-
-    CIVILIZATION_PERMISSION_CIVILIZATION("You don't have permission to join a civilization.", 2)
-
-    ;
+    CIVILIZATION_PERMISSION_CIVILIZATION("You don't have permission to join a civilization.", 2);
 
     private final LanguageEntry languageEntry;
     private final String defaultValue;
@@ -36,7 +33,6 @@ public enum CivilizationsAddonLang implements DefinedMessenger {
         for (Player player : Bukkit.getOnlinePlayers()) {
             this.sendMessage(player, objects);
         }
-
     }
 
     @Override
