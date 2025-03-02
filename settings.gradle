@@ -7,6 +7,11 @@ pluginManagement {
         gradlePluginPortal()
 
         maven {
+            name = "FabricMC"
+            url = "https://maven.fabricmc.net/"
+        }
+
+        maven {
             name = "nms-repo"
             url = "https://repo.codemc.org/repository/nms/"
         }
@@ -177,8 +182,8 @@ include(
         ":Auspice:game:bukkit:folia",
 
 
-        ":Auspice:game:fabric",
-        ":Auspice:game:forge",
+//        ":Auspice:game:fabric",
+//        ":Auspice:game:forge",
         ":Auspice:game:sponge",
 
 

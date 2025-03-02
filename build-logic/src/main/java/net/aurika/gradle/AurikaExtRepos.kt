@@ -18,11 +18,18 @@ val RepositoryHandler.SpigotMC_snapshots: MavenArtifactRepository
         name = "SpigotMC-snapshots"
     }
 
-@get:JvmName("PaperMC_repo")
-val RepositoryHandler.PaperMC_repo: MavenArtifactRepository
+@get:JvmName("PaperMC")
+val RepositoryHandler.PaperMC: MavenArtifactRepository
     get() = this.maven {
         url = URI.create("https://repo.papermc.io/repository/maven-public/")
-        name = "PaperMC-repo"
+        name = "PaperMC"
+    }
+
+@get:JvmName("FabricMC")
+val RepositoryHandler.FabricMC: MavenArtifactRepository
+    get() = maven {
+        url = URI.create("https://maven.fabricmc.net/")
+        name = "FabricMC"
     }
 
 @get:JvmName("PurpurMC_snapshots")
@@ -35,8 +42,15 @@ val RepositoryHandler.PurpurMC_snapshots: MavenArtifactRepository
 @get:JvmName("minecraft")
 val RepositoryHandler.minecraft: MavenArtifactRepository
     get() = this.maven {
-        name = "minecraft"
         url = URI.create("https://libraries.minecraft.net")
+        name = "minecraft"
+    }
+
+@get:JvmName("nms")
+val RepositoryHandler.nms: MavenArtifactRepository
+    get() = maven {
+        url = URI.create("https://repo.codemc.org/repository/nms/")
+        name = "nms-repo"
     }
 
 @get:JvmName("CodeMC")

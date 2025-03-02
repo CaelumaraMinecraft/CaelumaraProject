@@ -16,7 +16,7 @@ subprojects {
         AurikaExtReposKt.sonatype(it)
         AurikaExtReposKt.minecraft(it)
         AurikaExtReposKt.SpigotMC_snapshots(it)
-        AurikaExtReposKt.PaperMC_repo(it)
+        AurikaExtReposKt.PaperMC(it)
     }
 }
 

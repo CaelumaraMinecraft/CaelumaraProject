@@ -11,6 +11,5 @@ repositories {
 }
 
 dependencies {
-    compileOnly(libs.annotations.jetbrains)
-
+    compileOnlyApi(libs.annotations.jetbrains)
 }
