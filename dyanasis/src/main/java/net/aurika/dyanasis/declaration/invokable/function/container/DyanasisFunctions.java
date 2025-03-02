@@ -2,7 +2,6 @@ package net.aurika.dyanasis.declaration.invokable.function.container;
 
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunction;
 import net.aurika.dyanasis.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.declaration.invokable.property.container.EmptyDyanasisProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -16,8 +15,8 @@ public interface DyanasisFunctions {
      *
      * @return the empty functions
      */
-    static @NotNull EmptyDyanasisProperties empty() {
-        return EmptyDyanasisProperties.INSTANCE;
+    static @NotNull EmptyDyanasisFunctions empty() {
+        return EmptyDyanasisFunctions.INSTANCE;
     }
 
     /**

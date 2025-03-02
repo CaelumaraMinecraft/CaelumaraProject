@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class StandardDyanasisPropertyMap extends AbstractDyanasisObject implements DyanasisObjectMap {
+public class StandardDyanasisPropertyMap extends AbstractDyanasisObject<Map<?, ?>> implements DyanasisObjectMap {
 
-    public StandardDyanasisPropertyMap(@NotNull Map<?, ?> value,
-                                       @NotNull DyanasisLexerSettings lexerSettings) {
+    public StandardDyanasisPropertyMap(@NotNull Map<?, ?> value, @NotNull DyanasisLexerSettings settings) {
+        super(value, settings);
     }
 
     @Override
