@@ -57,4 +57,14 @@ public class StandardDyanasisObjectString extends AbstractDyanasisObject<String>
             return value.substring();
         }
     }
+    public class Substring_2 extends AbstractFunction {
+        public Substring_2() {
+            super(DyanasisFunctionKey.dyanasisFunctionKey("substring", 2));
+        }
+
+        @Override
+        public @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input) {
+            return value.substring();
+        }
+    }
 }
