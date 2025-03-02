@@ -51,11 +51,11 @@ public final class NamingContract {
     }
 
     @Language("RegExp")
-    public static final String ALLOWED_NAMESPACE = "[az]";
+    public static final String ALLOWED_NAMESPACE = "[a-z]";
     public static final Pattern NAMESPACE_PATTERN = Pattern.compile(ALLOWED_NAMESPACE);
 
     @Language("RegExp")
-    public static final String ALLOWED_INVOKABLE = "[az]+[azAZ09_]";
+    public static final String ALLOWED_INVOKABLE = "[a-z]+[a-zA-Z0-9_]";
     public static final Pattern INVOKABLE_PATTERN = Pattern.compile(ALLOWED_INVOKABLE);
 
     @Documented

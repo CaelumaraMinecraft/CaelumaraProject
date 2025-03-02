@@ -10,6 +10,10 @@ public class DyanasisFunctionKey {
     private final @NotNull String name;
     private final int argLen;
 
+    public static DyanasisFunctionKey dyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int argLen) {
+        return new DyanasisFunctionKey(name, argLen);
+    }
+
     public DyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int argLen) {
         this.name = name;
         this.argLen = argLen;

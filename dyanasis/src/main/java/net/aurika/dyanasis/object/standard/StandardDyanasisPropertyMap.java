@@ -1,6 +1,8 @@
 package net.aurika.dyanasis.object.standard;
 
+import net.aurika.dyanasis.NamingContract;
 import net.aurika.dyanasis.declaration.invokable.function.container.DyanasisFunctions;
+import net.aurika.dyanasis.declaration.invokable.property.DyanasisGetableProperty;
 import net.aurika.dyanasis.declaration.invokable.property.container.DyanasisProperties;
 import net.aurika.dyanasis.lexer.DyanasisLexerSettings;
 import net.aurika.dyanasis.object.AbstractDyanasisObject;
@@ -17,21 +19,29 @@ public class StandardDyanasisPropertyMap extends AbstractDyanasisObject<Map<?, ?
 
     @Override
     public @NotNull DyanasisProperties dyanasisProperties() {
-        return null;
+        TODO
     }
 
     @Override
     public @NotNull DyanasisFunctions dyanasisFunctions() {
-        return null;
+        TODO
     }
 
     @Override
     public boolean equals(@NotNull String cfgStr) {
-        return false;
+        TODO // lex and equals
     }
 
-    @Override
-    public @NotNull Map<?, ?> valueAsJava() {
-        return Map.of();
+    public class Size extends AbstractDyanasisObject<Map<?, ?>>.AbstractProperty implements DyanasisGetableProperty {
+        @Override
+        @NamingContract.Invokable
+        public @NotNull String name() {
+            return "size";
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObjectNumber get() {
+            return new StandardDyanasisObjectNumber(value.size(), settings);
+        }
     }
 }

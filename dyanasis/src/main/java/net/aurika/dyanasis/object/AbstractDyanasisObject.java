@@ -13,21 +13,11 @@ public abstract class AbstractDyanasisObject<T> implements DyanasisObject {
     protected T value;
     protected final @NotNull DyanasisLexerSettings settings;
 
-    protected AbstractDyanasisObject(@NotNull DyanasisLexerSettings settings) {
-        this(null, settings);
-    }
-
     protected AbstractDyanasisObject(T value, @NotNull DyanasisLexerSettings settings) {
         Validate.Arg.notNull(settings, "settings");
         this.value = value;
         this.settings = settings;
     }
-
-    @Override
-    public abstract @NotNull DyanasisProperties dyanasisProperties();
-
-    @Override
-    public abstract @NotNull DyanasisFunctions dyanasisFunctions();
 
     /**
      * Gets the lexer settings of this dyanasis object.
@@ -38,7 +28,18 @@ public abstract class AbstractDyanasisObject<T> implements DyanasisObject {
         return settings;
     }
 
-    public abstract class Property implements DyanasisProperty {
+    @Override
+    public abstract @NotNull DyanasisProperties dyanasisProperties();
+
+    @Override
+    public abstract @NotNull DyanasisFunctions dyanasisFunctions();
+
+    @Override
+    public @NotNull T valueAsJava() {
+        return value;
+    }
+
+    public abstract class AbstractProperty implements DyanasisProperty {
 
         @Override
         public @NotNull AbstractDyanasisObject<T> owner() {
@@ -46,10 +47,10 @@ public abstract class AbstractDyanasisObject<T> implements DyanasisObject {
         }
     }
 
-    public abstract class Function implements DyanasisFunction {
+    public abstract class AbstractFunction implements DyanasisFunction {
         protected final @NotNull DyanasisFunctionKey key;
 
-        public Function(@NotNull DyanasisFunctionKey key) {
+        public AbstractFunction(@NotNull DyanasisFunctionKey key) {
             Validate.Arg.notNull(key, "key");
             this.key = key;
         }
