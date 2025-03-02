@@ -66,18 +66,12 @@
     <option name="WHITESPACES_MODIFIED_LINES_COLOR" value="52433d" />
   </colors>
   <attributes>
-    <option name="ABSTRACT_CLASS_NAME_ATTRIBUTES">
+    <option name="ANNOTATION_ATTRIBUTE_NAME_ATTRIBUTES">
       <value>
-        <option name="FOREGROUND" value="bebeb6" />
+        <option name="FOREGROUND" value="56c1d6" />
       </value>
     </option>
-    <option name="ANNOTATION_ATTRIBUTE_NAME_ATTRIBUTES" baseAttributes="DEFAULT_FUNCTION_CALL" />
     <option name="ANNOTATION_NAME_ATTRIBUTES" baseAttributes="DEFAULT_METADATA" />
-    <option name="ANONYMOUS_CLASS_NAME_ATTRIBUTES">
-      <value>
-        <option name="FOREGROUND" value="bebeb6" />
-      </value>
-    </option>
     <option name="BAD_CHARACTER">
       <value>
         <option name="FOREGROUND" value="f75464" />
@@ -115,11 +109,6 @@
       <value>
         <option name="BACKGROUND" value="40252b" />
         <option name="ERROR_STRIPE_COLOR" value="8c5b65" />
-      </value>
-    </option>
-    <option name="CLASS_NAME_ATTRIBUTES">
-      <value>
-        <option name="FOREGROUND" value="bebeb6" />
       </value>
     </option>
     <option name="CODE_LENS_BORDER_COLOR">
@@ -173,7 +162,7 @@
       <value>
         <option name="FOREGROUND" value="548af7" />
         <option name="EFFECT_COLOR" value="548af7" />
-        <option name="EFFECT_TYPE" value="1" />
+        <option name="EFFECT_TYPE" value="-1" />
       </value>
     </option>
     <option name="CUSTOM_KEYWORD1_ATTRIBUTES">
@@ -199,6 +188,7 @@
     </option>
     <option name="CUSTOM_STRING_ATTRIBUTES" baseAttributes="DEFAULT_STRING" />
     <option name="CUSTOM_VALID_STRING_ESCAPE_ATTRIBUTES" baseAttributes="DEFAULT_VALID_STRING_ESCAPE" />
+    <option name="Class" baseAttributes="CLASS_NAME_ATTRIBUTES" />
     <option name="Closure braces">
       <value>
         <option name="FOREGROUND" value="e8e8a2" />
@@ -230,6 +220,11 @@
     <option name="DEFAULT_BRACKETS">
       <value>
         <option name="FOREGROUND" value="bcbec4" />
+      </value>
+    </option>
+    <option name="DEFAULT_CLASS_NAME">
+      <value>
+        <option name="FOREGROUND" value="bab6a0" />
       </value>
     </option>
     <option name="DEFAULT_CLASS_REFERENCE">
@@ -275,6 +270,11 @@
         <option name="FOREGROUND" value="bcbec4" />
       </value>
     </option>
+    <option name="DEFAULT_ENTITY">
+      <value>
+        <option name="FOREGROUND" value="56a8f5" />
+      </value>
+    </option>
     <option name="DEFAULT_FUNCTION_CALL">
       <value>
         <option name="FOREGROUND" value="b1cfe5" />
@@ -311,6 +311,11 @@
         <option name="FOREGROUND" value="578ff7" />
       </value>
     </option>
+    <option name="DEFAULT_INTERFACE_NAME">
+      <value>
+        <option name="FOREGROUND" value="c7c5ba" />
+      </value>
+    </option>
     <option name="DEFAULT_INVALID_STRING_ESCAPE">
       <value>
         <option name="FOREGROUND" value="cf8e6d" />
@@ -345,7 +350,7 @@
     </option>
     <option name="DEFAULT_NUMBER">
       <value>
-        <option name="FOREGROUND" value="1ebac7" />
+        <option name="FOREGROUND" value="39b2d7" />
       </value>
     </option>
     <option name="DEFAULT_OPERATION_SIGN">
@@ -416,11 +421,6 @@
       <value>
         <option name="EFFECT_COLOR" value="bcbec4" />
         <option name="EFFECT_TYPE" value="3" />
-      </value>
-    </option>
-    <option name="ENUM_NAME_ATTRIBUTES">
-      <value>
-        <option name="FOREGROUND" value="bebeb6" />
       </value>
     </option>
     <option name="ERRORS_ATTRIBUTES">
@@ -542,11 +542,6 @@
         <option name="BACKGROUND" value="43454a" />
       </value>
     </option>
-    <option name="INTERFACE_NAME_ATTRIBUTES">
-      <value>
-        <option name="FOREGROUND" value="bebeb6" />
-      </value>
-    </option>
     <option name="JS.GLOBAL_VARIABLE">
       <value>
         <option name="FOREGROUND" value="c77dba" />
@@ -595,7 +590,8 @@
     <option name="KOTLIN_PACKAGE_FUNCTION_CALL" baseAttributes="DEFAULT_STATIC_METHOD" />
     <option name="KOTLIN_QUEST">
       <value>
-        <option name="FOREGROUND" value="87d7af" />
+        <option name="FOREGROUND" value="696de" />
+        <option name="EFFECT_TYPE" value="1" />
       </value>
     </option>
     <option name="KOTLIN_SAFE_ACCESS">
@@ -619,6 +615,13 @@
       </value>
     </option>
     <option name="KOTLIN_TYPE_PARAMETER" baseAttributes="TYPE_PARAMETER_NAME_ATTRIBUTES" />
+    <option name="LAMBDA_PARAMETER_ATTRIBUTES">
+      <value>
+        <option name="FOREGROUND" value="a9a0ff" />
+        <option name="EFFECT_COLOR" value="fafad4" />
+        <option name="EFFECT_TYPE" value="1" />
+      </value>
+    </option>
     <option name="LINE_FULL_COVERAGE">
       <value>
         <option name="FOREGROUND" value="375239" />
@@ -696,6 +699,17 @@
         <option name="BACKGROUND" value="3f4045" />
       </value>
     </option>
+    <option name="NBTT_BYTE" baseAttributes="DEFAULT_NUMBER" />
+    <option name="NBTT_DOUBLE" baseAttributes="DEFAULT_NUMBER" />
+    <option name="NBTT_FLOAT" baseAttributes="DEFAULT_NUMBER" />
+    <option name="NBTT_LONG" baseAttributes="DEFAULT_NUMBER" />
+    <option name="NBTT_SHORT" baseAttributes="DEFAULT_NUMBER" />
+    <option name="NBTT_STRING_NAME" baseAttributes="NBTT_STRING" />
+    <option name="NBTT_UNQUOTED_STRING_NAME">
+      <value>
+        <option name="FOREGROUND" value="ce9ee0" />
+      </value>
+    </option>
     <option name="NG.SIGNAL">
       <value>
         <option name="FOREGROUND" value="1db8ab" />
@@ -722,13 +736,6 @@
     <option name="QUTE_BACKGROUND">
       <value>
         <option name="BACKGROUND" value="27292b" />
-      </value>
-    </option>
-    <option name="REASSIGNED_LOCAL_VARIABLE_ATTRIBUTES">
-      <value>
-        <option name="FOREGROUND" value="32b93a" />
-        <option name="EFFECT_COLOR" value="84868c" />
-        <option name="EFFECT_TYPE" value="1" />
       </value>
     </option>
     <option name="REGEXP.BRACES" baseAttributes="DEFAULT_BRACES" />
@@ -804,7 +811,7 @@
     </option>
     <option name="TYPE_PARAMETER_NAME_ATTRIBUTES">
       <value>
-        <option name="FOREGROUND" value="18e7d4" />
+        <option name="FOREGROUND" value="16eeaa" />
       </value>
     </option>
     <option name="TYPO">
@@ -865,20 +872,12 @@
         <option name="FOREGROUND" value="56a8f5" />
       </value>
     </option>
-    <option name="XML_PROLOGUE">
-      <value>
-        <option name="FOREGROUND" value="d5b778" />
-      </value>
-    </option>
+    <option name="XML_PROLOGUE" baseAttributes="TEXT" />
     <option name="XML_TAG">
       <value>
         <option name="FOREGROUND" value="d5b778" />
       </value>
     </option>
-    <option name="XML_TAG_NAME">
-      <value>
-        <option name="FOREGROUND" value="d5b778" />
-      </value>
-    </option>
+    <option name="XML_TAG_NAME" baseAttributes="DEFAULT_KEYWORD" />
   </attributes>
 </scheme>

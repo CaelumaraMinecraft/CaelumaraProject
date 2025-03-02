@@ -177,8 +177,8 @@ include(
         ":Auspice:game:bukkit:folia",
 
 
-//        ":Auspice:game:fabric",
-//        ":Auspice:game:forge",
+        ":Auspice:game:fabric",
+        ":Auspice:game:forge",
         ":Auspice:game:sponge",
 
 
