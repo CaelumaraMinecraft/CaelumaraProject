@@ -1,4 +1,4 @@
-import net.aurika.gradle.AurikaExtReposKt
+import static net.aurika.gradle.repository.AurikaExtReposKt.*
 
 plugins {
     id("aurika.repos")
@@ -14,9 +14,15 @@ description = "Wands plugin"
 repositories {
     mavenCentral()
     mavenLocal()
-    AurikaExtReposKt.sonatype(it)
-    AurikaExtReposKt.SpigotMC_snapshots(it)
-    AurikaExtReposKt.CodeMC(it)
+    aurikaRepos {
+        spigotMC {
+            snapshots()
+        }
+        codeMC {
+            maven_public()
+        }
+    }
+    sonatype(it)
 }
 
 dependencies {

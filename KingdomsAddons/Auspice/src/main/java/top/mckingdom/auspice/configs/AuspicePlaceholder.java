@@ -1,5 +1,6 @@
 package top.mckingdom.auspice.configs;
 
+import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kingdoms.constants.group.Kingdom;
@@ -64,6 +65,8 @@ public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
     }
 
     @Override  // val name get()
+    @SuppressWarnings("PatternValidation")
+    @Pattern("[a-z0-9]")
     public @NotNull String getName() {
         return name().toLowerCase(Locale.ENGLISH);
     }

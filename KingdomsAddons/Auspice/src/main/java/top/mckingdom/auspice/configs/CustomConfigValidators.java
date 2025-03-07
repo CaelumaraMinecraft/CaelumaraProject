@@ -21,12 +21,11 @@ public class CustomConfigValidators {
 
         @Override
         public ValidationFailure validate(ValidationContext context) {
-
-            Tag var2 = context.getNode().getTag();
-            if (var2 == BILL) {
+            Tag tag = context.getNode().getTag();
+            if (tag == BILL) {
                 return null;
             } else {
-                return context.getNode().getNodeType() != NodeType.MAPPING ? context.err("Expected an bill, instead got " + var2) : b.validate(context);
+                return context.getNode().getNodeType() != NodeType.MAPPING ? context.err("Expected an bill, instead got " + tag) : b.validate(context);
             }
         }
     }

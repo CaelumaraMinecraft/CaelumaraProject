@@ -56,14 +56,7 @@ fun setInvadeProtection(land: Land?, status: InvadeProtection) {
     }
 }
 
-class InvadeProtectionMeta(private var value: InvadeProtection) : KingdomMetadata {
-    override fun getValue(): InvadeProtection {
-        return this.value
-    }
-
-    override fun setValue(value: Any) {
-        this.value = value as InvadeProtection
-    }
+class InvadeProtectionMeta(override var value: Any) : KingdomMetadata {
 
     override fun serialize(
         container: KeyedKingdomsObject<*>,
@@ -77,7 +70,7 @@ class InvadeProtectionMeta(private var value: InvadeProtection) : KingdomMetadat
     }
 }
 
-class InvadeProtectionMetaHandler private constructor() :
+class InvadeProtectionMetaHandler internal constructor() :
     KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("INVADE_PROTECTION")) {
     override fun deserialize(
         container: KeyedKingdomsObject<*>,

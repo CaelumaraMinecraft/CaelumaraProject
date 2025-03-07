@@ -1,12 +1,12 @@
-import net.aurika.gradle.AurikaExtReposKt
-
 plugins {
     id("aurika.repos")
     alias(libs.plugins.kotlin)
 }
 
 repositories {
-    AurikaExtReposKt.thenextlvl_releases(it)
+    aurikaRepos {
+        thenextlvl_releases()
+    }
 }
 
 dependencies {

@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static top.mckingdom.auspice.util.KingdomsNamingContract.Namespace.Key;
+
 public final class AuspiceAddon extends AddonTemplate {
     public static final String NAMESPACE = "Auspice";
 
@@ -37,7 +39,8 @@ public final class AuspiceAddon extends AddonTemplate {
     /**
      * Builds a {@linkplain Namespace} for Auspice addon.
      */
-    public static @NotNull Namespace buildNS(@NotNull String key) {
+    @SuppressWarnings("PatternValidation")
+    public static @NotNull Namespace buildNS(@Key final @NotNull String key) {
         return new Namespace(NAMESPACE, key);
     }
 

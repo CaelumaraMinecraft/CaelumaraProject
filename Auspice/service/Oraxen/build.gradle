@@ -1,12 +1,14 @@
-import net.aurika.gradle.AurikaExtReposKt
-
 plugins {
     id("aurika.repos")
 }
 
 repositories {
-    AurikaExtReposKt.oraxen_releases(it)
-    AurikaExtReposKt.oraxen_snapshots(it)
+    aurikaRepos {
+        oraxen {
+            releases()
+            snapshots()
+        }
+    }
 }
 
 dependencies {

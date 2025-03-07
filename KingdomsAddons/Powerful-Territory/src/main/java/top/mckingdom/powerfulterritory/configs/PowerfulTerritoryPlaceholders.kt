@@ -9,12 +9,13 @@ import java.util.*
 import java.util.function.Function
 
 enum class PowerfulTerritoryPlaceholders(
-    private val default: Any,
-    private val translator: Function<KingdomsPlaceholderTranslationContext, Any?>
+    override val default: Any,
+    override val translator: Function<KingdomsPlaceholderTranslationContext, Any?>,
+    override var configuredDefaultValue: Any? = default
 ) : EnumKingdomsPlaceholderTranslator {
     KINGDOM_LANDS_OF_CATEGORY_NONE(0, { context ->
         var amount = 0
-        context.kingdom.lands.forEach { land ->
+        context.getKingdom()?.lands?.forEach { land: Land ->
             if (land.category == StandardLandCategory.NONE) {
                 amount++
             }
@@ -26,13 +27,13 @@ enum class PowerfulTerritoryPlaceholders(
         @PhFn
         fun of(
             context: KingdomsPlaceholderTranslationContext,
-            @PhParam(name = "category") category: String
+            @PhParam(p0 = "category") category: String
         ): Any {
             val kingdom = context.getKingdom()
             var amount = 0
             val category1 = LandCategoryRegistry.getLandCategoryFromConfigName(category) ?: return 0
 
-            kingdom.lands.forEach { land: Land ->
+            kingdom?.lands?.forEach { land: Land ->
                 if (land.category == category1) {
                     amount++
                 }
@@ -43,33 +44,12 @@ enum class PowerfulTerritoryPlaceholders(
 
     ;
 
-    private var configuredDefaultValue: Any?
-
-    init {
-        configuredDefaultValue = default
-        KingdomsPlaceholderTranslator.register(this)
+    override fun getFunctions(): Map<String, FunctionalPlaceholder.CompiledFunction>? {
+        return super<EnumKingdomsPlaceholderTranslator>.getFunctions()
     }
 
-    override fun getTranslator(): Function<KingdomsPlaceholderTranslationContext, Any?> {
-        return this.translator
-    }
-
-    override fun getName(): String {
-        return this.name.lowercase(Locale.ENGLISH)
-    }
-
-    //    override val default
-    override fun getDefault(): Any {
-        return this.default
-    }
-
-    //    override var configuredDefaultValue
-    override fun getConfiguredDefaultValue(): Any? {
-        return this.configuredDefaultValue
-    }
-
-    override fun setConfiguredDefaultValue(value: Any?) {
-        this.configuredDefaultValue = value
+    override fun translate(p0: KingdomsPlaceholderTranslationContext): Any? {
+        return super<EnumKingdomsPlaceholderTranslator>.translate(p0)
     }
 
     companion object {

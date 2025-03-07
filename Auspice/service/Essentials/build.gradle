@@ -1,13 +1,13 @@
-import net.aurika.gradle.AurikaExtReposKt
-
 plugins {
     id("aurika.repos")
     id("java-library")
 }
 
 repositories {
-    AurikaExtReposKt.essentials_releases(it)
-    AurikaExtReposKt.essentials_snapshots(it)
+    aurikaRepos {
+        essentials_releases()
+        essentials_snapshots()
+    }
 }
 
 dependencies {

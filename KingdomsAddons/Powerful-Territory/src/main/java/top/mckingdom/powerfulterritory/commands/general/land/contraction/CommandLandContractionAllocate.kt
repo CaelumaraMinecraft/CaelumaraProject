@@ -6,7 +6,6 @@ import org.kingdoms.commands.*
 import org.kingdoms.constants.land.Land
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.locale.Language
-import org.kingdoms.locale.LanguageManager
 import org.kingdoms.utils.PlayerUtils
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryConfig
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
@@ -32,17 +31,17 @@ class CommandLandContractionAllocate(parent: KingdomsParentCommand) : KingdomsCo
         } else {
             val sender: CommandSender = context.getMessageReceiver()
             val kSender = KingdomPlayer.getKingdomPlayer(context.senderAsPlayer())
-            val lang = kSender.getLanguage() ?: LanguageManager.getDefaultLanguage()
+            val lang = kSender.getLanguage()
             val land = Land.getLand(context.senderAsPlayer().getLocation())
             val contraction: LandContraction? = contractionsString.get(lang)?.get(context.arg(0))
             val receiver: OfflinePlayer? = PlayerUtils.getOfflinePlayer(context.arg(1))
 
             val duration: Duration = if (context.assertArgs(3)) {
                 context.arg(2).toLongOrNull()?.toDuration(DurationUnit.SECONDS)
-                    ?: PowerfulTerritoryConfig.LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION.getManager().getTime()
+                    ?: PowerfulTerritoryConfig.LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION.getManager().getTime()!!
                         .toKotlinDuration()
             } else {
-                PowerfulTerritoryConfig.LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION.getManager().getTime()
+                PowerfulTerritoryConfig.LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION.getManager().getTime()!!
                     .toKotlinDuration()
             }
 
@@ -130,7 +129,7 @@ class CommandLandContractionAllocate(parent: KingdomsParentCommand) : KingdomsCo
 //            return kingdom.getMembers { kp ->
 //                return@getMembers kp.getPlayer().getName()
 //            }
-            kingdom.getMembers().forEach { uuid: UUID ->
+            kingdom!!.getMembers().forEach { uuid: UUID ->
                 KingdomPlayer.getKingdomPlayer(uuid).getOfflinePlayer().getName()?.let { out.add(it) }
 
             }

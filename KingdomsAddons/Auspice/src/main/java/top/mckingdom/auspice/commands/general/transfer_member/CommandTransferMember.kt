@@ -22,6 +22,9 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
         val senderKP = context.kingdomPlayer ?: return CommandResult.FAILED
         val senderKingdom = senderKP.kingdom ?: return CommandResult.FAILED
         val offlinePlayer = context.getOfflinePlayer(0)
+        if (offlinePlayer == null) {
+            return CommandResult.FAILED  // TODO
+        }
         if (!senderKP.hasPermission(GroupExt.PERMISSION_TRANSFER_MEMBERS)) {
             GroupExt.PERMISSION_TRANSFER_MEMBERS.sendDeniedMessage(offlinePlayer.player!!)  // TODO
             return CommandResult.FAILED
@@ -29,7 +32,7 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
         val kPlayer = KingdomPlayer.getKingdomPlayer(offlinePlayer)
         val takerKingdom = context.getKingdom(1)
         if (!senderKingdom.hasAttribute(kPlayer.kingdom, GroupExt.DIRECTLY_TRANSFER_MEMBERS)) {
-            context.getPlayer(0).sendMessage("转移成员请求功能未实现")
+            offlinePlayer.player?.sendMessage("转移成员请求功能未实现")
             //TODO 转移成员申请
         } else {
             directlyTransfer(kPlayer, senderKP, takerKingdom)
@@ -45,8 +48,8 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
         val players = ArrayList<String>()
         kingdom.getMembers().forEach { uuid: UUID ->
             val player = KingdomPlayer.getKingdomPlayer(uuid)
-            if (player.rank.priority > kingdomPlayer.rank.priority) {
-                players.add(player.getPlayer().getName())
+            if (player.rank!!.priority > kingdomPlayer.rank!!.priority) {
+                players.add(player.player!!.getName())
             }
         }
 
@@ -61,7 +64,7 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
     companion object {
         @JvmStatic
         fun directlyTransfer(player: KingdomPlayer, sender: KingdomPlayer, taker: Kingdom): Boolean {
-            if (sender.rank.priority >= player.rank.priority) {    //如果送人的玩家职级优先级比被送出去的玩家差
+            if (sender.rank!!.priority >= player.rank!!.priority) {    //如果送人的玩家职级优先级比被送出去的玩家差
                 AuspiceLang.COMMAND_TRANSFER_MEMBER_FAILED_RANK_PRIORITY.sendError(sender.player)
                 return false
             } else {
@@ -79,8 +82,8 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
         @Deprecated("代码不稳定")
         @JvmStatic
         fun directlyTransfer(kingdom: Kingdom, sender: KingdomPlayer, taker: Nation): Boolean {
-            val kp: Int = kingdom.king.nationRank.priority
-            val sp: Int = sender.nationRank.priority
+            val kp: Int = kingdom.king!!.nationRank!!.priority
+            val sp: Int = sender.nationRank!!.priority
 
             if (sp >= kp) {
                 AuspiceLang.COMMAND_TRANSFER_MEMBER_FAILED_RANK_PRIORITY.sendError(sender.player)

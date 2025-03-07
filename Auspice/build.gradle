@@ -1,4 +1,4 @@
-import net.aurika.gradle.AurikaExtReposKt
+import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
 
 plugins {
     id("aurika.repos")
@@ -12,11 +12,15 @@ version = "0.0.1-pre"
 description = "A minecraft library"
 
 subprojects {
+    plugins.apply("aurika.repos")
+
     repositories {
-        AurikaExtReposKt.sonatype(it)
-        AurikaExtReposKt.minecraft(it)
-        AurikaExtReposKt.SpigotMC_snapshots(it)
-        AurikaExtReposKt.PaperMC(it)
+        aurikaRepos {
+            spigotMC.snapshots()
+            paperMC.maven_public()
+            minecraft()
+        }
+        sonatype(it)
     }
 }
 

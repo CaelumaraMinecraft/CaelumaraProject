@@ -1,8 +1,6 @@
-import net.aurika.gradle.AurikaExtReposKt
-
 plugins {
-    id("aurika.repos")
     id("java-library")
+    id("aurika.repos")
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.shadow) apply false
 }
@@ -14,27 +12,39 @@ def targetJavaVersion = 21
 
 subprojects {
 
-    group = this.group
-    version = this.version
+    Project subProject = it
+
+    subProject.group = this.group
+    subProject.version = this.version
 
     def _name = it.name
 
     apply {
-        plugins.apply("aurika.repos")
         plugins.apply("java-library")
+        plugins.apply("aurika.repos")
         plugins.apply(libs.plugins.kotlin.get().pluginId)
         plugins.apply(libs.plugins.shadow.get().pluginId)
     }
 
     repositories {
-        AurikaExtReposKt.SpigotMC_snapshots(it)
+        aurikaRepos {
+            spigotMC {
+                snapshots()
+                releases()
+            }
+        }
     }
+
+//    Project auspiceAddon = project(":KingdomsAddons:Auspice")
 
     dependencies {
         api(project(":common:validate"))
         compileOnly(libs.server.spigot)
         compileOnly(libs.annotations.checker)
-        compileOnly(fileTree("$rootDir/libs/plugins/Kingdoms"))
+//        compileOnly(fileTree("$rootDir\\libs\\plugins\\Kingdoms"))
+//        if (subProject != auspiceAddon) {
+//            compileOnly(auspiceAddon)
+//        }
     }
 
     java {

@@ -1,11 +1,13 @@
-import net.aurika.gradle.AurikaExtReposKt
-
 plugins {
     id("aurika.repos")
 }
 
 repositories {
-    AurikaExtReposKt.CodeMC(it)
+    aurikaRepos {
+        codeMC {
+            maven_public()
+        }
+    }
 }
 
 dependencies {

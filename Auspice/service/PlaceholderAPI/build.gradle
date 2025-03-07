@@ -1,11 +1,11 @@
-import net.aurika.gradle.AurikaExtReposKt
-
 plugins {
     id("aurika.repos")
 }
 
 repositories {
-    AurikaExtReposKt.placeholderAPI(it)
+    aurikaRepos {
+        placeholderAPI()
+    }
 }
 
 dependencies {

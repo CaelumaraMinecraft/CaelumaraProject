@@ -1,0 +1,71 @@
+
+
+我是一名 java 开发者, 我需要在项目的 build-logic 中写一个 gradle 插件(名为 "aurika.dependency.pre-relocation"), 能够为依赖项配置 relocation, 让依赖项先 relocate 再加载进 classPath, 使用 gradle 的 transformer api, 使用 asm 进行 relocate
+我需要能够像这样进行对依赖项的 relocation 配置:
+
+build.gradle.kts:
+
+plugins {  // plugins
+    id("java-library")
+    id("aurika.dependency.pre-relocation")
+}
+
+dependencies {
+    val libs1 = compileOnly(fileTree("libs/"))!!
+    val libs2 = compileOnly(fileTree("libs/"))!!
+
+    preRelocations {  // 为依赖项进行 preRelocations 配置
+        preRelocate(libs1) {  // 为依赖项 lib1 添加 preRelocates
+            relocate("org.ccc.shaded.kotlin", "kotlin")  // adds a relocate rule (class Relocation)
+            relocate("org.ccc.jetbrains.annotations", "org.jetbrains.annotations")
+        }
+        preRelocate(lib2) {
+            relocate("tem.sis.libs.kotlin", "kotlin")
+        }
+    }
+
+}
+
+
+
+
+我是一名 java 开发者, 我需要在项目的 build-logic 中写一个 gradle 插件, 能够将依赖项包装为 PreRelocatedDependency, 让依赖项 relocate 后再加载进 classPath, 使用 asm 进行 relocate
+我需要能够像这样进行对依赖项的 relocation 配置:
+
+build.gradle.kts:
+
+plugins {  // plugins
+    id("java-library")
+    id("aurika.dependency.pre-relocation")
+}
+
+dependencies {
+    val libs1 = create(fileTree("libs/1"))!!
+    val libs2 = create(fileTree("libs/2"))!!
+
+    val dep1 = preRelocatedDependency(lib1) {  // 包装一个 dependency, 生成一个 PreRelocatedDependency 并对其进行配置
+        preRelocate("org.ccc.shaded.kotlin", "kotlin")   // 增加一条 preRelocate 规则
+        preRelocate("org.libs.annotations", "org.jetbrains.annotations")   // 再增加一条 preRelocate 规则
+    }
+
+}
+
+我是一名 java 开发者, 我需要在项目的 build-logic 中写一个 gradle 插件, 能够在解析依赖项的时候就更改依赖项中的 classPath, 让依赖项 relocate 后再加载进 classPath, 使用 asm 进行 relocate
+我需要能够像这样进行对依赖项的 relocation 配置:
+
+build.gradle.kts:
+
+
+dependencies {
+    implementation(project(":utils"))
+
+    preRelocates {   // 一个 DependencyHandler 的拓展, 提供了 <D : Dependency> preRelocateRules(D, Action<D>) 方法, 可以为每个依赖项单独添加 preRelocateRules
+        preRelocateRules(this@dependencies.compileOnly(fileTree("libs/1"))) {
+            addRule(Relocate("org.ccc.shaded.kotlin", "kotlin"))
+            relocate("org.ccc.shaded.kotlin", "kotlin")        // 实现像 shadowJar 中 relocate("org.ccc.shaded.kotlin", "kotlin") 一样的功能
+            relocate("org.libs.annotations", "org.jetbrains.annotations")
+        }  // 让依赖项在解析时就更改 classPath
+    }
+}
+
+
