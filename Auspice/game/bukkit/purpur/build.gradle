@@ -54,7 +54,6 @@ tasks {
     }
 
     compileKotlin {
-
         kotlinOptions {
             jvmTarget = 17
         }
@@ -93,13 +92,13 @@ tasks {
     jar {
         enabled = false
     }
-}
 
-processResources {
-    def props = [version: version]
-    inputs.properties props
-    filteringCharset "UTF-8"
-    filesMatching("plugin.yml") {
-        expand props
+    processResources {
+        Map<String, Object> props = [version: version]
+        inputs.properties(props)
+        filteringCharset("UTF-8")
+        filesMatching("plugin.yml") {
+            expand(props)
+        }
     }
 }

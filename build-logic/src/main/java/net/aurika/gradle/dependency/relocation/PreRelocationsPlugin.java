@@ -2,9 +2,12 @@ package net.aurika.gradle.dependency.relocation;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.FileCollectionDependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.attributes.Attribute;
+import org.gradle.api.attributes.AttributesSchema;
 import org.gradle.api.file.Directory;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.ExtensionAware;
@@ -15,24 +18,36 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PreRelocationsPlugin implements Plugin<Project> {
+
+    public static final @NotNull String ATTRIBUTE_DEPENDENCY_IS_RELOCATED = "net.aurika.gradle.dependency.relocated";
+
     @Override
     public void apply(@NotNull Project project) {
 
         System.out.println("Applying pre-relocations plugin");
 
-        DependencyHandler dependencyHandler = project.getDependencies();
-        Directory defRelocatedPath = project.getLayout().getProjectDirectory().dir("relocated-libs");  // the default
-        PreRelocationsSettingsExtension handlerExtension = new PreRelocationsSettingsExtension(defRelocatedPath.getAsFile());
-        dependencyHandler.getExtensions().add(PreRelocationsSettingsExtension.class, "preRelocationSettings", handlerExtension);
+        DependencyHandler dependencies = project.getDependencies();
+        Directory defaultRelocatedPath = project.getLayout().getProjectDirectory().dir("relocated-libs");  // the default
+        PreRelocationsSettingsExtension handlerExtension = new PreRelocationsSettingsExtension(defaultRelocatedPath.getAsFile());
+        dependencies.getExtensions().add(PreRelocationsSettingsExtension.class, "preRelocationSettings", handlerExtension);
 
-//        System.out.println(handlerExtension.relocatedFolder().getPath());
+        Attribute<Boolean> isPreRelocatedAttribute = Attribute.of(ATTRIBUTE_DEPENDENCY_IS_RELOCATED, Boolean.class);
+        AttributesSchema attributesSchema = dependencies.getAttributesSchema();
+        attributesSchema.attribute(isPreRelocatedAttribute);
 
-        project.getConfigurations().all(cfg -> {
+        ConfigurationContainer configurations = project.getConfigurations();
+        configurations.all(configuration -> {
+            configuration.attributes(attributeContainer -> {
+                attributeContainer.attribute(isPreRelocatedAttribute, true);
+            });
+        });
+
+        configurations.all(cfg -> {
 
             String cfgName = cfg.getName();
-            String relocatedCfgPath = handlerExtension.relocatedFolder().getPath() + "\\" + cfgName;
+            String relocatedCfgPath = handlerExtension.getRelocatedFolder().getPath() + "\\" + cfgName;
 
-            AtomicBoolean cfgHasPreRelocations = new AtomicBoolean(false);
+            AtomicBoolean cfgHasRelocatedDep = new AtomicBoolean(false);
 
             cfg.getIncoming().beforeResolve((rabDeps) -> {
                 rabDeps.getDependencies();
@@ -40,16 +55,20 @@ public class PreRelocationsPlugin implements Plugin<Project> {
                 System.out.println("Incoming before resolve: " + rabDeps);
             });
 
+            cfg.getDependencies().forEach((dep) -> {
+               System.out.println("cfg.getDependencies().forEach(): " + dep + " " + System.identityHashCode(dep));
+            });
+
             cfg.withDependencies((DependencySet dependencySet) -> {
                 dependencySet.forEach(dependency -> {
                     if (dependency instanceof ExtensionAware extendableDep) {
                         PreRelocationsExtension depExt = extendableDep.getExtensions().findByType(PreRelocationsExtension.class);
                         if (depExt != null) {
-                            if (!cfgHasPreRelocations.get()) {  // Only create once
-                                dependencyHandler.add(cfgName, project.fileTree(relocatedCfgPath));
+                            if (!cfgHasRelocatedDep.get()) {  // Only create once for each configuration
+                                dependencies.add(cfgName, project.fileTree(relocatedCfgPath));
                                 dependencySet.remove(extendableDep);
                             }
-                            cfgHasPreRelocations.set(true);
+                            cfgHasRelocatedDep.set(true);
                             if (extendableDep instanceof FileCollectionDependency filesDependency) {
                                 if (!depExt.relocated) {
                                     depExt.relocated = true;
@@ -61,8 +80,7 @@ public class PreRelocationsPlugin implements Plugin<Project> {
 
                                         Path outputPath = Path.of(relocatedCfgPath + "\\" + "relocated-" + file.getName());
 
-                                        System.out.println("Relocating file: " + file + " to: " + outputPath);
-
+//                                        System.out.println("Relocating file: " + file + " to: " + outputPath);
 //                                        PreRelocateKt.remap(file, outputPath, depExt.relocates());
 
                                         RelocationHandler.remap(file.toPath(), outputPath, depExt.relocates());

@@ -8,6 +8,12 @@ dependencies {
 
     val kx: Dependency = compileOnlyApi(fileTree(rootDir.path + "\\libs\\plugins\\Kingdoms"))!!
 
+    println("kc interfaces: ")
+    for (inter in kx::class.java.interfaces) {
+        println(inter)
+    }
+    println()
+
     preRelocationSettings {
         addPreRelocatedDependency(kx) {
             relocate("org.kingdoms.libs.kotlin", "kotlin")

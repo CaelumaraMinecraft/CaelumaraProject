@@ -1,4 +1,4 @@
-import static net.aurika.gradle.repository.AurikaExtReposKt.*
+import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
 
 plugins {
     id("aurika.repos")
@@ -15,12 +15,8 @@ repositories {
     mavenCentral()
     mavenLocal()
     aurikaRepos {
-        spigotMC {
-            snapshots()
-        }
-        codeMC {
-            maven_public()
-        }
+        spigotMC.snapshots()
+        codeMC.maven_public()
     }
     sonatype(it)
 }

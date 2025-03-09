@@ -28,11 +28,11 @@ public class PreRelocationsSettingsExtension {
         action.execute(depExt);
     }
 
-    public @NotNull File relocatedFolder() {
+    public @NotNull File getRelocatedFolder() {
         return relocatedFolder;
     }
 
-    public void relocatedFolder(@NotNull File relocatedFolder) {
+    public void setRelocatedFolder(@NotNull File relocatedFolder) {
         this.relocatedFolder = relocatedFolder;
     }
 }

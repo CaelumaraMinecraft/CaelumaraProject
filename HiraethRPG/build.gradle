@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.internal.AbstractDependencyFilter
-
 plugins {
     id("java-library")
     alias(libs.plugins.kotlin) apply false
@@ -12,6 +10,8 @@ version = "0.0.1-pre"
 def targetJavaVersion = 21
 
 subprojects {
+
+    Project subProject = it
 
     group = this.group
     version = this.version
