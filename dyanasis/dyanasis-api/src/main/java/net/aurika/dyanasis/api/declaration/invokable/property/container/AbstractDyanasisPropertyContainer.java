@@ -1,0 +1,39 @@
+package net.aurika.dyanasis.api.declaration.invokable.property.container;
+
+import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
+import net.aurika.validate.Validate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AbstractDyanasisPropertyContainer implements DyanasisPropertyContainer {
+    protected final @NotNull Map<String, DyanasisProperty> properties;
+
+    protected AbstractDyanasisPropertyContainer() {
+        this(new HashMap<>());
+    }
+
+    protected AbstractDyanasisPropertyContainer(@NotNull Map<String, DyanasisProperty> properties) {
+        Validate.Arg.notNull(properties, "properties");
+        this.properties = properties;
+    }
+
+    @Override
+    public boolean hasProperty(@NotNull String name) {
+        return properties.containsKey(name);
+    }
+
+    @Override
+    public @Nullable DyanasisProperty getProperty(@NotNull String name) {
+        return properties.get(name);
+    }
+
+    @Override
+    public @Unmodifiable @NotNull Map<String, DyanasisProperty> allProperties() {
+        return Collections.unmodifiableMap(properties);
+    }
+}

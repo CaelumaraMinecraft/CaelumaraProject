@@ -151,6 +151,10 @@ include(
 
 include(
         ":dyanasis",
+        ":dyanasis:dyanasis-api",
+        ":dyanasis:dyanasis-editor-api",
+        ":dyanasis:dyanasis-editor-app",
+        ":dyanasis:dyanasis-editor-intellij",
 )
 
 include(
