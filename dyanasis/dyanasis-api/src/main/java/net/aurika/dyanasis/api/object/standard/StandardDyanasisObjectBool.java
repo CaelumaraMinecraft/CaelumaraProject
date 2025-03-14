@@ -1,31 +1,35 @@
 package net.aurika.dyanasis.api.object.standard;
 
-import net.aurika.dyanasis.api.declaration.invokable.function.container.DyanasisFunctionContainer;
-import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.NamingContract;
+import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
+import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
+import net.aurika.dyanasis.api.lexer.DyanasisLexer;
+import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectBool;
+import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
+public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Boolean, Lexer> implements DyanasisObjectBool {
 
-public class StandardDyanasisObjectBool implements DyanasisObjectBool {
+    protected static final AbstractDyanasisTypeData TYPE_DATA = new AbstractDyanasisTypeData()
 
-    public static final StandardDyanasisObjectBool TRUE = new StandardDyanasisObjectBool(true);
-    public static final StandardDyanasisObjectBool FALSE = new StandardDyanasisObjectBool(false);
+    protected final StandardObjectBoolPropertyContainer properties = new StandardObjectBoolPropertyContainer();
+    protected final StandardObjectBoolFunctionContainer functions = new StandardObjectBoolFunctionContainer();
 
-    private final boolean value;
-
-    private StandardDyanasisObjectBool(boolean value) {
-        this.value = value;
+    public StandardDyanasisObjectBool(boolean value, Lexer lexer) {
+        super(value, lexer, null, TYPE_DATA);
     }
 
     @Override
-    public @NotNull DyanasisPropertyContainer dyanasisProperties() {
-        return DyanasisPropertyContainer.empty();
+    public @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties() {
+        return properties;
     }
 
     @Override
-    public @NotNull DyanasisFunctionContainer dyanasisFunctions() {
-        return DyanasisFunctionContainer.empty();
+    public @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions() {
+        return functions;
     }
 
     @SuppressWarnings("PointlessBooleanExpression")
@@ -38,8 +42,53 @@ public class StandardDyanasisObjectBool implements DyanasisObjectBool {
         };
     }
 
-    @Override
-    public @NotNull Boolean valueAsJava() {
-        return value ? Boolean.TRUE : Boolean.FALSE;
+    public class StandardObjectBoolPropertyContainer extends StandardObjectPropertyContainer {
+        public StandardObjectBoolPropertyContainer() {
+            super();
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObjectBool<Lexer> owner() {
+            return StandardDyanasisObjectBool.this;
+        }
+    }
+
+    public class StandardObjectBoolFunctionContainer extends StandardObjectFunctionContainer {
+        public StandardObjectBoolFunctionContainer() {
+            super();
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObjectBool<Lexer> owner() {
+            return StandardDyanasisObjectBool.this;
+        }
+    }
+
+    public abstract class StandardObjectBoolProperty extends StandardObjectProperty {
+        public StandardObjectBoolProperty(@NamingContract.Invokable final @NotNull String name) {
+            super(name);
+        }
+
+        @Override
+        public abstract @NotNull DyanasisObject value();
+
+        @Override
+        public @NotNull StandardDyanasisObjectBool<Lexer> owner() {
+            return StandardDyanasisObjectBool.this;
+        }
+    }
+
+    public abstract class StandardObjectBoolFunction extends StandardObjectFunction {
+        public StandardObjectBoolFunction(@NotNull DyanasisFunctionKey key) {
+            super(key);
+        }
+
+        @Override
+        public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+
+        @Override
+        public @NotNull StandardDyanasisObjectBool<Lexer> owner() {
+            return StandardDyanasisObjectBool.this;
+        }
     }
 }

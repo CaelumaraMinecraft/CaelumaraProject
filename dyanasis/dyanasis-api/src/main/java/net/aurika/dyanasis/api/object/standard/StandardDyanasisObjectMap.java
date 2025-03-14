@@ -8,18 +8,25 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisGetablePro
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.object.AbstractDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectMap;
-import net.aurika.dyanasis.api.typedata.DyanasisTypeData;
+import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends AbstractDyanasisObject<Map<?, ?>, Lexer> implements DyanasisObjectMap {
+public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Map<?, ?>, Lexer> implements DyanasisObjectMap {
 
-    public StandardDyanasisObjectMap(@NotNull Map<?, ?> value, @NotNull Lexer lexer, @NotNull DyanasisTypeData typeData) {
-        super(value, lexer, typeData);
+    protected static final AbstractDyanasisTypeData TYPE_DATA
+
+            protected final
+
+    public StandardDyanasisObjectMap(@NotNull Map<?, ?> value, @NotNull Lexer lexer) {
+        this(value, lexer,null, TYPE_DATA);
+    }
+
+    protected StandardDyanasisObjectMap(Map<?, ?> value, @NotNull Lexer lexer, @Nullable StandardObjectDoc doc, @NotNull AbstractDyanasisTypeData typeData) {
+        super(value, lexer, doc, typeData);
     }
 
     @Override
@@ -59,18 +66,28 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Abst
         }
     }
 
-    public abstract class AbstractMapProperty extends AbstractDyanasisProperty<StandardDyanasisObjectMap<Lexer>> {
+    public abstract class AbstractMapProperty extends AbstractDyanasisProperty {
         public AbstractMapProperty(@NamingContract.Invokable final @NotNull String name) {
-            super(name, StandardDyanasisObjectMap.this);
+            super(name);
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObjectMap<Lexer> owner() {
+            return StandardDyanasisObjectMap.this;
         }
     }
 
-    public abstract class AbstractMapFunction extends AbstractDyanasisFunction<StandardDyanasisObjectMap<Lexer>> {
+    public abstract class AbstractMapFunction extends AbstractDyanasisFunction {
         public AbstractMapFunction(@NotNull DyanasisFunctionKey key) {
-            super(key, StandardDyanasisObjectMap.this);
+            super(key);
         }
 
         @Override
         public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+
+        @Override
+        public @NotNull StandardDyanasisObjectMap<Lexer> owner() {
+            return StandardDyanasisObjectMap.this;
+        }
     }
 }

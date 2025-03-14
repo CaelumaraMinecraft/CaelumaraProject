@@ -9,15 +9,15 @@ import java.util.Objects;
 public class DyanasisFunctionKey implements Named {
     @NamingContract.Invokable
     private final @NotNull String name;
-    private final int argLen;
+    private final int arity;
 
     public static DyanasisFunctionKey dyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int argLen) {
         return new DyanasisFunctionKey(name, argLen);
     }
 
-    public DyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int argLen) {
+    protected DyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int arity) {
         this.name = name;
-        this.argLen = argLen;
+        this.arity = arity;
     }
 
     /**
@@ -36,23 +36,23 @@ public class DyanasisFunctionKey implements Named {
      *
      * @return the arguments count
      */
-    public int argLen() {      // TODO rename
-        return argLen;
+    public int arity() {      // TODO rename
+        return arity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, argLen);
+        return Objects.hash(name, arity);
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof DyanasisFunctionKey that)) return false;
-        return argLen == that.argLen && Objects.equals(name, that.name);
+        return arity == that.arity && Objects.equals(name, that.name);
     }
 
     @Override
-    public String toString() {
-        return "FunctionKey[" + "name='" + name + '\'' + ", argLen=" + argLen + ']';
+    public @NotNull String toString() {
+        return "FunctionKey[name='" + name + "', arity=" + arity + "]";
     }
 }

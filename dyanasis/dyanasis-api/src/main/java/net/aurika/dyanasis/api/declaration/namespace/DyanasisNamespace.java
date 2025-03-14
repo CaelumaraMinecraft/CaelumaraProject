@@ -13,6 +13,7 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperties
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +23,15 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
         DyanasisPropertiesAware, DyanasisPropertyAnchor,
         DyanasisFunctionsAware, DyanasisFunctionAnchor,
         DyanasisDocAware, DyanasisDocAnchor {
+
+    static @NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull StandardDyanasisNamespaceTree tree, @NotNull String @NotNull [] path) {
+        Validate.Arg.notNull(tree, "tree");
+        @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace node = tree.findNamespace(path);
+        if (node == null) {
+            // TODO
+        }
+    }
+
     /**
      * Gets the dyanasis namespace name.
      *
@@ -60,13 +70,19 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     @NotNull Map<String, ? extends DyanasisNamespace> children();
 
     @Override
-    @NotNull DyanasisPropertyContainer<? extends DyanasisProperty> dyanasisProperties();
+    @NotNull NamespacePropertyContainer<? extends DyanasisProperty> dyanasisProperties();
 
     @Override
-    @NotNull DyanasisFunctionContainer<? extends DyanasisFunction> dyanasisFunctions();
+    @NotNull NamespaceFunctionContainer<? extends DyanasisFunction> dyanasisFunctions();
 
     @Override
     @Nullable NamespaceDoc dyanasisDoc();
+
+    interface NamespacePropertyContainer<Property extends NamespaceProperty> extends DyanasisPropertyContainer<Property> {
+    }
+
+    interface NamespaceFunctionContainer<Function extends NamespaceFunction> extends DyanasisFunctionContainer<Function> {
+    }
 
     interface NamespaceProperty extends DyanasisProperty {
         @Override

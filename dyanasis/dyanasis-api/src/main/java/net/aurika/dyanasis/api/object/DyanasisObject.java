@@ -1,5 +1,6 @@
 package net.aurika.dyanasis.api.object;
 
+import net.aurika.dyanasis.api.declaration.NeedOwner;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDoc;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAware;
@@ -11,8 +12,9 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperties
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
-import net.aurika.dyanasis.api.typedata.DyanasisTypeData;
+import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
 import net.aurika.dyanasis.api.typedata.DyanasisTypeDataAware;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +35,7 @@ public interface DyanasisObject
     @Nullable ObjectDoc dyanasisDoc();
 
     @Override
-    @NotNull DyanasisTypeData dyanasisTypeData();
+    @NotNull AbstractDyanasisTypeData dyanasisTypeData();
 
     /**
      * 将这个 {@linkplain DyanasisObject} 与一个配置中的字符串相比较.
@@ -50,12 +52,20 @@ public interface DyanasisObject
      */
     @NotNull Object valueAsJava();
 
-    interface ObjectPropertyContainer<P extends ObjectProperty> extends DyanasisPropertyContainer<P> {
-        @NotNull DyanasisTypeData objectTypeData();
+    interface ObjectPropertyContainer<P extends ObjectProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
+        @NotNull AbstractDyanasisTypeData objectTypeData();
+
+        @Override
+        @ApiStatus.Experimental
+        @NotNull DyanasisObject owner();
     }
 
-    interface ObjectFunctionContainer<F extends ObjectFunction> extends DyanasisFunctionContainer<F> {
-        @NotNull DyanasisTypeData objectTypeData();
+    interface ObjectFunctionContainer<F extends ObjectFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
+        @NotNull AbstractDyanasisTypeData objectTypeData();
+
+        @Override
+        @ApiStatus.Experimental
+        @NotNull DyanasisObject owner();
     }
 
     interface ObjectProperty extends DyanasisProperty {

@@ -56,7 +56,7 @@ public interface DyanasisFunctionContainer<F extends DyanasisFunction> {
             DyanasisFunctionKey fnKey = entry.getKey();
             if (fnKey != null) {
                 if (fnKey.name().equals(name)) {
-                    sameNameFns.put(fnKey.argLen(), entry.getValue());
+                    sameNameFns.put(fnKey.arity(), entry.getValue());
                 }
             }
         }

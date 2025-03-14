@@ -16,17 +16,17 @@ import java.util.function.Consumer;
 /**
  * The standard dyanasis namespace implementation.
  */
-public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
+public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer {
 
-    private final @NotNull Map<String, NodeDyanasisNamespace> roots = new LinkedHashMap<>();
+    private final @NotNull Map<String, StandardDyanasisNamespace> roots = new LinkedHashMap<>();
 
     @Unmodifiable
     public @NotNull Map<String, DyanasisNamespace> roots() {
         return Collections.unmodifiableMap(roots);
     }
 
-    public @Nullable DyanasisNamespaceTree.NodeDyanasisNamespace removeRoot(@NotNull String name) {
-        @Nullable NodeDyanasisNamespace root = roots.remove(name);
+    public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace removeRoot(@NotNull String name) {
+        @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace root = roots.remove(name);
         if (root != null) {
             root.killThisAndChildren();
         }
@@ -35,15 +35,15 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
 
     @Override
     public @NotNull Collection<? extends DyanasisNamespace> allNamespaces() {
-        List<NodeDyanasisNamespace> nss = new ArrayList<>();
-        for (NodeDyanasisNamespace root : roots.values()) {
+        List<StandardDyanasisNamespace> nss = new ArrayList<>();
+        for (StandardDyanasisNamespace root : roots.values()) {
             nss.add(root);
             collectAllChildren(root, nss);
         }
         return nss;
     }
 
-    private static void collectAllChildren(@NotNull NodeDyanasisNamespace ns, @NotNull Collection<NodeDyanasisNamespace> container) {
+    private static void collectAllChildren(@NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace ns, @NotNull Collection<StandardDyanasisNamespace> container) {
         for (var child : ns.children.values()) {
             container.add(child);
             collectAllChildren(child, container);
@@ -51,14 +51,14 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
     }
 
     @Override
-    public @Nullable NodeDyanasisNamespace findNamespace(@NotNull String @NotNull [] path) {
+    public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace findNamespace(@NotNull String @NotNull [] path) {
         if (path.length == 0) {
             return null;
         }
         if (path.length == 1) {
             return roots.get(path[0]);
         }
-        @Nullable NodeDyanasisNamespace ns = roots.get(path[0]);
+        @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace ns = roots.get(path[0]);
         for (int i = 1, pathLength = path.length; i < pathLength; i++) {
             if (ns != null) {
                 String name = path[i];
@@ -70,20 +70,20 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
         return ns;
     }
 
-    public class NodeDyanasisNamespace implements DyanasisNamespace, Named {
+    public class StandardDyanasisNamespace implements DyanasisNamespace, Named {
         @NamingContract.Namespace
         private final @NotNull String name;
-        protected @Nullable NodeDyanasisNamespace parent;
-        protected @NotNull Map<String, NodeDyanasisNamespace> children;
+        protected @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace parent;
+        protected @NotNull Map<String, StandardDyanasisNamespace> children;
         protected boolean available = true;
 
-        public NodeDyanasisNamespace(@NamingContract.Namespace final @NotNull String name) {
+        public StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name) {
             this(name, null, new LinkedHashMap<>());
         }
 
-        public NodeDyanasisNamespace(@NamingContract.Namespace final @NotNull String name,
-                                     @Nullable DyanasisNamespaceTree.NodeDyanasisNamespace parent,
-                                     @NotNull Map<String, NodeDyanasisNamespace> children
+        public StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name,
+                                         @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace parent,
+                                         @NotNull Map<String, StandardDyanasisNamespace> children
         ) {
             Validate.Arg.notNull(name, "name");
             this.name = name;
@@ -91,7 +91,7 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
             this.children = children;
         }
 
-        private void let(@NotNull Consumer<NodeDyanasisNamespace> action) {
+        private void let(@NotNull Consumer<StandardDyanasisNamespace> action) {
             action.accept(this);
         }
 
@@ -110,14 +110,14 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
 
         protected void removeThis() {
             available = false;
-            @Nullable NodeDyanasisNamespace parent = this.parent;
+            @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace parent = this.parent;
             if (parent != null) {
                 parent.removeChild(this.name);
             }
         }
 
         /**
-         * Lets this {@linkplain NodeDyanasisNamespace} invalidate.
+         * Lets this {@linkplain StandardDyanasisNamespace} invalidate.
          *
          * @return the previous survival
          */
@@ -139,8 +139,8 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
             killChildren();
         }
 
-        public @NotNull DyanasisNamespaceTree tree() {
-            return DyanasisNamespaceTree.this;
+        public @NotNull StandardDyanasisNamespaceTree tree() {
+            return StandardDyanasisNamespaceTree.this;
         }
 
         @Override
@@ -178,7 +178,7 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
          *
          * @param parent the new parent
          */
-        protected void syncParent(@Nullable DyanasisNamespaceTree.NodeDyanasisNamespace parent) {
+        protected void syncParent(@Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace parent) {
             checkAvailable();
             if (this.parent != null) {  // remove this from old parent's children
                 this.parent.children.remove(this.name);
@@ -191,10 +191,10 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
 
         @Override
         @Contract("-> new")
-        public @NotNull Map<String, NodeDyanasisNamespace> children() {
+        public @NotNull Map<String, StandardDyanasisNamespace> children() {
             checkAvailable();
-            LinkedHashMap<String, NodeDyanasisNamespace> children = new LinkedHashMap<>();
-            for (Map.Entry<String, NodeDyanasisNamespace> entry : this.children.entrySet()) {
+            LinkedHashMap<String, StandardDyanasisNamespace> children = new LinkedHashMap<>();
+            for (Map.Entry<String, StandardDyanasisNamespace> entry : this.children.entrySet()) {
                 if (entry.getValue().isAvailable()) {
                     children.put(entry.getKey(), entry.getValue());
                 }
@@ -203,12 +203,12 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
         }
 
         @Override
-        public @Nullable NodeDyanasisNamespace getChild(@NotNull String name) {
+        public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace getChild(@NotNull String name) {
             checkAvailable();
             return children.get(name);
         }
 
-        public @Nullable DyanasisNamespaceTree.NodeDyanasisNamespace addChild(@NotNull NodeDyanasisNamespace child) {
+        public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace addChild(@NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace child) {
             checkAvailable();
             Validate.Arg.notNull(child, "child");
             String childName = child.name();
@@ -216,18 +216,18 @@ public class DyanasisNamespaceTree implements DyanasisNamespaceContainer {
             return this.children.put(childName, child);
         }
 
-        public @Nullable DyanasisNamespaceTree.NodeDyanasisNamespace removeChild(@NotNull String childName) {
+        public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace removeChild(@NotNull String childName) {
             checkAvailable();
             Validate.Arg.notNull(childName, "childName");
-            NodeDyanasisNamespace child = this.children.remove(childName);
+            StandardDyanasisNamespace child = this.children.remove(childName);
             child.available = false;
             return child;
         }
 
-        public @NotNull Map<String, NodeDyanasisNamespace> clearChildren() {
+        public @NotNull Map<String, StandardDyanasisNamespace> clearChildren() {
             checkAvailable();
-            Map<String, NodeDyanasisNamespace> oldChildren = this.children;
-            for (Map.Entry<String, NodeDyanasisNamespace> entry : oldChildren.entrySet()) {
+            Map<String, StandardDyanasisNamespace> oldChildren = this.children;
+            for (Map.Entry<String, StandardDyanasisNamespace> entry : oldChildren.entrySet()) {
                 entry.getValue().available = false;
             }
             this.children = new LinkedHashMap<>();

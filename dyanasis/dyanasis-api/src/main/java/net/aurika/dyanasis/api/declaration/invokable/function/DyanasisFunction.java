@@ -1,5 +1,6 @@
 package net.aurika.dyanasis.api.declaration.invokable.function;
 
+import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.declaration.invokable.DyanasisInvokable;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
@@ -19,6 +20,10 @@ public interface DyanasisFunction extends DyanasisInvokable, Function<DyanasisFu
      */
     @Override
     @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+
+    @Override
+    @NamingContract.Invokable
+    @NotNull String name();
 
     /**
      * Gets the dyanasis function key.

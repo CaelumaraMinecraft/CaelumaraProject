@@ -11,13 +11,13 @@ import net.aurika.dyanasis.api.lexer.DyanasisLexer;
 import net.aurika.dyanasis.api.object.AbstractDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
-import net.aurika.dyanasis.api.typedata.DyanasisTypeData;
+import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends AbstractDyanasisObject<String, Lexer> implements DyanasisObjectString {
 
-    protected StandardDyanasisObjectString(@NotNull String value, @NotNull Lexer lexer, @NotNull DyanasisTypeData typeData) {
+    protected StandardDyanasisObjectString(@NotNull String value, @NotNull Lexer lexer, @NotNull AbstractDyanasisTypeData typeData) {
         super(value, lexer, typeData);
     }
 

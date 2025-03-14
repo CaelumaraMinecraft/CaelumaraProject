@@ -6,45 +6,26 @@ import net.aurika.dyanasis.api.declaration.invokable.function.AbstractDyanasisFu
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
 import net.aurika.dyanasis.api.declaration.invokable.property.AbstractDyanasisProperty;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.typedata.DyanasisTypeData;
+import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractDyanasisObject<
-        T,
-        Lexer extends DyanasisLexer,
-        Properties extends DyanasisObject.ObjectPropertyContainer<? extends DyanasisObject.ObjectProperty>,
-        Functions extends DyanasisObject.ObjectFunctionContainer<? extends DyanasisObject.ObjectFunction>,
-        Doc extends DyanasisObject.ObjectDoc
-        > implements DyanasisObject,
-        DyanasisDocEditable<Doc> {
+public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc extends DyanasisObject.ObjectDoc> implements DyanasisObject, DyanasisDocEditable<Doc> {
     protected T value;
     protected final @NotNull Lexer lexer;
-    protected @NotNull Properties properties;
-    protected @NotNull Functions functions;
     protected @Nullable Doc doc;
-    protected final @NotNull DyanasisTypeData typeData;
-
-    protected AbstractDyanasisObject(T value, @NotNull Lexer lexer, @NotNull DyanasisTypeData typeData) {
-
-    }
+    protected final @NotNull AbstractDyanasisTypeData typeData;
 
     protected AbstractDyanasisObject(T value,
                                      @NotNull Lexer lexer,
-                                     @NotNull Properties properties,
-                                     @NotNull Functions functions,
                                      @Nullable Doc doc,
-                                     @NotNull DyanasisTypeData typeData
+                                     @NotNull AbstractDyanasisTypeData typeData
     ) {
         Validate.Arg.notNull(lexer, "lexer");
-        Validate.Arg.notNull(properties, "properties");
-        Validate.Arg.notNull(functions, "functions");
         Validate.Arg.notNull(typeData, "typeData");
         this.value = value;
         this.lexer = lexer;
-        this.properties = properties;
-        this.functions = functions;
         this.doc = doc;
         this.typeData = typeData;
     }
@@ -59,14 +40,10 @@ public abstract class AbstractDyanasisObject<
     }
 
     @Override
-    public @NotNull Properties dyanasisProperties() {
-        return properties;
-    }
+    public abstract @NotNull ObjectPropertyContainer<? extends DyanasisObject.ObjectProperty> dyanasisProperties();
 
     @Override
-    public @NotNull Functions dyanasisFunctions() {
-        return functions;
-    }
+    public abstract @NotNull DyanasisObject.ObjectFunctionContainer<? extends DyanasisObject.ObjectFunction> dyanasisFunctions();
 
     @Override
     public @Nullable Doc dyanasisDoc() {
@@ -79,7 +56,7 @@ public abstract class AbstractDyanasisObject<
     }
 
     @Override
-    public @NotNull DyanasisTypeData dyanasisTypeData() {
+    public @NotNull AbstractDyanasisTypeData dyanasisTypeData() {
         return typeData;
     }
 
@@ -88,32 +65,56 @@ public abstract class AbstractDyanasisObject<
         return value;
     }
 
-    public abstract class AbstractObjectPropertyContainer<Property extends ObjectProperty> implements ObjectPropertyContainer<Property> {
+    public abstract static class AbstractObjectPropertyContainer<Property extends ObjectProperty> implements ObjectPropertyContainer<Property> {
+
         @Override
-        public @NotNull DyanasisTypeData objectTypeData() {
-            return AbstractDyanasisObject.this.typeData;
+        public @NotNull AbstractDyanasisTypeData objectTypeData() {
+            return owner().dyanasisTypeData();
         }
     }
 
-    public abstract class AbstractObjectFunctionContainer<Function extends ObjectFunction> implements ObjectFunctionContainer<Function> {
+    public abstract static class AbstractObjectFunctionContainer<Function extends ObjectFunction> implements ObjectFunctionContainer<Function> {
+
         @Override
-        public @NotNull DyanasisTypeData objectTypeData() {
-            return AbstractDyanasisObject.this.typeData;
+        public @NotNull AbstractDyanasisTypeData objectTypeData() {
+            return owner().dyanasisTypeData();
         }
     }
 
-    public abstract static class AbstractProperty<Anchored extends DyanasisObject> extends AbstractDyanasisProperty<Anchored> {
-        public AbstractProperty(@NamingContract.Invokable final @NotNull String name, @NotNull Anchored anchored) {
-            super(name, anchored);
+    public abstract static class AbstractObjectProperty extends AbstractDyanasisProperty implements ObjectProperty {
+        public AbstractObjectProperty(@NamingContract.Invokable final @NotNull String name) {
+            super(name);
         }
 
         @Override
         public abstract @NotNull DyanasisObject value();
+
+        @Override
+        public abstract @NotNull DyanasisObject owner();
     }
 
-    public abstract static class AbstractFunction<Anchored extends DyanasisObject> extends AbstractDyanasisFunction<Anchored> {
-        public AbstractFunction(@NotNull DyanasisFunctionKey key, @NotNull Anchored anchored) {
-            super(key, anchored);
+    public abstract static class AbstractObjectFunction extends AbstractDyanasisFunction implements ObjectFunction {
+        public AbstractObjectFunction(@NotNull DyanasisFunctionKey key) {
+            super(key);
         }
+
+        @Override
+        public abstract @NotNull DyanasisObject owner();
+    }
+
+    public abstract static class AbstractObjectDoc implements ObjectDoc {
+        protected @NotNull String value;
+
+        public AbstractObjectDoc(@NotNull String value) {
+            this.value = value;
+        }
+
+        @Override
+        public @NotNull String value() {
+            return value;
+        }
+
+        @Override
+        public abstract @NotNull DyanasisObject owner();
     }
 }
