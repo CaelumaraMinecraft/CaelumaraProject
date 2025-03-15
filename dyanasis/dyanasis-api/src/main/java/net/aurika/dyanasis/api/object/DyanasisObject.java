@@ -14,8 +14,8 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAn
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
-import net.aurika.dyanasis.api.typedata.DyanasisTypeData;
-import net.aurika.dyanasis.api.typedata.DyanasisTypeDataAware;
+import net.aurika.dyanasis.api.type.DyanasisType;
+import net.aurika.dyanasis.api.type.DyanasisTypeAware;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +25,7 @@ public interface DyanasisObject
         DyanasisPropertiesAware, DyanasisPropertyAnchor,
         DyanasisFunctionsAware, DyanasisFunctionAnchor,
         DyanasisDocAware, DyanasisDocAnchor,
-        DyanasisTypeDataAware {
+        DyanasisTypeAware {
 
     @Override
     @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties();
@@ -37,7 +37,7 @@ public interface DyanasisObject
     @Nullable ObjectDoc dyanasisDoc();
 
     @Override
-    @NotNull DyanasisTypeData<? extends DyanasisObject> dyanasisTypeData();
+    @NotNull DyanasisType<? extends DyanasisObject> dyanasisType();
 
     /**
      * 将这个 {@linkplain DyanasisObject} 与一个配置中的字符串相比较.

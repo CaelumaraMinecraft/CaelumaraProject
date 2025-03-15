@@ -5,6 +5,7 @@ import net.aurika.dyanasis.api.declaration.DyanasisDeclaration;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDoc;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAware;
+import net.aurika.dyanasis.api.declaration.doc.DyanasisDocEditable;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunction;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionsAware;
@@ -15,7 +16,9 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAn
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
+import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.validate.Validate;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,15 +27,13 @@ import java.util.Map;
 public interface DyanasisNamespace extends DyanasisDeclaration,
         DyanasisPropertiesAware, DyanasisPropertyAnchor,
         DyanasisFunctionsAware, DyanasisFunctionAnchor,
-        DyanasisDocAware, DyanasisDocAnchor,
+        DyanasisDocAware, DyanasisDocAnchor, DyanasisDocEditable<DyanasisNamespace.NamespaceDoc>,
         DyanasisRuntimeObject {
 
-    static @NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull StandardDyanasisNamespaceTree tree, @NotNull String @NotNull [] path) {
+    @Deprecated
+    static @NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull StandardDyanasisNamespaceTree tree, @NotNull DyanasisNamespacePath path) {
         Validate.Arg.notNull(tree, "tree");
-        @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace node = tree.findNamespace(path);
-        if (node == null) {
-            // TODO
-        }
+        return tree.foundOrCreate(path);
     }
 
     /**
@@ -73,21 +74,54 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     @NotNull Map<String, ? extends DyanasisNamespace> children();
 
     @Override
-    @NotNull NamespacePropertyContainer<? extends DyanasisProperty> dyanasisProperties();
+    @NotNull DyanasisPropertyContainer<? extends NamespaceProperty> dyanasisProperties();
 
     @Override
-    @NotNull NamespaceFunctionContainer<? extends DyanasisFunction> dyanasisFunctions();
+    @NotNull DyanasisFunctionContainer<? extends NamespaceFunction> dyanasisFunctions();
 
     @Override
     @Nullable NamespaceDoc dyanasisDoc();
 
     @Override
+    void dyanasisDoc(@Nullable NamespaceDoc doc);
+
+    /**
+     * Gets a {@linkplain DyanasisType} in the namespace by the type name.
+     *
+     * @param typename the type name
+     * @return the type, can be null
+     */
+    @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename);
+
+    boolean hasDyanasisType(@NotNull String typename);
+
+    /**
+     * Gets all dyanasis types in this namespace.
+     *
+     * @return the all types.
+     */
+    @NotNull Map<String, ? extends DyanasisType<?>> dyanasisTypes();
+
+    /**
+     * Adds a {@linkplain DyanasisType} to this namespace.
+     *
+     * @param type the dyanasis type
+     * @return the old type that has the same name
+     * @throws IllegalArgumentException when the namespace of {@code type} doesn't equals this namespace
+     */
+    @Nullable DyanasisType<?> addDyanasisType(@NotNull DyanasisType<?> type);
+
+    @Override
     @NotNull DyanasisRuntime dyanasisRuntime();
 
+    @ApiStatus.Experimental
     interface NamespacePropertyContainer<P extends NamespaceProperty> extends DyanasisPropertyContainer<P> {
+
     }
 
+    @ApiStatus.Experimental
     interface NamespaceFunctionContainer<F extends NamespaceFunction> extends DyanasisFunctionContainer<F> {
+
     }
 
     interface NamespaceProperty extends DyanasisProperty {

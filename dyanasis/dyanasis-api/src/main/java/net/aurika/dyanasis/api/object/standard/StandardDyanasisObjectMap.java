@@ -1,58 +1,71 @@
 package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.AbstractDyanasisFunction;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.api.declaration.invokable.property.AbstractDyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisGetableProperty;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
+import net.aurika.dyanasis.api.object.DefaultDyanasisObject;
+import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectMap;
-import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DyanasisType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Map<?, ?>, Lexer> implements DyanasisObjectMap {
 
-    protected static final AbstractDyanasisTypeData TYPE_DATA
+    public static final String TYPE_NAME = "Map";
 
-            protected final
+    public static final String PROPERTY_SIZE = "size";
 
-    public StandardDyanasisObjectMap(@NotNull Map<?, ?> value, @NotNull Lexer lexer) {
-        this(value, lexer,null, TYPE_DATA);
+    protected @NotNull StandardObjectMapPropertyContainer properties = new StandardObjectMapPropertyContainer();
+    protected @NotNull StandardObjectMapFunctionContainer functions = new StandardObjectMapFunctionContainer();
+
+    public StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer) {
+        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME,  () -> new StandardMapType(runtime, standardNS(runtime))));
     }
 
-    protected StandardDyanasisObjectMap(Map<?, ?> value, @NotNull Lexer lexer, @Nullable StandardObjectDoc doc, @NotNull AbstractDyanasisTypeData typeData) {
-        super(value, lexer, doc, typeData);
+    protected StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer, DefaultObjectDoc doc, @NotNull DyanasisType<? extends DefaultDyanasisObject<Map<?, ?>, Lexer>> typeData) {
+        super(runtime, value, lexer, doc, typeData);
     }
 
     @Override
     public @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties() {
-        //TODO
+        return properties;
     }
 
     @Override
     public @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions() {
-        //TODO
-    }
-
-    @Override
-    public @Nullable ObjectDoc dyanasisDoc() {
-        //TODO
+        return functions;
     }
 
     @Override
     public boolean equals(@NotNull String cfgStr) {
         //TODO lex and equals
+        return false;
+    }
+
+    public class StandardObjectMapPropertyContainer extends DefaultObjectPropertyContainer {
+        @Override
+        public @NotNull DyanasisObject owner() {
+            return StandardDyanasisObjectMap.this;
+        }
+    }
+
+    public class StandardObjectMapFunctionContainer extends DefaultObjectFunctionContainer {
+        @Override
+        public @NotNull DyanasisObject owner() {
+            return StandardDyanasisObjectMap.this;
+        }
     }
 
     public class Size extends AbstractMapProperty implements DyanasisGetableProperty {
-
         public Size() {
-            super("size");
+            super(PROPERTY_SIZE);
         }
 
         @Override
@@ -66,7 +79,7 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
         }
     }
 
-    public abstract class AbstractMapProperty extends AbstractDyanasisProperty {
+    public abstract class AbstractMapProperty extends DefaultObjectProperty {
         public AbstractMapProperty(@NamingContract.Invokable final @NotNull String name) {
             super(name);
         }
@@ -75,9 +88,14 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
         public @NotNull StandardDyanasisObjectMap<Lexer> owner() {
             return StandardDyanasisObjectMap.this;
         }
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return StandardDyanasisObjectMap.this.dyanasisRuntime();
+        }
     }
 
-    public abstract class AbstractMapFunction extends AbstractDyanasisFunction {
+    public abstract class AbstractMapFunction extends DefaultObjectFunction {
         public AbstractMapFunction(@NotNull DyanasisFunctionKey key) {
             super(key);
         }
@@ -88,6 +106,22 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
         @Override
         public @NotNull StandardDyanasisObjectMap<Lexer> owner() {
             return StandardDyanasisObjectMap.this;
+        }
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return StandardDyanasisObjectMap.this.dyanasisRuntime();
+        }
+    }
+
+    public static class StandardMapType extends DefaultObjectType<StandardDyanasisObjectMap<?>> {
+
+        public StandardMapType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
+            super(runtime, namespace, StandardDyanasisObjectMap.TYPE_NAME);
+        }
+
+        protected void addProperties() {
+            properties.put(PROPERTY_SIZE, (mapObject) -> mapObject.new Size());
         }
     }
 }

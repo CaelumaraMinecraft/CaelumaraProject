@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.typedata;
+package net.aurika.dyanasis.api.type;
 
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import org.jetbrains.annotations.NotNull;

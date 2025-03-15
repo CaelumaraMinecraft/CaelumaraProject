@@ -1,11 +1,10 @@
 package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.object.AbstractDyanasisObject;
-import net.aurika.dyanasis.api.object.DyanasisObject;
+import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import org.jetbrains.annotations.NotNull;
 
-public class StandardDyanasisObjectNumber<Lexer extends DyanasisLexer> extends AbstractDyanasisObject<Number, Lexer> implements DyanasisObject {
+public class StandardDyanasisObjectNumber<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Number, Lexer> implements DyanasisObjectNumber {
 
     public StandardDyanasisObjectNumber(@NotNull Number value, @NotNull Lexer lexer) {
         super(value, lexer);

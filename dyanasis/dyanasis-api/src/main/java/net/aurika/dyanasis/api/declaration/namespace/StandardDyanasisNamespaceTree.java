@@ -2,9 +2,11 @@ package net.aurika.dyanasis.api.declaration.namespace;
 
 import net.aurika.dyanasis.api.Named;
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunction;
+import net.aurika.dyanasis.api.declaration.invokable.function.container.SimpleDyanasisFunctionRegistry;
+import net.aurika.dyanasis.api.declaration.invokable.property.container.SimpleDyanasisPropertyRegistry;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
+import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -84,14 +86,43 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         return ns;
     }
 
+    @SuppressWarnings("PatternValidation")
     @Override
-    public @NotNull DyanasisNamespace foundOrCreate(@NotNull DyanasisNamespacePath path) {
+    public @NotNull StandardDyanasisNamespace foundOrCreate(@NotNull DyanasisNamespacePath path) {
         Validate.Arg.notNull(path, "path");
         int length = path.length();
         if (length == 0) {
             throw new IllegalArgumentException("DyanasisNamespace path must not be empty");
         }
+        String rootName = path.sectionAt(0);
+        @Nullable StandardDyanasisNamespace foundRoot = roots.get(rootName);
+        if (foundRoot == null) {
+            foundRoot = new StandardDyanasisNamespace(rootName);
+            roots.put(rootName, foundRoot);
+        }
+        if (length == 1) {
+            return foundRoot;
+        } else {  // length > 1
+            return foundOrCreate$$core(foundRoot, path, 1);
+        }
+    }
 
+    @SuppressWarnings("PatternValidation")   // TODO validate
+    protected final @NotNull StandardDyanasisNamespace foundOrCreate$$core(@NotNull StandardDyanasisNamespace ns, @NotNull DyanasisNamespacePath path, int index) {
+        Validate.Arg.notNull(ns, "ns");
+        Validate.Arg.notNull(path, "path");
+        int length = path.length();
+        String section = path.sectionAt(index);
+        if (index < length) {
+            @Nullable StandardDyanasisNamespace subNS = ns.getChild(section);
+            if (subNS == null) {
+                subNS = new StandardDyanasisNamespace(section, ns);
+                ns.addChild(subNS);
+            }
+            return foundOrCreate$$core(subNS, path, index + 1);
+        } else {
+            return ns;
+        }
     }
 
     @Override
@@ -106,8 +137,17 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         protected @NotNull Map<String, StandardDyanasisNamespace> children;
         protected boolean available = true;
 
+        protected @NotNull SimpleDyanasisPropertyRegistry<NamespaceProperty> properties = new SimpleDyanasisPropertyRegistry<>();
+        protected @NotNull SimpleDyanasisFunctionRegistry<NamespaceFunction> functions = new SimpleDyanasisFunctionRegistry<>();
+        protected @Nullable NamespaceDoc doc;
+        protected @NotNull Map<String, DyanasisType<?>> types = new HashMap<>();
+
         protected StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name) {
             this(name, null, new LinkedHashMap<>());
+        }
+
+        protected StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name, @Nullable StandardDyanasisNamespace parent) {
+            this(name, parent, new LinkedHashMap<>());
         }
 
         public StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name,
@@ -264,26 +304,70 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         }
 
         @Override
-        public @NotNull NamespacePropertyContainer<? extends NamespaceProperty> dyanasisProperties() {
+        public @NotNull SimpleDyanasisPropertyRegistry<? extends NamespaceProperty> dyanasisProperties() {
             checkAvailable();
-            // TODO
+            return properties;
         }
 
         @Override
-        public @NotNull NamespaceFunctionContainer<? extends DyanasisFunction> dyanasisFunctions() {
+        public @NotNull SimpleDyanasisFunctionRegistry<? extends NamespaceFunction> dyanasisFunctions() {
             checkAvailable();
-            // TODO
+            return functions;
         }
 
         @Override
         public @Nullable NamespaceDoc dyanasisDoc() {
             checkAvailable();
-            // TODO
+            return doc;
+        }
+
+        @Override
+        public void dyanasisDoc(@Nullable NamespaceDoc doc) {
+            checkAvailable();
+            this.doc = doc;
+        }
+
+        @Override
+        public @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename) {
+            Validate.Arg.notNull(typename, "typename");
+            checkAvailable();
+            return types.get(typename);
+        }
+
+        @Override
+        public boolean hasDyanasisType(@NotNull String typename) {
+            Validate.Arg.notNull(typename, "typename");
+            checkAvailable();
+            return types.containsKey(typename);
+        }
+
+        @Override
+        public @Unmodifiable @NotNull Map<String, ? extends DyanasisType<?>> dyanasisTypes() {
+            checkAvailable();
+            return Collections.unmodifiableMap(types);
+        }
+
+        @Override
+        public @Nullable DyanasisType<?> addDyanasisType(@NotNull DyanasisType<?> type) {
+            Validate.Arg.notNull(type, "type");
+            checkAvailable();
+            String typename = type.name();
+            DyanasisNamespace namespace = type.dyanasisNamespace();
+            if (!Objects.equals(namespace, this)) {
+                throw new IllegalArgumentException("The namespace of type: " + type + " doesn't equals the added namespace " + this);
+            }
+            return types.put(typename, type);
         }
 
         @Override
         public @NotNull DyanasisRuntime dyanasisRuntime() {
+            checkAvailable();
             return StandardDyanasisNamespaceTree.this.runtime;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + Arrays.toString(path().path());
         }
     }
 }

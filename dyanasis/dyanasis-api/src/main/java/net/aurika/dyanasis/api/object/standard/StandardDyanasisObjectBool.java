@@ -2,28 +2,31 @@ package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceContainer;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
+import net.aurika.dyanasis.api.object.DefaultDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectBool;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
-import net.aurika.validate.Validate;
+import net.aurika.dyanasis.api.type.DyanasisType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Boolean, Lexer> implements DyanasisObjectBool {
 
-    public static <Lexer extends DyanasisLexer> StandardTypeData<StandardDyanasisObjectBool<Lexer>> typeData(@NotNull DyanasisRuntime runtime) {
-        Validate.Arg.notNull(runtime, "runtime");
-        DyanasisNamespaceContainer namespaces = runtime.environment().namespaces();
-    }
+    public static final String TYPE_NAME = "Bool";
 
     protected final StandardObjectBoolPropertyContainer properties = new StandardObjectBoolPropertyContainer();
     protected final StandardObjectBoolFunctionContainer functions = new StandardObjectBoolFunctionContainer();
 
     public StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer) {
-        super(runtime, value, lexer, null, typeData(runtime));
+        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardObjectBoolType(runtime, standardNS(runtime))));
+    }
+
+    protected StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<? extends StandardDyanasisObjectBool<Lexer>> type) {
+        super(runtime, value, lexer, doc, type);
     }
 
     @Override
@@ -45,7 +48,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         };
     }
 
-    public class StandardObjectBoolPropertyContainer extends StandardObjectPropertyContainer {
+    public class StandardObjectBoolPropertyContainer extends DefaultObjectPropertyContainer {
         public StandardObjectBoolPropertyContainer() {
             super();
         }
@@ -56,7 +59,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         }
     }
 
-    public class StandardObjectBoolFunctionContainer extends StandardObjectFunctionContainer {
+    public class StandardObjectBoolFunctionContainer extends DefaultObjectFunctionContainer {
         public StandardObjectBoolFunctionContainer() {
             super();
         }
@@ -67,7 +70,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         }
     }
 
-    public abstract class StandardObjectBoolProperty extends StandardObjectProperty {
+    public abstract class StandardObjectBoolProperty extends DefaultObjectProperty {
         public StandardObjectBoolProperty(@NamingContract.Invokable final @NotNull String name) {
             super(name);
         }
@@ -81,7 +84,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         }
     }
 
-    public abstract class StandardObjectBoolFunction extends StandardObjectFunction {
+    public abstract class StandardObjectBoolFunction extends DefaultObjectFunction {
         public StandardObjectBoolFunction(@NotNull DyanasisFunctionKey key) {
             super(key);
         }
@@ -92,6 +95,20 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         @Override
         public @NotNull StandardDyanasisObjectBool<Lexer> owner() {
             return StandardDyanasisObjectBool.this;
+        }
+    }
+
+    public static class StandardObjectBoolType extends DefaultObjectType<StandardDyanasisObjectBool<?>> {
+        public StandardObjectBoolType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
+            super(runtime, namespace, StandardDyanasisObjectBool.TYPE_NAME);
+            addProperties();
+            addFunctions();
+        }
+
+        protected void addProperties() {
+        }
+
+        protected void addFunctions() {
         }
     }
 }

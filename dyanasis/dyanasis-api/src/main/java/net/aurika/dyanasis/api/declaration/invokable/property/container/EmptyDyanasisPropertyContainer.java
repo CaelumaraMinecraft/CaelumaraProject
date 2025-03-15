@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.Collections;
 import java.util.Map;
 
-public final class EmptyDyanasisPropertyContainer implements DyanasisPropertyContainer {
-    public static final EmptyDyanasisPropertyContainer INSTANCE = new EmptyDyanasisPropertyContainer();
+public final class EmptyDyanasisPropertyContainer<P extends DyanasisProperty> implements DyanasisPropertyContainer<P> {
+    public static final EmptyDyanasisPropertyContainer<?> INSTANCE = new EmptyDyanasisPropertyContainer<>();
 
     private EmptyDyanasisPropertyContainer() {
     }
@@ -20,12 +20,12 @@ public final class EmptyDyanasisPropertyContainer implements DyanasisPropertyCon
     }
 
     @Override
-    public @Nullable DyanasisProperty getProperty(@NotNull String name) {
+    public @Nullable P getProperty(@NotNull String name) {
         return null;
     }
 
     @Override
-    public @Unmodifiable @NotNull Map<String, DyanasisProperty> allProperties() {
+    public @Unmodifiable @NotNull Map<String, ? extends P> allProperties() {
         return Collections.emptyMap();
     }
 }

@@ -1,23 +1,24 @@
 package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.AbstractDyanasisFunction;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.api.declaration.invokable.property.AbstractDyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisGetableProperty;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.object.AbstractDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
+import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
-import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
+import net.aurika.dyanasis.api.type.AbstractDyanasisType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends AbstractDyanasisObject<String, Lexer> implements DyanasisObjectString {
+public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends StandardDyanasisObject<String, Lexer> implements DyanasisObjectString {
 
-    protected StandardDyanasisObjectString(@NotNull String value, @NotNull Lexer lexer, @NotNull AbstractDyanasisTypeData typeData) {
+    public static final String TYPE_NAME = "String";
+
+    public static final String PROPERTY_LENGTH = "length";
+
+    protected StandardDyanasisObjectString(@NotNull String value, @NotNull Lexer lexer, @NotNull AbstractDyanasisType typeData) {
         super(value, lexer, typeData);
     }
 
@@ -29,12 +30,6 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends A
     @Override
     public @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions() {
         //TODO
-
-    }
-
-    @Override
-    public @Nullable ObjectDoc dyanasisDoc() {
-        // TODO
     }
 
     @Override
@@ -59,8 +54,8 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends A
         }
 
         @Override
-        public @NotNull DyanasisObject value() {
-            // TODO
+        public @NotNull DyanasisObjectNumber value() {
+            return new StandardDyanasisObjectNumber<>(value.length(), lexer);
         }
     }
 
@@ -88,18 +83,28 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends A
         }
     }
 
-    public abstract class AbstractStringProperty extends AbstractDyanasisProperty<StandardDyanasisObjectString<Lexer>> {
+    public abstract class AbstractStringProperty extends DefaultObjectProperty {
         public AbstractStringProperty(@NamingContract.Invokable final @NotNull String name) {
-            super(name, StandardDyanasisObjectString.this);
+            super(name);
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObject<String, Lexer> owner() {
+            return StandardDyanasisObjectString.this;
         }
     }
 
-    public abstract class AbstractStringFunction extends AbstractDyanasisFunction<StandardDyanasisObjectString<Lexer>> {
+    public abstract class AbstractStringFunction extends DefaultObjectFunction {
         public AbstractStringFunction(@NotNull DyanasisFunctionKey key) {
-            super(key, StandardDyanasisObjectString.this);
+            super(key);
         }
 
         @Override
         public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+
+        @Override
+        public @NotNull StandardDyanasisObject<String, Lexer> owner() {
+            return StandardDyanasisObjectString.this;
+        }
     }
 }

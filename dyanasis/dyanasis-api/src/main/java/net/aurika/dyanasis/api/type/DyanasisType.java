@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.typedata;
+package net.aurika.dyanasis.api.type;
 
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaced;
@@ -7,7 +7,7 @@ import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import org.jetbrains.annotations.NotNull;
 
-public interface DyanasisTypeData<O extends DyanasisObject> extends DyanasisTypeDataAware, DyanasisNamespaced, DyanasisRuntimeObject {
+public interface DyanasisType<O extends DyanasisObject> extends DyanasisTypeAware, DyanasisNamespaced, DyanasisRuntimeObject {
     @NotNull String fullName();
 
     @NotNull String fullName(@NotNull String delimiter);
@@ -25,7 +25,7 @@ public interface DyanasisTypeData<O extends DyanasisObject> extends DyanasisType
     @NotNull DyanasisRuntime dyanasisRuntime();
 
     @Override
-    default @NotNull DyanasisTypeData<?> dyanasisTypeData() {
+    default @NotNull DyanasisType<? extends O> dyanasisType() {
         return this;
     }
 }

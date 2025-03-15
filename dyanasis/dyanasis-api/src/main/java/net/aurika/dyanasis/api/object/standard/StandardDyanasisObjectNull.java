@@ -8,16 +8,14 @@ import java.util.Objects;
 
 public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Void, Lexer> implements DyanasisObjectNull {
 
-    protected static final StandardTypeData<StandardDyanasisObjectNull<?>> TYPE = new StandardTypeData<>();
-
-    protected final StandardObjectPropertyContainer properties = new StandardObjectPropertyContainer() {
+    protected final DefaultObjectPropertyContainer properties = new DefaultObjectPropertyContainer() {
         @Override
         public @NotNull StandardDyanasisObjectNull<Lexer> owner() {
             return StandardDyanasisObjectNull.this;
         }
     };
 
-    protected final StandardObjectFunctionContainer functions = new StandardObjectFunctionContainer() {
+    protected final DefaultObjectFunctionContainer functions = new DefaultObjectFunctionContainer() {
         @Override
         public @NotNull StandardDyanasisObjectNull<Lexer> owner() {
             return StandardDyanasisObjectNull.this;

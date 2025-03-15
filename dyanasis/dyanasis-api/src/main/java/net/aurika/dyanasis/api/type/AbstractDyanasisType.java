@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.typedata;
+package net.aurika.dyanasis.api.type;
 
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.object.DyanasisObject;
@@ -6,19 +6,20 @@ import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractDyanasisTypeData<O extends DyanasisObject> implements DyanasisTypeData<O> {
+public abstract class AbstractDyanasisType<O extends DyanasisObject> implements DyanasisType<O> {
 
     private final @NotNull DyanasisRuntime runtime;
     private final @NotNull DyanasisNamespace namespace;
     private final @NotNull String name;
 
-    public AbstractDyanasisTypeData(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace, @NotNull String name) {
+    public AbstractDyanasisType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace, @NotNull String name) {
         Validate.Arg.notNull(runtime, "runtime");
         Validate.Arg.notNull(namespace, "namespace");
         Validate.Arg.notNull(name, "name");
         this.runtime = runtime;
         this.namespace = namespace;
         this.name = name;
+        namespace.addDyanasisType(this);
     }
 
     /**
@@ -34,7 +35,7 @@ public abstract class AbstractDyanasisTypeData<O extends DyanasisObject> impleme
     @Override
     public @NotNull String fullName(@NotNull String delimiter) {
         Validate.Arg.notNull(delimiter, "delimiter");
-        return String.join(delimiter, namespace.path()) + delimiter + name;
+        return String.join(delimiter, namespace.path().path()) + delimiter + name;
     }
 
     @Override
