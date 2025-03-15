@@ -12,14 +12,16 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperties
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
-import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
+import net.aurika.dyanasis.api.typedata.DyanasisTypeData;
 import net.aurika.dyanasis.api.typedata.DyanasisTypeDataAware;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface DyanasisObject
-        extends
+        extends DyanasisRuntimeObject,
         DyanasisPropertiesAware, DyanasisPropertyAnchor,
         DyanasisFunctionsAware, DyanasisFunctionAnchor,
         DyanasisDocAware, DyanasisDocAnchor,
@@ -35,7 +37,7 @@ public interface DyanasisObject
     @Nullable ObjectDoc dyanasisDoc();
 
     @Override
-    @NotNull AbstractDyanasisTypeData dyanasisTypeData();
+    @NotNull DyanasisTypeData<? extends DyanasisObject> dyanasisTypeData();
 
     /**
      * 将这个 {@linkplain DyanasisObject} 与一个配置中的字符串相比较.
@@ -52,8 +54,10 @@ public interface DyanasisObject
      */
     @NotNull Object valueAsJava();
 
+    @Override
+    @NotNull DyanasisRuntime dyanasisRuntime();
+
     interface ObjectPropertyContainer<P extends ObjectProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
-        @NotNull AbstractDyanasisTypeData objectTypeData();
 
         @Override
         @ApiStatus.Experimental
@@ -61,7 +65,6 @@ public interface DyanasisObject
     }
 
     interface ObjectFunctionContainer<F extends ObjectFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
-        @NotNull AbstractDyanasisTypeData objectTypeData();
 
         @Override
         @ApiStatus.Experimental

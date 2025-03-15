@@ -13,6 +13,8 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperties
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +24,8 @@ import java.util.Map;
 public interface DyanasisNamespace extends DyanasisDeclaration,
         DyanasisPropertiesAware, DyanasisPropertyAnchor,
         DyanasisFunctionsAware, DyanasisFunctionAnchor,
-        DyanasisDocAware, DyanasisDocAnchor {
+        DyanasisDocAware, DyanasisDocAnchor,
+        DyanasisRuntimeObject {
 
     static @NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull StandardDyanasisNamespaceTree tree, @NotNull String @NotNull [] path) {
         Validate.Arg.notNull(tree, "tree");
@@ -78,10 +81,13 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     @Override
     @Nullable NamespaceDoc dyanasisDoc();
 
-    interface NamespacePropertyContainer<Property extends NamespaceProperty> extends DyanasisPropertyContainer<Property> {
+    @Override
+    @NotNull DyanasisRuntime dyanasisRuntime();
+
+    interface NamespacePropertyContainer<P extends NamespaceProperty> extends DyanasisPropertyContainer<P> {
     }
 
-    interface NamespaceFunctionContainer<Function extends NamespaceFunction> extends DyanasisFunctionContainer<Function> {
+    interface NamespaceFunctionContainer<F extends NamespaceFunction> extends DyanasisFunctionContainer<F> {
     }
 
     interface NamespaceProperty extends DyanasisProperty {

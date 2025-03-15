@@ -14,6 +14,11 @@ import java.util.Collection;
 public interface DyanasisRuntimeEnvironment {
     @NotNull Collection<DyanasisFile> files();
 
+    /**
+     * Gets the current namespace container on this runtime.
+     *
+     * @return the namespace container
+     */
     @NotNull DyanasisNamespaceContainer namespaces();
 
     default @NotNull Collection<DyanasisProperty> allProperties() {

@@ -1,32 +1,46 @@
 package net.aurika.dyanasis.api.object.standard;
 
-import net.aurika.dyanasis.api.declaration.invokable.function.container.DyanasisFunctionContainer;
-import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
-import net.aurika.dyanasis.api.lexer.DyanasisLexerSettings;
-import net.aurika.dyanasis.api.object.AbstractDyanasisObject;
+import net.aurika.dyanasis.api.lexer.DyanasisLexer;
 import net.aurika.dyanasis.api.object.DyanasisObjectNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class StandardDyanasisObjectNull extends AbstractDyanasisObject<Void> implements DyanasisObjectNull {
-    public StandardDyanasisObjectNull(@NotNull DyanasisLexerSettings settings) {
-        super(null, settings);
+public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Void, Lexer> implements DyanasisObjectNull {
+
+    protected static final StandardTypeData<StandardDyanasisObjectNull<?>> TYPE = new StandardTypeData<>();
+
+    protected final StandardObjectPropertyContainer properties = new StandardObjectPropertyContainer() {
+        @Override
+        public @NotNull StandardDyanasisObjectNull<Lexer> owner() {
+            return StandardDyanasisObjectNull.this;
+        }
+    };
+
+    protected final StandardObjectFunctionContainer functions = new StandardObjectFunctionContainer() {
+        @Override
+        public @NotNull StandardDyanasisObjectNull<Lexer> owner() {
+            return StandardDyanasisObjectNull.this;
+        }
+    };
+
+    public StandardDyanasisObjectNull(@NotNull Lexer lexer) {
+        super(null, lexer, TYPE);
     }
 
     @Override
-    public @NotNull DyanasisPropertyContainer dyanasisProperties() {
-        return DyanasisPropertyContainer.empty();
+    public @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties() {
+        return properties;
     }
 
     @Override
-    public @NotNull DyanasisFunctionContainer dyanasisFunctions() {
-        return DyanasisFunctionContainer.empty();
+    public @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions() {
+        return functions;
     }
 
     @Override
     public boolean equals(@NotNull String cfgStr) {
-        return Objects.equals(cfgStr, lexer().idents().nil());
+        return Objects.equals(cfgStr, lexer().settings().idents().nil());
     }
 
     @Override

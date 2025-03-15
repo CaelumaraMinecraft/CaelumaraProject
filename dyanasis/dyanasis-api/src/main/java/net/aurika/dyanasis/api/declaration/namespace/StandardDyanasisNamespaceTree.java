@@ -2,8 +2,9 @@ package net.aurika.dyanasis.api.declaration.namespace;
 
 import net.aurika.dyanasis.api.Named;
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.container.DyanasisFunctionContainer;
-import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunction;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -16,9 +17,21 @@ import java.util.function.Consumer;
 /**
  * The standard dyanasis namespace implementation.
  */
-public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer {
+public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer, DyanasisRuntimeObject {
 
-    private final @NotNull Map<String, StandardDyanasisNamespace> roots = new LinkedHashMap<>();
+    private final @NotNull DyanasisRuntime runtime;
+    private final @NotNull Map<String, StandardDyanasisNamespace> roots;
+
+    public StandardDyanasisNamespaceTree(@NotNull DyanasisRuntime runtime) {
+        this(runtime, new LinkedHashMap<>());
+    }
+
+    public StandardDyanasisNamespaceTree(@NotNull DyanasisRuntime runtime, @NotNull Map<String, StandardDyanasisNamespace> roots) {
+        Validate.Arg.notNull(runtime, "runtime");
+        Validate.Arg.notNull(roots, "roots");
+        this.runtime = runtime;
+        this.roots = roots;
+    }
 
     @Unmodifiable
     public @NotNull Map<String, DyanasisNamespace> roots() {
@@ -68,6 +81,11 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
             }
         }
         return ns;
+    }
+
+    @Override
+    public @NotNull DyanasisRuntime dyanasisRuntime() {
+        return runtime;
     }
 
     public class StandardDyanasisNamespace implements DyanasisNamespace, Named {
@@ -235,18 +253,26 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         }
 
         @Override
-        public @NotNull DyanasisPropertyContainer<? extends NamespaceProperty> dyanasisProperties() {
+        public @NotNull NamespacePropertyContainer<? extends NamespaceProperty> dyanasisProperties() {
             checkAvailable();
+            // TODO
         }
 
         @Override
-        public @NotNull DyanasisFunctionContainer<? extends NamespaceFunction> dyanasisFunctions() {
+        public @NotNull NamespaceFunctionContainer<? extends DyanasisFunction> dyanasisFunctions() {
             checkAvailable();
+            // TODO
         }
 
         @Override
         public @Nullable NamespaceDoc dyanasisDoc() {
             checkAvailable();
+            // TODO
+        }
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return StandardDyanasisNamespaceTree.this.runtime;
         }
     }
 }

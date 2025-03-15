@@ -2,24 +2,28 @@ package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
-import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceContainer;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectBool;
-import net.aurika.dyanasis.api.typedata.AbstractDyanasisTypeData;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Boolean, Lexer> implements DyanasisObjectBool {
 
-    protected static final AbstractDyanasisTypeData TYPE_DATA = new AbstractDyanasisTypeData()
+    public static <Lexer extends DyanasisLexer> StandardTypeData<StandardDyanasisObjectBool<Lexer>> typeData(@NotNull DyanasisRuntime runtime) {
+        Validate.Arg.notNull(runtime, "runtime");
+        DyanasisNamespaceContainer namespaces = runtime.environment().namespaces();
+    }
 
     protected final StandardObjectBoolPropertyContainer properties = new StandardObjectBoolPropertyContainer();
     protected final StandardObjectBoolFunctionContainer functions = new StandardObjectBoolFunctionContainer();
 
-    public StandardDyanasisObjectBool(boolean value, Lexer lexer) {
-        super(value, lexer, null, TYPE_DATA);
+    public StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer) {
+        super(runtime, value, lexer, null, typeData(runtime));
     }
 
     @Override
