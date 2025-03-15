@@ -24,20 +24,18 @@ import java.util.function.Function;
 /**
  * {@linkplain DyanasisObject} 的默认实现. 自定义的类可以继承此类.
  */
-public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> extends AbstractDyanasisObject<T, Lexer, DefaultDyanasisObject.DefaultObjectDoc> implements DyanasisObject {
+public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> extends AbstractDyanasisObject<T, Lexer, DefaultDyanasisObject.DefaultObjectDoc> {
 
-    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @NotNull DyanasisType<? extends DefaultDyanasisObject<T, Lexer>> typeData) {
-        this(runtime, value, lexer, null, typeData);
+    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @NotNull DyanasisType<?> type) {
+        this(runtime, value, lexer, null, type);
     }
 
-    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<? extends DefaultDyanasisObject<T, Lexer>> typeData) {
-        super(runtime, value, lexer, doc, typeData);
+    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<?> type) {
+        super(runtime, value, lexer, doc, type);
     }
 
     @Override
-    public boolean equals(@NotNull String cfgStr) {
-        return false;
-    }
+    public abstract boolean equals(@NotNull String cfgStr);
 
     public static abstract class DefaultObjectPropertyContainer implements AbstractObjectPropertyContainer<DefaultObjectProperty> {
 
@@ -175,6 +173,20 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> exte
             super(runtime, namespace, name);
             this.properties = properties;
             this.functions = functions;
+            addProperties();
+            addFunctions();
+        }
+
+        /**
+         * Adds property handlers on creating this object.
+         */
+        protected void addProperties() {
+        }
+
+        /**
+         * Adds function handlers on creating this object.
+         */
+        protected void addFunctions() {
         }
 
         @Override

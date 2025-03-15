@@ -1,29 +1,29 @@
 package net.aurika.dyanasis.api.object.standard;
 
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
+import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectNull;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DyanasisType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends StandardDyanasisObject<Void, Lexer> implements DyanasisObjectNull {
 
-    protected final DefaultObjectPropertyContainer properties = new DefaultObjectPropertyContainer() {
-        @Override
-        public @NotNull StandardDyanasisObjectNull<Lexer> owner() {
-            return StandardDyanasisObjectNull.this;
-        }
-    };
+    public static final String TYPE_NAME = "Null";
 
-    protected final DefaultObjectFunctionContainer functions = new DefaultObjectFunctionContainer() {
-        @Override
-        public @NotNull StandardDyanasisObjectNull<Lexer> owner() {
-            return StandardDyanasisObjectNull.this;
-        }
-    };
+    protected final StandardObjectNullPropertyContainer properties = new StandardObjectNullPropertyContainer();
+    protected final StandardObjectNullFunctionContainer functions = new StandardObjectNullFunctionContainer();
 
-    public StandardDyanasisObjectNull(@NotNull Lexer lexer) {
-        super(null, lexer, TYPE);
+    public StandardDyanasisObjectNull(@NotNull DyanasisRuntime runtime, @NotNull Lexer lexer) {
+        this(runtime, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardNullType(runtime, standardNS(runtime))));
+    }
+
+    protected StandardDyanasisObjectNull(@NotNull DyanasisRuntime runtime, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc, @NotNull DyanasisType<? extends DyanasisObject> type) {
+        super(runtime, null, lexer, doc, type);
     }
 
     @Override
@@ -39,6 +39,26 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends Sta
     @Override
     public boolean equals(@NotNull String cfgStr) {
         return Objects.equals(cfgStr, lexer().settings().idents().nil());
+    }
+
+    public class StandardObjectNullPropertyContainer extends DefaultObjectPropertyContainer {
+        @Override
+        public @NotNull DyanasisObject owner() {
+            return StandardDyanasisObjectNull.this;
+        }
+    }
+
+    public class StandardObjectNullFunctionContainer extends DefaultObjectFunctionContainer {
+        @Override
+        public @NotNull DyanasisObject owner() {
+            return StandardDyanasisObjectNull.this;
+        }
+    }
+
+    public static class StandardNullType extends DefaultObjectType<StandardDyanasisObjectNull<?>> {
+        public StandardNullType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
+            super(runtime, namespace, StandardDyanasisObjectNull.TYPE_NAME);
+        }
     }
 
     @Override

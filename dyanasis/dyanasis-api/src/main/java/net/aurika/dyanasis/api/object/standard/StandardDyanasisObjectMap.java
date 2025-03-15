@@ -26,11 +26,11 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
     protected @NotNull StandardObjectMapFunctionContainer functions = new StandardObjectMapFunctionContainer();
 
     public StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer) {
-        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME,  () -> new StandardMapType(runtime, standardNS(runtime))));
+        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardMapType(runtime, standardNS(runtime))));
     }
 
-    protected StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer, DefaultObjectDoc doc, @NotNull DyanasisType<? extends DefaultDyanasisObject<Map<?, ?>, Lexer>> typeData) {
-        super(runtime, value, lexer, doc, typeData);
+    protected StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer, DefaultObjectDoc doc, @NotNull DyanasisType<? extends DefaultDyanasisObject<Map<?, ?>, Lexer>> type) {
+        super(runtime, value, lexer, doc, type);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
 
         @Override
         public @NotNull StandardDyanasisObjectNumber<? extends Lexer> value() {
-            return new StandardDyanasisObjectNumber<>(value.size(), lexer);
+            return new StandardDyanasisObjectNumber<>(runtime, value.size(), lexer);
         }
 
         @Override

@@ -3,14 +3,16 @@ package net.aurika.dyanasis.api.object.standard;
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisGetableProperty;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
-import net.aurika.dyanasis.api.type.AbstractDyanasisType;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DyanasisType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends StandardDyanasisObject<String, Lexer> implements DyanasisObjectString {
 
@@ -18,23 +20,44 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
 
     public static final String PROPERTY_LENGTH = "length";
 
-    protected StandardDyanasisObjectString(@NotNull String value, @NotNull Lexer lexer, @NotNull AbstractDyanasisType typeData) {
-        super(value, lexer, typeData);
+    protected @NotNull StandardObjectStringPropertyContainer properties = new StandardObjectStringPropertyContainer();
+    protected @NotNull StandardObjectStringFunctionContainer functions = new StandardObjectStringFunctionContainer();
+
+    public StandardDyanasisObjectString(@NotNull DyanasisRuntime runtime, String value, @NotNull Lexer lexer) {
+        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardStringType(runtime, standardNS(runtime))));
+    }
+
+    protected StandardDyanasisObjectString(@NotNull DyanasisRuntime runtime, String value, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc, @NotNull DyanasisType<?> type) {
+        super(runtime, value, lexer, doc, type);
     }
 
     @Override
     public @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties() {
-        //TODO
+        return properties;
     }
 
     @Override
     public @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions() {
-        //TODO
+        return functions;
     }
 
     @Override
     public boolean equals(@NotNull String cfgStr) {
         return value.equals(cfgStr);
+    }
+
+    public class StandardObjectStringPropertyContainer extends DefaultObjectPropertyContainer {
+        @Override
+        public @NotNull StandardDyanasisObject<String, Lexer> owner() {
+            return StandardDyanasisObjectString.this;
+        }
+    }
+
+    public class StandardObjectStringFunctionContainer extends DefaultObjectFunctionContainer {
+        @Override
+        public @NotNull StandardDyanasisObject<String, Lexer> owner() {
+            return StandardDyanasisObjectString.this;
+        }
     }
 
     public class Length extends AbstractStringProperty implements DyanasisGetableProperty {
@@ -43,8 +66,8 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
         }
 
         @Override
-        public @NotNull DyanasisObject getPropertyValue() {
-            return new StandardDyanasisObjectNumber<>(value.length(), lexer);
+        public @NotNull DyanasisObjectNumber getPropertyValue() {
+            return value();
         }
 
         @Override
@@ -55,7 +78,7 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
 
         @Override
         public @NotNull DyanasisObjectNumber value() {
-            return new StandardDyanasisObjectNumber<>(value.length(), lexer);
+            return new StandardDyanasisObjectNumber<>(runtime, value.length(), lexer);
         }
     }
 
@@ -105,6 +128,12 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
         @Override
         public @NotNull StandardDyanasisObject<String, Lexer> owner() {
             return StandardDyanasisObjectString.this;
+        }
+    }
+
+    public static class StandardStringType extends DefaultObjectType<StandardDyanasisObjectString<?>> {
+        public StandardStringType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
+            super(runtime, namespace, StandardDyanasisObjectString.TYPE_NAME);
         }
     }
 }

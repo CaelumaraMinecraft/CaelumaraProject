@@ -26,11 +26,11 @@ public abstract class StandardDyanasisObject<T, Lexer extends DyanasisLexer> ext
         return type(runtime, STD_NS_PATH, typename, whenCreate);
     }
 
-    protected StandardDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @NotNull DyanasisType<? extends DefaultDyanasisObject<T, Lexer>> typeData) {
-        super(runtime, value, lexer, typeData);
+    protected StandardDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @NotNull DyanasisType<?> type) {
+        super(runtime, value, lexer, type);
     }
 
-    protected StandardDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<? extends DefaultDyanasisObject<T, Lexer>> typeData) {
-        super(runtime, value, lexer, doc, typeData);
+    protected StandardDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<?> type) {
+        super(runtime, value, lexer, doc, type);
     }
 }

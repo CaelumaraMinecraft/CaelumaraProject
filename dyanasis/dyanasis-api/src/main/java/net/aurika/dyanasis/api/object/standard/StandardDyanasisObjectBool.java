@@ -101,14 +101,6 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
     public static class StandardObjectBoolType extends DefaultObjectType<StandardDyanasisObjectBool<?>> {
         public StandardObjectBoolType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
             super(runtime, namespace, StandardDyanasisObjectBool.TYPE_NAME);
-            addProperties();
-            addFunctions();
-        }
-
-        protected void addProperties() {
-        }
-
-        protected void addFunctions() {
         }
     }
 }
