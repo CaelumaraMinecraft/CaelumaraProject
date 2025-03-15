@@ -1,6 +1,5 @@
 package net.aurika.dyanasis.api.declaration.invokable.function;
 
-import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import org.jetbrains.annotations.NotNull;
@@ -15,13 +14,6 @@ public abstract class AbstractDyanasisFunction implements DyanasisFunction {
 
     @Override
     public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
-
-    @SuppressWarnings("PatternValidation")
-    @Override
-    @NamingContract.Invokable
-    public @NotNull String name() {
-        return key.name();
-    }
 
     @Override
     public @NotNull DyanasisFunctionKey key() {

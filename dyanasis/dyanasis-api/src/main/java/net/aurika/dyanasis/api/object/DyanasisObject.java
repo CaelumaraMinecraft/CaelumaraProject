@@ -74,15 +74,30 @@ public interface DyanasisObject
     interface ObjectProperty extends DyanasisProperty {
         @Override
         @NotNull DyanasisObject owner();
+
+        @Override
+        default @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 
     interface ObjectFunction extends DyanasisFunction {
         @Override
         @NotNull DyanasisObject owner();
+
+        @Override
+        default @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 
     interface ObjectDoc extends DyanasisDoc {
         @Override
         @NotNull DyanasisObject owner();
+
+        @Override
+        default @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 }

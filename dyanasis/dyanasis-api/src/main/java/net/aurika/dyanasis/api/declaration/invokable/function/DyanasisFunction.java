@@ -22,8 +22,11 @@ public interface DyanasisFunction extends DyanasisInvokable, Function<DyanasisFu
     @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
 
     @Override
+    @SuppressWarnings("PatternValidation")
     @NamingContract.Invokable
-    @NotNull String name();
+    default @NotNull String name() {
+        return key().name();
+    }
 
     /**
      * Gets the dyanasis function key.

@@ -36,12 +36,11 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         return functions;
     }
 
-    @SuppressWarnings("PointlessBooleanExpression")
     @Override
     public boolean equals(@NotNull String cfgStr) {
         return switch (cfgStr) {
-            case "true" -> value == true;
-            case "false" -> value == false;
+            case "true" -> value == Boolean.TRUE;
+            case "false" -> value == Boolean.FALSE;
             default -> false;
         };
     }

@@ -7,6 +7,8 @@ import net.aurika.dyanasis.api.declaration.NeedOwner;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunction;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * @see DyanasisFunction
  * @see DyanasisProperty
  */
-public interface DyanasisInvokable extends DyanasisDeclaration, DyanasisDocAnchor, NeedOwner, Named {
+public interface DyanasisInvokable extends DyanasisDeclaration, DyanasisDocAnchor, NeedOwner, Named, DyanasisRuntimeObject {
     /**
      * Gets the name of the dyanasis invokable.
      *
@@ -27,4 +29,7 @@ public interface DyanasisInvokable extends DyanasisDeclaration, DyanasisDocAncho
 
     @Override
     @NotNull DyanasisInvokableAnchor owner();
+
+    @Override
+    @NotNull DyanasisRuntime dyanasisRuntime();
 }

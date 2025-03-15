@@ -96,6 +96,11 @@ public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc
 
         @Override
         public abstract @NotNull DyanasisObject owner();
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 
     public abstract static class AbstractObjectFunction extends AbstractDyanasisFunction implements ObjectFunction {
@@ -105,6 +110,11 @@ public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc
 
         @Override
         public abstract @NotNull DyanasisObject owner();
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 
     public abstract static class AbstractObjectDoc implements ObjectDoc {
@@ -121,5 +131,10 @@ public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc
 
         @Override
         public abstract @NotNull DyanasisObject owner();
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 }

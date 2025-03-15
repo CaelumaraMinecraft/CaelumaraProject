@@ -47,40 +47,51 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
     }
 
     @Override
-    public @NotNull Collection<? extends DyanasisNamespace> allNamespaces() {
-        List<StandardDyanasisNamespace> nss = new ArrayList<>();
-        for (StandardDyanasisNamespace root : roots.values()) {
-            nss.add(root);
-            collectAllChildren(root, nss);
+    public @NotNull Map<DyanasisNamespacePath, ? extends StandardDyanasisNamespace> allNamespaces() {
+        HashMap<DyanasisNamespacePath, StandardDyanasisNamespace> nss = new HashMap<>();
+        for (Map.Entry<String, StandardDyanasisNamespace> rootEntry : roots.entrySet()) {
+            StandardDyanasisNamespace rootNS = rootEntry.getValue();
+            nss.put(DyanasisNamespacePath.path(rootEntry.getKey()), rootNS);
+            collectAllChildren(rootEntry.getValue(), nss);
         }
         return nss;
     }
 
-    private static void collectAllChildren(@NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace ns, @NotNull Collection<StandardDyanasisNamespace> container) {
-        for (var child : ns.children.values()) {
-            container.add(child);
+    protected static void collectAllChildren(@NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace ns, @NotNull Map<DyanasisNamespacePath, StandardDyanasisNamespace> container) {
+        for (StandardDyanasisNamespace child : ns.children.values()) {
+            container.put(child.path(), child);
             collectAllChildren(child, container);
         }
     }
 
     @Override
-    public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace findNamespace(@NotNull String @NotNull [] path) {
-        if (path.length == 0) {
+    public @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace findNamespace(@NotNull DyanasisNamespacePath path) {
+        if (path.length() == 0) {
             return null;
         }
-        if (path.length == 1) {
-            return roots.get(path[0]);
+        if (path.length() == 1) {
+            return roots.get(path.sectionAt(0));
         }
-        @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace ns = roots.get(path[0]);
-        for (int i = 1, pathLength = path.length; i < pathLength; i++) {
+        @Nullable StandardDyanasisNamespaceTree.StandardDyanasisNamespace ns = roots.get(path.sectionAt(0));
+        for (int i = 1, pathLength = path.length(); i < pathLength; i++) {
             if (ns != null) {
-                String name = path[i];
+                String name = path.sectionAt(i);
                 ns = ns.getChild(name);
             } else {
                 return null;
             }
         }
         return ns;
+    }
+
+    @Override
+    public @NotNull DyanasisNamespace foundOrCreate(@NotNull DyanasisNamespacePath path) {
+        Validate.Arg.notNull(path, "path");
+        int length = path.length();
+        if (length == 0) {
+            throw new IllegalArgumentException("DyanasisNamespace path must not be empty");
+        }
+
     }
 
     @Override
@@ -95,7 +106,7 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         protected @NotNull Map<String, StandardDyanasisNamespace> children;
         protected boolean available = true;
 
-        public StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name) {
+        protected StandardDyanasisNamespace(@NamingContract.Namespace final @NotNull String name) {
             this(name, null, new LinkedHashMap<>());
         }
 
@@ -146,7 +157,7 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         }
 
         protected void killChildren() {
-            for (var child : children.values()) {
+            for (StandardDyanasisNamespace child : children.values()) {
                 child.killThis();
                 child.killChildren();
             }
@@ -157,17 +168,13 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
             killChildren();
         }
 
-        public @NotNull StandardDyanasisNamespaceTree tree() {
-            return StandardDyanasisNamespaceTree.this;
-        }
-
         @Override
         @NamingContract.Namespace
         public @NotNull String name() {
             return name;
         }
 
-        public @NotNull String @NotNull [] path() {
+        public @NotNull DyanasisNamespacePath path() {
             @Nullable DyanasisNamespace ns = this;
             int count = 1;  // contains this
             while (ns != null) {
@@ -182,7 +189,7 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
                 i++;
                 ns = ns.parent();
             }
-            return path;
+            return DyanasisNamespacePath.path(path);
         }
 
         @Override
@@ -192,7 +199,7 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         }
 
         /**
-         * Sets the new parent and sync data.
+         * Changes to the new parent and sync data.
          *
          * @param parent the new parent
          */
@@ -250,6 +257,10 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
             }
             this.children = new LinkedHashMap<>();
             return oldChildren;
+        }
+
+        public @NotNull StandardDyanasisNamespaceTree tree() {
+            return StandardDyanasisNamespaceTree.this;
         }
 
         @Override

@@ -48,7 +48,7 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
      *
      * @return the namespace path
      */
-    @NotNull String @NotNull [] path();
+    @NotNull DyanasisNamespacePath path();
 
     /**
      * Gets the parent namespace of this namespace. Returns {@code null} if this namespace is rooted.
