@@ -34,6 +34,11 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
     }
 
     @Override
+    public int size() {
+        return value.size();
+    }
+
+    @Override
     public @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties() {
         return properties;
     }

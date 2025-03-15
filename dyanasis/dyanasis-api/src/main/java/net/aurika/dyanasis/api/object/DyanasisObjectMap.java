@@ -11,6 +11,7 @@ public interface DyanasisObjectMap extends DyanasisObjectSupport {
      *
      * @return the size
      */
+    @DyanasisObjectDebugMethod
     default int size() {
         throw new UnsupportedOperationException();
     }
@@ -22,10 +23,12 @@ public interface DyanasisObjectMap extends DyanasisObjectSupport {
      * @return the pair
      * @throws IndexOutOfBoundsException when the {@code index} is out of the bound of the map
      */
+    @DyanasisObjectDebugMethod
     default @NotNull DyanasisObjectPair atIndex(int index) throws IndexOutOfBoundsException {
         throw new UnsupportedOperationException();
     }
 
+    @DyanasisObjectDebugMethod
     default @NotNull DyanasisObject get(@NotNull DyanasisObject key) throws IndexOutOfBoundsException {
         LinkedHashMap<DyanasisObject, DyanasisObject> map = new LinkedHashMap<>();
         throw new UnsupportedOperationException();
