@@ -11,14 +11,21 @@ public abstract class AbstractDyanasisType<O extends DyanasisObject> implements 
     private final @NotNull DyanasisRuntime runtime;
     private final @NotNull DyanasisNamespace namespace;
     private final @NotNull String name;
+    private final @NotNull Class<? extends O> clazz;
 
-    public AbstractDyanasisType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace, @NotNull String name) {
+    public AbstractDyanasisType(@NotNull DyanasisRuntime runtime,
+                                @NotNull DyanasisNamespace namespace,
+                                @NotNull String name,
+                                @NotNull Class<? extends O> clazz
+    ) {
         Validate.Arg.notNull(runtime, "runtime");
         Validate.Arg.notNull(namespace, "namespace");
         Validate.Arg.notNull(name, "name");
+        Validate.Arg.notNull(clazz, "clazz");
         this.runtime = runtime;
         this.namespace = namespace;
         this.name = name;
+        this.clazz = clazz;
         namespace.addDyanasisType(this);
     }
 
@@ -46,6 +53,11 @@ public abstract class AbstractDyanasisType<O extends DyanasisObject> implements 
     @Override
     public @NotNull String name() {
         return name;
+    }
+
+    @Override
+    public @NotNull Class<? extends DyanasisObject> clazz() {
+        return clazz;
     }
 
     @Override

@@ -26,26 +26,29 @@ import java.util.function.Function;
  */
 public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> extends AbstractDyanasisObject<T, Lexer, DefaultDyanasisObject.DefaultObjectDoc> {
 
-    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @NotNull DyanasisType<?> type) {
-        this(runtime, value, lexer, null, type);
+    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer) {
+        this(runtime, value, lexer, null);
     }
 
-    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<?> type) {
-        super(runtime, value, lexer, doc, type);
+    protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc) {
+        super(runtime, value, lexer, doc);
     }
 
     @Override
     public abstract boolean equals(@NotNull String cfgStr);
 
-    public static abstract class DefaultObjectPropertyContainer implements AbstractObjectPropertyContainer<DefaultObjectProperty> {
+    @Override
+    public abstract @NotNull DyanasisType<? extends DefaultDyanasisObject<T, Lexer>> dyanasisType();
 
-        protected final @NotNull Map<String, DefaultObjectProperty> registry;
+    public static abstract class DefaultObjectPropertyContainer<P extends ObjectProperty> implements AbstractObjectPropertyContainer<P> {
+
+        protected final @NotNull Map<String, P> registry;
 
         protected DefaultObjectPropertyContainer() {
             this(new HashMap<>());
         }
 
-        protected DefaultObjectPropertyContainer(@NotNull Map<String, DefaultObjectProperty> registry) {
+        protected DefaultObjectPropertyContainer(@NotNull Map<String, P> registry) {
             super();
             this.registry = registry;
         }
@@ -56,20 +59,20 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> exte
         }
 
         @Override
-        public @Nullable DefaultDyanasisObject.DefaultObjectProperty getProperty(@NotNull String key) {
-            Map<String, DefaultObjectProperty> protectedProps = protectedProperties();
+        public @Nullable P getProperty(@NotNull String key) {
+            Map<String, P> protectedProps = protectedProperties();
             return protectedProps.containsKey(key) ? protectedProps.get(key) : registry.get(key);
         }
 
         @Override
-        public @Unmodifiable @NotNull Map<String, ? extends DefaultObjectProperty> allProperties() {
-            Map<String, DefaultObjectProperty> props = new HashMap<>();
+        public @Unmodifiable @NotNull Map<String, ? extends P> allProperties() {
+            Map<String, P> props = new HashMap<>();
             props.putAll(registry);
             props.putAll(protectedProperties());
             return Collections.unmodifiableMap(props);
         }
 
-        protected @NotNull Map<String, DefaultObjectProperty> protectedProperties() {
+        protected @NotNull Map<String, P> protectedProperties() {
             return ownerType().instancePropertyHandler().handle(owner());
         }
 
@@ -81,15 +84,15 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> exte
         public abstract @NotNull DyanasisObject owner();
     }
 
-    public static abstract class DefaultObjectFunctionContainer implements AbstractObjectFunctionContainer<DefaultObjectFunction> {
+    public static abstract class DefaultObjectFunctionContainer<F extends ObjectFunction> implements AbstractObjectFunctionContainer<F> {
 
-        protected final @NotNull Map<DyanasisFunctionKey, DefaultObjectFunction> registry;
+        protected final @NotNull Map<DyanasisFunctionKey, F> registry;
 
         protected DefaultObjectFunctionContainer() {
             this(new HashMap<>());
         }
 
-        protected DefaultObjectFunctionContainer(@NotNull Map<DyanasisFunctionKey, DefaultObjectFunction> registry) {
+        protected DefaultObjectFunctionContainer(@NotNull Map<DyanasisFunctionKey, F> registry) {
             super();
             Validate.Arg.notNull(registry, "registry");
             this.registry = registry;
@@ -101,20 +104,20 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> exte
         }
 
         @Override
-        public @Nullable DefaultDyanasisObject.DefaultObjectFunction getFunction(@NotNull DyanasisFunctionKey key) {
+        public @Nullable F getFunction(@NotNull DyanasisFunctionKey key) {
             var protectedFns = protectedFunctions();
             return protectedFns.containsKey(key) ? protectedFns.get(key) : registry.get(key);
         }
 
         @Override
-        public @Unmodifiable @NotNull Map<DyanasisFunctionKey, ? extends DefaultObjectFunction> allFunctions() {
-            Map<DyanasisFunctionKey, DefaultObjectFunction> fns = new HashMap<>();
+        public @Unmodifiable @NotNull Map<DyanasisFunctionKey, ? extends F> allFunctions() {
+            Map<DyanasisFunctionKey, F> fns = new HashMap<>();
             fns.putAll(registry);
             fns.putAll(protectedFunctions());
             return fns;
         }
 
-        protected @NotNull Map<DyanasisFunctionKey, DefaultObjectFunction> protectedFunctions() {
+        protected @NotNull Map<DyanasisFunctionKey, F> protectedFunctions() {
             return ownerType().instanceFunctionHandler().handle(owner());
         }
 
@@ -165,14 +168,24 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisLexer> exte
         protected final Map<String, Function<O, DyanasisObject.ObjectProperty>> properties;
         protected final Map<DyanasisFunctionKey, Function<O, DyanasisObject.ObjectFunction>> functions;
 
-        public DefaultObjectType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace, @NotNull String name) {
-            this(runtime, namespace, name, new HashMap<>(), new HashMap<>());
+        public DefaultObjectType(@NotNull DyanasisRuntime runtime,
+                                 @NotNull DyanasisNamespace namespace,
+                                 @NotNull String name,
+                                 @NotNull Class<? extends O> clazz
+        ) {
+            this(runtime, namespace, name, clazz, new HashMap<>(), new HashMap<>());
         }
 
-        public DefaultObjectType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace, @NotNull String name, Map<String, Function<O, ObjectProperty>> properties, Map<DyanasisFunctionKey, Function<O, ObjectFunction>> functions) {
-            super(runtime, namespace, name);
-            this.properties = properties;
-            this.functions = functions;
+        public DefaultObjectType(@NotNull DyanasisRuntime runtime,
+                                 @NotNull DyanasisNamespace namespace,
+                                 @NotNull String name,
+                                 @NotNull Class<? extends O> clazz,
+                                 Map<String, Function<O, ObjectProperty>> propertyHandlers,
+                                 Map<DyanasisFunctionKey, Function<O, ObjectFunction>> functionHandlers
+        ) {
+            super(runtime, namespace, name, clazz);
+            this.properties = propertyHandlers;
+            this.functions = functionHandlers;
             addProperties();
             addFunctions();
         }

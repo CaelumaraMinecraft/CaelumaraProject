@@ -17,6 +17,8 @@ public interface DyanasisType<O extends DyanasisObject> extends DyanasisTypeAwar
 
     @NotNull String name();
 
+    @NotNull Class<? extends DyanasisObject> clazz();
+
     @NotNull InstancePropertyHandler<O> instancePropertyHandler();
 
     @NotNull InstanceFunctionHandler<O> instanceFunctionHandler();

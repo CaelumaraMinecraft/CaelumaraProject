@@ -7,7 +7,6 @@ import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.object.DefaultDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectMap;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
@@ -22,15 +21,19 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
 
     public static final String PROPERTY_SIZE = "size";
 
+    public static final DyanasisFunctionKey FUNCTION_GET = DyanasisFunctionKey.dyanasisFunctionKey("get", 1);
+
     protected @NotNull StandardObjectMapPropertyContainer properties = new StandardObjectMapPropertyContainer();
     protected @NotNull StandardObjectMapFunctionContainer functions = new StandardObjectMapFunctionContainer();
 
+    private final @NotNull DyanasisType<? extends StandardDyanasisObjectMap<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardMapType(runtime, standardNS(runtime)));
+
     public StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer) {
-        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardMapType(runtime, standardNS(runtime))));
+        this(runtime, value, lexer, null);
     }
 
-    protected StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer, DefaultObjectDoc doc, @NotNull DyanasisType<? extends DefaultDyanasisObject<Map<?, ?>, Lexer>> type) {
-        super(runtime, value, lexer, doc, type);
+    protected StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer, DefaultObjectDoc doc) {
+        super(runtime, value, lexer, doc);
     }
 
     @Override
@@ -54,14 +57,19 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
         return false;
     }
 
-    public class StandardObjectMapPropertyContainer extends DefaultObjectPropertyContainer {
+    @Override
+    public @NotNull DyanasisType<? extends StandardDyanasisObjectMap<Lexer>> dyanasisType() {
+        return type;
+    }
+
+    public class StandardObjectMapPropertyContainer extends DefaultObjectPropertyContainer<AbstractMapProperty> {
         @Override
         public @NotNull DyanasisObject owner() {
             return StandardDyanasisObjectMap.this;
         }
     }
 
-    public class StandardObjectMapFunctionContainer extends DefaultObjectFunctionContainer {
+    public class StandardObjectMapFunctionContainer extends DefaultObjectFunctionContainer<AbstractMapFunction> {
         @Override
         public @NotNull DyanasisObject owner() {
             return StandardDyanasisObjectMap.this;
@@ -81,6 +89,17 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
         @Override
         public @NotNull StandardDyanasisObjectNumber<? extends Lexer> getPropertyValue() {
             return value();
+        }
+    }
+
+    public class Get extends AbstractMapFunction {
+        public Get() {
+            super(FUNCTION_GET);
+        }
+
+        @Override
+        public @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input) {
+            // TODO
         }
     }
 
@@ -119,14 +138,20 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
         }
     }
 
-    public static class StandardMapType extends DefaultObjectType<StandardDyanasisObjectMap<?>> {
+    public class StandardMapType extends DefaultObjectType<StandardDyanasisObjectMap<Lexer>> {
 
         public StandardMapType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
-            super(runtime, namespace, StandardDyanasisObjectMap.TYPE_NAME);
+            super(runtime, namespace, StandardDyanasisObjectMap.TYPE_NAME, (Class<? extends StandardDyanasisObjectMap<Lexer>>) StandardDyanasisObjectMap.this.getClass());
         }
 
+        @Override
         protected void addProperties() {
             properties.put(PROPERTY_SIZE, (mapObject) -> mapObject.new Size());
+        }
+
+        @Override
+        protected void addFunctions() {
+            functions.put(FUNCTION_GET, (mapObject) -> mapObject.new Get());
         }
     }
 }

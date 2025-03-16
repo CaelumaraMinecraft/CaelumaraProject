@@ -36,6 +36,10 @@ public interface DyanasisObject
     @Override
     @Nullable ObjectDoc dyanasisDoc();
 
+    /**
+     * {@inheritDoc} Note that the return type must be {@code DyanasisType<|X|>},
+     * the {@code |X|} is the implementation type of this dyanasis object.
+     */
     @Override
     @NotNull DyanasisType<? extends DyanasisObject> dyanasisType();
 

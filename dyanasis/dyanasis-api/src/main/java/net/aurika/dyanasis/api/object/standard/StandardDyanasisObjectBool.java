@@ -21,12 +21,15 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
     protected final StandardObjectBoolPropertyContainer properties = new StandardObjectBoolPropertyContainer();
     protected final StandardObjectBoolFunctionContainer functions = new StandardObjectBoolFunctionContainer();
 
+    @SuppressWarnings("unchecked")
+    private final @NotNull DyanasisType<? extends StandardDyanasisObjectBool<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardObjectBoolType(standardNS(runtime)));
+
     public StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer) {
-        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardObjectBoolType(runtime, standardNS(runtime))));
+        this(runtime, value, lexer, null);
     }
 
-    protected StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc, @NotNull DyanasisType<? extends StandardDyanasisObjectBool<Lexer>> type) {
-        super(runtime, value, lexer, doc, type);
+    protected StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc) {
+        super(runtime, value, lexer, doc);
     }
 
     @Override
@@ -48,7 +51,12 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         };
     }
 
-    public class StandardObjectBoolPropertyContainer extends DefaultObjectPropertyContainer {
+    @Override
+    public @NotNull DyanasisType<? extends StandardDyanasisObjectBool<Lexer>> dyanasisType() {
+        return type;
+    }
+
+    public class StandardObjectBoolPropertyContainer extends DefaultObjectPropertyContainer<StandardObjectBoolProperty> {
         public StandardObjectBoolPropertyContainer() {
             super();
         }
@@ -59,7 +67,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         }
     }
 
-    public class StandardObjectBoolFunctionContainer extends DefaultObjectFunctionContainer {
+    public class StandardObjectBoolFunctionContainer extends DefaultObjectFunctionContainer<StandardObjectBoolFunction> {
         public StandardObjectBoolFunctionContainer() {
             super();
         }
@@ -98,9 +106,10 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisLexer> extends Sta
         }
     }
 
-    public static class StandardObjectBoolType extends DefaultObjectType<StandardDyanasisObjectBool<?>> {
-        public StandardObjectBoolType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
-            super(runtime, namespace, StandardDyanasisObjectBool.TYPE_NAME);
+    public class StandardObjectBoolType extends DefaultObjectType<StandardDyanasisObjectBool<Lexer>> {
+        public StandardObjectBoolType(@NotNull DyanasisNamespace namespace) {
+            // noinspection unchecked
+            super(StandardDyanasisObjectBool.this.runtime, namespace, StandardDyanasisObjectBool.TYPE_NAME, (Class<? extends StandardDyanasisObjectBool<Lexer>>) StandardDyanasisObjectBool.this.getClass());
         }
     }
 }

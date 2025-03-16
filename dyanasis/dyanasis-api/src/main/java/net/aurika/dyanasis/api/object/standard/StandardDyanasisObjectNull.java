@@ -18,12 +18,15 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends Sta
     protected final StandardObjectNullPropertyContainer properties = new StandardObjectNullPropertyContainer();
     protected final StandardObjectNullFunctionContainer functions = new StandardObjectNullFunctionContainer();
 
+    @SuppressWarnings("unchecked")
+    private final @NotNull DyanasisType<? extends StandardDyanasisObjectNull<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardNullType(standardNS(runtime)));
+
     public StandardDyanasisObjectNull(@NotNull DyanasisRuntime runtime, @NotNull Lexer lexer) {
-        this(runtime, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardNullType(runtime, standardNS(runtime))));
+        this(runtime, lexer, null);
     }
 
-    protected StandardDyanasisObjectNull(@NotNull DyanasisRuntime runtime, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc, @NotNull DyanasisType<? extends DyanasisObject> type) {
-        super(runtime, null, lexer, doc, type);
+    protected StandardDyanasisObjectNull(@NotNull DyanasisRuntime runtime, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc) {
+        super(runtime, null, lexer, doc);
     }
 
     @Override
@@ -41,6 +44,11 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends Sta
         return Objects.equals(cfgStr, lexer().settings().idents().nil());
     }
 
+    @Override
+    public @NotNull DyanasisType<? extends StandardDyanasisObject<Void, Lexer>> dyanasisType() {
+        return type;
+    }
+
     public class StandardObjectNullPropertyContainer extends DefaultObjectPropertyContainer {
         @Override
         public @NotNull DyanasisObject owner() {
@@ -55,9 +63,10 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends Sta
         }
     }
 
-    public static class StandardNullType extends DefaultObjectType<StandardDyanasisObjectNull<?>> {
-        public StandardNullType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
-            super(runtime, namespace, StandardDyanasisObjectNull.TYPE_NAME);
+    public class StandardNullType extends DefaultObjectType<StandardDyanasisObjectNull<Lexer>> {
+        public StandardNullType(@NotNull DyanasisNamespace namespace) {
+            // noinspection unchecked
+            super(StandardDyanasisObjectNull.this.runtime, namespace, StandardDyanasisObjectNull.TYPE_NAME, (Class<? extends StandardDyanasisObjectNull<Lexer>>) StandardDyanasisObjectNull.this.getClass());
         }
     }
 

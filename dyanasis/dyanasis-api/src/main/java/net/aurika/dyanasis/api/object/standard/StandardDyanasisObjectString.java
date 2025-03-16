@@ -23,12 +23,15 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
     protected @NotNull StandardObjectStringPropertyContainer properties = new StandardObjectStringPropertyContainer();
     protected @NotNull StandardObjectStringFunctionContainer functions = new StandardObjectStringFunctionContainer();
 
+    @SuppressWarnings("unchecked")
+    private final @NotNull DyanasisType<? extends StandardDyanasisObjectString<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardStringType(runtime, standardNS(runtime)));
+
     public StandardDyanasisObjectString(@NotNull DyanasisRuntime runtime, String value, @NotNull Lexer lexer) {
-        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardStringType(runtime, standardNS(runtime))));
+        this(runtime, value, lexer, null);
     }
 
-    protected StandardDyanasisObjectString(@NotNull DyanasisRuntime runtime, String value, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc, @NotNull DyanasisType<?> type) {
-        super(runtime, value, lexer, doc, type);
+    protected StandardDyanasisObjectString(@NotNull DyanasisRuntime runtime, String value, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc) {
+        super(runtime, value, lexer, doc);
     }
 
     @Override
@@ -46,14 +49,19 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
         return value.equals(cfgStr);
     }
 
-    public class StandardObjectStringPropertyContainer extends DefaultObjectPropertyContainer {
+    @Override
+    public @NotNull DyanasisType<? extends StandardDyanasisObjectString<Lexer>> dyanasisType() {
+        return type;
+    }
+
+    public class StandardObjectStringPropertyContainer extends DefaultObjectPropertyContainer<AbstractStringProperty> {
         @Override
         public @NotNull StandardDyanasisObject<String, Lexer> owner() {
             return StandardDyanasisObjectString.this;
         }
     }
 
-    public class StandardObjectStringFunctionContainer extends DefaultObjectFunctionContainer {
+    public class StandardObjectStringFunctionContainer extends DefaultObjectFunctionContainer<AbstractStringFunction> {
         @Override
         public @NotNull StandardDyanasisObject<String, Lexer> owner() {
             return StandardDyanasisObjectString.this;
@@ -131,9 +139,10 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisLexer> extends S
         }
     }
 
-    public static class StandardStringType extends DefaultObjectType<StandardDyanasisObjectString<?>> {
+    public class StandardStringType extends DefaultObjectType<StandardDyanasisObjectString<Lexer>> {
         public StandardStringType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
-            super(runtime, namespace, StandardDyanasisObjectString.TYPE_NAME);
+            // noinspection unchecked
+            super(runtime, namespace, StandardDyanasisObjectString.TYPE_NAME, (Class<? extends StandardDyanasisObjectString<Lexer>>) StandardDyanasisObjectString.this.getClass());
         }
     }
 }

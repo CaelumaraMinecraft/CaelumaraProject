@@ -1,5 +1,7 @@
 package net.aurika.dyanasis.api.object.standard;
 
+import net.aurika.dyanasis.api.NamingContract;
+import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.lexer.DyanasisLexer;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
@@ -14,13 +16,14 @@ public class StandardDyanasisObjectNumber<Lexer extends DyanasisLexer> extends S
 
     protected @NotNull StandardObjectNumberPropertyContainer properties = new StandardObjectNumberPropertyContainer();
     protected @NotNull StandardObjectNumberFunctionContainer functions = new StandardObjectNumberFunctionContainer();
+    private final @NotNull DyanasisType<? extends StandardDyanasisObjectNumber<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardNumberType(runtime, standardNS(runtime)));
 
     public StandardDyanasisObjectNumber(@NotNull DyanasisRuntime runtime, Number value, @NotNull Lexer lexer) {
-        this(runtime, value, lexer, null, standardType(runtime, TYPE_NAME, () -> new StandardNumberType(runtime, standardNS(runtime))));
+        this(runtime, value, lexer, null);
     }
 
-    protected StandardDyanasisObjectNumber(@NotNull DyanasisRuntime runtime, Number value, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc, @NotNull DyanasisType<?> type) {
-        super(runtime, value, lexer, doc, type);
+    protected StandardDyanasisObjectNumber(@NotNull DyanasisRuntime runtime, Number value, @NotNull Lexer lexer, @Nullable DefaultObjectDoc doc) {
+        super(runtime, value, lexer, doc);
     }
 
     @Override
@@ -39,23 +42,51 @@ public class StandardDyanasisObjectNumber<Lexer extends DyanasisLexer> extends S
         //TODO compile and equals
     }
 
-    public class StandardObjectNumberPropertyContainer extends DefaultObjectPropertyContainer {
+    @Override
+    public @NotNull DyanasisType<? extends StandardDyanasisObjectNumber<Lexer>> dyanasisType() {
+        return type;
+    }
+
+    public class StandardObjectNumberPropertyContainer extends DefaultObjectPropertyContainer<AbstractNumberProperty> {
         @Override
         public @NotNull StandardDyanasisObjectNumber<Lexer> owner() {
             return StandardDyanasisObjectNumber.this;
         }
     }
 
-    public class StandardObjectNumberFunctionContainer extends DefaultObjectFunctionContainer {
+    public class StandardObjectNumberFunctionContainer extends DefaultObjectFunctionContainer<AbstractNumberFunction> {
         @Override
         public @NotNull StandardDyanasisObjectNumber<Lexer> owner() {
             return StandardDyanasisObjectNumber.this;
         }
     }
 
-    public static class StandardNumberType extends DefaultObjectType<StandardDyanasisObjectNumber<?>> {
+    public abstract class AbstractNumberProperty extends DefaultObjectProperty {
+        public AbstractNumberProperty(@NamingContract.Invokable final @NotNull String name) {
+            super(name);
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObjectNumber<Lexer> owner() {
+            return StandardDyanasisObjectNumber.this;
+        }
+    }
+
+    public abstract class AbstractNumberFunction extends DefaultObjectFunction {
+        public AbstractNumberFunction(@NotNull DyanasisFunctionKey key) {
+            super(key);
+        }
+
+        @Override
+        public @NotNull StandardDyanasisObjectNumber<Lexer> owner() {
+            return StandardDyanasisObjectNumber.this;
+        }
+    }
+
+    public class StandardNumberType extends DefaultObjectType<StandardDyanasisObjectNumber<Lexer>> {
         public StandardNumberType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
-            super(runtime, namespace, StandardDyanasisObjectNumber.TYPE_NAME);
+            // noinspection unchecked
+            super(runtime, namespace, StandardDyanasisObjectNumber.TYPE_NAME, (Class<? extends StandardDyanasisObjectNumber<Lexer>>) StandardDyanasisObjectNumber.this.getClass());
         }
     }
 }

@@ -2,6 +2,7 @@ package net.aurika.dyanasis.api.declaration.invokable.function;
 
 import net.aurika.dyanasis.api.Named;
 import net.aurika.dyanasis.api.NamingContract;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -11,8 +12,9 @@ public class DyanasisFunctionKey implements Named {
     private final @NotNull String name;
     private final int arity;
 
-    public static DyanasisFunctionKey dyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int argLen) {
-        return new DyanasisFunctionKey(name, argLen);
+    @Contract(value = "_, _ -> new", pure = true)
+    public static @NotNull DyanasisFunctionKey dyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int arity) {
+        return new DyanasisFunctionKey(name, arity);
     }
 
     protected DyanasisFunctionKey(@NamingContract.Invokable final @NotNull String name, int arity) {

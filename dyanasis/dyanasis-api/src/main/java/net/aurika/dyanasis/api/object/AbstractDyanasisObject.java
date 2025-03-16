@@ -19,17 +19,26 @@ import java.util.function.Supplier;
 
 public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc extends DyanasisObject.ObjectDoc> implements DyanasisObject, DyanasisDocEditable<Doc> {
 
-    @SuppressWarnings("rawtypes")
-    protected static <T extends DyanasisType<?>> @NotNull T type(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespacePath path, @NotNull String typename, Supplier<T> whenCreate) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    protected static <C extends DyanasisObject, T extends DyanasisType<C>> @NotNull T type(@NotNull DyanasisRuntime runtime,
+                                                                                           @NotNull DyanasisNamespacePath path,
+                                                                                           @NotNull String typename,
+                                                                                           Class<? extends C> clazz,
+                                                                                           Supplier<? extends T> whenCreate
+    ) {
         Validate.Arg.notNull(runtime, "runtime");
         Validate.Arg.notNull(path, "path");
         Validate.Arg.notNull(typename, "typename");
+        Validate.Arg.notNull(clazz, "clazz");
         Validate.Arg.notNull(whenCreate, "whenCreate");
         DyanasisType type;
         DyanasisNamespaceContainer namespaces = runtime.environment().namespaces();
         DyanasisNamespace ns = namespaces.foundOrCreate(path);
         if (ns.hasDyanasisType(typename)) {
             type = ns.getDyanasisType(typename);
+            if (!type.clazz().isAssignableFrom(clazz)) {
+                throw new IllegalStateException();
+            }
         } else {
             type = whenCreate.get();
         }
@@ -40,22 +49,18 @@ public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc
     protected T value;
     protected final @NotNull Lexer lexer;
     protected @Nullable Doc doc;
-    protected final @NotNull DyanasisType<? extends DyanasisObject> typeData;
 
     protected AbstractDyanasisObject(@NotNull DyanasisRuntime runtime,
                                      T value,
                                      @NotNull Lexer lexer,
-                                     @Nullable Doc doc,
-                                     @NotNull DyanasisType<? extends DyanasisObject> typeData
+                                     @Nullable Doc doc
     ) {
         Validate.Arg.notNull(runtime, "runtime");
         Validate.Arg.notNull(lexer, "lexer");
-        Validate.Arg.notNull(typeData, "typeData");
         this.runtime = runtime;
         this.value = value;
         this.lexer = lexer;
         this.doc = doc;
-        this.typeData = typeData;
     }
 
     /**
@@ -81,11 +86,6 @@ public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc
     @Override
     public void dyanasisDoc(@Nullable Doc doc) {
         this.doc = doc;
-    }
-
-    @Override
-    public @NotNull DyanasisType<? extends DyanasisObject> dyanasisType() {
-        return typeData;
     }
 
     @Override
