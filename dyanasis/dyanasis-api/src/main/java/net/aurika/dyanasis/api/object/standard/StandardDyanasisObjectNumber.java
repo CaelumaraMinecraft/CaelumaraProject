@@ -16,6 +16,7 @@ public class StandardDyanasisObjectNumber<Lexer extends DyanasisLexer> extends S
 
     protected @NotNull StandardObjectNumberPropertyContainer properties = new StandardObjectNumberPropertyContainer();
     protected @NotNull StandardObjectNumberFunctionContainer functions = new StandardObjectNumberFunctionContainer();
+    @SuppressWarnings("unchecked")
     private final @NotNull DyanasisType<? extends StandardDyanasisObjectNumber<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardNumberType(runtime, standardNS(runtime)));
 
     public StandardDyanasisObjectNumber(@NotNull DyanasisRuntime runtime, Number value, @NotNull Lexer lexer) {

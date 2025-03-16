@@ -17,7 +17,6 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisLexer> extends Sta
 
     protected final StandardObjectNullPropertyContainer properties = new StandardObjectNullPropertyContainer();
     protected final StandardObjectNullFunctionContainer functions = new StandardObjectNullFunctionContainer();
-
     @SuppressWarnings("unchecked")
     private final @NotNull DyanasisType<? extends StandardDyanasisObjectNull<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardNullType(standardNS(runtime)));
 

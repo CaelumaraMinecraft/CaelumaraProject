@@ -4,6 +4,8 @@ import net.aurika.dyanasis.api.declaration.doc.DyanasisDocEditable;
 import net.aurika.dyanasis.api.declaration.invokable.function.container.DyanasisFunctionContainer;
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +14,7 @@ public class AbstractDyanasisFile<
         Properties extends DyanasisPropertyContainer<? extends DyanasisFile.FileProperty>,
         Functions extends DyanasisFunctionContainer<? extends DyanasisFile.FileFunction>,
         Doc extends DyanasisFile.FileDoc>
-        implements DyanasisFile, DyanasisDocEditable<Doc> {
+        implements DyanasisFile, DyanasisRuntimeObject, DyanasisDocEditable<Doc> {
 
     private final @NotNull DyanasisNamespace namespace;
     private @Nullable DyanasisNamespace usingNamespace;
@@ -73,5 +75,10 @@ public class AbstractDyanasisFile<
     @Override
     public void dyanasisDoc(@Nullable Doc doc) {
         this.doc = doc;
+    }
+
+    @Override
+    public @NotNull DyanasisRuntime dyanasisRuntime() {
+        return namespace.dyanasisRuntime();
     }
 }

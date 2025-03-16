@@ -25,7 +25,7 @@ public class StandardDyanasisObjectMap<Lexer extends DyanasisLexer> extends Stan
 
     protected @NotNull StandardObjectMapPropertyContainer properties = new StandardObjectMapPropertyContainer();
     protected @NotNull StandardObjectMapFunctionContainer functions = new StandardObjectMapFunctionContainer();
-
+    @SuppressWarnings("unchecked")
     private final @NotNull DyanasisType<? extends StandardDyanasisObjectMap<Lexer>> type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardMapType(runtime, standardNS(runtime)));
 
     public StandardDyanasisObjectMap(@NotNull DyanasisRuntime runtime, Map<?, ?> value, @NotNull Lexer lexer) {
