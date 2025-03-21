@@ -20,7 +20,6 @@ import top.mckingdom.powerfulterritory.commands.general.land.CommandLand;
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryConfig;
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang;
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryPlaceholder;
-import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryPlaceholders;
 import top.mckingdom.powerfulterritory.constants.invade_protection.StandardInvadeProtection;
 import top.mckingdom.powerfulterritory.constants.land_categories.LandCategoryRegistry;
 import top.mckingdom.powerfulterritory.constants.land_categories.StandardLandCategory;
@@ -65,7 +64,6 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
 
         GroupExt.init();
 
-        PowerfulTerritoryPlaceholders.init();
         PowerfulTerritoryPlaceholder.init();
 
         LanguageManager.registerMessenger(PowerfulTerritoryLang.class);

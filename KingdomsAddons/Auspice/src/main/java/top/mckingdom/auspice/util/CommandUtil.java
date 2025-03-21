@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.kingdoms.commands.CommandContext;
 import org.kingdoms.commands.CommandTabContext;
 import org.kingdoms.commands.TabCompleteManager;
+import org.kingdoms.commands.admin.CommandAdminAddons;
 import org.kingdoms.constants.group.Group;
 import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.Nation;
@@ -42,13 +43,13 @@ public class CommandUtil {
         if (context.isAtArg(1)) {
             startsWith = context.arg(1);
             if (context.args[0].equals(playerTag)) {
-                out.addAll(TabCompleteManager.getPlayers(startsWith));
+                out.addAll(TabCompleteManager.getPlayers(startsWith, null));
             }
             if (context.args[0].equals(kingdomTag)) {
                 out.addAll(TabCompleteManager.getKingdoms(startsWith));
             }
             if (context.args[0].equals(nationTag) && targetNation) {
-                out.addAll(TabCompleteManager.getNations(startsWith));
+                out.addAll(TabCompleteManager.getNations(startsWith, null));
             }
             return out;
         }

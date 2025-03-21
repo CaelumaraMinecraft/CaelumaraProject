@@ -4,7 +4,7 @@ import net.aurika.dyanasis.api.lexer.DyanasisLexerSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LazyDyanasisFunctionInput extends DyanasisFunctionInput {
+public class LazyDyanasisFunctionInput extends AbstractDyanasisFunctionInput {
     private @Nullable DyanasisLexerSettings settings;
     private String[] args;
 

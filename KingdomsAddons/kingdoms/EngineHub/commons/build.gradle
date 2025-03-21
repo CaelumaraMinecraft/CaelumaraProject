@@ -1,0 +1,7 @@
+plugins {
+    id("java-library")
+    id("aurika.dependency")
+}
+
+group = "org.kingdoms.enginehub"
+version = "unspecified"

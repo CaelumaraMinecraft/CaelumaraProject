@@ -1,9 +1,21 @@
+import net.aurika.gradle.dependency.dependencies.KingdomsDependency
+
 plugins {
-    id("aurika.repos")
     id("java-library")
+    id("aurika.repos")
+    id("aurika.relocation")
     alias(libs.plugins.kotlin)
     alias(libs.plugins.shadow)
 }
+
+relocateFiles.createRelocates(fileTree("libs/plugins/Kingdoms"), layout.projectDirectory.dir("libs/plugins/Kingdoms_relocated"), relocates -> {
+
+    for (Map.Entry<String, String> reverseRelocate : KingdomsDependency.reverseRelocates().entrySet()) {
+        relocates.relocate(reverseRelocate.getKey(), reverseRelocate.getValue())
+    }
+    relocates.relocate()
+    println(relocates.targetDirectory)
+})
 
 allprojects {
     group = "net.aurika"

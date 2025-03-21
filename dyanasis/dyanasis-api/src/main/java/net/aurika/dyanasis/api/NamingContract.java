@@ -32,7 +32,7 @@ public final class NamingContract {
      * Checks a char is a valid normal invokable name char.
      *
      * @param c      the char to validate
-     * @param onHead the char is on head
+     * @param onHead the char is on the head
      * @return is valid
      */
     public static boolean isValidNormalInvokableChar(char c, boolean onHead) {

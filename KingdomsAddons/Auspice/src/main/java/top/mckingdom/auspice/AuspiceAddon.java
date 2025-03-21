@@ -81,7 +81,7 @@ public final class AuspiceAddon extends AddonTemplate {
     @Override
     public void onEnable0() {
         getLogger().info("Registering event listeners...");
-        // TODO is have event listeners
+        // TODO do this if have event listeners
 
         getLogger().info("Registering commands...");
         registerAllCommands();
@@ -89,7 +89,6 @@ public final class AuspiceAddon extends AddonTemplate {
 
     @Override
     public void onDisable0() {
-
     }
 
     @Override

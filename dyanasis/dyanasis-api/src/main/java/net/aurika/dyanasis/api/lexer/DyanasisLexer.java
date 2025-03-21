@@ -13,12 +13,24 @@ public interface DyanasisLexer {
      */
     @Nullable DyanasisLexer parent();
 
+    /**
+     * Gets the lex settings.
+     *
+     * @return the lex settings
+     */
     @NotNull DyanasisLexerSettings settings();
 
+    /**
+     * Gets the original string
+     *
+     * @return the original string
+     */
     @NotNull String originalString();
 
+    /**
+     * The lexed expression.
+     */
     interface Expression {
-
         /**
          * Evaluates and returns the result.
          *

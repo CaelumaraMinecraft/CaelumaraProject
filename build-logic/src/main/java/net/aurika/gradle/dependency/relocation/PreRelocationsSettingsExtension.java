@@ -1,5 +1,6 @@
 package net.aurika.gradle.dependency.relocation;
 
+import groovy.lang.Closure;
 import org.gradle.api.Action;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.plugins.ExtensionAware;
@@ -16,6 +17,15 @@ public class PreRelocationsSettingsExtension {
     }
 
     public void addPreRelocatedDependency(@NotNull Dependency dependency, @NotNull Action<? super PreRelocationsExtension> action) {
+        action.execute(putPreRelocationsExtension(dependency));
+    }
+
+    public void addPreRelocatedDependency(@NotNull Dependency dependency, @NotNull Closure closure) {
+        closure.setDelegate(putPreRelocationsExtension(dependency));
+        closure.call();
+    }
+
+    protected @NotNull PreRelocationsExtension putPreRelocationsExtension(@NotNull Dependency dependency) {
         @Nullable PreRelocationsExtension depExt = ((ExtensionAware) dependency).getExtensions().findByType(PreRelocationsExtension.class);
         if (depExt == null) {
             depExt = ((ExtensionAware) dependency).getExtensions().create(
@@ -25,7 +35,7 @@ public class PreRelocationsSettingsExtension {
                     new Object[]{this}
             );
         }
-        action.execute(depExt);
+        return depExt;
     }
 
     public @NotNull File getRelocatedFolder() {

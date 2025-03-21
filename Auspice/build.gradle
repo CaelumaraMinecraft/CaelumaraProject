@@ -97,7 +97,7 @@ tasks {
 }
 
 processResources {
-    def props = [version: version]
+    Map<String, String> props = [version: version]
     inputs.properties(props)
     filteringCharset = "UTF-8"
     filesMatching("plugin.yml") {

@@ -161,4 +161,16 @@ public class DyanasisLexerSettings {
             return DyanasisLexerSettings.this;
         }
     }
+
+    public class Lexers {
+        protected final @NotNull ExpressionLexer expression;
+
+        public Lexers(@NotNull ExpressionLexer expression) {
+            this.expression = expression;
+        }
+
+        public @NotNull DyanasisLexerSettings parentSettings() {
+            return DyanasisLexerSettings.this;
+        }
+    }
 }

@@ -1,4 +1,5 @@
-name: Kingdoms-Addon-Trade-Point
-version: '0.1-SNAPSHOT'
+name: "${project_fullName}"
+version: "${project_version}"
+description: "${project_description}"
 main: top.mckingdom.trade_point.TradePointAddon
 api-version: '1.13'

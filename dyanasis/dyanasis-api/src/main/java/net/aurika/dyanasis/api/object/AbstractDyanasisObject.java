@@ -73,10 +73,10 @@ public abstract class AbstractDyanasisObject<T, Lexer extends DyanasisLexer, Doc
     }
 
     @Override
-    public abstract @NotNull ObjectPropertyContainer<? extends DyanasisObject.ObjectProperty> dyanasisProperties();
+    public abstract @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties();
 
     @Override
-    public abstract @NotNull DyanasisObject.ObjectFunctionContainer<? extends DyanasisObject.ObjectFunction> dyanasisFunctions();
+    public abstract @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions();
 
     @Override
     public @Nullable Doc dyanasisDoc() {

@@ -1,7 +1,7 @@
 package net.aurika.gradle.dependency.relocation;
 
-import net.aurika.gradle.dependency.relocation.relocator.JarRelocator;
-import net.aurika.gradle.dependency.relocation.relocator.SimpleRelocation;
+import net.aurika.gradle.relocation.relocation.JarRelocator;
+import net.aurika.gradle.relocation.relocation.SimpleRelocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -26,11 +26,9 @@ public final class RelocationHandler {
 //        System.out.println("Exists: " + outputFile.exists());
         if (!outputFile.exists()) {
             try {
-
                 outputFile.createNewFile();
 
                 JarRelocator instance = new JarRelocator(input.toFile(), output.toFile(), mappings);
-
 
                 instance.run();
             } catch (IOException e) {

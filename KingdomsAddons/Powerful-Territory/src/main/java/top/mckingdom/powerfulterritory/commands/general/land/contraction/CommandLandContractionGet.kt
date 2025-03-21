@@ -8,7 +8,6 @@ import org.kingdoms.constants.land.Land
 import org.kingdoms.constants.land.location.SimpleChunkLocation
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.locale.Language
-import org.kingdoms.locale.LanguageManager
 import org.kingdoms.locale.compiler.builders.MessageObjectLinker
 import top.mckingdom.powerfulterritory.configs.PowerfulTerritoryLang
 import top.mckingdom.powerfulterritory.data.getContractions
@@ -29,7 +28,6 @@ class CommandLandContractionGet(parent: KingdomsParentCommand) : KingdomsCommand
         fun show(context: CommandContext, location: SimpleChunkLocation): Boolean {
             val sender = context.getMessageReceiver()
             val lang: Language = KingdomPlayer.getKingdomPlayer(context.senderAsPlayer()).getLanguage()
-                ?: LanguageManager.getDefaultLanguage()
 
             val land = Land.getLand(location)
             val x = location.x
@@ -55,7 +53,7 @@ class CommandLandContractionGet(parent: KingdomsParentCommand) : KingdomsCommand
                         "contraction",
                         name,
                         "players",
-                        linker.buildPlain(context.getMessageContext())
+                        linker.buildPlain(context.messageContext)
                     )
                 }
             }

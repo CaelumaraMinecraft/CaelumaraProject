@@ -1,5 +1,6 @@
 package top.mckingdom.powerfulterritory.managers;
 
+import com.cryptomorin.xseries.particles.ParticleDisplay;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +10,6 @@ import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.upgradable.MiscUpgrade;
 import org.kingdoms.constants.land.Land;
 import org.kingdoms.constants.player.KingdomPlayer;
-import org.kingdoms.libs.xseries.particles.ParticleDisplay;
 import org.kingdoms.locale.KingdomsLang;
 import top.mckingdom.powerfulterritory.util.GroupExt;
 

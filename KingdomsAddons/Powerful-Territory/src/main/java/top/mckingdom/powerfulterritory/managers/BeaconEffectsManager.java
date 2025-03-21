@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.land.Land;
 import org.kingdoms.constants.player.KingdomPlayer;
 import top.mckingdom.powerfulterritory.util.GroupExt;
@@ -17,8 +18,11 @@ public class BeaconEffectsManager implements Listener {
                 KingdomPlayer player = KingdomPlayer.getKingdomPlayer((Player) event.getEntity());
                 Land land = Land.getLand(event.getEntity().getLocation());
                 if (land != null && land.isClaimed()) {
-                    if (!land.getKingdom().hasAttribute(player.getKingdom(), GroupExt.BEACON_EFFECTS)) {
-                        event.setCancelled(true);
+                    Kingdom landKingdom = land.getKingdom();
+                    if (landKingdom != null) {
+                        if (!landKingdom.hasAttribute(player.getKingdom(), GroupExt.BEACON_EFFECTS)) {
+                            event.setCancelled(true);
+                        }
                     }
                 }
             }

@@ -1,6 +1,6 @@
 package net.aurika.gradle.dependency.relocation;
 
-import net.aurika.gradle.dependency.relocation.relocator.SimpleRelocation;
+import net.aurika.gradle.relocation.relocation.SimpleRelocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

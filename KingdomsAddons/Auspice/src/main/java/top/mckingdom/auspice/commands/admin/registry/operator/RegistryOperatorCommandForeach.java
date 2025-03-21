@@ -14,8 +14,8 @@ import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.locale.messenger.DefaultedMessenger;
 import org.kingdoms.locale.messenger.Messenger;
-import top.mckingdom.auspice.commands.CommandName;
 import top.mckingdom.auspice.configs.AuspiceLang;
+import top.mckingdom.auspice.util.KingdomsNamingContract;
 import top.mckingdom.auspice.util.LazyMessenger;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public abstract class RegistryOperatorCommandForeach<T extends Namespaced, R ext
     protected final @NotNull Messenger failed_noop = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "noop"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_NOOP));
     protected final @NotNull Messenger failed_unknown_op = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "unknown-op"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_UNKNOWN_OP));
 
-    public RegistryOperatorCommandForeach(@CommandName final @NotNull String name, @Nullable KingdomsParentCommand parent, @Nullable PermissionDefault permissionDefault, @NotNull R registry, @NotNull Class<T> valueType) {
+    public RegistryOperatorCommandForeach(@KingdomsNamingContract.CommandName final @NotNull String name, @Nullable KingdomsParentCommand parent, @Nullable PermissionDefault permissionDefault, @NotNull R registry, @NotNull Class<T> valueType) {
         super(name, parent, permissionDefault, registry, valueType);
     }
 

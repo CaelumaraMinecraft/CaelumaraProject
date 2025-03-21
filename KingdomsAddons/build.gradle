@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("aurika.repos")
+    id("aurika.dependency")
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.shadow) apply false
 }
@@ -8,16 +9,16 @@ plugins {
 group = "top.mckingdom"
 version = "1.0.2"
 
-def targetJavaVersion = 21
+int targetJavaVersion = 21
 
-subprojects {
+subprojects { sub ->
 
-    Project subProject = it
+    sub.group = this.group
+    sub.version = this.version
 
-    subProject.group = this.group
-    subProject.version = this.version
+    String shortName = sub.name
 
-    def _name = it.name
+    String fullName = "Kingdoms-Addon-$shortName"
 
     apply {
         plugins.apply("java-library")
@@ -35,16 +36,12 @@ subprojects {
         }
     }
 
-//    Project auspiceAddon = project(":KingdomsAddons:Auspice")
-
     dependencies {
         api(project(":common:validate"))
         compileOnly(libs.server.spigot)
         compileOnly(libs.annotations.checker)
-//        compileOnly(fileTree("$rootDir\\libs\\plugins\\Kingdoms"))
-//        if (subProject != auspiceAddon) {
-//            compileOnly(auspiceAddon)
-//        }
+        compileOnly(libs.xseries)
+        compileOnly(fileTree(rootDir.getPath() + "/libs/plugins/Kingdoms_relocated"))
     }
 
     java {
@@ -74,12 +71,13 @@ subprojects {
         }
 
         shadowJar {
-            archiveBaseName = "Kingdoms-Addon-$_name"
+            archiveBaseName = fullName
             archiveClassifier = null
 
             minimize()
 
-            relocate("kotlin", "org.kingdoms.libs.kotlin")
+            kingdomsRelocates.kingdomsRelocates()
+
             relocate("net.aurika", "top.mckingdom.libs.aurika")
 
             exclude("**/kotlin-stdlib**")
@@ -87,7 +85,7 @@ subprojects {
         }
 
         processResources {
-            def props = [version: version]
+            def props = [project: new KingdomsAddonProject(fullName, version, description)]
             inputs.properties(props)
             filteringCharset = "UTF-8"
             filesMatching("plugin.yml") {
@@ -96,3 +94,20 @@ subprojects {
         }
     }
 }
+
+public class KingdomsAddonProject implements Serializable {
+    public String name;
+    public String version;
+    public String description;
+
+    public KingdomsAddonProject(String name, String version, String description) {
+        this.name = name
+        this.version = version
+        this.description = description
+    }
+}
+
+//println("Relocators:")
+//((ShadowJar) tasks.getByName("shadowJar")).relocators.forEach {
+//    println(((SimpleRelocator) it).pattern + "=>" + (it as SimpleRelocator).shadedPattern)
+//}

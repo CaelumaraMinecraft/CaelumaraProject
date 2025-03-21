@@ -1,21 +1,12 @@
 package net.aurika.dyanasis.api.invoking.input;
 
-import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
-
-import java.util.Objects;
 
 /**
  * The data of dyanasis function invocation. It is based on string.
  */
-public abstract class DyanasisFunctionInput {
-    protected final @NotNull String original;
-
-    public DyanasisFunctionInput(@NotNull String original) {
-        Validate.Arg.notNull(original, "original");
-        this.original = original;
-    }
+public interface DyanasisFunctionInput {
 
     /**
      * Gets an argument from {@code index}.
@@ -24,36 +15,14 @@ public abstract class DyanasisFunctionInput {
      * @return the argument
      * @throws IndexOutOfBoundsException when the index is out of bound for the arguments
      */
-    public @NotNull String arg(@Range(from = 0, to = 127) int index) throws IndexOutOfBoundsException {
-        return args()[index];
-    }
+    @NotNull String arg(@Range(from = 0, to = 127) int index) throws IndexOutOfBoundsException;
 
     /**
      * Gets the arguments of the dyanasis function input.
      *
      * @return the arguments
      */
-    public abstract @NotNull String @NotNull [] args();
+    @NotNull String @NotNull [] args();
 
-    public final @NotNull String originalString() {
-        return original;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(original);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof DyanasisFunctionInput that)) return false;
-        return Objects.equals(original, that.original);
-    }
-
-    @Override
-    public String toString() {
-        return "DyFunctionInput{" +
-                "original='" + original + '\'' +
-                '}';
-    }
+    @NotNull String originalString();
 }

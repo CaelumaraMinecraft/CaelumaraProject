@@ -1,8 +1,8 @@
 import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
 
 plugins {
-    id("aurika.repos")
     id("java-library")
+    id("aurika.repos")
     alias(libs.plugins.shadow)
     alias(libs.plugins.kotlin)
 }
@@ -49,14 +49,13 @@ tasks {
 //    jar {
 //        destinationDirectory = file("$rootDir/output")
 //    }
-}
 
-
-processResources {
-    def props = [version: version]
-    inputs.properties(props)
-    filteringCharset("UTF-8")
-    filesMatching("plugin.yml") {
-        expand(props)
+    processResources {
+        def props = [version: version]
+        inputs.properties(props)
+        filteringCharset = "UTF-8"
+        filesMatching("plugin.yml") {
+            expand(props)
+        }
     }
 }

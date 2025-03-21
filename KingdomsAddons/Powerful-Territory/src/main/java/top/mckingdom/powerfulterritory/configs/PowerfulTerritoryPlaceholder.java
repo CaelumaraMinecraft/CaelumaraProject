@@ -6,6 +6,7 @@ import org.kingdoms.constants.land.Land;
 import org.kingdoms.locale.placeholders.EnumKingdomsPlaceholderTranslator;
 import org.kingdoms.locale.placeholders.KingdomsPlaceholderTranslationContext;
 import org.kingdoms.locale.placeholders.KingdomsPlaceholderTranslator;
+import top.mckingdom.auspice.util.KingdomsNamingContract;
 import top.mckingdom.powerfulterritory.constants.land_categories.StandardLandCategory;
 import top.mckingdom.powerfulterritory.data.LandCategories;
 
@@ -36,6 +37,8 @@ public enum PowerfulTerritoryPlaceholder implements EnumKingdomsPlaceholderTrans
     }
 
     @Override  // val name get()
+    @SuppressWarnings("PatternValidation")
+    @KingdomsNamingContract.PlaceholderName
     public @NotNull String getName() {
         return name().toLowerCase(Locale.ENGLISH);
     }

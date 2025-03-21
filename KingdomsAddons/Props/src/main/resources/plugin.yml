@@ -1,6 +1,7 @@
-name: Kingdoms-Addon-Props
-version: '0.2-SNAPSHOT'
+name: "${project.name}"
+version: "${project.version}"
+description: "${project.description}"
 main: top.mckingdom.props.PropsAddon
-api-version: '1.20.6'
-depend: [ Kingdoms ]
+api-version: "1.20.6"
+depend: [ Kingdoms, Kingdoms-Addon-Auspice ]
 

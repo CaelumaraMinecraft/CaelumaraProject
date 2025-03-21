@@ -12,16 +12,18 @@ import org.jetbrains.annotations.Nullable;
  * </pre></blockquote>
  */
 public interface FunctionInputLexer extends DyanasisLexer {
-    static FunctionInputLexerImpl standardFnInLexer(@Nullable DyanasisLexer parent, @NotNull DyanasisLexerSettings settings, @NotNull String original) {
-        return new FunctionInputLexerImpl(parent, settings, original);
+    static DefaultFunctionInputLexer standardFnInLexer(@Nullable DyanasisLexer parent, @NotNull DyanasisLexerSettings settings, @NotNull String original) {
+        return new DefaultFunctionInputLexer(parent, settings, original);
     }
 
     @Override
     @NotNull Expression lex();
 
     interface Expression extends DyanasisLexer.Expression {
+        @Override
         @NotNull DyanasisFunctionInput evaluate();
 
+        @Override
         @NotNull FunctionInputLexer lexer();
     }
 }

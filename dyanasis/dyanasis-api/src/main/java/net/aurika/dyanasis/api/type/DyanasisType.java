@@ -8,6 +8,8 @@ import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import org.jetbrains.annotations.NotNull;
 
 public interface DyanasisType<O extends DyanasisObject> extends DyanasisTypeAware, DyanasisNamespaced, DyanasisRuntimeObject {
+    boolean isInstance(DyanasisObject dyanasisObject);
+
     @NotNull String fullName();
 
     @NotNull String fullName(@NotNull String delimiter);

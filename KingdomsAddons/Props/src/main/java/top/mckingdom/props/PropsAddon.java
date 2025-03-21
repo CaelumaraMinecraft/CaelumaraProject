@@ -1,9 +1,9 @@
 package top.mckingdom.props;
 
-import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.namespace.Namespace;
 import top.mckingdom.auspice.util.AddonTemplate;
+import top.mckingdom.auspice.util.KingdomsNamingContract;
 import top.mckingdom.auspice.util.permission.XKingdomPermission;
 
 import static top.mckingdom.auspice.configs.MsgConst.E_COLOR;
@@ -13,6 +13,7 @@ public class PropsAddon extends AddonTemplate {
 
     private static PropsAddon instance;
 
+    @KingdomsNamingContract.Namespace.Group
     public static final String NAMESPACE = "Props";
 
     public static final XKingdomPermission PERMISSION_USE_PROPS = XKingdomPermission.create(
@@ -30,7 +31,8 @@ public class PropsAddon extends AddonTemplate {
         }
     }
 
-    public static @NotNull Namespace buildNS(@Pattern("[A-Z0-9_]{3,100}") final @NotNull String key) {
+    @SuppressWarnings("PatternValidation")
+    public static @NotNull Namespace buildNS(@KingdomsNamingContract.Namespace.Key final @NotNull String key) {
         return new Namespace(NAMESPACE, key);
     }
 
@@ -44,27 +46,22 @@ public class PropsAddon extends AddonTemplate {
     }
 
     @Override
-    public void onLoad0() {
-
+    protected void onLoad0() {
     }
 
-    public void onEnable0() {
-
+    protected void onEnable0() {
     }
 
     @Override
     protected void onDisable0() {
-
     }
 
     @Override
-    public void reloadAddon0() {
-
+    protected void reloadAddon0() {
     }
 
     @Override
-    public void uninstall0() {
-
+    protected void uninstall0() {
     }
 
     @Override

@@ -14,10 +14,12 @@ import org.kingdoms.constants.metadata.StandardKingdomMetadata
 import org.kingdoms.constants.namespace.Namespace
 import org.kingdoms.data.database.dataprovider.SectionCreatableDataSetter
 import org.kingdoms.data.database.dataprovider.SectionableDataGetter
+import org.kingdoms.utils.internal.cast
 import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon
 import top.mckingdom.powerfulterritory.constants.invade_protection.InvadeProtection
 import top.mckingdom.powerfulterritory.constants.invade_protection.InvadeProtectionRegistry
 import top.mckingdom.powerfulterritory.constants.invade_protection.StandardInvadeProtection
+import top.mckingdom.powerfulterritory.constants.land_contractions.LandContraction
 import top.mckingdom.powerfulterritory.util.PowerfulTerritoryLogger
 import java.util.*
 
@@ -35,7 +37,7 @@ fun getInvadeProtection(land: Land?): InvadeProtection? {
         StandardInvadeProtection.NO_PROTECTION
     } else {
         Objects.requireNonNullElse(
-            meta.getValue() as InvadeProtection,
+            meta.value as InvadeProtection,
             StandardInvadeProtection.NO_PROTECTION
         )
     }
@@ -62,7 +64,7 @@ class InvadeProtectionMeta(override var value: Any) : KingdomMetadata {
         container: KeyedKingdomsObject<*>,
         context: SerializationContext<SectionCreatableDataSetter>
     ) {
-        context.getDataProvider().setString(this.value.getNamespace().asNormalizedString())
+        context.getDataProvider().setString(this.value.cast<LandContraction>().getNamespace().asNormalizedString())
     }
 
     override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {

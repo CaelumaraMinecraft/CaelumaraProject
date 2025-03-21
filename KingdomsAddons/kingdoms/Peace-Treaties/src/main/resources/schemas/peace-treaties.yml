@@ -1,0 +1,36 @@
+duration: Period
+
+force-accept:
+  condition: Condition
+  war-points: decimal
+
+war-points:
+  initial: Math
+  max: Math
+  allowed-relationships: set
+  scores:
+    gain: &warPts
+      (keys): [ kill, invade, break-turret, break-structure ]
+      (values): Math
+    lose: *warPts
+
+min-terms: int
+
+terms:
+  (optional): true
+  (values):
+    (required): [ terms, war-points ]
+    war-points: Math
+    terms:
+      (type): set
+      (elements): Term
+    conditions:
+      (keys): Condition
+      (values): MessageEntry
+
+    term-options:
+      (keys): Term
+      (values):
+        conditions:
+          (keys): Condition
+          (values): MessageEntry

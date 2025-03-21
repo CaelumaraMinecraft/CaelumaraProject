@@ -8,15 +8,15 @@ import org.kingdoms.constants.namespace.Lockable;
 import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.constants.namespace.UnregistrableNamespaceRegistry;
-import top.mckingdom.auspice.commands.CommandName;
 import top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandList;
 import top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandLock;
 import top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandUnregister;
+import top.mckingdom.auspice.util.KingdomsNamingContract;
 
 import java.util.Map;
 
 public abstract class CommandAdminRegistryTemplate<T extends Namespaced, R extends NamespacedRegistry<T>> extends KingdomsParentCommand {
-    public CommandAdminRegistryTemplate(@CommandName final @NotNull String name,
+    public CommandAdminRegistryTemplate(@KingdomsNamingContract.CommandName final @NotNull String name,
                                         @Nullable KingdomsParentCommand parent,
                                         PermissionDefault permissionDefault,
                                         @NotNull R registry,

@@ -2,6 +2,7 @@ package net.aurika.dyanasis.api.declaration.namespace;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.declaration.DyanasisDeclaration;
+import net.aurika.dyanasis.api.declaration.NeedOwner;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDoc;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAware;
@@ -74,10 +75,10 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     @NotNull Map<String, ? extends DyanasisNamespace> children();
 
     @Override
-    @NotNull DyanasisPropertyContainer<? extends NamespaceProperty> dyanasisProperties();
+    @NotNull NamespacePropertyContainer<? extends NamespaceProperty> dyanasisProperties();
 
     @Override
-    @NotNull DyanasisFunctionContainer<? extends NamespaceFunction> dyanasisFunctions();
+    @NotNull NamespaceFunctionContainer<? extends NamespaceFunction> dyanasisFunctions();
 
     @Override
     @Nullable NamespaceDoc dyanasisDoc();
@@ -115,13 +116,15 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     @NotNull DyanasisRuntime dyanasisRuntime();
 
     @ApiStatus.Experimental
-    interface NamespacePropertyContainer<P extends NamespaceProperty> extends DyanasisPropertyContainer<P> {
-
+    interface NamespacePropertyContainer<P extends NamespaceProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
+        @Override
+        @NotNull DyanasisNamespace owner();
     }
 
     @ApiStatus.Experimental
-    interface NamespaceFunctionContainer<F extends NamespaceFunction> extends DyanasisFunctionContainer<F> {
-
+    interface NamespaceFunctionContainer<F extends NamespaceFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
+        @Override
+        @NotNull DyanasisNamespace owner();
     }
 
     interface NamespaceProperty extends DyanasisProperty {

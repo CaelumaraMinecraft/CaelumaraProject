@@ -259,6 +259,15 @@ include(
         ":KingdomsAddons:Powerful-Territory",
         ":KingdomsAddons:Props",
         ":KingdomsAddons:Trade-Point",
+
+        ":KingdomsAddons:kingdoms",
+        ":KingdomsAddons:kingdoms:Peace-Treaties",
+        ":KingdomsAddons:kingdoms:Outposts",
+        ":KingdomsAddons:kingdoms:EngineHub",
+        ":KingdomsAddons:kingdoms:EngineHub:commons",
+        ":KingdomsAddons:kingdoms:EngineHub:worldguard",
+        ":KingdomsAddons:kingdoms:EngineHub:worldguard:v6",
+        ":KingdomsAddons:kingdoms:EngineHub:worldguard:v7",
 )
 
 include(

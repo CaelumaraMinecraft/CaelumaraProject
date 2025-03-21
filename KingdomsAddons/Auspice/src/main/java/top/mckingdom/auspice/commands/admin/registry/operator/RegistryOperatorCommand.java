@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import org.kingdoms.commands.*;
 import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
-import top.mckingdom.auspice.commands.CommandName;
+import top.mckingdom.auspice.util.KingdomsNamingContract;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public abstract class RegistryOperatorCommand<T extends Namespaced, R extends Na
     private final @NotNull R registry;
     private final @NotNull Class<T> valueType;
 
-    public RegistryOperatorCommand(@CommandName final @NotNull String name,
+    public RegistryOperatorCommand(@KingdomsNamingContract.CommandName final @NotNull String name,
                                    @Nullable KingdomsParentCommand parent,
                                    @Nullable PermissionDefault permissionDefault,
                                    @NotNull R registry,

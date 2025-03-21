@@ -1,0 +1,21 @@
+plugins {
+    id("java-library")
+    id("aurika.repos")
+}
+
+group = "org.kingdoms.services.worldguard"
+version = "1.0.0"
+
+repositories {
+    aurikaRepos {
+        enginehub()
+    }
+}
+
+dependencies {
+//    compileOnly(project(":core:service"))
+    compileOnly(project(":KingdomsAddons:kingdoms:EngineHub:worldguard"))
+    compileOnly("org.checkerframework:checker-qual:3.21.0")
+    compileOnly("com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-legacy:6.2")
+}

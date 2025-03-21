@@ -17,6 +17,7 @@ import org.kingdoms.data.database.dataprovider.SectionCreatableDataSetter
 import org.kingdoms.data.database.dataprovider.SectionableDataGetter
 import org.kingdoms.locale.Language
 import org.kingdoms.locale.SupportedLanguage
+import top.mckingdom.auspice.util.land.addExtMessageContextEdit
 import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon
 import top.mckingdom.powerfulterritory.constants.land_categories.LandCategory
 import top.mckingdom.powerfulterritory.constants.land_categories.StandardLandCategory
@@ -61,7 +62,7 @@ var Land.category: LandCategory?
  * Get the raw category data from the [this] land metadata.
  */
 fun Land.getCategoryRaw(): LandCategory? {
-    return this.getMetadata().get(LandCategoryMetaHandler.INSTANCE)?.getValue() as? LandCategory
+    return this.getMetadata().get(LandCategoryMetaHandler.INSTANCE)?.value as? LandCategory
 }
 
 fun Land.clearCategoryData() {
@@ -69,13 +70,12 @@ fun Land.clearCategoryData() {
 }
 
 class LandCategoryMeta(private var landCategory: LandCategory) : KingdomMetadata {
-    override fun getValue(): Any {
-        return this.landCategory
-    }
 
-    override fun setValue(o: Any) {
-        this.landCategory = o as LandCategory
-    }
+    override var value: Any
+        get() = this.landCategory
+        set(value) {
+            this.landCategory = value as LandCategory
+        }
 
     override fun serialize(
         container: KeyedKingdomsObject<*>,
@@ -95,7 +95,8 @@ class LandCategoryMetaHandler private constructor() :
         container: KeyedKingdomsObject<*>,
         dataGetter: DeserializationContext<SectionableDataGetter>
     ): KingdomMetadata {
-        val chunkTypeNS = Namespace.fromString(dataGetter.getDataProvider().asString())
+        val chunkTypeNSString: String? = dataGetter.getDataProvider().asString()
+        val chunkTypeNS = Namespace.fromString(chunkTypeNSString!!)
         val landCategory = PowerfulTerritoryAddon.get().getLandCategoryRegistry().getRegistered(chunkTypeNS)
         if (landCategory == null) {
             PowerfulTerritoryLogger.warn(
@@ -113,8 +114,8 @@ class LandCategoryMetaHandler private constructor() :
 }
 
 fun registerLandCategoryExternalMessageContextEdit() {
-    top.mckingdom.auspice.util.land.addExtMessageContextEdit("category") { land -> land.category }
-    top.mckingdom.auspice.util.land.addExtMessageContextEdit("category-key") { land -> land.category?.namespace?.asString() }
+    addExtMessageContextEdit("category") { land -> land.category }
+    addExtMessageContextEdit("category-key") { land -> land.category?.namespace?.asString() }
 }
 
 /**
@@ -124,7 +125,7 @@ object Categories {
     @JvmStatic
     fun initialize() {
         SupportedLanguage.entries.forEach { lang ->
-            if (lang.isLoaded()) {
+            if (lang.isLoaded) {
                 categoriesString.put(lang, HashMap<String, LandCategory>().also {
                     PowerfulTerritoryAddon.get().getLandCategoryRegistry().getRegistry().forEach { _, category ->
                         it.put(category.getName(lang), category)

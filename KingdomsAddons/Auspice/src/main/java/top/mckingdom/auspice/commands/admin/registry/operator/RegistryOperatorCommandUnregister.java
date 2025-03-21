@@ -15,8 +15,8 @@ import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.constants.namespace.UnregistrableNamespaceRegistry;
 import org.kingdoms.locale.messenger.DefaultedMessenger;
 import org.kingdoms.locale.messenger.Messenger;
-import top.mckingdom.auspice.commands.CommandName;
 import top.mckingdom.auspice.configs.AuspiceLang;
+import top.mckingdom.auspice.util.KingdomsNamingContract;
 import top.mckingdom.auspice.util.LazyMessenger;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class RegistryOperatorCommandUnregister<T extends Namespaced, R extends N
     protected final Messenger failed_wrong_key = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "wrong-key"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY));
     protected final Messenger success = new LazyMessenger(() -> new DefaultedMessenger(this.lang("success"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS));
 
-    public RegistryOperatorCommandUnregister(@CommandName final @NotNull String name,
+    public RegistryOperatorCommandUnregister(@KingdomsNamingContract.CommandName final @NotNull String name,
                                              @Nullable KingdomsParentCommand parent,
                                              @Nullable PermissionDefault permissionDefault,
                                              @NotNull R registry,

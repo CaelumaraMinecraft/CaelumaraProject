@@ -53,7 +53,7 @@ class CommandLandCategorySet(parent: KingdomsParentCommand) : KingdomsCommand("s
             )
         }
 
-        println("++++++++++++++++++++++出现了意外的情况! 请联系插件作者(Attaccer)============================")
+        println("++++++++++++++++++++++出现了意外的情况! 请联系插件作者============================")
         return CommandResult.FAILED
     }
 

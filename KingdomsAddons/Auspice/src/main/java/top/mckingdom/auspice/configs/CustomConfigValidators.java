@@ -1,11 +1,11 @@
 package top.mckingdom.auspice.configs;
 
-import org.kingdoms.libs.snakeyaml.nodes.NodeType;
-import org.kingdoms.libs.snakeyaml.nodes.Tag;
-import org.kingdoms.libs.snakeyaml.validation.NodeValidator;
-import org.kingdoms.libs.snakeyaml.validation.ValidationContext;
-import org.kingdoms.libs.snakeyaml.validation.ValidationFailure;
 import org.kingdoms.utils.config.adapters.YamlContainer;
+import org.snakeyaml.nodes.NodeType;
+import org.snakeyaml.nodes.Tag;
+import org.snakeyaml.validation.NodeValidator;
+import org.snakeyaml.validation.ValidationContext;
+import org.snakeyaml.validation.ValidationFailure;
 import top.mckingdom.auspice.AuspiceAddon;
 
 public class CustomConfigValidators {

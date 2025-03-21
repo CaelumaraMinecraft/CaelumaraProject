@@ -2,8 +2,12 @@ package top.mckingdom.auspice.util;
 
 import org.intellij.lang.annotations.Language;
 import org.intellij.lang.annotations.Pattern;
+import org.kingdoms.locale.placeholders.KingdomsPlaceholderTranslator;
 
 import java.lang.annotation.*;
+
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
 public final class KingdomsNamingContract {
     private KingdomsNamingContract() {
@@ -38,5 +42,22 @@ public final class KingdomsNamingContract {
         @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
         @interface Key {
         }
+    }
+
+    /**
+     * {@linkplain KingdomsPlaceholderTranslator#NAME_PATTERN}
+     */
+    @Documented
+    @Pattern(KingdomsPlaceholderTranslator.NAME_PATTERN)
+    @Retention(RetentionPolicy.CLASS)
+    @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
+    public @interface PlaceholderName {
+    }
+
+    @Documented
+    @Pattern("[a-zA-Z0-9]+")
+    @Retention(CLASS)
+    @Target({METHOD, FIELD, PARAMETER, LOCAL_VARIABLE, ANNOTATION_TYPE})
+    public @interface CommandName {
     }
 }

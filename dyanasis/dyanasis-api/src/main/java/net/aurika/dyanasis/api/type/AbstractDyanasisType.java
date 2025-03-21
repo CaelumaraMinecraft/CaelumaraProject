@@ -29,6 +29,11 @@ public abstract class AbstractDyanasisType<O extends DyanasisObject> implements 
         namespace.addDyanasisType(this);
     }
 
+    @Override
+    public boolean isInstance(DyanasisObject dyanasisObject) {
+        return clazz.isInstance(dyanasisObject);
+    }
+
     /**
      * Gets the full name of the type. It looks like {@code std.String}, {@code net.aurika.auspice.dyanasis.Namespace}
      *

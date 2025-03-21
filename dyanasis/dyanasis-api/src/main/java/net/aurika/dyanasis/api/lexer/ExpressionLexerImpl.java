@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * The standard implementation of {@linkplain ExpressionLexer}.
  */
-public class ExpressionLexerImpl extends DyanasisLexerImpl implements ExpressionLexer {
+public class ExpressionLexerImpl extends AbstractDyanasisLexer implements ExpressionLexer {
 
     protected int ap;  // pointer A, move in forward
     protected int bp;  // pointer B, move in reverse

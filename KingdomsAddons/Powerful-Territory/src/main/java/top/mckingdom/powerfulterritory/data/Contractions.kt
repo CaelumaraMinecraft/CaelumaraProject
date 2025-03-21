@@ -186,7 +186,7 @@ object Contractions {
     @JvmStatic
     fun initialize() {
         SupportedLanguage.entries.forEach { lang ->
-            if (lang.isLoaded()) {
+            if (lang.isLoaded) {
                 contractionsString.put(lang, HashMap<String, LandContraction>().also {
                     PowerfulTerritoryAddon.get().getLandContractionRegistry().getRegistry().forEach { _, contraction ->
                         it.put(contraction.getName(lang), contraction)
@@ -244,7 +244,7 @@ fun Land.allocate(
                     PowerfulTerritoryConfig.LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT.getManager().getBoolean()
                 )
             )
-        }.getValue() as LandContractionsData).contractions
+        }.value as LandContractionsData).contractions
         .getOrPut(contraction) { ContractionLandData(HashMap()) }).allocationReceivers
         .getOrPut(player) { Allocations(System.currentTimeMillis(), HashMap()) }).value
         .put(startTime, Allocation(duration, allocator))
@@ -280,17 +280,13 @@ fun Land.getContractions(): HashMap<LandContraction, ContractionLandData>? {
 
 @JvmName("getContractionsData")
 fun Land.getContractionsData(): LandContractionsData? {
-    return this.getMetadata().get(LandContractionsMetaHandler.INSTANCE)?.getValue() as LandContractionsData?
+    return this.getMetadata().get(LandContractionsMetaHandler.INSTANCE)?.value as LandContractionsData?
 }
 
 class LandContractionsMeta(private var landContractions: LandContractionsData) : KingdomMetadata {
-    override fun getValue(): Any {
-        return landContractions
-    }
-
-    override fun setValue(value: Any) {
-        this.landContractions = value as LandContractionsData
-    }
+    override var value: Any
+        get() = this.landContractions
+        set(value) {}
 
     override fun serialize(
         container: KeyedKingdomsObject<*>,
@@ -363,14 +359,14 @@ class LandContractionsMetaHandler private constructor() :
                 provider.get("contractions")
                     .asMap(HashMap()) { contractionsMap, contractionNamespace, contractionLandData ->
                         val contraction = PowerfulTerritoryAddon.get().getLandContractionRegistry()
-                            .getRegistered(Namespace.fromString(contractionNamespace.asString()))
+                            .getRegistered(Namespace.fromString(contractionNamespace.asString()!!))  // TODO nullability
                         if (contraction != null) {
                             contractionsMap.put(
                                 contraction, ContractionLandData(
                                     contractionLandData.get("players")
                                         .asMap(HashMap()) { playersMap, playerUUID, playerData ->
                                             playersMap.put(
-                                                KingdomPlayer.getKingdomPlayer(playerUUID.asUUID()),
+                                                KingdomPlayer.getKingdomPlayer(playerUUID.asUUID()!!),  // TODO nullability
                                                 Allocations(
                                                     playerData.get("since").asLong(),
                                                     playerData.get("history")
@@ -382,7 +378,8 @@ class LandContractionsMetaHandler private constructor() :
                                                                         DurationUnit.MILLISECONDS
                                                                     ),
                                                                     KingdomPlayer.getKingdomPlayer(
-                                                                        allocation.get("allocator").asUUID()
+                                                                        allocation.get("allocator")
+                                                                            .asUUID()!! // TODO nullability
                                                                     )
                                                                 )
                                                             )

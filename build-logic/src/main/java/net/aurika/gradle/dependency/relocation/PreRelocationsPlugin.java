@@ -31,16 +31,16 @@ public class PreRelocationsPlugin implements Plugin<Project> {
         PreRelocationsSettingsExtension handlerExtension = new PreRelocationsSettingsExtension(defaultRelocatedPath.getAsFile());
         dependencies.getExtensions().add(PreRelocationsSettingsExtension.class, "preRelocationSettings", handlerExtension);
 
-        Attribute<Boolean> isPreRelocatedAttribute = Attribute.of(ATTRIBUTE_DEPENDENCY_IS_RELOCATED, Boolean.class);
-        AttributesSchema attributesSchema = dependencies.getAttributesSchema();
-        attributesSchema.attribute(isPreRelocatedAttribute);
+//        Attribute<Boolean> isPreRelocatedAttribute = Attribute.of(ATTRIBUTE_DEPENDENCY_IS_RELOCATED, Boolean.class);
+//        AttributesSchema attributesSchema = dependencies.getAttributesSchema();
+//        attributesSchema.attribute(isPreRelocatedAttribute);
 
         ConfigurationContainer configurations = project.getConfigurations();
-        configurations.all(configuration -> {
-            configuration.attributes(attributeContainer -> {
-                attributeContainer.attribute(isPreRelocatedAttribute, true);
-            });
-        });
+//        configurations.all(configuration -> {
+//            configuration.attributes(attributeContainer -> {
+//                attributeContainer.attribute(isPreRelocatedAttribute, true);
+//            });
+//        });
 
         configurations.all(cfg -> {
 
@@ -48,16 +48,6 @@ public class PreRelocationsPlugin implements Plugin<Project> {
             String relocatedCfgPath = handlerExtension.getRelocatedFolder().getPath() + "\\" + cfgName;
 
             AtomicBoolean cfgHasRelocatedDep = new AtomicBoolean(false);
-
-            cfg.getIncoming().beforeResolve((rabDeps) -> {
-                rabDeps.getDependencies();
-
-                System.out.println("Incoming before resolve: " + rabDeps);
-            });
-
-            cfg.getDependencies().forEach((dep) -> {
-               System.out.println("cfg.getDependencies().forEach(): " + dep + " " + System.identityHashCode(dep));
-            });
 
             cfg.withDependencies((DependencySet dependencySet) -> {
                 dependencySet.forEach(dependency -> {
@@ -80,8 +70,7 @@ public class PreRelocationsPlugin implements Plugin<Project> {
 
                                         Path outputPath = Path.of(relocatedCfgPath + "\\" + "relocated-" + file.getName());
 
-//                                        System.out.println("Relocating file: " + file + " to: " + outputPath);
-//                                        PreRelocateKt.remap(file, outputPath, depExt.relocates());
+                                        System.out.println("Relocating file: " + file + " to: " + outputPath);
 
                                         RelocationHandler.remap(file.toPath(), outputPath, depExt.relocates());
                                     }

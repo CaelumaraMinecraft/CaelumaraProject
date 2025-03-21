@@ -1,8 +1,10 @@
 package net.aurika.dyanasis.api.declaration.file;
 
+import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocEditable;
-import net.aurika.dyanasis.api.declaration.invokable.function.container.DyanasisFunctionContainer;
-import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.declaration.invokable.function.AbstractDyanasisFunction;
+import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunctionKey;
+import net.aurika.dyanasis.api.declaration.invokable.property.AbstractDyanasisProperty;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
@@ -10,41 +12,24 @@ import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractDyanasisFile<
-        Properties extends DyanasisPropertyContainer<? extends DyanasisFile.FileProperty>,
-        Functions extends DyanasisFunctionContainer<? extends DyanasisFile.FileFunction>,
-        Doc extends DyanasisFile.FileDoc>
-        implements DyanasisFile, DyanasisRuntimeObject, DyanasisDocEditable<Doc> {
+public abstract class AbstractDyanasisFile<Doc extends DyanasisFile.FileDoc> implements DyanasisFile, DyanasisRuntimeObject, DyanasisDocEditable<Doc> {
 
-    private final @NotNull DyanasisNamespace namespace;
+    private final @NotNull DyanasisRuntime runtime;
     private @Nullable DyanasisNamespace usingNamespace;
-    protected @NotNull Properties properties;
-    protected @NotNull Functions functions;
     private @Nullable Doc doc;
 
-    public AbstractDyanasisFile(@NotNull DyanasisNamespace namespace, @NotNull Properties properties, @NotNull Functions functions) {
-        this(namespace, null, properties, functions, null);
+    public AbstractDyanasisFile(@NotNull DyanasisRuntime runtime) {
+        this(runtime, null, null);
     }
 
-    public AbstractDyanasisFile(@NotNull DyanasisNamespace namespace,
+    public AbstractDyanasisFile(@NotNull DyanasisRuntime runtime,
                                 @Nullable DyanasisNamespace usingNamespace,
-                                @NotNull Properties properties,
-                                @NotNull Functions functions,
                                 @Nullable Doc doc
     ) {
-        Validate.Arg.notNull(namespace, "namespace");
-        Validate.Arg.notNull(properties, "properties");
-        Validate.Arg.notNull(functions, "functions");
-        this.namespace = namespace;
+        Validate.Arg.notNull(runtime, "runtime");
+        this.runtime = runtime;
         this.usingNamespace = usingNamespace;
-        this.properties = properties;
-        this.functions = functions;
         this.doc = doc;
-    }
-
-    @Override
-    public @NotNull DyanasisNamespace dyanasisNamespace() {
-        return namespace;
     }
 
     @Override
@@ -58,14 +43,10 @@ public class AbstractDyanasisFile<
     }
 
     @Override
-    public @NotNull Properties dyanasisProperties() {
-        return properties;
-    }
+    public abstract @NotNull FilePropertyContainer<? extends FileProperty> dyanasisProperties();
 
     @Override
-    public @NotNull Functions dyanasisFunctions() {
-        return functions;
-    }
+    public abstract @NotNull FileFunctionContainer<? extends FileFunction> dyanasisFunctions();
 
     @Override
     public @Nullable Doc dyanasisDoc() {
@@ -79,6 +60,51 @@ public class AbstractDyanasisFile<
 
     @Override
     public @NotNull DyanasisRuntime dyanasisRuntime() {
-        return namespace.dyanasisRuntime();
+        return runtime;
+    }
+
+    public static abstract class AbstractFileProperty extends AbstractDyanasisProperty implements FileProperty {
+        public AbstractFileProperty(@NamingContract.Invokable final @NotNull String name) {
+            super(name);
+        }
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
+    }
+
+    public static abstract class AbstractFileFunction extends AbstractDyanasisFunction implements FileFunction {
+        public AbstractFileFunction(@NotNull DyanasisFunctionKey key) {
+            super(key);
+        }
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
+    }
+
+    public static abstract class AbstractFileDoc implements FileDoc {
+
+        private final @NotNull String value;
+
+        protected AbstractFileDoc(@NotNull String value) {
+            Validate.Arg.notNull(value, "value");
+            this.value = value;
+        }
+
+        @Override
+        public @NotNull String value() {
+            return value;
+        }
+
+        @Override
+        public abstract @NotNull DyanasisFile owner();
+
+        @Override
+        public @NotNull DyanasisRuntime dyanasisRuntime() {
+            return owner().dyanasisRuntime();
+        }
     }
 }

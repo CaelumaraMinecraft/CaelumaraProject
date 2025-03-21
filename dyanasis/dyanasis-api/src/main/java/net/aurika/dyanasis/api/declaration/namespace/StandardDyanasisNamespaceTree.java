@@ -130,6 +130,14 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         return runtime;
     }
 
+    public record A(int a, String b) {
+    }
+
+    public static void a() {
+        A a =  new A(1, null);
+       int sada = a.a() ;
+    }
+
     public class StandardDyanasisNamespace implements DyanasisNamespace, Named {
         @NamingContract.Namespace
         private final @NotNull String name;
@@ -137,8 +145,8 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         protected @NotNull Map<String, StandardDyanasisNamespace> children;
         protected boolean available = true;
 
-        protected @NotNull SimpleDyanasisPropertyRegistry<NamespaceProperty> properties = new SimpleDyanasisPropertyRegistry<>();
-        protected @NotNull SimpleDyanasisFunctionRegistry<NamespaceFunction> functions = new SimpleDyanasisFunctionRegistry<>();
+        protected @NotNull StandardNamespacePropertyContainer properties = new StandardNamespacePropertyContainer();
+        protected @NotNull StandardNamespaceFunctionContainer functions = new StandardNamespaceFunctionContainer();
         protected @Nullable NamespaceDoc doc;
         protected @NotNull Map<String, DyanasisType<?>> types = new HashMap<>();
 
@@ -304,13 +312,13 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         }
 
         @Override
-        public @NotNull SimpleDyanasisPropertyRegistry<? extends NamespaceProperty> dyanasisProperties() {
+        public @NotNull StandardNamespacePropertyContainer dyanasisProperties() {
             checkAvailable();
             return properties;
         }
 
         @Override
-        public @NotNull SimpleDyanasisFunctionRegistry<? extends NamespaceFunction> dyanasisFunctions() {
+        public @NotNull StandardNamespaceFunctionContainer dyanasisFunctions() {
             checkAvailable();
             return functions;
         }
@@ -363,6 +371,20 @@ public class StandardDyanasisNamespaceTree implements DyanasisNamespaceContainer
         public @NotNull DyanasisRuntime dyanasisRuntime() {
             checkAvailable();
             return StandardDyanasisNamespaceTree.this.runtime;
+        }
+
+        public class StandardNamespacePropertyContainer extends SimpleDyanasisPropertyRegistry<NamespaceProperty> implements NamespacePropertyContainer<NamespaceProperty> {
+            @Override
+            public @NotNull StandardDyanasisNamespace owner() {
+                return StandardDyanasisNamespace.this;
+            }
+        }
+
+        public class StandardNamespaceFunctionContainer extends SimpleDyanasisFunctionRegistry<NamespaceFunction> implements NamespaceFunctionContainer<NamespaceFunction> {
+            @Override
+            public @NotNull StandardDyanasisNamespace owner() {
+                return StandardDyanasisNamespace.this;
+            }
         }
 
         @Override
