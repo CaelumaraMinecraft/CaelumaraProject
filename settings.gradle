@@ -166,8 +166,6 @@ include(
 include(
         ":Auspice",
 
-        ":Auspice:build-logic",
-
         ":Auspice:api",
         ":Auspice:api:platform",
         ":Auspice:api:platform:geyser",
@@ -203,7 +201,6 @@ include(
         ":Auspice:service-api:bungee-api",
         ":Auspice:service-api:velocity-api",
         ":Auspice:service",
-        ":Auspice:service-api:bukkit",
         ":Auspice:service:AttributePlus",
         ":Auspice:service:AuthMe",
         ":Auspice:service:CMI",
