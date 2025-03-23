@@ -164,8 +164,8 @@ public final class Generics {
         }
 
         boolean allType = true;
-        for (Object o : collection) {
-            if (!elementType.isInstance(o)) {
+        for (Object e : collection) {
+            if (!elementType.isInstance(e)) {
                 allType = false;
                 break;
             }

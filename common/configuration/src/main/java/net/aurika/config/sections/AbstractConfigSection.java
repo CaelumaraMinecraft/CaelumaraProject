@@ -1,25 +1,18 @@
 package net.aurika.config.sections;
 
 import com.google.common.base.Enums;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.config.path.ConfigEntry;
 import net.aurika.config.path.ConfigEntryMap;
 import net.aurika.config.sections.interpreter.SectionInterpreter;
 import net.aurika.config.sections.label.Label;
-import net.aurika.auspice.text.compiler.TextCompiler;
-import net.aurika.auspice.text.compiler.TextCompilerSettings;
-import net.aurika.auspice.text.compiler.TextObject;
-import net.aurika.text.placeholders.context.PlaceholderProvider;
-import net.aurika.util.Checker;
-import net.aurika.auspice.utils.Generics;
-import net.aurika.auspice.utils.arrays.ArrayUtils;
-import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
-import net.aurika.auspice.utils.compiler.math.MathCompiler;
-import net.aurika.auspice.utils.map.MapUtils;
+import net.aurika.util.collection.CollectionUtils;
+import net.aurika.util.collection.MapUtils;
+import net.aurika.util.generics.Generics;
+import net.aurika.validate.Validate;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.time.Duration;
 import java.util.*;
 
 /**
@@ -35,7 +28,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
      * 父节未知, 路径已知
      */
     public AbstractConfigSection(ConfigEntry path) {
-        this(Checker.Arg.notNull(path, "path", "Path must be provided"), path.getEnd(UNKNOWN_PARENT), null);
+        this(Validate.Arg.notNull(path, "path", "Path must be provided"), path.getEnd(UNKNOWN_PARENT), null);
     }
 
     public AbstractConfigSection(@NotNull ConfigEntry path, @NotNull String key, ConfigSection parent) {
@@ -47,7 +40,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public AbstractConfigSection(@NotNull ConfigEntry path, ConfigSection parent, @NotNull Label label) {
-        this(Checker.Arg.notNull(path, "path"), path.getEnd(UNKNOWN_PARENT), parent, label);
+        this(Validate.Arg.notNull(path, "path"), path.getEnd(UNKNOWN_PARENT), parent, label);
     }
 
     public AbstractConfigSection(@NotNull ConfigSection parent, @NotNull String key) {
@@ -55,13 +48,13 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public AbstractConfigSection(@NotNull ConfigSection parent, @NotNull String key, @NotNull Label label) {
-        this(Checker.Arg.notNull(parent, "parent", "Parent section must be provided when auto generate path.").getPath().append(Checker.Arg.notNull(key, "key", "Section name must be provided.")), key, parent, label);
+        this(Validate.Arg.notNull(parent, "parent", "Parent section must be provided when auto generate path.").getPath().append(Validate.Arg.notNull(key, "key", "Section name must be provided.")), key, parent, label);
     }
 
     protected AbstractConfigSection(@NotNull ConfigEntry path, @NotNull String key, ConfigSection parent, @NotNull Label label) {
-        Checker.Arg.notNull(path, "path", "Path must be provided");
-        Checker.Arg.notNull(key, "key", "Key must be provided");
-        Checker.Arg.notNull(label, "label", "Label must be provided");
+        Validate.Arg.notNull(path, "path", "Path must be provided");
+        Validate.Arg.notNull(key, "key", "Key must be provided");
+        Validate.Arg.notNull(label, "label", "Label must be provided");
         this.path = path;
         this.key = checkKeyIsPathEnd(path, key);
         this.parent = parent;
@@ -127,41 +120,41 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public void setLabel(@NotNull Label label) {
-        Checker.Arg.notNull(label, "Label", "label of config section must be provided");
+        Validate.Arg.notNull(label, "Label", "label of config section must be provided");
         this.label = label;
     }
 
     @Contract("_, _, !null -> !null")
     public <T> T getObject(@NotNull String @NotNull [] path, @NotNull Class<T> type, T def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         T t = this.getObject(path, type);
         return t == null ? def : t;
     }
 
     @Contract("_, !null -> !null")
     public Boolean getBoolean(@NotNull String @NotNull [] path, Boolean def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         Boolean b = getBoolean(path);
         return b == null ? def : b;
     }
 
     @Contract("_, !null -> !null")
     public Byte getByte(@NotNull String @NotNull [] path, Byte def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         Byte b = getByte(path);
         return b == null ? def : b;
     }
 
     @Contract("_, !null -> !null")
     public Short getShort(@NotNull String @NotNull [] path, Short def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         Short s = getShort(path);
         return s == null ? def : s;
     }
 
     @Contract("_, !null -> !null")
     public Integer getInteger(@NotNull String @NotNull [] path, Integer def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         Integer i = this.getInteger(path);
         return i == null ? def : i;
@@ -169,7 +162,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
 
     @Contract("_, !null -> !null")
     public Long getLong(@NotNull String @NotNull [] path, Long def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         Long l = this.getLong(path);
         return l == null ? def : l;
@@ -177,7 +170,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
 
     @Contract("_, !null -> !null")
     public Float getFloat(@NotNull String @NotNull [] path, Float def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         Float f = this.getFloat(path);
         return f == null ? def : f;
@@ -185,30 +178,30 @@ public abstract class AbstractConfigSection implements ConfigSection {
 
     @Contract("_, !null -> !null")
     public Double getDouble(@NotNull String @NotNull [] path, Double def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         Double d = this.getDouble(path);
         return d == null ? def : d;
     }
 
     @Contract("_, !null -> !null")
     public String getString(@NotNull String @NotNull [] path, String def) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         String s = getString(path);
         return s == null ? def : s;
     }
 
     public @Nullable List<Boolean> getBooleanList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         return Generics.filterElementType(this.getList(path), Boolean.class);
     }
 
     public @Nullable List<Character> getCharacterList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
         return Generics.filterElementType(this.getList(path), Character.class);
     }
 
     public @Nullable List<Byte> getByteList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         List<Number> numberList = Generics.filterElementType(this.getList(path), Number.class);
         if (numberList != null) {
@@ -223,7 +216,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public @Nullable List<Short> getShortList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         List<Number> numberList = Generics.filterElementType(this.getList(path), Number.class);
         if (numberList != null) {
@@ -238,7 +231,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public @Nullable List<Integer> getIntegerList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         List<Number> numberList = Generics.filterElementType(this.getList(path), Number.class);
         if (numberList != null) {
@@ -253,7 +246,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public @Nullable List<Long> getLongList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         List<Number> numberList = Generics.filterElementType(this.getList(path), Number.class);
         if (numberList != null) {
@@ -268,7 +261,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public @Nullable List<Float> getFloatList(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.nonNullArray(path, "path");
 
         List<Number> numberList = Generics.filterElementType(this.getList(path), Number.class);
         if (numberList != null) {
@@ -323,21 +316,21 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public <T> @Nullable List<T> getList(@NotNull String @NotNull [] path, @NotNull Class<T> elementType) {
-        Checker.Arg.notNull(elementType, "elementType");
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.notNull(elementType, "elementType");
+        Validate.Arg.nonNullArray(path, "path");
         return Generics.filterElementType(this.getList(path), elementType);
     }
 
     public <K, V> @Nullable Map<K, V> getMap(@NotNull String @NotNull [] path, @NotNull Class<K> keyType, @NotNull Class<V> valueType) {
-        Checker.Arg.notNull(keyType, "keyType");
-        Checker.Arg.notNull(valueType, "valueType");
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.notNull(keyType, "keyType");
+        Validate.Arg.notNull(valueType, "valueType");
+        Validate.Arg.nonNullArray(path, "path");
         return Generics.filterKVType(this.getMap(path), keyType, valueType);
     }
 
     public <T extends Enum<T>> @Nullable T getEnum(@NotNull String @NotNull [] path, Class<T> type) {
-        Checker.Arg.notNull(type, "type");
-        Checker.Arg.nonNullArray(path, "path");
+        Validate.Arg.notNull(type, "type");
+        Validate.Arg.nonNullArray(path, "path");
         String s = this.getString(path);
         if (s != null) {
             return Enums.getIfPresent(type, s).orNull();
@@ -345,29 +338,29 @@ public abstract class AbstractConfigSection implements ConfigSection {
         return null;
     }
 
-    public @Nullable TextObject getText(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
-        return this.getText(path, TextCompiler.defaultSettings());
-    }
-
-    public @Nullable TextObject getText(@NotNull String @NotNull [] path, @NotNull TextCompilerSettings settings) {
-        Checker.Arg.notNull(settings, "settings", "TextCompiler settings cannot be null");
-        Checker.Arg.nonNullArray(path, "path");
-        String str = this.getString(path);
-        return str == null ? null : TextCompiler.compile(str, settings);
-    }
-
-    public @Nullable MathCompiler.Expression getMath(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
-        String str = this.getString(path);
-        return str == null ? null : MathCompiler.compile(str);
-    }
-
-    public @Nullable ConditionCompiler.LogicalOperand getCondition(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path");
-        String str = this.getString(path);
-        return str == null ? null : ConditionCompiler.compile(str).evaluate();
-    }
+//    public @Nullable TextObject getText(@NotNull String @NotNull [] path) {
+//        Validate.Arg.nonNullArray(path, "path");
+//        return this.getText(path, TextCompiler.defaultSettings());
+//    }
+//
+//    public @Nullable TextObject getText(@NotNull String @NotNull [] path, @NotNull TextCompilerSettings settings) {
+//        Validate.Arg.notNull(settings, "settings", "TextCompiler settings cannot be null");
+//        Validate.Arg.nonNullArray(path, "path");
+//        String str = this.getString(path);
+//        return str == null ? null : TextCompiler.compile(str, settings);
+//    }
+//
+//    public @Nullable MathCompiler.Expression getMath(@NotNull String @NotNull [] path) {
+//        Validate.Arg.nonNullArray(path, "path");
+//        String str = this.getString(path);
+//        return str == null ? null : MathCompiler.compile(str);
+//    }
+//
+//    public @Nullable ConditionCompiler.LogicalOperand getCondition(@NotNull String @NotNull [] path) {
+//        Validate.Arg.nonNullArray(path, "path");
+//        String str = this.getString(path);
+//        return str == null ? null : ConditionCompiler.compile(str).evaluate();
+//    }
 
     public @Nullable List<Boolean> getBooleanList() {
         return Generics.filterElementType(this.getList(), Boolean.class);
@@ -464,7 +457,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
     }
 
     public @Nullable <E extends Enum<E>> List<E> getEnumList(@NotNull Class<E> enumType) {
-        Checker.Arg.notNull(enumType, "enumType");
+        Validate.Arg.notNull(enumType, "enumType");
 
         List<String> strList = this.getStringList();
         if (strList != null) {
@@ -500,7 +493,7 @@ public abstract class AbstractConfigSection implements ConfigSection {
 
     public @NotNull <T> List<T> siftList(@NotNull Class<T> elementType) {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), elementType, false);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), elementType, false);
     }
 
     public @NotNull <K, V> Map<K, V> siftMap(@NotNull Class<K> keyType, @NotNull Class<V> valueType) {
@@ -510,38 +503,38 @@ public abstract class AbstractConfigSection implements ConfigSection {
 
     public @NotNull List<Boolean> siftBooleanList() {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), Boolean.class, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), Boolean.class, true);
     }
 
     public @NotNull List<Integer> siftIntegerList() {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), Integer.class, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), Integer.class, true);
     }
 
     public @NotNull List<Long> siftLongList() {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), Long.class, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), Long.class, true);
     }
 
     public @NotNull List<Float> siftFloatList() {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), Float.class, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), Float.class, true);
     }
 
     public @NotNull List<Double> siftDoubleList() {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), Double.class, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), Double.class, true);
     }
 
     public @NotNull List<String> siftStringList() {
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), String.class, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), String.class, true);
     }
 
     public <E extends Enum<E>> @NotNull List<E> siftEnumList(Class<E> enumType) {
-        Checker.Arg.notNull(enumType, "enumType");
+        Validate.Arg.notNull(enumType, "enumType");
         List<?> list = this.getList();
-        return list == null ? new ArrayList<>() : ArrayUtils.typeFilter(list, new ArrayList<>(), enumType, true);
+        return list == null ? new ArrayList<>() : CollectionUtils.typeFilter(list, new ArrayList<>(), enumType, true);
     }
 
     public @NotNull ConfigSection.BranchState getBranchState() {
@@ -556,29 +549,29 @@ public abstract class AbstractConfigSection implements ConfigSection {
         }
     }
 
-    public Duration getTime() {
-        return this.getTime(PlaceholderProvider.EMPTY);
-    }
-
-    public @Nullable Duration getTime(@Nullable PlaceholderProvider placeholderProvider) {
-        try {
-            return SectionInterpreter.getTime(this, placeholderProvider);
-        } catch (RuntimeException e) {
-            return null;
-        }
-    }
-
-    public Duration getTime(String[] path) {
-        return this.getTime(path, PlaceholderProvider.EMPTY);
-    }
-
-    public @Nullable Duration getTime(String @NotNull [] path, @Nullable PlaceholderProvider placeholderProvider) {
-        try {
-            return SectionInterpreter.getTime(this.getSection(path), placeholderProvider);
-        } catch (RuntimeException e) {
-            return null;
-        }
-    }
+//    public Duration getTime() {
+//        return this.getTime(PlaceholderProvider.EMPTY);
+//    }
+//
+//    public @Nullable Duration getTime(@Nullable PlaceholderProvider placeholderProvider) {
+//        try {
+//            return SectionInterpreter.getTime(this, placeholderProvider);
+//        } catch (RuntimeException e) {
+//            return null;
+//        }
+//    }
+//
+//    public Duration getTime(String[] path) {
+//        return this.getTime(path, PlaceholderProvider.EMPTY);
+//    }
+//
+//    public @Nullable Duration getTime(String @NotNull [] path, @Nullable PlaceholderProvider placeholderProvider) {
+//        try {
+//            return SectionInterpreter.getTime(this.getSection(path), placeholderProvider);
+//        } catch (RuntimeException e) {
+//            return null;
+//        }
+//    }
 
     public @Nullable <T> T asObject(SectionInterpreter<T> interpreter) {
         return interpreter.parse(this);

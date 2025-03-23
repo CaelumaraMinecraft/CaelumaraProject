@@ -1,9 +1,9 @@
 package net.aurika.config.path;
 
+import net.aurika.abstraction.BuildableObject;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.abstraction.BuildableObject;
-import net.aurika.util.Checker;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,10 +20,8 @@ public class ConfigEntryBuilder implements BuildableObject.Builder {
     }
 
     public ConfigEntryBuilder(@NotNull String @NotNull [] initialization) {
-        Checker.Arg.nonNullArray(initialization, "initialization");
-        LinkedList<@NotNull String> path = new LinkedList<>();
-        path.addAll(Arrays.asList(initialization));
-        this.path = path;
+        Validate.Arg.nonNullArray(initialization, "initialization");
+        this.path = new LinkedList<>(Arrays.asList(initialization));
     }
 
     public ConfigEntryBuilder(LinkedList<@NotNull String> initialization) {
@@ -39,14 +37,14 @@ public class ConfigEntryBuilder implements BuildableObject.Builder {
 
     @Contract("_ -> this")
     public ConfigEntryBuilder append(@NotNull String section) {
-        Checker.Arg.notNull(section, "section");
+        Validate.Arg.notNull(section, "section");
         this.path.add(section);
         return this;
     }
 
     @Contract("_ -> this")
     public ConfigEntryBuilder append(@NotNull String @NotNull [] sections) {
-        Checker.Arg.nonNullArray(sections, "sections");
+        Validate.Arg.nonNullArray(sections, "sections");
         Collections.addAll(this.path, sections);
         return this;
     }

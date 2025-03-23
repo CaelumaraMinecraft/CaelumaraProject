@@ -146,8 +146,8 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
         Validate.Arg.notNull(data, "data");
         ConfigSection parent = getParent();
         if (parent instanceof YamlNodeSection yamlParent) {
-            Node prentNode = yamlParent.root;
-            if (!(prentNode instanceof MappingNode mappingParentNode)) {
+            Node parentNode = yamlParent.root;
+            if (!(parentNode instanceof MappingNode mappingParentNode)) {
                 throw new IllegalStateException("Parent node is not a mapping node");
             } else {
                 NodeUtils.putNode(mappingParentNode, this.getKey(), data);

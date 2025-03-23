@@ -9,13 +9,7 @@ import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.auspice.text.compiler.TextCompilerSettings;
-import net.aurika.auspice.text.compiler.TextObject;
-import net.aurika.text.placeholders.context.PlaceholderProvider;
-import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
-import net.aurika.auspice.utils.compiler.math.MathCompiler;
 
-import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,21 +17,14 @@ import java.util.Set;
 
 /**
  * 配置节.
- * <p>
- * 用于表达某配置文件中的一部分, 由键(key) 与 根(root) 构成:
- * <p>
- * 键为一个字符串, 并且不应为 null. 若这个配置节作为根存在, 则键为 {@link ConfigSection#ROOT}
- * <p>
- * 根有两种形式:
- * <p>
- * 一种是这个配置节拥有子节, 此时根为字符串键对子配置节值的映射.
- * <p>
- * 另一种是这个配置节直接对应一个值, 这个配置节没有子节.
- * <p>
- * 此外, 这个配置节应当提供路径(在需要的时候), 路径的最后一节的值( {@linkplain ConfigEntry#getEnd()} )应等于这个配置节的键(这个配置节作为根存在除外).
- * 若这个配置节作为配置文件根存在, 路径应为 {@link ConfigEntry#empty()}
- * <p>
- * 这是一个示例配置文件：
+ * <p>用于表达某配置文件中的一部分, 由键(key) 与 根(root) 构成: </p>
+ * <p>键为一个字符串, 并且不应为 null. 若这个配置节作为根存在, 则键为 {@link ConfigSection#ROOT}
+ * <p>根有两种形式: </p>
+ * <p>一种是这个配置节拥有子节, 此时根为字符串键对子配置节值的映射.</p>
+ * <p>另一种是这个配置节直接对应一个值, 这个配置节没有子节.</p>
+ * <p>此外, 这个配置节应当提供路径(在需要的时候), 路径的最后一节的值( {@linkplain ConfigEntry#getEnd()} )应等于这个配置节的键(这个配置节作为根存在除外).
+ * 若这个配置节作为配置文件根存在, 路径应为 {@link ConfigEntry#empty()}/. </p>
+ * <p>这是一个示例配置文件：</p>
  * <blockquote><pre>
  * pets:
  *   cat:
@@ -290,13 +277,13 @@ public interface ConfigSection {
 
     @Nullable <T extends Enum<T>> T getEnum(@NotNull String @NotNull [] path, Class<T> type);
 
-    @Nullable TextObject getText(@NotNull String @NotNull [] path);
-
-    @Nullable TextObject getText(@NotNull String @NotNull [] path, @NotNull TextCompilerSettings settings);
-
-    @Nullable MathCompiler.Expression getMath(@NotNull String @NotNull [] path);
-
-    @Nullable ConditionCompiler.LogicalOperand getCondition(@NotNull String @NotNull [] path);
+//    @Nullable TextObject getText(@NotNull String @NotNull [] path);
+//
+//    @Nullable TextObject getText(@NotNull String @NotNull [] path, @NotNull TextCompilerSettings settings);
+//
+//    @Nullable MathCompiler.Expression getMath(@NotNull String @NotNull [] path);
+//
+//    @Nullable ConditionCompiler.LogicalOperand getCondition(@NotNull String @NotNull [] path);
 
     @Nullable List<?> getList(@NotNull String @NotNull [] path);
 
@@ -326,7 +313,7 @@ public interface ConfigSection {
 
     @Nullable <K, V> Map<K, V> getMap(@NotNull String @NotNull [] path, @NotNull Class<K> keyType, @NotNull Class<V> valueType);
 
-    @Nullable Duration getTime(@NotNull String @NotNull [] path, @Nullable PlaceholderProvider placeholderProvider);
+//    @Nullable Duration getTime(@NotNull String @NotNull [] path, @Nullable PlaceholderProvider placeholderProvider);
 
 
     // ==== direct get methods
@@ -388,7 +375,7 @@ public interface ConfigSection {
 
     @Nullable <K, V> Map<K, V> getMap(@NotNull Class<K> keyType, @NotNull Class<V> valueType);
 
-    @Nullable Duration getTime(@Nullable PlaceholderProvider placeholderProvider);
+//    @Nullable Duration getTime(@Nullable PlaceholderProvider placeholderProvider);
 
     // =====  sift methods
 

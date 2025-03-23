@@ -1,9 +1,5 @@
 package net.aurika.common.snakeyaml.nodes;
 
-import net.aurika.annotations.bookmark.Bookmark;
-import net.aurika.util.function.TriConsumer;
-import net.aurika.util.generics.Generics;
-import net.aurika.util.unsafe.fn.Fn;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +28,6 @@ public final class NodeUtils {
 
     };
 
-    @ImplicitOperateCached
     public static Node nodeOfObject(@Nullable Object obj) {
         Node node = CORE_REPRESENTER.represent(obj);
         NodesKt.cacheConstructed(node, obj);
@@ -174,7 +169,6 @@ public final class NodeUtils {
         return new MappingNode(node.getTag(), true, node.getValue(), node.getFlowStyle(), node.getStartMark(), node.getEndMark());
     }
 
-    @Bookmark(value = {Bookmark.BookmarkType.EXPERIMENTAL}, comment = "我不知道浅拷贝一个 AnchorNode 有啥用")
     @Contract("_ -> new")
     public static AnchorNode shallowCopyAnchorNode(AnchorNode node) {
         return new AnchorNode(node.getRealNode());
@@ -320,7 +314,6 @@ public final class NodeUtils {
         return node instanceof ScalarNode;
     }
 
-    @ImplicitOperateCached
     public static @Nullable Object deepGetParsed(Node node) {
         node = unpackAnchor(node);
         Object parsed = NodesKt.parsed(node);
@@ -343,7 +336,6 @@ public final class NodeUtils {
         return parsed;
     }
 
-    @ImplicitOperateCached
     public static List<?> deepGetParsed(SequenceNode node) {
         if (node == null) return null;
         Object parsed = NodesKt.parsed(node);
@@ -358,7 +350,6 @@ public final class NodeUtils {
         return (List<?>) parsed;
     }
 
-    @ImplicitOperateCached
     public static Map<String, ?> deepGetParsed(MappingNode node) {
         Object parsed = NodesKt.parsed(node);
         if (parsed instanceof Map<?, ?>) {

@@ -1,27 +1,28 @@
 package net.aurika.config.path;
 
 import net.aurika.abstraction.BuildableObject;
-import net.aurika.common.annotations.data.Immutable;
-import net.aurika.util.Checker;
+import net.aurika.util.collection.ArrayUtils;
+import net.aurika.util.string.Strings;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.auspice.utils.arrays.ArrayUtils;
-import net.aurika.auspice.utils.string.Strings;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-@Immutable
-public class ConfigEntry implements BuildableObject {
+/**
+ * An immutable class that represents a config path.
+ */
+public final class ConfigEntry implements BuildableObject {
     public static final String ALLOWED_PATH = "[A-Za-z0-9-]+((\\.[A-Za-z0-9-]+)+)?";
     private static final Pattern PATH_PATTERN = Pattern.compile(ALLOWED_PATH);
-    protected static final ConfigEntry EMPTY = new ConfigEntry(new String[0]);
+    private static final ConfigEntry EMPTY = new ConfigEntry(new String[0]);
 
     private final @NotNull String @NotNull [] path;
 
     public ConfigEntry(@NotNull String @NotNull [] path) {
-        Checker.Arg.nonNullArray(path, "path", "Path array cannot contains null values");
+        Validate.Arg.nonNullArray(path, "path", "Path array cannot contains null values");
         this.path = path;
     }
 
@@ -79,7 +80,7 @@ public class ConfigEntry implements BuildableObject {
     }
 
     public ConfigEntry removePrefix(@NotNull ConfigEntry prefix) {
-        Checker.Arg.notNull(prefix, "prefix");
+        Validate.Arg.notNull(prefix, "prefix");
         return this.removePrefix(prefix.path);
     }
 
@@ -139,7 +140,7 @@ public class ConfigEntry implements BuildableObject {
         }
     }
 
-    public String asString() {
+    public @NotNull String asString() {
         return String.join(".", this.path);
     }
 
