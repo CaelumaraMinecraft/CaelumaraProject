@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":common:configuration"))
+    api(project(":common:config"))
     api(project(":Auspice:auspice-api:platform"))
     api(project(":aurika"))
     api(project(":ecliptor"))

@@ -1,5 +1,7 @@
 package net.aurika.common.snakeyaml.nodes;
 
+import net.aurika.common.function.TriConsumer;
+import net.aurika.util.generics.Generics;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -344,7 +346,7 @@ public final class NodeUtils {
         }
         parsed = new LinkedList<>();
         for (Node subNode : node.getValue()) {
-            ((LinkedList<?>) parsed).add(Fn.cast(deepGetParsed(subNode)));
+            ((LinkedList) parsed).add(deepGetParsed(subNode));
         }
         NodesKt.cacheConstructed(node, parsed);
         return (List<?>) parsed;

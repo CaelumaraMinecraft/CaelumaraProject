@@ -113,7 +113,10 @@ rootProject.name = "Aurika"
 
 include(
         ":common:annotation",
-        ":common:configuration",
+        ":common:config",
+        ":common:config:config-api",
+        ":common:config:config-json",
+        ":common:config:config-yaml",
         ":common:data-api",
         ":common:dependency",
         ":common:examinable-api",

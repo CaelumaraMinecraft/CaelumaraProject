@@ -2,10 +2,9 @@ package net.aurika.common.key.namespace.nested;
 
 import net.aurika.common.key.namespace.NSKey;
 import net.aurika.common.key.namespace.nested.exceptions.NestedNamespaceContainsIllegalLevelException;
-import net.aurika.util.Checker;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.auspice.utils.string.Strings;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -26,7 +25,7 @@ public final class NestedNamespace {
     }
 
     public NestedNamespace(@NotNull String @NotNull [] nesting) {
-        Checker.Arg.nonNullArray(nesting, "nesting");
+        Validate.Arg.nonNullArray(nesting, "nesting");
 
         for (int i = 0; i < nesting.length; i++) {
             String ns = nesting[i];
@@ -61,7 +60,7 @@ public final class NestedNamespace {
      * @return 这个嵌套命名空间是否在另外一个嵌套命名空间内部
      */
     public boolean isInside(@NotNull NestedNamespace other) {
-        Checker.Arg.notNull(other, "other");
+        Validate.Arg.notNull(other, "other");
         String[] other_nesting = other.nesting;
         String[] this_nesting = this.nesting;
         if (this_nesting.length <= other_nesting.length) {
@@ -82,7 +81,7 @@ public final class NestedNamespace {
      */
     @Contract("_ -> new")
     public @NotNull NestedNamespace newInternal(@NotNull @NSKey.Namespace String ns) {
-        Checker.Arg.notNull(ns, "ns");
+        Validate.Arg.notNull(ns, "ns");
         if (!NSKey.NAMESPACE_PATTERN.matcher(ns).matches()) {
             throw new IllegalArgumentException("namespace '" + ns + "' doesnt matches: " + NSKey.ALLOWED_NAMESPACE);
         }
