@@ -41,7 +41,7 @@ public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
                 landContext.setPrimaryTarget(land);
                 LandUtil.addMessageContextEntries(land, landContext);
                 ConditionProcessor landVariableProcessor = new ConditionProcessor(landContext);
-                if (Boolean.TRUE.equals(filter.eval(landVariableProcessor))) {
+                if (filter.eval(landVariableProcessor)) {
                     count++;
                 }
             }
