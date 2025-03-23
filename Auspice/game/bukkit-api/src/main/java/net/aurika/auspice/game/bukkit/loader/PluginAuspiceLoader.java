@@ -1,8 +1,8 @@
 package net.aurika.auspice.game.bukkit.loader;
 
-import net.aurika.auspice.api.user.AuspiceUser;
+import net.aurika.auspice.user.AuspiceUser;
 import net.aurika.auspice.loader.AuspiceLoader;
-import net.aurika.auspice.main.Auspice;
+import net.aurika.auspice.user.Auspice;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 

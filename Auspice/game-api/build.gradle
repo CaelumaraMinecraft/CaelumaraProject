@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":Auspice:api"))
+    api(project(":Auspice:auspice-api"))
     api(libs.annotations.jetbrains)
 }

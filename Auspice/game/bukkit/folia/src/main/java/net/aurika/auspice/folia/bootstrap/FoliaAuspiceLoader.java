@@ -1,9 +1,9 @@
 package net.aurika.auspice.folia.bootstrap;
 
-import net.aurika.auspice.api.user.AuspiceUser;
+import net.aurika.auspice.user.AuspiceUser;
 import net.aurika.auspice.game.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.auspice.game.bukkit.scheduler.BukkitSchedulerAdapter;
-import net.aurika.auspice.main.Auspice;
+import net.aurika.auspice.user.Auspice;
 import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
 import net.aurika.common.dependency.DependencyManager;
 import org.bukkit.plugin.Plugin;

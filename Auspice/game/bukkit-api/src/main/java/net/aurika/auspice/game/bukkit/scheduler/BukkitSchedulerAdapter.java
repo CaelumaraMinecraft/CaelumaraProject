@@ -4,10 +4,9 @@ import net.aurika.auspice.scheduler.AbstractJavaScheduler;
 import net.aurika.util.scheduler.*;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.auspice.api.user.AuspiceUser;
+import net.aurika.auspice.user.AuspiceUser;
 import net.aurika.auspice.game.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.common.dependency.classpath.BootstrapProvider;
-import net.aurika.auspice.scheduler.*;
 import net.aurika.util.scheduler.Task.ExecutionContextType;
 import net.aurika.auspice.utils.unsafe.time.TickTemporalUnit;
 

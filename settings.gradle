@@ -113,6 +113,7 @@ rootProject.name = "Aurika"
 
 include(
         ":common:annotation",
+        ":common:configuration",
         ":common:data-api",
         ":common:dependency",
         ":common:examinable-api",
@@ -160,15 +161,14 @@ include(
 include(
         ":aurika:base",
         ":aurika:config-api",
-        ":aurika:configuration",
 )
 
 include(
         ":Auspice",
 
-        ":Auspice:api",
-        ":Auspice:api:platform",
-        ":Auspice:api:platform:geyser",
+        ":Auspice:auspice-api",
+        ":Auspice:auspice-api:platform",
+        ":Auspice:auspice-api:platform:geyser",
 
 
         ":Auspice:game",

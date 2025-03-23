@@ -45,7 +45,7 @@ public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedReg
             this.registry = new HashMap<>();
         }
         Key key = obj.key();
-        Objects.requireNonNull(key, "Obj key");
+        Objects.requireNonNull(key, "obj key");
         this.registry.put(key, obj);
     }
 

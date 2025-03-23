@@ -1,6 +1,6 @@
 package net.aurika.auspice.folia.bootstrap;
 
-import net.aurika.auspice.api.user.AuspiceUser;
+import net.aurika.auspice.user.AuspiceUser;
 import net.aurika.common.dependency.classpath.BootstrapProvider;
 import net.aurika.common.dependency.classpath.ClassPathAppender;
 import net.aurika.common.dependency.classpath.ReflectionClassPathAppender;
