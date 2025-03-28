@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.invoking.input;
 
-import net.aurika.dyanasis.api.lexer.setting.DyanasisCompilerSettings;
+import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

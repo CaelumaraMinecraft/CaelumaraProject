@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.lexer.setting;
+package net.aurika.dyanasis.api.compiler.setting;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;

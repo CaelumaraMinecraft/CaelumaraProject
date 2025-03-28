@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.lexer.setting;
+package net.aurika.dyanasis.api.compiler.setting;
 
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;

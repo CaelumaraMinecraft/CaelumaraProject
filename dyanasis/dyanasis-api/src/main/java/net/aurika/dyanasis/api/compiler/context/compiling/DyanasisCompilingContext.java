@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.lexer.context.compiling;
+package net.aurika.dyanasis.api.compiler.context.compiling;
 
 import org.jetbrains.annotations.ApiStatus;
 

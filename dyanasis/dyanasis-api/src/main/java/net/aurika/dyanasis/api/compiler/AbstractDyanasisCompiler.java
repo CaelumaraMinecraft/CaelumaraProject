@@ -1,8 +1,7 @@
-package net.aurika.dyanasis.api.lexer;
+package net.aurika.dyanasis.api.compiler;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.lexer.context.compiling.DyanasisCompilingContext;
-import net.aurika.dyanasis.api.lexer.setting.DyanasisCompilerSettings;
+import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

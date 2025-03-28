@@ -7,7 +7,7 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisGetablePro
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
-import net.aurika.dyanasis.api.lexer.DyanasisCompiler;
+import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;

@@ -5,7 +5,7 @@ import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFuncti
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
-import net.aurika.dyanasis.api.lexer.DyanasisCompiler;
+import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.type.AbstractDyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisType;

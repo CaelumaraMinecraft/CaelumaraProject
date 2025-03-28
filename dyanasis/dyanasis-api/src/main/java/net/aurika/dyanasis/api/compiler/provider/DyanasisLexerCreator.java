@@ -1,6 +1,6 @@
-package net.aurika.dyanasis.api.lexer.provider;
+package net.aurika.dyanasis.api.compiler.provider;
 
-import net.aurika.dyanasis.api.lexer.DyanasisCompiler;
+import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 
 /**
  * An interface to generate a dyanasis lexer.

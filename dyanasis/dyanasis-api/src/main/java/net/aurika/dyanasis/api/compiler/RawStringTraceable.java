@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.lexer;
+package net.aurika.dyanasis.api.compiler;
 
 import org.jetbrains.annotations.NotNull;
 

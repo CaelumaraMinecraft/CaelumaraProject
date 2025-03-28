@@ -2,7 +2,7 @@ package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceIdent;
-import net.aurika.dyanasis.api.lexer.DyanasisCompiler;
+import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.object.DefaultDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;

@@ -1,4 +1,4 @@
-package net.aurika.dyanasis.api.lexer.exception;
+package net.aurika.dyanasis.api.compiler.exception;
 
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;

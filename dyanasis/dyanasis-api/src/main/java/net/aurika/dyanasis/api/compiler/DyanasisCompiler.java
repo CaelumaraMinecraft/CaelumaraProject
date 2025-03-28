@@ -1,13 +1,14 @@
-package net.aurika.dyanasis.api.lexer;
+package net.aurika.dyanasis.api.compiler;
 
+import net.aurika.dyanasis.api.compiler.context.evaluating.DyanasisCompilerEvaluateContext;
+import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
 import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
-import net.aurika.dyanasis.api.lexer.context.evaluating.DyanasisCompilerEvaluateContext;
-import net.aurika.dyanasis.api.lexer.setting.DyanasisCompilerSettings;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.validate.Validate;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,16 +21,16 @@ public interface DyanasisCompiler {
   @NotNull Expression compile();
 
   /**
-   * Gets the parent lexer of this lexer instance.
+   * Gets the parent compiler of this compiler instance.
    *
-   * @return the parent lexer
+   * @return the parent compiler
    */
   @Nullable DyanasisCompiler parent();
 
   /**
-   * Gets the lex settings.
+   * Gets the compile settings.
    *
-   * @return the lex settings
+   * @return the compile settings
    */
   @NotNull DyanasisCompilerSettings settings();
 
@@ -49,17 +50,14 @@ public interface DyanasisCompiler {
 
   }
 
-  interface PropertyOperator extends InvokingOperator { }
-
-  interface FunctionOperator extends InvokingOperator { }
-
-  interface InvokingOperator extends Operator { }
+  interface Executing extends Expression { }
 
   /**
-   * An operator who accepts the operand at the right. Like {@code ++i} {@code !true}.
+   * An operator who accepts the operand at the right. Like {@code ++i} {@code !b}.
    */
   interface PrefixOperator extends UnaryOperator {
 
+    @Override
     @NotNull Operation accept(@NotNull Expression right);
 
   }
@@ -74,11 +72,16 @@ public interface DyanasisCompiler {
      *
      * @param left the left operand
      */
+    @Override
     @NotNull Operation accept(@NotNull Expression left);
 
   }
 
-  interface UnaryOperator extends Operator { }
+  interface UnaryOperator extends Operator {
+
+    @NotNull Operation accept(@NotNull Expression operand);
+
+  }
 
   /**
    * An operator that accepts a left operand and a right operand, like {@code 1 + 4}
@@ -88,6 +91,12 @@ public interface DyanasisCompiler {
     @NotNull Operation accept(@NotNull Expression left, @NotNull Expression right);
 
   }
+
+  /**
+   * 三元运算符.
+   */
+  @ApiStatus.Experimental
+  interface TernaryOperator extends Operator { }
 
   interface LogicalOperator extends Operator { }
 
@@ -99,7 +108,7 @@ public interface DyanasisCompiler {
   interface Operator { }
 
   /**
-   * 一个操作语句, 包含一个或多个操作数 {@linkplain Expression} 以及一个操作符 {@linkplain Operator}.
+   * 一个操作语句, 包含一个或多个 {@linkplain Expression operand} 以及一个操作符 {@linkplain Operator operator}.
    * 如 {@code a + b} {@code a > b} {@code "in" == b} {@code a && b} {@code a || b} 等.
    */
   interface Operation extends Statement {
@@ -171,6 +180,17 @@ public interface DyanasisCompiler {
   interface NamespaceAccess extends Access { }
 
   /**
+   * A domain object access, such as access a {@link DyanasisNamespace namespace},
+   * a {@link DyanasisNamespace.NamespaceProperty namespace level property}.
+   * Note that execute a function or a constructor is not a {@linkplain DomainAccess}.
+   */
+  interface DomainAccess extends Access {
+
+    @NotNull DomainAccessPath path();
+
+  }
+
+  /**
    * An expression that is a thing been accessed. Such as access a {@link DyanasisNamespace namespace},
    * a {@code local variable}, a {@link DyanasisProperty peoperty}.
    */
@@ -227,22 +247,31 @@ public interface DyanasisCompiler {
 
   }
 
-  interface LocalVariableDeclaration extends Declaration { }
+  interface LocalVariableDeclaration extends Declaration {
 
-  interface FunctionDeclarationWithBody extends FunctionDeclaration {
-
-    /**
-     * Gets the function body.
-     *
-     * @return the function body
-     */
-    @NotNull Block functionBody();
+    @NotNull String variableName();
 
   }
+
+
+
+  interface InstanceFunctionDeclaration extends FunctionDeclaration { }
+
+  interface ExtendFunctionDeclaration extends FunctionDeclaration { }
+
+  interface ProtectedPropertyDeclaration extends PropertyDeclaration { }
+
+  interface ExtendPropertyDeclaration extends PropertyDeclaration { }
+
+  interface PropertyDeclaration extends Declaration { }
 
   interface FunctionDeclaration extends Declaration {
 
+    @NotNull FunctionDeclarationBody functionBody();
+
   }
+
+  interface FunctionDeclarationBody { }
 
   /**
    * 标记一个新的声明
