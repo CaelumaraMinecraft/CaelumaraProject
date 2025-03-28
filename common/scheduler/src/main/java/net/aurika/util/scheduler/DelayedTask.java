@@ -5,5 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
 
 public interface DelayedTask extends ScheduledTask {
-    @NotNull Duration getDelay();
+
+  @NotNull Duration getDelay();
+
 }

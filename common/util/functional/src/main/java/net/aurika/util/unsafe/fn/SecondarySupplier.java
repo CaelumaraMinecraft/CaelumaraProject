@@ -8,5 +8,7 @@ import java.util.function.Supplier;
  */
 @FunctionalInterface
 public interface SecondarySupplier<T> extends Supplier<T> {
-    T get();
+
+  T get();
+
 }

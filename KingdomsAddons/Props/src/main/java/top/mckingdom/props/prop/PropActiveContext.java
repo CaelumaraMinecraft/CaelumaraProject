@@ -18,129 +18,130 @@ import java.util.function.Consumer;
 
 public final class PropActiveContext {
 
-    private Event event;
-    private KingdomPlayer player;
-    private ItemStack item;
-    private ActiveType activeType;
+  private Event event;
+  private KingdomPlayer player;
+  private ItemStack item;
+  private ActiveType activeType;
 
-    private Block blockClicked;
-    private BlockFace blockFace;
-    private KeyedConfigAccessor option;
+  private Block blockClicked;
+  private BlockFace blockFace;
+  private KeyedConfigAccessor option;
 
-    private LivingEntity interactedEntity;
-    private Consumer<KingdomPropActiveEvent> modifier;
+  private LivingEntity interactedEntity;
+  private Consumer<KingdomPropActiveEvent> modifier;
 
-    public PropActiveContext() {
+  public PropActiveContext() {
 
+  }
+
+  private PropActiveContext(Event cause) {
+    this.event = cause;
+  }
+
+  public PropActiveContext(PlayerInteractEntityEvent cause) {
+    this((Event) cause);
+    player = KingdomPlayer.getKingdomPlayer(cause.getPlayer());
+    item = cause.getPlayer().getItemInUse();
+    activeType = ActiveType.RIGHT_CLICK_ENTITY;
+  }
+
+  public PropActiveContext(PlayerInteractEvent cause) {
+    this((Event) cause);
+    player = KingdomPlayer.getKingdomPlayer(cause.getPlayer());
+    item = cause.getItem();
+    blockClicked = cause.getClickedBlock();
+    blockFace = cause.getBlockFace();
+    if (cause.getAction() == Action.RIGHT_CLICK_AIR) {
+      activeType = ActiveType.RIGHT_CLICK_AIR;
+    } else if (cause.getAction() == Action.LEFT_CLICK_AIR) {
+      activeType = ActiveType.LEFT_CLICK_AIR;
+    } else if (cause.getAction() == Action.RIGHT_CLICK_BLOCK) {
+      activeType = ActiveType.RIGHT_CLICK_BLOCK;
+    } else if (cause.getAction() == Action.LEFT_CLICK_BLOCK) {
+      activeType = ActiveType.LEFT_CLICK_BLOCK;
+    } else {
+      activeType = null;
     }
+  }
 
-    private PropActiveContext(Event cause) {
-        this.event = cause;
-    }
+  public PropActiveContext(BlockBreakEvent cause) {
+    this((Event) cause);
+    player = KingdomPlayer.getKingdomPlayer(cause.getPlayer());
+    item = cause.getPlayer().getItemInUse();
+    blockClicked = cause.getBlock();
+    blockFace = cause.getPlayer().getFacing().getOppositeFace();   //TODO: 不确定
+  }
 
-    public PropActiveContext(PlayerInteractEntityEvent cause) {
-        this((Event) cause);
-        player = KingdomPlayer.getKingdomPlayer(cause.getPlayer());
-        item = cause.getPlayer().getItemInUse();
-        activeType = ActiveType.RIGHT_CLICK_ENTITY;
-    }
+  public PropActiveContext(Event cause, KingdomPlayer player, ItemStack item, ActiveType activeType) {
+    this((Event) cause);
+    this.player = player;
+    this.item = item;
+    this.activeType = activeType;
+  }
 
-    public PropActiveContext(PlayerInteractEvent cause) {
-        this((Event) cause);
-        player = KingdomPlayer.getKingdomPlayer(cause.getPlayer());
-        item = cause.getItem();
-        blockClicked = cause.getClickedBlock();
-        blockFace = cause.getBlockFace();
-        if (cause.getAction() == Action.RIGHT_CLICK_AIR) {
-            activeType = ActiveType.RIGHT_CLICK_AIR;
-        } else if (cause.getAction() == Action.LEFT_CLICK_AIR) {
-            activeType = ActiveType.LEFT_CLICK_AIR;
-        } else if (cause.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            activeType = ActiveType.RIGHT_CLICK_BLOCK;
-        } else if (cause.getAction() == Action.LEFT_CLICK_BLOCK) {
-            activeType = ActiveType.LEFT_CLICK_BLOCK;
-        } else {
-            activeType = null;
-        }
-    }
+  public @Nullable Event getCause() {
+    return this.event;
+  }
 
-    public PropActiveContext(BlockBreakEvent cause) {
-        this((Event) cause);
-        player = KingdomPlayer.getKingdomPlayer(cause.getPlayer());
-        item = cause.getPlayer().getItemInUse();
-        blockClicked = cause.getBlock();
-        blockFace = cause.getPlayer().getFacing().getOppositeFace();   //TODO: 不确定
-    }
+  public void setCause(@Nullable Event cause) {
+    this.event = cause;
+  }
 
-    public PropActiveContext(Event cause, KingdomPlayer player, ItemStack item, ActiveType activeType) {
-        this((Event) cause);
-        this.player = player;
-        this.item = item;
-        this.activeType = activeType;
-    }
+  public @Nullable KingdomPlayer getPlayer() {
+    return player;
+  }
 
-    public @Nullable Event getCause() {
-        return this.event;
-    }
+  public void setPlayer(@Nullable KingdomPlayer player) {
+    this.player = player;
+  }
 
-    public void setCause(@Nullable Event cause) {
-        this.event = cause;
-    }
+  public @Nullable ItemStack getItem() {
+    return item;
+  }
 
-    public @Nullable KingdomPlayer getPlayer() {
-        return player;
-    }
+  public void setItem(@Nullable ItemStack item) {
+    this.item = item;
+  }
 
-    public void setPlayer(@Nullable KingdomPlayer player) {
-        this.player = player;
-    }
+  public @Nullable ActiveType getActiveType() {
+    return activeType;
+  }
 
-    public @Nullable ItemStack getItem() {
-        return item;
-    }
+  public void setActiveType(@Nullable ActiveType activeType) {
+    this.activeType = activeType;
+  }
 
-    public void setItem(@Nullable ItemStack item) {
-        this.item = item;
-    }
+  public LivingEntity getInteractedEntity() {
+    return interactedEntity;
+  }
 
-    public @Nullable ActiveType getActiveType() {
-        return activeType;
-    }
+  public void setInteractedEntity(LivingEntity interactedEntity) {
+    this.interactedEntity = interactedEntity;
+  }
 
-    public void setActiveType(@Nullable ActiveType activeType) {
-        this.activeType = activeType;
-    }
+  public Consumer<KingdomPropActiveEvent> getModifier() {
+    return modifier;
+  }
 
-    public LivingEntity getInteractedEntity() {
-        return interactedEntity;
-    }
+  public void setModifier(Consumer<KingdomPropActiveEvent> modifier) {
+    this.modifier = modifier;
+  }
 
-    public void setInteractedEntity(LivingEntity interactedEntity) {
-        this.interactedEntity = interactedEntity;
-    }
+  public KeyedConfigAccessor getOption() {
+    return option;
+  }
 
-    public Consumer<KingdomPropActiveEvent> getModifier() {
-        return modifier;
-    }
+  public void setOption(KeyedConfigAccessor option) {
+    this.option = option;
+  }
 
-    public void setModifier(Consumer<KingdomPropActiveEvent> modifier) {
-        this.modifier = modifier;
-    }
+  public PropActiveContext dontCallEvent() {
+    this.modifier = PropActiveContext::a;
+    return this;
+  }
 
-    public KeyedConfigAccessor getOption() {
-        return option;
-    }
+  private static void a(KingdomPropActiveEvent event) {   //节省内存?
+    event.setCancelled(true);
+  }
 
-    public void setOption(KeyedConfigAccessor option) {
-        this.option = option;
-    }
-
-    public PropActiveContext dontCallEvent() {
-        this.modifier = PropActiveContext::a;
-        return this;
-    }
-
-    private static void a(KingdomPropActiveEvent event) {   //节省内存?
-        event.setCancelled(true);
-    }
 }

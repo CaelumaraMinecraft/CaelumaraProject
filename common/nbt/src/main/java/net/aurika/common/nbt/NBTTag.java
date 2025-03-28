@@ -12,45 +12,47 @@ import java.util.Objects;
  */
 public interface NBTTag extends NBTTagLike, BinaryTagLike {
 
-    /**
-     * Gets the tag type {@link NBTTagType}.
-     */
-    @NotNull NBTTagType<? extends NBTTag> nbtTagType();
+  /**
+   * Gets the tag type {@link NBTTagType}.
+   */
+  @NotNull NBTTagType<? extends NBTTag> nbtTagType();
 
-    /**
-     * Gets the tag value as a java object.
-     */
-    @NotNull Object valueAsObject();
+  /**
+   * Gets the tag value as a java object.
+   */
+  @NotNull Object valueAsObject();
 
-    @Override
-    default @NotNull NBTTag asNBTTag() {
-        return this;
-    }
+  @Override
+  default @NotNull NBTTag asNBTTag() {
+    return this;
+  }
 
-    @Override
-    @NotNull BinaryTag asBinaryTag();
+  @Override
+  @NotNull BinaryTag asBinaryTag();
+
 }
 
 abstract class NBTTagImpl implements NBTTag {
 
-    protected NBTTagImpl() {
-    }
+  protected NBTTagImpl() {
+  }
 
-    public int hashCode() {
-        return this.valueAsObject().hashCode();
-    }
+  public int hashCode() {
+    return this.valueAsObject().hashCode();
+  }
 
-    public boolean equals(@Nullable Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (obj instanceof NBTTag that) {
-            return Objects.equals(this.valueAsObject(), that.valueAsObject());
-        } else {
-            return false;
-        }
+  public boolean equals(@Nullable Object obj) {
+    if (this == obj) {
+      return true;
+    } else if (obj instanceof NBTTag that) {
+      return Objects.equals(this.valueAsObject(), that.valueAsObject());
+    } else {
+      return false;
     }
+  }
 
-    public @NotNull String toString() {
-        return this.getClass().getSimpleName() + "[" + this.valueAsObject() + ']';
-    }
+  public @NotNull String toString() {
+    return this.getClass().getSimpleName() + "[" + this.valueAsObject() + ']';
+  }
+
 }

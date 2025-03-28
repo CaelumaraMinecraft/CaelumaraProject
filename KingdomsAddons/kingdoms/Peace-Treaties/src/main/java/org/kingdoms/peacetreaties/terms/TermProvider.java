@@ -14,23 +14,24 @@ import java.util.concurrent.CompletionStage;
  * into the class.
  */
 public interface TermProvider extends Namespaced {
-    /**
-     * A new instance of the term must be provided.
-     * This is usually implemented by simply calling a nullary constructor of the class.
-     */
-    Term construct();
+  /**
+   * A new instance of the term must be provided.
+   * This is usually implemented by simply calling a nullary constructor of the class.
+   */
+  Term construct();
 
-    boolean requiresData(TermGroupingOptions options);
+  boolean requiresData(TermGroupingOptions options);
 
-    boolean isLongTerm();
+  boolean isLongTerm();
 
-    CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor);
+  CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor);
 
-    default Messenger canApply(TermGroupingOptions options, PeaceTreaty peaceTreaty) {
-        return null;
-    }
+  default Messenger canApply(TermGroupingOptions options, PeaceTreaty peaceTreaty) {
+    return null;
+  }
 
-    default Messenger getMessage() {
-        return new LanguageEntryMessenger("peace-treaties", "terms", Strings.configOption(getNamespace().getKey()), "message");
-    }
+  default Messenger getMessage() {
+    return new LanguageEntryMessenger("peace-treaties", "terms", Strings.configOption(getNamespace().getKey()), "message");
+  }
+
 }

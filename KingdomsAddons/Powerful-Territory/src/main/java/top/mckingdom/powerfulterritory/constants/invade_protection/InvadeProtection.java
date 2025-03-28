@@ -8,7 +8,8 @@ import org.kingdoms.locale.Language;
 @Deprecated
 public interface InvadeProtection extends Namespaced {
 
-    boolean isProtect(KingdomPreInvadeEvent event);
+  boolean isProtect(KingdomPreInvadeEvent event);
 
-    @NotNull String getName(@NotNull Language language);
+  @NotNull String getName(@NotNull Language language);
+
 }

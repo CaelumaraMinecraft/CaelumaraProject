@@ -13,47 +13,47 @@ import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon;
 
 public enum PowerfulTerritoryConfig implements EnumConfig {
 
-    METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ELYTRA(3, 5),
-    METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ENDER_PEARL(3, 5),
-    METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS(3, 5),
+  METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ELYTRA(3, 5),
+  METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ENDER_PEARL(3, 5),
+  METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS(3, 5),
 
-    METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT(3, 5),
+  METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT(3, 5),
 
-    LAND_CONTRACTION_ENABLED(2),
-    LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS(2),
-    LAND_CONTRACTION_ALLOCATE_OTHER_KINGDOMS(2, 3),
-    LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION(2, 3),
+  LAND_CONTRACTION_ENABLED(2),
+  LAND_CONTRACTION_CLAIMER_HAS_ALL_PERMISSIONS(2),
+  LAND_CONTRACTION_ALLOCATE_OTHER_KINGDOMS(2, 3),
+  LAND_CONTRACTION_ALLOCATE_DEFAULT_DURATION(2, 3),
 
-    LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT(2, 5);
+  LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT(2, 5);
 
-    public static final YamlResource POWERFUL_TERRITORY =
-            new YamlResource(PowerfulTerritoryAddon.get(),
-                    Kingdoms.getPath("powerful-territory.yml").toFile(),
-                    "powerful-territory.yml").load();
+  public static final YamlResource POWERFUL_TERRITORY =
+      new YamlResource(PowerfulTerritoryAddon.get(),
+          Kingdoms.getPath("powerful-territory.yml").toFile(),
+          "powerful-territory.yml").load();
 
-    static {
-        ConfigWatcher.register(POWERFUL_TERRITORY.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-        ConfigManager.registerNormalWatcher("powerful-territory.yml", (event) -> {
-            ConfigWatcher.reload(POWERFUL_TERRITORY, "powerful-territory.yml");
-        });
-    }
+  static {
+    ConfigWatcher.register(POWERFUL_TERRITORY.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
+    ConfigManager.registerNormalWatcher("powerful-territory.yml", (event) -> {
+      ConfigWatcher.reload(POWERFUL_TERRITORY, "powerful-territory.yml");
+    });
+  }
 
-    private final ConfigPath option;
+  private final ConfigPath option;
 
-    PowerfulTerritoryConfig() {
-        this.option = new ConfigPath(Strings.configOption(this));
-    }
+  PowerfulTerritoryConfig() {
+    this.option = new ConfigPath(Strings.configOption(this));
+  }
 
-    PowerfulTerritoryConfig(int... grouped) {
-        this.option = new ConfigPath(this.name(), grouped);
-    }
+  PowerfulTerritoryConfig(int... grouped) {
+    this.option = new ConfigPath(this.name(), grouped);
+  }
 
-    @Override
-    public KeyedConfigAccessor getManager() {
-        return new KeyedYamlConfigAccessor(POWERFUL_TERRITORY, option);
-    }
+  @Override
+  public KeyedConfigAccessor getManager() {
+    return new KeyedYamlConfigAccessor(POWERFUL_TERRITORY, option);
+  }
 
-    public static YamlResource getConfig() {
-        return POWERFUL_TERRITORY;
-    }
+  public static YamlResource getConfig() {
+    return POWERFUL_TERRITORY;
+  }
 }

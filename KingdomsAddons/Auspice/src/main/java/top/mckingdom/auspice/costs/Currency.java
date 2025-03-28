@@ -24,25 +24,26 @@ public interface Currency<T, C> {
 //        return targetClass;
 //    }
 
-    @NotNull String getKey();
+  @NotNull String getKey();
 
-    @NotNull Class<T> getTargetClass();
+  @NotNull Class<T> getTargetClass();
 
-    /**
-     * 如果形参amountString不符合规范
-     * 则返回null
-     */
-    CurrencyEntry<T, C> getAmount(String amountString);
+  /**
+   * 如果形参amountString不符合规范
+   * 则返回null
+   */
+  CurrencyEntry<T, C> getAmount(String amountString);
 
-    CurrencyEntry<T, C> getAmount(Object amount);
+  CurrencyEntry<T, C> getAmount(Object amount);
 
-    boolean canExpend(T target, C amount);
+  boolean canExpend(T target, C amount);
 
-    void forceExpend(T target, C amount);
+  void forceExpend(T target, C amount);
 
-    boolean canRefund(T target, C amount);
+  boolean canRefund(T target, C amount);
 
-    void forceRefund(T target, C amount);
+  void forceRefund(T target, C amount);
+
 }
 
 

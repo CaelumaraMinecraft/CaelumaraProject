@@ -3,22 +3,26 @@ package net.aurika.logging;
 import org.jetbrains.annotations.NotNull;
 
 public interface IndentSequence {
-    static @NotNull IndentSequence indentSequence(@NotNull Indent @NotNull [] indents) {
-        return new IndentSequenceImpl(indents);
-    }
 
-    @NotNull Indent @NotNull [] getIndents();
+  static @NotNull IndentSequence indentSequence(@NotNull Indent @NotNull [] indents) {
+    return new IndentSequenceImpl(indents);
+  }
+
+  @NotNull Indent @NotNull [] getIndents();
+
 }
 
 class IndentSequenceImpl implements IndentSequence {
-    private final @NotNull Indent @NotNull [] indents;
 
-    IndentSequenceImpl(@NotNull Indent @NotNull [] indents) {
-        this.indents = indents;
-    }
+  private final @NotNull Indent @NotNull [] indents;
 
-    @Override
-    public @NotNull Indent @NotNull [] getIndents() {
-        return indents;
-    }
+  IndentSequenceImpl(@NotNull Indent @NotNull [] indents) {
+    this.indents = indents;
+  }
+
+  @Override
+  public @NotNull Indent @NotNull [] getIndents() {
+    return indents;
+  }
+
 }

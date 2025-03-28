@@ -1,13 +1,13 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
+  id("java-library")
+  id("maven-publish")
 }
 
 dependencies {
-    api(project(":common:validate"))
-    api(project(":common:util:collection"))
-    api(project(":common:util:string"))
-    api(libs.apache.commons.io)
-    compileOnlyApi(libs.annotations.jetbrains)
-    compileOnlyApi(libs.annotations.checker)
+  api(project(":common:validate"))
+  api(project(":common:util:collection"))
+  api(project(":common:util:string"))
+  api(libs.apache.commons.io)
+  compileOnlyApi(libs.annotations.jetbrains)
+  compileOnlyApi(libs.annotations.checker)
 }

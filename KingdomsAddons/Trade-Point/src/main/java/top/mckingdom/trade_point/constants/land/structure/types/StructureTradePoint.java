@@ -7,13 +7,14 @@ import org.kingdoms.gui.InteractiveGUI;
 
 public class StructureTradePoint extends StructureType {
 
-    public StructureTradePoint() {
-        super("trade-point");
-    }
+  public StructureTradePoint() {
+    super("trade-point");
+  }
 
-    @Override
-    public InteractiveGUI open(KingdomItemGUIContext<Structure> context) {
+  @Override
+  public InteractiveGUI open(KingdomItemGUIContext<Structure> context) {
 
-        return null;
-    }
+    return null;
+  }
+
 }

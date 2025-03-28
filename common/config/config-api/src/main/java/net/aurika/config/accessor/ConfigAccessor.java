@@ -8,29 +8,30 @@ import java.util.List;
 
 public interface ConfigAccessor extends DefaultableConfigAccessor {
 
-    ConfigAccessor noDefault();
+  ConfigAccessor noDefault();
 
-    boolean isSet(String[] path);
+  boolean isSet(String[] path);
 
-    Boolean getBoolean(String[] path);
+  Boolean getBoolean(String[] path);
 
-    Integer getInteger(String[] path);
+  Integer getInteger(String[] path);
 
-    Long getLong(String[] path);
+  Long getLong(String[] path);
 
-    Double getDouble(String[] path);
+  Double getDouble(String[] path);
 
-    String getString(String[] path);
+  String getString(String[] path);
 
-    List<Integer> getIntegerList(String[] path);
+  List<Integer> getIntegerList(String[] path);
 
-    List<String> getStringList(String[] path);
+  List<String> getStringList(String[] path);
 
-    default <T extends Enum<T>> T getEnum(String[] path, Class<T> enumClass) {
-        return Enums.getIfPresent(enumClass, this.getString(path)).orNull();
-    }
+  default <T extends Enum<T>> T getEnum(String[] path, Class<T> enumClass) {
+    return Enums.getIfPresent(enumClass, this.getString(path)).orNull();
+  }
 
-    MathCompiler.Expression getMath(String[] path);
+  MathCompiler.Expression getMath(String[] path);
 
-    ConditionCompiler.LogicalOperand getCondition(String[] path);
+  ConditionCompiler.LogicalOperand getCondition(String[] path);
+
 }

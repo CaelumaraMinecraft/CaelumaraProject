@@ -7,9 +7,11 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public interface StaticKeyedRegistry<T extends Keyed> extends KeyedRegistry<T>, Identified {
-    @ApiStatus.NonExtendable
-    /*final*/ @NotNull Ident ident();
 
-    @ApiStatus.NonExtendable
-    /*final*/ @NotNull Ident registryID();  // TODO
+  @ApiStatus.NonExtendable
+  /*final*/ @NotNull Ident ident();
+
+  @ApiStatus.NonExtendable
+  /*final*/ @NotNull Ident registryID();  // TODO
+
 }

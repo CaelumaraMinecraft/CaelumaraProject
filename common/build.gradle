@@ -1,0 +1,16 @@
+plugins {
+  id("java-library")
+}
+
+subprojects {
+  int targetJavaVersion = 8
+
+  java {
+    JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+      toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+  }
+}

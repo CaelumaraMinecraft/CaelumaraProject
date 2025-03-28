@@ -9,23 +9,25 @@ import java.util.Collections;
 import java.util.Map;
 
 public final class EmptyDyanasisPropertyContainer<P extends DyanasisProperty> implements DyanasisPropertyContainer<P> {
-    public static final EmptyDyanasisPropertyContainer<?> INSTANCE = new EmptyDyanasisPropertyContainer<>();
 
-    private EmptyDyanasisPropertyContainer() {
-    }
+  public static final EmptyDyanasisPropertyContainer<?> INSTANCE = new EmptyDyanasisPropertyContainer<>();
 
-    @Override
-    public boolean hasProperty(@NotNull String name) {
-        return false;
-    }
+  private EmptyDyanasisPropertyContainer() {
+  }
 
-    @Override
-    public @Nullable P getProperty(@NotNull String name) {
-        return null;
-    }
+  @Override
+  public boolean hasProperty(@NotNull String name) {
+    return false;
+  }
 
-    @Override
-    public @Unmodifiable @NotNull Map<String, ? extends P> allProperties() {
-        return Collections.emptyMap();
-    }
+  @Override
+  public @Nullable P getProperty(@NotNull String name) {
+    return null;
+  }
+
+  @Override
+  public @Unmodifiable @NotNull Map<String, ? extends P> allProperties() {
+    return Collections.emptyMap();
+  }
+
 }

@@ -1,39 +1,38 @@
 package top.mckingdom.bridges.placeholderapi;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import org.kingdoms.addons.Addon;
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.locale.compiler.placeholders.Placeholder;
+import top.mckingdom.auspice.util.AddonTemplate;
 
-import java.io.File;
+public class PlaceholderAPIBridge extends AddonTemplate {
+  private static PlaceholderAPIBridge instance;
 
-public class PlaceholderAPIBridge extends JavaPlugin implements Addon {
+  @Override
+  protected void onInit0() {
+    instance = this;
+  }
 
-    @Override
-    public void onLoad() {
+  @Override
+  protected void onLoad0() {
+  }
 
-    }
+  @Override
+  protected void onEnable0() {
+    Placeholder
+  }
 
-    @Override
-    public void onEnable() {
-        Placeholder
-    }
+  @Override
+  protected void reloadAddon0() {
+  }
 
-    @Override
-    public void reloadAddon() {
-    }
+  @Override
+  protected void onDisable0() {
+    super.onDisable();
+  }
 
-    @Override
-    public void onDisable() {
-        super.onDisable();
-    }
+  @Override
+  public @NotNull String getAddonName() {
+    return "PlaceholderAPI-Bridge";
+  }
 
-    @Override
-    public String getAddonName() {
-        return "PlaceholderAPI-Bridge";
-    }
-
-    @Override
-    public File getFile() {
-        return super.getFile();
-    }
 }

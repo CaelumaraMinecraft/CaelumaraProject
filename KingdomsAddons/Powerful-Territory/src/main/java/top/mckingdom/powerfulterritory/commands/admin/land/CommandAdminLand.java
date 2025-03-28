@@ -6,20 +6,21 @@ import top.mckingdom.powerfulterritory.commands.admin.land.invade_protection.Com
 
 public class CommandAdminLand extends KingdomsParentCommand {
 
-    private static CommandAdminLand instance;
+  private static CommandAdminLand instance;
 
-    public CommandAdminLand(KingdomsParentCommand parent) {
-        super("domain", parent);
-        new CommandAdminLandCategory(this);
-        new CommandAdminLandInvadeProtection(this);
-        new CommandAdminLandClearData(this);
-    }
+  public CommandAdminLand(KingdomsParentCommand parent) {
+    super("domain", parent);
+    new CommandAdminLandCategory(this);
+    new CommandAdminLandInvadeProtection(this);
+    new CommandAdminLandClearData(this);
+  }
 
-    public static CommandAdminLand getInstance() {
-        return instance;
-    }
+  public static CommandAdminLand getInstance() {
+    return instance;
+  }
 
-    public static void setInstance(CommandAdminLand instance) {
-        CommandAdminLand.instance = instance;
-    }
+  public static void setInstance(CommandAdminLand instance) {
+    CommandAdminLand.instance = instance;
+  }
+
 }

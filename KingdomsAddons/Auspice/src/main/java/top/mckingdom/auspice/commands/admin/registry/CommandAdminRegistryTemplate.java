@@ -16,35 +16,36 @@ import top.mckingdom.auspice.util.KingdomsNamingContract;
 import java.util.Map;
 
 public abstract class CommandAdminRegistryTemplate<T extends Namespaced, R extends NamespacedRegistry<T>> extends KingdomsParentCommand {
-    public CommandAdminRegistryTemplate(@KingdomsNamingContract.CommandName final @NotNull String name,
-                                        @Nullable KingdomsParentCommand parent,
-                                        PermissionDefault permissionDefault,
-                                        @NotNull R registry,
-                                        @NotNull Class<T> valueType
-    ) {
-        super(name, parent, permissionDefault);
-        if (registry instanceof Lockable) {
-            // generics hack
-            // noinspection rawtypes, unchecked
-            new RegistryOperatorCommandLock("lock", this, permissionDefault, registry, valueType);
-        }
-        if (registry instanceof UnregistrableNamespaceRegistry<?>) {
-            // generics hack
-            // noinspection rawtypes, unchecked
-            new RegistryOperatorCommandUnregister("unregister", this, permissionDefault, registry, valueType);
-        }
-        new RegistryOperatorCommandList<>("list", this, permissionDefault, registry, valueType) {
-
-            @Override
-            protected @NotNull Map<String, ? extends RegistryOperatorCommandList<T, R>.ListOperation> availableOperations() {
-                return Map.of(
-                        "value-hashcode", new ValueHashCode(),
-                        "value-to-string", new ValueHashCode(),
-                        "key-full-string", new KeyToFullString(),
-                        "key-config-string", new KeyToConfigString(),
-                        "info", new Info()
-                );
-            }
-        };
+  public CommandAdminRegistryTemplate(@KingdomsNamingContract.CommandName final @NotNull String name,
+                                      @Nullable KingdomsParentCommand parent,
+                                      PermissionDefault permissionDefault,
+                                      @NotNull R registry,
+                                      @NotNull Class<T> valueType
+  ) {
+    super(name, parent, permissionDefault);
+    if (registry instanceof Lockable) {
+      // generics hack
+      // noinspection rawtypes, unchecked
+      new RegistryOperatorCommandLock("lock", this, permissionDefault, registry, valueType);
     }
+    if (registry instanceof UnregistrableNamespaceRegistry<?>) {
+      // generics hack
+      // noinspection rawtypes, unchecked
+      new RegistryOperatorCommandUnregister("unregister", this, permissionDefault, registry, valueType);
+    }
+    new RegistryOperatorCommandList<>("list", this, permissionDefault, registry, valueType) {
+
+      @Override
+      protected @NotNull Map<String, ? extends RegistryOperatorCommandList<T, R>.ListOperation> availableOperations() {
+        return Map.of(
+            "value-hashcode", new ValueHashCode(),
+            "value-to-string", new ValueHashCode(),
+            "key-full-string", new KeyToFullString(),
+            "key-config-string", new KeyToConfigString(),
+            "info", new Info()
+        );
+      }
+    };
+  }
+
 }

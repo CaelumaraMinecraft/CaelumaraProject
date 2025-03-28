@@ -25,72 +25,72 @@ import java.util.*
 
 //命名空间根据服务器需求进行修改
 fun getInvadeProtection(chunk: SimpleChunkLocation): InvadeProtection? {
-    return getInvadeProtection(chunk.getLand())
+  return getInvadeProtection(chunk.getLand())
 }
 
 fun getInvadeProtection(land: Land?): InvadeProtection? {
-    if (land == null || !land.isClaimed()) {
-        return null
-    }
-    val meta: KingdomMetadata? = land.getMetadata().get(InvadeProtectionMetaHandler.INSTANCE)
-    return if (meta == null) {
-        StandardInvadeProtection.NO_PROTECTION
-    } else {
-        Objects.requireNonNullElse(
-            meta.value as InvadeProtection,
-            StandardInvadeProtection.NO_PROTECTION
-        )
-    }
+  if (land == null || !land.isClaimed()) {
+    return null
+  }
+  val meta: KingdomMetadata? = land.getMetadata().get(InvadeProtectionMetaHandler.INSTANCE)
+  return if (meta == null) {
+    StandardInvadeProtection.NO_PROTECTION
+  } else {
+    Objects.requireNonNullElse(
+      meta.value as InvadeProtection,
+      StandardInvadeProtection.NO_PROTECTION
+    )
+  }
 }
 
 fun setInvadeProtection(chunk: SimpleChunkLocation, status: InvadeProtection) {
-    setInvadeProtection(chunk.getLand(), status)
+  setInvadeProtection(chunk.getLand(), status)
 }
 
 fun setInvadeProtection(land: Land?, status: InvadeProtection) {
-    if (land != null && land.isClaimed()) {
-        if (status === StandardInvadeProtection.NO_PROTECTION) {
-            land.getMetadata().remove(InvadeProtectionMetaHandler.INSTANCE)
-        } else {
-            land.getMetadata()
-                .put(InvadeProtectionMetaHandler.INSTANCE, StandardKingdomMetadata(status.getNamespace().asString()))
-        }
+  if (land != null && land.isClaimed()) {
+    if (status === StandardInvadeProtection.NO_PROTECTION) {
+      land.getMetadata().remove(InvadeProtectionMetaHandler.INSTANCE)
+    } else {
+      land.getMetadata()
+        .put(InvadeProtectionMetaHandler.INSTANCE, StandardKingdomMetadata(status.getNamespace().asString()))
     }
+  }
 }
 
 class InvadeProtectionMeta(override var value: Any) : KingdomMetadata {
 
-    override fun serialize(
-        container: KeyedKingdomsObject<*>,
-        context: SerializationContext<SectionCreatableDataSetter>
-    ) {
-        context.getDataProvider().setString(this.value.cast<LandContraction>().getNamespace().asNormalizedString())
-    }
+  override fun serialize(
+    container: KeyedKingdomsObject<*>,
+    context: SerializationContext<SectionCreatableDataSetter>
+  ) {
+    context.getDataProvider().setString(this.value.cast<LandContraction>().getNamespace().asNormalizedString())
+  }
 
-    override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {
-        return container is Land
-    }
+  override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {
+    return container is Land
+  }
 }
 
 class InvadeProtectionMetaHandler internal constructor() :
-    KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("INVADE_PROTECTION")) {
-    override fun deserialize(
-        container: KeyedKingdomsObject<*>,
-        context: DeserializationContext<SectionableDataGetter>
-    ): KingdomMetadata {
-        val namespace: Namespace = context.getDataProvider().asString()?.let { Namespace.fromString(it) }
-            ?: StandardInvadeProtection.NO_PROTECTION.getNamespace()
-        val invadeProtection: InvadeProtection? = InvadeProtectionRegistry.get().getRegistered(namespace)
-        if (invadeProtection == null) {
-            PowerfulTerritoryLogger.warn("Unknown InvadeProtection: $namespace, ignore it.")
-            return InvadeProtectionMeta(StandardInvadeProtection.NO_PROTECTION)
-        } else {
-            return InvadeProtectionMeta(invadeProtection)
-        }
+  KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("INVADE_PROTECTION")) {
+  override fun deserialize(
+    container: KeyedKingdomsObject<*>,
+    context: DeserializationContext<SectionableDataGetter>
+  ): KingdomMetadata {
+    val namespace: Namespace = context.getDataProvider().asString()?.let { Namespace.fromString(it) }
+      ?: StandardInvadeProtection.NO_PROTECTION.getNamespace()
+    val invadeProtection: InvadeProtection? = InvadeProtectionRegistry.get().getRegistered(namespace)
+    if (invadeProtection == null) {
+      PowerfulTerritoryLogger.warn("Unknown InvadeProtection: $namespace, ignore it.")
+      return InvadeProtectionMeta(StandardInvadeProtection.NO_PROTECTION)
+    } else {
+      return InvadeProtectionMeta(invadeProtection)
     }
+  }
 
-    companion object {
-        @JvmField
-        val INSTANCE: KingdomMetadataHandler = InvadeProtectionMetaHandler()
-    }
+  companion object {
+    @JvmField
+    val INSTANCE: KingdomMetadataHandler = InvadeProtectionMetaHandler()
+  }
 }

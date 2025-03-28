@@ -10,11 +10,12 @@ import top.mckingdom.powerfulterritory.constants.land_categories.LandCategoryReg
 
 public class CommandAdminRegistryLandCategory extends CommandAdminRegistryTemplate<LandCategory, LandCategoryRegistry> {
 
-    public CommandAdminRegistryLandCategory(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryLandCategory(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryLandCategory(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-        super("land" + "category", parent, permissionDefault, PowerfulTerritoryAddon.get().getLandCategoryRegistry(), LandCategory.class);
-    }
+  public CommandAdminRegistryLandCategory(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
+    super("land" + "category", parent, permissionDefault, PowerfulTerritoryAddon.get().getLandCategoryRegistry(), LandCategory.class);
+  }
+
 }

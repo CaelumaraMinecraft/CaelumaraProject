@@ -6,5 +6,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Path {
-    String[] value();
+
+  String[] value();
+
 }

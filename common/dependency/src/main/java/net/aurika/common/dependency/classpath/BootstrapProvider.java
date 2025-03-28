@@ -5,17 +5,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public interface BootstrapProvider {
-    void onLoad();
 
-    void onEnable();
+  void onLoad();
 
-    void onDisable();
+  void onEnable();
 
-    void runAsyncLater(Runnable runnable, long delay, TimeUnit delayTimeUnit);
+  void onDisable();
 
-    ClassPathAppender getClassPathAppender();
+  void runAsyncLater(Runnable runnable, long delay, TimeUnit delayTimeUnit);
 
-    Path getLibsFolder();
+  ClassPathAppender getClassPathAppender();
 
-    Logger getLogger();
+  Path getLibsFolder();
+
+  Logger getLogger();
+
 }

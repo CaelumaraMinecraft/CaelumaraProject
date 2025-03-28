@@ -27,61 +27,61 @@ import kotlin.time.toDuration
 //typealias ContractionsData = HashMap<LandContraction, HashSet<UUID>>
 
 class LandContractionsData(
-    val contractions: HashMap<LandContraction, ContractionLandData>,
-    var keepDataWhenUnClaim: Boolean
+  val contractions: HashMap<LandContraction, ContractionLandData>,
+  var keepDataWhenUnClaim: Boolean
 )
 
 class ContractionLandData(
-    val allocationReceivers: HashMap<KingdomPlayer, Allocations>,
-    val properties: ContractionLandProperties? = null
+  val allocationReceivers: HashMap<KingdomPlayer, Allocations>,
+  val properties: ContractionLandProperties? = null
 ) {
 
-    fun deallocateAll(player: KingdomPlayer): Allocations? {
-        return this.allocationReceivers.remove(player)
-    }
+  fun deallocateAll(player: KingdomPlayer): Allocations? {
+    return this.allocationReceivers.remove(player)
+  }
 }
 
 class Allocations(val since: Long, val value: HashMap<Long, Allocation>) {
-    fun isEffective(): Boolean {
-        val time: Long = System.currentTimeMillis()                 //当前系统时间减去每次分配的时长, 返回当前系统时间是否小于首次分配开始时的时间
-        value.values.forEach { allocation ->
-            time.minus(allocation.duration.toLong(DurationUnit.MILLISECONDS))
-        }
-        return time < since
+  fun isEffective(): Boolean {
+    val time: Long = System.currentTimeMillis()                 //当前系统时间减去每次分配的时长, 返回当前系统时间是否小于首次分配开始时的时间
+    value.values.forEach { allocation ->
+      time.minus(allocation.duration.toLong(DurationUnit.MILLISECONDS))
     }
+    return time < since
+  }
 
-    fun hasAllocator(player: KingdomPlayer): Boolean {
-        this.value.values.forEach {
-            if (it.allocator == player) {
-                return true
-            }
-        }
-        return false
+  fun hasAllocator(player: KingdomPlayer): Boolean {
+    this.value.values.forEach {
+      if (it.allocator == player) {
+        return true
+      }
     }
+    return false
+  }
 
-    fun getAllocators(): MutableList<KingdomPlayer> {
-        val out = ArrayList<KingdomPlayer>()
-        this.value.values.forEach {
-            out.add(it.allocator)
-        }
-        return out
+  fun getAllocators(): MutableList<KingdomPlayer> {
+    val out = ArrayList<KingdomPlayer>()
+    this.value.values.forEach {
+      out.add(it.allocator)
     }
+    return out
+  }
 
-    fun getAllocatorsName(): MutableList<String> {
-        val out = ArrayList<String>()
-        this.value.values.forEach { allocation ->
-            allocation.allocator.getOfflinePlayer().getName()?.let { out.add(it) }
-        }
-        return out
+  fun getAllocatorsName(): MutableList<String> {
+    val out = ArrayList<String>()
+    this.value.values.forEach { allocation ->
+      allocation.allocator.getOfflinePlayer().getName()?.let { out.add(it) }
     }
+    return out
+  }
 
-    fun deallocate(allocator: KingdomPlayer) {
-        this.value.forEach { since, allocation ->
-            if (allocation.allocator == allocator) {
-                this.value.remove(since)
-            }
-        }
+  fun deallocate(allocator: KingdomPlayer) {
+    this.value.forEach { since, allocation ->
+      if (allocation.allocator == allocator) {
+        this.value.remove(since)
+      }
     }
+  }
 }
 
 class Allocation(val duration: Duration, var allocator: KingdomPlayer)
@@ -183,142 +183,142 @@ class Allocation(val duration: Duration, var allocator: KingdomPlayer)
  * For command
  */
 object Contractions {
-    @JvmStatic
-    fun initialize() {
-        SupportedLanguage.entries.forEach { lang ->
-            if (lang.isLoaded) {
-                contractionsString.put(lang, HashMap<String, LandContraction>().also {
-                    PowerfulTerritoryAddon.get().getLandContractionRegistry().getRegistry().forEach { _, contraction ->
-                        it.put(contraction.getName(lang), contraction)
-                    }
-                })
-            }
-        }
+  @JvmStatic
+  fun initialize() {
+    SupportedLanguage.entries.forEach { lang ->
+      if (lang.isLoaded) {
+        contractionsString.put(lang, HashMap<String, LandContraction>().also {
+          PowerfulTerritoryAddon.get().getLandContractionRegistry().getRegistry().forEach { _, contraction ->
+            it.put(contraction.getName(lang), contraction)
+          }
+        })
+      }
     }
+  }
 
-    @JvmField
-    val contractionsString = HashMap<Language, HashMap<String, LandContraction>>()
+  @JvmField
+  val contractionsString = HashMap<Language, HashMap<String, LandContraction>>()
 
-    @JvmStatic
-    fun getContractions(starts: String, language: Language): List<String> {
-        val out: MutableList<String> = ArrayList()
-        contractionsString.get(language)?.keys?.forEach { contraction: String ->
-            if (contraction.startsWith(starts)) {
-                out.add(contraction)
-            }
-        }
-        return out
+  @JvmStatic
+  fun getContractions(starts: String, language: Language): List<String> {
+    val out: MutableList<String> = ArrayList()
+    contractionsString.get(language)?.keys?.forEach { contraction: String ->
+      if (contraction.startsWith(starts)) {
+        out.add(contraction)
+      }
     }
+    return out
+  }
 
-    fun getContraction(name: String, language: Language): LandContraction? {
-        return contractionsString.get(language)?.get(name)
-    }
+  fun getContraction(name: String, language: Language): LandContraction? {
+    return contractionsString.get(language)?.get(name)
+  }
 }
 
 fun KingdomPlayer.hasLandContraction(
-    land: Land,
-    contraction: LandContraction,
-    requireEffectiveContraction: Boolean = true
+  land: Land,
+  contraction: LandContraction,
+  requireEffectiveContraction: Boolean = true
 ): Boolean {
-    return if (requireEffectiveContraction) {
-        land.getContractions(this).get(contraction)?.isEffective() ?: false
-    } else {
-        land.getContractions(this).containsKey(contraction)
-    }
+  return if (requireEffectiveContraction) {
+    land.getContractions(this).get(contraction)?.isEffective() ?: false
+  } else {
+    land.getContractions(this).containsKey(contraction)
+  }
 }
 
 
 @JvmName("allocate")
 fun Land.allocate(
-    contraction: LandContraction,
-    player: KingdomPlayer,
-    duration: Duration,
-    allocator: KingdomPlayer,
-    startTime: Long = System.currentTimeMillis()
+  contraction: LandContraction,
+  player: KingdomPlayer,
+  duration: Duration,
+  allocator: KingdomPlayer,
+  startTime: Long = System.currentTimeMillis()
 ): Allocation? {
-    return (((this.getMetadata()
-        .getOrPut(LandContractionsMetaHandler.INSTANCE) {
-            LandContractionsMeta(
-                LandContractionsData(
-                    HashMap(),
-                    PowerfulTerritoryConfig.LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT.getManager().getBoolean()
-                )
-            )
-        }.value as LandContractionsData).contractions
-        .getOrPut(contraction) { ContractionLandData(HashMap()) }).allocationReceivers
-        .getOrPut(player) { Allocations(System.currentTimeMillis(), HashMap()) }).value
-        .put(startTime, Allocation(duration, allocator))
+  return (((this.getMetadata()
+    .getOrPut(LandContractionsMetaHandler.INSTANCE) {
+      LandContractionsMeta(
+        LandContractionsData(
+          HashMap(),
+          PowerfulTerritoryConfig.LAND_CONTRACTION_UNCLAIM_KEEP_DATA_DEFAULT.getManager().getBoolean()
+        )
+      )
+    }.value as LandContractionsData).contractions
+    .getOrPut(contraction) { ContractionLandData(HashMap()) }).allocationReceivers
+    .getOrPut(player) { Allocations(System.currentTimeMillis(), HashMap()) }).value
+    .put(startTime, Allocation(duration, allocator))
 }
 
 
 @JvmName("getAllocations")
 fun Land.getAllocations(contraction: LandContraction, player: KingdomPlayer): Allocations? {
-    return this.getAllocationReceivers(contraction)?.get(player)
+  return this.getAllocationReceivers(contraction)?.get(player)
 }
 
 @JvmName("getPlayers")
 fun Land.getAllocationReceivers(contraction: LandContraction): HashMap<KingdomPlayer, Allocations>? {
-    return this.getContractions()?.get(contraction)?.allocationReceivers
+  return this.getContractions()?.get(contraction)?.allocationReceivers
 }
 
 @JvmName("getContractions")
 fun Land.getContractions(player: KingdomPlayer): HashMap<LandContraction, Allocations> {
-    val out: HashMap<LandContraction, Allocations> = HashMap()
-    this.getContractions()?.forEach { contraction, data ->
-        val allocations: Allocations? = data.allocationReceivers.get(player)
-        if (allocations != null) {
-            out.put(contraction, allocations)
-        }
+  val out: HashMap<LandContraction, Allocations> = HashMap()
+  this.getContractions()?.forEach { contraction, data ->
+    val allocations: Allocations? = data.allocationReceivers.get(player)
+    if (allocations != null) {
+      out.put(contraction, allocations)
     }
-    return out
+  }
+  return out
 }
 
 @JvmName("getContractions")
 fun Land.getContractions(): HashMap<LandContraction, ContractionLandData>? {
-    return this.getContractionsData()?.contractions
+  return this.getContractionsData()?.contractions
 }
 
 @JvmName("getContractionsData")
 fun Land.getContractionsData(): LandContractionsData? {
-    return this.getMetadata().get(LandContractionsMetaHandler.INSTANCE)?.value as LandContractionsData?
+  return this.getMetadata().get(LandContractionsMetaHandler.INSTANCE)?.value as LandContractionsData?
 }
 
 class LandContractionsMeta(private var landContractions: LandContractionsData) : KingdomMetadata {
-    override var value: Any
-        get() = this.landContractions
-        set(value) {}
+  override var value: Any
+    get() = this.landContractions
+    set(value) {}
 
-    override fun serialize(
-        container: KeyedKingdomsObject<*>,
-        context: SerializationContext<SectionCreatableDataSetter>
-    ) {
-        val section0: SectionableDataSetter = context.getDataProvider().createSection()
+  override fun serialize(
+    container: KeyedKingdomsObject<*>,
+    context: SerializationContext<SectionCreatableDataSetter>
+  ) {
+    val section0: SectionableDataSetter = context.getDataProvider().createSection()
 
-        section0.get("contractions")
-            .setMap(landContractions.contractions) { contraction, contractionNamespace, contractionLandData ->
-                contractionNamespace.setString(contraction.getNamespace().asString())
-                val section1: SectionableDataSetter = contractionNamespace.getValueProvider().createSection()
-                section1.get("players")
-                    .setMap(contractionLandData.allocationReceivers) { player, playerKey, allocations ->
-                        playerKey.setUUID(player.getId())
-                        val section2 = playerKey.getValueProvider().createSection()
-                        section2.get("since").setLong(allocations.since)
-                        section2.get("history").setMap(allocations.value) { allocateTime, allocationKey, allocation ->
-                            allocationKey.setLong(allocateTime)
-                            val information = allocationKey.getValueProvider().createSection()
-                            information.setUUID("allocator", allocation.allocator.getId())
-                            information.setLong("duration", allocation.duration.toLong(DurationUnit.MILLISECONDS))
-                        }
-                    }
-                contractionLandData.properties?.serializeProperties(section1.get("properties"))
-                //TODO
+    section0.get("contractions")
+      .setMap(landContractions.contractions) { contraction, contractionNamespace, contractionLandData ->
+        contractionNamespace.setString(contraction.getNamespace().asString())
+        val section1: SectionableDataSetter = contractionNamespace.getValueProvider().createSection()
+        section1.get("players")
+          .setMap(contractionLandData.allocationReceivers) { player, playerKey, allocations ->
+            playerKey.setUUID(player.getId())
+            val section2 = playerKey.getValueProvider().createSection()
+            section2.get("since").setLong(allocations.since)
+            section2.get("history").setMap(allocations.value) { allocateTime, allocationKey, allocation ->
+              allocationKey.setLong(allocateTime)
+              val information = allocationKey.getValueProvider().createSection()
+              information.setUUID("allocator", allocation.allocator.getId())
+              information.setLong("duration", allocation.duration.toLong(DurationUnit.MILLISECONDS))
             }
-        section0.get("keepDataWhenUnClaim").setBoolean(landContractions.keepDataWhenUnClaim)
-    }
+          }
+        contractionLandData.properties?.serializeProperties(section1.get("properties"))
+        //TODO
+      }
+    section0.get("keepDataWhenUnClaim").setBoolean(landContractions.keepDataWhenUnClaim)
+  }
 
-    override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {
-        return container is Land || landContractions.keepDataWhenUnClaim
-    }
+  override fun shouldSave(container: KeyedKingdomsObject<*>): Boolean {
+    return container is Land || landContractions.keepDataWhenUnClaim
+  }
 }
 /*
 
@@ -347,60 +347,60 @@ class LandContractionsMeta(private var landContractions: LandContractionsData) :
 */
 
 class LandContractionsMetaHandler private constructor() :
-    KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("LAND_CONTRACTION")) {
-    override fun deserialize(
-        container: KeyedKingdomsObject<*>,
-        context: DeserializationContext<SectionableDataGetter>
-    ): KingdomMetadata {
-        val provider = context.getDataProvider()
+  KingdomMetadataHandler(PowerfulTerritoryAddon.buildNS("LAND_CONTRACTION")) {
+  override fun deserialize(
+    container: KeyedKingdomsObject<*>,
+    context: DeserializationContext<SectionableDataGetter>
+  ): KingdomMetadata {
+    val provider = context.getDataProvider()
 
-        return LandContractionsMeta(
-            LandContractionsData(
-                provider.get("contractions")
-                    .asMap(HashMap()) { contractionsMap, contractionNamespace, contractionLandData ->
-                        val contraction = PowerfulTerritoryAddon.get().getLandContractionRegistry()
-                            .getRegistered(Namespace.fromString(contractionNamespace.asString()!!))  // TODO nullability
-                        if (contraction != null) {
-                            contractionsMap.put(
-                                contraction, ContractionLandData(
-                                    contractionLandData.get("players")
-                                        .asMap(HashMap()) { playersMap, playerUUID, playerData ->
-                                            playersMap.put(
-                                                KingdomPlayer.getKingdomPlayer(playerUUID.asUUID()!!),  // TODO nullability
-                                                Allocations(
-                                                    playerData.get("since").asLong(),
-                                                    playerData.get("history")
-                                                        .asMap(HashMap()) { historyMap, allocateTime, allocation ->
-                                                            historyMap.put(
-                                                                allocateTime.asLong(),
-                                                                Allocation(
-                                                                    (allocation.get("duration").asLong()).toDuration(
-                                                                        DurationUnit.MILLISECONDS
-                                                                    ),
-                                                                    KingdomPlayer.getKingdomPlayer(
-                                                                        allocation.get("allocator")
-                                                                            .asUUID()!! // TODO nullability
-                                                                    )
-                                                                )
-                                                            )
-                                                        }
-                                                )
-                                            )
-                                        },
-                                    contraction.deserializeProperties(contractionLandData.get("properties"))
+    return LandContractionsMeta(
+      LandContractionsData(
+        provider.get("contractions")
+          .asMap(HashMap()) { contractionsMap, contractionNamespace, contractionLandData ->
+            val contraction = PowerfulTerritoryAddon.get().getLandContractionRegistry()
+              .getRegistered(Namespace.fromString(contractionNamespace.asString()!!))  // TODO nullability
+            if (contraction != null) {
+              contractionsMap.put(
+                contraction, ContractionLandData(
+                  contractionLandData.get("players")
+                    .asMap(HashMap()) { playersMap, playerUUID, playerData ->
+                      playersMap.put(
+                        KingdomPlayer.getKingdomPlayer(playerUUID.asUUID()!!),  // TODO nullability
+                        Allocations(
+                          playerData.get("since").asLong(),
+                          playerData.get("history")
+                            .asMap(HashMap()) { historyMap, allocateTime, allocation ->
+                              historyMap.put(
+                                allocateTime.asLong(),
+                                Allocation(
+                                  (allocation.get("duration").asLong()).toDuration(
+                                    DurationUnit.MILLISECONDS
+                                  ),
+                                  KingdomPlayer.getKingdomPlayer(
+                                    allocation.get("allocator")
+                                      .asUUID()!! // TODO nullability
+                                  )
                                 )
-                            )
-                        }
+                              )
+                            }
+                        )
+                      )
                     },
-                provider.get("keepDataWhenUnClaim").asBoolean()
-            )
-        )
-    }
+                  contraction.deserializeProperties(contractionLandData.get("properties"))
+                )
+              )
+            }
+          },
+        provider.get("keepDataWhenUnClaim").asBoolean()
+      )
+    )
+  }
 
-    companion object {
-        @JvmField
-        val INSTANCE = LandContractionsMetaHandler()
-    }
+  companion object {
+    @JvmField
+    val INSTANCE = LandContractionsMetaHandler()
+  }
 }
 
 

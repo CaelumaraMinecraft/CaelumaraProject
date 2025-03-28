@@ -8,27 +8,29 @@ import org.jetbrains.annotations.NotNull;
  */
 @ApiStatus.NonExtendable
 public interface DyanasisObjectSupport extends DyanasisObject {
-    @NotNull SupportType supportType();
 
-    enum SupportType {
-        ARRAY(DyanasisObjectArray.class),
-        BOOL(DyanasisObjectBool.class),
-        LAMBDA(DyanasisObjectLambda.class),
-        MAP(DyanasisObjectMap.class),
-        NULL(DyanasisObjectNull.class),
-        NUMBER(DyanasisObjectNumber.class),
-        PAIR(DyanasisObjectPair.class),
-        STRING(DyanasisObjectString.class),
-        ;
-        private final @NotNull Class<? extends DyanasisObjectSupport> type;
+  @NotNull SupportType supportType();
 
-        SupportType(@NotNull Class<? extends DyanasisObjectSupport> type) {
-            this.type = type;
-        }
+  enum SupportType {
+    ARRAY(DyanasisObjectArray.class),
+    BOOL(DyanasisObjectBool.class),
+    LAMBDA(DyanasisObjectLambda.class),
+    MAP(DyanasisObjectMap.class),
+    NULL(DyanasisObjectNull.class),
+    NUMBER(DyanasisObjectNumber.class),
+    PAIR(DyanasisObjectPair.class),
+    STRING(DyanasisObjectString.class),
+    ;
+    private final @NotNull Class<? extends DyanasisObjectSupport> type;
 
-        @ApiStatus.Experimental
-        public @NotNull Class<? extends DyanasisObjectSupport> type() {
-            return type;
-        }
+    SupportType(@NotNull Class<? extends DyanasisObjectSupport> type) {
+      this.type = type;
     }
+
+    @ApiStatus.Experimental
+    public @NotNull Class<? extends DyanasisObjectSupport> type() {
+      return type;
+    }
+  }
+
 }

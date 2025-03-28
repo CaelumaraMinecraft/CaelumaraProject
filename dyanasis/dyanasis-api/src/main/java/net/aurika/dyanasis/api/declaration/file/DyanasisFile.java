@@ -21,55 +21,66 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface DyanasisFile
-        extends DyanasisDeclaration,
-        UsingNamespace, DyanasisRuntimeObject,
-        DyanasisPropertiesAware, DyanasisPropertyAnchor,
-        DyanasisFunctionsAware, DyanasisFunctionAnchor,
-        DyanasisDocAware, DyanasisDocAnchor {
+    extends DyanasisDeclaration,
+    UsingNamespace, DyanasisRuntimeObject,
+    DyanasisPropertiesAware, DyanasisPropertyAnchor,
+    DyanasisFunctionsAware, DyanasisFunctionAnchor,
+    DyanasisDocAware, DyanasisDocAnchor {
+
+  @Override
+  @Nullable DyanasisNamespace usingNamespace();
+
+  @Override
+  void usingNamespace(@Nullable DyanasisNamespace namespace);
+
+  @Override
+  @NotNull FilePropertyContainer<? extends FileProperty> dyanasisProperties();
+
+  @Override
+  @NotNull FileFunctionContainer<? extends FileFunction> dyanasisFunctions();
+
+  @Override
+  @Nullable FileDoc dyanasisDoc();
+
+  @Override
+  @NotNull DyanasisRuntime dyanasisRuntime();
+
+  interface FilePropertyContainer<P extends FileProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
 
     @Override
-    @Nullable DyanasisNamespace usingNamespace();
+    @NotNull DyanasisFile owner();
+
+  }
+
+  interface FileFunctionContainer<F extends FileFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
 
     @Override
-    void usingNamespace(@Nullable DyanasisNamespace namespace);
+    @NotNull DyanasisFile owner();
+
+  }
+
+  interface FileProperty extends DyanasisProperty {
 
     @Override
-    @NotNull FilePropertyContainer<? extends FileProperty> dyanasisProperties();
+    @NotNull DyanasisFile owner();
+
+  }
+
+  interface FileFunction extends DyanasisFunction {
 
     @Override
-    @NotNull FileFunctionContainer<? extends FileFunction> dyanasisFunctions();
+    @NotNull DyanasisFile owner();
+
+  }
+
+  /**
+   * The dyanasis doc to a dyanasis file.
+   */
+  interface FileDoc extends DyanasisDoc {
 
     @Override
-    @Nullable FileDoc dyanasisDoc();
+    @NotNull DyanasisFile owner();
 
-    @Override
-    @NotNull DyanasisRuntime dyanasisRuntime();
+  }
 
-    interface FilePropertyContainer<P extends FileProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
-        @Override
-        @NotNull DyanasisFile owner();
-    }
-
-    interface FileFunctionContainer<F extends FileFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
-        @Override
-        @NotNull DyanasisFile owner();
-    }
-
-    interface FileProperty extends DyanasisProperty {
-        @Override
-        @NotNull DyanasisFile owner();
-    }
-
-    interface FileFunction extends DyanasisFunction {
-        @Override
-        @NotNull DyanasisFile owner();
-    }
-
-    /**
-     * The dyanasis doc to a dyanasis file.
-     */
-    interface FileDoc extends DyanasisDoc {
-        @Override
-        @NotNull DyanasisFile owner();
-    }
 }

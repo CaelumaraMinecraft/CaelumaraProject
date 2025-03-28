@@ -1,74 +1,76 @@
 package net.aurika.common.key.namespace;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.auspice.utils.nonnull.NonNullMap;
 import net.aurika.auspice.utils.unsafe.string.PrettyStringFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 public class NSKeyMap<V> implements Map<NSedKey, V> {
-    protected final Map<NSedKey, V> map;
 
-    public NSKeyMap() {
-        this.map = new NonNullMap<>();
-    }
+  protected final Map<NSedKey, V> map;
 
-    public NSKeyMap(Map<NSedKey, V> map) {
-        this.map = NonNullMap.of(map);
-    }
+  public NSKeyMap() {
+    this.map = new NonNullMap<>();
+  }
 
-    public int size() {
-        return this.map.size();
-    }
+  public NSKeyMap(Map<NSedKey, V> map) {
+    this.map = NonNullMap.of(map);
+  }
 
-    public boolean isEmpty() {
-        return this.map.isEmpty();
-    }
+  public int size() {
+    return this.map.size();
+  }
 
-    public boolean containsKey(Object key) {
-        return this.map.containsKey(key);
-    }
+  public boolean isEmpty() {
+    return this.map.isEmpty();
+  }
 
-    public boolean containsValue(Object value) {
-        return this.map.containsValue(value);
-    }
+  public boolean containsKey(Object key) {
+    return this.map.containsKey(key);
+  }
 
-    public V get(Object key) {
-        return this.map.get(key);
-    }
+  public boolean containsValue(Object value) {
+    return this.map.containsValue(value);
+  }
 
-    public @Nullable V put(NSedKey key, V value) {
-        return this.map.put(key, value);
-    }
+  public V get(Object key) {
+    return this.map.get(key);
+  }
 
-    public V remove(Object key) {
-        return this.map.remove(key);
-    }
+  public @Nullable V put(NSedKey key, V value) {
+    return this.map.put(key, value);
+  }
 
-    public void putAll(@NotNull Map<? extends NSedKey, ? extends V> m) {
-        this.map.putAll(m);
-    }
+  public V remove(Object key) {
+    return this.map.remove(key);
+  }
 
-    public void clear() {
-        this.map.clear();
-    }
+  public void putAll(@NotNull Map<? extends NSedKey, ? extends V> m) {
+    this.map.putAll(m);
+  }
 
-    public @NotNull Set<NSedKey> keySet() {
-        return this.map.keySet();
-    }
+  public void clear() {
+    this.map.clear();
+  }
 
-    public @NotNull Collection<V> values() {
-        return this.map.values();
-    }
+  public @NotNull Set<NSedKey> keySet() {
+    return this.map.keySet();
+  }
 
-    public @NotNull Set<Map.Entry<NSedKey, V>> entrySet() {
-        return this.map.entrySet();
-    }
+  public @NotNull Collection<V> values() {
+    return this.map.values();
+  }
 
-    public @NotNull String toString() {
-        return PrettyStringFactory.toDefaultPrettyString(this);
-    }
+  public @NotNull Set<Map.Entry<NSedKey, V>> entrySet() {
+    return this.map.entrySet();
+  }
+
+  public @NotNull String toString() {
+    return PrettyStringFactory.toDefaultPrettyString(this);
+  }
+
 }

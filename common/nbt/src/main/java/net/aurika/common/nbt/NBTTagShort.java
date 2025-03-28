@@ -5,44 +5,47 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NBTTagShort extends NBTTagNumber {
 
-    static @NotNull NBTTagShort nbtTagShort(short value) {
-        return new NBTTagShortImpl(value);
-    }
+  static @NotNull NBTTagShort nbtTagShort(short value) {
+    return new NBTTagShortImpl(value);
+  }
 
-    @Override
-    default @NotNull NBTTagType<NBTTagShort> nbtTagType() {
-        return NBTTagType.SHORT;
-    }
+  @Override
+  default @NotNull NBTTagType<NBTTagShort> nbtTagType() {
+    return NBTTagType.SHORT;
+  }
 
-    void value(short value);
+  void value(short value);
 
-    short value();
+  short value();
 
-    @Override
-    default @NotNull Short valueAsObject() {
-        return this.value();
-    }
+  @Override
+  default @NotNull Short valueAsObject() {
+    return this.value();
+  }
 
-    @Override
-    default @NotNull ShortBinaryTag asBinaryTag() {
-        return ShortBinaryTag.shortBinaryTag(value());
-    }
+  @Override
+  default @NotNull ShortBinaryTag asBinaryTag() {
+    return ShortBinaryTag.shortBinaryTag(value());
+  }
+
 }
 
 class NBTTagShortImpl extends NBTTagNumberImpl implements NBTTagShort {
-    private short value;
 
-    NBTTagShortImpl(short value) {
-        this.value = value;
-    }
+  private short value;
 
-    @Override
-    public void value(short value) {
-        this.value = value;
-    }
+  NBTTagShortImpl(short value) {
+    this.value = value;
+  }
 
-    @Override
-    public short value() {
-        return this.value;
-    }
+  @Override
+  public void value(short value) {
+    this.value = value;
+  }
+
+  @Override
+  public short value() {
+    return this.value;
+  }
+
 }

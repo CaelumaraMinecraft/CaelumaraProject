@@ -11,12 +11,13 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandUnregister;
 
 public class CommandAdminRegistryEconomy extends CommandAdminRegistryTemplate<Economy, EconomyRegistry> {
-    public CommandAdminRegistryEconomy(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryEconomy(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryEconomy(@Nullable KingdomsParentCommand parent, @NotNull PermissionDefault permissionDefault) {
-        super("economy", parent, permissionDefault, EconomyRegistry.INSTANCE, Economy.class);
-        new RegistryOperatorCommandUnregister<>("unregister", this, permissionDefault, PeaceTreatiesAddon.get().getTermRegistry(), TermProvider.class);
-    }
+  public CommandAdminRegistryEconomy(@Nullable KingdomsParentCommand parent, @NotNull PermissionDefault permissionDefault) {
+    super("economy", parent, permissionDefault, EconomyRegistry.INSTANCE, Economy.class);
+    new RegistryOperatorCommandUnregister<>("unregister", this, permissionDefault, PeaceTreatiesAddon.get().getTermRegistry(), TermProvider.class);
+  }
+
 }

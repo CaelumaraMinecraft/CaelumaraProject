@@ -1,54 +1,56 @@
 package net.aurika.util.scheduler;
 
-import org.jetbrains.annotations.NotNull;
 import net.aurika.util.scheduler.Task.ExecutionContextType;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.util.concurrent.Executor;
 
 public class InstantTaskScheduler implements TaskScheduler {
-    public static final InstantTaskScheduler INSTANCE = new InstantTaskScheduler();
 
-    protected InstantTaskScheduler() {
-    }
+  public static final InstantTaskScheduler INSTANCE = new InstantTaskScheduler();
 
-    @NotNull
-    public ExecutionContextType getExecutionContextType() {
-        return ExecutionContextType.SYNC;
-    }
+  protected InstantTaskScheduler() {
+  }
 
-    @NotNull
-    public Executor getExecutor() {
-        throw new UnsupportedOperationException();
-    }
+  @NotNull
+  public ExecutionContextType getExecutionContextType() {
+    return ExecutionContextType.SYNC;
+  }
 
-    private static void requireZero(Duration duration, String name) {
-        if (!duration.isZero()) {
-            throw new IllegalArgumentException("Instant task scheduler cannot run task with " + name + " of " + duration);
-        }
-    }
+  @NotNull
+  public Executor getExecutor() {
+    throw new UnsupportedOperationException();
+  }
 
-    public @NotNull Task execute(@NotNull Runnable var1) {
-        return new AbstractTask(this.getExecutionContextType(), var1);
+  private static void requireZero(Duration duration, String name) {
+    if (!duration.isZero()) {
+      throw new IllegalArgumentException("Instant task scheduler cannot run task with " + name + " of " + duration);
     }
+  }
 
-    public @NotNull DelayedTask delayed(@NotNull Duration delay, @NotNull Runnable runnable) {
-        requireZero(delay, "delay");
-        return new AbstractDelayedTask(runnable, delay, this.getExecutionContextType()) {
-            public boolean cancel() {
-                return super.cancel();
-            }
-        };
-    }
+  public @NotNull Task execute(@NotNull Runnable var1) {
+    return new AbstractTask(this.getExecutionContextType(), var1);
+  }
 
-    public @NotNull DelayedRepeatingTask repeating(@NotNull Duration initialDelay, @NotNull Duration intervalDelays, @NotNull Runnable runnable) {
-        requireZero(initialDelay, "initialDelay");
-        requireZero(intervalDelays, "intervalDelays");
-        return new AbstractDelayedRepeatingTask(runnable, initialDelay, intervalDelays, this.getExecutionContextType()) {
-            public boolean cancel() {
-                return super.cancel();
-            }
-        };
-    }
+  public @NotNull DelayedTask delayed(@NotNull Duration delay, @NotNull Runnable runnable) {
+    requireZero(delay, "delay");
+    return new AbstractDelayedTask(runnable, delay, this.getExecutionContextType()) {
+      public boolean cancel() {
+        return super.cancel();
+      }
+    };
+  }
+
+  public @NotNull DelayedRepeatingTask repeating(@NotNull Duration initialDelay, @NotNull Duration intervalDelays, @NotNull Runnable runnable) {
+    requireZero(initialDelay, "initialDelay");
+    requireZero(intervalDelays, "intervalDelays");
+    return new AbstractDelayedRepeatingTask(runnable, initialDelay, intervalDelays, this.getExecutionContextType()) {
+      public boolean cancel() {
+        return super.cancel();
+      }
+    };
+  }
+
 }
 

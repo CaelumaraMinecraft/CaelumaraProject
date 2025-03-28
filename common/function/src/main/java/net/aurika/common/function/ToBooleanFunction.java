@@ -14,5 +14,7 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface ToBooleanFunction<T> {
-    boolean applyAsBoolean(T value);
+
+  boolean applyAsBoolean(T value);
+
 }

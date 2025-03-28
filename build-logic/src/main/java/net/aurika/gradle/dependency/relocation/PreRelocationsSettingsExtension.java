@@ -10,39 +10,42 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 
 public class PreRelocationsSettingsExtension {
-    private @NotNull File relocatedFolder;
 
-    public PreRelocationsSettingsExtension(@NotNull File relocatedFolder) {
-        this.relocatedFolder = relocatedFolder;
-    }
+  private @NotNull File relocatedFolder;
 
-    public void addPreRelocatedDependency(@NotNull Dependency dependency, @NotNull Action<? super PreRelocationsExtension> action) {
-        action.execute(putPreRelocationsExtension(dependency));
-    }
+  public PreRelocationsSettingsExtension(@NotNull File relocatedFolder) {
+    this.relocatedFolder = relocatedFolder;
+  }
 
-    public void addPreRelocatedDependency(@NotNull Dependency dependency, @NotNull Closure closure) {
-        closure.setDelegate(putPreRelocationsExtension(dependency));
-        closure.call();
-    }
+  public void addPreRelocatedDependency(@NotNull Dependency dependency, @NotNull Action<? super PreRelocationsExtension> action) {
+    action.execute(putPreRelocationsExtension(dependency));
+  }
 
-    protected @NotNull PreRelocationsExtension putPreRelocationsExtension(@NotNull Dependency dependency) {
-        @Nullable PreRelocationsExtension depExt = ((ExtensionAware) dependency).getExtensions().findByType(PreRelocationsExtension.class);
-        if (depExt == null) {
-            depExt = ((ExtensionAware) dependency).getExtensions().create(
-                    PreRelocationsExtension.class,
-                    PreRelocationsExtension.EXTENSION_NAME,
-                    PreRelocationsExtension.class,
-                    new Object[]{this}
-            );
-        }
-        return depExt;
-    }
+  public void addPreRelocatedDependency(@NotNull Dependency dependency, @NotNull Closure closure) {
+    closure.setDelegate(putPreRelocationsExtension(dependency));
+    closure.call();
+  }
 
-    public @NotNull File getRelocatedFolder() {
-        return relocatedFolder;
+  protected @NotNull PreRelocationsExtension putPreRelocationsExtension(@NotNull Dependency dependency) {
+    @Nullable PreRelocationsExtension depExt = ((ExtensionAware) dependency).getExtensions().findByType(
+        PreRelocationsExtension.class);
+    if (depExt == null) {
+      depExt = ((ExtensionAware) dependency).getExtensions().create(
+          PreRelocationsExtension.class,
+          PreRelocationsExtension.EXTENSION_NAME,
+          PreRelocationsExtension.class,
+          new Object[]{this}
+      );
     }
+    return depExt;
+  }
 
-    public void setRelocatedFolder(@NotNull File relocatedFolder) {
-        this.relocatedFolder = relocatedFolder;
-    }
+  public @NotNull File getRelocatedFolder() {
+    return relocatedFolder;
+  }
+
+  public void setRelocatedFolder(@NotNull File relocatedFolder) {
+    this.relocatedFolder = relocatedFolder;
+  }
+
 }

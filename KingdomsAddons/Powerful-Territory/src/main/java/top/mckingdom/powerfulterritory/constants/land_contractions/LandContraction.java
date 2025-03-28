@@ -13,23 +13,24 @@ import top.mckingdom.powerfulterritory.data.LandContractions;
 
 public abstract class LandContraction implements Namespaced {
 
-    private final Namespace namespace;
+  private final Namespace namespace;
 
-    public LandContraction(Namespace namespace) {
-        this.namespace = namespace;
-    }
+  public LandContraction(Namespace namespace) {
+    this.namespace = namespace;
+  }
 
-    @Override
-    public @NonNull Namespace getNamespace() {
-        return namespace;
-    }
+  @Override
+  public @NonNull Namespace getNamespace() {
+    return namespace;
+  }
 
-    public boolean hasContraction(Land land, KingdomPlayer player, boolean requireEffectiveContraction) {
-        return LandContractions.hasLandContraction(player, land, this, requireEffectiveContraction);
-    }
+  public boolean hasContraction(Land land, KingdomPlayer player, boolean requireEffectiveContraction) {
+    return LandContractions.hasLandContraction(player, land, this, requireEffectiveContraction);
+  }
 
-    //单例方法
-    public abstract @Nullable ContractionLandProperties deserializeProperties(@NotNull SectionableDataGetter context);
+  //单例方法
+  public abstract @Nullable ContractionLandProperties deserializeProperties(@NotNull SectionableDataGetter context);
 
-    public abstract @NotNull String getName(Language lang);
+  public abstract @NotNull String getName(Language lang);
+
 }

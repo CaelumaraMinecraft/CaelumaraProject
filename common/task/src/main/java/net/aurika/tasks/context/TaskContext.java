@@ -5,11 +5,13 @@ import net.aurika.tasks.container.TaskSession;
 import org.jetbrains.annotations.NotNull;
 
 public interface TaskContext {
-    @NotNull TaskState getState();
 
-    void setState(@NotNull TaskState state);
+  @NotNull TaskState getState();
 
-    @NotNull TaskSession getSession();
+  void setState(@NotNull TaskState state);
 
-    @NotNull TaskContext createNew();
+  @NotNull TaskSession getSession();
+
+  @NotNull TaskContext createNew();
+
 }

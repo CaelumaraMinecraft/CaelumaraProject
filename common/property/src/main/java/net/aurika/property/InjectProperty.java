@@ -7,15 +7,16 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 public @interface InjectProperty {
 
-    enum Type {
-        OBJECT,
-        BOOLEAN,
-        CHAR,
-        BYTE,
-        SHORT,
-        INT,
-        LONG,
-        FLOAT,
-        DOUBLE,
-    }
+  enum Type {
+    OBJECT,
+    BOOLEAN,
+    CHAR,
+    BYTE,
+    SHORT,
+    INT,
+    LONG,
+    FLOAT,
+    DOUBLE,
+  }
+
 }

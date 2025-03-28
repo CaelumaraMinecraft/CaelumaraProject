@@ -2,7 +2,7 @@ package net.aurika.auspice.configs.globalconfig;
 
 import com.cryptomorin.xseries.XSound;
 import net.aurika.config.accessor.YamlUndefinedPathConfigAccessor;
-import net.aurika.config.adapters.YamlResource;
+import net.aurika.config.adapter.YamlResource;
 import net.aurika.config.path.ConfigPath;
 import net.aurika.config.yaml.importers.YamlGlobalImporter;
 import net.aurika.auspice.configs.globalconfig.accessor.EnumGlobalConfig;

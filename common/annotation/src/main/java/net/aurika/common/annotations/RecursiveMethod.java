@@ -9,5 +9,4 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 @Documented
-@interface RecursiveMethod {
-}
+@interface RecursiveMethod { }

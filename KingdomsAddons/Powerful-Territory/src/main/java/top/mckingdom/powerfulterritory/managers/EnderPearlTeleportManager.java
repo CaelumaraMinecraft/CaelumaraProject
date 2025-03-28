@@ -15,27 +15,28 @@ import top.mckingdom.powerfulterritory.util.GroupExt;
 
 public class EnderPearlTeleportManager implements Listener {
 
-    @EventHandler(ignoreCancelled = true)
-    public final void onPearlTeleport(PlayerTeleportEvent event) {
+  @EventHandler(ignoreCancelled = true)
+  public final void onPearlTeleport(PlayerTeleportEvent event) {
 
-        if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
+    if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
 
-            Player player;
-            KingdomPlayer kPlayer = KingdomPlayer.getKingdomPlayer(player = event.getPlayer());
-            Land land;
-            if ((land = Land.getLand(event.getTo())) != null && land.isClaimed()) {
-                Kingdom kingdom;
-                if ((kingdom = land.getKingdom()).getUpgradeLevel(MiscUpgrade.ANTI_TRAMPLE) >= 3) {
-                    Kingdom var5 = kPlayer.getKingdom();
-                    if (!GroupExt.ENDER_PEARL_TELEPORT.hasAttribute(kingdom, var5)) {
-                        event.setCancelled(true);
-                        ParticleDisplay.of(Particle.CLOUD).withCount(10).spawn(event.getTo());
-                        KingdomsLang.LANDS_ENDER_PEARL_PROTECTION.sendError(player);
-                    } else {
-                        event.setCancelled(false);
-                    }
-                }
-            }
+      Player player;
+      KingdomPlayer kPlayer = KingdomPlayer.getKingdomPlayer(player = event.getPlayer());
+      Land land;
+      if ((land = Land.getLand(event.getTo())) != null && land.isClaimed()) {
+        Kingdom kingdom;
+        if ((kingdom = land.getKingdom()).getUpgradeLevel(MiscUpgrade.ANTI_TRAMPLE) >= 3) {
+          Kingdom var5 = kPlayer.getKingdom();
+          if (!GroupExt.ENDER_PEARL_TELEPORT.hasAttribute(kingdom, var5)) {
+            event.setCancelled(true);
+            ParticleDisplay.of(Particle.CLOUD).withCount(10).spawn(event.getTo());
+            KingdomsLang.LANDS_ENDER_PEARL_PROTECTION.sendError(player);
+          } else {
+            event.setCancelled(false);
+          }
         }
+      }
     }
+  }
+
 }

@@ -9,23 +9,24 @@ import java.util.function.Predicate;
 
 public class ExactPathFilter implements Predicate<Path> {
 
-    private final @NotNull Path exactPath;
+  private final @NotNull Path exactPath;
 
-    public ExactPathFilter(@NotNull Path exactPath) {
-        Validate.Arg.notNull(exactPath, "exactPath");
-        this.exactPath = exactPath;
-    }
+  public ExactPathFilter(@NotNull Path exactPath) {
+    Validate.Arg.notNull(exactPath, "exactPath");
+    this.exactPath = exactPath;
+  }
 
-    public @NotNull Path getExactPath() {
-        return exactPath;
-    }
+  public @NotNull Path getExactPath() {
+    return exactPath;
+  }
 
-    public boolean test(@NotNull Path path) {
-        Validate.Arg.notNull(path, "path");
-        return Objects.equals(exactPath, path);
-    }
+  public boolean test(@NotNull Path path) {
+    Validate.Arg.notNull(path, "path");
+    return Objects.equals(exactPath, path);
+  }
 
-    public @NotNull String toString() {
-        return "ExactPathFilter(" + this.exactPath + ')';
-    }
+  public @NotNull String toString() {
+    return "ExactPathFilter(" + this.exactPath + ')';
+  }
+
 }

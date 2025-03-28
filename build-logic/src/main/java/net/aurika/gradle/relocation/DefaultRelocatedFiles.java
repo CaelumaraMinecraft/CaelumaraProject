@@ -12,47 +12,48 @@ import java.util.Objects;
 
 public class DefaultRelocatedFiles implements RelocatedFiles {
 
-    protected @NotNull FileCollection files;
-    protected @NotNull List<SimpleRelocation> relocations;
-    protected @NotNull Directory targetDirectory;
+  protected @NotNull FileCollection files;
+  protected @NotNull List<SimpleRelocation> relocations;
+  protected @NotNull Directory targetDirectory;
 
-    public DefaultRelocatedFiles(@NotNull FileCollection files, @NotNull List<SimpleRelocation> relocations, @NotNull Directory targetDirectory) {
-        this.files = files;
-        this.relocations = relocations;
-        this.targetDirectory = targetDirectory;
+  public DefaultRelocatedFiles(@NotNull FileCollection files, @NotNull List<SimpleRelocation> relocations, @NotNull Directory targetDirectory) {
+    this.files = files;
+    this.relocations = relocations;
+    this.targetDirectory = targetDirectory;
+  }
+
+  @Override
+  public @NotNull FileCollection getFiles() {
+    return files;
+  }
+
+  @Override
+  public @NotNull List<SimpleRelocation> getRelocations() {
+    return relocations;
+  }
+
+  @Override
+  public @NotNull Directory getTargetDirectory() {
+    return targetDirectory;
+  }
+
+  @Override
+  public void relocate() {
+    Objects.requireNonNull(files);
+    Objects.requireNonNull(relocations);
+    Objects.requireNonNull(targetDirectory);
+
+    for (File input : files) {
+      String outputFileName = "relocated-" + input.getName();
+      File outputFile = targetDirectory.file(outputFileName).getAsFile();
+
+      if (!outputFile.exists()) {
+
+        System.out.println(outputFile.getAbsolutePath());
+
+        RelocationHandler.remap(input.toPath(), outputFile.toPath(), relocations);
+      }
     }
+  }
 
-    @Override
-    public @NotNull FileCollection getFiles() {
-        return files;
-    }
-
-    @Override
-    public @NotNull List<SimpleRelocation> getRelocations() {
-        return relocations;
-    }
-
-    @Override
-    public @NotNull Directory getTargetDirectory() {
-        return targetDirectory;
-    }
-
-    @Override
-    public void relocate() {
-        Objects.requireNonNull(files);
-        Objects.requireNonNull(relocations);
-        Objects.requireNonNull(targetDirectory);
-
-        for (File input : files) {
-            String outputFileName = "relocated-" + input.getName();
-            File outputFile = targetDirectory.file(outputFileName).getAsFile();
-
-            if (!outputFile.exists()) {
-
-                System.out.println(outputFile.getAbsolutePath());
-
-                RelocationHandler.remap(input.toPath(), outputFile.toPath(), relocations);
-            }
-        }
-    }
 }

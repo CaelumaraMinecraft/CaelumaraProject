@@ -8,25 +8,26 @@ import java.util.function.Predicate;
 
 public class ConditionalPathVisitor {
 
-    private final @NotNull Predicate<Path> predicate;
-    private final @NotNull PathVisitor visitor;
+  private final @NotNull Predicate<Path> predicate;
+  private final @NotNull PathVisitor visitor;
 
-    public ConditionalPathVisitor(@NotNull Predicate<Path> predicate, @NotNull PathVisitor visitor) {
-        Validate.Arg.notNull(predicate, "predicate");
-        Validate.Arg.notNull(visitor, "visitor");
-        this.predicate = predicate;
-        this.visitor = visitor;
-    }
+  public ConditionalPathVisitor(@NotNull Predicate<Path> predicate, @NotNull PathVisitor visitor) {
+    Validate.Arg.notNull(predicate, "predicate");
+    Validate.Arg.notNull(visitor, "visitor");
+    this.predicate = predicate;
+    this.visitor = visitor;
+  }
 
-    public @NotNull Predicate<Path> getPredicate() {
-        return predicate;
-    }
+  public @NotNull Predicate<Path> getPredicate() {
+    return predicate;
+  }
 
-    public @NotNull PathVisitor getVisitor() {
-        return visitor;
-    }
+  public @NotNull PathVisitor getVisitor() {
+    return visitor;
+  }
 
-    public @NotNull String toString() {
-        return "ConditionalPathVisitor(" + predicate + " -> " + visitor + ')';
-    }
+  public @NotNull String toString() {
+    return "ConditionalPathVisitor(" + predicate + " -> " + visitor + ')';
+  }
+
 }

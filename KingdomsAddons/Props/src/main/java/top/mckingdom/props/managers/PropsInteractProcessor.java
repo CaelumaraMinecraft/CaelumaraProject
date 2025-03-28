@@ -12,32 +12,33 @@ import org.kingdoms.platform.bukkit.item.ItemNBT;
 
 public class PropsInteractProcessor extends AbstractKingdomsProcessor {
 
-    private final PlayerInteractEvent event;
+  private final PlayerInteractEvent event;
 
-    public PropsInteractProcessor(PlayerInteractEvent event) {
-        this.event = event;
+  public PropsInteractProcessor(PlayerInteractEvent event) {
+    this.event = event;
+  }
+
+  @Override
+  public KingdomsProcessor reprocess() {
+    return new PropsInteractProcessor(this.event);
+  }
+
+  @Override
+  public KingdomsProcessor process() {
+    super.process();
+    return this;
+  }
+
+  @Override
+  public Messenger processIssue() {
+    Block block = event.getClickedBlock();
+    ItemStack item = event.getItem();
+    if (item != null) {                                            //TODO: in disable world
+      NBTTagCompound nbt = ItemNBT.getTag(item);
+      NBTTagCompound kingdomsNBT = nbt.tryGetTag("Kingdoms", NBTTagType.COMPOUND);
     }
 
-    @Override
-    public KingdomsProcessor reprocess() {
-        return new PropsInteractProcessor(this.event);
-    }
+    return null;
+  }
 
-    @Override
-    public KingdomsProcessor process() {
-        super.process();
-        return this;
-    }
-
-    @Override
-    public Messenger processIssue() {
-        Block block = event.getClickedBlock();
-        ItemStack item = event.getItem();
-        if (item != null) {                                            //TODO: in disable world
-            NBTTagCompound nbt = ItemNBT.getTag(item);
-            NBTTagCompound kingdomsNBT = nbt.tryGetTag("Kingdoms", NBTTagType.COMPOUND);
-        }
-
-        return null;
-    }
 }

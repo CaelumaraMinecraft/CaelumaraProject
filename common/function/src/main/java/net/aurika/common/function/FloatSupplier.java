@@ -18,10 +18,11 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface FloatSupplier {
 
-    /**
-     * Gets a result.
-     *
-     * @return a result
-     */
-    float getAsFloat();
+  /**
+   * Gets a result.
+   *
+   * @return a result
+   */
+  float getAsFloat();
+
 }

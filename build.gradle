@@ -1,56 +1,72 @@
-import net.aurika.gradle.dependency.dependencies.KingdomsDependency
+import net.aurika.gradle.kingdoms.dependency.KingdomsDependency
 
 plugins {
-    id("java-library")
-    id("aurika.repos")
-    id("aurika.relocation")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("java-library")
+  id("aurika.repos")
+  id("aurika.relocation")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
-relocateFiles.createRelocates(fileTree("libs/plugins/Kingdoms"), layout.projectDirectory.dir("libs/plugins/Kingdoms_relocated"), relocates -> {
+relocateFiles.createRelocates(
+    fileTree("libs/plugins/Kingdoms"),
+    layout.projectDirectory.dir("libs/plugins/Kingdoms_relocated"),
+    (relocates) -> {
 
-    for (Map.Entry<String, String> reverseRelocate : KingdomsDependency.reverseRelocates().entrySet()) {
+      for (Map.Entry<String, String> reverseRelocate : KingdomsDependency.reverseRelocates().entrySet()) {
         relocates.relocate(reverseRelocate.getKey(), reverseRelocate.getValue())
+      }
+      relocates.relocate()
+      println(relocates.targetDirectory)
     }
-    relocates.relocate()
-    println(relocates.targetDirectory)
-})
+)
 
 allprojects {
-    group = "net.aurika"
+  group = "net.aurika"
 
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        gradlePluginPortal()
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
 
-        maven {
-            name = "nostal-snapshots"
-            url = "https://maven.nostal.ink/repository/maven-snapshots/"
-        }
-
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/groups/public/"
-        }
-
-        maven {
-            name = "rosewood-dev"
-            url = "https://repo.rosewooddev.io/repository/public/"
-        }
-
-        maven {
-            name = "nms-repo"
-            url = "https://repo.codemc.org/repository/nms/"
-        }
-
-        maven {
-            name = "jitpack-io"
-            url = "https://jitpack.io"
-            content {
-                includeGroupByRegex("com\\.github\\..*")
-            }
-        }
+    maven {
+      name = "nostal-snapshots"
+      url = "https://maven.nostal.ink/repository/maven-snapshots/"
     }
+
+    maven {
+      name = "sonatype"
+      url = "https://oss.sonatype.org/content/groups/public/"
+    }
+
+    maven {
+      name = "rosewood-dev"
+      url = "https://repo.rosewooddev.io/repository/public/"
+    }
+
+    maven {
+      name = "nms-repo"
+      url = "https://repo.codemc.org/repository/nms/"
+    }
+
+    maven {
+      name = "jitpack-io"
+      url = "https://jitpack.io"
+      content {
+        includeGroupByRegex("com\\.github\\..*")
+      }
+    }
+  }
+//
+//    int targetJavaVersion = 8
+//
+//    java {
+//        withSourcesJar()
+//        JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+//        sourceCompatibility = javaVersion
+//        targetCompatibility = javaVersion
+//        if (JavaVersion.current() < javaVersion) {
+//            toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+//        }
+//    }
 }

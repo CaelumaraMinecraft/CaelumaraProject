@@ -1,11 +1,13 @@
 package net.aurika.util.scheduler;
 
 public interface ScheduledTask extends Task, Cancellable {
-    ExecutionContextType getExecutionContextType();
 
-    void run();
+  ExecutionContextType getExecutionContextType();
 
-    boolean cancel();
+  void run();
 
-    boolean isCancelled();
+  boolean cancel();
+
+  boolean isCancelled();
+
 }

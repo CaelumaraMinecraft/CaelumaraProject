@@ -15,46 +15,47 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import java.util.concurrent.CompletionStage;
 
 public class ScutageTerm extends Term {
-    private double percent;
+  private double percent;
 
-    public static final TermProvider PROVIDER = new StandardTermProvider(Namespace.kingdoms("SCUTAGE"), ScutageTerm::new, true, true) {
-        @Override
-        public CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor) {
-            return standardAmountPrompt(this, options, editor, (amount) -> new ScutageTerm(amount.doubleValue()));
-        }
-    };
-
-    private ScutageTerm() {
-    }
-
-    public ScutageTerm(double money) {
-        this.percent = money;
-    }
-
-    public double getPercent() {
-        return percent;
-    }
-
+  public static final TermProvider PROVIDER = new StandardTermProvider(Namespace.kingdoms("SCUTAGE"), ScutageTerm::new, true, true) {
     @Override
-    public void deserialize(DeserializationContext<SectionableDataGetter> context) {
-        SectionableDataGetter json = context.getDataProvider();
-        this.percent = json.get("percent").asDouble();
+    public CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor) {
+      return standardAmountPrompt(this, options, editor, (amount) -> new ScutageTerm(amount.doubleValue()));
     }
+  };
 
-    @Override
-    public void serialize(SerializationContext<SectionableDataSetter> context) {
-        SectionableDataSetter json = context.getDataProvider();
-        json.setDouble("percent", percent);
-    }
+  private ScutageTerm() {
+  }
 
-    @Override
-    public void addEdits(MessagePlaceholderProvider builder) {
-        super.addEdits(builder);
-        builder.raw("term_scutage_percent", percent);
-    }
+  public ScutageTerm(double money) {
+    this.percent = money;
+  }
 
-    @Override
-    public TermProvider getProvider() {
-        return PROVIDER;
-    }
+  public double getPercent() {
+    return percent;
+  }
+
+  @Override
+  public void deserialize(DeserializationContext<SectionableDataGetter> context) {
+    SectionableDataGetter json = context.getDataProvider();
+    this.percent = json.get("percent").asDouble();
+  }
+
+  @Override
+  public void serialize(SerializationContext<SectionableDataSetter> context) {
+    SectionableDataSetter json = context.getDataProvider();
+    json.setDouble("percent", percent);
+  }
+
+  @Override
+  public void addEdits(MessagePlaceholderProvider builder) {
+    super.addEdits(builder);
+    builder.raw("term_scutage_percent", percent);
+  }
+
+  @Override
+  public TermProvider getProvider() {
+    return PROVIDER;
+  }
+
 }

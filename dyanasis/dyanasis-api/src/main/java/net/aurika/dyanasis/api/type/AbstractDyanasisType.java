@@ -8,71 +8,57 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractDyanasisType<O extends DyanasisObject> implements DyanasisType<O> {
 
-    private final @NotNull DyanasisRuntime runtime;
-    private final @NotNull DyanasisNamespace namespace;
-    private final @NotNull String name;
-    private final @NotNull Class<? extends O> clazz;
+  private final @NotNull DyanasisRuntime runtime;
+  private final @NotNull DyanasisNamespace namespace;
+  private final @NotNull String name;
+  private final @NotNull Class<? extends O> clazz;
 
-    public AbstractDyanasisType(@NotNull DyanasisRuntime runtime,
-                                @NotNull DyanasisNamespace namespace,
-                                @NotNull String name,
-                                @NotNull Class<? extends O> clazz
-    ) {
-        Validate.Arg.notNull(runtime, "runtime");
-        Validate.Arg.notNull(namespace, "namespace");
-        Validate.Arg.notNull(name, "name");
-        Validate.Arg.notNull(clazz, "clazz");
-        this.runtime = runtime;
-        this.namespace = namespace;
-        this.name = name;
-        this.clazz = clazz;
-        namespace.addDyanasisType(this);
-    }
+  public AbstractDyanasisType(
+      @NotNull DyanasisRuntime runtime,
+      @NotNull DyanasisNamespace namespace,
+      @NotNull String name,
+      @NotNull Class<? extends O> clazz
+  ) {
+    Validate.Arg.notNull(runtime, "runtime");
+    Validate.Arg.notNull(namespace, "namespace");
+    Validate.Arg.notNull(name, "name");
+    Validate.Arg.notNull(clazz, "clazz");
+    this.runtime = runtime;
+    this.namespace = namespace;
+    this.name = name;
+    this.clazz = clazz;
+    namespace.addDyanasisType(this);
+  }
 
-    @Override
-    public boolean isInstance(DyanasisObject dyanasisObject) {
-        return clazz.isInstance(dyanasisObject);
-    }
+  @Override
+  public @NotNull DyanasisTypeIdent ident() {
+    return namespace.ident().mergeToTypeIdent(name);
+  }
 
-    /**
-     * Gets the full name of the type. It looks like {@code std.String}, {@code net.aurika.auspice.dyanasis.Namespace}
-     *
-     * @return the full name
-     */
-    @Override
-    public @NotNull String fullName() {
-        return fullName(".");
-    }
+  @Override
+  public boolean isInstance(DyanasisObject dyanasisObject) {
+    return clazz.isInstance(dyanasisObject);
+  }
 
-    @Override
-    public @NotNull String fullName(@NotNull String delimiter) {
-        Validate.Arg.notNull(delimiter, "delimiter");
-        return String.join(delimiter, namespace.path().path()) + delimiter + name;
-    }
+  @Override
+  public @NotNull DyanasisNamespace dyanasisNamespace() {
+    return namespace;
+  }
 
-    @Override
-    public @NotNull DyanasisNamespace dyanasisNamespace() {
-        return namespace;
-    }
+  @Override
+  public @NotNull Class<? extends DyanasisObject> clazz() {
+    return clazz;
+  }
 
-    @Override
-    public @NotNull String name() {
-        return name;
-    }
+  @Override
+  public abstract @NotNull InstancePropertyHandler<O> instancePropertyHandler();
 
-    @Override
-    public @NotNull Class<? extends DyanasisObject> clazz() {
-        return clazz;
-    }
+  @Override
+  public abstract @NotNull InstanceFunctionHandler<O> instanceFunctionHandler();
 
-    @Override
-    public abstract @NotNull InstancePropertyHandler<O> instancePropertyHandler();
+  @Override
+  public @NotNull DyanasisRuntime dyanasisRuntime() {
+    return runtime;
+  }
 
-    @Override
-    public abstract @NotNull InstanceFunctionHandler<O> instanceFunctionHandler();
-
-    @Override
-    public @NotNull DyanasisRuntime dyanasisRuntime() {
-        return runtime;
-    }
 }

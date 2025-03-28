@@ -7,12 +7,13 @@ import org.kingdoms.gui.InteractiveGUI;
 
 public class StructureCivilizationCore extends StructureType {
 
-    public StructureCivilizationCore() {
-        super("civilization-core");
-    }
+  public StructureCivilizationCore() {
+    super("civilization-core");
+  }
 
-    @Override
-    public InteractiveGUI open(KingdomItemGUIContext<Structure> context) {
-        return null;
-    }
+  @Override
+  public InteractiveGUI open(KingdomItemGUIContext<Structure> context) {
+    return null;
+  }
+
 }

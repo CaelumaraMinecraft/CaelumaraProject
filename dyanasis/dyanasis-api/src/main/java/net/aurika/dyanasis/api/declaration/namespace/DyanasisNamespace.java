@@ -15,6 +15,8 @@ import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperties
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisPropertyAnchor;
 import net.aurika.dyanasis.api.declaration.invokable.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.domain.DyanasisDomainObjectsAware;
+import net.aurika.dyanasis.api.domain.DyanasisDomainObjectsContainer;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.dyanasis.api.type.DyanasisType;
@@ -26,119 +28,140 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public interface DyanasisNamespace extends DyanasisDeclaration,
-        DyanasisPropertiesAware, DyanasisPropertyAnchor,
-        DyanasisFunctionsAware, DyanasisFunctionAnchor,
-        DyanasisDocAware, DyanasisDocAnchor, DyanasisDocEditable<DyanasisNamespace.NamespaceDoc>,
-        DyanasisRuntimeObject {
+    DyanasisPropertiesAware, DyanasisPropertyAnchor,
+    DyanasisFunctionsAware, DyanasisFunctionAnchor,
+    DyanasisDocAware, DyanasisDocAnchor, DyanasisDocEditable<DyanasisNamespace.NamespaceDoc>,
+    DyanasisRuntimeObject, DyanasisDomainObjectsAware {
 
-    @Deprecated
-    static @NotNull StandardDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull StandardDyanasisNamespaceTree tree, @NotNull DyanasisNamespacePath path) {
-        Validate.Arg.notNull(tree, "tree");
-        return tree.foundOrCreate(path);
-    }
+  @Deprecated(forRemoval = true)
+  static @NotNull DefaultDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull DefaultDyanasisNamespaceTree tree, @NotNull DyanasisNamespaceIdent path) {
+    Validate.Arg.notNull(tree, "tree");
+    return tree.foundOrCreate(path);
+  }
 
-    /**
-     * Gets the dyanasis namespace name.
-     *
-     * @return the dyanasis namespace name
-     */
-    @NamingContract.Namespace
-    @NotNull String name();
+  /**
+   * Gets the dyanasis namespace name.
+   *
+   * @return the dyanasis namespace name
+   */
+  @NamingContract.Namespace
+  @NotNull String name();
 
-    /**
-     * Gets the path for the {@linkplain DyanasisNamespace}.
-     *
-     * @return the namespace path
-     */
-    @NotNull DyanasisNamespacePath path();
+  /**
+   * Gets the path for the {@linkplain DyanasisNamespace}.
+   *
+   * @return the namespace path
+   */
+  @NotNull DyanasisNamespaceIdent ident();
 
-    /**
-     * Gets the parent namespace of this namespace. Returns {@code null} if this namespace is rooted.
-     *
-     * @return the parent namespace
-     */
-    @Nullable DyanasisNamespace parent();
+  /**
+   * Gets the parent namespace of this namespace. Returns {@code null} if this namespace is rooted.
+   *
+   * @return the parent namespace
+   */
+  @Nullable DyanasisNamespace parent();
 
-    /**
-     * Gets a child dyanasis namespace from the child name.
-     *
-     * @param name the child namespace name
-     * @return the get child namespace
-     */
-    @Nullable DyanasisNamespace getChild(@NotNull String name);
+  /**
+   * Gets a child dyanasis namespace from the child name.
+   *
+   * @param name the child namespace name
+   * @return the found child namespace
+   */
+  @Nullable DyanasisNamespace foundChild(@NotNull String name);
 
-    /**
-     * Gets children for this namespace.
-     *
-     * @return the subordinates
-     */
-    @NotNull Map<String, ? extends DyanasisNamespace> children();
+  /**
+   * Gets children for this namespace.
+   *
+   * @return the subordinates
+   */
+  @NotNull Map<String, ? extends DyanasisNamespace> children();
+
+  @Override
+  @NotNull NamespacePropertyContainer<? extends NamespaceProperty> dyanasisProperties();
+
+  @Override
+  @NotNull NamespaceFunctionContainer<? extends NamespaceFunction> dyanasisFunctions();
+
+  @Override
+  @NotNull NamespaceDomainsContainer dyanasisDomains();
+
+  @Override
+  @Nullable NamespaceDoc dyanasisDoc();
+
+  @Override
+  void dyanasisDoc(@Nullable NamespaceDoc doc);
+
+  /**
+   * Gets a {@linkplain DyanasisType} in the namespace by the type name.
+   *
+   * @param typename the type name
+   * @return the type, can be null
+   */
+  @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename);
+
+  boolean hasDyanasisType(@NotNull String typename);
+
+  /**
+   * Gets all dyanasis types in this namespace.
+   *
+   * @return the all types.
+   */
+  @NotNull Map<String, ? extends DyanasisType<?>> dyanasisTypes();
+
+  /**
+   * Adds a {@linkplain DyanasisType} to this namespace.
+   *
+   * @param type the dyanasis type
+   * @return the old type that has the same name
+   * @throws IllegalArgumentException when the namespace of {@code type} doesn't equals this namespace
+   */
+  @Nullable DyanasisType<?> addDyanasisType(@NotNull DyanasisType<?> type);
+
+  @Override
+  @NotNull DyanasisRuntime dyanasisRuntime();
+
+  @ApiStatus.Experimental
+  interface NamespacePropertyContainer<P extends NamespaceProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
 
     @Override
-    @NotNull NamespacePropertyContainer<? extends NamespaceProperty> dyanasisProperties();
+    @NotNull DyanasisNamespace owner();
+
+  }
+
+  @ApiStatus.Experimental
+  interface NamespaceFunctionContainer<F extends NamespaceFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
 
     @Override
-    @NotNull NamespaceFunctionContainer<? extends NamespaceFunction> dyanasisFunctions();
+    @NotNull DyanasisNamespace owner();
+
+  }
+
+  interface NamespaceProperty extends DyanasisProperty {
 
     @Override
-    @Nullable NamespaceDoc dyanasisDoc();
+    @NotNull DyanasisNamespace owner();
+
+  }
+
+  interface NamespaceFunction extends DyanasisFunction {
 
     @Override
-    void dyanasisDoc(@Nullable NamespaceDoc doc);
+    @NotNull DyanasisNamespace owner();
 
-    /**
-     * Gets a {@linkplain DyanasisType} in the namespace by the type name.
-     *
-     * @param typename the type name
-     * @return the type, can be null
-     */
-    @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename);
+  }
 
-    boolean hasDyanasisType(@NotNull String typename);
-
-    /**
-     * Gets all dyanasis types in this namespace.
-     *
-     * @return the all types.
-     */
-    @NotNull Map<String, ? extends DyanasisType<?>> dyanasisTypes();
-
-    /**
-     * Adds a {@linkplain DyanasisType} to this namespace.
-     *
-     * @param type the dyanasis type
-     * @return the old type that has the same name
-     * @throws IllegalArgumentException when the namespace of {@code type} doesn't equals this namespace
-     */
-    @Nullable DyanasisType<?> addDyanasisType(@NotNull DyanasisType<?> type);
+  interface NamespaceDomainsContainer extends DyanasisDomainObjectsContainer, NeedOwner {
 
     @Override
-    @NotNull DyanasisRuntime dyanasisRuntime();
+    @NotNull DyanasisNamespace owner();
 
-    @ApiStatus.Experimental
-    interface NamespacePropertyContainer<P extends NamespaceProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
-        @Override
-        @NotNull DyanasisNamespace owner();
-    }
+  }
 
-    @ApiStatus.Experimental
-    interface NamespaceFunctionContainer<F extends NamespaceFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
-        @Override
-        @NotNull DyanasisNamespace owner();
-    }
+  interface NamespaceDoc extends DyanasisDoc {
 
-    interface NamespaceProperty extends DyanasisProperty {
-        @Override
-        @NotNull DyanasisNamespace owner();
-    }
+    @Override
+    @NotNull DyanasisNamespace owner();
 
-    interface NamespaceFunction extends DyanasisFunction {
-        @Override
-        @NotNull DyanasisNamespace owner();
-    }
+  }
 
-    interface NamespaceDoc extends DyanasisDoc {
-        @Override
-        @NotNull DyanasisNamespace owner();
-    }
 }

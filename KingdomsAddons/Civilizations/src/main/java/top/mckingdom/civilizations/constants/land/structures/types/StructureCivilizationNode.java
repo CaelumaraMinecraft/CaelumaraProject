@@ -8,17 +8,18 @@ import org.kingdoms.constants.land.structures.StructureType;
 import org.kingdoms.gui.InteractiveGUI;
 
 public class StructureCivilizationNode extends StructureType {
-    public StructureCivilizationNode() {
-        super("civilization-node");
-    }
+  public StructureCivilizationNode() {
+    super("civilization-node");
+  }
 
-    @Override
-    public InteractiveGUI open(KingdomItemGUIContext<Structure> context) {
-        return null;
-    }
+  @Override
+  public InteractiveGUI open(KingdomItemGUIContext<Structure> context) {
+    return null;
+  }
 
-    @Override
-    public Structure build(KingdomItemBuilder<Structure, StructureStyle, StructureType> kingdomItemBuilder) {
-        return super.build(kingdomItemBuilder);
-    }
+  @Override
+  public Structure build(KingdomItemBuilder<Structure, StructureStyle, StructureType> kingdomItemBuilder) {
+    return super.build(kingdomItemBuilder);
+  }
+
 }

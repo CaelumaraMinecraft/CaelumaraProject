@@ -11,21 +11,22 @@ import top.mckingdom.powerfulterritory.util.GroupExt;
 
 public class BeaconEffectsManager implements Listener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void whenPlayerInBeacon(EntityPotionEffectEvent event) {
-        if (event.getCause() == EntityPotionEffectEvent.Cause.BEACON) {
-            if (event.getEntity() instanceof Player) {
-                KingdomPlayer player = KingdomPlayer.getKingdomPlayer((Player) event.getEntity());
-                Land land = Land.getLand(event.getEntity().getLocation());
-                if (land != null && land.isClaimed()) {
-                    Kingdom landKingdom = land.getKingdom();
-                    if (landKingdom != null) {
-                        if (!landKingdom.hasAttribute(player.getKingdom(), GroupExt.BEACON_EFFECTS)) {
-                            event.setCancelled(true);
-                        }
-                    }
-                }
+  @EventHandler(ignoreCancelled = true)
+  public void whenPlayerInBeacon(EntityPotionEffectEvent event) {
+    if (event.getCause() == EntityPotionEffectEvent.Cause.BEACON) {
+      if (event.getEntity() instanceof Player) {
+        KingdomPlayer player = KingdomPlayer.getKingdomPlayer((Player) event.getEntity());
+        Land land = Land.getLand(event.getEntity().getLocation());
+        if (land != null && land.isClaimed()) {
+          Kingdom landKingdom = land.getKingdom();
+          if (landKingdom != null) {
+            if (!landKingdom.hasAttribute(player.getKingdom(), GroupExt.BEACON_EFFECTS)) {
+              event.setCancelled(true);
             }
+          }
         }
+      }
     }
+  }
+
 }

@@ -6,34 +6,36 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import java.util.Objects;
 
 public class CacheSet<K> {
-    private final Cache<K, Boolean> map;
 
-    public CacheSet(Caffeine<K, Boolean> builder) {
-        Objects.requireNonNull(builder, "Builder is null");
-        this.map = builder.build();
-    }
+  private final Cache<K, Boolean> map;
 
-    public void add(K key) {
-        map.put(key, true);
-    }
+  public CacheSet(Caffeine<K, Boolean> builder) {
+    Objects.requireNonNull(builder, "Builder is null");
+    this.map = builder.build();
+  }
 
-    public void clear() {
-        map.invalidateAll();
-    }
+  public void add(K key) {
+    map.put(key, true);
+  }
 
-    public boolean contains(K key) {
-        return map.getIfPresent(key) != null;
-    }
+  public void clear() {
+    map.invalidateAll();
+  }
 
-    public void remove(K key) {
-        map.invalidate(key);
-    }
+  public boolean contains(K key) {
+    return map.getIfPresent(key) != null;
+  }
 
-    public void cleanUp() {
-        map.cleanUp();
-    }
+  public void remove(K key) {
+    map.invalidate(key);
+  }
 
-    public boolean isEmpty() {
-        return map.asMap().isEmpty();
-    }
+  public void cleanUp() {
+    map.cleanUp();
+  }
+
+  public boolean isEmpty() {
+    return map.asMap().isEmpty();
+  }
+
 }

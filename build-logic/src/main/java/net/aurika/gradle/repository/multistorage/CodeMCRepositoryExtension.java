@@ -5,33 +5,35 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.jetbrains.annotations.NotNull;
 
 public class CodeMCRepositoryExtension extends MultiComponentsRepositoryExtension {
-    public static final String EXTENSION_NAME = "codeMC";
 
-    public CodeMCRepositoryExtension(@NotNull RepositoryHandler repositoryHandler) {
-        super(repositoryHandler, "https://repo.codemc.io/repository/", "CodeMC");
-    }
+  public static final String EXTENSION_NAME = "codeMC";
 
-    public MavenArtifactRepository maven_public() {
-        return super.named("maven-public");
-    }
+  public CodeMCRepositoryExtension(@NotNull RepositoryHandler repositoryHandler) {
+    super(repositoryHandler, "https://repo.codemc.io/repository/", "CodeMC");
+  }
 
-    public MavenArtifactRepository nms() {
-        return super.named("nms");
-    }
+  public MavenArtifactRepository maven_public() {
+    return super.named("maven-public");
+  }
 
-    public MavenArtifactRepository mohistmc() {
-        return super.named("mohistmc");
-    }
+  public MavenArtifactRepository nms() {
+    return super.named("nms");
+  }
 
-    public MavenArtifactRepository authme() {
-        return super.named("authme");
-    }
+  public MavenArtifactRepository mohistmc() {
+    return super.named("mohistmc");
+  }
 
-    public MavenArtifactRepository codemc() {
-        return super.named("codemc");
-    }
+  public MavenArtifactRepository authme() {
+    return super.named("authme");
+  }
 
-    public MavenArtifactRepository mrog() {
-        return super.named("mrog");
-    }
+  public MavenArtifactRepository codemc() {
+    return super.named("codemc");
+  }
+
+  public MavenArtifactRepository mrog() {
+    return super.named("mrog");
+  }
+
 }

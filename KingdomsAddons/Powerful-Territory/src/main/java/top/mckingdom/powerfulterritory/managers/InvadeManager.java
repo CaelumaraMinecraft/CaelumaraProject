@@ -10,15 +10,16 @@ import top.mckingdom.powerfulterritory.data.InvadeProtections;
 
 public class InvadeManager implements Listener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerInvade(KingdomPreInvadeEvent event) {
-        Invasion invasion = event.getInvasion();
-        invasion.getAffectedLands().forEach((chunk) -> {
-            InvadeProtection status = InvadeProtections.getInvadeProtection(chunk);
-            if (status != null && status.isProtect(event)) {
-                event.setCancelled(true);
-                PowerfulTerritoryLang.POWERFUL_TERRITORY_INVADE_PROTECTION.sendError(event.getInvasion().getInvaderPlayer());
-            }
-        });
-    }
+  @EventHandler(ignoreCancelled = true)
+  public void onPlayerInvade(KingdomPreInvadeEvent event) {
+    Invasion invasion = event.getInvasion();
+    invasion.getAffectedLands().forEach((chunk) -> {
+      InvadeProtection status = InvadeProtections.getInvadeProtection(chunk);
+      if (status != null && status.isProtect(event)) {
+        event.setCancelled(true);
+        PowerfulTerritoryLang.POWERFUL_TERRITORY_INVADE_PROTECTION.sendError(event.getInvasion().getInvaderPlayer());
+      }
+    });
+  }
+
 }

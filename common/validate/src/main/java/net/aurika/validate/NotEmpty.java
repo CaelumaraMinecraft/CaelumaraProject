@@ -14,5 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({METHOD, FIELD, PARAMETER, LOCAL_VARIABLE, TYPE_USE})
 public @interface NotEmpty {
-    String message() default "";
+
+  String message() default "";
+
 }

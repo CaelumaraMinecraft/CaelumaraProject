@@ -1,18 +1,20 @@
 package net.aurika.util.scheduler;
 
 public interface Task extends Runnable {
-    ExecutionContextType getExecutionContextType();
 
-    void run();
+  ExecutionContextType getExecutionContextType();
 
-    enum ExecutionContextType {
-        /**
-         * 同步的
-         */
-        SYNC,
-        /**
-         * 异步的
-         */
-        ASYNC
-    }
+  void run();
+
+  enum ExecutionContextType {
+    /**
+     * 同步的
+     */
+    SYNC,
+    /**
+     * 异步的
+     */
+    ASYNC
+  }
+
 }

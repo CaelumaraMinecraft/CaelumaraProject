@@ -7,12 +7,13 @@ import top.mckingdom.civilizations.constants.civilization.member.types.Civilizat
 
 public class CivilizationMemberNation extends CivilizationMember<Nation> {
 
-    public CivilizationMemberNation(Nation nation) {
-        super(nation, CivilizationMemberTypeNation.INSTANCE);
-    }
+  public CivilizationMemberNation(Nation nation) {
+    super(nation, CivilizationMemberTypeNation.INSTANCE);
+  }
 
-    @Override
-    public void serializeIndentData(SectionableDataSetter section) {
-        section.get("key").setUUID(this.getKey().getKey());
-    }
+  @Override
+  public void serializeIndentData(SectionableDataSetter section) {
+    section.get("key").setUUID(this.getKey().getKey());
+  }
+
 }

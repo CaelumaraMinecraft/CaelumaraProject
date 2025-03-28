@@ -9,27 +9,28 @@ import top.mckingdom.civilizations.constants.civilization.member.objects.Civiliz
 
 public class CivilizationMemberTypeKingdom extends CivilizationMemberType<Kingdom, CivilizationMember<Kingdom>> {
 
-    public static final CivilizationMemberTypeKingdom INSTANCE = new CivilizationMemberTypeKingdom();
+  public static final CivilizationMemberTypeKingdom INSTANCE = new CivilizationMemberTypeKingdom();
 
-    protected CivilizationMemberTypeKingdom() {
-        super(CivilizationsAddon.buildNS("KINGDOM"), Kingdom.class);
-    }
+  protected CivilizationMemberTypeKingdom() {
+    super(CivilizationsAddon.buildNS("KINGDOM"), Kingdom.class);
+  }
 
-    @Override
-    public CivilizationMemberKingdom deserializeFromIdentData(SectionableDataGetter section) {
-        Kingdom k = Kingdom.getKingdom(section.get("key").asUUID());
-        if (k != null) {
-            return new CivilizationMemberKingdom(k);
-        }
-        return null;
+  @Override
+  public CivilizationMemberKingdom deserializeFromIdentData(SectionableDataGetter section) {
+    Kingdom k = Kingdom.getKingdom(section.get("key").asUUID());
+    if (k != null) {
+      return new CivilizationMemberKingdom(k);
     }
+    return null;
+  }
 
-    @Override
-    public CivilizationMember<Kingdom> of0(Kingdom kingdom) {
-        return new CivilizationMemberKingdom(kingdom);
-    }
+  @Override
+  public CivilizationMember<Kingdom> of0(Kingdom kingdom) {
+    return new CivilizationMemberKingdom(kingdom);
+  }
 
-    public static CivilizationMemberTypeKingdom get() {
-        return INSTANCE;
-    }
+  public static CivilizationMemberTypeKingdom get() {
+    return INSTANCE;
+  }
+
 }

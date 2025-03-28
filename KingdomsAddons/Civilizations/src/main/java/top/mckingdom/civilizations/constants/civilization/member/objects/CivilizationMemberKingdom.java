@@ -7,11 +7,12 @@ import top.mckingdom.civilizations.constants.civilization.member.types.Civilizat
 
 public class CivilizationMemberKingdom extends CivilizationMember<Kingdom> {
 
-    public CivilizationMemberKingdom(Kingdom kingdom) {
-        super(kingdom, CivilizationMemberTypeKingdom.INSTANCE);
-    }
+  public CivilizationMemberKingdom(Kingdom kingdom) {
+    super(kingdom, CivilizationMemberTypeKingdom.INSTANCE);
+  }
 
-    public void serializeIndentData(SectionableDataSetter setter) {
-        setter.get("key").setUUID(this.getKey().getKey());
-    }
+  public void serializeIndentData(SectionableDataSetter setter) {
+    setter.get("key").setUUID(this.getKey().getKey());
+  }
+
 }

@@ -19,61 +19,62 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import java.util.concurrent.CompletionStage;
 
 public class TakeMoneyTerm extends Term {
-    private double amount;
+  private double amount;
 
-    public static final TermProvider PROVIDER = new StandardTermProvider(Namespace.kingdoms("TAKE_MONEY"), TakeMoneyTerm::new, true, false) {
-        @Override
-        public CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor) {
-            return standardAmountPrompt(this, options, editor, (amount) -> new TakeMoneyTerm(amount.doubleValue()));
-        }
-    };
-
-    private TakeMoneyTerm() {
-    }
-
-    public TakeMoneyTerm(double money) {
-        this.amount = money;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
+  public static final TermProvider PROVIDER = new StandardTermProvider(Namespace.kingdoms("TAKE_MONEY"), TakeMoneyTerm::new, true, false) {
     @Override
-    public void deserialize(DeserializationContext<SectionableDataGetter> context) {
-        SectionableDataGetter json = context.getDataProvider();
-        this.amount = json.get("amount").asDouble();
+    public CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor) {
+      return standardAmountPrompt(this, options, editor, (amount) -> new TakeMoneyTerm(amount.doubleValue()));
     }
+  };
 
-    @Override
-    public void serialize(SerializationContext<SectionableDataSetter> context) {
-        SectionableDataSetter json = context.getDataProvider();
-        json.setDouble("amount", amount);
-    }
+  private TakeMoneyTerm() {
+  }
 
-    @Override
-    public void addEdits(MessagePlaceholderProvider builder) {
-        super.addEdits(builder);
-        builder.raw("term_take_money_amount", amount);
-    }
+  public TakeMoneyTerm(double money) {
+    this.amount = money;
+  }
 
-    @Override
-    public TermProvider getProvider() {
-        return PROVIDER;
-    }
+  public double getAmount() {
+    return amount;
+  }
 
-    @Override
-    public boolean apply(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
-        Kingdom kingdom = peaceTreaty.getVictimKingdom();
-        if (!kingdom.getBank().has(amount)) return false;
-        kingdom.getBank().add(-amount);
-        return true;
-    }
+  @Override
+  public void deserialize(DeserializationContext<SectionableDataGetter> context) {
+    SectionableDataGetter json = context.getDataProvider();
+    this.amount = json.get("amount").asDouble();
+  }
 
-    @Override
-    public Messenger canAccept(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
-        Kingdom kingdom = peaceTreaty.getVictimKingdom();
-        if (!kingdom.getBank().has(amount)) return PeaceTreatyLang.TERMS_TAKE_MONEY_NOT_ENOUGH;
-        return null;
-    }
+  @Override
+  public void serialize(SerializationContext<SectionableDataSetter> context) {
+    SectionableDataSetter json = context.getDataProvider();
+    json.setDouble("amount", amount);
+  }
+
+  @Override
+  public void addEdits(MessagePlaceholderProvider builder) {
+    super.addEdits(builder);
+    builder.raw("term_take_money_amount", amount);
+  }
+
+  @Override
+  public TermProvider getProvider() {
+    return PROVIDER;
+  }
+
+  @Override
+  public boolean apply(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
+    Kingdom kingdom = peaceTreaty.getVictimKingdom();
+    if (!kingdom.getBank().has(amount)) return false;
+    kingdom.getBank().add(-amount);
+    return true;
+  }
+
+  @Override
+  public Messenger canAccept(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
+    Kingdom kingdom = peaceTreaty.getVictimKingdom();
+    if (!kingdom.getBank().has(amount)) return PeaceTreatyLang.TERMS_TAKE_MONEY_NOT_ENOUGH;
+    return null;
+  }
+
 }

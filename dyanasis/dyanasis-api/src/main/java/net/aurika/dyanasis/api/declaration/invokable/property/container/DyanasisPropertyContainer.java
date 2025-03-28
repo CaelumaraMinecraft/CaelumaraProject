@@ -8,30 +8,32 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.Map;
 
 public interface DyanasisPropertyContainer<P extends DyanasisProperty> {
-    /**
-     * Gets the {@linkplain DyanasisPropertyContainer} that has none property.
-     *
-     * @return the empty properties
-     */
-    static @NotNull EmptyDyanasisPropertyContainer empty() {
-        return EmptyDyanasisPropertyContainer.INSTANCE;
-    }
 
-    /**
-     * Returns {@code true} if it has the property that equals the {@code name}.
-     */
-    boolean hasProperty(@NotNull String name);
+  /**
+   * Gets the {@linkplain DyanasisPropertyContainer} that has none property.
+   *
+   * @return the empty properties
+   */
+  static @NotNull EmptyDyanasisPropertyContainer empty() {
+    return EmptyDyanasisPropertyContainer.INSTANCE;
+  }
 
-    /**
-     * Gets a property by the {@code name}.
-     */
-    @Nullable P getProperty(@NotNull String name);
+  /**
+   * Returns {@code true} if it has the property that equals the {@code name}.
+   */
+  boolean hasProperty(@NotNull String name);
 
-    /**
-     * Gets all available properties.
-     *
-     * @return the properties
-     */
-    @Unmodifiable
-    @NotNull Map<String, ? extends P> allProperties();
+  /**
+   * Gets a property by the {@code name}.
+   */
+  @Nullable P getProperty(@NotNull String name);
+
+  /**
+   * Gets all available properties.
+   *
+   * @return the properties
+   */
+  @Unmodifiable
+  @NotNull Map<String, ? extends P> allProperties();
+
 }

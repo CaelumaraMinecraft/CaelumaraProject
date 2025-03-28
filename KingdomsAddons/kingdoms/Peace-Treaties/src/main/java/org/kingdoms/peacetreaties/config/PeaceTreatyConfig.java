@@ -13,51 +13,51 @@ import org.kingdoms.utils.config.adapters.YamlResource;
 import org.kingdoms.utils.string.Strings;
 
 public enum PeaceTreatyConfig implements EnumConfig {
-    DURATION,
-    MIN_TERMS,
-    FORCE_ACCEPT_CONDITION(2),
-    FORCE_ACCEPT_WAR_POINTS(2),
-    UNFINISHED_CONTRACT_REMINDER,
-    WAR_POINTS_MAX(2),
-    WAR_POINTS_ALLOWED_RELATIONSHIPS(2),
-    WAR_POINTS_SCORES_GAIN_KILL(2, 3, 4),
-    WAR_POINTS_SCORES_LOSE_KILL(2, 3, 4),
-    WAR_POINTS_SCORES_GAIN_BREAK_STRUCTURE(2, 3, 4),
-    WAR_POINTS_SCORES_LOSE_BREAK_STRUCTURE(2, 3, 4),
-    WAR_POINTS_SCORES_GAIN_BREAK_TURRET(2, 3, 4),
-    WAR_POINTS_SCORES_LOSE_BREAK_TURRET(2, 3, 4),
-    WAR_POINTS_SCORES_GAIN_INVADE(2, 3, 4),
-    WAR_POINTS_SCORES_LOSE_INVADE(2, 3, 4),
-    ;
+  DURATION,
+  MIN_TERMS,
+  FORCE_ACCEPT_CONDITION(2),
+  FORCE_ACCEPT_WAR_POINTS(2),
+  UNFINISHED_CONTRACT_REMINDER,
+  WAR_POINTS_MAX(2),
+  WAR_POINTS_ALLOWED_RELATIONSHIPS(2),
+  WAR_POINTS_SCORES_GAIN_KILL(2, 3, 4),
+  WAR_POINTS_SCORES_LOSE_KILL(2, 3, 4),
+  WAR_POINTS_SCORES_GAIN_BREAK_STRUCTURE(2, 3, 4),
+  WAR_POINTS_SCORES_LOSE_BREAK_STRUCTURE(2, 3, 4),
+  WAR_POINTS_SCORES_GAIN_BREAK_TURRET(2, 3, 4),
+  WAR_POINTS_SCORES_LOSE_BREAK_TURRET(2, 3, 4),
+  WAR_POINTS_SCORES_GAIN_INVADE(2, 3, 4),
+  WAR_POINTS_SCORES_LOSE_INVADE(2, 3, 4),
+  ;
 
-    public static final YamlResource PEACE_TREATIES =
-            new YamlResource(PeaceTreatiesAddon.get(),
-                    Kingdoms.getPath("peace-treaties.yml").toFile(), "peace-treaties.yml").load();
+  public static final YamlResource PEACE_TREATIES =
+      new YamlResource(PeaceTreatiesAddon.get(),
+          Kingdoms.getPath("peace-treaties.yml").toFile(), "peace-treaties.yml").load();
 
-    static {
-        ConfigWatcher.register(PEACE_TREATIES.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-        ConfigManager.registerNormalWatcher("peace-treaties", (event) -> {
-            ConfigWatcher.reload(PEACE_TREATIES, "peace-treaties.yml");
-            TermRegistry.loadTermGroupings();
-        });
-    }
+  static {
+    ConfigWatcher.register(PEACE_TREATIES.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
+    ConfigManager.registerNormalWatcher("peace-treaties", (event) -> {
+      ConfigWatcher.reload(PEACE_TREATIES, "peace-treaties.yml");
+      TermRegistry.loadTermGroupings();
+    });
+  }
 
-    private final ConfigPath option;
+  private final ConfigPath option;
 
-    PeaceTreatyConfig() {
-        this.option = new ConfigPath(Strings.configOption(this));
-    }
+  PeaceTreatyConfig() {
+    this.option = new ConfigPath(Strings.configOption(this));
+  }
 
-    PeaceTreatyConfig(int... grouped) {
-        this.option = new ConfigPath(this.name(), grouped);
-    }
+  PeaceTreatyConfig(int... grouped) {
+    this.option = new ConfigPath(this.name(), grouped);
+  }
 
-    @Override
-    public KeyedConfigAccessor getManager() {
-        return new KeyedYamlConfigAccessor(PEACE_TREATIES, option);
-    }
+  @Override
+  public KeyedConfigAccessor getManager() {
+    return new KeyedYamlConfigAccessor(PEACE_TREATIES, option);
+  }
 
-    public static YamlResource getConfig() {
-        return PEACE_TREATIES;
-    }
+  public static YamlResource getConfig() {
+    return PEACE_TREATIES;
+  }
 }

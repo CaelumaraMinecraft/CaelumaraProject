@@ -5,11 +5,13 @@ import org.gradle.api.file.Directory;
 import org.jetbrains.annotations.NotNull;
 
 public interface ConfigurableRelocatedFiles extends RelocatedFiles {
-    default void relocate(@NotNull String from, @NotNull String to) {
-        this.addRelocation(new SimpleRelocation(from, to));
-    }
 
-    void addRelocation(@NotNull SimpleRelocation relocation);
+  default void relocate(@NotNull String from, @NotNull String to) {
+    this.addRelocation(new SimpleRelocation(from, to));
+  }
 
-    void setTargetDirectory(@NotNull Directory targetDirectory);
+  void addRelocation(@NotNull SimpleRelocation relocation);
+
+  void setTargetDirectory(@NotNull Directory targetDirectory);
+
 }

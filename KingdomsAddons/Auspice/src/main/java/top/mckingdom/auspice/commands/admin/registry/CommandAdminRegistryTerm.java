@@ -9,11 +9,12 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import org.kingdoms.peacetreaties.terms.TermRegistry;
 
 public class CommandAdminRegistryTerm extends CommandAdminRegistryTemplate<TermProvider, TermRegistry> {
-    public CommandAdminRegistryTerm(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryTerm(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryTerm(@Nullable KingdomsParentCommand parent, @NotNull PermissionDefault permissionDefault) {
-        super("term", parent, permissionDefault, PeaceTreatiesAddon.get().getTermRegistry(), TermProvider.class);
-    }
+  public CommandAdminRegistryTerm(@Nullable KingdomsParentCommand parent, @NotNull PermissionDefault permissionDefault) {
+    super("term", parent, permissionDefault, PeaceTreatiesAddon.get().getTermRegistry(), TermProvider.class);
+  }
+
 }

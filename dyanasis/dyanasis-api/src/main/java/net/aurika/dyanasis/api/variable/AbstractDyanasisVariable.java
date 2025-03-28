@@ -5,15 +5,17 @@ import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public class AbstractDyanasisVariable implements DyanasisVariable {
-    private final @NotNull DyanasisObject value;
 
-    public AbstractDyanasisVariable(@NotNull DyanasisObject value) {
-        Validate.Arg.notNull(value, "value");
-        this.value = value;
-    }
+  private final @NotNull DyanasisObject value;
 
-    @Override
-    public @NotNull DyanasisObject value() {
-        return value;
-    }
+  public AbstractDyanasisVariable(@NotNull DyanasisObject value) {
+    Validate.Arg.notNull(value, "value");
+    this.value = value;
+  }
+
+  @Override
+  public @NotNull DyanasisObject value() {
+    return value;
+  }
+
 }

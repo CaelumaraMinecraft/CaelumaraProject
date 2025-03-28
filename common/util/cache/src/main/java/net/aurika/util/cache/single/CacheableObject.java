@@ -4,23 +4,25 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public interface CacheableObject<T> extends Supplier<T> {
-    void invalidate();
 
-    boolean isCached();
+  void invalidate();
 
-    default boolean contains(T other) {
-        return Objects.equals(this.get(), other);
-    }
+  boolean isCached();
 
-    default boolean isNull() {
-        return this.get() == null;
-    }
+  default boolean contains(T other) {
+    return Objects.equals(this.get(), other);
+  }
 
-    default boolean isPresent() {
-        return this.get() != null;
-    }
+  default boolean isNull() {
+    return this.get() == null;
+  }
 
-    T get();
+  default boolean isPresent() {
+    return this.get() != null;
+  }
 
-    void set(T var1);
+  T get();
+
+  void set(T var1);
+
 }

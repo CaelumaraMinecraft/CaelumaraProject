@@ -9,87 +9,89 @@ import java.util.Locale;
 import java.util.stream.IntStream;
 
 public class QuantumString implements CharSequence, Cloneable {
-    private final @Nullable String original;
-    private final @NonNull String quantumValue;
 
-    public static QuantumString of(String original) {
-        return new QuantumString(original, true);
-    }
+  private final @Nullable String original;
+  private final @NonNull String quantumValue;
 
-    public QuantumString(@NonNull String original, boolean quantum) {
-        Validate.Arg.notNull(original, "original", "Quantum original string cannot be null");
-        this.original = quantum ? original : null;
-        this.quantumValue = quantum ? original.toLowerCase(Locale.ENGLISH) : original;
-    }
+  public static QuantumString of(String original) {
+    return new QuantumString(original, true);
+  }
 
-    public static QuantumString empty() {
-        return new QuantumString("", false);
-    }
+  public QuantumString(@NonNull String original, boolean quantum) {
+    Validate.Arg.notNull(original, "original", "Quantum original string cannot be null");
+    this.original = quantum ? original : null;
+    this.quantumValue = quantum ? original.toLowerCase(Locale.ENGLISH) : original;
+  }
 
-    public boolean isQuantum() {
-        return original != null;
-    }
+  public static QuantumString empty() {
+    return new QuantumString("", false);
+  }
 
-    public int hashCode() {
-        return quantumValue.hashCode();
-    }
+  public boolean isQuantum() {
+    return original != null;
+  }
 
-    public boolean equals(Object obj) {
-        return this == obj || obj instanceof QuantumString && quantumValue.equals(((QuantumString) obj).quantumValue);
-    }
+  public int hashCode() {
+    return quantumValue.hashCode();
+  }
 
-    public @NotNull String toString() {
-        return "QuantumString:[quantum= " + isQuantum() + ", original=" + original + ", quantumValue=" + quantumValue + ']';
-    }
+  public boolean equals(Object obj) {
+    return this == obj || obj instanceof QuantumString && quantumValue.equals(((QuantumString) obj).quantumValue);
+  }
 
-    public int length() {
-        return quantumValue.length();
-    }
+  public @NotNull String toString() {
+    return "QuantumString:[quantum= " + isQuantum() + ", original=" + original + ", quantumValue=" + quantumValue + ']';
+  }
 
-    public boolean isEmpty() {
-        return quantumValue.isEmpty();
-    }
+  public int length() {
+    return quantumValue.length();
+  }
 
-    public char charAt(int index) {
-        return getQuantum().charAt(index);
-    }
+  public boolean isEmpty() {
+    return quantumValue.isEmpty();
+  }
 
-    @NotNull
-    public CharSequence subSequence(int start, int end) {
-        return getQuantum().subSequence(start, end);
-    }
+  public char charAt(int index) {
+    return getQuantum().charAt(index);
+  }
 
-    @NotNull
-    public IntStream chars() {
-        return getQuantum().chars();
-    }
+  @NotNull
+  public CharSequence subSequence(int start, int end) {
+    return getQuantum().subSequence(start, end);
+  }
 
-    @NotNull
-    public IntStream codePoints() {
-        return getQuantum().codePoints();
-    }
+  @NotNull
+  public IntStream chars() {
+    return getQuantum().chars();
+  }
 
-    public Object clone() {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException exc) {
-            throw new AssertionError();
-        }
-    }
+  @NotNull
+  public IntStream codePoints() {
+    return getQuantum().codePoints();
+  }
 
-    @Nullable
-    public String getOriginal() {
-        return original;
+  public Object clone() {
+    try {
+      return super.clone();
+    } catch (CloneNotSupportedException exc) {
+      throw new AssertionError();
     }
+  }
 
-    @NonNull
-    public String getQuantumValue() {
-        return quantumValue;
-    }
+  @Nullable
+  public String getOriginal() {
+    return original;
+  }
 
-    @NonNull
-    public String getQuantum() {
-        return isQuantum() ? original : quantumValue;
-    }
+  @NonNull
+  public String getQuantumValue() {
+    return quantumValue;
+  }
+
+  @NonNull
+  public String getQuantum() {
+    return isQuantum() ? original : quantumValue;
+  }
+
 }
 

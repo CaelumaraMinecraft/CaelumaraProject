@@ -7,12 +7,13 @@ import org.jetbrains.annotations.Nullable;
 
 public interface Priority {
 
-    int UNSUPPORTED_COMPARABLE = Integer.MAX_VALUE;
+  int UNSUPPORTED_COMPARABLE = Integer.MAX_VALUE;
 
-    int compareTo(@NotNull Task<?> task, @NotNull TaskRegistry<?, ?> registry);
+  int compareTo(@NotNull Task<?> task, @NotNull TaskRegistry<?, ?> registry);
 
-    default @Nullable String validateFor(@NotNull Task<?> task) {
-        return null;
-    }
+  default @Nullable String validateFor(@NotNull Task<?> task) {
+    return null;
+  }
+
 }
 

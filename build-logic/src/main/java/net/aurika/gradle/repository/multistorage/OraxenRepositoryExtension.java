@@ -8,26 +8,28 @@ import org.jetbrains.annotations.NotNull;
 import javax.inject.Inject;
 
 public class OraxenRepositoryExtension extends MultiComponentsRepositoryExtension {
-    public static final String EXTENSION_NAME = "oraxen";
 
-    @Inject
-    public OraxenRepositoryExtension(@NotNull RepositoryHandler repositoryHandler) {
-        super(repositoryHandler, "https://repo.oraxen.com/", "Oraxen");
-    }
+  public static final String EXTENSION_NAME = "oraxen";
 
-    public MavenArtifactRepository releases() {
-        MavenArtifactRepository repo = super.named("releases");
-        repo.mavenContent(MavenRepositoryContentDescriptor::releasesOnly);
-        return repo;
-    }
+  @Inject
+  public OraxenRepositoryExtension(@NotNull RepositoryHandler repositoryHandler) {
+    super(repositoryHandler, "https://repo.oraxen.com/", "Oraxen");
+  }
 
-    public MavenArtifactRepository snapshots() {
-        MavenArtifactRepository repo = super.named("snapshots");
-        repo.mavenContent(MavenRepositoryContentDescriptor::snapshotsOnly);
-        return repo;
-    }
+  public MavenArtifactRepository releases() {
+    MavenArtifactRepository repo = super.named("releases");
+    repo.mavenContent(MavenRepositoryContentDescriptor::releasesOnly);
+    return repo;
+  }
 
-    public MavenArtifactRepository mirror() {
-        return super.named("mirror");
-    }
+  public MavenArtifactRepository snapshots() {
+    MavenArtifactRepository repo = super.named("snapshots");
+    repo.mavenContent(MavenRepositoryContentDescriptor::snapshotsOnly);
+    return repo;
+  }
+
+  public MavenArtifactRepository mirror() {
+    return super.named("mirror");
+  }
+
 }

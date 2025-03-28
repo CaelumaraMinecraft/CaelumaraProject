@@ -3,40 +3,41 @@ package net.aurika.config.validation;
 import net.aurika.config.sections.ConfigSection;
 
 public class ValidationFailure {
-    private final Severity severity;
-    private final ConfigSection section;
-    private String message;
 
-    public ValidationFailure(Severity severity, ConfigSection section) {
-        this.severity = severity;
-        this.section = section;
-    }
+  private final Severity severity;
+  private final ConfigSection section;
+  private String message;
 
-    public ValidationFailure(Severity severity, ConfigSection section, String message) {
-        this.severity = severity;
-        this.section = section;
-        this.message = message;
-    }
+  public ValidationFailure(Severity severity, ConfigSection section) {
+    this.severity = severity;
+    this.section = section;
+  }
 
-    public Severity getSeverity() {
-        return this.severity;
-    }
+  public ValidationFailure(Severity severity, ConfigSection section, String message) {
+    this.severity = severity;
+    this.section = section;
+    this.message = message;
+  }
 
-    public ConfigSection getSection() {
-        return section;
-    }
+  public Severity getSeverity() {
+    return this.severity;
+  }
 
-    public String getMessage() {
-        return this.message;
-    }
+  public ConfigSection getSection() {
+    return section;
+  }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+  public String getMessage() {
+    return this.message;
+  }
 
-    public enum Severity {
-        ERROR,
-        WARNING
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-    }
+  public enum Severity {
+    ERROR,
+    WARNING
+  }
+
 }

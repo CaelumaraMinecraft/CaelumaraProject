@@ -7,26 +7,28 @@ import net.aurika.dyanasis.api.variable.DyanasisVariable;
 import org.jetbrains.annotations.NotNull;
 
 public interface DyanasisProperty extends DyanasisInvokable, DyanasisVariable {
-    /**
-     * Gets the dyanasis property name.
-     *
-     * @return the dyanasis property name
-     */
-    @Override
-    @NamingContract.Invokable
-    @NotNull String name();
 
-    @Override
-    @NotNull DyanasisPropertyAnchor owner();
+  /**
+   * Gets the dyanasis property name.
+   *
+   * @return the dyanasis property name
+   */
+  @Override
+  @NamingContract.Invokable
+  @NotNull String name();
 
-    @Override
-    @NotNull DyanasisObject value();
+  @Override
+  @NotNull DyanasisPropertyAnchor owner();
 
-    static boolean isGetable(@NotNull DyanasisProperty property) {
-        return property instanceof DyanasisGetableProperty;
-    }
+  @Override
+  @NotNull DyanasisObject value();
 
-    static boolean isSetable(@NotNull DyanasisProperty property) {
-        return property instanceof DyanasisSetableProperty;
-    }
+  static boolean isGetable(@NotNull DyanasisProperty property) {
+    return property instanceof DyanasisGetableProperty;
+  }
+
+  static boolean isSetable(@NotNull DyanasisProperty property) {
+    return property instanceof DyanasisSetableProperty;
+  }
+
 }

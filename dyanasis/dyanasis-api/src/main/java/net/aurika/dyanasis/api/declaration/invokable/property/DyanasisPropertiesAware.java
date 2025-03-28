@@ -7,10 +7,12 @@ import org.jetbrains.annotations.NotNull;
  * The implementation of {@linkplain DyanasisPropertiesAware} can provide {@linkplain DyanasisPropertyContainer}.
  */
 public interface DyanasisPropertiesAware {
-    /**
-     * Gets the available dyanasis properties.
-     *
-     * @return the properties
-     */
-    @NotNull DyanasisPropertyContainer<?> dyanasisProperties();
+
+  /**
+   * Gets the available dyanasis properties.
+   *
+   * @return the properties
+   */
+  @NotNull DyanasisPropertyContainer<?> dyanasisProperties();
+
 }

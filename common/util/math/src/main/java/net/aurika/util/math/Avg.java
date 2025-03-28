@@ -3,36 +3,38 @@ package net.aurika.util.math;
 import org.jetbrains.annotations.NotNull;
 
 public class Avg {
-    private double sum;
-    private long count;
 
-    public Avg(double sum, long count) {
-        this.sum = sum;
-        this.count = count;
-    }
+  private double sum;
+  private long count;
 
-    public final double getSum() {
-        return this.sum;
-    }
+  public Avg(double sum, long count) {
+    this.sum = sum;
+    this.count = count;
+  }
 
-    public final void setSum(double sum) {
-        this.sum = sum;
-    }
+  public final double getSum() {
+    return this.sum;
+  }
 
-    public final long getCount() {
-        return this.count;
-    }
+  public final void setSum(double sum) {
+    this.sum = sum;
+  }
 
-    public final void setCount(long count) {
-        this.count = count;
-    }
+  public final long getCount() {
+    return this.count;
+  }
 
-    public final @NotNull Avg plus(double additional) {
-        this.sum += additional;
-        return this;
-    }
+  public final void setCount(long count) {
+    this.count = count;
+  }
 
-    public final double getAverage() {
-        return this.sum / (double) this.count;
-    }
+  public final @NotNull Avg plus(double additional) {
+    this.sum += additional;
+    return this;
+  }
+
+  public final double getAverage() {
+    return this.sum / (double) this.count;
+  }
+
 }

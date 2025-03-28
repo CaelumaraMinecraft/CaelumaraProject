@@ -6,56 +6,58 @@ import java.util.Collection;
 import java.util.Map;
 
 public final class ValidationContext {
-    private final Node relatedKey;
-    private final Node node;
-    private final Map<String, NodeValidator> validatorMap;
-    private final Collection<ValidationFailure> exceptions;
 
-    public ValidationContext(Node relatedKey, Node node, Map<String, NodeValidator> validatorMap, Collection<ValidationFailure> exceptions) {
-        this.relatedKey = relatedKey;
-        this.node = node;
-        this.validatorMap = validatorMap;
-        this.exceptions = exceptions;
-    }
+  private final Node relatedKey;
+  private final Node node;
+  private final Map<String, NodeValidator> validatorMap;
+  private final Collection<ValidationFailure> exceptions;
 
-    public ValidationContext(Node node, Map<String, NodeValidator> validatorMap, Collection<ValidationFailure> exceptions) {
-        this(null, node, validatorMap, exceptions);
-    }
+  public ValidationContext(Node relatedKey, Node node, Map<String, NodeValidator> validatorMap, Collection<ValidationFailure> exceptions) {
+    this.relatedKey = relatedKey;
+    this.node = node;
+    this.validatorMap = validatorMap;
+    this.exceptions = exceptions;
+  }
 
-    public ValidationContext delegate(Node relatedKey, Node node) {
-        return new ValidationContext(relatedKey, node, this.validatorMap, this.exceptions);
-    }
+  public ValidationContext(Node node, Map<String, NodeValidator> validatorMap, Collection<ValidationFailure> exceptions) {
+    this(null, node, validatorMap, exceptions);
+  }
 
-    public Node getRelatedKey() {
-        return this.relatedKey;
-    }
+  public ValidationContext delegate(Node relatedKey, Node node) {
+    return new ValidationContext(relatedKey, node, this.validatorMap, this.exceptions);
+  }
 
-    public Map<String, NodeValidator> getValidatorMap() {
-        return this.validatorMap;
-    }
+  public Node getRelatedKey() {
+    return this.relatedKey;
+  }
 
-    public Collection<ValidationFailure> getExceptions() {
-        return this.exceptions;
-    }
+  public Map<String, NodeValidator> getValidatorMap() {
+    return this.validatorMap;
+  }
 
-    public ValidationFailure fail(ValidationFailure failure) {
-        this.exceptions.add(failure);
-        return failure;
-    }
+  public Collection<ValidationFailure> getExceptions() {
+    return this.exceptions;
+  }
 
-    public ValidationFailure err(String message) {
-        return this.fail(new ValidationFailure(ValidationFailure.Severity.ERROR, this.node, null, message));
-    }
+  public ValidationFailure fail(ValidationFailure failure) {
+    this.exceptions.add(failure);
+    return failure;
+  }
 
-    public void warn(String message) {
-        this.fail(new ValidationFailure(ValidationFailure.Severity.WARNING, this.node, null, message));
-    }
+  public ValidationFailure err(String message) {
+    return this.fail(new ValidationFailure(ValidationFailure.Severity.ERROR, this.node, null, message));
+  }
 
-    public Node getNode() {
-        return this.node;
-    }
+  public void warn(String message) {
+    this.fail(new ValidationFailure(ValidationFailure.Severity.WARNING, this.node, null, message));
+  }
 
-    public NodeValidator getValidator(String name) {
-        return this.validatorMap.get(name);
-    }
+  public Node getNode() {
+    return this.node;
+  }
+
+  public NodeValidator getValidator(String name) {
+    return this.validatorMap.get(name);
+  }
+
 }

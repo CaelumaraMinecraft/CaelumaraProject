@@ -1,53 +1,53 @@
 package net.aurika.config.placeholder.types;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import net.aurika.config.placeholder.Placeholder;
 import net.aurika.text.placeholders.context.PlaceholderProvider;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public abstract class AbstractPlaceholder implements Placeholder {
-    @NotNull
-    private final String originalString;
-    @Nullable
-    private final String pointer;
 
-    public AbstractPlaceholder(@NotNull String originalString, @Nullable String pointer) {
-        this.originalString = Objects.requireNonNull(originalString);
-        this.pointer = Objects.requireNonNull(pointer);
-    }
+  @NotNull
+  private final String originalString;
+  @Nullable
+  private final String pointer;
 
-    @Override
-    public abstract @NotNull String asString(boolean surround);
+  public AbstractPlaceholder(@NotNull String originalString, @Nullable String pointer) {
+    this.originalString = Objects.requireNonNull(originalString);
+    this.pointer = Objects.requireNonNull(pointer);
+  }
 
-    @NotNull
-    public String getOriginalString() {
-        return this.originalString;
-    }
+  @Override
+  public abstract @NotNull String asString(boolean surround);
 
-    @Nullable
-    public String getPointer() {
-        return this.pointer;
-    }
+  @NotNull
+  public String getOriginalString() {
+    return this.originalString;
+  }
 
-    @Override
-    public @Nullable Object request(@NotNull PlaceholderProvider placeholderProvider) {
-        return null;
-    }
+  @Nullable
+  public String getPointer() {
+    return this.pointer;
+  }
 
-    @NotNull
-    public String toString() {
-        return this.getClass().getSimpleName() + '{' + this.getOriginalString() + '}';
-    }
+  @Override
+  public @Nullable Object request(@NotNull PlaceholderProvider placeholderProvider) {
+    return null;
+  }
 
-    public int hashCode() {
-        throw new UnsupportedOperationException();
-    }
+  @NotNull
+  public String toString() {
+    return this.getClass().getSimpleName() + '{' + this.getOriginalString() + '}';
+  }
 
-    public boolean equals(@Nullable Object var1) {
-        throw new UnsupportedOperationException();
-    }
+  public int hashCode() {
+    throw new UnsupportedOperationException();
+  }
 
+  public boolean equals(@Nullable Object var1) {
+    throw new UnsupportedOperationException();
+  }
 
 }

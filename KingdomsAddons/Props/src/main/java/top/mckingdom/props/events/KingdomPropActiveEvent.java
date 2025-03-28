@@ -8,39 +8,40 @@ import top.mckingdom.props.prop.PropStyle;
 
 public class KingdomPropActiveEvent extends KingdomPropEvent implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private ActiveType activeType;
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
+  private ActiveType activeType;
 
-    public KingdomPropActiveEvent(PropStyle style, ActiveType activeType) {
-        super(style);
-        this.activeType = activeType;
-    }
+  public KingdomPropActiveEvent(PropStyle style, ActiveType activeType) {
+    super(style);
+    this.activeType = activeType;
+  }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 
-    @NotNull
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  @NotNull
+  @Override
+  public HandlerList getHandlers() {
+    return handlers;
+  }
 
-    public ActiveType getActiveType() {
-        return activeType;
-    }
+  public ActiveType getActiveType() {
+    return activeType;
+  }
 
-    public void setActiveType(ActiveType activeType) {
-        this.activeType = activeType;
-    }
+  public void setActiveType(ActiveType activeType) {
+    this.activeType = activeType;
+  }
 
-    @Override
-    public boolean isCancelled() {
-        return this.cancelled;
-    }
+  @Override
+  public boolean isCancelled() {
+    return this.cancelled;
+  }
 
-    public void setCancelled(boolean b) {
-        this.cancelled = b;
-    }
+  public void setCancelled(boolean b) {
+    this.cancelled = b;
+  }
+
 }

@@ -9,11 +9,12 @@ import org.kingdoms.main.Kingdoms;
 
 public class CommandAdminRegistryAuditLog extends CommandAdminRegistryTemplate<AuditLogProvider, AuditLogRegistry> {
 
-    public CommandAdminRegistryAuditLog(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryAuditLog(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryAuditLog(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-        super("audit" + "log", parent, permissionDefault, Kingdoms.get().getAuditLogRegistry(), AuditLogProvider.class);
-    }
+  public CommandAdminRegistryAuditLog(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
+    super("audit" + "log", parent, permissionDefault, Kingdoms.get().getAuditLogRegistry(), AuditLogProvider.class);
+  }
+
 }

@@ -10,21 +10,23 @@ import java.util.Set;
  * 配置读取器, 拥有确定的配置路径 ({@linkplain ConfigEntry})
  */
 public interface ClearlyConfigAccessor extends ConfigAccessor, DefaultableConfigAccessor {
-    ConfigEntry getPath();
+
+  ConfigEntry getPath();
 
 //    String getStringPath();
 
-    ClearlyConfigAccessor noDefault();
+  ClearlyConfigAccessor noDefault();
 
-    boolean isSet(String[] path);
+  boolean isSet(String[] path);
 
-    Set<String> getKeys();
+  Set<String> getKeys();
 
-    ClearlyConfigAccessor gotoSection(String[] path);
+  ClearlyConfigAccessor gotoSection(String[] path);
 
-    ConfigSection getSection();
+  ConfigSection getSection();
 
-    UndefinedPathConfigAccessor get(String[] path);
+  UndefinedPathConfigAccessor get(String[] path);
 
-    Map<String, Object> getEntries();
+  Map<String, Object> getEntries();
+
 }

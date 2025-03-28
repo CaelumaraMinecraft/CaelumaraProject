@@ -1,16 +1,16 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
+  id("java-library")
+  id("maven-publish")
 }
 
 dependencies {
-    api(project(":common:config:config-api"))
-    api(project(":aurika:base"))
-    api(project(":common:key"))
-    api(project(":common:function"))
-    api(project(":common:validate"))
-    api(project(":common:snakeyaml"))
-    api(project(":common:util:collection"))
-    api(project(":common:util:string"))
-    api(project(":common:util:generics"))
+  api(project(":common:config:config-api"))
+  api(project(":aurika:base"))
+  api(project(":common:key"))
+  api(project(":common:function"))
+  api(project(":common:validate"))
+  api(project(":common:snakeyaml"))
+  api(project(":common:util:collection"))
+  api(project(":common:util:string"))
+  api(project(":common:util:generics"))
 }

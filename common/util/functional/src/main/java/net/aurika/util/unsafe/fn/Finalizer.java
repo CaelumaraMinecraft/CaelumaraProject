@@ -13,30 +13,32 @@ import java.util.Objects;
  * This finalizer is not re-usable and can be only ran once.
  */
 public final class Finalizer implements Runnable {
-    private final List<Runnable> tasks = new ArrayList<>(5);
-    private boolean ran = false;
 
-    private void ensureOpen() {
-        if (ran) throw new IllegalStateException("Finalizer was already executed");
-    }
+  private final List<Runnable> tasks = new ArrayList<>(5);
+  private boolean ran = false;
 
-    public void add(Finalizer finalizer) {
-        ensureOpen();
-        this.tasks.addAll(finalizer.tasks);
-    }
+  private void ensureOpen() {
+    if (ran) throw new IllegalStateException("Finalizer was already executed");
+  }
 
-    public void add(Runnable runnable) {
-        ensureOpen();
-        Objects.requireNonNull(runnable, "Cannot add null task");
-        tasks.add(runnable);
-    }
+  public void add(Finalizer finalizer) {
+    ensureOpen();
+    this.tasks.addAll(finalizer.tasks);
+  }
 
-    @Override
-    public void run() {
-        ensureOpen();
-        ran = true;
-        for (Runnable task : tasks) {
-            task.run();
-        }
+  public void add(Runnable runnable) {
+    ensureOpen();
+    Objects.requireNonNull(runnable, "Cannot add null task");
+    tasks.add(runnable);
+  }
+
+  @Override
+  public void run() {
+    ensureOpen();
+    ran = true;
+    for (Runnable task : tasks) {
+      task.run();
     }
+  }
+
 }

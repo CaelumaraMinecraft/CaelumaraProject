@@ -8,5 +8,7 @@ import java.util.Map;
 
 @FunctionalInterface
 public interface InstanceInvokableHandler<O extends DyanasisObject, K, I extends DyanasisInvokable> {
-    @NotNull Map<K, ? extends I> handle(@NotNull O object);
+
+  @NotNull Map<K, ? extends I> handle(@NotNull O object);
+
 }

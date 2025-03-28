@@ -5,5 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 @ApiStatus.Experimental
 public interface Named {
-    @NotNull String name();
+
+  @NotNull String name();
+
 }

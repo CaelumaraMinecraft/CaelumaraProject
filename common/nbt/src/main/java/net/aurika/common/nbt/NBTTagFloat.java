@@ -5,42 +5,45 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NBTTagFloat extends NBTTagNumber {
 
-    static @NotNull NBTTagFloat nbtTagFloat(float value) {
-        return new NBTTagFloatImpl(value);
-    }
+  static @NotNull NBTTagFloat nbtTagFloat(float value) {
+    return new NBTTagFloatImpl(value);
+  }
 
-    @Override
-    default @NotNull NBTTagType<NBTTagFloat> nbtTagType() {
-        return NBTTagType.FLOAT;
-    }
+  @Override
+  default @NotNull NBTTagType<NBTTagFloat> nbtTagType() {
+    return NBTTagType.FLOAT;
+  }
 
-    void value(float value);
+  void value(float value);
 
-    float value();
+  float value();
 
-    @Override
-    default @NotNull Float valueAsObject() {
-        return this.value();
-    }
+  @Override
+  default @NotNull Float valueAsObject() {
+    return this.value();
+  }
 
-    @Override
-    default @NotNull FloatBinaryTag asBinaryTag() {
-        return FloatBinaryTag.floatBinaryTag(this.value());
-    }
+  @Override
+  default @NotNull FloatBinaryTag asBinaryTag() {
+    return FloatBinaryTag.floatBinaryTag(this.value());
+  }
+
 }
 
 class NBTTagFloatImpl extends NBTTagNumberImpl implements NBTTagFloat {
-    private float value;
 
-    NBTTagFloatImpl(float value) {
-        this.value = value;
-    }
+  private float value;
 
-    public void value(float value) {
-        this.value = value;
-    }
+  NBTTagFloatImpl(float value) {
+    this.value = value;
+  }
 
-    public float value() {
-        return this.value;
-    }
+  public void value(float value) {
+    this.value = value;
+  }
+
+  public float value() {
+    return this.value;
+  }
+
 }

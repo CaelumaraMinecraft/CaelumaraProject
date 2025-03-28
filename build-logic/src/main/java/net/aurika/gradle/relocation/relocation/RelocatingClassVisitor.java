@@ -1,30 +1,29 @@
 package net.aurika.gradle.relocation.relocation;
 
 import org.jetbrains.annotations.NotNull;
-import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.ClassRemapper;
 
 final class RelocatingClassVisitor extends ClassRemapper {
-    private final String packageName;
 
-    RelocatingClassVisitor(ClassWriter writer, RelocatingRemapper remapper, @NotNull String name) {
-        super(589824, writer, remapper);
-        this.packageName = name.substring(0, name.lastIndexOf('/') + 1);
-    }
+  private final String packageName;
 
-    @Override
-    public void visitSource(String source, String debug) {
-        if (source == null) {
-            super.visitSource(null, debug);
-        } else {
-            String name = this.packageName + source;
-            String mappedName = super.remapper.map(name);
-            String mappedFileName = mappedName.substring(mappedName.lastIndexOf(0x2f) + 1);
-            super.visitSource(mappedFileName, debug);
-        }
+  RelocatingClassVisitor(ClassWriter writer, RelocatingRemapper remapper, @NotNull String name) {
+    super(589824, writer, remapper);
+    this.packageName = name.substring(0, name.lastIndexOf('/') + 1);
+  }
+
+  @Override
+  public void visitSource(String source, String debug) {
+    if (source == null) {
+      super.visitSource(null, debug);
+    } else {
+      String name = this.packageName + source;
+      String mappedName = super.remapper.map(name);
+      String mappedFileName = mappedName.substring(mappedName.lastIndexOf(0x2f) + 1);
+      super.visitSource(mappedFileName, debug);
     }
+  }
 
 //    private boolean visitedInterface;
 //

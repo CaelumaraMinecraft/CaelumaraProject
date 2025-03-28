@@ -8,13 +8,15 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AdvancedMessage {
-    XSound DEFAULT_SOUND = XSound.ENTITY_PARROT_IMITATE_HUSK;
 
-    String actionbar() default "";
+  XSound DEFAULT_SOUND = XSound.ENTITY_PARROT_IMITATE_HUSK;
 
-    String title() default "";
+  String actionbar() default "";
 
-    String subtitle() default "";
+  String title() default "";
 
-    XSound sound() default XSound.ENTITY_PARROT_IMITATE_HUSK;
+  String subtitle() default "";
+
+  XSound sound() default XSound.ENTITY_PARROT_IMITATE_HUSK;
+
 }

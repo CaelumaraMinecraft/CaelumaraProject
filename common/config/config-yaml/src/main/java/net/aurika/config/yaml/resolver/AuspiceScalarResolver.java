@@ -6,10 +6,11 @@ import org.snakeyaml.engine.v2.resolver.CoreScalarResolver;
 
 public class AuspiceScalarResolver extends CoreScalarResolver {
 
-    public static final AuspiceScalarResolver INSTANCE = new AuspiceScalarResolver();
+  public static final AuspiceScalarResolver INSTANCE = new AuspiceScalarResolver();
 
-    @Override
-    public @NotNull Tag resolve(String value, Boolean implicit) {
-        return super.resolve(value, implicit);
-    }
+  @Override
+  public @NotNull Tag resolve(String value, Boolean implicit) {
+    return super.resolve(value, implicit);
+  }
+
 }

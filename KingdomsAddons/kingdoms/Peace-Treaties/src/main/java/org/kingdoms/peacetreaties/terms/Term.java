@@ -9,28 +9,29 @@ import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
 import org.kingdoms.peacetreaties.data.PeaceTreaty;
 
 public abstract class Term {
-    public abstract TermProvider getProvider();
+  public abstract TermProvider getProvider();
 
-    public boolean apply(TermGroupingOptions options, PeaceTreaty peaceTreaty) {
-        return true;
-    }
+  public boolean apply(TermGroupingOptions options, PeaceTreaty peaceTreaty) {
+    return true;
+  }
 
-    public Messenger canAccept(TermGroupingOptions options, PeaceTreaty peaceTreaty) {
-        return null;
-    }
+  public Messenger canAccept(TermGroupingOptions options, PeaceTreaty peaceTreaty) {
+    return null;
+  }
 
-    public void deserialize(DeserializationContext<SectionableDataGetter> context) {
-    }
+  public void deserialize(DeserializationContext<SectionableDataGetter> context) {
+  }
 
-    public void serialize(SerializationContext<SectionableDataSetter> context) {
-    }
+  public void serialize(SerializationContext<SectionableDataSetter> context) {
+  }
 
-    public void addEdits(MessagePlaceholderProvider builder) {
-    }
+  public void addEdits(MessagePlaceholderProvider builder) {
+  }
 
-    public final MessagePlaceholderProvider getEdits() {
-        MessagePlaceholderProvider edits = new MessagePlaceholderProvider();
-        addEdits(edits);
-        return edits;
-    }
+  public final MessagePlaceholderProvider getEdits() {
+    MessagePlaceholderProvider edits = new MessagePlaceholderProvider();
+    addEdits(edits);
+    return edits;
+  }
+
 }

@@ -5,9 +5,11 @@ import net.aurika.common.key.Keyed;
 import org.jetbrains.annotations.Nullable;
 
 public interface KeyedRegistry<T extends Keyed> {
-    void register(T obj);
 
-    boolean isRegistered(Key key);
+  void register(T obj);
 
-    @Nullable T getRegistered(Key key);
+  boolean isRegistered(Key key);
+
+  @Nullable T getRegistered(Key key);
+
 }

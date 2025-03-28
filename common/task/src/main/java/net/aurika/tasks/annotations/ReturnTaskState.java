@@ -10,5 +10,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface ReturnTaskState {
-    TaskState state();
+
+  TaskState state();
+
 }

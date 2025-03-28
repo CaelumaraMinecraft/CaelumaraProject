@@ -6,19 +6,21 @@ import org.gradle.api.artifacts.repositories.MavenRepositoryContentDescriptor;
 import org.jetbrains.annotations.NotNull;
 
 public class PurpurMCRepositoryExtension extends MultiComponentsRepositoryExtension {
-    public PurpurMCRepositoryExtension(@NotNull RepositoryHandler repositoryHandler) {
-        super(repositoryHandler, "https://repo.purpurmc.org/", "PurpurMC");
-    }
 
-    public MavenArtifactRepository releases() {
-        MavenArtifactRepository repo = super.named("releases");
-        repo.mavenContent(MavenRepositoryContentDescriptor::releasesOnly);
-        return repo;
-    }
+  public PurpurMCRepositoryExtension(@NotNull RepositoryHandler repositoryHandler) {
+    super(repositoryHandler, "https://repo.purpurmc.org/", "PurpurMC");
+  }
 
-    public MavenArtifactRepository snapshots() {
-        MavenArtifactRepository repo = super.named("snapshots");
-        repo.mavenContent(MavenRepositoryContentDescriptor::snapshotsOnly);
-        return repo;
-    }
+  public MavenArtifactRepository releases() {
+    MavenArtifactRepository repo = super.named("releases");
+    repo.mavenContent(MavenRepositoryContentDescriptor::releasesOnly);
+    return repo;
+  }
+
+  public MavenArtifactRepository snapshots() {
+    MavenArtifactRepository repo = super.named("snapshots");
+    repo.mavenContent(MavenRepositoryContentDescriptor::snapshotsOnly);
+    return repo;
+  }
+
 }

@@ -19,61 +19,62 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import java.util.concurrent.CompletionStage;
 
 public class TakeResourcePointsTerm extends Term {
-    private long amount;
+  private long amount;
 
-    public static final TermProvider PROVIDER = new StandardTermProvider(Namespace.kingdoms("TAKE_RESOURCE_POINTS"), TakeResourcePointsTerm::new, true, false) {
-        @Override
-        public CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor) {
-            return standardAmountPrompt(this, options, editor, (amount) -> new TakeResourcePointsTerm(amount.longValue()));
-        }
-    };
-
-    TakeResourcePointsTerm() {
-    }
-
-    public TakeResourcePointsTerm(long amount) {
-        this.amount = amount;
-    }
-
+  public static final TermProvider PROVIDER = new StandardTermProvider(Namespace.kingdoms("TAKE_RESOURCE_POINTS"), TakeResourcePointsTerm::new, true, false) {
     @Override
-    public TermProvider getProvider() {
-        return PROVIDER;
+    public CompletionStage<Term> prompt(TermGroupingOptions options, StandardPeaceTreatyEditor editor) {
+      return standardAmountPrompt(this, options, editor, (amount) -> new TakeResourcePointsTerm(amount.longValue()));
     }
+  };
 
-    public long getAmount() {
-        return amount;
-    }
+  TakeResourcePointsTerm() {
+  }
 
-    @Override
-    public void deserialize(DeserializationContext<SectionableDataGetter> context) {
-        SectionableDataGetter json = context.getDataProvider();
-        this.amount = json.get("amount").asLong();
-    }
+  public TakeResourcePointsTerm(long amount) {
+    this.amount = amount;
+  }
 
-    @Override
-    public void serialize(SerializationContext<SectionableDataSetter> context) {
-        SectionableDataSetter json = context.getDataProvider();
-        json.setLong("amount", amount);
-    }
+  @Override
+  public TermProvider getProvider() {
+    return PROVIDER;
+  }
 
-    @Override
-    public boolean apply(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
-        Kingdom kingdom = peaceTreaty.getVictimKingdom();
-        if (!kingdom.getResourcePoints().has(amount)) return false;
-        kingdom.getResourcePoints().add(-amount);
-        return true;
-    }
+  public long getAmount() {
+    return amount;
+  }
 
-    @Override
-    public void addEdits(MessagePlaceholderProvider builder) {
-        super.addEdits(builder);
-        builder.raw("term_take_resource_points_amount", amount);
-    }
+  @Override
+  public void deserialize(DeserializationContext<SectionableDataGetter> context) {
+    SectionableDataGetter json = context.getDataProvider();
+    this.amount = json.get("amount").asLong();
+  }
 
-    @Override
-    public Messenger canAccept(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
-        Kingdom kingdom = peaceTreaty.getVictimKingdom();
-        if (!kingdom.getResourcePoints().has(amount)) return PeaceTreatyLang.TERMS_TAKE_RESOURCE_POINTS_NOT_ENOUGH;
-        return null;
-    }
+  @Override
+  public void serialize(SerializationContext<SectionableDataSetter> context) {
+    SectionableDataSetter json = context.getDataProvider();
+    json.setLong("amount", amount);
+  }
+
+  @Override
+  public boolean apply(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
+    Kingdom kingdom = peaceTreaty.getVictimKingdom();
+    if (!kingdom.getResourcePoints().has(amount)) return false;
+    kingdom.getResourcePoints().add(-amount);
+    return true;
+  }
+
+  @Override
+  public void addEdits(MessagePlaceholderProvider builder) {
+    super.addEdits(builder);
+    builder.raw("term_take_resource_points_amount", amount);
+  }
+
+  @Override
+  public Messenger canAccept(TermGroupingOptions config, PeaceTreaty peaceTreaty) {
+    Kingdom kingdom = peaceTreaty.getVictimKingdom();
+    if (!kingdom.getResourcePoints().has(amount)) return PeaceTreatyLang.TERMS_TAKE_RESOURCE_POINTS_NOT_ENOUGH;
+    return null;
+  }
+
 }

@@ -1,5 +1,12 @@
+plugins {
+  id("aurika.kingdoms.addon")
+}
+
 version = "0.0.1-SNAPSHOT"
+description = ""
 
 dependencies {
-    compileOnly(project(":KingdomsAddons:Auspice"))
+  compileOnly(project(":KingdomsAddons:Auspice"))
 }
+
+kingdomsAddon.isAddonBody = true

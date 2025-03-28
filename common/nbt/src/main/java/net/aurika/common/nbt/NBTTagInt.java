@@ -5,44 +5,47 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NBTTagInt extends NBTTagNumber {
 
-    static @NotNull NBTTagInt nbtTagInt(int value) {
-        return new NBTTagIntImpl(value);
-    }
+  static @NotNull NBTTagInt nbtTagInt(int value) {
+    return new NBTTagIntImpl(value);
+  }
 
-    @Override
-    default @NotNull NBTTagType<NBTTagInt> nbtTagType() {
-        return NBTTagType.INT;
-    }
+  @Override
+  default @NotNull NBTTagType<NBTTagInt> nbtTagType() {
+    return NBTTagType.INT;
+  }
 
-    @Override
-    default @NotNull Integer valueAsObject() {
-        return this.value();
-    }
+  @Override
+  default @NotNull Integer valueAsObject() {
+    return this.value();
+  }
 
-    void value(int value);
+  void value(int value);
 
-    int value();
+  int value();
 
-    @Override
-    default @NotNull IntBinaryTag asBinaryTag() {
-        return IntBinaryTag.intBinaryTag(this.value());
-    }
+  @Override
+  default @NotNull IntBinaryTag asBinaryTag() {
+    return IntBinaryTag.intBinaryTag(this.value());
+  }
+
 }
 
 class NBTTagIntImpl extends NBTTagImpl implements NBTTagInt {
-    private int value;
 
-    NBTTagIntImpl(int value) {
-        this.value = value;
-    }
+  private int value;
 
-    @Override
-    public void value(int value) {
-        this.value = value;
-    }
+  NBTTagIntImpl(int value) {
+    this.value = value;
+  }
 
-    @Override
-    public int value() {
-        return this.value;
-    }
+  @Override
+  public void value(int value) {
+    this.value = value;
+  }
+
+  @Override
+  public int value() {
+    return this.value;
+  }
+
 }

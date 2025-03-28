@@ -10,40 +10,43 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.Executor;
 
 public interface TaskScheduler {
-    @NotNull Task.ExecutionContextType getExecutionContextType();
 
-    @NotNull Executor getExecutor();
+  @NotNull Task.ExecutionContextType getExecutionContextType();
 
-    @NotNull Task execute(@NotNull Runnable runnable);
+  @NotNull Executor getExecutor();
 
-    @NotNull DelayedTask delayed(@NotNull Duration delay, @NotNull Runnable runnable);
+  @NotNull Task execute(@NotNull Runnable runnable);
 
-    @NotNull DelayedRepeatingTask repeating(@NotNull Duration var1, @NotNull Duration var2, @NotNull Runnable var3);
+  @NotNull DelayedTask delayed(@NotNull Duration delay, @NotNull Runnable runnable);
 
-    default @NotNull <T> CompletableFuture<T> supplyFuture(@NotNull Callable<T> var0) {
-        Objects.requireNonNull(var0, "");
-        CompletableFuture<T> var10000 = CompletableFuture.supplyAsync(() -> {
-            Objects.requireNonNull(var0, "");
+  @NotNull DelayedRepeatingTask repeating(@NotNull Duration var1, @NotNull Duration var2, @NotNull Runnable var3);
 
-            try {
-                return var0.call();
-            } catch (Exception var1) {
-                if (var1 instanceof RuntimeException) {
-                    throw (RuntimeException) var1;
-                } else {
-                    throw new CompletionException(var1);
-                }
+  default @NotNull <T> CompletableFuture<T> supplyFuture(@NotNull Callable<T> var0) {
+    Objects.requireNonNull(var0, "");
+    CompletableFuture<T> var10000 = CompletableFuture.supplyAsync(
+        () -> {
+          Objects.requireNonNull(var0, "");
+
+          try {
+            return var0.call();
+          } catch (Exception var1) {
+            if (var1 instanceof RuntimeException) {
+              throw (RuntimeException) var1;
+            } else {
+              throw new CompletionException(var1);
             }
-        }, this.getExecutor());
-        Objects.requireNonNull(var10000, "");
-        return var10000;
-    }
+          }
+        }, this.getExecutor()
+    );
+    Objects.requireNonNull(var10000, "");
+    return var10000;
+  }
 
-    default @NotNull CompletableFuture<Void> runFuture(@NotNull Runnable future) {
-        Objects.requireNonNull(future);
-        CompletableFuture<Void> var10000 = CompletableFuture.runAsync(future, this.getExecutor());
-        Objects.requireNonNull(var10000);
-        return var10000;
-    }
+  default @NotNull CompletableFuture<Void> runFuture(@NotNull Runnable future) {
+    Objects.requireNonNull(future);
+    CompletableFuture<Void> var10000 = CompletableFuture.runAsync(future, this.getExecutor());
+    Objects.requireNonNull(var10000);
+    return var10000;
+  }
 
 }

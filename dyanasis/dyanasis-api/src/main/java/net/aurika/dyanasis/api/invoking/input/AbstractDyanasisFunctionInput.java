@@ -7,50 +7,51 @@ import org.jetbrains.annotations.Range;
 import java.util.Objects;
 
 public abstract class AbstractDyanasisFunctionInput implements DyanasisFunctionInput {
-    protected final @NotNull String original;
 
-    public AbstractDyanasisFunctionInput(@NotNull String original) {
-        Validate.Arg.notNull(original, "original");
-        this.original = original;
-    }
+  protected final @NotNull String original;
 
-    /**
-     * Gets an argument from {@code index}.
-     *
-     * @param index the index
-     * @return the argument
-     * @throws IndexOutOfBoundsException when the index is out of bound for the arguments
-     */
-    public @NotNull String arg(@Range(from = 0, to = 127) int index) throws IndexOutOfBoundsException {
-        return args()[index];
-    }
+  public AbstractDyanasisFunctionInput(@NotNull String original) {
+    Validate.Arg.notNull(original, "original");
+    this.original = original;
+  }
 
-    /**
-     * Gets the arguments of the dyanasis function input.
-     *
-     * @return the arguments
-     */
-    public abstract @NotNull String @NotNull [] args();
+  /**
+   * Gets an argument from {@code index}.
+   *
+   * @param index the index
+   * @return the argument
+   * @throws IndexOutOfBoundsException when the index is out of bound for the arguments
+   */
+  public @NotNull String stringAtArg(@Range(from = 0, to = 127) int index) throws IndexOutOfBoundsException {
+    return argStrings()[index];
+  }
 
-    public final @NotNull String originalString() {
-        return original;
-    }
+  /**
+   * Gets the arguments of the dyanasis function input.
+   *
+   * @return the arguments
+   */
+  public abstract @NotNull String @NotNull [] argStrings();
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(original);
-    }
+  public final @NotNull String originalString() {
+    return original;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof DyanasisFunctionInput that)) return false;
-        return Objects.equals(original, that.originalString());
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(original);
+  }
 
-    @Override
-    public String toString() {
-        return "DyFunctionInput{" +
-                "original='" + original + '\'' +
-                '}';
-    }
+  @Override
+  public boolean equals(Object obj) {
+    return super.equals(obj);
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{" +
+        "original='" + original + '\'' +
+        '}';
+  }
+
 }

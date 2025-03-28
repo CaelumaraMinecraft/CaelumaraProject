@@ -7,17 +7,18 @@ import java.nio.file.FileVisitResult;
 
 public final class SkipAll implements PathVisitor {
 
-    public static final @NotNull SkipAll INSTANCE = new SkipAll();
+  public static final @NotNull SkipAll INSTANCE = new SkipAll();
 
-    private SkipAll() {
-    }
+  private SkipAll() {
+  }
 
-    public @NotNull FileVisitResult onVisit(@NotNull PathVisit visit) {
-        Validate.Arg.notNull(visit, "visit");
-        return FileVisitResult.SKIP_SUBTREE;
-    }
+  public @NotNull FileVisitResult onVisit(@NotNull PathVisit visit) {
+    Validate.Arg.notNull(visit, "visit");
+    return FileVisitResult.SKIP_SUBTREE;
+  }
 
-    public @NotNull String toString() {
-        return "PathVisitor:SkipAll";
-    }
+  public @NotNull String toString() {
+    return "PathVisitor:SkipAll";
+  }
+
 }

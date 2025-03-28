@@ -16,76 +16,77 @@ import java.util.Locale;
 import java.util.function.Function;
 
 public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
-    KINGDOM_LANDS_COUNT(0, new FunctionalPlaceholder() {
-        @PhFn
-        public @Nullable Object byFilter(KingdomsPlaceholderTranslationContext context, @PhParam(name = "filter") String filterStr) {
-            if (filterStr == null || filterStr.isEmpty()) {
-                return null;
-            }
-            Kingdom kingdom = context.getKingdom();
-            if (kingdom == null) {
-                return null;
-            }
-            ConditionalCompiler.LogicalOperand filter;
-            try {
-                filter = ConditionalCompiler.compile(filterStr).evaluate();
-            } catch (Exception e) {
-                return null;
-            }
+  KINGDOM_LANDS_COUNT(0, new FunctionalPlaceholder() {
+    @PhFn
+    public @Nullable Object byFilter(KingdomsPlaceholderTranslationContext context, @PhParam(name = "filter") String filterStr) {
+      if (filterStr == null || filterStr.isEmpty()) {
+        return null;
+      }
+      Kingdom kingdom = context.getKingdom();
+      if (kingdom == null) {
+        return null;
+      }
+      ConditionalCompiler.LogicalOperand filter;
+      try {
+        filter = ConditionalCompiler.compile(filterStr).evaluate();
+      } catch (Exception e) {
+        return null;
+      }
 
-            @NotNull List<Land> lands = kingdom.getLands();
-            int count = 0;
-            for (Land land : lands) {
-                if (land == null) continue;
-                MessagePlaceholderProvider landContext = context.asMessaegeBuilder().clone();
-                landContext.setPrimaryTarget(land);
-                LandUtil.addMessageContextEntries(land, landContext);
-                ConditionProcessor landVariableProcessor = new ConditionProcessor(landContext);
-                if (filter.eval(landVariableProcessor)) {
-                    count++;
-                }
-            }
-            return count;
+      @NotNull List<Land> lands = kingdom.getLands();
+      int count = 0;
+      for (Land land : lands) {
+        if (land == null) continue;
+        MessagePlaceholderProvider landContext = context.asMessaegeBuilder().clone();
+        landContext.setPrimaryTarget(land);
+        LandUtil.addMessageContextEntries(land, landContext);
+        ConditionProcessor landVariableProcessor = new ConditionProcessor(landContext);
+        if (filter.eval(landVariableProcessor)) {
+          count++;
         }
-    });
-
-    private final @NotNull Function<KingdomsPlaceholderTranslationContext, Object> translator;
-    private final @NotNull Object defaultValue;
-    private @Nullable Object configuredDefaultValue;
-
-    AuspicePlaceholder(@NotNull Object defaultValue, @NotNull Function<KingdomsPlaceholderTranslationContext, Object> translator) {
-        this.translator = translator;
-        this.defaultValue = defaultValue;
-        KingdomsPlaceholderTranslator.register(this);
+      }
+      return count;
     }
+  });
 
-    @Override  // val translator get()
-    public @NotNull Function<KingdomsPlaceholderTranslationContext, Object> getTranslator() {
-        return this.translator;
-    }
+  private final @NotNull Function<KingdomsPlaceholderTranslationContext, Object> translator;
+  private final @NotNull Object defaultValue;
+  private @Nullable Object configuredDefaultValue;
 
-    @Override  // val name get()
-    @SuppressWarnings("PatternValidation")
-    @Pattern("[a-z0-9]")
-    public @NotNull String getName() {
-        return name().toLowerCase(Locale.ENGLISH);
-    }
+  AuspicePlaceholder(@NotNull Object defaultValue, @NotNull Function<KingdomsPlaceholderTranslationContext, Object> translator) {
+    this.translator = translator;
+    this.defaultValue = defaultValue;
+    KingdomsPlaceholderTranslator.register(this);
+  }
 
-    @Override  // val default get()
-    public @NotNull Object getDefault() {
-        return defaultValue;
-    }
+  @Override  // val translator get()
+  public @NotNull Function<KingdomsPlaceholderTranslationContext, Object> getTranslator() {
+    return this.translator;
+  }
 
-    @Override  // var configuredDefaultValue get()
-    public @Nullable Object getConfiguredDefaultValue() {
-        return configuredDefaultValue;
-    }
+  @Override  // val name get()
+  @SuppressWarnings("PatternValidation")
+  @Pattern("[a-z0-9]")
+  public @NotNull String getName() {
+    return name().toLowerCase(Locale.ENGLISH);
+  }
 
-    @Override  // var configuredDefaultValue set(Object)
-    public void setConfiguredDefaultValue(@Nullable Object ConfiguredDefaultValue) {
-        this.configuredDefaultValue = ConfiguredDefaultValue;
-    }
+  @Override  // val default get()
+  public @NotNull Object getDefault() {
+    return defaultValue;
+  }
 
-    public static void init() {
-    }
+  @Override  // var configuredDefaultValue get()
+  public @Nullable Object getConfiguredDefaultValue() {
+    return configuredDefaultValue;
+  }
+
+  @Override  // var configuredDefaultValue set(Object)
+  public void setConfiguredDefaultValue(@Nullable Object ConfiguredDefaultValue) {
+    this.configuredDefaultValue = ConfiguredDefaultValue;
+  }
+
+  public static void init() {
+    // <clinit>
+  }
 }

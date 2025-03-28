@@ -7,5 +7,7 @@ import org.jetbrains.annotations.NotNull;
  */
 @Deprecated
 public interface Keyed {
-    @NotNull NSedKey getNamespacedKey();
+
+  @NotNull NSedKey getNamespacedKey();
+
 }

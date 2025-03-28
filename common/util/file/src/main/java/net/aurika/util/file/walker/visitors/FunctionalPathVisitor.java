@@ -13,134 +13,136 @@ import java.util.function.Predicate;
 
 public class FunctionalPathVisitor implements PathVisitor {
 
-    private final @NotNull Path root;
-    private @NotNull List<ConditionalPathVisitor> visitors;
+  private final @NotNull Path root;
+  private @NotNull List<ConditionalPathVisitor> visitors;
 
-    public FunctionalPathVisitor(@NotNull Path root) {
-        Validate.Arg.notNull(root, "root");
-        this.root = root;
-        this.visitors = new ArrayList<>();
+  public FunctionalPathVisitor(@NotNull Path root) {
+    Validate.Arg.notNull(root, "root");
+    this.root = root;
+    this.visitors = new ArrayList<>();
+  }
+
+  public @NotNull Path getRoot() {
+    return root;
+  }
+
+  public @NotNull List<ConditionalPathVisitor> getVisitors() {
+    return visitors;
+  }
+
+  public void setVisitors(@NotNull List<ConditionalPathVisitor> visitors) {
+    Validate.Arg.notNull(visitors, "visitors");
+    this.visitors = visitors;
+  }
+
+  private Predicate<Path> getPathPredicate(boolean folder, Path resolvablePath) {
+    return folder ? new StartsWithPathFilter(resolvablePath) : new ExactPathFilter(resolvablePath);
+  }
+
+  private FunctionalPathVisitor stringVisitor(boolean folder, String resolvablePath, boolean visit) {
+    Path exatPath = root;
+    for (String it : resolvablePath.split("/")) {
+      exatPath = root.resolve(it);
     }
+    return visitor(folder, getPathPredicate(folder, exatPath), visit);
+  }
 
-    public @NotNull Path getRoot() {
-        return root;
+  private FunctionalPathVisitor pathVisitor(boolean folder, Path path, boolean visit) {
+    if (!path.startsWith(root)) {
+      throw new IllegalArgumentException(
+          "Given path '" + path + "' isn't included in the root path '" + this.root + '\'');
+    } else {
+      return this.visitor(folder, this.getPathPredicate(folder, path), visit);
     }
+  }
 
-    public @NotNull List<ConditionalPathVisitor> getVisitors() {
-        return visitors;
+  private FunctionalPathVisitor visitor(boolean folder, Predicate<Path> filter, boolean visit) {
+    ConditionalPathVisitor handle = new ConditionalPathVisitor(filter, visit ? VisitAll.INSTANCE : SkipAll.INSTANCE);
+    visitors.add(handle);
+    return this;
+  }
+
+  public @NotNull FunctionalPathVisitor onlyIf(boolean condition, @NotNull Consumer<FunctionalPathVisitor> handler) {
+    Validate.Arg.notNull(handler, "handler");
+    if (condition) {
+      handler.accept(this);
     }
+    return this;
+  }
 
-    public void setVisitors(@NotNull List<ConditionalPathVisitor> visitors) {
-        Validate.Arg.notNull(visitors, "visitors");
-        this.visitors = visitors;
-    }
+  public @NotNull FunctionalPathVisitor visitFiles(@NotNull Predicate<Path> filter) {
+    Validate.Arg.notNull(filter, "filter");
+    return this.visitor(false, filter, true);
+  }
 
-    private Predicate<Path> getPathPredicate(boolean folder, Path resolvablePath) {
-        return folder ? new StartsWithPathFilter(resolvablePath) : new ExactPathFilter(resolvablePath);
-    }
+  public @NotNull FunctionalPathVisitor skipFiles(@NotNull Predicate<Path> filter) {
+    Validate.Arg.notNull(filter, "filter");
+    return this.visitor(false, filter, true);
+  }
 
-    private FunctionalPathVisitor stringVisitor(boolean folder, String resolvablePath, boolean visit) {
-        Path exatPath = root;
-        for (String it : resolvablePath.split("/")) {
-            exatPath = root.resolve(it);
+  public @NotNull FunctionalPathVisitor visitFolders(@NotNull Predicate<Path> filter) {
+    Validate.Arg.notNull(filter, "filter");
+    return this.visitor(true, filter, true);
+  }
+
+  public @NotNull FunctionalPathVisitor skipFolders(@NotNull Predicate<Path> filter) {
+    Validate.Arg.notNull(filter, "filter");
+    return this.visitor(true, filter, true);
+  }
+
+  public @NotNull FunctionalPathVisitor visitFile(@NotNull String resolvablePath) {
+    Validate.Arg.notNull(resolvablePath, "resolvablePath");
+    return this.stringVisitor(false, resolvablePath, true);
+  }
+
+  public @NotNull FunctionalPathVisitor skipFile(@NotNull String resolvablePath) {
+    Validate.Arg.notNull(resolvablePath, "resolvablePath");
+    return this.stringVisitor(false, resolvablePath, false);
+  }
+
+  public @NotNull FunctionalPathVisitor visitFolder(@NotNull String resolvablePath) {
+    Validate.Arg.notNull(resolvablePath, "resolvablePath");
+    return this.stringVisitor(true, resolvablePath, true);
+  }
+
+  public @NotNull FunctionalPathVisitor skipFolder(@NotNull String resolvablePath) {
+    Validate.Arg.notNull(resolvablePath, "resolvablePath");
+    return this.stringVisitor(true, resolvablePath, false);
+  }
+
+  public @NotNull FunctionalPathVisitor visitFile(@NotNull Path path) {
+    Validate.Arg.notNull(path, "path");
+    return this.pathVisitor(false, path, true);
+  }
+
+  public @NotNull FunctionalPathVisitor skipFile(@NotNull Path path) {
+    Validate.Arg.notNull(path, "path");
+    return this.pathVisitor(false, path, false);
+  }
+
+  public @NotNull FunctionalPathVisitor visitFolder(@NotNull Path path) {
+    Validate.Arg.notNull(path, "path");
+    return this.pathVisitor(true, path, true);
+  }
+
+  public @NotNull FunctionalPathVisitor skipFolder(@NotNull Path path) {
+    Validate.Arg.notNull(path, "path");
+    return this.pathVisitor(true, path, false);
+  }
+
+  public @NotNull FileVisitResult onVisit(@NotNull PathVisit visit) {
+    Validate.Arg.notNull(visit, "visit");
+    if (Objects.equals(visit.path(), this.root)) {
+      return FileVisitResult.CONTINUE;
+    } else {
+      for (ConditionalPathVisitor pathVisitHandle : this.visitors) {
+        if (pathVisitHandle.getPredicate().test(visit.path())) {
+          return pathVisitHandle.getVisitor().onVisit(visit);
         }
-        return visitor(folder, getPathPredicate(folder, exatPath), visit);
-    }
+      }
 
-    private FunctionalPathVisitor pathVisitor(boolean folder, Path path, boolean visit) {
-        if (!path.startsWith(root)) {
-            throw new IllegalArgumentException("Given path '" + path + "' isn't included in the root path '" + this.root + '\'');
-        } else {
-            return this.visitor(folder, this.getPathPredicate(folder, path), visit);
-        }
+      return FileVisitResult.SKIP_SUBTREE;
     }
+  }
 
-    private FunctionalPathVisitor visitor(boolean folder, Predicate<Path> filter, boolean visit) {
-        ConditionalPathVisitor handle = new ConditionalPathVisitor(filter, visit ? VisitAll.INSTANCE : SkipAll.INSTANCE);
-        visitors.add(handle);
-        return this;
-    }
-
-    public @NotNull FunctionalPathVisitor onlyIf(boolean condition, @NotNull Consumer<FunctionalPathVisitor> handler) {
-        Validate.Arg.notNull(handler, "handler");
-        if (condition) {
-            handler.accept(this);
-        }
-        return this;
-    }
-
-    public @NotNull FunctionalPathVisitor visitFiles(@NotNull Predicate<Path> filter) {
-        Validate.Arg.notNull(filter, "filter");
-        return this.visitor(false, filter, true);
-    }
-
-    public @NotNull FunctionalPathVisitor skipFiles(@NotNull Predicate<Path> filter) {
-        Validate.Arg.notNull(filter, "filter");
-        return this.visitor(false, filter, true);
-    }
-
-    public @NotNull FunctionalPathVisitor visitFolders(@NotNull Predicate<Path> filter) {
-        Validate.Arg.notNull(filter, "filter");
-        return this.visitor(true, filter, true);
-    }
-
-    public @NotNull FunctionalPathVisitor skipFolders(@NotNull Predicate<Path> filter) {
-        Validate.Arg.notNull(filter, "filter");
-        return this.visitor(true, filter, true);
-    }
-
-    public @NotNull FunctionalPathVisitor visitFile(@NotNull String resolvablePath) {
-        Validate.Arg.notNull(resolvablePath, "resolvablePath");
-        return this.stringVisitor(false, resolvablePath, true);
-    }
-
-    public @NotNull FunctionalPathVisitor skipFile(@NotNull String resolvablePath) {
-        Validate.Arg.notNull(resolvablePath, "resolvablePath");
-        return this.stringVisitor(false, resolvablePath, false);
-    }
-
-    public @NotNull FunctionalPathVisitor visitFolder(@NotNull String resolvablePath) {
-        Validate.Arg.notNull(resolvablePath, "resolvablePath");
-        return this.stringVisitor(true, resolvablePath, true);
-    }
-
-    public @NotNull FunctionalPathVisitor skipFolder(@NotNull String resolvablePath) {
-        Validate.Arg.notNull(resolvablePath, "resolvablePath");
-        return this.stringVisitor(true, resolvablePath, false);
-    }
-
-    public @NotNull FunctionalPathVisitor visitFile(@NotNull Path path) {
-        Validate.Arg.notNull(path, "path");
-        return this.pathVisitor(false, path, true);
-    }
-
-    public @NotNull FunctionalPathVisitor skipFile(@NotNull Path path) {
-        Validate.Arg.notNull(path, "path");
-        return this.pathVisitor(false, path, false);
-    }
-
-    public @NotNull FunctionalPathVisitor visitFolder(@NotNull Path path) {
-        Validate.Arg.notNull(path, "path");
-        return this.pathVisitor(true, path, true);
-    }
-
-    public @NotNull FunctionalPathVisitor skipFolder(@NotNull Path path) {
-        Validate.Arg.notNull(path, "path");
-        return this.pathVisitor(true, path, false);
-    }
-
-    public @NotNull FileVisitResult onVisit(@NotNull PathVisit visit) {
-        Validate.Arg.notNull(visit, "visit");
-        if (Objects.equals(visit.path(), this.root)) {
-            return FileVisitResult.CONTINUE;
-        } else {
-            for (ConditionalPathVisitor pathVisitHandle : this.visitors) {
-                if (pathVisitHandle.getPredicate().test(visit.path())) {
-                    return pathVisitHandle.getVisitor().onVisit(visit);
-                }
-            }
-
-            return FileVisitResult.SKIP_SUBTREE;
-        }
-    }
 }

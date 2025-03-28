@@ -4,7 +4,7 @@ import com.cryptomorin.xseries.XSound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.Unmodifiable;
-import net.aurika.config.adapters.YamlWithDefaults;
+import net.aurika.config.adapter.YamlWithDefaults;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.text.compiler.TextObject;
 import net.aurika.text.messenger.Messenger;

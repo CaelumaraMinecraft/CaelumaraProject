@@ -7,29 +7,32 @@ import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The type of {@linkplain DyanasisObject}.
+ *
+ * @param <O> the type of object
+ */
 public interface DyanasisType<O extends DyanasisObject> extends DyanasisTypeAware, DyanasisNamespaced, DyanasisRuntimeObject {
-    boolean isInstance(DyanasisObject dyanasisObject);
 
-    @NotNull String fullName();
+  @NotNull DyanasisTypeIdent ident();
 
-    @NotNull String fullName(@NotNull String delimiter);
+  boolean isInstance(DyanasisObject dyanasisObject);
 
-    @Override
-    @NotNull DyanasisNamespace dyanasisNamespace();
+  @Override
+  @NotNull DyanasisNamespace dyanasisNamespace();
 
-    @NotNull String name();
+  @NotNull Class<? extends DyanasisObject> clazz();
 
-    @NotNull Class<? extends DyanasisObject> clazz();
+  @NotNull InstancePropertyHandler<O> instancePropertyHandler();
 
-    @NotNull InstancePropertyHandler<O> instancePropertyHandler();
+  @NotNull InstanceFunctionHandler<O> instanceFunctionHandler();
 
-    @NotNull InstanceFunctionHandler<O> instanceFunctionHandler();
+  @Override
+  @NotNull DyanasisRuntime dyanasisRuntime();
 
-    @Override
-    @NotNull DyanasisRuntime dyanasisRuntime();
+  @Override
+  default @NotNull DyanasisType<? extends O> dyanasisType() {
+    return this;
+  }
 
-    @Override
-    default @NotNull DyanasisType<? extends O> dyanasisType() {
-        return this;
-    }
 }

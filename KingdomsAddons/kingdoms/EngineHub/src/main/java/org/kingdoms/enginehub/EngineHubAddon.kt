@@ -20,102 +20,103 @@ import java.io.File
  * https://enginehub.org/
  */
 class EngineHubAddon : JavaPlugin(), Addon {
-    companion object {
-        @JvmStatic lateinit var INSTANCE: EngineHubAddon
+  companion object {
+    @JvmStatic
+    lateinit var INSTANCE: EngineHubAddon
+  }
+
+  init {
+    INSTANCE = this
+  }
+
+  var worldGuard: ServiceWorldGuard? = null
+
+  fun hasWorldGuard(): Boolean = worldGuard != null
+
+  private fun tryLoad(seven: Boolean, errors: MutableList<Throwable>): ServiceWorldGuard? {
+    try {
+      val wg = if (seven) ServiceWorldGuardSeven()
+      else ServiceWorldGuardSix()
+      val error = wg.checkAvailability() ?: return wg
+      errors.add(error)
+    } catch (ex: Throwable) {
+      errors.add(ex)
     }
+    return null
+  }
 
-    init {
-        INSTANCE = this
-    }
+  override fun onLoad() {
+    LanguageManager.registerMessenger(EngineHubLang::class.java)
+    EngineHubConfig.register(this)
 
-    var worldGuard: ServiceWorldGuard? = null
+    initWorldGuard()
+    SoftService.WORLD_GUARD.hook(true)
+  }
 
-    fun hasWorldGuard(): Boolean = worldGuard != null
+  private fun initWorldGuard() {
+    if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
+      val errors: MutableList<Throwable> = mutableListOf()
+      var wg = tryLoad(true, errors)
+      if (wg == null) wg = tryLoad(false, errors)
+      worldGuard = wg
 
-    private fun tryLoad(seven: Boolean, errors: MutableList<Throwable>): ServiceWorldGuard? {
+      if (worldGuard == null && Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
+        RuntimeException("Failed to load any of the WorldGuard services").apply {
+          errors.forEach { addSuppressed(it) }
+        }.printStackTrace()
+        return
+      }
+
+      if (EngineHubConfig.WORLDGUARD_REGISTER_FLAGS.manager.boolean) {
+        var successful = true
         try {
-            val wg = if (seven) ServiceWorldGuardSeven()
-            else ServiceWorldGuardSix()
-            val error = wg.checkAvailability() ?: return wg
-            errors.add(error)
+          logger.info("Registering WorldGuard flags...")
+          worldGuard!!.registerFlags()
         } catch (ex: Throwable) {
-            errors.add(ex)
+          ex.printStackTrace()
+          successful = false
         }
-        return null
+        if (successful) Kingdoms.get().logger.info("Successfully registered WorldGuard flags.")
+      }
+    }
+  }
+
+  override fun onEnable() {
+    if (!isKingdomsEnabled) return
+
+    if (EngineHubConfig.WORLDEDIT_USE_SCHEMATICS.manager.boolean) {
+      Kingdoms.get().buildingArchitectRegistry.apply {
+        register(WorldEditBuilding.Arch)
+        register(WorldEditBuildingConstruction.Arch)
+      }
     }
 
-    override fun onLoad() {
-        LanguageManager.registerMessenger(EngineHubLang::class.java)
-        EngineHubConfig.register(this)
-
-        initWorldGuard()
-        SoftService.WORLD_GUARD.hook(true)
+    if (EngineHubConfig.WORLDEDIT_EDIT_PROTECTION.manager.boolean) {
+      ServiceWorldEditSessionProtection().enable()
     }
 
-    private fun initWorldGuard() {
-        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
-            val errors: MutableList<Throwable> = mutableListOf()
-            var wg = tryLoad(true, errors)
-            if (wg == null) wg = tryLoad(false, errors)
-            worldGuard = wg
+    reloadAddon()
 
-            if (worldGuard == null && Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
-                RuntimeException("Failed to load any of the WorldGuard services").apply {
-                    errors.forEach { addSuppressed(it) }
-                }.printStackTrace()
-                return
-            }
+    if (hasWorldGuard()) WorldGuardHandler(this)
+    registerAddon()
+  }
 
-            if (EngineHubConfig.WORLDGUARD_REGISTER_FLAGS.manager.boolean) {
-                var successful = true
-                try {
-                    logger.info("Registering WorldGuard flags...")
-                    worldGuard!!.registerFlags()
-                } catch (ex: Throwable) {
-                    ex.printStackTrace()
-                    successful = false
-                }
-                if (successful) Kingdoms.get().logger.info("Successfully registered WorldGuard flags.")
-            }
-        }
+  override fun reloadAddon() {
+    if (!isKingdomsEnabled) return
+    Kingdoms.get().buildingArchitectRegistry.apply {
+      defaultArchitect = WorldEditBuildingConstruction.Arch
     }
 
-    override fun onEnable() {
-        if (!isKingdomsEnabled) return
+    SchematicManager.loadAll()
+    SchematicManager.setup()
+    CommandAdminSchematic(CommandAdmin.getInstance())
+  }
 
-        if (EngineHubConfig.WORLDEDIT_USE_SCHEMATICS.manager.boolean) {
-            Kingdoms.get().buildingArchitectRegistry.apply {
-                register(WorldEditBuilding.Arch)
-                register(WorldEditBuildingConstruction.Arch)
-            }
-        }
+  override fun onDisable() {
+    super.onDisable()
+    signalDisable()
+  }
 
-        if (EngineHubConfig.WORLDEDIT_EDIT_PROTECTION.manager.boolean) {
-            ServiceWorldEditSessionProtection().enable()
-        }
-
-        reloadAddon()
-
-        if (hasWorldGuard()) WorldGuardHandler(this)
-        registerAddon()
-    }
-
-    override fun reloadAddon() {
-        if (!isKingdomsEnabled) return
-        Kingdoms.get().buildingArchitectRegistry.apply {
-            defaultArchitect = WorldEditBuildingConstruction.Arch
-        }
-
-        SchematicManager.loadAll()
-        SchematicManager.setup()
-        CommandAdminSchematic(CommandAdmin.getInstance())
-    }
-
-    override fun onDisable() {
-        super.onDisable()
-        signalDisable()
-    }
-
-    override fun getFile(): File = super.getFile()
-    override fun getAddonName(): String = "EngineHub"
+  override fun getFile(): File = super.getFile()
+  override fun getAddonName(): String = "EngineHub"
 }

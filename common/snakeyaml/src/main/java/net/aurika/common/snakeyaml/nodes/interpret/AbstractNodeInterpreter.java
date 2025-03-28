@@ -7,25 +7,26 @@ import static net.aurika.common.snakeyaml.nodes.interpret.NodeInterpretContext.R
 
 abstract class AbstractNodeInterpreter<T> implements NodeInterpreter<T> {
 
-    protected final boolean priorUseCachedValue;
+  protected final boolean priorUseCachedValue;
 
-    public AbstractNodeInterpreter(boolean priorUseCachedValue) {
-        this.priorUseCachedValue = priorUseCachedValue;
+  public AbstractNodeInterpreter(boolean priorUseCachedValue) {
+    this.priorUseCachedValue = priorUseCachedValue;
+  }
+
+  public boolean priorUseCachedValue() {
+    return priorUseCachedValue;
+  }
+
+  @Override
+  public T parse(@NotNull NodeInterpretContext<T> context) {
+    Node node = context.getNode();
+    if (node == null) {
+      return context.asResult(NULL, null);
+    } else {
+      return parse0(context);
     }
+  }
 
-    public boolean priorUseCachedValue() {
-        return priorUseCachedValue;
-    }
+  public abstract T parse0(@NotNull NodeInterpretContext<T> context);
 
-    @Override
-    public T parse(@NotNull NodeInterpretContext<T> context) {
-        Node node = context.getNode();
-        if (node == null) {
-            return context.asResult(NULL, null);
-        } else {
-            return parse0(context);
-        }
-    }
-
-    public abstract T parse0(@NotNull NodeInterpretContext<T> context);
 }

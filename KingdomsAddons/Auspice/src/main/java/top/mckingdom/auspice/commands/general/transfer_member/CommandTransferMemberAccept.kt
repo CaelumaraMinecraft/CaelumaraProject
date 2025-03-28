@@ -6,7 +6,7 @@ import org.kingdoms.commands.KingdomsCommand
 import org.kingdoms.commands.KingdomsParentCommand
 
 class CommandTransferMemberAccept(parent: KingdomsParentCommand) : KingdomsCommand("accept", parent) {
-    override fun execute(p0: CommandContext): CommandResult {
-        return CommandResult.SUCCESS
-    }
+  override fun execute(p0: CommandContext): CommandResult {
+    return CommandResult.SUCCESS
+  }
 }

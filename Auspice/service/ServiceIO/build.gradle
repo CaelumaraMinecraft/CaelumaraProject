@@ -16,3 +16,8 @@ dependencies {
     compileOnlyApi(fileTree("$rootDir/libs/plugins/ServiceIO"))
     compileOnlyApi(libs.server.paper)
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}

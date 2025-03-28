@@ -38,127 +38,128 @@ import java.util.Set;
 
 public final class PowerfulTerritoryAddon extends AddonTemplate {
 
-    public static final String CONFIG_HEAD = "powerful-territory";
+  public static final String CONFIG_HEAD = "powerful-territory";
 
-    private static PowerfulTerritoryAddon instance;
+  private static PowerfulTerritoryAddon instance;
 
-    public static @NotNull Namespace buildNS(@NotNull String key) {
-        return new Namespace("PowerfulTerritory", key);
+  public static @NotNull Namespace buildNS(@NotNull String key) {
+    return new Namespace("PowerfulTerritory", key);
+  }
+
+  private final LandCategoryRegistry landCategoryRegistry = new LandCategoryRegistry();
+  private final LandContractionRegistry landContractionRegistry = new LandContractionRegistry();
+  private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();
+
+  public PowerfulTerritoryAddon() {
+    super();
+  }
+
+  @Override
+  protected void onInit0() {
+    instance = this;
+  }
+
+  @Override
+  public void onLoad0() {
+
+    GroupExt.init();
+
+    PowerfulTerritoryPlaceholder.init();
+
+    LanguageManager.registerMessenger(PowerfulTerritoryLang.class);
+
+    registerAllMetadataHandlers();
+
+    StandardInvadeProtection.init();
+    StandardLandCategory.init();
+    LandCategories.registerLandCategoryExternalMessageContextEdit();
+    StandardLandContraction.init();
+  }
+
+  @Override
+  public void onEnable0() {
+    registerAllEvents();
+    registerAllCommands();
+  }
+
+  @Override
+  public void onDisable0() {
+
+  }
+
+  @Override
+  public void reloadAddon0() {
+    registerAllCommands();
+
+    registerAllEvents();
+  }
+
+  @Override
+  public @NotNull String getAddonName() {
+    return "powerful-territory";
+  }
+
+  public void registerAllEvents() {
+
+    if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ELYTRA.getManager().getBoolean()) {
+      registerEvents(new ElytraManager());
     }
-
-    private final LandCategoryRegistry landCategoryRegistry = new LandCategoryRegistry();
-    private final LandContractionRegistry landContractionRegistry = new LandContractionRegistry();
-    private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();
-
-    public PowerfulTerritoryAddon() {
-        super();
+    if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ENDER_PEARL.getManager().getBoolean()) {
+      registerEvents(new EnderPearlTeleportManager());
+      PlayerTeleportEvent.getHandlerList().unregister(Kingdoms.get());
     }
-
-    @Override
-    protected void onInit0() {
-        instance = this;
+    if (
+        KingdomsConfig.Claims.BEACON_PROTECTED_EFFECTS.getManager().getBoolean()
+            && PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS.getManager().getBoolean()
+    ) {
+      registerEvents(new BeaconEffectsManager());
+      EntityPotionEffectEvent.getHandlerList().unregister(Kingdoms.get());
     }
-
-    @Override
-    public void onLoad0() {
-
-        GroupExt.init();
-
-        PowerfulTerritoryPlaceholder.init();
-
-        LanguageManager.registerMessenger(PowerfulTerritoryLang.class);
-
-        registerAllMetadataHandlers();
-
-        StandardInvadeProtection.init();
-        StandardLandCategory.init();
-        LandCategories.registerLandCategoryExternalMessageContextEdit();
-        StandardLandContraction.init();
+    if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT.getManager().getBoolean()) {
+      registerEvents(new BoatUseManager());
     }
+  }
 
-    @Override
-    public void onEnable0() {
-        registerAllEvents();
-        registerAllCommands();
+  private void registerEvents(Listener listener) {
+    getServer().getPluginManager().registerEvents(listener, this);
+  }
+
+  public void registerAllCommands() {
+
+    Categories.initialize();
+    Contractions.initialize();
+
+    new CommandLand();
+    new CommandAdminLand(CommandAdmin.getInstance());
+
+    CommandAdminRegistry command_admin_registry = CommandAdminRegistry.getInstance();
+    new CommandAdminRegistryLandCategory(command_admin_registry);
+    new CommandAdminRegistryLandContraction(command_admin_registry);
+  }
+
+  public void registerAllMetadataHandlers() {
+    KingdomMetadataRegistry mr = Kingdoms.get().getMetadataRegistry();
+
+    landMetadataHandlers.addAll(Arrays.asList(
+        LandCategoryMetaHandler.INSTANCE,
+        LandContractionsMetaHandler.INSTANCE
+    ));
+    landMetadataHandlers.forEach(mr::register);
+  }
+
+  public @NotNull LandCategoryRegistry getLandCategoryRegistry() {
+    return this.landCategoryRegistry;
+  }
+
+  public @NotNull LandContractionRegistry getLandContractionRegistry() {
+    return this.landContractionRegistry;
+  }
+
+  public static @NotNull PowerfulTerritoryAddon get() {
+    if (instance == null) {
+      throw new IllegalStateException("PowerfulTerritory has not been initialized yet.");
     }
+    return instance;
+  }
 
-    @Override
-    public void onDisable0() {
-
-    }
-
-    @Override
-    public void reloadAddon0() {
-        registerAllCommands();
-
-        registerAllEvents();
-    }
-
-    @Override
-    public @NotNull String getAddonName() {
-        return "powerful-territory";
-    }
-
-    public void registerAllEvents() {
-
-        if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ELYTRA.getManager().getBoolean()) {
-            registerEvents(new ElytraManager());
-        }
-        if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ENDER_PEARL.getManager().getBoolean()) {
-            registerEvents(new EnderPearlTeleportManager());
-            PlayerTeleportEvent.getHandlerList().unregister(Kingdoms.get());
-        }
-        if (
-                KingdomsConfig.Claims.BEACON_PROTECTED_EFFECTS.getManager().getBoolean()
-                        && PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS.getManager().getBoolean()
-        ) {
-            registerEvents(new BeaconEffectsManager());
-            EntityPotionEffectEvent.getHandlerList().unregister(Kingdoms.get());
-        }
-        if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT.getManager().getBoolean()) {
-            registerEvents(new BoatUseManager());
-        }
-    }
-
-    private void registerEvents(Listener listener) {
-        getServer().getPluginManager().registerEvents(listener, this);
-    }
-
-    public void registerAllCommands() {
-
-        Categories.initialize();
-        Contractions.initialize();
-
-        new CommandLand();
-        new CommandAdminLand(CommandAdmin.getInstance());
-
-        CommandAdminRegistry command_admin_registry = CommandAdminRegistry.getInstance();
-        new CommandAdminRegistryLandCategory(command_admin_registry);
-        new CommandAdminRegistryLandContraction(command_admin_registry);
-    }
-
-    public void registerAllMetadataHandlers() {
-        KingdomMetadataRegistry mr = Kingdoms.get().getMetadataRegistry();
-
-        landMetadataHandlers.addAll(Arrays.asList(
-                LandCategoryMetaHandler.INSTANCE,
-                LandContractionsMetaHandler.INSTANCE
-        ));
-        landMetadataHandlers.forEach(mr::register);
-    }
-
-    public @NotNull LandCategoryRegistry getLandCategoryRegistry() {
-        return this.landCategoryRegistry;
-    }
-
-    public @NotNull LandContractionRegistry getLandContractionRegistry() {
-        return this.landContractionRegistry;
-    }
-
-    public static @NotNull PowerfulTerritoryAddon get() {
-        if (instance == null) {
-            throw new IllegalStateException("PowerfulTerritory has not been initialized yet.");
-        }
-        return instance;
-    }
 }

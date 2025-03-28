@@ -12,12 +12,13 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import top.mckingdom.auspice.commands.admin.registry.operator.RegistryOperatorCommandUnregister;
 
 public class CommandAdminRegistryBuildingArchitect extends CommandAdminRegistryTemplate<BuildingArchitect, BuildingArchitectRegistry> {
-    public CommandAdminRegistryBuildingArchitect(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryBuildingArchitect(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryBuildingArchitect(@Nullable KingdomsParentCommand parent, @NotNull PermissionDefault permissionDefault) {
-        super("building" + "architect", parent, permissionDefault, Kingdoms.get().getBuildingArchitectRegistry(), BuildingArchitect.class);
-        new RegistryOperatorCommandUnregister<>("unregister", this, permissionDefault, PeaceTreatiesAddon.get().getTermRegistry(), TermProvider.class);
-    }
+  public CommandAdminRegistryBuildingArchitect(@Nullable KingdomsParentCommand parent, @NotNull PermissionDefault permissionDefault) {
+    super("building" + "architect", parent, permissionDefault, Kingdoms.get().getBuildingArchitectRegistry(), BuildingArchitect.class);
+    new RegistryOperatorCommandUnregister<>("unregister", this, permissionDefault, PeaceTreatiesAddon.get().getTermRegistry(), TermProvider.class);
+  }
+
 }

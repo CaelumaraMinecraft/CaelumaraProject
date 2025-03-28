@@ -5,14 +5,14 @@ import org.kingdoms.utils.config.ConfigSection
 import top.mckingdom.auspice.costs.statistics.CurrencyEntryList
 
 class LandCurrencyListGenerator : CurrencyListGenerator<Land> {
-    override fun generate(section: ConfigSection): CurrencyEntryList<Land> {
-        return generalGenerate(section, Land::class.java)
-    }
+  override fun generate(section: ConfigSection): CurrencyEntryList<Land> {
+    return generalGenerate(section, Land::class.java)
+  }
 
-    companion object {
-        private val instance = LandCurrencyListGenerator()
+  companion object {
+    private val instance = LandCurrencyListGenerator()
 
-        @JvmStatic
-        fun get() = instance
-    }
+    @JvmStatic
+    fun get() = instance
+  }
 }

@@ -12,43 +12,45 @@ import java.util.Map;
 import java.util.Objects;
 
 public class SimpleDyanasisPropertyRegistry<P extends DyanasisProperty> implements DyanasisPropertyContainer<P> {
-    protected final @NotNull Map<String, P> properties;
 
-    public SimpleDyanasisPropertyRegistry() {
-        this(new HashMap<>());
-    }
+  protected final @NotNull Map<String, P> properties;
 
-    public SimpleDyanasisPropertyRegistry(@NotNull Map<String, P> properties) {
-        Validate.Arg.notNull(properties, "properties");
-        this.properties = properties;
-    }
+  public SimpleDyanasisPropertyRegistry() {
+    this(new HashMap<>());
+  }
 
-    /**
-     * Adds a dyanasis property to this {@linkplain SimpleDyanasisPropertyRegistry} and
-     * returns the old property that contains the same name to {@code property}.
-     *
-     * @param property the property to add
-     * @return the old property
-     */
-    public @Nullable DyanasisProperty addProperty(@NotNull P property) {
-        Validate.Arg.notNull(property, "property");
-        String name = property.name();
-        Objects.requireNonNull(name, "property.name()");
-        return properties.put(name, property);
-    }
+  public SimpleDyanasisPropertyRegistry(@NotNull Map<String, P> properties) {
+    Validate.Arg.notNull(properties, "properties");
+    this.properties = properties;
+  }
 
-    @Override
-    public boolean hasProperty(@NotNull String name) {
-        return properties.containsKey(name);
-    }
+  /**
+   * Adds a dyanasis property to this {@linkplain SimpleDyanasisPropertyRegistry} and
+   * returns the old property that contains the same name to {@code property}.
+   *
+   * @param property the property to add
+   * @return the old property
+   */
+  public @Nullable DyanasisProperty addProperty(@NotNull P property) {
+    Validate.Arg.notNull(property, "property");
+    String name = property.name();
+    Objects.requireNonNull(name, "property.name()");
+    return properties.put(name, property);
+  }
 
-    @Override
-    public @Nullable P getProperty(@NotNull String name) {
-        return properties.get(name);
-    }
+  @Override
+  public boolean hasProperty(@NotNull String name) {
+    return properties.containsKey(name);
+  }
 
-    @Override
-    public @Unmodifiable @NotNull Map<String, P> allProperties() {
-        return Collections.unmodifiableMap(properties);
-    }
+  @Override
+  public @Nullable P getProperty(@NotNull String name) {
+    return properties.get(name);
+  }
+
+  @Override
+  public @Unmodifiable @NotNull Map<String, P> allProperties() {
+    return Collections.unmodifiableMap(properties);
+  }
+
 }

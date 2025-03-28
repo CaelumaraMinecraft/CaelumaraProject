@@ -4,7 +4,8 @@ import top.mckingdom.props.prop.PropType;
 
 public abstract class TurretProp extends PropType {
 
-    protected TurretProp(String name) {
-        super(name);
-    }
+  protected TurretProp(String name) {
+    super(name);
+  }
+
 }

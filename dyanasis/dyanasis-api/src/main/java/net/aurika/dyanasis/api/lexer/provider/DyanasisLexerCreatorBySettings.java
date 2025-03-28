@@ -1,8 +1,10 @@
 package net.aurika.dyanasis.api.lexer.provider;
 
-import net.aurika.dyanasis.api.lexer.DyanasisLexer;
-import net.aurika.dyanasis.api.lexer.DyanasisLexerSettings;
+import net.aurika.dyanasis.api.lexer.DyanasisCompiler;
+import net.aurika.dyanasis.api.lexer.setting.DyanasisCompilerSettings;
 
-public interface DyanasisLexerCreatorBySettings<Lexer extends DyanasisLexer, Settings extends DyanasisLexerSettings> {
-    Lexer createDyanasisLexer(Settings settings);
+public interface DyanasisLexerCreatorBySettings<Lexer extends DyanasisCompiler, Settings extends DyanasisCompilerSettings> {
+
+  Lexer createDyanasisLexer(Settings settings);
+
 }

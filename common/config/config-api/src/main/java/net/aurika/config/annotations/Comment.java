@@ -6,9 +6,11 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Comment {
-    String BLANK = "";
 
-    String[] value();
+  String BLANK = "";
 
-    boolean forParent() default false;
+  String[] value();
+
+  boolean forParent() default false;
+
 }

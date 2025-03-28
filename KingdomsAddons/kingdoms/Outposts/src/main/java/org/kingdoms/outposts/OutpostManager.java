@@ -18,75 +18,77 @@ import org.kingdoms.utils.compilers.expressions.MathExpression;
 import org.kingdoms.utils.internal.numbers.Numbers;
 
 public final class OutpostManager implements Listener {
-    public OutpostManager() {
-        PvPManager.registerHandler(new OutpostPvPHandler());
+  public OutpostManager() {
+    PvPManager.registerHandler(new OutpostPvPHandler());
+  }
+
+  private static final class OutpostPvPHandler implements PvPManager.PvPHandler {
+    @Override
+    public Boolean canFight(@NonNull Player victim, @NonNull Player damager) {
+      OutpostEvent victimEvent = OutpostEvent.getJoinedEvent(victim.getUniqueId());
+      if (victimEvent == null) return null;
+
+      OutpostEvent damagerEvent = OutpostEvent.getJoinedEvent(damager.getUniqueId());
+      if (damagerEvent == null) return null;
+
+      if (victimEvent != damagerEvent) return null;
+      return true;
     }
 
-    private static final class OutpostPvPHandler implements PvPManager.PvPHandler {
-        @Override
-        public Boolean canFight(@NonNull Player victim, @NonNull Player damager) {
-            OutpostEvent victimEvent = OutpostEvent.getJoinedEvent(victim.getUniqueId());
-            if (victimEvent == null) return null;
+  }
 
-            OutpostEvent damagerEvent = OutpostEvent.getJoinedEvent(damager.getUniqueId());
-            if (damagerEvent == null) return null;
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+  public void onArenaMobDamageBonus(EntityDamageByEntityEvent event) {
+    if (!(event.getDamager() instanceof Player)) return;
 
-            if (victimEvent != damagerEvent) return null;
-            return true;
-        }
-    }
+    Player player = (Player) event.getDamager();
+    Kingdom kingdom = KingdomPlayer.getKingdomPlayer(player).getKingdom();
+    if (kingdom == null) return;
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onArenaMobDamageBonus(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) return;
+    OutpostEvent opEvent = OutpostEvent.getJoinedEvent(kingdom);
+    if (opEvent == null) return;
 
-        Player player = (Player) event.getDamager();
-        Kingdom kingdom = KingdomPlayer.getKingdomPlayer(player).getKingdom();
-        if (kingdom == null) return;
+    OutpostParticipant participant = opEvent.getParticipants().get(kingdom.getId());
+    if (participant == null) return; // If this happens at all?
 
-        OutpostEvent opEvent = OutpostEvent.getJoinedEvent(kingdom);
-        if (opEvent == null) return;
+    OutpostEvent.ArenaMob arenaMob = opEvent.getArenaMobEntities().get(event.getEntity());
+    if (arenaMob == null) return;
 
-        OutpostParticipant participant = opEvent.getParticipants().get(kingdom.getId());
-        if (participant == null) return; // If this happens at all?
+    MathExpression dmgBonus = arenaMob.settings.getDamageBonus();
+    if (dmgBonus == null) return;
 
-        OutpostEvent.ArenaMob arenaMob = opEvent.getArenaMobEntities().get(event.getEntity());
-        if (arenaMob == null) return;
+    double bonus = MathUtils.eval(dmgBonus, new PlaceholderContextBuilder().raw("dmg", event.getFinalDamage()));
+    participant.score(bonus);
+  }
 
-        MathExpression dmgBonus = arenaMob.settings.getDamageBonus();
-        if (dmgBonus == null) return;
+  @EventHandler
+  public void onPlayerJoin(PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+    Kingdom kingdom = KingdomPlayer.getKingdomPlayer(player).getKingdom();
+    if (kingdom == null) return;
 
-        double bonus = MathUtils.eval(dmgBonus, new PlaceholderContextBuilder().raw("dmg", event.getFinalDamage()));
-        participant.score(bonus);
-    }
+    OutpostEvent opEvent = OutpostEvent.getJoinedEvent(kingdom);
+    if (opEvent != null) opEvent.display(player);
+  }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        Kingdom kingdom = KingdomPlayer.getKingdomPlayer(player).getKingdom();
-        if (kingdom == null) return;
+  @EventHandler
+  public void onPlayerDeath(PlayerDeathEvent event) {
+    if (OutpostEvent.getEvents().isEmpty()) return;
 
-        OutpostEvent opEvent = OutpostEvent.getJoinedEvent(kingdom);
-        if (opEvent != null) opEvent.display(player);
-    }
+    Player player = event.getEntity();
+    KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
+    Kingdom kingdom = kp.getKingdom();
 
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        if (OutpostEvent.getEvents().isEmpty()) return;
+    if (kingdom == null) return;
+    if (!OutpostEvent.getKingdomsInEvents().containsKey(kingdom.getId())) return;
 
-        Player player = event.getEntity();
-        KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
-        Kingdom kingdom = kp.getKingdom();
+    String str = KingdomsConfig.OUTPOST_EVENTS_DEATH_RESOURCE_POINTS_PENALTY.getString();
+    if (str == null || str.equals("0")) return;
+    long rp = (long) MathUtils.eval(str, kingdom);
+    if (rp <= 0) return;
 
-        if (kingdom == null) return;
-        if (!OutpostEvent.getKingdomsInEvents().containsKey(kingdom.getId())) return;
+    kingdom.getResourcePoints().add(-rp);
+    OutpostsLang.OUTPOST_EVENTS_DEATH.sendMessage(player, "rp", Numbers.toFancyNumber(rp));
+  }
 
-        String str = KingdomsConfig.OUTPOST_EVENTS_DEATH_RESOURCE_POINTS_PENALTY.getString();
-        if (str == null || str.equals("0")) return;
-        long rp = (long) MathUtils.eval(str, kingdom);
-        if (rp <= 0) return;
-
-        kingdom.getResourcePoints().add(-rp);
-        OutpostsLang.OUTPOST_EVENTS_DEATH.sendMessage(player, "rp", Numbers.toFancyNumber(rp));
-    }
 }

@@ -7,10 +7,12 @@ import org.jetbrains.annotations.NotNull;
  * Provider of {@linkplain DyanasisFunctionContainer}.
  */
 public interface DyanasisFunctionsAware {
-    /**
-     * Gets the dyanasis functions.
-     *
-     * @return the functions
-     */
-    @NotNull DyanasisFunctionContainer dyanasisFunctions();
+
+  /**
+   * Gets the dyanasis functions.
+   *
+   * @return the functions
+   */
+  @NotNull DyanasisFunctionContainer dyanasisFunctions();
+
 }

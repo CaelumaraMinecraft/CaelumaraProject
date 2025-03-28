@@ -30,147 +30,147 @@ import kotlin.io.path.outputStream
  * https://worldedit.enginehub.org/en/latest/api/examples/clipboard/#schematic-examples
  */
 object WorldEditSchematicHandler {
-    const val FILE_EXTENSION = ".schematic"
+  const val FILE_EXTENSION = ".schematic"
 
-    private val openOptions = arrayOf(
-        StandardOpenOption.CREATE,
-        StandardOpenOption.TRUNCATE_EXISTING,
-        StandardOpenOption.WRITE
-    )
+  private val openOptions = arrayOf(
+    StandardOpenOption.CREATE,
+    StandardOpenOption.TRUNCATE_EXISTING,
+    StandardOpenOption.WRITE
+  )
 
-    @JvmStatic
-    fun getClipboardFormat(format: ClipboardFormat? = null): ClipboardFormat =
-        format ?: if (ClipboardFormat::class.java.isEnum) {
-            XReflection.of(ClipboardFormat::class.java).enums().named("SCHEMATIC").enumConstant as ClipboardFormat
-        } else {
-            Enums.findOneOf(
-                BuiltInClipboardFormat::class.java,
-                "SPONGE_V3_SCHEMATIC",
-                "SPONGE_SCHEMATIC"
-            )
-        }
-
-    @JvmStatic
-    fun saveSchematic(schematic: WorldEditSchematic, format: ClipboardFormat? = null): WorldEditSchematic {
-        val path = schematic.storedFile
-        val format = getClipboardFormat(format)
-
-        format.getWriter(path.outputStream(*openOptions)).use { writer ->
-            writer.write(schematic.clipboard)
-            return WorldEditSchematic(schematic.name, path, schematic.clipboard)
-        }
+  @JvmStatic
+  fun getClipboardFormat(format: ClipboardFormat? = null): ClipboardFormat =
+    format ?: if (ClipboardFormat::class.java.isEnum) {
+      XReflection.of(ClipboardFormat::class.java).enums().named("SCHEMATIC").enumConstant as ClipboardFormat
+    } else {
+      Enums.findOneOf(
+        BuiltInClipboardFormat::class.java,
+        "SPONGE_V3_SCHEMATIC",
+        "SPONGE_SCHEMATIC"
+      )
     }
 
-    @JvmStatic
-    private fun getLocalSession(player: Player): LocalSession {
-        // https://worldedit.enginehub.org/en/latest/api/examples/local-sessions/
-        val actor = BukkitAdapter.adapt(player)
-        val manager = WorldEdit.getInstance().sessionManager
-        return manager.get(actor)
+  @JvmStatic
+  fun saveSchematic(schematic: WorldEditSchematic, format: ClipboardFormat? = null): WorldEditSchematic {
+    val path = schematic.storedFile
+    val format = getClipboardFormat(format)
+
+    format.getWriter(path.outputStream(*openOptions)).use { writer ->
+      writer.write(schematic.clipboard)
+      return WorldEditSchematic(schematic.name, path, schematic.clipboard)
+    }
+  }
+
+  @JvmStatic
+  private fun getLocalSession(player: Player): LocalSession {
+    // https://worldedit.enginehub.org/en/latest/api/examples/local-sessions/
+    val actor = BukkitAdapter.adapt(player)
+    val manager = WorldEdit.getInstance().sessionManager
+    return manager.get(actor)
+  }
+
+  @JvmStatic
+  private fun getCurrentSelection(player: Player): Region? {
+    try {
+      // https://worldedit.enginehub.org/en/latest/api/examples/clipboard/#copying
+      val localSession = getLocalSession(player)
+      val selectionWorld = localSession.selectionWorld ?: return null
+      return localSession.getSelection(selectionWorld) // This returns an empty clipboard for some reason.
+    } catch (ex: Exception) {
+      when (ex) {
+        is EmptyClipboardException, is IncompleteRegionException -> return null
+        else -> throw ex
+      }
+    }
+  }
+
+  /**
+   * Checks whatever the player has in "//copy" commmand.
+   */
+  @JvmStatic
+  private fun getCurrentClipboard(player: Player): Clipboard? {
+    try {
+      val clipboard = getLocalSession(player).clipboard
+      // Bake in the transformation before getting the clipboard
+      // https://github.com/EngineHub/WorldEdit/blob/79a06b1d21bacfb8b6ab1df1c2452da119fdddf4/worldedit-core/src/main/java/com/sk89q/worldedit/command/ClipboardCommands.java#L221-L240
+      return ClipboardTransformBaker.bakeTransform(clipboard)
+    } catch (ex: Exception) {
+      when (ex) {
+        is EmptyClipboardException, is IncompleteRegionException -> return null
+        else -> throw ex
+      }
+    }
+  }
+
+  @JvmStatic
+  fun loadSchematicIntoClipboard(player: Player, clipboard: WorldEditSchematic) {
+    val localSession = getLocalSession(player)
+    localSession.clipboard = ClipboardHolder(clipboard.clipboard)
+  }
+
+  @JvmStatic
+  fun playerHasClipboard(player: Player): Boolean {
+    return getCurrentClipboard(player) != null
+  }
+
+  @JvmStatic
+  fun playerHasSelection(player: Player): Boolean {
+    return getCurrentSelection(player) != null
+  }
+
+  @JvmStatic
+  fun getClipboardOrigin(player: Player): BlockVector3 {
+    val localSession = getLocalSession(player)
+    return localSession.clipboard.clipboard.origin.adapt
+  }
+
+  @JvmStatic
+  fun getOriginOfClipboard(player: Player): BlockVector3 {
+    return getLocalSession(player).clipboard.clipboard.origin.adapt
+  }
+
+  @JvmStatic
+  fun changeClipboardOrigin(player: Player, absolute: Boolean, offset: BlockVector3): BlockVector3 {
+    val localSession = getLocalSession(player)
+    val clipboard = localSession.clipboard.clipboard
+    clipboard.origin = if (absolute) offset.adapt else clipboard.origin.add(offset.adapt)
+    return clipboard.origin.adapt
+  }
+
+  @JvmStatic
+  fun savePlayerClipboard(player: Player, schematicFile: Path, schematicName: String): WorldEditSchematic {
+    val clipboard = getCurrentClipboard(player) ?: throw IllegalStateException("Player has no clipboard")
+    val schematic = WorldEditSchematic(schematicName, schematicFile, clipboard)
+
+    saveSchematic(schematic)
+    return schematic
+  }
+
+  @JvmStatic
+  fun loadSchematic(path: Path, withName: String?): WorldEditSchematic {
+    if (!Files.exists(path) || !Files.isRegularFile(path)) {
+      throw IllegalArgumentException(
+        "Cannot load schematic from: ${path.absolutePathString()} (${
+          Files.exists(
+            path
+          )
+        } || ${Files.isRegularFile(path)})"
+      )
     }
 
-    @JvmStatic
-    private fun getCurrentSelection(player: Player): Region? {
-        try {
-            // https://worldedit.enginehub.org/en/latest/api/examples/clipboard/#copying
-            val localSession = getLocalSession(player)
-            val selectionWorld = localSession.selectionWorld ?: return null
-            return localSession.getSelection(selectionWorld) // This returns an empty clipboard for some reason.
-        } catch (ex: Exception) {
-            when (ex) {
-                is EmptyClipboardException, is IncompleteRegionException -> return null
-                else -> throw ex
-            }
-        }
+    val format: ClipboardFormat = try {
+      ClipboardFormats.findByFile(path.toFile())
+        ?: throw UnknownClipboardFormatException(
+          path,
+          "Unknown clipboard format for file: ${path.absolutePathString()}"
+        )
+    } catch (ex: NoClassDefFoundError) {
+      getClipboardFormat(null)
     }
 
-    /**
-     * Checks whatever the player has in "//copy" commmand.
-     */
-    @JvmStatic
-    private fun getCurrentClipboard(player: Player): Clipboard? {
-        try {
-            val clipboard = getLocalSession(player).clipboard
-            // Bake in the transformation before getting the clipboard
-            // https://github.com/EngineHub/WorldEdit/blob/79a06b1d21bacfb8b6ab1df1c2452da119fdddf4/worldedit-core/src/main/java/com/sk89q/worldedit/command/ClipboardCommands.java#L221-L240
-            return ClipboardTransformBaker.bakeTransform(clipboard)
-        } catch (ex: Exception) {
-            when (ex) {
-                is EmptyClipboardException, is IncompleteRegionException -> return null
-                else -> throw ex
-            }
-        }
+    format.getReader(path.inputStream(StandardOpenOption.READ)).use { reader ->
+      val cb = reader.read()
+      return WorldEditSchematic(withName ?: path.nameWithoutExtension, path, cb)
     }
-
-    @JvmStatic
-    fun loadSchematicIntoClipboard(player: Player, clipboard: WorldEditSchematic) {
-        val localSession = getLocalSession(player)
-        localSession.clipboard = ClipboardHolder(clipboard.clipboard)
-    }
-
-    @JvmStatic
-    fun playerHasClipboard(player: Player): Boolean {
-        return getCurrentClipboard(player) != null
-    }
-
-    @JvmStatic
-    fun playerHasSelection(player: Player): Boolean {
-        return getCurrentSelection(player) != null
-    }
-
-    @JvmStatic
-    fun getClipboardOrigin(player: Player): BlockVector3 {
-        val localSession = getLocalSession(player)
-        return localSession.clipboard.clipboard.origin.adapt
-    }
-
-    @JvmStatic
-    fun getOriginOfClipboard(player: Player): BlockVector3 {
-        return getLocalSession(player).clipboard.clipboard.origin.adapt
-    }
-
-    @JvmStatic
-    fun changeClipboardOrigin(player: Player, absolute: Boolean, offset: BlockVector3): BlockVector3 {
-        val localSession = getLocalSession(player)
-        val clipboard = localSession.clipboard.clipboard
-        clipboard.origin = if (absolute) offset.adapt else clipboard.origin.add(offset.adapt)
-        return clipboard.origin.adapt
-    }
-
-    @JvmStatic
-    fun savePlayerClipboard(player: Player, schematicFile: Path, schematicName: String): WorldEditSchematic {
-        val clipboard = getCurrentClipboard(player) ?: throw IllegalStateException("Player has no clipboard")
-        val schematic = WorldEditSchematic(schematicName, schematicFile, clipboard)
-
-        saveSchematic(schematic)
-        return schematic
-    }
-
-    @JvmStatic
-    fun loadSchematic(path: Path, withName: String?): WorldEditSchematic {
-        if (!Files.exists(path) || !Files.isRegularFile(path)) {
-            throw IllegalArgumentException(
-                "Cannot load schematic from: ${path.absolutePathString()} (${
-                    Files.exists(
-                        path
-                    )
-                } || ${Files.isRegularFile(path)})"
-            )
-        }
-
-        val format: ClipboardFormat = try {
-            ClipboardFormats.findByFile(path.toFile())
-                ?: throw UnknownClipboardFormatException(
-                    path,
-                    "Unknown clipboard format for file: ${path.absolutePathString()}"
-                )
-        } catch (ex: NoClassDefFoundError) {
-            getClipboardFormat(null)
-        }
-
-        format.getReader(path.inputStream(StandardOpenOption.READ)).use { reader ->
-            val cb = reader.read()
-            return WorldEditSchematic(withName ?: path.nameWithoutExtension, path, cb)
-        }
-    }
+  }
 }

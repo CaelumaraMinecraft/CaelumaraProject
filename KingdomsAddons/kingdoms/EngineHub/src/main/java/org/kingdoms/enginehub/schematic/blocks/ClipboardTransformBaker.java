@@ -44,106 +44,107 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @see Transform
  */
 public class ClipboardTransformBaker {
-    private final Clipboard original;
-    private final Transform transform;
+  private final Clipboard original;
+  private final Transform transform;
 
-    /**
-     * Create a new instance.
-     *
-     * @param original  the original clipboard
-     * @param transform the transform
-     */
-    private ClipboardTransformBaker(Clipboard original, Transform transform) {
-        checkNotNull(original);
-        checkNotNull(transform);
-        this.original = original;
-        this.transform = transform;
+  /**
+   * Create a new instance.
+   *
+   * @param original  the original clipboard
+   * @param transform the transform
+   */
+  private ClipboardTransformBaker(Clipboard original, Transform transform) {
+    checkNotNull(original);
+    checkNotNull(transform);
+    this.original = original;
+    this.transform = transform;
+  }
+
+  /**
+   * Get the transformed region.
+   *
+   * @return the transformed region
+   */
+  private Region getTransformedRegion() {
+    Region region = original.getRegion();
+    Vector3 minimum = region.getMinimumPoint().toVector3();
+    Vector3 maximum = region.getMaximumPoint().toVector3();
+
+    Transform transformAround =
+        new CombinedTransform(
+            new AffineTransform().translate(original.getOrigin().multiply(-1)),
+            transform,
+            new AffineTransform().translate(original.getOrigin()));
+
+    Vector3[] corners = new Vector3[]{
+        minimum,
+        maximum,
+        minimum.withX(maximum.getX()),
+        minimum.withY(maximum.getY()),
+        minimum.withZ(maximum.getZ()),
+        maximum.withX(minimum.getX()),
+        maximum.withY(minimum.getY()),
+        maximum.withZ(minimum.getZ())
+    };
+
+    for (int i = 0; i < corners.length; i++) {
+      corners[i] = transformAround.apply(corners[i]);
     }
 
-    /**
-     * Get the transformed region.
-     *
-     * @return the transformed region
-     */
-    private Region getTransformedRegion() {
-        Region region = original.getRegion();
-        Vector3 minimum = region.getMinimumPoint().toVector3();
-        Vector3 maximum = region.getMaximumPoint().toVector3();
+    Vector3 newMinimum = corners[0];
+    Vector3 newMaximum = corners[0];
 
-        Transform transformAround =
-                new CombinedTransform(
-                        new AffineTransform().translate(original.getOrigin().multiply(-1)),
-                        transform,
-                        new AffineTransform().translate(original.getOrigin()));
-
-        Vector3[] corners = new Vector3[]{
-                minimum,
-                maximum,
-                minimum.withX(maximum.getX()),
-                minimum.withY(maximum.getY()),
-                minimum.withZ(maximum.getZ()),
-                maximum.withX(minimum.getX()),
-                maximum.withY(minimum.getY()),
-                maximum.withZ(minimum.getZ())
-        };
-
-        for (int i = 0; i < corners.length; i++) {
-            corners[i] = transformAround.apply(corners[i]);
-        }
-
-        Vector3 newMinimum = corners[0];
-        Vector3 newMaximum = corners[0];
-
-        for (int i = 1; i < corners.length; i++) {
-            newMinimum = newMinimum.getMinimum(corners[i]);
-            newMaximum = newMaximum.getMaximum(corners[i]);
-        }
-
-        // After transformation, the points may not really sit on a block,
-        // so we should expand the region for edge cases
-        newMinimum = newMinimum.floor();
-        newMaximum = newMaximum.ceil();
-
-        return new CuboidRegion(newMinimum.toBlockPoint(), newMaximum.toBlockPoint());
+    for (int i = 1; i < corners.length; i++) {
+      newMinimum = newMinimum.getMinimum(corners[i]);
+      newMaximum = newMaximum.getMaximum(corners[i]);
     }
 
-    /**
-     * Create an operation to copy from the original clipboard to the given extent.
-     *
-     * @param target the target
-     * @return the operation
-     */
-    private Operation copyTo(Extent target) {
-        BlockTransformExtent extent = new BlockTransformExtent(original, transform);
-        ForwardExtentCopy copy = new ForwardExtentCopy(extent, original.getRegion(), original.getOrigin(), target, original.getOrigin());
-        copy.setTransform(transform);
-        if (original.hasBiomes()) {
-            copy.setCopyingBiomes(true);
-        }
-        return copy;
-    }
+    // After transformation, the points may not really sit on a block,
+    // so we should expand the region for edge cases
+    newMinimum = newMinimum.floor();
+    newMaximum = newMaximum.ceil();
 
-    /**
-     * Create a new instance to bake the transform with.
-     *
-     * @param original  the original clipboard
-     * @param transform the transform
-     * @return a builder
-     * @throws WorldEditException if an error occurred during copy
-     */
-    public static Clipboard bakeTransform(Clipboard original, Transform transform) throws WorldEditException {
-        if (transform.isIdentity()) {
-            return original;
-        }
-        ClipboardTransformBaker baker = new ClipboardTransformBaker(original, transform);
-        Clipboard target = new BlockArrayClipboard(baker.getTransformedRegion());
-        target.setOrigin(original.getOrigin());
-        Operations.complete(baker.copyTo(target));
+    return new CuboidRegion(newMinimum.toBlockPoint(), newMaximum.toBlockPoint());
+  }
 
-        return target;
+  /**
+   * Create an operation to copy from the original clipboard to the given extent.
+   *
+   * @param target the target
+   * @return the operation
+   */
+  private Operation copyTo(Extent target) {
+    BlockTransformExtent extent = new BlockTransformExtent(original, transform);
+    ForwardExtentCopy copy = new ForwardExtentCopy(extent, original.getRegion(), original.getOrigin(), target, original.getOrigin());
+    copy.setTransform(transform);
+    if (original.hasBiomes()) {
+      copy.setCopyingBiomes(true);
     }
+    return copy;
+  }
 
-    public static Clipboard bakeTransform(ClipboardHolder holder) throws WorldEditException {
-        return bakeTransform(holder.getClipboard(), holder.getTransform());
+  /**
+   * Create a new instance to bake the transform with.
+   *
+   * @param original  the original clipboard
+   * @param transform the transform
+   * @return a builder
+   * @throws WorldEditException if an error occurred during copy
+   */
+  public static Clipboard bakeTransform(Clipboard original, Transform transform) throws WorldEditException {
+    if (transform.isIdentity()) {
+      return original;
     }
+    ClipboardTransformBaker baker = new ClipboardTransformBaker(original, transform);
+    Clipboard target = new BlockArrayClipboard(baker.getTransformedRegion());
+    target.setOrigin(original.getOrigin());
+    Operations.complete(baker.copyTo(target));
+
+    return target;
+  }
+
+  public static Clipboard bakeTransform(ClipboardHolder holder) throws WorldEditException {
+    return bakeTransform(holder.getClipboard(), holder.getTransform());
+  }
+
 }

@@ -4,7 +4,8 @@ import org.kingdoms.data.database.dataprovider.SectionableDataSetter;
 
 public class ContractionLandProperties {
 
-    public void serializeProperties(SectionableDataSetter context) {
+  public void serializeProperties(SectionableDataSetter context) {
 
-    }
+  }
+
 }

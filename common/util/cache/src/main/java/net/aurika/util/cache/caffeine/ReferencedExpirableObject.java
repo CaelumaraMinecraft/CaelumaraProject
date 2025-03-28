@@ -4,21 +4,23 @@ import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public final class ReferencedExpirableObject<T> implements ExpirableObject {
-    private final T reference;
 
-    private final @NotNull ExpirationStrategy expirationStrategy;
+  private final T reference;
 
-    public ReferencedExpirableObject(T reference, @NotNull ExpirationStrategy expirationStrategy) {
-        Validate.Arg.notNull(expirationStrategy, "expirationStrategy");
-        this.reference = reference;
-        this.expirationStrategy = expirationStrategy;
-    }
+  private final @NotNull ExpirationStrategy expirationStrategy;
 
-    public T getReference() {
-        return this.reference;
-    }
+  public ReferencedExpirableObject(T reference, @NotNull ExpirationStrategy expirationStrategy) {
+    Validate.Arg.notNull(expirationStrategy, "expirationStrategy");
+    this.reference = reference;
+    this.expirationStrategy = expirationStrategy;
+  }
 
-    public @NotNull ExpirationStrategy getExpirationStrategy() {
-        return this.expirationStrategy;
-    }
+  public T getReference() {
+    return this.reference;
+  }
+
+  public @NotNull ExpirationStrategy getExpirationStrategy() {
+    return this.expirationStrategy;
+  }
+
 }

@@ -1,12 +1,12 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
+  id("java-library")
+  id("maven-publish")
 }
 
 dependencies {
-    api(project(":common:validate"))
+  api(project(":common:validate"))
 
-    api(libs.gson)
+  api(libs.gson)
 
-    compileOnly(libs.annotations.jetbrains)
+  compileOnly(libs.annotations.jetbrains)
 }

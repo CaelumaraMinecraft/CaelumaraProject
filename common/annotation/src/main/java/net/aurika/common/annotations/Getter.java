@@ -9,5 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 public @interface Getter {
-    boolean isRawValue() default true;
+
+  boolean isRawValue() default true;
+
 }

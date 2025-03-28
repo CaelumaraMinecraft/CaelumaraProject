@@ -16,38 +16,39 @@ import org.kingdoms.tasks.container.LocalTaskSession
 
 @GroupedTask(namespace = "WorldGuard")
 class WorldGuardClaimProcessorTask(private val worldGuard: ServiceWorldGuard) : LocalTaskSession {
-    @Task(key = "PROTECTED_REGIONS") @Before(other = "CLAIMS")
-    @ReturnTaskState(state = TaskState.SHOULD_STOP)
-    fun ClaimProcessor.checkProtectedRegions(): Messenger? {
-        // if (!SoftService.WORLD_GUARD.isAvailable()) return null;
-        if (isAdminMode) return null
-        if (KingdomsDefaultPluginPermission.`WORLDGUARD_BYPASS_CLAIM$PROTECTION`.hasPermission(
-                kingdomPlayer.player!!,
-                false
-            )
-        ) return null
+  @Task(key = "PROTECTED_REGIONS")
+  @Before(other = "CLAIMS")
+  @ReturnTaskState(state = TaskState.SHOULD_STOP)
+  fun ClaimProcessor.checkProtectedRegions(): Messenger? {
+    // if (!SoftService.WORLD_GUARD.isAvailable()) return null;
+    if (isAdminMode) return null
+    if (KingdomsDefaultPluginPermission.`WORLDGUARD_BYPASS_CLAIM$PROTECTION`.hasPermission(
+        kingdomPlayer.player!!,
+        false
+      )
+    ) return null
 
-        val radius = EngineHubConfig.WORLDGUARD_PROTECTED_REGION_RADIUS.manager.int
-        if (radius <= 1) {
-            if (chunk.run {
-                    worldGuard.isChunkInRegion(bukkitWorld, x, z, 0)
-                }) return EngineHubLang.COMMAND_CLAIM_IN_REGION
-        } else {
-            val world = chunk.bukkitWorld
-            val x = chunk.x
-            val z = chunk.z
+    val radius = EngineHubConfig.WORLDGUARD_PROTECTED_REGION_RADIUS.manager.int
+    if (radius <= 1) {
+      if (chunk.run {
+          worldGuard.isChunkInRegion(bukkitWorld, x, z, 0)
+        }) return EngineHubLang.COMMAND_CLAIM_IN_REGION
+    } else {
+      val world = chunk.bukkitWorld
+      val x = chunk.x
+      val z = chunk.z
 
-            val protectedRegion = chunk.findFromSurroundingChunks(
-                radius
-            ) { current: SimpleChunkLocation? ->
-                if (worldGuard.isChunkInRegion(world, x, z, radius)) current else null
-            }
+      val protectedRegion = chunk.findFromSurroundingChunks(
+        radius
+      ) { current: SimpleChunkLocation? ->
+        if (worldGuard.isChunkInRegion(world, x, z, radius)) current else null
+      }
 
-            if (protectedRegion != null) {
-                return EngineHubLang.COMMAND_CLAIM_NEAR_REGION
-            }
-        }
-
-        return null
+      if (protectedRegion != null) {
+        return EngineHubLang.COMMAND_CLAIM_NEAR_REGION
+      }
     }
+
+    return null
+  }
 }

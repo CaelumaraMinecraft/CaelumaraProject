@@ -15,15 +15,16 @@ import java.util.UUID;
 
 public final class StructureUtil {
 
-    public static Structure placeStructure(@NotNull StructureStyle style, @NotNull Location location) {
-        Validate.Arg.notNull(style, "style");
-        Validate.Arg.notNull(location, "location");
-        @Nullable Land land = Land.getLand(location);
-        if (land == null) {  // will auto save this land
-            land = new Land((UUID) null, SimpleChunkLocation.of(location));
-        }
-        Structure structure = new Structure(style, SimpleLocation.of(location));
-        land.unsafeGetStructures().put(BlockVector3.of(location.getBlockX(), location.getBlockY(), location.getBlockZ()), structure);
-        return structure;
+  public static Structure placeStructure(@NotNull StructureStyle style, @NotNull Location location) {
+    Validate.Arg.notNull(style, "style");
+    Validate.Arg.notNull(location, "location");
+    @Nullable Land land = Land.getLand(location);
+    if (land == null) {  // will auto save this land
+      land = new Land((UUID) null, SimpleChunkLocation.of(location));
     }
+    Structure structure = new Structure(style, SimpleLocation.of(location));
+    land.unsafeGetStructures().put(BlockVector3.of(location.getBlockX(), location.getBlockY(), location.getBlockZ()), structure);
+    return structure;
+  }
+
 }

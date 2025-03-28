@@ -9,27 +9,29 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ScheduledExecutorService;
 
 public final class CacheHandler {
-    private static final ForkJoinPool POOL = new ForkJoinPool();
-    private static final Scheduler CACHE_SCHEDULER = Scheduler.forScheduledExecutorService(newScheduler());
 
-    public static @NotNull Caffeine<Object, Object> newBuilder() {
-        return Caffeine.newBuilder().executor(POOL);
-    }
+  private static final ForkJoinPool POOL = new ForkJoinPool();
+  private static final Scheduler CACHE_SCHEDULER = Scheduler.forScheduledExecutorService(newScheduler());
 
-    @SuppressWarnings("unchecked")
-    public static <K, V> @NotNull Caffeine<K, V> typedBuilder() {
-        return (Caffeine<K, V>) newBuilder();
-    }
+  public static @NotNull Caffeine<Object, Object> newBuilder() {
+    return Caffeine.newBuilder().executor(POOL);
+  }
 
-    public static ForkJoinPool getPool() {
-        return POOL;
-    }
+  @SuppressWarnings("unchecked")
+  public static <K, V> @NotNull Caffeine<K, V> typedBuilder() {
+    return (Caffeine<K, V>) newBuilder();
+  }
 
-    public static Scheduler getCacheScheduler() {
-        return CACHE_SCHEDULER;
-    }
+  public static ForkJoinPool getPool() {
+    return POOL;
+  }
 
-    public static @NotNull ScheduledExecutorService newScheduler() {
-        return Executors.newSingleThreadScheduledExecutor(Executors.defaultThreadFactory());
-    }
+  public static Scheduler getCacheScheduler() {
+    return CACHE_SCHEDULER;
+  }
+
+  public static @NotNull ScheduledExecutorService newScheduler() {
+    return Executors.newSingleThreadScheduledExecutor(Executors.defaultThreadFactory());
+  }
+
 }

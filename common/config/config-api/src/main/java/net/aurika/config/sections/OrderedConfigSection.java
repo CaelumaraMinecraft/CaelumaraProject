@@ -5,9 +5,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 
 public interface OrderedConfigSection extends ConfigSection {
-    LinkedHashMap<String, ConfigSection> getSubSections();
 
-    @Nullable ConfigSection getSubSection(int index);
+  LinkedHashMap<String, ConfigSection> getSubSections();
 
-    @Nullable ConfigSection removeSubSection(int index);
+  @Nullable ConfigSection getSubSection(int index);
+
+  @Nullable ConfigSection removeSubSection(int index);
+
 }

@@ -11,5 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CacheType {
-    Class<?>[] value();
+
+  Class<?>[] value();
+
 }

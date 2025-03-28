@@ -1,9 +1,9 @@
 package net.aurika.config.placeholder.types;
 
+import net.aurika.text.placeholders.KingdomsPlaceholderTranslator;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.text.placeholders.KingdomsPlaceholderTranslator;
 
 /**
  * 占位符主体部分:
@@ -24,12 +24,11 @@ import net.aurika.text.placeholders.KingdomsPlaceholderTranslator;
  */
 public class AuspicePlaceholder extends AbstractPlaceholder {
 
-    protected final @NonNull KingdomsPlaceholderTranslator identifier;
+  protected final @NonNull KingdomsPlaceholderTranslator identifier;
 
-    public AuspicePlaceholder(@NotNull String originalString, @Nullable String pointer, @NonNull KingdomsPlaceholderTranslator identifier) {
-        super(originalString, pointer);
-        this.identifier = identifier;
-    }
-
+  public AuspicePlaceholder(@NotNull String originalString, @Nullable String pointer, @NonNull KingdomsPlaceholderTranslator identifier) {
+    super(originalString, pointer);
+    this.identifier = identifier;
+  }
 
 }

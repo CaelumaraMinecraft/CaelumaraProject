@@ -8,27 +8,28 @@ import top.mckingdom.civilizations.constants.civilization.member.CivilizationMem
 import top.mckingdom.civilizations.constants.civilization.member.objects.CivilizationMemberNation;
 
 public class CivilizationMemberTypeNation extends CivilizationMemberType<Nation, CivilizationMember<Nation>> {
-    public static final CivilizationMemberTypeNation INSTANCE = new CivilizationMemberTypeNation();
+  public static final CivilizationMemberTypeNation INSTANCE = new CivilizationMemberTypeNation();
 
-    protected CivilizationMemberTypeNation() {
-        super(CivilizationsAddon.buildNS("NATION"), Nation.class);
-    }
+  protected CivilizationMemberTypeNation() {
+    super(CivilizationsAddon.buildNS("NATION"), Nation.class);
+  }
 
-    @Override
-    public CivilizationMemberNation deserializeFromIdentData(SectionableDataGetter section) {
-        Nation n = Nation.getNation(section.get("key").asUUID());
-        if (n != null) {
-            return new CivilizationMemberNation(n);
-        }
-        return null;
+  @Override
+  public CivilizationMemberNation deserializeFromIdentData(SectionableDataGetter section) {
+    Nation n = Nation.getNation(section.get("key").asUUID());
+    if (n != null) {
+      return new CivilizationMemberNation(n);
     }
+    return null;
+  }
 
-    @Override
-    public CivilizationMemberNation of0(Nation nation) {
-        return new CivilizationMemberNation(nation);
-    }
+  @Override
+  public CivilizationMemberNation of0(Nation nation) {
+    return new CivilizationMemberNation(nation);
+  }
 
-    public static CivilizationMemberTypeNation get() {
-        return INSTANCE;
-    }
+  public static CivilizationMemberTypeNation get() {
+    return INSTANCE;
+  }
+
 }

@@ -9,15 +9,18 @@ import org.kingdoms.managers.land.indicator.LandIndicatorPreparation;
 import org.kingdoms.managers.land.indicator.LandVisualizer;
 
 public class WorldGuardLandVisualizerPreparation implements LandIndicatorPreparation {
-    private final ServiceWorldGuard worldGuard;
+  private final ServiceWorldGuard worldGuard;
 
-    public WorldGuardLandVisualizerPreparation(ServiceWorldGuard worldGuard) {this.worldGuard = worldGuard;}
+  public WorldGuardLandVisualizerPreparation(ServiceWorldGuard worldGuard) {
+    this.worldGuard = worldGuard;
+  }
 
-    @Nullable
-    @Override
-    public LandVisualizer prepare(@NotNull LandChangeEvent event, @NotNull LandVisualizer visualizer) {
-        SimpleChunkLocation toChunk = event.getToChunk();
-        if (worldGuard.isChunkInRegion(toChunk.getBukkitWorld(), toChunk.getX(), toChunk.getZ(), 0)) return null;
-        return visualizer;
-    }
+  @Nullable
+  @Override
+  public LandVisualizer prepare(@NotNull LandChangeEvent event, @NotNull LandVisualizer visualizer) {
+    SimpleChunkLocation toChunk = event.getToChunk();
+    if (worldGuard.isChunkInRegion(toChunk.getBukkitWorld(), toChunk.getX(), toChunk.getZ(), 0)) return null;
+    return visualizer;
+  }
+
 }

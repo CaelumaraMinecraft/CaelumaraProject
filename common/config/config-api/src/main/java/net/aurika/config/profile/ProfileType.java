@@ -2,25 +2,25 @@ package net.aurika.config.profile;
 
 public interface ProfileType {
 
-    YamlProfile YAML = new YamlProfile() {
-    };
+  YamlProfile YAML = new YamlProfile() {
+  };
 
-    XmlProfile XML = new XmlProfile() {
-    };
+  XmlProfile XML = new XmlProfile() {
+  };
 
-    JsonProfile JSON = new JsonProfile() {
-    };
+  JsonProfile JSON = new JsonProfile() {
+  };
 
-    interface YamlProfile extends ProfileType {
+  interface YamlProfile extends ProfileType {
 
-    }
+  }
 
-    interface XmlProfile extends ProfileType {
+  interface XmlProfile extends ProfileType {
 
-    }
+  }
 
-    interface JsonProfile extends ProfileType {
+  interface JsonProfile extends ProfileType {
 
-    }
+  }
 
 }

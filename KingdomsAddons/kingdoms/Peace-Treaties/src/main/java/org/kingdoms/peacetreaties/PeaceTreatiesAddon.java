@@ -29,104 +29,105 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class PeaceTreatiesAddon extends JavaPlugin implements Addon {
-    private static boolean loaded = false;
-    private static PeaceTreatiesAddon instance;
-    private final TermRegistry termRegistry = new TermRegistry();
+  private static boolean loaded = false;
+  private static PeaceTreatiesAddon instance;
+  private final TermRegistry termRegistry = new TermRegistry();
 
-    public TermRegistry getTermRegistry() {
-        return termRegistry;
+  public TermRegistry getTermRegistry() {
+    return termRegistry;
+  }
+
+  public PeaceTreatiesAddon() {
+    instance = this;
+  }
+
+  public static PeaceTreatiesAddon get() {
+    return instance;
+  }
+
+  private final Set<KingdomMetadataHandler> metadataHandlers = new HashSet<>();
+
+  @Override
+  public void uninstall() {
+    getLogger().info("Removing peace treaties metadata info...");
+    KingdomMetadataRegistry.removeMetadata(Kingdoms.get().getDataCenter().getKingdomManager(), metadataHandlers);
+  }
+
+  @Override
+  public void onLoad() {
+    if (!isKingdomsLoaded()) return;
+
+    getLogger().info("Registering kingdoms metadata handler...");
+
+    metadataHandlers.addAll(Arrays.asList(PeaceTreatyProposerMetaHandler.INSTANCE, PeaceTreatyReceiverMetaHandler.INSTANCE, WarPointsMetaHandler.INSTANCE));
+    metadataHandlers.forEach(x -> Kingdoms.get().getMetadataRegistry().register(x));
+
+    Kingdoms.get().getAuditLogRegistry().register(LogPeaceTreatySent.PROVIDER);
+    Kingdoms.get().getAuditLogRegistry().register(LogPeaceTreatyReceived.PROVIDER);
+
+    getLogger().info("Registering default terms...");
+    Arrays.asList(TakeMoneyTerm.PROVIDER, LeaveDisbandNationTerm.PROVIDER, TakeResourcePointsTerm.PROVIDER,
+            ScutageTerm.PROVIDER, AnnulTreatiesTerm.PROVIDER, MiscUpgradesTerm.PROVIDER, KeepLandsTerm.PROVIDER,
+            LimitTurretsTerm.PROVIDER, LimitStructuresTerm.PROVIDER, LimitClaimsTerm.PROVIDER, KingChangeTerm.PROVIDER)
+        .forEach(termRegistry::register);
+
+    PeaceTreatiesPlaceholder.init();
+    LanguageManager.registerMessenger(PeaceTreatyLang.class);
+    CustomConfigValidators.init();
+    ConfigManager.registerAsMainConfig(PeaceTreatyConfig.PEACE_TREATIES);
+  }
+
+  @Override
+  public void onEnable() {
+    if (!isKingdomsEnabled()) {
+      getLogger().severe("Kingdoms plugin didn't load correctly. Disabling...");
+      Bukkit.getPluginManager().disablePlugin(this);
+      return;
     }
 
-    public PeaceTreatiesAddon() {
-        instance = this;
-    }
+    TermRegistry.loadTermGroupings();
+    Bukkit.getPluginManager().registerEvents(new WarPointManager(), this);
+    Bukkit.getPluginManager().registerEvents(new RelationshipListener(), this);
+    Bukkit.getPluginManager().registerEvents(new TermManager(), this);
 
-    public static PeaceTreatiesAddon get() {
-        return instance;
-    }
+    new CommandPeaceTreaty();
 
-    private final Set<KingdomMetadataHandler> metadataHandlers = new HashSet<>();
+    // peace-treaties.yml
+    ConfigWatcher.register(PeaceTreatyConfig.PEACE_TREATIES.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
+    ConfigManager.registerNormalWatcher("peace-treaties.yml", (event) -> {
+      ConfigWatcher.reload(PeaceTreatyConfig.PEACE_TREATIES, "peace-treaties.yml");
+      getLogger().info("Reloading terms...");
+      TermRegistry.loadTermGroupings();
+    });
 
-    @Override
-    public void uninstall() {
-        getLogger().info("Removing peace treaties metadata info...");
-        KingdomMetadataRegistry.removeMetadata(Kingdoms.get().getDataCenter().getKingdomManager(), metadataHandlers);
-    }
+    GUIConfig.loadInternalGUIs(this);
 
-    @Override
-    public void onLoad() {
-        if (!isKingdomsLoaded()) return;
+    registerAddon();
+    HealthCheckupHandler.addCheckupHandler(new PeaceTreatyFSCK());
+    loaded = true;
+  }
 
-        getLogger().info("Registering kingdoms metadata handler...");
+  @Override
+  public void onDisable() {
+    super.onDisable();
+    signalDisable();
+  }
 
-        metadataHandlers.addAll(Arrays.asList(PeaceTreatyProposerMetaHandler.INSTANCE, PeaceTreatyReceiverMetaHandler.INSTANCE, WarPointsMetaHandler.INSTANCE));
-        metadataHandlers.forEach(x -> Kingdoms.get().getMetadataRegistry().register(x));
+  @Override
+  public void reloadAddon() {
+    PeaceTreatyConfig.getConfig().reload();
+    TermRegistry.loadTermGroupings();
+    new CommandPeaceTreaty();
+  }
 
-        Kingdoms.get().getAuditLogRegistry().register(LogPeaceTreatySent.PROVIDER);
-        Kingdoms.get().getAuditLogRegistry().register(LogPeaceTreatyReceived.PROVIDER);
+  @Override
+  public String getAddonName() {
+    return "peace-treaties";
+  }
 
-        getLogger().info("Registering default terms...");
-        Arrays.asList(TakeMoneyTerm.PROVIDER, LeaveDisbandNationTerm.PROVIDER, TakeResourcePointsTerm.PROVIDER,
-                        ScutageTerm.PROVIDER, AnnulTreatiesTerm.PROVIDER, MiscUpgradesTerm.PROVIDER, KeepLandsTerm.PROVIDER,
-                        LimitTurretsTerm.PROVIDER, LimitStructuresTerm.PROVIDER, LimitClaimsTerm.PROVIDER, KingChangeTerm.PROVIDER)
-                .forEach(termRegistry::register);
+  @Override
+  public File getFile() {
+    return super.getFile();
+  }
 
-        PeaceTreatiesPlaceholder.init();
-        LanguageManager.registerMessenger(PeaceTreatyLang.class);
-        CustomConfigValidators.init();
-        ConfigManager.registerAsMainConfig(PeaceTreatyConfig.PEACE_TREATIES);
-    }
-
-    @Override
-    public void onEnable() {
-        if (!isKingdomsEnabled()) {
-            getLogger().severe("Kingdoms plugin didn't load correctly. Disabling...");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-
-        TermRegistry.loadTermGroupings();
-        Bukkit.getPluginManager().registerEvents(new WarPointManager(), this);
-        Bukkit.getPluginManager().registerEvents(new RelationshipListener(), this);
-        Bukkit.getPluginManager().registerEvents(new TermManager(), this);
-
-        new CommandPeaceTreaty();
-
-        // peace-treaties.yml
-        ConfigWatcher.register(PeaceTreatyConfig.PEACE_TREATIES.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-        ConfigManager.registerNormalWatcher("peace-treaties.yml", (event) -> {
-            ConfigWatcher.reload(PeaceTreatyConfig.PEACE_TREATIES, "peace-treaties.yml");
-            getLogger().info("Reloading terms...");
-            TermRegistry.loadTermGroupings();
-        });
-
-        GUIConfig.loadInternalGUIs(this);
-
-        registerAddon();
-        HealthCheckupHandler.addCheckupHandler(new PeaceTreatyFSCK());
-        loaded = true;
-    }
-
-    @Override
-    public void onDisable() {
-        super.onDisable();
-        signalDisable();
-    }
-
-    @Override
-    public void reloadAddon() {
-        PeaceTreatyConfig.getConfig().reload();
-        TermRegistry.loadTermGroupings();
-        new CommandPeaceTreaty();
-    }
-
-    @Override
-    public String getAddonName() {
-        return "peace-treaties";
-    }
-
-    @Override
-    public File getFile() {
-        return super.getFile();
-    }
 }

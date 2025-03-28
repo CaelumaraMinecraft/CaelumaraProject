@@ -5,9 +5,11 @@ import net.aurika.common.key.Identified;
 import org.jetbrains.annotations.Nullable;
 
 public interface IdentifiedRegistry<T extends Identified> extends BaseRegistry {
-    void register(T obj);
 
-    boolean isRegistered(Ident id);
+  void register(T obj);
 
-    @Nullable T getRegistered(Ident ident);
+  boolean isRegistered(Ident id);
+
+  @Nullable T getRegistered(Ident ident);
+
 }

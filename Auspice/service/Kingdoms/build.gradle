@@ -1,5 +1,5 @@
 plugins {
-    id("aurika.dependency")
+    id("aurika.kingdoms.dependency")
     alias(libs.plugins.shadow)
 }
 

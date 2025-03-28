@@ -31,82 +31,84 @@ import java.util.Objects;
 import java.util.Set;
 
 public final class ServiceWorldEditSessionProtection implements Service {
-    @Override
-    public void enable() {
-        // https://worldedit.enginehub.org/en/latest/api/concepts/edit-sessions/
-        WorldEdit.getInstance().getEventBus().register(this);
+  @Override
+  public void enable() {
+    // https://worldedit.enginehub.org/en/latest/api/concepts/edit-sessions/
+    WorldEdit.getInstance().getEventBus().register(this);
+  }
+
+  @Override
+  public void disable() {
+    WorldEdit.getInstance().getEventBus().unregister(this);
+  }
+
+  private static final class KingdomsProtectionExtent extends AbstractDelegateExtent {
+    private final Set<org.kingdoms.server.location.BlockVector3> excluded = new HashSet<>();
+    private final Player actor;
+    private final World world;
+    private final Kingdom kingdom;
+    private boolean beforeChange = true;
+
+    protected KingdomsProtectionExtent(Extent extent, Player actor, World world, Kingdom kingdom) {
+      super(extent);
+      this.actor = actor;
+      this.world = world;
+      this.kingdom = kingdom;
     }
 
     @Override
-    public void disable() {
-        WorldEdit.getInstance().getEventBus().unregister(this);
+    public <T extends BlockStateHolder<T>> boolean setBlock(BlockVector3 location, T block) throws WorldEditException {
+      Location bukkitLocation = BukkitAdapter.adapt(world, location);
+      SimpleChunkLocation chunk = SimpleChunkLocation.of(bukkitLocation);
+      if (!kingdom.isClaimed(chunk)) {
+        excluded.add(org.kingdoms.platform.bukkit.adapters.BukkitAdapter.adapt(bukkitLocation).toBlockVector());
+        return false;
+      }
+
+      return super.setBlock(location, block);
     }
 
-    private static final class KingdomsProtectionExtent extends AbstractDelegateExtent {
-        private final Set<org.kingdoms.server.location.BlockVector3> excluded = new HashSet<>();
-        private final Player actor;
-        private final World world;
-        private final Kingdom kingdom;
-        private boolean beforeChange = true;
+    @Override
+    protected Operation commitBefore() {
+      // This is called twice, once before calling any setBlock() and once
+      // after all the setBlock() calls have been made.
 
-        protected KingdomsProtectionExtent(Extent extent, Player actor, World world, Kingdom kingdom) {
-            super(extent);
-            this.actor = actor;
-            this.world = world;
-            this.kingdom = kingdom;
+      if (beforeChange) {
+        beforeChange = false;
+      } else {
+        if (!excluded.isEmpty()) {
+          EngineHubLang.WORLDEDIT_EXCLUDED.sendError(actor, "blocks", excluded.size());
+          if (PluginChannels.isSupported()) {
+            PluginChannels.sendBlockMarker(actor, excluded,
+                new BlockMarker(Duration.ofSeconds(10), Color.RED, ""));
+          }
         }
+      }
 
-        @Override
-        public <T extends BlockStateHolder<T>> boolean setBlock(BlockVector3 location, T block) throws WorldEditException {
-            Location bukkitLocation = BukkitAdapter.adapt(world, location);
-            SimpleChunkLocation chunk = SimpleChunkLocation.of(bukkitLocation);
-            if (!kingdom.isClaimed(chunk)) {
-                excluded.add(org.kingdoms.platform.bukkit.adapters.BukkitAdapter.adapt(bukkitLocation).toBlockVector());
-                return false;
-            }
-
-            return super.setBlock(location, block);
-        }
-
-        @Override
-        protected Operation commitBefore() {
-            // This is called twice, once before calling any setBlock() and once
-            // after all the setBlock() calls have been made.
-
-            if (beforeChange) {
-                beforeChange = false;
-            } else {
-                if (!excluded.isEmpty()) {
-                    EngineHubLang.WORLDEDIT_EXCLUDED.sendError(actor, "blocks", excluded.size());
-                    if (PluginChannels.isSupported()) {
-                        PluginChannels.sendBlockMarker(actor, excluded,
-                                new BlockMarker(Duration.ofSeconds(10), Color.RED, ""));
-                    }
-                }
-            }
-
-            return super.commitBefore();
-        }
+      return super.commitBefore();
     }
 
-    @Subscribe
-    public void onEdit(EditSessionEvent event) {
-        if (event.getStage() != EditSession.Stage.BEFORE_HISTORY) return;
+  }
 
-        Actor editor = event.getActor();
-        if (editor == null || !editor.isPlayer()) return;
+  @Subscribe
+  public void onEdit(EditSessionEvent event) {
+    if (event.getStage() != EditSession.Stage.BEFORE_HISTORY) return;
 
-        Player player = Bukkit.getPlayer(editor.getUniqueId());
-        Objects.requireNonNull(player, () -> "Actor " + editor + " for WorldEdit is a null player");
-        if (KingdomsDefaultPluginPermission.WORLDEDIT_BYPASS_EDIT$PROTECTION.hasPermission(player, false)) return;
+    Actor editor = event.getActor();
+    if (editor == null || !editor.isPlayer()) return;
 
-        KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
-        if (!kp.hasKingdom() || kp.isAdmin()) return;
+    Player player = Bukkit.getPlayer(editor.getUniqueId());
+    Objects.requireNonNull(player, () -> "Actor " + editor + " for WorldEdit is a null player");
+    if (KingdomsDefaultPluginPermission.WORLDEDIT_BYPASS_EDIT$PROTECTION.hasPermission(player, false)) return;
 
-        Kingdom kingdom = kp.getKingdom();
-        World world = BukkitAdapter.asBukkitWorld(event.getWorld()).getWorld();
+    KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
+    if (!kp.hasKingdom() || kp.isAdmin()) return;
 
-        // This won't work here because extent isn't executed immediatelly.
-        event.setExtent(new KingdomsProtectionExtent(event.getExtent(), player, world, kingdom));
-    }
+    Kingdom kingdom = kp.getKingdom();
+    World world = BukkitAdapter.asBukkitWorld(event.getWorld()).getWorld();
+
+    // This won't work here because extent isn't executed immediatelly.
+    event.setExtent(new KingdomsProtectionExtent(event.getExtent(), player, world, kingdom));
+  }
+
 }

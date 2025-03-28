@@ -16,25 +16,26 @@ import java.util.Set;
 import java.util.UUID;
 
 public class dataHandlerCivilization extends KeyedDataHandler<UUID, Civilization> {
-    public dataHandlerCivilization(IdDataTypeHandler<UUID> idDataTypeHandler, SQLDataHandlerProperties sqlDataHandlerProperties) {
-        super(idDataTypeHandler, sqlDataHandlerProperties);
-    }   //TODO
+  public dataHandlerCivilization(IdDataTypeHandler<UUID> idDataTypeHandler, SQLDataHandlerProperties sqlDataHandlerProperties) {
+    super(idDataTypeHandler, sqlDataHandlerProperties);
+  }   //TODO
 
-    @Override
-    @NotNull
-    public Civilization load(SectionableDataGetter rootSection, UUID uuid) {
-        Set<CivilizationMember<?>> members = rootSection.get("members").asCollection(new HashSet<>(), (civilizationMembers, sectionableDataGetter) -> {
-            civilizationMembers.add(CivilizationMemberTypeRegistry.deserializeIntactMember(sectionableDataGetter));
-        });
+  @Override
+  @NotNull
+  public Civilization load(SectionableDataGetter rootSection, UUID uuid) {
+    Set<CivilizationMember<?>> members = rootSection.get("members").asCollection(new HashSet<>(), (civilizationMembers, sectionableDataGetter) -> {
+      civilizationMembers.add(CivilizationMemberTypeRegistry.deserializeIntactMember(sectionableDataGetter));
+    });
 
-        return null;
-    }
+    return null;
+  }
 
-    @Override
-    public void save(SectionableDataSetter rootSection, Civilization civilization) {
-        rootSection.get("members").setCollection(civilization.getTopMembers(), ((membersSection, member) -> {
-            member.serialize(membersSection.createSection(), true);
-        }));
-        DataHandlerMetadata.serializeMetadata(rootSection, civilization);
-    }
+  @Override
+  public void save(SectionableDataSetter rootSection, Civilization civilization) {
+    rootSection.get("members").setCollection(civilization.getTopMembers(), ((membersSection, member) -> {
+      member.serialize(membersSection.createSection(), true);
+    }));
+    DataHandlerMetadata.serializeMetadata(rootSection, civilization);
+  }
+
 }

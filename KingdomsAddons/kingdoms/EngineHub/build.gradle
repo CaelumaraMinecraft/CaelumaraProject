@@ -1,6 +1,6 @@
 plugins {
-    id("java-library")
-    id("aurika.repos")
+  id("java-library")
+  id("aurika.repos")
 }
 
 group = "org.kingdoms.enginehub"
@@ -8,9 +8,9 @@ version = "1.1.0"
 description = "Adds support for EngineHub plugins (WorldEdit & WorldGuard) selections & schematic buildings."
 
 repositories {
-    aurikaRepos {
-        enginehub()
-    }
+  aurikaRepos {
+    enginehub()
+  }
 }
 
 boolean examineWorldGuardSix = false
@@ -22,25 +22,25 @@ dependencies {
 //    compileOnly(project(":platform:bukkit"))
 //    compileOnly(libs.xseries)
 
-    api(project(":KingdomsAddons:kingdoms:EngineHub:commons"))
+  api(project(":KingdomsAddons:kingdoms:EngineHub:commons"))
 
-    if (!examineWorldGuardSix) {
-        api(project(":KingdomsAddons:kingdoms:EngineHub:worldguard"))
-        implementation(project(":KingdomsAddons:kingdoms:EngineHub:worldguard:v6"))
-        implementation(project(":KingdomsAddons:kingdoms:EngineHub:worldguard:v7"))
-    }
+  if (!examineWorldGuardSix) {
+    api(project(":KingdomsAddons:kingdoms:EngineHub:worldguard"))
+    implementation(project(":KingdomsAddons:kingdoms:EngineHub:worldguard:v6"))
+    implementation(project(":KingdomsAddons:kingdoms:EngineHub:worldguard:v7"))
+  }
 
-    // compileOnly(project(":schematics"))
-    // compileOnly(project(path=":nms:v1.20", configuration="reobf"))
+  // compileOnly(project(":schematics"))
+  // compileOnly(project(path=":nms:v1.20", configuration="reobf"))
 
-    // https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-core/
-    if (!examineWorldGuardSix) {
-        compileOnly("com.sk89q.worldedit:worldedit-core:7.2.9")
-        compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.9")
-    } else {
-        compileOnly("com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT")
-        compileOnly("com.sk89q.worldedit:worldedit-bukkit:6.1.5")
-    }
+  // https://maven.enginehub.org/repo/com/sk89q/worldedit/worldedit-core/
+  if (!examineWorldGuardSix) {
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.2.9")
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.2.9")
+  } else {
+    compileOnly("com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT")
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:6.1.5")
+  }
 }
 
 //tasks.shadowJar {

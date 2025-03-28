@@ -11,5 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 public @interface CallAfter {
-    String value();
+
+  String value();
+
 }

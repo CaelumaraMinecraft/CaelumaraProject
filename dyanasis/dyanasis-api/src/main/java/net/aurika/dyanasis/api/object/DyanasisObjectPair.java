@@ -6,17 +6,18 @@ import org.jetbrains.annotations.NotNull;
 @ApiStatus.Experimental
 public interface DyanasisObjectPair extends DyanasisObjectSupport {
 
-    @DyanasisObjectDebugMethod
-    @NotNull DyanasisObject component1();
+  @DyanasisObjectDebugMethod
+  @NotNull DyanasisObject component1();
 
-    @DyanasisObjectDebugMethod
-    @NotNull DyanasisObject component2();
+  @DyanasisObjectDebugMethod
+  @NotNull DyanasisObject component2();
 
-    @Override
-    default @NotNull SupportType supportType() {
-        return SupportType.PAIR;
-    }
+  @Override
+  default @NotNull SupportType supportType() {
+    return SupportType.PAIR;
+  }
 
-    @Override
-    @NotNull Object valueAsJava();
+  @Override
+  @NotNull Object valueAsJava();
+
 }

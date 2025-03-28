@@ -5,19 +5,20 @@ import org.jetbrains.annotations.NotNull;
 import org.kingdoms.peacetreaties.data.PeaceTreaty;
 
 public final class PeaceTreatyRequestEvent extends PeaceTreatyEvent {
-    public PeaceTreatyRequestEvent(PeaceTreaty peaceTreaty) {
-        super(peaceTreaty);
-    }
+  public PeaceTreatyRequestEvent(PeaceTreaty peaceTreaty) {
+    super(peaceTreaty);
+  }
 
-    private static final HandlerList handlers = new HandlerList();
+  private static final HandlerList handlers = new HandlerList();
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
 
-    @Override
-    @NotNull
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  @Override
+  @NotNull
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
 }

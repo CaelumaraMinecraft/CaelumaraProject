@@ -7,129 +7,133 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 public final class CommaDataSplitStrategy {
-    private final String data;
-    private final int len;
-    private int index;
-    private final int expectedComponentCount;
-    private final String[] components;
 
-    public CommaDataSplitStrategy(@NotNull String data, int expectedComponentCount) {
-        Validate.Arg.notEmpty(data, "data", "Data cannot be null or empty");
-        if (expectedComponentCount < 1)
-            throw new IllegalArgumentException("expectedComponentCount must be greater than zero: " + expectedComponentCount);
+  private final String data;
+  private final int len;
+  private int index;
+  private final int expectedComponentCount;
+  private final String[] components;
 
-        this.expectedComponentCount = expectedComponentCount;
-        this.components = new String[expectedComponentCount];
-        this.data = data;
-        this.len = data.length();
-        this.parseAllComponents();
-    }
+  public CommaDataSplitStrategy(@NotNull String data, int expectedComponentCount) {
+    Validate.Arg.notEmpty(data, "data", "Data cannot be null or empty");
+    if (expectedComponentCount < 1)
+      throw new IllegalArgumentException("expectedComponentCount must be greater than zero: " + expectedComponentCount);
 
-    public void missing() {
-        throw new IllegalStateException("Components missing. Expected " + expectedComponentCount + ": " + data);
-    }
+    this.expectedComponentCount = expectedComponentCount;
+    this.components = new String[expectedComponentCount];
+    this.data = data;
+    this.len = data.length();
+    this.parseAllComponents();
+  }
 
-    private void parseAllComponents() {
-        int i = 0;
-        int start = 0;
+  public void missing() {
+    throw new IllegalStateException("Components missing. Expected " + expectedComponentCount + ": " + data);
+  }
 
-        for (int j = 0; j < expectedComponentCount; j++) {
-            String component = null;
-            if (i >= len) missing();
+  private void parseAllComponents() {
+    int i = 0;
+    int start = 0;
 
-            while (i < len) {
-                if (data.charAt(i) == ',') {
-                    component = data.substring(start, i);
+    for (int j = 0; j < expectedComponentCount; j++) {
+      String component = null;
+      if (i >= len) missing();
 
-                    // Skip the space after comma, and we know that our data is at least one character long.
-                    start = i += 2;
-                    break;
-                }
-                i++;
-            }
+      while (i < len) {
+        if (data.charAt(i) == ',') {
+          component = data.substring(start, i);
 
-            if (component == null) component = data.substring(start, len);
-            if (component == null || component.isEmpty()) missing();
-            this.components[j] = component;
+          // Skip the space after comma, and we know that our data is at least one character long.
+          start = i += 2;
+          break;
         }
+        i++;
+      }
 
-        if (i < len)
-            throw new IllegalStateException("Only expected " + expectedComponentCount + " components but got more: " + data);
+      if (component == null) component = data.substring(start, len);
+      if (component == null || component.isEmpty()) missing();
+      this.components[j] = component;
     }
 
-    public String nextString() {
-        int nextIndex = index++;
-        if (nextIndex >= components.length) {
-            throw new IllegalStateException("Only expected " + expectedComponentCount + " components but requested more: " + data);
-        }
-        return components[nextIndex];
-    }
+    if (i < len)
+      throw new IllegalStateException("Only expected " + expectedComponentCount + " components but got more: " + data);
+  }
 
-    private RuntimeException numberError(String str) {
-        return new IllegalStateException("Expected an number for " + index + " but got '" + str + "' in: " + data);
+  public String nextString() {
+    int nextIndex = index++;
+    if (nextIndex >= components.length) {
+      throw new IllegalStateException(
+          "Only expected " + expectedComponentCount + " components but requested more: " + data);
     }
+    return components[nextIndex];
+  }
 
-    public byte nextByte() {
-        String str = nextString();
-        try {
-            return Byte.parseByte(str);
-        } catch (NumberFormatException ex) {
-            throw numberError(str);
-        }
-    }
+  private RuntimeException numberError(String str) {
+    return new IllegalStateException("Expected an number for " + index + " but got '" + str + "' in: " + data);
+  }
 
-    public int nextInt() {
-        String str = nextString();
-        try {
-            return Integer.parseInt(str);
-        } catch (NumberFormatException ex) {
-            throw numberError(str);
-        }
+  public byte nextByte() {
+    String str = nextString();
+    try {
+      return Byte.parseByte(str);
+    } catch (NumberFormatException ex) {
+      throw numberError(str);
     }
+  }
 
-    public long nextLong() {
-        String str = nextString();
-        try {
-            return Long.parseLong(str);
-        } catch (NumberFormatException ex) {
-            throw numberError(str);
-        }
+  public int nextInt() {
+    String str = nextString();
+    try {
+      return Integer.parseInt(str);
+    } catch (NumberFormatException ex) {
+      throw numberError(str);
     }
+  }
 
-    public float nextFloat() {
-        String str = nextString();
-        try {
-            return Float.parseFloat(str);
-        } catch (NumberFormatException ex) {
-            throw numberError(str);
-        }
+  public long nextLong() {
+    String str = nextString();
+    try {
+      return Long.parseLong(str);
+    } catch (NumberFormatException ex) {
+      throw numberError(str);
     }
+  }
 
-    public double nextDouble() {
-        String str = nextString();
-        try {
-            return Double.parseDouble(str);
-        } catch (NumberFormatException ex) {
-            throw numberError(str);
-        }
+  public float nextFloat() {
+    String str = nextString();
+    try {
+      return Float.parseFloat(str);
+    } catch (NumberFormatException ex) {
+      throw numberError(str);
     }
+  }
 
-    public boolean nextBoolean() {
-        String str = nextString();
-        if (str.equals("true")) return true;
-        if (str.equals("false")) return false;
-        throw new IllegalStateException("Expected a boolean value (true or false) but got '" + str + "' in: " + data);
+  public double nextDouble() {
+    String str = nextString();
+    try {
+      return Double.parseDouble(str);
+    } catch (NumberFormatException ex) {
+      throw numberError(str);
     }
+  }
 
-    public static String toString(Object[] components) {
-        StringJoiner joiner = new StringJoiner(", ");
-        for (Object component : components) {
-            String str = component.toString();
-            if (str == null || str.isEmpty()) {
-                throw new IllegalArgumentException("Data component is null or empty '" + str + "' in: " + Arrays.toString(components));
-            }
-            joiner.add(str);
-        }
-        return joiner.toString();
+  public boolean nextBoolean() {
+    String str = nextString();
+    if (str.equals("true")) return true;
+    if (str.equals("false")) return false;
+    throw new IllegalStateException("Expected a boolean value (true or false) but got '" + str + "' in: " + data);
+  }
+
+  public static String toString(Object[] components) {
+    StringJoiner joiner = new StringJoiner(", ");
+    for (Object component : components) {
+      String str = component.toString();
+      if (str == null || str.isEmpty()) {
+        throw new IllegalArgumentException(
+            "Data component is null or empty '" + str + "' in: " + Arrays.toString(components));
+      }
+      joiner.add(str);
     }
+    return joiner.toString();
+  }
+
 }

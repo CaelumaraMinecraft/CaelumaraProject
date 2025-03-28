@@ -1,6 +1,6 @@
 package net.aurika.util.number;
 
 public enum NumberDecorator {
-    SUFFIX,
-    COMMA;
+  SUFFIX,
+  COMMA;
 }

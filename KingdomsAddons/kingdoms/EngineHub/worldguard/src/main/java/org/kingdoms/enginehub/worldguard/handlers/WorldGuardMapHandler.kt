@@ -5,13 +5,13 @@ import org.kingdoms.managers.land.map.KingdomsMap
 import org.kingdoms.managers.land.map.KingdomsMapElement
 
 class WorldGuardKingdomsMapHandler(
-    private val worldGuard: ServiceWorldGuard
+  private val worldGuard: ServiceWorldGuard
 ) : KingdomsMapElement {
 
-    override fun getElement(map: KingdomsMap): String? {
-        map.chunk.apply {
-            if (worldGuard.isChunkInRegion(bukkitWorld, x, z, 0)) return "protected"
-        }
-        return null
+  override fun getElement(map: KingdomsMap): String? {
+    map.chunk.apply {
+      if (worldGuard.isChunkInRegion(bukkitWorld, x, z, 0)) return "protected"
     }
+    return null
+  }
 }

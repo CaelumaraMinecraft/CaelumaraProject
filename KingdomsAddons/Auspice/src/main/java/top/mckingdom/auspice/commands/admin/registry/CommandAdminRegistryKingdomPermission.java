@@ -9,11 +9,12 @@ import org.kingdoms.main.Kingdoms;
 
 public class CommandAdminRegistryKingdomPermission extends CommandAdminRegistryTemplate<KingdomPermission, KingdomPermissionRegistry> {
 
-    public CommandAdminRegistryKingdomPermission(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryKingdomPermission(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryKingdomPermission(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-        super("kingdom" + "permission", parent, permissionDefault, Kingdoms.get().getPermissionRegistery(), KingdomPermission.class);
-    }
+  public CommandAdminRegistryKingdomPermission(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
+    super("kingdom" + "permission", parent, permissionDefault, Kingdoms.get().getPermissionRegistery(), KingdomPermission.class);
+  }
+
 }

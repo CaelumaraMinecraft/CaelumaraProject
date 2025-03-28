@@ -9,16 +9,17 @@ import top.mckingdom.powerfulterritory.util.GroupExt;
 
 public class BoatUseManager implements Listener {
 
-    @EventHandler
-    public void onInteractBoat(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked() instanceof Boat) {
-            KingdomPlayer player = KingdomPlayer.getKingdomPlayer(event.getPlayer());
-            assert player != null : "getKingdomPlayer(org.bukkit.OfflinePlayer) returned null";
-            if (!player.hasKingdom()) return;
-            if (!player.hasPermission(GroupExt.PERMISSION_USE_BOATS)) {
-                event.setCancelled(true);
-                GroupExt.PERMISSION_USE_BOATS.sendDeniedMessage(event.getPlayer());
-            }
-        }
+  @EventHandler
+  public void onInteractBoat(PlayerInteractEntityEvent event) {
+    if (event.getRightClicked() instanceof Boat) {
+      KingdomPlayer player = KingdomPlayer.getKingdomPlayer(event.getPlayer());
+      assert player != null : "getKingdomPlayer(org.bukkit.OfflinePlayer) returned null";
+      if (!player.hasKingdom()) return;
+      if (!player.hasPermission(GroupExt.PERMISSION_USE_BOATS)) {
+        event.setCancelled(true);
+        GroupExt.PERMISSION_USE_BOATS.sendDeniedMessage(event.getPlayer());
+      }
     }
+  }
+
 }

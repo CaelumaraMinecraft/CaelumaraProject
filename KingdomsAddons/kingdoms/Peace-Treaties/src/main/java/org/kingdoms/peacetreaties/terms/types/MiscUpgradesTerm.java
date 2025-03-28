@@ -6,11 +6,12 @@ import org.kingdoms.peacetreaties.terms.Term;
 import org.kingdoms.peacetreaties.terms.TermProvider;
 
 public class MiscUpgradesTerm extends Term {
-    public static final TermProvider PROVIDER =
-            new StandardTermProvider(Namespace.kingdoms("MISC_UPGRADES"), MiscUpgradesTerm::new, false, true);
+  public static final TermProvider PROVIDER =
+      new StandardTermProvider(Namespace.kingdoms("MISC_UPGRADES"), MiscUpgradesTerm::new, false, true);
 
-    @Override
-    public TermProvider getProvider() {
-        return PROVIDER;
-    }
+  @Override
+  public TermProvider getProvider() {
+    return PROVIDER;
+  }
+
 }

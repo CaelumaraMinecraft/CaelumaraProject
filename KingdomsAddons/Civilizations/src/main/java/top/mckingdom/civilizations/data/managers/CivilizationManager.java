@@ -13,43 +13,44 @@ import top.mckingdom.civilizations.constants.civilization.Civilization;
 import java.util.*;
 
 public class CivilizationManager extends KeyedDataManager<UUID, Civilization> {
-    private static final Map<QuantumString, UUID> a = new HashMap();
-    private static final IndexedHashMap<UUID, Integer> b = new IndexedHashMap(new UUID[0]);
-    private static final HashSet<UUID> civilizationsUUID = new HashSet<>();
-    private static final HashMap<UUID, Civilization> civilizations = new HashMap<>();
+  private static final Map<QuantumString, UUID> a = new HashMap();
+  private static final IndexedHashMap<UUID, Integer> b = new IndexedHashMap(new UUID[0]);
+  private static final HashSet<UUID> civilizationsUUID = new HashSet<>();
+  private static final HashMap<UUID, Civilization> civilizations = new HashMap<>();
 
-    public static Set<UUID> getCivilizationsIdSet() {
-        return civilizationsUUID;
-    }
+  public static Set<UUID> getCivilizationsIdSet() {
+    return civilizationsUUID;
+  }
 
-    static {
+  static {
 
-    }
+  }
 
-    public static CivilizationManager INSTANCE;
+  public static CivilizationManager INSTANCE;
 
-    public CivilizationManager(KeyedKingdomsDatabase<UUID, Civilization> var2, boolean var3, KingdomsDataCenter var4) {
-        super(CivilizationsAddon.buildNS("CIVILIZATIONS"), var2, var3, var4);
-        INSTANCE = this;
-    }
+  public CivilizationManager(KeyedKingdomsDatabase<UUID, Civilization> var2, boolean var3, KingdomsDataCenter var4) {
+    super(CivilizationsAddon.buildNS("CIVILIZATIONS"), var2, var3, var4);
+    INSTANCE = this;
+  }
 
-    public static Civilization getCivilization(UUID uuid) {
-        return civilizations.get(uuid);
-    }
+  public static Civilization getCivilization(UUID uuid) {
+    return civilizations.get(uuid);
+  }
 
-    public static @NotNull Map<QuantumString, UUID> getNames() {
-        return Collections.unmodifiableMap(a);
-    }
+  public static @NotNull Map<QuantumString, UUID> getNames() {
+    return Collections.unmodifiableMap(a);
+  }
 
-    public static QuantumString toQuantumName(String str) {
-        return new QuantumString(str, !CivilizationsAddonConfig.CIVILIZATION_NAME_CASE_SENSITIVE.getBoolean());
-    }
+  public static QuantumString toQuantumName(String str) {
+    return new QuantumString(str, !CivilizationsAddonConfig.CIVILIZATION_NAME_CASE_SENSITIVE.getBoolean());
+  }
 
-    public static Map<UUID, Civilization> getCivilizations() {
-        return civilizations;
-    }
+  public static Map<UUID, Civilization> getCivilizations() {
+    return civilizations;
+  }
 
-    public Civilization getData(UUID uuid) {
-        return civilizations.get(uuid);
-    }
+  public Civilization getData(UUID uuid) {
+    return civilizations.get(uuid);
+  }
+
 }

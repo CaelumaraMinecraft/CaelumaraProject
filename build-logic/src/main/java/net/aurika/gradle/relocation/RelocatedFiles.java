@@ -8,21 +8,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public interface RelocatedFiles {
-    /**
-     * Gets the files that to relocate.
-     *
-     * @return the files
-     */
-    @NotNull FileCollection getFiles();
 
-    /**
-     * Gets the relocation rules.
-     *
-     * @return the relocation rules
-     */
-    @NotNull List<SimpleRelocation> getRelocations();
+  /**
+   * Gets the files that to relocate.
+   *
+   * @return the files
+   */
+  @NotNull FileCollection getFiles();
 
-    @NotNull Directory getTargetDirectory();
+  /**
+   * Gets the relocation rules.
+   *
+   * @return the relocation rules
+   */
+  @NotNull List<SimpleRelocation> getRelocations();
 
-    void relocate();
+  @NotNull Directory getTargetDirectory();
+
+  void relocate();
+
 }

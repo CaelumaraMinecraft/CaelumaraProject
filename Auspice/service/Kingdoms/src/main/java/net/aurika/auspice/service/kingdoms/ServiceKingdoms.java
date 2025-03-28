@@ -14,4 +14,9 @@ public class ServiceKingdoms implements BukkitService {
         KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
         return kp.hasKingdom() && kp.getKingdom().hasNation();
     }
+
+    @Override
+    public boolean isSupportFolia() {
+        return false;
+    }
 }

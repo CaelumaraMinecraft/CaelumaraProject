@@ -2,45 +2,48 @@ package net.aurika.property;
 
 public interface ShortProperty extends BaseProperty {
 
-    @Override
-    String name();
+  @Override
+  String name();
 
-    @Override
-    boolean isSet();
+  @Override
+  boolean isSet();
 
-    short get() throws PropertyNotInitializedException;
+  short get() throws PropertyNotInitializedException;
 
-    void set(short value);
+  void set(short value);
+
 }
 
 class ShortPropertyImpl extends BasePropertyImpl implements ShortProperty {
-    private short value;
 
-    ShortPropertyImpl(String name) {
-        this(name, false, (short) 0);
-    }
+  private short value;
 
-    ShortPropertyImpl(String name, short value) {
-        this(name, true, value);
-    }
+  ShortPropertyImpl(String name) {
+    this(name, false, (short) 0);
+  }
 
-    private ShortPropertyImpl(String name, boolean set, short value) {
-        super(name, set);
-        this.value = value;
-    }
+  ShortPropertyImpl(String name, short value) {
+    this(name, true, value);
+  }
 
-    @Override
-    public short get() throws PropertyNotInitializedException {
-        if (set) {
-            return value;
-        } else {
-            throw new PropertyNotInitializedException(name);
-        }
-    }
+  private ShortPropertyImpl(String name, boolean set, short value) {
+    super(name, set);
+    this.value = value;
+  }
 
-    @Override
-    public void set(short value) {
-        this.value = value;
-        this.set = true;
+  @Override
+  public short get() throws PropertyNotInitializedException {
+    if (set) {
+      return value;
+    } else {
+      throw new PropertyNotInitializedException(name);
     }
+  }
+
+  @Override
+  public void set(short value) {
+    this.value = value;
+    this.set = true;
+  }
+
 }

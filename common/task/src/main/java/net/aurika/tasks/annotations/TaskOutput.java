@@ -11,5 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Experimental
 public @interface TaskOutput {
-    String[] task();
+
+  String[] task();
+
 }

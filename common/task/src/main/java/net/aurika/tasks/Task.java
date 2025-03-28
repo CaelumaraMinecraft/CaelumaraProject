@@ -9,31 +9,33 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface Task<C extends TaskContext> extends Keyed {
-    @NotNull Key key();
 
-    @NotNull Priority priority();
+  @NotNull Key key();
 
-    @Nullable Task<C> parent();
+  @NotNull Priority priority();
 
-    void run(@NotNull C context);
+  @Nullable Task<C> parent();
 
-    int hashCode();
+  void run(@NotNull C context);
 
-    boolean equals(@Nullable Object obj);
+  int hashCode();
 
-    default int compareTo(@NotNull Task<?> other, @NotNull TaskRegistry<?, ?> registry) {
-        Validate.Arg.notNull(other, "other");
-        Validate.Arg.notNull(registry, "registry");
-        int compared = this.priority().compareTo(other, registry);
-        if (compared == Integer.MAX_VALUE) {
-            compared = other.priority().compareTo(this, registry);
-            if (compared == Integer.MAX_VALUE) {
-                compared = 0;
-            } else {
-                compared = -compared;
-            }
-        }
+  boolean equals(@Nullable Object obj);
 
-        return compared;
+  default int compareTo(@NotNull Task<?> other, @NotNull TaskRegistry<?, ?> registry) {
+    Validate.Arg.notNull(other, "other");
+    Validate.Arg.notNull(registry, "registry");
+    int compared = this.priority().compareTo(other, registry);
+    if (compared == Integer.MAX_VALUE) {
+      compared = other.priority().compareTo(this, registry);
+      if (compared == Integer.MAX_VALUE) {
+        compared = 0;
+      } else {
+        compared = -compared;
+      }
     }
+
+    return compared;
+  }
+
 }

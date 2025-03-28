@@ -5,15 +5,16 @@ import top.mckingdom.props.prop.PropActiveContext;
 import top.mckingdom.props.prop.PropType;
 
 public class PropChampionLeash extends PropType {
-    public PropChampionLeash() {
-        super("champion-leash");
-    }
+  public PropChampionLeash() {
+    super("champion-leash");
+  }
 
-    @Override
-    public void active(PropActiveContext context) {
-        KingdomPlayer player = context.getPlayer();
-        if (player != null) {
-            player.getInvasion().getChampion();               //TODO: 还是废稿
-        }
+  @Override
+  public void active(PropActiveContext context) {
+    KingdomPlayer player = context.getPlayer();
+    if (player != null) {
+      player.getInvasion().getChampion();               //TODO: 还是废稿
     }
+  }
+
 }

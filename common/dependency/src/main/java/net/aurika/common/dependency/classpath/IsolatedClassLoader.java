@@ -7,15 +7,16 @@ import java.net.URLClassLoader;
 import java.util.Arrays;
 
 public final class IsolatedClassLoader extends URLClassLoader {
-    public IsolatedClassLoader(@NotNull URL @NotNull [] urls) {
-        super(urls, ClassLoader.getSystemClassLoader().getParent());
-    }
 
-    public @NotNull String toString() {
-        return "IsolatedClassLoader[" + Arrays.toString(this.getURLs()) + ']';
-    }
+  public IsolatedClassLoader(@NotNull URL @NotNull [] urls) {
+    super(urls, ClassLoader.getSystemClassLoader().getParent());
+  }
 
-    static {
-        ClassLoader.registerAsParallelCapable();
-    }
+  public @NotNull String toString() {
+    return "IsolatedClassLoader[" + Arrays.toString(this.getURLs()) + ']';
+  }
+
+  static {
+    ClassLoader.registerAsParallelCapable();
+  }
 }

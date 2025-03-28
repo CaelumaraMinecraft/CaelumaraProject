@@ -8,5 +8,4 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
-public @interface UtilMethod {
-}
+public @interface UtilMethod { }

@@ -9,53 +9,55 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedRegistry<T> {
-    private Map<Key, T> registry;
 
-    protected AbstractKeyedRegistry() {
-    }
+  private Map<Key, T> registry;
 
-    protected AbstractKeyedRegistry(Map<Key, T> registry) {
-        this.registry = registry;
-    }
+  protected AbstractKeyedRegistry() {
+  }
 
-    /**
-     * Get the raw registry.
-     *
-     * @return The raw registry
-     */
-    protected Map<Key, T> rawRegistry() {
-        return this.registry;
-    }
+  protected AbstractKeyedRegistry(Map<Key, T> registry) {
+    this.registry = registry;
+  }
 
-    /**
-     * Set the raw registry.
-     *
-     * @return The old registry (maybe null)
-     */
-    protected Map<Key, T> rawRegistry(Map<Key, T> newRegistry) {
-        var oldRegistry = registry;
-        this.registry = newRegistry;
-        return oldRegistry;
-    }
+  /**
+   * Get the raw registry.
+   *
+   * @return The raw registry
+   */
+  protected Map<Key, T> rawRegistry() {
+    return this.registry;
+  }
 
-    @Override
-    public void register(T obj) {
-        if (obj == null) return;
-        if (this.registry == null) {
-            this.registry = new HashMap<>();
-        }
-        Key key = obj.key();
-        Objects.requireNonNull(key, "obj key");
-        this.registry.put(key, obj);
-    }
+  /**
+   * Set the raw registry.
+   *
+   * @return The old registry (maybe null)
+   */
+  protected Map<Key, T> rawRegistry(Map<Key, T> newRegistry) {
+    var oldRegistry = registry;
+    this.registry = newRegistry;
+    return oldRegistry;
+  }
 
-    @Override
-    public boolean isRegistered(Key key) {
-        return this.registry != null && this.registry.containsKey(key);
+  @Override
+  public void register(T obj) {
+    if (obj == null) return;
+    if (this.registry == null) {
+      this.registry = new HashMap<>();
     }
+    Key key = obj.key();
+    Objects.requireNonNull(key, "obj key");
+    this.registry.put(key, obj);
+  }
 
-    @Override
-    public @Nullable T getRegistered(Key key) {
-        return this.registry == null ? null : this.registry.get(key);
-    }
+  @Override
+  public boolean isRegistered(Key key) {
+    return this.registry != null && this.registry.containsKey(key);
+  }
+
+  @Override
+  public @Nullable T getRegistered(Key key) {
+    return this.registry == null ? null : this.registry.get(key);
+  }
+
 }

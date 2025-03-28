@@ -1,16 +1,16 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
-    alias(libs.plugins.kotlin)
+  id("java-library")
+  id("maven-publish")
+  alias(libs.plugins.kotlin)
 }
 
 dependencies {
-    api(project(":common:key"))
-    api(project(":common:function"))
-    api(project(":common:validate"))
-    api(project(":common:util:collection"))
-    api(project(":common:util:string"))
-    api(project(":common:util:generics"))
-    api(libs.yamlengine)
-    compileOnlyApi(libs.annotations.jetbrains)
+  api(project(":common:key"))
+  api(project(":common:function"))
+  api(project(":common:validate"))
+  api(project(":common:util:collection"))
+  api(project(":common:util:string"))
+  api(project(":common:util:generics"))
+  api(libs.yamlengine)
+  compileOnlyApi(libs.annotations.jetbrains)
 }

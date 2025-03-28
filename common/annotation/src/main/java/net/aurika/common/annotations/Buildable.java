@@ -7,5 +7,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 public @interface Buildable {
-    Class<?>[] fromBuilder();
+
+  Class<?>[] fromBuilder();
+
 }

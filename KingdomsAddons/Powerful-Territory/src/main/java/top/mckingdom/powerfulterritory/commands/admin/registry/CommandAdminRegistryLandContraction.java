@@ -10,11 +10,12 @@ import top.mckingdom.powerfulterritory.constants.land_contractions.LandContracti
 
 public class CommandAdminRegistryLandContraction extends CommandAdminRegistryTemplate<LandContraction, LandContractionRegistry> {
 
-    public CommandAdminRegistryLandContraction(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryLandContraction(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryLandContraction(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-        super("land" + "contraction", parent, permissionDefault, PowerfulTerritoryAddon.get().getLandContractionRegistry(), LandContraction.class);
-    }
+  public CommandAdminRegistryLandContraction(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
+    super("land" + "contraction", parent, permissionDefault, PowerfulTerritoryAddon.get().getLandContractionRegistry(), LandContraction.class);
+  }
+
 }

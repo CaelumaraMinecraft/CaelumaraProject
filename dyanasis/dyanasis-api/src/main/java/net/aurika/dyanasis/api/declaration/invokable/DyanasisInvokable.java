@@ -18,18 +18,20 @@ import org.jetbrains.annotations.NotNull;
  * @see DyanasisProperty
  */
 public interface DyanasisInvokable extends DyanasisDeclaration, DyanasisDocAnchor, NeedOwner, Named, DyanasisRuntimeObject {
-    /**
-     * Gets the name of the dyanasis invokable.
-     *
-     * @return the name
-     */
-    @Override
-    @NamingContract.Invokable
-    @NotNull String name();
 
-    @Override
-    @NotNull DyanasisInvokableAnchor owner();
+  /**
+   * Gets the name of the dyanasis invokable.
+   *
+   * @return the name
+   */
+  @Override
+  @NamingContract.Invokable
+  @NotNull String name();
 
-    @Override
-    @NotNull DyanasisRuntime dyanasisRuntime();
+  @Override
+  @NotNull DyanasisInvokableAnchor owner();
+
+  @Override
+  @NotNull DyanasisRuntime dyanasisRuntime();
+
 }

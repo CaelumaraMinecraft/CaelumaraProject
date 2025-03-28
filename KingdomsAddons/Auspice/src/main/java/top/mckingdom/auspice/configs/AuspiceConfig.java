@@ -13,41 +13,41 @@ import top.mckingdom.auspice.AuspiceAddon;
 
 public enum AuspiceConfig implements EnumConfig {
 
-    MEMBER_TRANSFER_ENABLED(2),
+  MEMBER_TRANSFER_ENABLED(2),
 
-    CURRENCY_TEST,
+  CURRENCY_TEST,
 
 
-    ;
+  ;
 
-    public static final YamlResource AUSPICE_MAIN =
-            new YamlResource(AuspiceAddon.get(),
-                    Kingdoms.getPath("auspice-addon.yml").toFile(),
-                    "auspice-addon.yml").load();
+  public static final YamlResource AUSPICE_MAIN =
+      new YamlResource(AuspiceAddon.get(),
+          Kingdoms.getPath("auspice-addon.yml").toFile(),
+          "auspice-addon.yml").load();
 
-    static {
-        ConfigWatcher.register(AUSPICE_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-        ConfigManager.registerNormalWatcher("auspice-addon.yml", (event) -> {
-            ConfigWatcher.reload(AUSPICE_MAIN, "auspice-addon.yml");
-        });
-    }
+  static {
+    ConfigWatcher.register(AUSPICE_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
+    ConfigManager.registerNormalWatcher("auspice-addon.yml", (event) -> {
+      ConfigWatcher.reload(AUSPICE_MAIN, "auspice-addon.yml");
+    });
+  }
 
-    private final ConfigPath option;
+  private final ConfigPath option;
 
-    AuspiceConfig() {
-        this.option = new ConfigPath(Strings.configOption(this));
-    }
+  AuspiceConfig() {
+    this.option = new ConfigPath(Strings.configOption(this));
+  }
 
-    AuspiceConfig(int... grouped) {
-        this.option = new ConfigPath(this.name(), grouped);
-    }
+  AuspiceConfig(int... grouped) {
+    this.option = new ConfigPath(this.name(), grouped);
+  }
 
-    @Override
-    public KeyedConfigAccessor getManager() {
-        return new KeyedYamlConfigAccessor(AUSPICE_MAIN, this.option);
-    }
+  @Override
+  public KeyedConfigAccessor getManager() {
+    return new KeyedYamlConfigAccessor(AUSPICE_MAIN, this.option);
+  }
 
-    public static YamlResource getConfig() {
-        return AUSPICE_MAIN;
-    }
+  public static YamlResource getConfig() {
+    return AUSPICE_MAIN;
+  }
 }

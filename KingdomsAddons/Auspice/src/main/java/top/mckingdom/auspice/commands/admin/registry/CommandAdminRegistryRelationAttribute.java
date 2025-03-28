@@ -9,11 +9,12 @@ import org.kingdoms.main.Kingdoms;
 
 public class CommandAdminRegistryRelationAttribute extends CommandAdminRegistryTemplate<RelationAttribute, RelationAttributeRegistry> {
 
-    public CommandAdminRegistryRelationAttribute(@Nullable KingdomsParentCommand parent) {
-        this(parent, PermissionDefault.OP);
-    }
+  public CommandAdminRegistryRelationAttribute(@Nullable KingdomsParentCommand parent) {
+    this(parent, PermissionDefault.OP);
+  }
 
-    public CommandAdminRegistryRelationAttribute(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-        super("relation" + "attribute", parent, permissionDefault, Kingdoms.get().getRelationAttributeRegistry(), RelationAttribute.class);
-    }
+  public CommandAdminRegistryRelationAttribute(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
+    super("relation" + "attribute", parent, permissionDefault, Kingdoms.get().getRelationAttributeRegistry(), RelationAttribute.class);
+  }
+
 }
