@@ -1,9 +1,9 @@
-<scheme name="Attaccer copy3" version="142" parent_scheme="Darcula">
+<scheme name="Aurika" version="142" parent_scheme="Darcula">
   <option name="FONT_SCALE" value="1.0" />
   <metaInfo>
     <property name="ide">idea</property>
     <property name="ideVersion">2025.1.0.0</property>
-    <property name="originalScheme">Attaccer copy3</property>
+    <property name="originalScheme">Darcula</property>
   </metaInfo>
   <option name="LINE_SPACING" value="1.2" />
   <option name="EDITOR_FONT_SIZE" value="13" />
