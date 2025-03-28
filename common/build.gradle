@@ -3,7 +3,7 @@ plugins {
 }
 
 subprojects {
-  int targetJavaVersion = 8
+  int targetJavaVersion = 11
 
   java {
     JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)

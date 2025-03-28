@@ -13,7 +13,7 @@ plugins {
 group = "top.mckingdom"
 version = "1.0.2"
 
-int targetJavaVersion = 17
+int targetJavaVersion = 21
 
 subprojects {
 
