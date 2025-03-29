@@ -9,20 +9,22 @@ import net.aurika.auspice.server.player.PlayerManager;
 import org.jetbrains.annotations.NotNull;
 
 public interface GameServer extends Server, EventServer {
-    /**
-     * Gets ticks the server ran.
-     *
-     * @return the ticks
-     */
-    int ticks();
 
-    boolean isMainThread();
+  /**
+   * Gets ticks the server ran.
+   *
+   * @return the ticks
+   */
+  int ticks();
 
-    @NotNull EventManager eventManager();
+  boolean isMainThread();
 
-    @NotNull WorldRegistry worldRegistry();
+  @NotNull EventManager eventManager();
 
-    @NotNull PlayerManager playerManager();
+  @NotNull WorldRegistry worldRegistry();
 
-    @NotNull PermissionManager permissionManager();
+  @NotNull PlayerManager playerManager();
+
+  @NotNull PermissionManager permissionManager();
+
 }

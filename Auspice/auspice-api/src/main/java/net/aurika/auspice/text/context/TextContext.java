@@ -9,25 +9,26 @@ import org.jetbrains.annotations.NotNull;
 
 public interface TextContext extends PlaceholderContextBuilder, Cloneable {
 
-    @Override
-    default PlaceholderContextBuilder inheritVariables(@NotNull PlaceholderContextBuilder other) {
-        PlaceholderContextBuilder.super.inheritVariables(other);
-        if (other instanceof TextContext) {
-            this.ignoreColors(((TextContext) other).ignoreColors());
-        }
-        return this;
+  @Override
+  default PlaceholderContextBuilder inheritVariables(@NotNull PlaceholderContextBuilder other) {
+    PlaceholderContextBuilder.super.inheritVariables(other);
+    if (other instanceof TextContext) {
+      this.ignoreColors(((TextContext) other).ignoreColors());
     }
+    return this;
+  }
 
-    @Contract("_ -> param1")
-    default <T extends TextContext> @NotNull T cloneInto(@NotNull T other) {
-        PlaceholderContextBuilder.super.cloneInto((PlaceholderContextBuilderImpl) other);
-        other.ignoreColors(this.ignoreColors());
-        return other;
-    }
+  @Contract("_ -> param1")
+  default <T extends TextContext> @NotNull T cloneInto(@NotNull T other) {
+    PlaceholderContextBuilder.super.cloneInto((PlaceholderContextBuilderImpl) other);
+    other.ignoreColors(this.ignoreColors());
+    return other;
+  }
 
-    @Getter
-    boolean ignoreColors();
+  @Getter
+  boolean ignoreColors();
 
-    @Setter
-    TextContext ignoreColors(boolean ignoreColors);
+  @Setter
+  TextContext ignoreColors(boolean ignoreColors);
+
 }

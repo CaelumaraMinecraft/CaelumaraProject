@@ -5,16 +5,18 @@ import net.aurika.common.annotations.Getter;
 import net.aurika.common.annotations.Setter;
 
 public class TextContextImpl extends PlaceholderContextBuilderImpl implements TextContext {
-    public boolean ignoreColors = false;
 
-    @Getter
-    public boolean ignoreColors() {
-        return this.ignoreColors;
-    }
+  public boolean ignoreColors = false;
 
-    @Setter
-    public TextContext ignoreColors(boolean ignoreColors) {
-        this.ignoreColors = ignoreColors;
-        return this;
-    }
+  @Getter
+  public boolean ignoreColors() {
+    return this.ignoreColors;
+  }
+
+  @Setter
+  public TextContext ignoreColors(boolean ignoreColors) {
+    this.ignoreColors = ignoreColors;
+    return this;
+  }
+
 }

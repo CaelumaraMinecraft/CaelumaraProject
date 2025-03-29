@@ -4,13 +4,15 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 public interface Expression<VT extends VariableTranslator<?>, OUT> {
-    OUT eval(@NotNull VT variableTranslator);
 
-    boolean isDefault();
+  OUT eval(@NotNull VT variableTranslator);
 
-    public @Nullable Expression<VT, OUT> nullIfDefault();
+  boolean isDefault();
 
-    public @Nullable String getOriginalString();
+  public @Nullable Expression<VT, OUT> nullIfDefault();
 
-    public @NotNull String asString(boolean b);
+  public @Nullable String getOriginalString();
+
+  public @NotNull String asString(boolean b);
+
 }

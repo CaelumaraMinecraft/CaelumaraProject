@@ -1,8 +1,8 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.forgegradle)
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("java-library")
+  alias(libs.plugins.forgegradle)
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
 group = "net.aurika.auspice.forge"
@@ -11,5 +11,5 @@ repositories {
 }
 
 dependencies {
-    compileOnlyApi(libs.annotations.jetbrains)
+  compileOnlyApi(libs.annotations.jetbrains)
 }

@@ -1,68 +1,68 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
 group = "net.aurika.auspice.spigot"
 
 dependencies {
 
-    api(project(":Auspice:game:bukkit:craftbukkit"))  // Craftbukkit 的 API 适用于 Spigot
+  api(project(":Auspice:game:bukkit:craftbukkit"))  // Craftbukkit 的 API 适用于 Spigot
 
-    //Classpath libs
-    compileOnly(libs.server.spigot)
-    compileOnly(libs.bungee.chat)
+  //Classpath libs
+  compileOnly(libs.server.spigot)
+  compileOnly(libs.bungee.chat)
 
-    compileOnly(libs.annotations.checker)
-    compileOnly(libs.annotations.jetbrains)
+  compileOnly(libs.annotations.checker)
+  compileOnly(libs.annotations.jetbrains)
 }
 
 def targetJavaVersion = 17
 
 java {
-    JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
+  JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+  sourceCompatibility = javaVersion
+  targetCompatibility = javaVersion
+  if (JavaVersion.current() < javaVersion) {
+    toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+  }
 }
 
 tasks {
 
-    build {
-        dependsOn("shadowJar")
+  build {
+    dependsOn("shadowJar")
+  }
+
+  compileKotlin {
+
+    kotlinOptions {
+      jvmTarget = 17
     }
+  }
 
-    compileKotlin {
+  compileJava {
+    options.encoding = 'UTF-8'
 
-        kotlinOptions {
-            jvmTarget = 17
-        }
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+      options.release.set(targetJavaVersion)
     }
+  }
 
-    compileJava {
-        options.encoding = 'UTF-8'
+  shadowJar {
 
-        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-            options.release.set(targetJavaVersion)
-        }
-    }
+    enabled = true
 
-    shadowJar {
+    archiveBaseName = "Auspice-CraftBukkit"
+    archiveClassifier = null
 
-        enabled = true
-
-        archiveBaseName = "Auspice-CraftBukkit"
-        archiveClassifier = null
-
-        relocate("kotlin", "net.aurika.auspice.libs.kotlin")
-        relocate("com.github.benmanes.caffeine", "net.aurika.auspice.libs.caffeine")
-        relocate("org.snakeyaml.engine", "net.aurika.auspice.libs.snakeyaml")
-        relocate("com.google.common", "net.aurika.auspice.libs.google.common")
-        relocate("com.cryptomorin.xseries", "net.aurika.auspice.libs.xserise")
-        relocate("org.objectweb.asm", "net.aurika.auspice.libs.asm")
+    relocate("kotlin", "net.aurika.auspice.libs.kotlin")
+    relocate("com.github.benmanes.caffeine", "net.aurika.auspice.libs.caffeine")
+    relocate("org.snakeyaml.engine", "net.aurika.auspice.libs.snakeyaml")
+    relocate("com.google.common", "net.aurika.auspice.libs.google.common")
+    relocate("com.cryptomorin.xseries", "net.aurika.auspice.libs.xserise")
+    relocate("org.objectweb.asm", "net.aurika.auspice.libs.asm")
 
 //        exclude(
 //                "kotlin-stdlib-2.0.20-Beta2.jar",
@@ -70,18 +70,18 @@ tasks {
 //                "checker-qual-3.46.0.jar",
 //                "snakeyaml-2.2.jar"
 //        )
-    }
+  }
 
-    jar {
-        enabled = false
-    }
+  jar {
+    enabled = false
+  }
 }
 
 processResources {
-    def props = [version: version]
-    inputs.properties props
-    filteringCharset = "UTF-8"
-    filesMatching("plugin.yml") {
-        expand props
-    }
+  def props = [version: version]
+  inputs.properties props
+  filteringCharset = "UTF-8"
+  filesMatching("plugin.yml") {
+    expand props
+  }
 }

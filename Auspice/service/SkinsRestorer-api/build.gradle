@@ -1,16 +1,16 @@
 plugins {
-    id("aurika.repos")
+  id("aurika.repos")
 }
 
 repositories {
-    aurikaRepos {
-        codeMC {
-            maven_public()
-        }
+  aurikaRepos {
+    codeMC {
+      maven_public()
     }
+  }
 }
 
 dependencies {
 //    compileOnlyApi("net.skinsrestorer:skinsrestorer-api:15.5.2")  TODO
-    compileOnlyApi(fileTree("$rootDir/libs/plugins/SkinsRestorer"))
+  compileOnlyApi(fileTree("$rootDir/libs/plugins/SkinsRestorer"))
 }

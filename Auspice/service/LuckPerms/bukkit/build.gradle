@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.kotlin)
+  alias(libs.plugins.kotlin)
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly(fileTree("$rootDir/libs/plugins/LuckPerms-Bukkit"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly(fileTree("$rootDir/libs/plugins/LuckPerms-Bukkit"))
 }

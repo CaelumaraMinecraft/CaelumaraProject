@@ -5,5 +5,7 @@ import net.aurika.common.key.Identified;
 import org.jetbrains.annotations.NotNull;
 
 public interface BaseAuditLogConstructor extends Identified {
-    @NotNull Ident ident();
+
+  @NotNull Ident ident();
+
 }

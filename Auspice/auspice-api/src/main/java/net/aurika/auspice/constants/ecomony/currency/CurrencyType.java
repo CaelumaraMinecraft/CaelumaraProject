@@ -1,9 +1,9 @@
 package net.aurika.auspice.constants.ecomony.currency;
 
+import net.aurika.auspice.constants.ecomony.currency.bill.CurrencyEntry;
 import net.aurika.common.key.Key;
 import net.aurika.common.key.Keyed;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.auspice.constants.ecomony.currency.bill.CurrencyEntry;
 
 public interface CurrencyType<T, C> extends Keyed {
 
@@ -26,35 +26,35 @@ public interface CurrencyType<T, C> extends Keyed {
 //        return targetClass;
 //    }
 
-    /**
-     * Get the currency type key.
-     */
-    @Override
-    @NotNull Key key();
+  /**
+   * Get the currency type key.
+   */
+  @Override
+  @NotNull Key key();
 
-    /**
-     * Return weather can apply the currency to the target
-     *
-     * @param target The target
-     */
-    boolean canApply(@NotNull Object target);
+  /**
+   * Return weather can apply the currency to the target
+   *
+   * @param target The target
+   */
+  boolean canApply(@NotNull Object target);
 
+  /**
+   * 如果形参 amountString 不符合规范
+   * 则返回 {@code null}
+   */
+  CurrencyEntry<T, C> getAmount(String amountString);
 
-    /**
-     * 如果形参 amountString 不符合规范
-     * 则返回 {@code null}
-     */
-    CurrencyEntry<T, C> getAmount(String amountString);
+  CurrencyEntry<T, C> getAmount(Object amount);
 
-    CurrencyEntry<T, C> getAmount(Object amount);
+  boolean canExpend(T target, C amount);
 
-    boolean canExpend(T target, C amount);
+  void forceExpend(T target, C amount);
 
-    void forceExpend(T target, C amount);
+  boolean canRefund(T target, C amount);
 
-    boolean canRefund(T target, C amount);
+  void forceRefund(T target, C amount);
 
-    void forceRefund(T target, C amount);
 }
 
 

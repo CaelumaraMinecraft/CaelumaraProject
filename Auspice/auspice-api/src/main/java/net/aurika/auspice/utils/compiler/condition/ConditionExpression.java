@@ -1,20 +1,22 @@
 package net.aurika.auspice.utils.compiler.condition;
 
+import net.aurika.auspice.utils.compiler.base.Expression;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.auspice.utils.compiler.base.Expression;
 
 public interface ConditionExpression extends Expression<ConditionVariableTranslator, Boolean> {
-    @NotNull Boolean eval(@NotNull ConditionVariableTranslator variableTranslator);
 
-    boolean isDefault();
+  @NotNull Boolean eval(@NotNull ConditionVariableTranslator variableTranslator);
 
-    @Nullable
-    String getOriginalString();
+  boolean isDefault();
 
-    @NotNull String asString(boolean b);
+  @Nullable
+  String getOriginalString();
 
-    default @Nullable ConditionExpression nullIfDefault() {
-        return this.isDefault() ? null : this;
-    }
+  @NotNull String asString(boolean b);
+
+  default @Nullable ConditionExpression nullIfDefault() {
+    return this.isDefault() ? null : this;
+  }
+
 }

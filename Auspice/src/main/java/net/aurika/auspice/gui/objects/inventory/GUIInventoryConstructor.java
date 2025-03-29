@@ -5,9 +5,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 public interface GUIInventoryConstructor {
-    Inventory create(InventoryHolder var1, String var2);
 
-    int getMaxSize();
+  Inventory create(InventoryHolder var1, String var2);
 
-    InventoryType getType();
+  int getMaxSize();
+
+  InventoryType getType();
+
 }

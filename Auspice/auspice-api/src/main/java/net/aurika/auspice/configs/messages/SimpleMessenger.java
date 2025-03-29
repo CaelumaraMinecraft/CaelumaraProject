@@ -6,25 +6,27 @@ import net.aurika.auspice.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class SimpleMessenger implements ContextualMessenger {
-    protected final @NotNull CommandSender sender;
-    protected final @NotNull MessageContext messageSettings;
 
-    public SimpleMessenger(@NotNull CommandSender sender, @NotNull MessageContext messageSettings) {
-        this.sender = sender;
-        this.messageSettings = messageSettings;
-    }
+  protected final @NotNull CommandSender sender;
+  protected final @NotNull MessageContext messageSettings;
 
-    public @NotNull Player senderAsPlayer() {
-        return (Player) this.sender;
-    }
+  public SimpleMessenger(@NotNull CommandSender sender, @NotNull MessageContext messageSettings) {
+    this.sender = sender;
+    this.messageSettings = messageSettings;
+  }
 
-    @Override
-    public @NotNull MessageContext messageContext() {
-        return this.messageSettings;
-    }
+  public @NotNull Player senderAsPlayer() {
+    return (Player) this.sender;
+  }
 
-    @Override
-    public @NotNull CommandSender messageReceiver() {
-        return this.sender;
-    }
+  @Override
+  public @NotNull MessageContext messageContext() {
+    return this.messageSettings;
+  }
+
+  @Override
+  public @NotNull CommandSender messageReceiver() {
+    return this.sender;
+  }
+
 }

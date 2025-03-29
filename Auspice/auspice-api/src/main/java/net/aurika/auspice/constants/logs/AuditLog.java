@@ -1,7 +1,7 @@
 package net.aurika.auspice.constants.logs;
 
-import net.aurika.auspice.configs.messages.context.MessageContextProvider;
 import net.aurika.auspice.configs.messages.context.MessageContext;
+import net.aurika.auspice.configs.messages.context.MessageContextProvider;
 import net.aurika.auspice.utils.time.TimeUtils;
 import net.aurika.common.annotations.Getter;
 import net.aurika.common.annotations.Setter;
@@ -13,40 +13,42 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AuditLog implements MessageContextProvider, Serializable, Deserializable {
-    protected long time = System.currentTimeMillis();
 
-    public AuditLog() {
-    }
+  protected long time = System.currentTimeMillis();
 
-    public abstract @NotNull AuditLogConstructor constructor();
+  public AuditLog() {
+  }
 
-    @MustBeInvokedByOverriders
-    public void deserialize(@NotNull SectionableDataGetter dataGetter) {
-        this.time = dataGetter.get("time").asLong();
-    }
+  public abstract @NotNull AuditLogConstructor constructor();
 
-    @MustBeInvokedByOverriders
-    public void serialize(@NotNull SectionableDataSetter dataSetter) {
-        dataSetter.setLong("time", this.time);
-    }
+  @MustBeInvokedByOverriders
+  public void deserialize(@NotNull SectionableDataGetter dataGetter) {
+    this.time = dataGetter.get("time").asLong();
+  }
 
-    @Getter
-    public final long time() {
-        return this.time;
-    }
+  @MustBeInvokedByOverriders
+  public void serialize(@NotNull SectionableDataSetter dataSetter) {
+    dataSetter.setLong("time", this.time);
+  }
 
-    @Setter
-    public final void time(long time) {
-        this.time = time;
-    }
+  @Getter
+  public final long time() {
+    return this.time;
+  }
 
-    @MustBeInvokedByOverriders
-    public void addMessageContextEdits(@NotNull MessageContext messageContext) {
-        addEdits(messageContext);
-    }
+  @Setter
+  public final void time(long time) {
+    this.time = time;
+  }
 
-    @MustBeInvokedByOverriders
-    public void addEdits(@NotNull MessageContext messageContext) {
-        messageContext.raw("time", TimeUtils.getDateAndTime(this.time).toString());
-    }
+  @MustBeInvokedByOverriders
+  public void addMessageContextEdits(@NotNull MessageContext messageContext) {
+    addEdits(messageContext);
+  }
+
+  @MustBeInvokedByOverriders
+  public void addEdits(@NotNull MessageContext messageContext) {
+    messageContext.raw("time", TimeUtils.getDateAndTime(this.time).toString());
+  }
+
 }

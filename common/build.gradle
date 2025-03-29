@@ -2,7 +2,9 @@ plugins {
   id("java-library")
 }
 
-subprojects {
+allprojects {
+  group = "net.aurika.commons"
+
   int targetJavaVersion = 11
 
   java {

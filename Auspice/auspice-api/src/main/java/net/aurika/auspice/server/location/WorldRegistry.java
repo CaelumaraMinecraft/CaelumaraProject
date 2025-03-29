@@ -8,9 +8,10 @@ import java.util.UUID;
 
 public interface WorldRegistry {
 
-    @NotNull List<? extends World> getWorlds();
+  @NotNull List<? extends World> getWorlds();
 
-    @Nullable World getWorld(@NotNull UUID id);
+  @Nullable World getWorld(@NotNull UUID id);
 
-    @Nullable World getWorld(@NotNull String name);
+  @Nullable World getWorld(@NotNull String name);
+
 }

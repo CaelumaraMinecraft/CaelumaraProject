@@ -1,22 +1,24 @@
 package net.aurika.auspice.user;
 
 public class AuspiceUserException extends RuntimeException {
-    public AuspiceUserException() {
-    }
 
-    public AuspiceUserException(String message) {
-        super(message);
-    }
+  public AuspiceUserException() {
+  }
 
-    public AuspiceUserException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public AuspiceUserException(String message) {
+    super(message);
+  }
 
-    public AuspiceUserException(Throwable cause) {
-        super(cause);
-    }
+  public AuspiceUserException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-    protected AuspiceUserException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+  public AuspiceUserException(Throwable cause) {
+    super(cause);
+  }
+
+  protected AuspiceUserException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
+  }
+
 }

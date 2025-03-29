@@ -6,16 +6,17 @@ import java.util.Objects;
 
 public final class IdentityPlaceholderTarget implements PlaceholderTarget {
 
-    private final @NotNull Object identity;
+  private final @NotNull Object identity;
 
-    public IdentityPlaceholderTarget(@NotNull Object identity) {
-        Objects.requireNonNull(identity, "identity");
-        this.identity = identity;
-    }
+  public IdentityPlaceholderTarget(@NotNull Object identity) {
+    Objects.requireNonNull(identity, "identity");
+    this.identity = identity;
+  }
 
-    @NotNull
-    public Object provideTo(@NotNull PlaceholderTargetProvider placeholderTargetProvider) {
-        Objects.requireNonNull(placeholderTargetProvider);
-        return this.identity;
-    }
+  @NotNull
+  public Object provideTo(@NotNull PlaceholderTargetProvider placeholderTargetProvider) {
+    Objects.requireNonNull(placeholderTargetProvider);
+    return this.identity;
+  }
+
 }

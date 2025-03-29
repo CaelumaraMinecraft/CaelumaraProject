@@ -1,8 +1,8 @@
 plugins {
-    id("java-library")
+  id("java-library")
 }
 
 dependencies {
-    api(project(":Auspice:service-api"))
-    compileOnlyApi(libs.server.craftbukkit)
+  api(project(":Auspice:service-api"))
+  compileOnlyApi(libs.server.craftbukkit)
 }

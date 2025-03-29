@@ -8,13 +8,15 @@ import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public final class ServiceMyPet implements BukkitServicePet {
-    @Override
-    public PetInfo petInfo(@NotNull Entity entity) {
-        if (entity instanceof MyPetBukkitEntity) {
-            MyPet pet = ((MyPetBukkitEntity) entity).getMyPet();
-            return new PetInfo(pet.getOwner().getPlayerUUID(), true);
-        } else {
-            return null;
-        }
+
+  @Override
+  public PetInfo petInfo(@NotNull Entity entity) {
+    if (entity instanceof MyPetBukkitEntity) {
+      MyPet pet = ((MyPetBukkitEntity) entity).getMyPet();
+      return new PetInfo(pet.getOwner().getPlayerUUID(), true);
+    } else {
+      return null;
     }
+  }
+
 }

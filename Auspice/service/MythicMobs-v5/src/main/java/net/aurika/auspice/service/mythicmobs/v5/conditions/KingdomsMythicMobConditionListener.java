@@ -10,12 +10,14 @@ import java.util.Locale;
 import java.util.Map;
 
 public final class KingdomsMythicMobConditionListener implements Listener {
-    static final Map<String, ISkillCondition> CONDITIONS = new HashMap<>();
 
-    @EventHandler
-    public void onConditionLoad(MythicConditionLoadEvent event) {
-        String conditionName = event.getConditionName().toLowerCase(Locale.ENGLISH);
-        ISkillCondition condition = CONDITIONS.get(conditionName);
-        if (condition != null) event.register(condition);
-    }
+  static final Map<String, ISkillCondition> CONDITIONS = new HashMap<>();
+
+  @EventHandler
+  public void onConditionLoad(MythicConditionLoadEvent event) {
+    String conditionName = event.getConditionName().toLowerCase(Locale.ENGLISH);
+    ISkillCondition condition = CONDITIONS.get(conditionName);
+    if (condition != null) event.register(condition);
+  }
+
 }

@@ -1,16 +1,16 @@
 plugins {
-    id("aurika.repos")
-    id("java-library")
+  id("aurika.repos")
+  id("java-library")
 }
 
 repositories {
-    aurikaRepos {
-        essentials_releases()
-        essentials_snapshots()
-    }
+  aurikaRepos {
+    essentials_releases()
+    essentials_snapshots()
+  }
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly("net.essentialsx:EssentialsX:2.20.1")
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly("net.essentialsx:EssentialsX:2.20.1")
 }

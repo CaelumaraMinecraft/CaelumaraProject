@@ -1,19 +1,21 @@
 package net.aurika.auspice.server.location;
 
 class AbstractDirectional implements Directional {
-    private final float pitch;
-    private final float yaw;
 
-    public AbstractDirectional(float pitch, float yaw) {
-        this.pitch = pitch;
-        this.yaw = yaw;
-    }
+  private final float pitch;
+  private final float yaw;
 
-    public float getPitch() {
-        return this.pitch;
-    }
+  public AbstractDirectional(float pitch, float yaw) {
+    this.pitch = pitch;
+    this.yaw = yaw;
+  }
 
-    public float getYaw() {
-        return this.yaw;
-    }
+  public float getPitch() {
+    return this.pitch;
+  }
+
+  public float getYaw() {
+    return this.yaw;
+  }
+
 }

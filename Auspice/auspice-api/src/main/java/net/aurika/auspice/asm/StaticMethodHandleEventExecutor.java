@@ -10,28 +10,30 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 public class StaticMethodHandleEventExecutor implements EventExecutor {
-    private final Class<? extends Event> eventClass;
-    private final MethodHandle handle;
 
-    public StaticMethodHandleEventExecutor(@NotNull Class<? extends Event> eventClass, @NotNull Method m) {
-        Preconditions.checkArgument(Modifier.isStatic(m.getModifiers()), "Not a static method: %s", m);
-        Preconditions.checkArgument(eventClass != null, "eventClass is null");
-        this.eventClass = eventClass;
-        try {
-            m.setAccessible(true);
-            this.handle = MethodHandles.lookup().unreflect(m);
-        } catch (IllegalAccessException e) {
-            throw new AssertionError("Unable to set accessible", e);
-        }
-    }
+  private final Class<? extends Event> eventClass;
+  private final MethodHandle handle;
 
-    @Override
-    public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
-        if (!eventClass.isInstance(event)) return;
-        try {
-            handle.invoke(event);
-        } catch (Throwable throwable) {
-            throw new RuntimeException(throwable);
-        }
+  public StaticMethodHandleEventExecutor(@NotNull Class<? extends Event> eventClass, @NotNull Method m) {
+    Preconditions.checkArgument(Modifier.isStatic(m.getModifiers()), "Not a static method: %s", m);
+    Preconditions.checkArgument(eventClass != null, "eventClass is null");
+    this.eventClass = eventClass;
+    try {
+      m.setAccessible(true);
+      this.handle = MethodHandles.lookup().unreflect(m);
+    } catch (IllegalAccessException e) {
+      throw new AssertionError("Unable to set accessible", e);
     }
+  }
+
+  @Override
+  public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
+    if (!eventClass.isInstance(event)) return;
+    try {
+      handle.invoke(event);
+    } catch (Throwable throwable) {
+      throw new RuntimeException(throwable);
+    }
+  }
+
 }

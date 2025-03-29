@@ -9,9 +9,11 @@ public abstract class RepositoryExtension {
   protected final @NotNull String urlPrefix;
   protected final @NotNull String repositoryName;
 
-  public RepositoryExtension(@NotNull RepositoryHandler repositoryHandler,
-                             @NotNull String urlPrefix,
-                             @NotNull String repositoryName) {
+  public RepositoryExtension(
+      @NotNull RepositoryHandler repositoryHandler,
+      @NotNull String urlPrefix,
+      @NotNull String repositoryName
+  ) {
     this.repositoryHandler = repositoryHandler;
     this.urlPrefix = processURLPrefix(urlPrefix);
     this.repositoryName = repositoryName;

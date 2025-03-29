@@ -9,56 +9,60 @@ import java.util.Objects;
 
 public final class PlaceholderParts {
 
-    private final @NotNull String full;
-    private @Nullable List<String> parts;
+  private final @NotNull String full;
+  private @Nullable List<String> parts;
 
-    public PlaceholderParts(@NotNull String full) {
-        Objects.requireNonNull(full, "full");
-        this.full = full;
-        if (this.full.isEmpty()) {
-            throw new IllegalArgumentException("Placeholder parts cannot be empty: " + this.full);
-        }
+  public PlaceholderParts(@NotNull String full) {
+    Objects.requireNonNull(full, "full");
+    this.full = full;
+    if (this.full.isEmpty()) {
+      throw new IllegalArgumentException("Placeholder parts cannot be empty: " + this.full);
+    }
+  }
+
+  /**
+   * Gets the full name.
+   *
+   * @return the full name
+   */
+  public @NotNull String full() {
+    return this.full;
+  }
+
+  /**
+   * Gets the placeholder parts.
+   *
+   * @return the parts
+   */
+  public @NotNull List<String> parts() {
+    if (this.parts == null) {
+      this.parts = Strings.split(this.full, '_', false);
     }
 
-    /**
-     * Gets the full name.
-     * @return the full name
-     */
-    public @NotNull String full() {
-        return this.full;
-    }
+    return Objects.requireNonNull(this.parts);
+  }
 
-    /**
-     * Gets the placeholder parts.
-     * @return the parts
-     */
-    public @NotNull List<String> parts() {
-        if (this.parts == null) {
-            this.parts = Strings.split(this.full, '_', false);
-        }
+  /**
+   * Gets the first part of the placeholder name.
+   *
+   * @return the first part
+   */
+  public @NotNull String id() {
+    return this.parts().getFirst();
+  }
 
-        return Objects.requireNonNull(this.parts);
-    }
+  public boolean isTerminal() {
+    return this.parts().size() == 1;
+  }
 
-    /**
-     * Gets the first part of the placeholder name.
-     * @return the first part
-     */
-    public @NotNull String id() {
-        return this.parts().getFirst();
-    }
+  public @NotNull String getParameterFromIndex(int index) {
+    return Objects.requireNonNull(String.join("_", this.parts().subList(index, this.parts().size())));
+  }
 
-    public boolean isTerminal() {
-        return this.parts().size() == 1;
-    }
+  @NotNull
+  public String toString() {
+    return "PlaceholderParts(full='" + this.full + "', placeholder=" + this.parts() + ')';
+  }
 
-    public @NotNull String getParameterFromIndex(int index) {
-        return Objects.requireNonNull(String.join("_", this.parts().subList(index, this.parts().size())));
-    }
-
-    @NotNull
-    public String toString() {
-        return "PlaceholderParts(full='" + this.full + "', placeholder=" + this.parts() + ')';
-    }
 }
 

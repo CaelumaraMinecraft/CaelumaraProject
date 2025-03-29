@@ -6,9 +6,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface PermissionManager {
-    @Nullable Permission getPermission(@NotNull PermissionKey permKey);
 
-    void addPermission(@NotNull Permission permission);
+  @Nullable Permission getPermission(@NotNull PermissionKey permKey);
 
-    @Nullable Permission removePermission(PermissionKey permKey);
+  void addPermission(@NotNull Permission permission);
+
+  @Nullable Permission removePermission(PermissionKey permKey);
+
 }

@@ -1,18 +1,18 @@
 plugins {
-    id("aurika.repos")
-    id("java-library")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("aurika.repos")
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
 repositories {
-    aurikaRepos {
-        enginehub()
-    }
+  aurikaRepos {
+    enginehub()
+  }
 }
 
 dependencies {
-    api(project(":Auspice:service-api:bukkit-api"))
-    // WorldEdit
-    compileOnly("com.sk89q.worldedit:worldedit-core:7.2.9")
+  api(project(":Auspice:service-api:bukkit-api"))
+  // WorldEdit
+  compileOnly("com.sk89q.worldedit:worldedit-core:7.2.9")
 }

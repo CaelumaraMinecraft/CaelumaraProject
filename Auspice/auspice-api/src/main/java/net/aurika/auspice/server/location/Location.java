@@ -1,110 +1,115 @@
 package net.aurika.auspice.server.location;
 
 import kotlin.jvm.internal.Intrinsics;
+import net.aurika.auspice.server.core.Server;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.aurika.auspice.server.core.Server;
 
 public class Location {
-    private @Nullable World world;
-    private double x;
-    private double y;
-    private double z;
-    private float yaw;
-    private float pitch;
 
-    public static Location of(@Nullable World world, double x, double y, double z) {
-        return new Location(world, x, y, z);
+  private @Nullable World world;
+  private double x;
+  private double y;
+  private double z;
+  private float yaw;
+  private float pitch;
+
+  public static Location of(@Nullable World world, double x, double y, double z) {
+    return new Location(world, x, y, z);
+  }
+
+  public static Location of(@Nullable World world, double x, double y, double z, float yaw, float pitch) {
+    return new Location(world, x, y, z, yaw, pitch);
+  }
+
+  public Location(@Nullable World world, double x, double y, double z) { // Paper
+    this(world, x, y, z, 0, 0);
+  }
+
+  public Location(@Nullable World world, double x, double y, double z, float yaw, float pitch) {
+    this.world = world;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.yaw = yaw;
+    this.pitch = pitch;
+  }
+
+  public @Nullable World getWorld() {
+    return this.world;
+  }
+
+  public boolean isWorldLoaded() {
+    if (this.world == null) {
+      return false;
     }
 
-    public static Location of(@Nullable World world, double x, double y, double z, float yaw, float pitch) {
-        return new Location(world, x, y, z, yaw, pitch);
-    }
+    World world = this.world;
+    return Server.get().worldRegistry().getWorld(world.getUID()) != null;
+  }
 
-    public Location(@Nullable World world, double x, double y, double z) { // Paper
-        this(world, x, y, z, 0, 0);
-    }
+  public double getX() {
+    return this.x;
+  }
 
-    public Location(@Nullable World world, double x, double y, double z, float yaw, float pitch) {
-        this.world = world;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.yaw = yaw;
-        this.pitch = pitch;
-    }
+  public double getY() {
+    return this.y;
+  }
 
-    public @Nullable World getWorld() {
-        return this.world;
-    }
+  public float getYaw() {
+    return this.yaw;
+  }
 
-    public boolean isWorldLoaded() {
-        if (this.world == null) {
-            return false;
-        }
+  public float getPitch() {
+    return this.pitch;
+  }
 
-        World world = this.world;
-        return Server.get().worldRegistry().getWorld(world.getUID()) != null;
-    }
+  public double getZ() {
+    return this.z;
+  }
 
-    public double getX() {
-        return this.x;
-    }
+  public void setWorld(@Nullable World world) {
+    this.world = world;
+  }
 
-    public double getY() {
-        return this.y;
-    }
+  public void setX(double x) {
+    this.x = x;
+  }
 
-    public float getYaw() {
-        return this.yaw;
-    }
+  public void setY(double y) {
+    this.y = y;
+  }
 
-    public float getPitch() {
-        return this.pitch;
-    }
+  public void setZ(double z) {
+    this.z = z;
+  }
 
-    public double getZ() {
-        return this.z;
-    }
+  public void setYaw(float yaw) {
+    this.yaw = yaw;
+  }
 
-    public void setWorld(@Nullable World world) {
-        this.world = world;
-    }
+  public void setPitch(float pitch) {
+    this.pitch = pitch;
+  }
 
-    public void setX(double x) {
-        this.x = x;
-    }
+  public int hashCode() {
+    throw new UnsupportedOperationException();
+  }
 
-    public void setY(double y) {
-        this.y = y;
+  public boolean equals(@Nullable Object other) {
+    if (!(other instanceof Location)) {
+      return false;
+    } else {
+      return Intrinsics.areEqual(
+          this.getWorld(),
+          ((Location) other).getWorld()
+      ) && this.getX() == ((Location) other).getX() && this.getY() == ((Location) other).getY() && this.getZ() == ((Location) other).getZ() && this.getYaw() == ((Location) other).getYaw() && this.getPitch() == ((Location) other).getPitch();
     }
+  }
 
-    public void setZ(double z) {
-        this.z = z;
-    }
+  @NotNull
+  public String toString() {
+    return this.getClass().getSimpleName() + "(world=" + this.getWorld() + ", x=" + this.getX() + ", y=" + this.getY() + ", z=" + this.getZ() + ", yaw=" + this.getYaw() + ", pitch=" + this.getPitch() + ')';
+  }
 
-    public void setYaw(float yaw) {
-        this.yaw = yaw;
-    }
-
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
-    }
-
-    public int hashCode() {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean equals(@Nullable Object other) {
-        if (!(other instanceof Location)) {
-            return false;
-        } else {
-            return Intrinsics.areEqual(this.getWorld(), ((Location) other).getWorld()) && this.getX() == ((Location) other).getX() && this.getY() == ((Location) other).getY() && this.getZ() == ((Location) other).getZ() && this.getYaw() == ((Location) other).getYaw() && this.getPitch() == ((Location) other).getPitch();
-        }
-    }
-
-    @NotNull
-    public String toString() {
-        return this.getClass().getSimpleName() + "(world=" + this.getWorld() + ", x=" + this.getX() + ", y=" + this.getY() + ", z=" + this.getZ() + ", yaw=" + this.getYaw() + ", pitch=" + this.getPitch() + ')';
-    }
 }

@@ -1,12 +1,12 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
 dependencies {
-    compileOnly(project(":Auspice:auspice-api"))
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    // https://github.com/MilkBowl/VaultAPI
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+  compileOnly(project(":Auspice:auspice-api"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  // https://github.com/MilkBowl/VaultAPI
+  compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 }

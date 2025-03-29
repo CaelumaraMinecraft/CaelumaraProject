@@ -22,4 +22,6 @@ public class KingdomsDependencyPlugin implements Plugin<Project> {
     );
   }
 
+  private static void ii() { }
+
 }

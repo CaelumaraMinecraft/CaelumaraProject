@@ -11,39 +11,41 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 class FoliaBootstrapProvider implements BootstrapProvider {
-    private final FoliaAuspiceLoader loader;
-    private final ReflectionClassPathAppender b;
 
-    public FoliaBootstrapProvider(FoliaAuspiceLoader loader) {
-        this.loader = loader;
-        this.b = new ReflectionClassPathAppender(this.getClass().getClassLoader());
-    }
+  private final FoliaAuspiceLoader loader;
+  private final ReflectionClassPathAppender b;
 
-    public void onLoad() {
-        this.loader.onLoad();
-    }
+  public FoliaBootstrapProvider(FoliaAuspiceLoader loader) {
+    this.loader = loader;
+    this.b = new ReflectionClassPathAppender(this.getClass().getClassLoader());
+  }
 
-    public void onEnable() {
-        this.loader.onEnable();
-    }
+  public void onLoad() {
+    this.loader.onLoad();
+  }
 
-    public void onDisable() {
-        this.loader.onDisable();
-    }
+  public void onEnable() {
+    this.loader.onEnable();
+  }
 
-    public void runAsyncLater(Runnable runnable, long delay, TimeUnit delayTimeUnit) {
-        AuspiceUser.taskScheduler().async().delayed(Duration.ofMillis(delayTimeUnit.toMillis(delay)), runnable);
-    }
+  public void onDisable() {
+    this.loader.onDisable();
+  }
 
-    public ClassPathAppender getClassPathAppender() {
-        return this.b;
-    }
+  public void runAsyncLater(Runnable runnable, long delay, TimeUnit delayTimeUnit) {
+    AuspiceUser.taskScheduler().async().delayed(Duration.ofMillis(delayTimeUnit.toMillis(delay)), runnable);
+  }
 
-    public Path getLibsFolder() {
-        return FoliaAuspiceLoader.getFolder().resolve("libs");
-    }
+  public ClassPathAppender getClassPathAppender() {
+    return this.b;
+  }
 
-    public Logger getLogger() {
-        return this.loader.getLogger();
-    }
+  public Path getLibsFolder() {
+    return FoliaAuspiceLoader.getFolder().resolve("libs");
+  }
+
+  public Logger getLogger() {
+    return this.loader.getLogger();
+  }
+
 }

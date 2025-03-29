@@ -10,9 +10,11 @@ import java.util.Objects;
 
 public abstract class MultiComponentsRepositoryExtension extends RepositoryExtension {
 
-  public MultiComponentsRepositoryExtension(@NotNull RepositoryHandler repositoryHandler,
-                                            @NotNull String webPrefix,
-                                            @NotNull String repositoryName) {
+  public MultiComponentsRepositoryExtension(
+      @NotNull RepositoryHandler repositoryHandler,
+      @NotNull String webPrefix,
+      @NotNull String repositoryName
+  ) {
     super(repositoryHandler, webPrefix, repositoryName);
   }
 

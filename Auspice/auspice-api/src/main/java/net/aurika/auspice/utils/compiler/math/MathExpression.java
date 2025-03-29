@@ -1,21 +1,23 @@
 package net.aurika.auspice.utils.compiler.math;
 
+import net.aurika.auspice.utils.compiler.base.Expression;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.auspice.utils.compiler.base.Expression;
 
 public interface MathExpression extends Expression<MathVariableTranslator, Double> {
-    @NotNull Double eval(@NotNull MathVariableTranslator variableTranslator);
 
-    boolean isDefault();
+  @NotNull Double eval(@NotNull MathVariableTranslator variableTranslator);
 
-    default @Nullable MathExpression nullIfDefault() {
-        return this.isDefault() ? null : this;
-    }
+  boolean isDefault();
 
-    @Nullable
-    String getOriginalString();
+  default @Nullable MathExpression nullIfDefault() {
+    return this.isDefault() ? null : this;
+  }
 
-    @NotNull String asString(boolean b);
+  @Nullable
+  String getOriginalString();
+
+  @NotNull String asString(boolean b);
+
 }
 

@@ -1,23 +1,23 @@
 plugins {
-    id("aurika.repos")
-    alias(libs.plugins.kotlin)
+  id("aurika.repos")
+  alias(libs.plugins.kotlin)
 }
 
 repositories {
-    aurikaRepos {
-        thenextlvl_releases()
-    }
+  aurikaRepos {
+    thenextlvl_releases()
+  }
 }
 
 dependencies {
-    api(project(":Auspice:service:Vault"))
-    api(project(":Auspice:service-api:bukkit-api"))
-    compileOnlyApi("net.thenextlvl.services:service-io:2.2.0")
-    compileOnlyApi(fileTree("$rootDir/libs/plugins/ServiceIO"))
-    compileOnlyApi(libs.server.paper)
+  api(project(":Auspice:service:Vault"))
+  api(project(":Auspice:service-api:bukkit-api"))
+  compileOnlyApi("net.thenextlvl.services:service-io:2.2.0")
+  compileOnlyApi(fileTree("$rootDir/libs/plugins/ServiceIO"))
+  compileOnlyApi(libs.server.paper)
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
 }

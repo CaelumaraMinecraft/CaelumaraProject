@@ -1,18 +1,18 @@
 plugins {
-    id("aurika.repos")
+  id("aurika.repos")
 }
 
 repositories {
-    aurikaRepos {
-        oraxen {
-            releases()
-            snapshots()
-        }
+  aurikaRepos {
+    oraxen {
+      releases()
+      snapshots()
     }
+  }
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
 //    compileOnly("io.th0rgal:Oraxen:1.189.0")
-    compileOnlyApi(fileTree("$rootDir/libs/plugins/Oraxen"))
+  compileOnlyApi(fileTree("$rootDir/libs/plugins/Oraxen"))
 }

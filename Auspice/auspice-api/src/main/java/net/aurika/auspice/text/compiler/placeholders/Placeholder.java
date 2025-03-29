@@ -12,40 +12,43 @@ import java.util.List;
 import java.util.Set;
 
 public interface Placeholder {
-    @NotNull String asString(boolean surround);
 
-    @NotNull String getOriginalString();
+  @NotNull String asString(boolean surround);
 
-    @Nullable String getPointer();
+  @NotNull String getOriginalString();
 
-    @NotNull List<PlaceholderModifier> getModifiers();
+  @Nullable String getPointer();
 
-    @Nullable Object request(@NotNull VariableProvider variableProvider);
+  @NotNull List<PlaceholderModifier> getModifiers();
 
-    default @Nullable Set<PlaceholderModifier> getExpectedModifiers() {
-        return null;
+  @Nullable Object request(@NotNull VariableProvider variableProvider);
+
+  default @Nullable Set<PlaceholderModifier> getExpectedModifiers() {
+    return null;
+  }
+
+  default @Nullable Object applyModifiers(@Nullable Object context) {
+    Object var2 = context;
+    context = context instanceof PlaceholderTranslationContext ? ((PlaceholderTranslationContext) context).getValue() : context;
+
+    for (PlaceholderModifier placeholderModifier : this.getModifiers()) {
+      if ((context = placeholderModifier.apply(this, context)) instanceof PlaceholderTranslationContext) {
+        var2 = context;
+        context = ((PlaceholderTranslationContext) context).getValue();
+      }
     }
 
-    default @Nullable Object applyModifiers(@Nullable Object context) {
-        Object var2 = context;
-        context = context instanceof PlaceholderTranslationContext ? ((PlaceholderTranslationContext) context).getValue() : context;
-
-        for (PlaceholderModifier placeholderModifier : this.getModifiers()) {
-            if ((context = placeholderModifier.apply(this, context)) instanceof PlaceholderTranslationContext) {
-                var2 = context;
-                context = ((PlaceholderTranslationContext) context).getValue();
-            }
-        }
-
-        if ((context == null || ((context instanceof String ? (String) context : null) != null && (context instanceof String ? (String) context : null).length() == 0)) && this instanceof KingdomsPlaceholder && (context = ((KingdomsPlaceholder) this).identifier.getConfiguredDefaultValue()) == null) {
-            context = ((KingdomsPlaceholder) this).identifier.getDefault();
-        }
-
-        return var2 instanceof PlaceholderTranslationContext ? ((PlaceholderTranslationContext) var2).copyTo(context) : context;
+    if ((context == null || ((context instanceof String ? (String) context : null) != null && (context instanceof String ? (String) context : null).length() == 0)) && this instanceof KingdomsPlaceholder && (context = ((KingdomsPlaceholder) this).identifier.getConfiguredDefaultValue()) == null) {
+      context = ((KingdomsPlaceholder) this).identifier.getDefault();
     }
 
-    default PlaceholderTranslationException error(@NotNull String message) {
-        return new PlaceholderTranslationException(this, message);
-    }
+    return var2 instanceof PlaceholderTranslationContext ? ((PlaceholderTranslationContext) var2).copyTo(
+        context) : context;
+  }
+
+  default PlaceholderTranslationException error(@NotNull String message) {
+    return new PlaceholderTranslationException(this, message);
+  }
+
 }
 

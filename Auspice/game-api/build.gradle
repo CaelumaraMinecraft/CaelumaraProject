@@ -1,8 +1,8 @@
 plugins {
-    id("java-library")
+  id("java-library")
 }
 
 dependencies {
-    api(project(":Auspice:auspice-api"))
-    api(libs.annotations.jetbrains)
+  api(project(":Auspice:auspice-api"))
+  api(libs.annotations.jetbrains)
 }

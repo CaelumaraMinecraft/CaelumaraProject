@@ -5,5 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface BukkitServicePet extends BukkitService {
-    @Nullable PetInfo petInfo(@NotNull Entity entity);
+
+  @Nullable PetInfo petInfo(@NotNull Entity entity);
+
 }

@@ -1,8 +1,8 @@
 plugins {
-    id("java-library")
+  id("java-library")
 }
 
 dependencies {
-    api(project(":common:validate"))
-    compileOnlyApi(libs.annotations.jetbrains)
+  api(project(":common:validate"))
+  compileOnlyApi(libs.annotations.jetbrains)
 }

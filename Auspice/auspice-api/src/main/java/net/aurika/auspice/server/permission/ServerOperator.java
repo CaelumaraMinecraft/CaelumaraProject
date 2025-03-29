@@ -7,7 +7,8 @@ import net.aurika.auspice.server.entity.Player;
  */
 public interface ServerOperator {
 
-    boolean isOp();
+  boolean isOp();
 
-    void setOp(boolean value);
+  void setOp(boolean value);
+
 }

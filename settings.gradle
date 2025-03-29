@@ -1,275 +1,291 @@
 import org.gradle.api.initialization.resolve.RepositoriesMode
 
 pluginManagement {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        gradlePluginPortal()
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
 
-        maven {
-            name = "FabricMC"
-            url = "https://maven.fabricmc.net/"
-        }
-
-        maven {
-            name = "nms-repo"
-            url = "https://repo.codemc.org/repository/nms/"
-        }
-
-        maven {
-            name = "minecraft-repo"
-            url = "https://libraries.minecraft.net/"
-        }
-
-        maven {
-            name = "spigotmc-repo"
-            url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-        }
-
-        maven {
-            name = "sk89q-repo"
-            url = "https://maven.enginehub.org/repo/"
-        }
-
-        maven {
-            name = "placeholderapi"
-            url = "https://repo.extendedclip.com/content/repositories/placeholderapi/"
-        }
-
-        maven {
-            name = "Lumine"
-            url = "https://mvn.lumine.io/repository/maven-public/"
-        }
-
-        maven {
-            name = "MVdW-public"
-            url = "https://repo.mvdw-software.be/content/groups/public/"
-        }
-
-        maven {
-            name = "jitpack.io"
-            url = "https://jitpack.io/"
-        }
-
-        maven {
-            name = "Scarsz-Nexus"
-            url = "https://nexus.scarsz.me/content/groups/public/"
-        }
-
-        maven {
-            name = ("dynmap")
-            url = ("https://repo.mikeprimm.com/")
-        }
-
-        maven {
-            name = ("sonatype")
-            url = ("https://oss.sonatype.org/content/groups/public/")
-        }
-        maven {
-            name = ("essentials")
-            url = ("https://repo.essentialsx.net/releases/")
-        }
-        maven { url = "https://repo.rosewooddev.io/repository/public/" }
-        maven { url = "https://repo.auxilor.io/repository/maven-public/" }
-        maven { url = "https://repo.papermc.io/repository/maven-public/" }
-        maven {
-            url = ("https://jitpack.io")
-            content {
-                includeGroupByRegex("com\\.github\\..*")
-            }
-        }
-
-        maven { url = "https://repo.auxilor.io/repository/maven-public/" }
-        maven { url = "https://repo.papermc.io/repository/maven-public/" }
-
-        maven {
-            name = "ossrh"
-            url = "https://oss.sonatype.org/content/repositories/snapshots"
-        }
-
-        maven {
-            name = "ossrh"
-            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        }
-
-        maven {
-            name = "papermc-repo"
-            url = "https://repo.papermc.io/repository/maven-public/"
-        }
-
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/groups/public/"
-        }
+    maven {
+      name = "FabricMC"
+      url = "https://maven.fabricmc.net/"
     }
-    includeBuild("build-logic")
+
+    maven {
+      name = "nms-repo"
+      url = "https://repo.codemc.org/repository/nms/"
+    }
+
+    maven {
+      name = "minecraft-repo"
+      url = "https://libraries.minecraft.net/"
+    }
+
+    maven {
+      name = "spigotmc-repo"
+      url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+
+    maven {
+      name = "sk89q-repo"
+      url = "https://maven.enginehub.org/repo/"
+    }
+
+    maven {
+      name = "placeholderapi"
+      url = "https://repo.extendedclip.com/content/repositories/placeholderapi/"
+    }
+
+    maven {
+      name = "Lumine"
+      url = "https://mvn.lumine.io/repository/maven-public/"
+    }
+
+    maven {
+      name = "MVdW-public"
+      url = "https://repo.mvdw-software.be/content/groups/public/"
+    }
+
+    maven {
+      name = "jitpack.io"
+      url = "https://jitpack.io/"
+    }
+
+    maven {
+      name = "Scarsz-Nexus"
+      url = "https://nexus.scarsz.me/content/groups/public/"
+    }
+
+    maven {
+      name = ("dynmap")
+      url = ("https://repo.mikeprimm.com/")
+    }
+
+    maven {
+      name = ("sonatype")
+      url = ("https://oss.sonatype.org/content/groups/public/")
+    }
+    maven {
+      name = ("essentials")
+      url = ("https://repo.essentialsx.net/releases/")
+    }
+    maven { url = "https://repo.rosewooddev.io/repository/public/" }
+    maven { url = "https://repo.auxilor.io/repository/maven-public/" }
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
+    maven {
+      url = ("https://jitpack.io")
+      content {
+        includeGroupByRegex("com\\.github\\..*")
+      }
+    }
+
+    maven { url = "https://repo.auxilor.io/repository/maven-public/" }
+    maven { url = "https://repo.papermc.io/repository/maven-public/" }
+
+    maven {
+      name = "ossrh"
+      url = "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+
+    maven {
+      name = "ossrh"
+      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    }
+
+    maven {
+      name = "papermc-repo"
+      url = "https://repo.papermc.io/repository/maven-public/"
+    }
+
+    maven {
+      name = "sonatype"
+      url = "https://oss.sonatype.org/content/groups/public/"
+    }
+  }
+  includeBuild("build-logic")
 }
 
 dependencyResolutionManagement {
-    repositoriesMode = RepositoriesMode.PREFER_PROJECT
+  repositoriesMode = RepositoriesMode.PREFER_PROJECT
 }
 
 rootProject.name = "Aurika"
 
 include(
-        ":common:annotation",
-        ":common:config",
-        ":common:config:config-api",
-        ":common:config:config-json",
-        ":common:config:config-yaml",
-        ":common:data-api",
-        ":common:dependency",
-        ":common:examinable-api",
-        ":common:function",
-        ":common:key",
-        ":common:logging",
-        ":common:nbt",
-        ":common:property",
-        ":common:scheduler",
-        ":common:snakeyaml",
-        ":common:task",
-        ":common:validate",
+    ":common:annotation",
+    ":common:config",
+    ":common:config:config-api",
+    ":common:config:config-json",
+    ":common:config:config-yaml",
+    ":common:data-api",
+    ":common:dependency",
+    ":common:examinable-api",
+    ":common:function",
+    ":common:key",
+    ":common:logging",
+    ":common:nbt",
+    ":common:property",
+    ":common:scheduler",
+    ":common:snakeyaml",
+    ":common:task",
+    ":common:validate",
 
-        ":common:util:cache",
-        ":common:util:collection",
-        ":common:util:enumeration",
-        ":common:util:file",
-        ":common:util:functional",
-        ":common:util:generics",
-        ":common:util:gson",
-        ":common:util:number",
-        ":common:util:math",
-        ":common:util:reflection",
-        ":common:util:registry",
-        ":common:util:stacktrace",
-        ":common:util:string",
-        ":common:util:uuid",
-)
-
-include(
-        ":ecliptor",
-        ":ecliptor:annotations",
-        ":ecliptor:data-api",
-        ":ecliptor:data-storage",
-)
+    ":common:util:cache",
+    ":common:util:collection",
+    ":common:util:enumeration",
+    ":common:util:file",
+    ":common:util:functional",
+    ":common:util:generics",
+    ":common:util:gson",
+    ":common:util:number",
+    ":common:util:math",
+    ":common:util:reflection",
+    ":common:util:registry",
+    ":common:util:stacktrace",
+    ":common:util:string",
+    ":common:util:uuid",
+    )
 
 include(
-        ":dyanasis",
-        ":dyanasis:dyanasis-api",
-        ":dyanasis:dyanasis-editor-api",
-        ":dyanasis:dyanasis-editor-app",
-        ":dyanasis:dyanasis-editor-intellij",
-)
+    ":ecliptor",
+    ":ecliptor:annotations",
+    ":ecliptor:data-api",
+    ":ecliptor:data-storage",
+    )
 
 include(
-        ":aurika:base",
-        ":aurika:config-api",
-)
+    ":dyanasis",
+    ":dyanasis:dyanasis-api",
+    ":dyanasis:dyanasis-editor-api",
+    ":dyanasis:dyanasis-editor-app",
+    ":dyanasis:dyanasis-editor-intellij",
+    )
 
 include(
-        ":Auspice",
+    ":aurika:base",
+    ":aurika:config-api",
+    )
 
-        ":Auspice:auspice-api",
-        ":Auspice:auspice-api:platform",
-        ":Auspice:auspice-api:platform:geyser",
+include(
+    ":Auspice",
+
+    ":Auspice:auspice-api",
+    ":Auspice:auspice-api:platform",
+    ":Auspice:auspice-api:platform:geyser",
 
 
-        ":Auspice:game",
-        ":Auspice:game-api",
+    ":Auspice:game",
+    ":Auspice:game-api",
 
-        ":Auspice:game:bukkit-api",
+    ":Auspice:game:bukkit-api",
 
-        ":Auspice:game:bukkit:craftbukkit",
-        ":Auspice:game:bukkit:spigot",
-        ":Auspice:game:bukkit:paper",
-        ":Auspice:game:bukkit:purpur",
-        ":Auspice:game:bukkit:leaf",
-        ":Auspice:game:bukkit:folia",
+    ":Auspice:game:bukkit:craftbukkit",
+    ":Auspice:game:bukkit:spigot",
+    ":Auspice:game:bukkit:paper",
+    ":Auspice:game:bukkit:purpur",
+    ":Auspice:game:bukkit:leaf",
+    ":Auspice:game:bukkit:folia",
 
 
 //        ":Auspice:game:fabric",
 //        ":Auspice:game:forge",
-        ":Auspice:game:sponge",
+    ":Auspice:game:sponge",
 
 
-        ":Auspice:proxy",
-        ":Auspice:proxy-api",
+    ":Auspice:proxy",
+    ":Auspice:proxy-api",
 
-        ":Auspice:proxy:bungee",
-        ":Auspice:proxy:velocity",
+    ":Auspice:proxy:bungee",
+    ":Auspice:proxy:velocity",
 
-        // services
-        ":Auspice:service-api",
-        ":Auspice:service-api:bukkit-api",
-        ":Auspice:service-api:bungee-api",
-        ":Auspice:service-api:velocity-api",
-        ":Auspice:service",
-        ":Auspice:service:AttributePlus",
-        ":Auspice:service:AuthMe",
-        ":Auspice:service:CMI",
-        ":Auspice:service:Essentials",
-        ":Auspice:service:ItemsAdder",
-        ":Auspice:service:Kingdoms",
-        ":Auspice:service:LuckPerms-api",
-        ":Auspice:service:LuckPerms",
-        ":Auspice:service:LuckPerms:bukkit",
-        ":Auspice:service:LuckPerms:bungee",
-        ":Auspice:service:LuckPerms:velocity",
-        ":Auspice:service:MVdWPlaceholderAPI",
-        ":Auspice:service:MyPet",
-        ":Auspice:service:MythicMobs-v4",
-        ":Auspice:service:MythicMobs-v5",
-        ":Auspice:service:Oraxen",
-        ":Auspice:service:PlaceholderAPI",
-        ":Auspice:service:ProjectKorra",
-        ":Auspice:service:ServiceIO",
-        ":Auspice:service:SimplePets",
-        ":Auspice:service:SkinsRestorer",
-        ":Auspice:service:SkinsRestorer-api",
-        ":Auspice:service:SkinsRestorer:bukkit",
-        ":Auspice:service:SkinsRestorer:bungee",
-        ":Auspice:service:SkinsRestorer:velocity",
-        ":Auspice:service:Vault",
-        ":Auspice:service:WorldEdit",
+    // services
+    ":Auspice:service-api",
+    ":Auspice:service-api:bukkit-api",
+    ":Auspice:service-api:bungee-api",
+    ":Auspice:service-api:velocity-api",
+    ":Auspice:service",
+    ":Auspice:service:AttributePlus",
+    ":Auspice:service:AuthMe",
+    ":Auspice:service:CMI",
+    ":Auspice:service:Essentials",
+    ":Auspice:service:ItemsAdder",
+    ":Auspice:service:Kingdoms",
+    ":Auspice:service:LuckPerms-api",
+    ":Auspice:service:LuckPerms",
+    ":Auspice:service:LuckPerms:bukkit",
+    ":Auspice:service:LuckPerms:bungee",
+    ":Auspice:service:LuckPerms:velocity",
+    ":Auspice:service:MVdWPlaceholderAPI",
+    ":Auspice:service:MyPet",
+    ":Auspice:service:MythicMobs-v4",
+    ":Auspice:service:MythicMobs-v5",
+    ":Auspice:service:Oraxen",
+    ":Auspice:service:PlaceholderAPI",
+    ":Auspice:service:ProjectKorra",
+    ":Auspice:service:ServiceIO",
+    ":Auspice:service:SimplePets",
+    ":Auspice:service:SkinsRestorer",
+    ":Auspice:service:SkinsRestorer-api",
+    ":Auspice:service:SkinsRestorer:bukkit",
+    ":Auspice:service:SkinsRestorer:bungee",
+    ":Auspice:service:SkinsRestorer:velocity",
+    ":Auspice:service:Vault",
+    ":Auspice:service:WorldEdit",
 
-)
-
-include(
-        ":HiraethRPG",
-        ":HiraethRPG:api",
-
-        ":HiraethRPG:game",
-        ":HiraethRPG:game:api",
-
-        ":HiraethRPG:game:bukkit",
-        ":HiraethRPG:game:bukkit:api",
-
-        ":HiraethRPG:game:bukkit:paper",
-        ":HiraethRPG:game:bukkit:folia",
-
-
-        ":HiraethRPG:proxy",
-        ":HiraethRPG:proxy:api",
-)
+    )
 
 include(
-        ":KingdomsAddons:Auspice",
-        ":KingdomsAddons:Civilizations",
-        ":KingdomsAddons:PlaceholderAPI-Bridge",
-        ":KingdomsAddons:Powerful-Territory",
-        ":KingdomsAddons:Props",
-        ":KingdomsAddons:Trade-Point",
+    ":HiraethRPG",
+    ":HiraethRPG:api",
 
-        ":KingdomsAddons:kingdoms",
-        ":KingdomsAddons:kingdoms:Peace-Treaties",
-        ":KingdomsAddons:kingdoms:Outposts",
-        ":KingdomsAddons:kingdoms:EngineHub",
-        ":KingdomsAddons:kingdoms:EngineHub:commons",
-        ":KingdomsAddons:kingdoms:EngineHub:worldguard",
-        ":KingdomsAddons:kingdoms:EngineHub:worldguard:v6",
-        ":KingdomsAddons:kingdoms:EngineHub:worldguard:v7",
-)
+    ":HiraethRPG:game",
+    ":HiraethRPG:game:api",
+
+    ":HiraethRPG:game:bukkit",
+    ":HiraethRPG:game:bukkit:api",
+
+    ":HiraethRPG:game:bukkit:paper",
+    ":HiraethRPG:game:bukkit:folia",
+
+
+    ":HiraethRPG:proxy",
+    ":HiraethRPG:proxy:api",
+    )
 
 include(
-        ":WandsCraftsmanship",
-)
+    ":KingdomsAddons:Auspice",
+    ":KingdomsAddons:Civilizations",
+    ":KingdomsAddons:PlaceholderAPI-Bridge",
+    ":KingdomsAddons:Powerful-Territory",
+    ":KingdomsAddons:Props",
+    ":KingdomsAddons:Trade-Point",
+
+    ":KingdomsAddons:kingdoms",
+    ":KingdomsAddons:kingdoms:Peace-Treaties",
+    ":KingdomsAddons:kingdoms:Outposts",
+    ":KingdomsAddons:kingdoms:EngineHub",
+    ":KingdomsAddons:kingdoms:EngineHub:commons",
+    ":KingdomsAddons:kingdoms:EngineHub:worldguard",
+    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v6",
+    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v7",
+    )
+
+include(
+    ":WandsCraftsmanship",
+    )
+
+includeBuild("commons") {
+  dependencySubstitution {
+    substitute(module("net.aurika.commons:validate")).using(project(":validate"))
+  }
+}
+includeBuild("kingdoms-addons") {}
+
+includeBuild("kingdoms")
+
+public static void addProjectAccesses(ConfigurableIncludedBuild includedBuild) {
+  String name = includedBuild.name
+  includedBuild.dependencySubstitution {
+    substitute(module("net.aurika." + name))
+  }
+}

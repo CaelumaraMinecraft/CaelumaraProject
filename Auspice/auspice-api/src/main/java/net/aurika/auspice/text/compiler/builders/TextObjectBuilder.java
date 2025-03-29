@@ -8,29 +8,31 @@ import net.aurika.auspice.text.context.TextContext;
 import net.kyori.adventure.text.TextComponent;
 
 public interface TextObjectBuilder {
-    void build(ComplexTextBuilderContextProvider provider);
 
-    void build(PlainTextBuilderContextProvider provider);
+  void build(ComplexTextBuilderContextProvider provider);
 
-    void build(HTMLTextBuilderContextProvider provider);
+  void build(PlainTextBuilderContextProvider provider);
 
-    boolean isAvailable(TextContext provider);
+  void build(HTMLTextBuilderContextProvider provider);
 
-    TextObject evaluateDynamicPieces(TextContext provider);
+  boolean isAvailable(TextContext provider);
 
-    default TextComponent buildComplex(TextContext provider) {
-        ComplexTextBuilderContextProvider complexBuilder = new ComplexTextBuilderContextProvider(provider);
-        this.build(complexBuilder);
-        return complexBuilder.merge();
-    }
+  TextObject evaluateDynamicPieces(TextContext provider);
 
-    default String buildPlain(TextContext provider) {
-        PlainTextBuilderContextProvider plainBuilder = new PlainTextBuilderContextProvider(provider);
-        this.build(plainBuilder);
-        return plainBuilder.merge();
-    }
+  default TextComponent buildComplex(TextContext provider) {
+    ComplexTextBuilderContextProvider complexBuilder = new ComplexTextBuilderContextProvider(provider);
+    this.build(complexBuilder);
+    return complexBuilder.merge();
+  }
 
-    default String build(TextContext provider) {
-        return this.buildPlain(provider);
-    }
+  default String buildPlain(TextContext provider) {
+    PlainTextBuilderContextProvider plainBuilder = new PlainTextBuilderContextProvider(provider);
+    this.build(plainBuilder);
+    return plainBuilder.merge();
+  }
+
+  default String build(TextContext provider) {
+    return this.buildPlain(provider);
+  }
+
 }

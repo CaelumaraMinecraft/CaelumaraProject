@@ -7,17 +7,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public class LazyVariableProvider implements VariableProvider {
-    private final CacheableObject<VariableProvider> delegate;
 
-    public LazyVariableProvider(Supplier<VariableProvider> placeholderProviderSupplier) {
-        this.delegate = new CachedSupplier<>(placeholderProviderSupplier);
-    }
+  private final CacheableObject<VariableProvider> delegate;
 
-    public Object provideVariable(String name) {
-        return this.delegate.get().provideVariable(name);
-    }
+  public LazyVariableProvider(Supplier<VariableProvider> placeholderProviderSupplier) {
+    this.delegate = new CachedSupplier<>(placeholderProviderSupplier);
+  }
 
-    public @NotNull String toString() {
-        return LazyVariableProvider.class.getSimpleName() + "{" + this.delegate.get().toString() + '}';
-    }
+  public Object provideVariable(String name) {
+    return this.delegate.get().provideVariable(name);
+  }
+
+  public @NotNull String toString() {
+    return LazyVariableProvider.class.getSimpleName() + "{" + this.delegate.get().toString() + '}';
+  }
+
 }

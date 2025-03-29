@@ -6,7 +6,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class ServiceAuthMe implements BukkitServiceAuth {
-    public boolean isAuthenticated(@NotNull Player player) {
-        return AuthMeApi.getInstance().isAuthenticated(player);
-    }
+
+  public boolean isAuthenticated(@NotNull Player player) {
+    return AuthMeApi.getInstance().isAuthenticated(player);
+  }
+
 }

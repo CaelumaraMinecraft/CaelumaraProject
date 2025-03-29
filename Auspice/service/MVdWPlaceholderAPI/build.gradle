@@ -1,15 +1,15 @@
 plugins {
-    id("aurika.repos")
+  id("aurika.repos")
 }
 
 repositories {
-    aurikaRepos {
-        mvdw_software()
-    }
+  aurikaRepos {
+    mvdw_software()
+  }
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
 //    compileOnly("be.maximvdw:MVdWPlaceholderAPI:3.1.1")
-    compileOnly(fileTree("$rootDir/libs.plugins/MVdWPlaceholderAPI"))
+  compileOnly(fileTree("$rootDir/libs.plugins/MVdWPlaceholderAPI"))
 }

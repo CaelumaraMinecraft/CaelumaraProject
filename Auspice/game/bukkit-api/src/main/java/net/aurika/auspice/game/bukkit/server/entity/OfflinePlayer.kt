@@ -19,54 +19,54 @@ import java.util.*
  */
 
 class OfflinePlayer(private val id: UUID, private val name: String) : OfflinePlayer {
-    @Suppress("NOTHING_TO_INLINE")
-    private inline fun unsupported(): Nothing =
-        throw UnsupportedOperationException("Cannot use method on fake offline player")
+  @Suppress("NOTHING_TO_INLINE")
+  private inline fun unsupported(): Nothing =
+    throw UnsupportedOperationException("Cannot use method on fake offline player")
 
-    override fun getName(): String = name
-    override fun getUniqueId(): UUID = id
-    override fun hasPlayedBefore(): Boolean = true
-    override fun isOnline(): Boolean = player != null
-    override fun getPlayer(): Player? = Bukkit.getPlayer(id)
+  override fun getName(): String = name
+  override fun getUniqueId(): UUID = id
+  override fun hasPlayedBefore(): Boolean = true
+  override fun isOnline(): Boolean = player != null
+  override fun getPlayer(): Player? = Bukkit.getPlayer(id)
 
-    override fun isOp(): Boolean = unsupported()
-    override fun setOp(value: Boolean) = unsupported()
-    override fun serialize(): MutableMap<String, Any> = unsupported()
-    override fun getPlayerProfile(): PlayerProfile = unsupported()
+  override fun isOp(): Boolean = unsupported()
+  override fun setOp(value: Boolean) = unsupported()
+  override fun serialize(): MutableMap<String, Any> = unsupported()
+  override fun getPlayerProfile(): PlayerProfile = unsupported()
 
-    override fun isBanned(): Boolean = unsupported()
-    override fun ban(p0: String?, p1: Date?, p2: String?): BanEntry<PlayerProfile> = unsupported()
-    override fun ban(p0: String?, p1: Instant?, p2: String?): BanEntry<PlayerProfile> = unsupported()
-    override fun ban(p0: String?, p1: Duration?, p2: String?): BanEntry<PlayerProfile> = unsupported()
+  override fun isBanned(): Boolean = unsupported()
+  override fun ban(p0: String?, p1: Date?, p2: String?): BanEntry<PlayerProfile> = unsupported()
+  override fun ban(p0: String?, p1: Instant?, p2: String?): BanEntry<PlayerProfile> = unsupported()
+  override fun ban(p0: String?, p1: Duration?, p2: String?): BanEntry<PlayerProfile> = unsupported()
 
-    override fun isWhitelisted(): Boolean = unsupported()
-    override fun setWhitelisted(value: Boolean) = unsupported()
-    override fun getFirstPlayed(): Long = unsupported()
-    override fun getLastPlayed(): Long = unsupported()
-    override fun getBedSpawnLocation(): Location = unsupported()
-    override fun getRespawnLocation(): Location? = unsupported()
-    // Paper
-    //    override fun getLastLogin(): Long = unsupported()
-    //    override fun getLastSeen(): Long = unsupported()
+  override fun isWhitelisted(): Boolean = unsupported()
+  override fun setWhitelisted(value: Boolean) = unsupported()
+  override fun getFirstPlayed(): Long = unsupported()
+  override fun getLastPlayed(): Long = unsupported()
+  override fun getBedSpawnLocation(): Location = unsupported()
+  override fun getRespawnLocation(): Location? = unsupported()
+  // Paper
+  //    override fun getLastLogin(): Long = unsupported()
+  //    override fun getLastSeen(): Long = unsupported()
 
-    override fun incrementStatistic(statistic: Statistic) = unsupported()
-    override fun incrementStatistic(statistic: Statistic, amount: Int) = unsupported()
-    override fun incrementStatistic(statistic: Statistic, material: Material) = unsupported()
-    override fun incrementStatistic(statistic: Statistic, material: Material, amount: Int) = unsupported()
-    override fun incrementStatistic(statistic: Statistic, entityType: EntityType) = unsupported()
-    override fun incrementStatistic(statistic: Statistic, entityType: EntityType, amount: Int) = unsupported()
-    override fun decrementStatistic(statistic: Statistic) = unsupported()
-    override fun decrementStatistic(statistic: Statistic, amount: Int) = unsupported()
-    override fun decrementStatistic(statistic: Statistic, material: Material) = unsupported()
-    override fun decrementStatistic(statistic: Statistic, material: Material, amount: Int) = unsupported()
-    override fun decrementStatistic(statistic: Statistic, entityType: EntityType) = unsupported()
-    override fun decrementStatistic(statistic: Statistic, entityType: EntityType, amount: Int) = unsupported()
-    override fun setStatistic(statistic: Statistic, newValue: Int) = unsupported()
-    override fun setStatistic(statistic: Statistic, material: Material, newValue: Int) = unsupported()
-    override fun setStatistic(statistic: Statistic, entityType: EntityType, newValue: Int) = unsupported()
-    override fun getStatistic(statistic: Statistic): Int = unsupported()
-    override fun getStatistic(statistic: Statistic, material: Material): Int = unsupported()
-    override fun getStatistic(statistic: Statistic, entityType: EntityType): Int = unsupported()
-    override fun getLastDeathLocation(): Location = unsupported()
-    override fun getLocation(): Location? = unsupported()
+  override fun incrementStatistic(statistic: Statistic) = unsupported()
+  override fun incrementStatistic(statistic: Statistic, amount: Int) = unsupported()
+  override fun incrementStatistic(statistic: Statistic, material: Material) = unsupported()
+  override fun incrementStatistic(statistic: Statistic, material: Material, amount: Int) = unsupported()
+  override fun incrementStatistic(statistic: Statistic, entityType: EntityType) = unsupported()
+  override fun incrementStatistic(statistic: Statistic, entityType: EntityType, amount: Int) = unsupported()
+  override fun decrementStatistic(statistic: Statistic) = unsupported()
+  override fun decrementStatistic(statistic: Statistic, amount: Int) = unsupported()
+  override fun decrementStatistic(statistic: Statistic, material: Material) = unsupported()
+  override fun decrementStatistic(statistic: Statistic, material: Material, amount: Int) = unsupported()
+  override fun decrementStatistic(statistic: Statistic, entityType: EntityType) = unsupported()
+  override fun decrementStatistic(statistic: Statistic, entityType: EntityType, amount: Int) = unsupported()
+  override fun setStatistic(statistic: Statistic, newValue: Int) = unsupported()
+  override fun setStatistic(statistic: Statistic, material: Material, newValue: Int) = unsupported()
+  override fun setStatistic(statistic: Statistic, entityType: EntityType, newValue: Int) = unsupported()
+  override fun getStatistic(statistic: Statistic): Int = unsupported()
+  override fun getStatistic(statistic: Statistic, material: Material): Int = unsupported()
+  override fun getStatistic(statistic: Statistic, entityType: EntityType): Int = unsupported()
+  override fun getLastDeathLocation(): Location = unsupported()
+  override fun getLocation(): Location? = unsupported()
 }

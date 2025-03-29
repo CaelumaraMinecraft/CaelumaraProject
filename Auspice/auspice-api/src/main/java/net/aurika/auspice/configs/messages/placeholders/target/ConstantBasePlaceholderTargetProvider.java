@@ -4,19 +4,20 @@ import org.jetbrains.annotations.Nullable;
 
 final class ConstantBasePlaceholderTargetProvider implements BasePlaceholderTargetProvider {
 
-    private final @Nullable Object primaryTarget;
-    private final @Nullable Object secondaryTarget;
+  private final @Nullable Object primaryTarget;
+  private final @Nullable Object secondaryTarget;
 
-    public ConstantBasePlaceholderTargetProvider(@Nullable Object primaryTarget, @Nullable Object secondaryTarget) {
-        this.primaryTarget = primaryTarget;
-        this.secondaryTarget = secondaryTarget;
-    }
+  public ConstantBasePlaceholderTargetProvider(@Nullable Object primaryTarget, @Nullable Object secondaryTarget) {
+    this.primaryTarget = primaryTarget;
+    this.secondaryTarget = secondaryTarget;
+  }
 
-    public @Nullable Object primaryTarget() {
-        return this.primaryTarget;
-    }
+  public @Nullable Object primaryTarget() {
+    return this.primaryTarget;
+  }
 
-    public @Nullable Object secondaryTarget() {
-        return this.secondaryTarget;
-    }
+  public @Nullable Object secondaryTarget() {
+    return this.secondaryTarget;
+  }
+
 }

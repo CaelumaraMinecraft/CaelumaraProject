@@ -11,35 +11,37 @@ import java.util.UUID;
 
 public class ServiceEssentials implements BukkitService, BukkitServiceVanish {
 
-    private static Essentials ESS;
+  private static Essentials ESS;
 
-    @Override
-    public boolean isVanished(Player player) {
-        return getEss().getUser(player).isVanished();
+  @Override
+  public boolean isVanished(Player player) {
+    return getEss().getUser(player).isVanished();
+  }
+
+  @Override
+  public boolean isInGodMode(Player player) {
+    return getEss().getUser(player).isGodModeEnabled();
+  }
+
+  @Override
+  public boolean isIgnoring(Player ignorant, UUID ignoring) {
+    return getEss().getUser(ignorant).isIgnoredPlayer(getEss().getUser(ignoring));
+  }
+
+  public static @NotNull Essentials getEss() {
+    if (ESS == null) {
+      initEss();
     }
 
-    @Override
-    public boolean isInGodMode(Player player) {
-        return getEss().getUser(player).isGodModeEnabled();
-    }
+    return ESS;
+  }
 
-    @Override
-    public boolean isIgnoring(Player ignorant, UUID ignoring) {
-        return getEss().getUser(ignorant).isIgnoredPlayer(getEss().getUser(ignoring));
+  public static void initEss() {
+    ESS = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+    if (ESS == null) {
+      throw new IllegalStateException(
+          "The EssentialsX plugin is not running on your server. You should ensure the plugin is running before you called the \"getEss()\" method");
     }
+  }
 
-    public static @NotNull Essentials getEss() {
-        if (ESS == null) {
-            initEss();
-        }
-
-        return ESS;
-    }
-
-    public static void initEss() {
-        ESS = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-        if (ESS == null) {
-            throw new IllegalStateException("The EssentialsX plugin is not running on your server. You should ensure the plugin is running before you called the \"getEss()\" method");
-        }
-    }
 }

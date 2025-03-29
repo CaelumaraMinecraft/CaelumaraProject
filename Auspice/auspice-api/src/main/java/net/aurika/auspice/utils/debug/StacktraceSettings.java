@@ -6,12 +6,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public final class StacktraceSettings {
-    @NotNull
-    public static final StacktraceSettings INSTANCE = new StacktraceSettings();
-    public boolean isWhitelist = true;
-    @NotNull
-    public Set<DebugIdent> list = new LinkedHashSet<>();
 
-    private StacktraceSettings() {
-    }
+  @NotNull
+  public static final StacktraceSettings INSTANCE = new StacktraceSettings();
+  public boolean isWhitelist = true;
+  @NotNull
+  public Set<DebugIdent> list = new LinkedHashSet<>();
+
+  private StacktraceSettings() {
+  }
+
 }

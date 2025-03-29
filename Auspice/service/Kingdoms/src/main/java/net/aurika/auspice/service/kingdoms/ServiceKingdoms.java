@@ -6,17 +6,19 @@ import org.kingdoms.constants.player.KingdomPlayer;
 import java.util.UUID;
 
 public class ServiceKingdoms implements BukkitService {
-    public boolean hasKingdom(UUID player) {
-        return KingdomPlayer.getKingdomPlayer(player).hasKingdom();
-    }
 
-    public boolean hasNation(UUID player) {
-        KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
-        return kp.hasKingdom() && kp.getKingdom().hasNation();
-    }
+  public boolean hasKingdom(UUID player) {
+    return KingdomPlayer.getKingdomPlayer(player).hasKingdom();
+  }
 
-    @Override
-    public boolean isSupportFolia() {
-        return false;
-    }
+  public boolean hasNation(UUID player) {
+    KingdomPlayer kp = KingdomPlayer.getKingdomPlayer(player);
+    return kp.hasKingdom() && kp.getKingdom().hasNation();
+  }
+
+  @Override
+  public boolean isSupportFolia() {
+    return false;
+  }
+
 }

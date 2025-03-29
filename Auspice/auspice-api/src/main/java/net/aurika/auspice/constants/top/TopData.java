@@ -12,19 +12,27 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public interface TopData<V> extends Comparator<V> {
-    Optional<V> getTopPosition(int var1);
 
-    @IntRange(from = 1L) Optional<Integer> getPositionOf(@NotNull V var1);
+  Optional<V> getTopPosition(int var1);
 
-    default boolean isIncluded(V var1) {
-        return this.getPositionOf(var1).isPresent();
-    }
+  @IntRange(from = 1L)
+  Optional<Integer> getPositionOf(@NotNull V var1);
 
-    @NotNull @Unmodifiable List<V> getTop(int var1, int var2, @Nullable Predicate<V> var3);
+  default boolean isIncluded(V var1) {
+    return this.getPositionOf(var1).isPresent();
+  }
 
-    @NotNull @Unmodifiable List<V> getTop();
+  @NotNull
+  @Unmodifiable
+  List<V> getTop(int var1, int var2, @Nullable Predicate<V> var3);
 
-    @IntRange(from = 0L) int size();
+  @NotNull
+  @Unmodifiable
+  List<V> getTop();
 
-    void update(@NotNull @Unmodifiable Collection<V> var1);
+  @IntRange(from = 0L)
+  int size();
+
+  void update(@NotNull @Unmodifiable Collection<V> var1);
+
 }

@@ -1,14 +1,14 @@
 plugins {
-    id("aurika.repos")
+  id("aurika.repos")
 }
 
 repositories {
-    aurikaRepos {
-        placeholderAPI()
-    }
+  aurikaRepos {
+    placeholderAPI()
+  }
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly("me.clip:placeholderapi:2.11.6")
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly("me.clip:placeholderapi:2.11.6")
 }

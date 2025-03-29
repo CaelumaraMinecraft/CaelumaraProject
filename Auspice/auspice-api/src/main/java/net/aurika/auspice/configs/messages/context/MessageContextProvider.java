@@ -6,10 +6,12 @@ import org.jetbrains.annotations.NotNull;
  * Provider of {@linkplain MessageContext}.
  */
 public interface MessageContextProvider {
-    /**
-     * Provides a message context.
-     *
-     * @return the message context
-     */
-    @NotNull MessageContext messageContext();
+
+  /**
+   * Provides a message context.
+   *
+   * @return the message context
+   */
+  @NotNull MessageContext messageContext();
+
 }

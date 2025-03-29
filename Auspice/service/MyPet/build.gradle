@@ -1,9 +1,9 @@
 plugins {
-    id("java-library")
+  id("java-library")
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    // Local https://wiki.mypet-plugin.de/hooks/hook-types
-    compileOnly(fileTree("$rootDir/libs/plugins/MyPet"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  // Local https://wiki.mypet-plugin.de/hooks/hook-types
+  compileOnly(fileTree("$rootDir/libs/plugins/MyPet"))
 }

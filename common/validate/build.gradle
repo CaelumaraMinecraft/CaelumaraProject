@@ -3,6 +3,9 @@ plugins {
   id("maven-publish")
 }
 
+version = "0.0.1"
+description = "A validate library"
+
 dependencies {
   compileOnlyApi(libs.annotations.jetbrains)
 }

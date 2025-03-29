@@ -5,11 +5,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public interface World {
-    @NotNull String getName();
 
-    @NotNull UUID getUID();
+  @NotNull String getName();
 
-    int getMaxHeight();
+  @NotNull UUID getUID();
 
-    int getMinHeight();
+  int getMaxHeight();
+
+  int getMinHeight();
+
 }

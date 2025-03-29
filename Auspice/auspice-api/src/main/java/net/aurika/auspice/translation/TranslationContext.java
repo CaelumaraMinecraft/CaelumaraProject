@@ -5,15 +5,17 @@ import net.aurika.common.annotations.Getter;
 import net.aurika.common.annotations.Setter;
 
 public interface TranslationContext {
-    /**
-     * Gets the {@linkplain Diversity}.
-     */
-    @Getter
-    Diversity diversity();
 
-    /**
-     * Sets the {@linkplain Diversity}
-     */
-    @Setter
-    TranslationContext diversity(Diversity diversity);
+  /**
+   * Gets the {@linkplain Diversity}.
+   */
+  @Getter
+  Diversity diversity();
+
+  /**
+   * Sets the {@linkplain Diversity}
+   */
+  @Setter
+  TranslationContext diversity(Diversity diversity);
+
 }

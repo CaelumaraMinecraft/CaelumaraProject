@@ -1,15 +1,15 @@
 plugins {
-    id("aurika.kingdoms.dependency")
-    alias(libs.plugins.shadow)
+  id("aurika.kingdoms.dependency")
+  alias(libs.plugins.shadow)
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly(fileTree("$rootDir/libs/plugins/Kingdoms_relocated"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly(fileTree("$rootDir/libs/plugins/Kingdoms_relocated"))
 }
 
 tasks {
-    shadowJar {
-        kingdomsRelocates.kingdomsRelocates()
-    }
+  shadowJar {
+    kingdomsRelocates.kingdomsRelocates()
+  }
 }

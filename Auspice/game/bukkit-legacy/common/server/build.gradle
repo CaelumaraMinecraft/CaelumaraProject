@@ -1,17 +1,17 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
 group = "net.aurika.auspice.bukkitlegacy.server"
 
 dependencies {
-    compileOnly(project(":base"))
-    compileOnly(project(":Auspice:game:bukkit-legacy:base"))
+  compileOnly(project(":base"))
+  compileOnly(project(":Auspice:game:bukkit-legacy:base"))
 
-    implementation(libs.xseries)
+  implementation(libs.xseries)
 
-    compileOnly(libs.server.legacy.craftbukkit)
-    compileOnly(libs.annotations.jetbrains)
+  compileOnly(libs.server.legacy.craftbukkit)
+  compileOnly(libs.annotations.jetbrains)
 }

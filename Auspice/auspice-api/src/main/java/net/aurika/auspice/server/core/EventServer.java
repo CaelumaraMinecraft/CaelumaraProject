@@ -7,5 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * A server that supports event system.
  */
 public interface EventServer extends Server {
-    @NotNull EventManager eventManager();
+
+  @NotNull EventManager eventManager();
+
 }

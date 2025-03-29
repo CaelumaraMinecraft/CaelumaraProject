@@ -7,35 +7,37 @@ import org.bukkit.event.entity.EntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class EntityMountEvent extends EntityEvent implements ServerEvent, Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final Entity mount;
 
-    public EntityMountEvent(@NotNull Entity what, @NotNull Entity mount) {
-        super(what);
-        this.mount = mount;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
+  private final Entity mount;
 
-    @NotNull
-    public Entity getMount() {
-        return this.mount;
-    }
+  public EntityMountEvent(@NotNull Entity what, @NotNull Entity mount) {
+    super(what);
+    this.mount = mount;
+  }
 
-    public boolean isCancelled() {
-        return this.cancelled;
-    }
+  @NotNull
+  public Entity getMount() {
+    return this.mount;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return this.cancelled;
+  }
 
-    @NotNull
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancelled = cancel;
+  }
 
-    @NotNull
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @NotNull
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  @NotNull
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
+
 }

@@ -1,10 +1,10 @@
 plugins {
-    id("java")
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
+  id("java")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly(fileTree("$rootDir/libs/plugins/AttributePlus"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly(fileTree("$rootDir/libs/plugins/AttributePlus"))
 }

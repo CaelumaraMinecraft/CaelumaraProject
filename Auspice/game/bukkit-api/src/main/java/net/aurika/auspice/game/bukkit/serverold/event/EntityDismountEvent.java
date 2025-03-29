@@ -7,35 +7,37 @@ import org.bukkit.event.entity.EntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class EntityDismountEvent extends EntityEvent implements ServerEvent, Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-    private final Entity dismounted;
 
-    public EntityDismountEvent(@NotNull Entity what, @NotNull Entity dismounted) {
-        super(what);
-        this.dismounted = dismounted;
-    }
+  private static final HandlerList handlers = new HandlerList();
+  private boolean cancelled;
+  private final Entity dismounted;
 
-    @NotNull
-    public Entity getDismounted() {
-        return this.dismounted;
-    }
+  public EntityDismountEvent(@NotNull Entity what, @NotNull Entity dismounted) {
+    super(what);
+    this.dismounted = dismounted;
+  }
 
-    public boolean isCancelled() {
-        return this.cancelled;
-    }
+  @NotNull
+  public Entity getDismounted() {
+    return this.dismounted;
+  }
 
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
-    }
+  public boolean isCancelled() {
+    return this.cancelled;
+  }
 
-    @NotNull
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+  public void setCancelled(boolean cancel) {
+    this.cancelled = cancel;
+  }
 
-    @NotNull
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+  @NotNull
+  public HandlerList getHandlers() {
+    return handlers;
+  }
+
+  @NotNull
+  public static HandlerList getHandlerList() {
+    return handlers;
+  }
+
 }

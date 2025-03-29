@@ -1,16 +1,16 @@
 repositories {
-    maven {
-        name = "bs-repo-releases"
-        url = "https://repo.bsdevelopment.org/releases"
-    }
+  maven {
+    name = "bs-repo-releases"
+    url = "https://repo.bsdevelopment.org/releases"
+  }
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
 
-    // https://github.com/brainsynder-Dev/SimplePets
-    // https://www.spigotmc.org/resources/100106/
-    // https://repo.bsdevelopment.org/#/releases/simplepets/brainsynder/API
-    compileOnly("simplepets.brainsynder:API:5.0-BUILD-273")
-    compileOnlyApi(libs.annotations.jetbrains)
+  // https://github.com/brainsynder-Dev/SimplePets
+  // https://www.spigotmc.org/resources/100106/
+  // https://repo.bsdevelopment.org/#/releases/simplepets/brainsynder/API
+  compileOnly("simplepets.brainsynder:API:5.0-BUILD-273")
+  compileOnlyApi(libs.annotations.jetbrains)
 }

@@ -1,14 +1,14 @@
 plugins {
-    id("aurika.repos")
+  id("aurika.repos")
 }
 
 repositories {
-    aurikaRepos {
-        matteodev()
-    }
+  aurikaRepos {
+    matteodev()
+  }
 }
 
 dependencies {
-    compileOnly(project(":Auspice:service-api:bukkit-api"))
-    compileOnly("dev.lone:api-itemsadder:4.0.2-beta-release-11")
+  compileOnly(project(":Auspice:service-api:bukkit-api"))
+  compileOnly("dev.lone:api-itemsadder:4.0.2-beta-release-11")
 }
