@@ -3,9 +3,10 @@ plugins {
   id("maven-publish")
 }
 
+subprojects.forEach {
+  dependencies.api(it)
+}
+
 dependencies {
-  subprojects.forEach {
-    implementation(api(it))
-  }
   compileOnlyApi(libs.annotations.jetbrains)
 }

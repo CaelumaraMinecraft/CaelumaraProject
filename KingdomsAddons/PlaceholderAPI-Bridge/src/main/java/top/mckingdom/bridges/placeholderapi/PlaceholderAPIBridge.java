@@ -1,8 +1,7 @@
 package top.mckingdom.bridges.placeholderapi;
 
 import org.jetbrains.annotations.NotNull;
-import org.kingdoms.locale.compiler.placeholders.Placeholder;
-import top.mckingdom.auspice.util.AddonTemplate;
+import net.aurika.kingdoms.auspice.util.AddonTemplate;
 
 public class PlaceholderAPIBridge extends AddonTemplate {
   private static PlaceholderAPIBridge instance;

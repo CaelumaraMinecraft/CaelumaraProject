@@ -7,21 +7,21 @@ import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.locale.LanguageManager;
 import org.kingdoms.main.Kingdoms;
-import top.mckingdom.auspice.commands.admin.registry.CommandAdminRegistry;
-import top.mckingdom.auspice.commands.admin.relation.CommandAdminRelation;
-import top.mckingdom.auspice.configs.AuspiceLang;
-import top.mckingdom.auspice.configs.AuspicePlaceholder;
-import top.mckingdom.auspice.configs.CustomConfigValidators;
-import top.mckingdom.auspice.costs.CurrencyRegistry;
-import top.mckingdom.auspice.util.AddonTemplate;
-import top.mckingdom.auspice.util.GroupExt;
-import top.mckingdom.auspice.util.land.LandUtil;
+import net.aurika.kingdoms.auspice.commands.admin.registry.CommandAdminRegistry;
+import net.aurika.kingdoms.auspice.commands.admin.relation.CommandAdminRelation;
+import net.aurika.kingdoms.auspice.configs.AuspiceLang;
+import net.aurika.kingdoms.auspice.configs.AuspicePlaceholder;
+import net.aurika.kingdoms.auspice.configs.CustomConfigValidators;
+import net.aurika.kingdoms.auspice.costs.CurrencyRegistry;
+import net.aurika.kingdoms.auspice.util.AddonTemplate;
+import net.aurika.kingdoms.auspice.util.GroupExt;
+import net.aurika.kingdoms.auspice.util.land.LandUtil;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static top.mckingdom.auspice.util.KingdomsNamingContract.Namespace.Key;
+import static net.aurika.kingdoms.auspice.util.KingdomsNamingContract.Namespace.Key;
 
 public final class AuspiceAddon extends AddonTemplate {
   public static final String NAMESPACE = "Auspice";

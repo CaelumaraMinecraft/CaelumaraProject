@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:validate"))
-  api(project(":common:util:functional"))
+  api(project(":util:functional"))
+  api(project(":validate"))
   api(libs.kyori.advntr.nbt)
   compileOnlyApi(libs.annotations.jetbrains)
 }

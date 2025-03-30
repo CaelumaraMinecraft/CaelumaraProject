@@ -1,0 +1,34 @@
+plugins {
+  id("org.gradle.java-gradle-plugin")
+//  id("org.gradle.kotlin.kotlin-dsl")
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+  gradlePluginPortal()
+}
+
+dependencies {
+  implementation(libs.asm.asm)
+  implementation(libs.asm.commons)
+  implementation("net.kyori:indra-common:3.1.3")
+  implementation("com.gradleup.shadow:shadow-gradle-plugin:8.3.3")
+}
+
+gradlePlugin {
+  plugins {
+    register("aurika-kingdoms") {
+      id = "net.aurika.gradle.kingdoms"
+      implementationClass = "net.aurika.gradle.kingdoms.KingdomsPlugin"
+    }
+    register("aurika-relocation") {
+      id = "net.aurika.gradle.relocation"
+      implementationClass = "net.aurika.gradle.relocation.AurikaRelocationPlugin"
+    }
+    register("aurika-repository") {
+      id = "net.aurika.gradle.repository"
+      implementationClass = "net.aurika.gradle.repository.AurikaRepositoryPlugin"
+    }
+  }
+}

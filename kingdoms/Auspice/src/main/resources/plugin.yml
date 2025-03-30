@@ -1,0 +1,9 @@
+name: "${project.name}"
+version: '${project.version}'
+main: net.aurika.kingdoms.auspice.AuspiceAddon
+description: "${project.description}"
+api-version: "1.13"
+depend: [ Kingdoms ]
+softdepend: [ Vault, PlaceholderAPI ]
+authors: [ Attaccer and DuoDuoJuZi ]
+load: POSTWORLD

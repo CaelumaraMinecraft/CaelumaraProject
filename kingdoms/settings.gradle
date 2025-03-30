@@ -1,0 +1,4 @@
+include(
+    ":Auspice",
+    ":Powerful-Territory"
+)

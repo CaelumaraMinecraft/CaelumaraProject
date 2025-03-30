@@ -1,8 +1,8 @@
-import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
+//import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
 
 plugins {
     id("java-library")
-    id("aurika.repos")
+    id("net.aurika.gradle.repository")
     alias(libs.plugins.shadow)
     alias(libs.plugins.kotlin)
 }
@@ -18,7 +18,7 @@ repositories {
         spigotMC.snapshots()
         codeMC.maven_public()
     }
-    sonatype(it)
+//    sonatype(it)
 }
 
 dependencies {

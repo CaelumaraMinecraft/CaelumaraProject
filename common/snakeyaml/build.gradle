@@ -5,12 +5,12 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:key"))
-  api(project(":common:function"))
-  api(project(":common:validate"))
-  api(project(":common:util:collection"))
-  api(project(":common:util:string"))
-  api(project(":common:util:generics"))
+  api(project(":function"))
+  api(project(":key"))
+  api(project(":util:collection"))
+  api(project(":util:string"))
+  api(project(":util:generic"))
+  api(project(":validate"))
   api(libs.yamlengine)
   compileOnlyApi(libs.annotations.jetbrains)
 }

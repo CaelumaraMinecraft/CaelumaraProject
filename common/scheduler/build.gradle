@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:validate"))
-  api(project(":common:util:collection"))
-  api(project(":common:util:stacktrace"))
-  api(libs.kyori.advntr.key)
+  api(project(":key"))
+  api(project(":util:collection"))
+  api(project(":util:stacktrace"))
+  api(project(":validate"))
   compileOnlyApi(libs.annotations.jetbrains)
 }

@@ -4,7 +4,7 @@ plugins {
 }
 
 version = "0.0.1"
-description = "A validate library"
+description = "A library to validate something"
 
 dependencies {
   compileOnlyApi(libs.annotations.jetbrains)

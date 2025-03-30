@@ -102,7 +102,6 @@ pluginManagement {
       url = "https://oss.sonatype.org/content/groups/public/"
     }
   }
-  includeBuild("build-logic")
 }
 
 dependencyResolutionManagement {
@@ -110,41 +109,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Aurika"
-
-include(
-    ":common:annotation",
-    ":common:config",
-    ":common:config:config-api",
-    ":common:config:config-json",
-    ":common:config:config-yaml",
-    ":common:data-api",
-    ":common:dependency",
-    ":common:examinable-api",
-    ":common:function",
-    ":common:key",
-    ":common:logging",
-    ":common:nbt",
-    ":common:property",
-    ":common:scheduler",
-    ":common:snakeyaml",
-    ":common:task",
-    ":common:validate",
-
-    ":common:util:cache",
-    ":common:util:collection",
-    ":common:util:enumeration",
-    ":common:util:file",
-    ":common:util:functional",
-    ":common:util:generics",
-    ":common:util:gson",
-    ":common:util:number",
-    ":common:util:math",
-    ":common:util:reflection",
-    ":common:util:registry",
-    ":common:util:stacktrace",
-    ":common:util:string",
-    ":common:util:uuid",
-    )
 
 include(
     ":ecliptor",
@@ -163,8 +127,8 @@ include(
 
 include(
     ":aurika:base",
-    ":aurika:config-api",
-    )
+    ":aurika:config-api"
+)
 
 include(
     ":Auspice",
@@ -271,17 +235,58 @@ include(
     )
 
 include(
-    ":WandsCraftsmanship",
-    )
+    ":WandsCraftsmanship"
+)
 
-includeBuild("commons") {
+includeBuild("gradle-plugin") {
   dependencySubstitution {
-    substitute(module("net.aurika.commons:validate")).using(project(":validate"))
   }
 }
-includeBuild("kingdoms-addons") {}
 
-includeBuild("kingdoms")
+includeBuild("common") {
+  dependencySubstitution {
+    substitute(module("net.aurika:common-annotation")).using(project(":annotation"))
+    substitute(module("net.aurika:common-config")).using(project(":config"))
+    substitute(module("net.aurika:common-config-api")).using(project(":config:config-api"))
+    substitute(module("net.aurika:common-config-json")).using(project(":config:config-json"))
+    substitute(module("net.aurika:common-config-yaml")).using(project(":config:config-yaml"))
+    substitute(module("net.aurika:common-data-api")).using(project(":data-api"))
+    substitute(module("net.aurika:common-dependency")).using(project(":dependency"))
+    substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
+    substitute(module("net.aurika:common-function")).using(project(":function"))
+    substitute(module("net.aurika:common-key")).using(project(":key"))
+    substitute(module("net.aurika:common-logging")).using(project(":logging"))
+    substitute(module("net.aurika:common-nbt")).using(project(":nbt"))
+    substitute(module("net.aurika:common-property")).using(project(":property"))
+    substitute(module("net.aurika:common-scheduler")).using(project(":scheduler"))
+    substitute(module("net.aurika:common-snakeyaml")).using(project(":snakeyaml"))
+    substitute(module("net.aurika:common-task")).using(project(":task"))
+
+    substitute(module("net.aurika:common-util-cache")).using(project(":util:cache"))
+    substitute(module("net.aurika:common-util-collection")).using(project(":util:collection"))
+    substitute(module("net.aurika:common-util-enumeration")).using(project(":util:enumeration"))
+    substitute(module("net.aurika:common-util-file")).using(project(":util:file"))
+    substitute(module("net.aurika:common-util-functional")).using(project(":util:functional"))
+    substitute(module("net.aurika:common-util-generic")).using(project(":util:generic"))
+    substitute(module("net.aurika:common-util-gson")).using(project(":util:gson"))
+    substitute(module("net.aurika:common-util-math")).using(project(":util:math"))
+    substitute(module("net.aurika:common-util-number")).using(project(":util:number"))
+    substitute(module("net.aurika:common-util-reflection")).using(project(":util:reflection"))
+    substitute(module("net.aurika:common-util-registry")).using(project(":util:registry"))
+    substitute(module("net.aurika:common-util-stacktrace")).using(project(":util:stacktrace"))
+    substitute(module("net.aurika:common-util-string")).using(project(":util:string"))
+    substitute(module("net.aurika:common-util-uuid")).using(project(":util:uuid"))
+
+    substitute(module("net.aurika:common-validate")).using(project(":validate"))
+  }
+}
+
+includeBuild("kingdoms") {
+  dependencySubstitution {
+    substitute(module("net.aurika:kingdoms-addon-auspice")).using(project(":Auspice"))
+    substitute(module("net.aurika:kingdoms-addon-powerful-territory")).using(project(":Powerful-Territory"))
+  }
+}
 
 public static void addProjectAccesses(ConfigurableIncludedBuild includedBuild) {
   String name = includedBuild.name

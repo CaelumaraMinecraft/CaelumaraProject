@@ -1,9 +1,9 @@
 package top.mckingdom.civilizations;
 
-import top.mckingdom.auspice.util.permission.XKingdomPermission;
+import net.aurika.kingdoms.auspice.util.permission.XKingdomPermission;
 
-import static top.mckingdom.auspice.configs.MsgConst.E_COLOR;
-import static top.mckingdom.auspice.configs.MsgConst.S_COLOR;
+import static net.aurika.kingdoms.auspice.configs.MsgConst.E_COLOR;
+import static net.aurika.kingdoms.auspice.configs.MsgConst.S_COLOR;
 import static top.mckingdom.civilizations.CivilizationsAddon.buildNS;
 
 public final class GroupExt {

@@ -7,7 +7,7 @@ import org.kingdoms.events.invasion.KingdomPreInvadeEvent;
 import org.kingdoms.locale.Language;
 import org.kingdoms.locale.messenger.Messenger;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
-import top.mckingdom.auspice.util.MessengerUtil;
+import net.aurika.kingdoms.auspice.util.MessengerUtil;
 import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon;
 
 import java.util.Locale;

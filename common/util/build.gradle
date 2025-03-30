@@ -3,8 +3,6 @@ plugins {
   id("maven-publish")
 }
 
-dependencies {
-  subprojects.forEach {
-    api(it)
-  }
+subprojects.forEach {
+  dependencies.api(it)
 }

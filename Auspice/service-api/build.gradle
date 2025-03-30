@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:validate"))
+  api("net.aurika:common-validate")
   compileOnlyApi(libs.annotations.jetbrains)
 }

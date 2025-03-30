@@ -4,17 +4,22 @@ plugins {
 }
 
 dependencies {
-    api(project(":aurika:base"))
-    api(project(":ecliptor:data-api"))
-    api(project(":common:dependency"))
-    api(project(":common:function"))
-    api(project(":common:nbt"))
-    api(project(":common:task"))
-    api(project(":common:snakeyaml"))
-    api(project(":common:util:file"))
-    api(project(":common:util:functional"))
-    api(project(":common:util:gson"))
-    api(project(":common:util:string"))
+    
+    api("net.aurika:common-annotation")
+    api("net.aurika:common-data-api")
+    api("net.aurika:common-dependency")
+    api("net.aurika:common-function")
+    api("net.aurika:common-nbt")
+    api("net.aurika:common-property")
+    api("net.aurika:common-snakeyaml")
+    api("net.aurika:common-scheduler")
+    api("net.aurika:common-task")
+    api("net.aurika:common-util-file")
+    api("net.aurika:common-util-functional")
+    api("net.aurika:common-util-gson")
+    api("net.aurika:common-util-math")
+    api("net.aurika:common-util-string")
+    api("net.aurika:common-validate")
 
     api(libs.annotations.jetbrains)
     api(libs.annotations.checker)

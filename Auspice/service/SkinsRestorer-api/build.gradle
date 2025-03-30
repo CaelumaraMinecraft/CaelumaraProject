@@ -1,5 +1,5 @@
 plugins {
-  id("aurika.repos")
+  id("net.aurika.gradle.repository")
 }
 
 repositories {

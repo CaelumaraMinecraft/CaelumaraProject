@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:validate"))
+  api(project(":validate"))
   api(libs.kyori.examination.api)
   compileOnlyApi(libs.annotations.jetbrains)
 }

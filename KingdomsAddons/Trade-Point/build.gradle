@@ -1,11 +1,11 @@
-plugins {
-  id("aurika.kingdoms.addon")
-}
-
 version = "0.0.1-SNAPSHOT"
 
 dependencies {
   compileOnly(project(":KingdomsAddons:Auspice"))
 }
 
-kingdomsAddon.isAddonBody = true
+kingdoms {
+  addon {
+    isAddonInterface = true
+  }
+}

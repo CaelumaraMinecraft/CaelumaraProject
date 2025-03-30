@@ -2,8 +2,8 @@ package top.mckingdom.civilizations;
 
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.namespace.Namespace;
-import top.mckingdom.auspice.util.AddonTemplate;
-import top.mckingdom.auspice.util.KingdomsNamingContract;
+import net.aurika.kingdoms.auspice.util.AddonTemplate;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 import top.mckingdom.civilizations.config.CivilizationsAddonConfig;
 import top.mckingdom.civilizations.constants.civilization.member.CivilizationMemberTypeRegistry;
 import top.mckingdom.civilizations.constants.civilization.relation.StandardCivilizationRelation;

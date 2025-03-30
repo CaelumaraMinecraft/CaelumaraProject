@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:data-api"))
-  api(project(":common:validate"))
-  api(project(":common:util:string"))
+  api(project(":data-api"))
+  api(project(":util:string"))
+  api(project(":validate"))
   compileOnlyApi(libs.annotations.jetbrains)
 }

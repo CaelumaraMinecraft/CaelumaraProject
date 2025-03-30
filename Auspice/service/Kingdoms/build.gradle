@@ -1,5 +1,5 @@
 plugins {
-  id("aurika.kingdoms.dependency")
+  id("net.aurika.gradle.kingdoms")
   alias(libs.plugins.shadow)
 }
 

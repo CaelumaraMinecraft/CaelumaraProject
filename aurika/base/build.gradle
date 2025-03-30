@@ -4,8 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":common:validate"))
-    api(project(":common:util"))
+    api("net.aurika:common-validate")
 
     api(libs.caffeine)
     api(libs.kyori.advntr.api)

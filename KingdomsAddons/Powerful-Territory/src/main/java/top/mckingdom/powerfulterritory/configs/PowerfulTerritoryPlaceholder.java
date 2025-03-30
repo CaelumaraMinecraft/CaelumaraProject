@@ -6,7 +6,7 @@ import org.kingdoms.constants.land.Land;
 import org.kingdoms.locale.placeholders.EnumKingdomsPlaceholderTranslator;
 import org.kingdoms.locale.placeholders.KingdomsPlaceholderTranslationContext;
 import org.kingdoms.locale.placeholders.KingdomsPlaceholderTranslator;
-import top.mckingdom.auspice.util.KingdomsNamingContract;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 import top.mckingdom.powerfulterritory.constants.land_categories.StandardLandCategory;
 import top.mckingdom.powerfulterritory.data.LandCategories;
 

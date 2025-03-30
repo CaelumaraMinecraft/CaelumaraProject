@@ -6,7 +6,7 @@ plugins {
 description = "A dynamic, based on string placeholder system"
 
 dependencies {
-  api(project(":common:validate"))
+  api("net.aurika:common-validate")
   compileOnlyApi(libs.annotations.jetbrains)
   compileOnlyApi(libs.annotations.checker)
 }

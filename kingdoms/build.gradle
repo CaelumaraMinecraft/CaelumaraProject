@@ -1,0 +1,162 @@
+import com.github.jengelman.gradle.plugins.shadow.relocation.SimpleRelocator
+import net.aurika.gradle.kingdoms.addon.KingdomsAddonExtension
+import net.aurika.gradle.kingdoms.addon.KingdomsAddonPlugin
+
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.kingdoms")
+  id("net.aurika.gradle.repository")
+  alias(libs.plugins.kotlin) apply false
+  alias(libs.plugins.shadow) apply false
+}
+
+group = "net.aurika.kingdoms"
+
+int targetJavaVersion = 17
+
+subprojects {
+
+  apply {
+    plugins.apply("java-library")
+    plugins.apply("net.aurika.gradle.kingdoms")
+    plugins.apply("net.aurika.gradle.repository")
+    plugins.apply(libs.plugins.kotlin.get().pluginId)
+    plugins.apply(libs.plugins.shadow.get().pluginId)
+  }
+
+  afterEvaluate {
+
+    KingdomsAddonPlugin kap = plugins.findPlugin(KingdomsAddonPlugin.class)
+    KingdomsAddonExtension kex = extensions.findByType(KingdomsAddonExtension.class)
+    boolean isAddonBody = kap != null && kex != null && kex.isAddonInterface
+    println(path + " is Kingdoms Addon interface: " + isAddonBody)
+
+    if (isAddonBody) {
+
+      String shortName = name
+      String fullName = "Kingdoms-Addon-$shortName"
+
+      tasks {
+
+        build {
+          dependsOn(shadowJar)
+        }
+
+        compileKotlin {
+          kotlinOptions {
+            jvmTarget = targetJavaVersion
+          }
+        }
+
+        jar {
+          enabled = false
+        }
+
+        shadowJar {
+          archiveBaseName = fullName
+          archiveClassifier = null
+
+          minimize()
+
+          kingdomsRelocates.kingdomsRelocates()
+
+          println("Relocators for " + fullName + ": ")
+          relocators.forEach { relocator ->
+            SimpleRelocator sr = (SimpleRelocator) relocator
+            println(sr.pattern + " => " + sr.shadedPattern)
+          }
+          println()
+
+          exclude("**/kotlin-stdlib**")
+          exclude("**/annotations**")
+        }
+
+        processResources {
+          def props = [project: new KingdomsAddonProject(fullName, version, description)]
+          inputs.properties(props)
+          filteringCharset = "UTF-8"
+          filesMatching("plugin.yml") {
+            expand(props)
+          }
+        }
+      }
+    }
+
+  }
+
+  repositories {
+    aurikaRepos {
+      spigotMC {
+        snapshots()
+        releases()
+      }
+    }
+
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
+
+    maven {
+      name = "nostal-snapshots"
+      url = "https://maven.nostal.ink/repository/maven-snapshots/"
+    }
+
+    maven {
+      name = "sonatype"
+      url = "https://oss.sonatype.org/content/groups/public/"
+    }
+
+    maven {
+      name = "rosewood-dev"
+      url = "https://repo.rosewooddev.io/repository/public/"
+    }
+
+    maven {
+      name = "nms-repo"
+      url = "https://repo.codemc.org/repository/nms/"
+    }
+
+    maven {
+      name = "jitpack-io"
+      url = "https://jitpack.io"
+      content {
+        includeGroupByRegex("com\\.github\\..*")
+      }
+    }
+  }
+
+  dependencies {
+    compileOnly(libs.server.spigot)
+    compileOnly(libs.annotations.checker)
+    compileOnly(libs.xseries)
+    compileOnly(fileTree(rootDir.getPath() + "/libs/plugins/Kingdoms_relocated"))
+  }
+
+  java {
+    withSourcesJar()
+    JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+      toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+  }
+
+}
+
+public class KingdomsAddonProject implements Serializable {
+  public String name;
+  public String version;
+  public String description;
+
+  public KingdomsAddonProject(String name, String version, String description) {
+    this.name = name
+    this.version = version
+    this.description = description
+  }
+}
+
+//println("Relocators:")
+//((ShadowJar) tasks.getByName("shadowJar")).relocators.forEach {
+//    println(((SimpleRelocator) it).pattern + "=>" + (it as SimpleRelocator).shadedPattern)
+//}

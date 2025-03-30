@@ -4,8 +4,8 @@ import net.aurika.gradle.kingdoms.addon.KingdomsAddonPlugin
 
 plugins {
   id("java-library")
-  id("aurika.repos")
-  id("aurika.kingdoms.dependency")
+  id("net.aurika.gradle.kingdoms")
+  id("net.aurika.gradle.repository")
   alias(libs.plugins.kotlin) apply false
   alias(libs.plugins.shadow) apply false
 }
@@ -19,8 +19,8 @@ subprojects {
 
   apply {
     plugins.apply("java-library")
-    plugins.apply("aurika.repos")
-    plugins.apply("aurika.kingdoms.dependency")
+    plugins.apply("net.aurika.gradle.repository")
+    plugins.apply("net.aurika.gradle.kingdoms")
     plugins.apply(libs.plugins.kotlin.get().pluginId)
     plugins.apply(libs.plugins.shadow.get().pluginId)
   }
@@ -29,7 +29,7 @@ subprojects {
 
     KingdomsAddonPlugin kap = plugins.findPlugin(KingdomsAddonPlugin.class)
     KingdomsAddonExtension kex = extensions.findByType(KingdomsAddonExtension.class)
-    boolean isAddonBody = kap != null && kex != null && kex.isAddonBody
+    boolean isAddonBody = kap != null && kex != null && kex.isAddonInterface
     println(path + " is Kingdoms Addon body: " + isAddonBody)
 
     if (isAddonBody) {

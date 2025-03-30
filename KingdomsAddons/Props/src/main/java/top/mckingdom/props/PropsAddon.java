@@ -2,12 +2,12 @@ package top.mckingdom.props;
 
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.namespace.Namespace;
-import top.mckingdom.auspice.util.AddonTemplate;
-import top.mckingdom.auspice.util.KingdomsNamingContract;
-import top.mckingdom.auspice.util.permission.XKingdomPermission;
+import net.aurika.kingdoms.auspice.util.AddonTemplate;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
+import net.aurika.kingdoms.auspice.util.permission.XKingdomPermission;
 
-import static top.mckingdom.auspice.configs.MsgConst.E_COLOR;
-import static top.mckingdom.auspice.configs.MsgConst.S_COLOR;
+import static net.aurika.kingdoms.auspice.configs.MsgConst.E_COLOR;
+import static net.aurika.kingdoms.auspice.configs.MsgConst.S_COLOR;
 
 public class PropsAddon extends AddonTemplate {
 

@@ -1,7 +1,7 @@
-import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
+//import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
 
 plugins {
-  id("aurika.repos")
+  id("net.aurika.gradle.repository")
   id("java-library")
   alias(libs.plugins.kotlin)
   alias(libs.plugins.shadow)
@@ -12,7 +12,7 @@ version = "0.0.1-pre"
 description = "A minecraft library"
 
 subprojects {
-  plugins.apply("aurika.repos")
+  plugins.apply("net.aurika.gradle.repository")
 
   repositories {
     aurikaRepos {
@@ -20,7 +20,7 @@ subprojects {
       paperMC.maven_public()
       minecraft()
     }
-    sonatype(it)
+//    sonatype(it)
   }
 }
 

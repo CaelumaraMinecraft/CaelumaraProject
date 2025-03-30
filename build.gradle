@@ -2,8 +2,8 @@ import net.aurika.gradle.kingdoms.dependency.KingdomsDependency
 
 plugins {
   id("java-library")
-  id("aurika.repos")
-  id("aurika.relocation")
+  id("net.aurika.gradle.repository")
+  id("net.aurika.gradle.relocation")
   alias(libs.plugins.kotlin)
   alias(libs.plugins.shadow)
 }

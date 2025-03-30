@@ -3,9 +3,16 @@ plugins {
 }
 
 allprojects {
-  group = "net.aurika.commons"
 
-  int targetJavaVersion = 11
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
+  }
+
+  group = "net.aurika.common"
+
+  int targetJavaVersion = 8
 
   java {
     JavaVersion javaVersion = JavaVersion.toVersion(targetJavaVersion)

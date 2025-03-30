@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:validate"))
-  api(project(":ecliptor:data-api"))
+  api(project(":validate"))
+  api(project(":data-api"))
 
   compileOnly(libs.annotations.jetbrains)
 }

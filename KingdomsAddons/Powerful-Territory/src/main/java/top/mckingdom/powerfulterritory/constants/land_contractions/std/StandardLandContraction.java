@@ -8,7 +8,7 @@ import org.kingdoms.data.database.dataprovider.SectionableDataGetter;
 import org.kingdoms.locale.Language;
 import org.kingdoms.locale.messenger.DefinedMessenger;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
-import top.mckingdom.auspice.util.MessengerUtil;
+import net.aurika.kingdoms.auspice.util.MessengerUtil;
 import top.mckingdom.powerfulterritory.PowerfulTerritoryAddon;
 import top.mckingdom.powerfulterritory.constants.land_contractions.ContractionLandProperties;
 import top.mckingdom.powerfulterritory.constants.land_contractions.LandContraction;
