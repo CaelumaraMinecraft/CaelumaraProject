@@ -9,6 +9,7 @@ import net.aurika.kingdoms.auspice.costs.Currency;
  * @param <C>
  */
 public class CurrencyEntry<T, C> {
+
   public final Currency<T, C> currency;
   public C amount;
 

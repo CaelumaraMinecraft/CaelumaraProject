@@ -1,5 +1,8 @@
 package net.aurika.kingdoms.auspice.commands.admin.registry.operator;
 
+import net.aurika.kingdoms.auspice.configs.AuspiceLang;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
+import net.aurika.kingdoms.auspice.util.LazyMessenger;
 import net.aurika.validate.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -14,9 +17,6 @@ import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.locale.messenger.DefaultedMessenger;
 import org.kingdoms.locale.messenger.Messenger;
-import net.aurika.kingdoms.auspice.configs.AuspiceLang;
-import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
-import net.aurika.kingdoms.auspice.util.LazyMessenger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,16 @@ public abstract class RegistryOperatorCommandForeach<T extends Namespaced, R ext
 
   public static final String VAR_OP = "op";
 
-  protected final @NotNull Messenger failed_noop = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "noop"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_NOOP));
-  protected final @NotNull Messenger failed_unknown_op = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "unknown-op"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_UNKNOWN_OP));
+  protected final @NotNull Messenger failed_noop = new LazyMessenger(
+      () -> new DefaultedMessenger(
+          this.lang("failed", "noop"),
+          () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_NOOP
+      ));
+  protected final @NotNull Messenger failed_unknown_op = new LazyMessenger(
+      () -> new DefaultedMessenger(
+          this.lang("failed", "unknown-op"),
+          () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_FOREACH_FAILED_UNKNOWN_OP
+      ));
 
   public RegistryOperatorCommandForeach(@KingdomsNamingContract.CommandName final @NotNull String name, @Nullable KingdomsParentCommand parent, @Nullable PermissionDefault permissionDefault, @NotNull R registry, @NotNull Class<T> valueType) {
     super(name, parent, permissionDefault, registry, valueType);
@@ -72,6 +80,7 @@ public abstract class RegistryOperatorCommandForeach<T extends Namespaced, R ext
   protected abstract @NotNull Map<String, ? extends ForeachOperation> availableOperations();
 
   public abstract class ForeachOperation {
+
     public final @NotNull String name;
 
     public ForeachOperation(@NotNull String name) {

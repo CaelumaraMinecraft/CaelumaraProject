@@ -14,7 +14,10 @@ public class CommandAdminRegistryRelationAttribute extends CommandAdminRegistryT
   }
 
   public CommandAdminRegistryRelationAttribute(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-    super("relation" + "attribute", parent, permissionDefault, Kingdoms.get().getRelationAttributeRegistry(), RelationAttribute.class);
+    super(
+        "relation" + "attribute", parent, permissionDefault, Kingdoms.get().getRelationAttributeRegistry(),
+        RelationAttribute.class
+    );
   }
 
 }

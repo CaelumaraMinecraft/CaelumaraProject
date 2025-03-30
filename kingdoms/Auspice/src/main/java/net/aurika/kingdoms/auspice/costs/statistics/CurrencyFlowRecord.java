@@ -1,6 +1,7 @@
 package net.aurika.kingdoms.auspice.costs.statistics;
 
 public class CurrencyFlowRecord<T> {
+
   public T target;                  //such as a kingdom, or a player
   public long circulateTime;
   private final CurrencyEntryList<T> entries;

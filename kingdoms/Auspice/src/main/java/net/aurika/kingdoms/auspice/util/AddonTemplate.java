@@ -13,7 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AddonTemplate extends JavaPlugin implements Addon {
-  private static Map<Class<? extends AddonTemplate>, AddonTemplate> subs = new HashMap<>();
+
+  private static final Map<Class<? extends AddonTemplate>, AddonTemplate> subs = new HashMap<>();
 
   @Contract("null, _ -> null; !null, _ -> !null")
   public static @Nullable String unboxAddonName(@Nullable Addon addon, boolean silent) {

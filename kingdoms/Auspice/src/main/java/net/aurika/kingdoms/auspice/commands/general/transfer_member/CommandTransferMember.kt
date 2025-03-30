@@ -1,5 +1,7 @@
 package net.aurika.kingdoms.auspice.commands.general.transfer_member
 
+import net.aurika.kingdoms.auspice.configs.AuspiceLang
+import net.aurika.kingdoms.auspice.util.GroupExt
 import org.bukkit.Bukkit
 import org.kingdoms.commands.CommandContext
 import org.kingdoms.commands.CommandResult
@@ -10,14 +12,12 @@ import org.kingdoms.constants.group.Nation
 import org.kingdoms.constants.player.KingdomPlayer
 import org.kingdoms.events.members.LeaveReason
 import org.kingdoms.locale.KingdomsLang
-import net.aurika.kingdoms.auspice.configs.AuspiceLang
-import net.aurika.kingdoms.auspice.util.GroupExt
 import java.util.*
 
 class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
 
   override fun execute(context: CommandContext): CommandResult {
-    val args = context.getArgs()
+    context.getArgs()
 
     val senderKP = context.kingdomPlayer ?: return CommandResult.FAILED
     val senderKingdom = senderKP.kingdom ?: return CommandResult.FAILED
@@ -42,7 +42,7 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
   }
 
   override fun tabComplete(context: CommandTabContext): List<String> {
-    val kingdomPlayer = context.kingdomPlayer ?: return emptyList();
+    val kingdomPlayer = context.kingdomPlayer ?: return emptyList()
     val kingdom = kingdomPlayer.kingdom ?: return emptyList()
 
     val players = ArrayList<String>()
@@ -87,7 +87,7 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
 
       if (sp >= kp) {
         AuspiceLang.COMMAND_TRANSFER_MEMBER_FAILED_RANK_PRIORITY.sendError(sender.player)
-        return false;
+        return false
       }
 
       if (taker.maxMembers <= taker.members.size) {

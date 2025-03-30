@@ -4,6 +4,7 @@ import net.aurika.gradle.kingdoms.addon.KingdomsAddonPlugin
 
 plugins {
   id("java-library")
+  id("net.aurika.gradle.dependency")
   id("net.aurika.gradle.kingdoms")
   id("net.aurika.gradle.repository")
   alias(libs.plugins.kotlin) apply false
@@ -18,6 +19,7 @@ subprojects {
 
   apply {
     plugins.apply("java-library")
+    plugins.apply("net.aurika.gradle.dependency")
     plugins.apply("net.aurika.gradle.kingdoms")
     plugins.apply("net.aurika.gradle.repository")
     plugins.apply(libs.plugins.kotlin.get().pluginId)
@@ -72,7 +74,7 @@ subprojects {
         }
 
         processResources {
-          def props = [project: new KingdomsAddonProject(fullName, version, description)]
+          def props = [project: new KingdomsAddonProject(fullName, version as String, description as String)]
           inputs.properties(props)
           filteringCharset = "UTF-8"
           filesMatching("plugin.yml") {
@@ -129,7 +131,7 @@ subprojects {
     compileOnly(libs.server.spigot)
     compileOnly(libs.annotations.checker)
     compileOnly(libs.xseries)
-    compileOnly(fileTree(rootDir.getPath() + "/libs/plugins/Kingdoms_relocated"))
+    compileOnly(aurikaDependency.libsFileTree("plugins/Kingdoms_relocated"))
   }
 
   java {

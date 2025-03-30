@@ -1,5 +1,6 @@
 package net.aurika.kingdoms.auspice.configs;
 
+import net.aurika.kingdoms.auspice.AuspiceAddon;
 import org.kingdoms.config.accessor.EnumConfig;
 import org.kingdoms.config.accessor.KeyedConfigAccessor;
 import org.kingdoms.config.implementation.KeyedYamlConfigAccessor;
@@ -9,7 +10,6 @@ import org.kingdoms.main.Kingdoms;
 import org.kingdoms.utils.config.ConfigPath;
 import org.kingdoms.utils.config.adapters.YamlResource;
 import org.kingdoms.utils.string.Strings;
-import net.aurika.kingdoms.auspice.AuspiceAddon;
 
 public enum AuspiceConfig implements EnumConfig {
 
@@ -21,15 +21,19 @@ public enum AuspiceConfig implements EnumConfig {
   ;
 
   public static final YamlResource AUSPICE_MAIN =
-      new YamlResource(AuspiceAddon.get(),
+      new YamlResource(
+          AuspiceAddon.get(),
           Kingdoms.getPath("auspice-addon.yml").toFile(),
-          "auspice-addon.yml").load();
+          "auspice-addon.yml"
+      ).load();
 
   static {
     ConfigWatcher.register(AUSPICE_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-    ConfigManager.registerNormalWatcher("auspice-addon.yml", (event) -> {
-      ConfigWatcher.reload(AUSPICE_MAIN, "auspice-addon.yml");
-    });
+    ConfigManager.registerNormalWatcher(
+        "auspice-addon.yml", (event) -> {
+          ConfigWatcher.reload(AUSPICE_MAIN, "auspice-addon.yml");
+        }
+    );
   }
 
   private final ConfigPath option;

@@ -1,7 +1,7 @@
 package net.aurika.kingdoms.auspice.costs;
 
-import org.jetbrains.annotations.NotNull;
 import net.aurika.kingdoms.auspice.costs.statistics.CurrencyEntry;
+import org.jetbrains.annotations.NotNull;
 
 public interface Currency<T, C> {
 

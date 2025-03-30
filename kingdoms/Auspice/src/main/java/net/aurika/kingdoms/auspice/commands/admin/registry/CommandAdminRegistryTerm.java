@@ -9,6 +9,7 @@ import org.kingdoms.peacetreaties.terms.TermProvider;
 import org.kingdoms.peacetreaties.terms.TermRegistry;
 
 public class CommandAdminRegistryTerm extends CommandAdminRegistryTemplate<TermProvider, TermRegistry> {
+
   public CommandAdminRegistryTerm(@Nullable KingdomsParentCommand parent) {
     this(parent, PermissionDefault.OP);
   }

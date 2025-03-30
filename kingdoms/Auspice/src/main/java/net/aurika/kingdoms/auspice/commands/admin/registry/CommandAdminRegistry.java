@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import org.kingdoms.commands.KingdomsParentCommand;
 
 public class CommandAdminRegistry extends KingdomsParentCommand {
+
   private static @Nullable CommandAdminRegistry instance;
 
   public static @Nullable CommandAdminRegistry getInstance() {

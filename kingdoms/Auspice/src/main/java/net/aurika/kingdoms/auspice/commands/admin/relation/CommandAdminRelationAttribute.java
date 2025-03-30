@@ -1,5 +1,6 @@
 package net.aurika.kingdoms.auspice.commands.admin.relation;
 
+import net.aurika.kingdoms.auspice.configs.AuspiceLang;
 import net.aurika.validate.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -13,7 +14,6 @@ import org.kingdoms.constants.group.model.relationships.KingdomRelation;
 import org.kingdoms.constants.group.model.relationships.RelationAttribute;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.main.Kingdoms;
-import net.aurika.kingdoms.auspice.configs.AuspiceLang;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,8 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
     String relationStr = args[1];
 
     if (!relationsString.contains(relationStr)) {  // Unknown relation
-      AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_SELF_RELATION.sendError(messageReceiver, "relation_str", relationStr);
+      AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_SELF_RELATION.sendError(
+          messageReceiver, "relation_str", relationStr);
       return CommandResult.FAILED;
     }
     KingdomRelation relation;
@@ -63,7 +64,8 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
 
     String attrStr = args[2];
 
-    RelationAttribute attribute = Kingdoms.get().getRelationAttributeRegistry().getRegistered(Namespace.fromConfigString(attrStr));
+    RelationAttribute attribute = Kingdoms.get().getRelationAttributeRegistry().getRegistered(
+        Namespace.fromConfigString(attrStr));
 
     if (attribute == null) {
       System.out.println("The input value is not a relation attribute config name");
@@ -82,7 +84,8 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
           kingdom.getGroup().getAttributes().get(relation).remove(attribute);
         }
       });
-      AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_KINGDOM.sendMessage(messageReceiver, "relation", relationStr, "value", setTrue);
+      AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_KINGDOM.sendMessage(
+          messageReceiver, "relation", relationStr, "value", setTrue);
       return CommandResult.SUCCESS;
     } else if (targetStr.equals("#ALL_NATION")) { // All nations
       Kingdoms.get().getDataCenter().getNationManager().getNations().forEach((nation) -> {
@@ -92,7 +95,8 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
           nation.getGroup().getAttributes().get(relation).remove(attribute);
         }
       });
-      AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_NATION.sendMessage(messageReceiver, "relation", relationStr, "value", setTrue);
+      AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_ALL_NATION.sendMessage(
+          messageReceiver, "relation", relationStr, "value", setTrue);
       return CommandResult.SUCCESS;
     } else {
       Kingdom kingdom = context.getKingdom(0);
@@ -101,7 +105,8 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
       Group group = kingdom == null ? nation : kingdom;
 
       if (group == null) {
-        AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_NOTFOUND_GROUP.sendError(messageReceiver, "name", targetStr);
+        AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_FAILED_NOTFOUND_GROUP.sendError(
+            messageReceiver, "name", targetStr);
         return CommandResult.FAILED;
       }
 
@@ -112,9 +117,11 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
       }
 
       if (group instanceof Kingdom) {
-        AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_SINGLE_KINGDOM.sendMessage(messageReceiver, "group-name", targetStr, "relation", relationStr, "attribute", attrStr);
+        AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_SINGLE_KINGDOM.sendMessage(
+            messageReceiver, "group-name", targetStr, "relation", relationStr, "attribute", attrStr);
       } else {
-        AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_SINGLE_NATION.sendMessage(messageReceiver, "group-name", targetStr, "relation", relationStr, "attribute", attrStr);
+        AuspiceLang.COMMAND_ADMIN_RELATION_ATTRIBUTE_SUCCESS_SINGLE_NATION.sendMessage(
+            messageReceiver, "group-name", targetStr, "relation", relationStr, "attribute", attrStr);
       }
 
       return CommandResult.SUCCESS;
@@ -139,7 +146,8 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
 
     if (context.isAtArg(2)) {
       List<String> out2 = new ArrayList<>();
-      Kingdoms.get().getRelationAttributeRegistry().getRegistry().keySet().forEach(namespace -> out2.add(namespace.getConfigOptionName()));
+      Kingdoms.get().getRelationAttributeRegistry().getRegistry().keySet().forEach(
+          namespace -> out2.add(namespace.getConfigOptionName()));
       return out2;
     }
 

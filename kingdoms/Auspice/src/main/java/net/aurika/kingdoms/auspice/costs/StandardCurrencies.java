@@ -1,14 +1,15 @@
 package net.aurika.kingdoms.auspice.costs;
 
+import net.aurika.kingdoms.auspice.costs.statistics.CurrencyEntry;
+import net.aurika.kingdoms.auspice.util.NumberUtils;
+import net.aurika.kingdoms.auspice.util.RelatedKingdoms;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.group.Kingdom;
 import org.kingdoms.constants.group.Nation;
 import org.kingdoms.peacetreaties.data.WarPoint;
-import net.aurika.kingdoms.auspice.costs.statistics.CurrencyEntry;
-import net.aurika.kingdoms.auspice.util.NumberUtils;
-import net.aurika.kingdoms.auspice.util.RelatedKingdoms;
 
 public final class StandardCurrencies {
+
   public static final KingdomBankCurrency KINGDOM_BANK = new KingdomBankCurrency();
   public static final KingdomResourcePointsCurrency KINGDOM_RESOURCE_POINTS = new KingdomResourcePointsCurrency();
   public static final KingdomMaxLandsModifierCurrency KINGDOM_MAX_LANDS_MODIFIER = new KingdomMaxLandsModifierCurrency();

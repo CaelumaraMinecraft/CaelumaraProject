@@ -1,5 +1,9 @@
 package net.aurika.kingdoms.auspice.commands.admin.registry;
 
+import net.aurika.kingdoms.auspice.commands.admin.registry.operator.RegistryOperatorCommandList;
+import net.aurika.kingdoms.auspice.commands.admin.registry.operator.RegistryOperatorCommandLock;
+import net.aurika.kingdoms.auspice.commands.admin.registry.operator.RegistryOperatorCommandUnregister;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,19 +12,17 @@ import org.kingdoms.constants.namespace.Lockable;
 import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.constants.namespace.UnregistrableNamespaceRegistry;
-import net.aurika.kingdoms.auspice.commands.admin.registry.operator.RegistryOperatorCommandList;
-import net.aurika.kingdoms.auspice.commands.admin.registry.operator.RegistryOperatorCommandLock;
-import net.aurika.kingdoms.auspice.commands.admin.registry.operator.RegistryOperatorCommandUnregister;
-import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 
 import java.util.Map;
 
 public abstract class CommandAdminRegistryTemplate<T extends Namespaced, R extends NamespacedRegistry<T>> extends KingdomsParentCommand {
-  public CommandAdminRegistryTemplate(@KingdomsNamingContract.CommandName final @NotNull String name,
-                                      @Nullable KingdomsParentCommand parent,
-                                      PermissionDefault permissionDefault,
-                                      @NotNull R registry,
-                                      @NotNull Class<T> valueType
+
+  public CommandAdminRegistryTemplate(
+      @KingdomsNamingContract.CommandName final @NotNull String name,
+      @Nullable KingdomsParentCommand parent,
+      PermissionDefault permissionDefault,
+      @NotNull R registry,
+      @NotNull Class<T> valueType
   ) {
     super(name, parent, permissionDefault);
     if (registry instanceof Lockable) {

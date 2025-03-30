@@ -1,5 +1,8 @@
 package net.aurika.kingdoms.auspice.commands.admin.registry.operator;
 
+import net.aurika.kingdoms.auspice.configs.AuspiceLang;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
+import net.aurika.kingdoms.auspice.util.LazyMessenger;
 import net.aurika.validate.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -14,9 +17,6 @@ import org.kingdoms.constants.namespace.Namespaced;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.locale.messenger.DefaultedMessenger;
 import org.kingdoms.locale.messenger.Messenger;
-import net.aurika.kingdoms.auspice.configs.AuspiceLang;
-import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
-import net.aurika.kingdoms.auspice.util.LazyMessenger;
 
 import java.util.List;
 import java.util.Map;
@@ -25,9 +25,19 @@ public abstract class RegistryOperatorCommandList<T extends Namespaced, R extend
 
   public static final String VAR_LIST_ENTRY = "entry";
 
-  protected final Messenger success_head = new LazyMessenger(() -> new DefaultedMessenger(this.lang("success", "head"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_HEAD));
-  protected final Messenger success_entry = new LazyMessenger(() -> new DefaultedMessenger(this.lang("success", "entry"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_ENTRY));
-  protected final Messenger success_end = new LazyMessenger(() -> new DefaultedMessenger(this.lang("success", "end"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_END));
+  protected final Messenger success_head = new LazyMessenger(() -> new DefaultedMessenger(
+      this.lang("success", "head"),
+      () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_HEAD
+  ));
+  protected final Messenger success_entry = new LazyMessenger(
+      () -> new DefaultedMessenger(
+          this.lang("success", "entry"),
+          () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_ENTRY
+      ));
+  protected final Messenger success_end = new LazyMessenger(() -> new DefaultedMessenger(
+      this.lang("success", "end"),
+      () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_LIST_SUCCESS_END
+  ));
 
   public RegistryOperatorCommandList(@KingdomsNamingContract.CommandName final @NotNull String name, @Nullable KingdomsParentCommand parent, @Nullable PermissionDefault permissionDefault, @NotNull R registry, @NotNull Class<T> valueType) {
     super(name, parent, permissionDefault, registry, valueType);
@@ -49,7 +59,8 @@ public abstract class RegistryOperatorCommandList<T extends Namespaced, R extend
       success_head.sendMessage(messageReceiver);
       for (Map.Entry<Namespace, T> entry : registry.getRegistry().entrySet()) {
         try {
-          success_entry.sendMessage(messageReceiver, VAR_LIST_ENTRY, op.execute(entry.getKey(), entry.getValue(), commandContext));
+          success_entry.sendMessage(
+              messageReceiver, VAR_LIST_ENTRY, op.execute(entry.getKey(), entry.getValue(), commandContext));
         } catch (Exception e) {  // TODO
           return CommandResult.FAILED;
         }
@@ -148,6 +159,7 @@ public abstract class RegistryOperatorCommandList<T extends Namespaced, R extend
   }
 
   public abstract class ListOperation extends ForeachOperation {
+
     public ListOperation(@NotNull String name) {
       super(name);
     }

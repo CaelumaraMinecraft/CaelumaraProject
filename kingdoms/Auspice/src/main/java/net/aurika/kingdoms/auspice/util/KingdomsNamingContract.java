@@ -10,6 +10,7 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.CLASS;
 
 public final class KingdomsNamingContract {
+
   private KingdomsNamingContract() {
     throw new AssertionError("Can not initialize class " + getClass().getName());
   }
@@ -33,6 +34,7 @@ public final class KingdomsNamingContract {
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
   public @interface Namespace {
+
     @Documented
     @Pattern(NAMESPACE_GROUP)
     @Retention(RetentionPolicy.CLASS)

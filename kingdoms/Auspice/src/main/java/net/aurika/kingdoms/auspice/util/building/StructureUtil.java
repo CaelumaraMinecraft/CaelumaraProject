@@ -23,7 +23,8 @@ public final class StructureUtil {
       land = new Land((UUID) null, SimpleChunkLocation.of(location));
     }
     Structure structure = new Structure(style, SimpleLocation.of(location));
-    land.unsafeGetStructures().put(BlockVector3.of(location.getBlockX(), location.getBlockY(), location.getBlockZ()), structure);
+    land.unsafeGetStructures().put(
+        BlockVector3.of(location.getBlockX(), location.getBlockY(), location.getBlockZ()), structure);
     return structure;
   }
 

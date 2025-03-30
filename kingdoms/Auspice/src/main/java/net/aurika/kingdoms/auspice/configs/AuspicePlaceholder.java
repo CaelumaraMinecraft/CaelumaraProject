@@ -1,5 +1,6 @@
 package net.aurika.kingdoms.auspice.configs;
 
+import net.aurika.kingdoms.auspice.util.land.LandUtil;
 import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,14 +10,14 @@ import org.kingdoms.locale.placeholders.*;
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider;
 import org.kingdoms.utils.compilers.ConditionalCompiler;
 import org.kingdoms.utils.conditions.ConditionProcessor;
-import net.aurika.kingdoms.auspice.util.land.LandUtil;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
 
 public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
-  KINGDOM_LANDS_COUNT(0, new FunctionalPlaceholder() {
+  KINGDOM_LANDS_COUNT(
+      0, new FunctionalPlaceholder() {
     @PhFn
     public @Nullable Object byFilter(KingdomsPlaceholderTranslationContext context, @PhParam(name = "filter") String filterStr) {
       if (filterStr == null || filterStr.isEmpty()) {
@@ -47,7 +48,8 @@ public enum AuspicePlaceholder implements EnumKingdomsPlaceholderTranslator {
       }
       return count;
     }
-  });
+  }
+  );
 
   private final @NotNull Function<KingdomsPlaceholderTranslationContext, Object> translator;
   private final @NotNull Object defaultValue;

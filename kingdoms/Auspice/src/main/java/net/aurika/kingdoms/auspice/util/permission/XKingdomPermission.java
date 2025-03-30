@@ -38,23 +38,30 @@ public class XKingdomPermission extends KingdomPermission {
     return new LanguageEntry(componentPath(ns, sec));
   }
 
-  public static @NotNull XKingdomPermission create(@NotNull Namespace namespace,
-                                                   @NotNull String name,
-                                                   @NotNull String description,
-                                                   @NotNull String deniedMessage
+  public static @NotNull XKingdomPermission create(
+      @NotNull Namespace namespace,
+      @NotNull String name,
+      @NotNull String description,
+      @NotNull String deniedMessage
   ) {
     return create(
         namespace,
-        new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "name")), () -> new StaticMessenger(name)),
-        new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "description")), () -> new StaticMessenger(description)),
-        new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "denied")), () -> new StaticMessenger(deniedMessage))
+        new DefaultedMessenger(
+            new LanguageEntryMessenger(componentEntry(namespace, "name")), () -> new StaticMessenger(name)),
+        new DefaultedMessenger(
+            new LanguageEntryMessenger(componentEntry(namespace, "description")),
+            () -> new StaticMessenger(description)
+        ),
+        new DefaultedMessenger(
+            new LanguageEntryMessenger(componentEntry(namespace, "denied")), () -> new StaticMessenger(deniedMessage))
     );
   }
 
-  public static @NotNull XKingdomPermission create(@NotNull Namespace namespace,
-                                                   @NotNull Messenger name,
-                                                   @NotNull Messenger description,
-                                                   @NotNull Messenger deniedMessage
+  public static @NotNull XKingdomPermission create(
+      @NotNull Namespace namespace,
+      @NotNull Messenger name,
+      @NotNull Messenger description,
+      @NotNull Messenger deniedMessage
   ) {
     XKingdomPermission perm = new XKingdomPermission(namespace, name, description, deniedMessage);
     Kingdoms.get().getPermissionRegistery().register(perm);

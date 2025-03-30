@@ -61,7 +61,6 @@ public class CurrencyEntryList<T> extends LinkedList<CurrencyEntry<T, ?>> {
   public enum TradeType {
     EXPEND,  //expenditure  支出
     INCOME,  //收入
-    ;
   }
 
 }

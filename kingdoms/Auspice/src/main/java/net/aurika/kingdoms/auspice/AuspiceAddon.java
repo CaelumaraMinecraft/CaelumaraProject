@@ -1,12 +1,5 @@
 package net.aurika.kingdoms.auspice;
 
-import org.jetbrains.annotations.NotNull;
-import org.kingdoms.commands.admin.CommandAdmin;
-import org.kingdoms.constants.metadata.KingdomMetadataHandler;
-import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
-import org.kingdoms.constants.namespace.Namespace;
-import org.kingdoms.locale.LanguageManager;
-import org.kingdoms.main.Kingdoms;
 import net.aurika.kingdoms.auspice.commands.admin.registry.CommandAdminRegistry;
 import net.aurika.kingdoms.auspice.commands.admin.relation.CommandAdminRelation;
 import net.aurika.kingdoms.auspice.configs.AuspiceLang;
@@ -16,14 +9,23 @@ import net.aurika.kingdoms.auspice.costs.CurrencyRegistry;
 import net.aurika.kingdoms.auspice.util.AddonTemplate;
 import net.aurika.kingdoms.auspice.util.GroupExt;
 import net.aurika.kingdoms.auspice.util.land.LandUtil;
+import org.jetbrains.annotations.NotNull;
+import org.kingdoms.commands.admin.CommandAdmin;
+import org.kingdoms.constants.metadata.KingdomMetadataHandler;
+import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
+import org.kingdoms.constants.namespace.Namespace;
+import org.kingdoms.locale.LanguageManager;
+import org.kingdoms.main.Kingdoms;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static net.aurika.kingdoms.auspice.util.KingdomsNamingContract.Namespace.Key;
 
 public final class AuspiceAddon extends AddonTemplate {
+
   public static final String NAMESPACE = "Auspice";
 
   private static AuspiceAddon instance;
@@ -58,9 +60,7 @@ public final class AuspiceAddon extends AddonTemplate {
   @Override
   public void onLoad0() {
 
-    landMetadataHandlers.addAll(Arrays.asList(
-
-    ));
+    landMetadataHandlers.addAll(List.of());
     landMetadataHandlers.forEach(metaHandler -> {
       Kingdoms.get().getMetadataRegistry().register(metaHandler);
     });

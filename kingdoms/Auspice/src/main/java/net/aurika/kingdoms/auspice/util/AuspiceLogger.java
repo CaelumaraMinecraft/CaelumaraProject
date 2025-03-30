@@ -5,6 +5,7 @@ import net.aurika.kingdoms.auspice.AuspiceAddon;
 import java.util.logging.Logger;
 
 public class AuspiceLogger {
+
   private static final Logger logger = AuspiceAddon.get().getLogger();
 
   public static void info(Object o) {

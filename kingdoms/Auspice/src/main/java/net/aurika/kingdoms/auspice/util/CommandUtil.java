@@ -91,6 +91,7 @@ public class CommandUtil {
   // not null, not null
 
   public static class Operation<T, O> {
+
     private T target;
     private O operation;
 

@@ -8,6 +8,7 @@ import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.main.Kingdoms;
 
 public class CommandAdminRegistryMetadata extends CommandAdminRegistryTemplate<KingdomMetadataHandler, KingdomMetadataRegistry> {
+
   public CommandAdminRegistryMetadata(@Nullable KingdomsParentCommand parent) {
     this(parent, PermissionDefault.OP);
   }

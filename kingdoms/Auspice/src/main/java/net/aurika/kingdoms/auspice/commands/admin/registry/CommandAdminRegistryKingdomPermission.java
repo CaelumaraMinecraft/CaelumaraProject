@@ -14,7 +14,10 @@ public class CommandAdminRegistryKingdomPermission extends CommandAdminRegistryT
   }
 
   public CommandAdminRegistryKingdomPermission(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
-    super("kingdom" + "permission", parent, permissionDefault, Kingdoms.get().getPermissionRegistery(), KingdomPermission.class);
+    super(
+        "kingdom" + "permission", parent, permissionDefault, Kingdoms.get().getPermissionRegistery(),
+        KingdomPermission.class
+    );
   }
 
 }

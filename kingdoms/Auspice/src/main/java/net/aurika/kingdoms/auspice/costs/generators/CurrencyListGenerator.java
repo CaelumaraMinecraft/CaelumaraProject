@@ -1,10 +1,10 @@
 package net.aurika.kingdoms.auspice.costs.generators;
 
-import org.jetbrains.annotations.NotNull;
-import org.kingdoms.utils.config.ConfigSection;
 import net.aurika.kingdoms.auspice.costs.Currency;
 import net.aurika.kingdoms.auspice.costs.CurrencyRegistry;
 import net.aurika.kingdoms.auspice.costs.statistics.CurrencyEntryList;
+import org.jetbrains.annotations.NotNull;
+import org.kingdoms.utils.config.ConfigSection;
 
 public interface CurrencyListGenerator<T> {
 

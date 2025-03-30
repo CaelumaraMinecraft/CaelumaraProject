@@ -1,6 +1,7 @@
 package net.aurika.kingdoms.auspice.configs;
 
 public class MsgConst {
+
   public static final String NONE = "{$$none}";
   public static final String P_COLOR = "{$p}";
   public static final String S_COLOR = "{$s}";

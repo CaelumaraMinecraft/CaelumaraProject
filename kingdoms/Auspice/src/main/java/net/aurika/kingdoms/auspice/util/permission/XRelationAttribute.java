@@ -39,20 +39,26 @@ public class XRelationAttribute extends RelationAttribute {
     return new LanguageEntry(componentPath(ns, sec));
   }
 
-  public static @NotNull XRelationAttribute create(@NotNull Namespace namespace,
-                                                   @NotNull String name,
-                                                   @NotNull String description
+  public static @NotNull XRelationAttribute create(
+      @NotNull Namespace namespace,
+      @NotNull String name,
+      @NotNull String description
   ) {
     return create(
         namespace,
-        new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "name")), () -> new StaticMessenger(name)),
-        new DefaultedMessenger(new LanguageEntryMessenger(componentEntry(namespace, "description")), () -> new StaticMessenger(description))
+        new DefaultedMessenger(
+            new LanguageEntryMessenger(componentEntry(namespace, "name")), () -> new StaticMessenger(name)),
+        new DefaultedMessenger(
+            new LanguageEntryMessenger(componentEntry(namespace, "description")),
+            () -> new StaticMessenger(description)
+        )
     );
   }
 
-  public static @NotNull XRelationAttribute create(@NotNull Namespace namespace,
-                                                   @NotNull Messenger name,
-                                                   @NotNull Messenger description
+  public static @NotNull XRelationAttribute create(
+      @NotNull Namespace namespace,
+      @NotNull Messenger name,
+      @NotNull Messenger description
   ) {
     XRelationAttribute attr = new XRelationAttribute(namespace, name, description);
     Kingdoms.get().getRelationAttributeRegistry().register(attr);

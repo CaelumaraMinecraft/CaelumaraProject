@@ -1,5 +1,6 @@
 package net.aurika.kingdoms.auspice.util;
 
+import net.aurika.kingdoms.auspice.AuspiceAddon;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.config.annotations.AdvancedMessage;
@@ -9,7 +10,6 @@ import org.kingdoms.locale.LanguageEntry;
 import org.kingdoms.locale.LanguageManager;
 import org.kingdoms.locale.messenger.DefinedMessenger;
 import org.kingdoms.locale.provider.MessageProvider;
-import net.aurika.kingdoms.auspice.AuspiceAddon;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -33,7 +33,8 @@ public class MessengerUtil {
     }
 
     if (AuspiceAddon.get().isKingdomsEnabled()) {
-      AuspiceLogger.warn("You shouldn't create messenger when Kingdoms is already enabled, this will result in no language entry in the language file");
+      AuspiceLogger.warn(
+          "You shouldn't create messenger when Kingdoms is already enabled, this will result in no language entry in the language file");
     }
 
     LinkedList<String> newPath = new LinkedList<>();
@@ -49,6 +50,7 @@ public class MessengerUtil {
   }
 
   public static class Companion {
+
     static final Set<DynamicLanguage> constants = new HashSet<>();
 
   }

@@ -18,9 +18,13 @@ dependencies {
 
 gradlePlugin {
   plugins {
+    register("aurika-dependency") {
+      id = "net.aurika.gradle.dependency"
+      implementationClass = "net.aurika.gradle.dependency.AurikaDependencyPlugin"
+    }
     register("aurika-kingdoms") {
       id = "net.aurika.gradle.kingdoms"
-      implementationClass = "net.aurika.gradle.kingdoms.KingdomsPlugin"
+      implementationClass = "net.aurika.gradle.kingdoms.AurikaKingdomsPlugin"
     }
     register("aurika-relocation") {
       id = "net.aurika.gradle.relocation"

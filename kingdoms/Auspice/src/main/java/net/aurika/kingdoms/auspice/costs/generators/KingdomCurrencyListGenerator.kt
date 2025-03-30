@@ -1,8 +1,8 @@
 package net.aurika.kingdoms.auspice.costs.generators
 
+import net.aurika.kingdoms.auspice.costs.statistics.CurrencyEntryList
 import org.kingdoms.constants.group.Kingdom
 import org.kingdoms.utils.config.ConfigSection
-import net.aurika.kingdoms.auspice.costs.statistics.CurrencyEntryList
 
 class KingdomCurrencyListGenerator : CurrencyListGenerator<Kingdom> {
   override fun generate(section: ConfigSection): CurrencyEntryList<Kingdom> {

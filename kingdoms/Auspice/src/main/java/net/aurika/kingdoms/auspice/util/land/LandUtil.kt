@@ -2,9 +2,9 @@
 
 package net.aurika.kingdoms.auspice.util.land
 
+import net.aurika.kingdoms.auspice.util.context.ExternalMessageContextEditsFactory
 import org.kingdoms.constants.land.Land
 import org.kingdoms.locale.placeholders.context.MessagePlaceholderProvider
-import net.aurika.kingdoms.auspice.util.context.ExternalMessageContextEditsFactory
 import java.util.function.Function
 
 fun addExtMessageContextEdit(name: String, editProvider: Function<Land, Any?>) {

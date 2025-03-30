@@ -1,5 +1,8 @@
 package net.aurika.kingdoms.auspice.commands.admin.registry.operator;
 
+import net.aurika.kingdoms.auspice.configs.AuspiceLang;
+import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
+import net.aurika.kingdoms.auspice.util.LazyMessenger;
 import net.aurika.validate.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
@@ -15,9 +18,6 @@ import org.kingdoms.constants.namespace.NamespacedRegistry;
 import org.kingdoms.constants.namespace.UnregistrableNamespaceRegistry;
 import org.kingdoms.locale.messenger.DefaultedMessenger;
 import org.kingdoms.locale.messenger.Messenger;
-import net.aurika.kingdoms.auspice.configs.AuspiceLang;
-import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
-import net.aurika.kingdoms.auspice.util.LazyMessenger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,18 +25,33 @@ import java.util.List;
 import java.util.Map;
 
 public class RegistryOperatorCommandUnregister<T extends Namespaced, R extends NamespacedRegistry<T> & UnregistrableNamespaceRegistry<T>> extends RegistryOperatorCommand<T, R> {
+
   public static final String VAR_KEY = "key";  // TODO inline
 
-  protected final Messenger failed_not_unregisterable = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "not-unregisterable"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NOT_UNREGISTERABLE));
-  protected final Messenger failed_no_key = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "no-key"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NO_KEY));
-  protected final Messenger failed_wrong_key = new LazyMessenger(() -> new DefaultedMessenger(this.lang("failed", "wrong-key"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY));
-  protected final Messenger success = new LazyMessenger(() -> new DefaultedMessenger(this.lang("success"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS));
+  protected final Messenger failed_not_unregisterable = new LazyMessenger(
+      () -> new DefaultedMessenger(
+          this.lang("failed", "not-unregisterable"),
+          () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NOT_UNREGISTERABLE
+      ));
+  protected final Messenger failed_no_key = new LazyMessenger(
+      () -> new DefaultedMessenger(
+          this.lang("failed", "no-key"),
+          () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_NO_KEY
+      ));
+  protected final Messenger failed_wrong_key = new LazyMessenger(
+      () -> new DefaultedMessenger(
+          this.lang("failed", "wrong-key"),
+          () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_FAILED_WRONG_KEY
+      ));
+  protected final Messenger success = new LazyMessenger(
+      () -> new DefaultedMessenger(this.lang("success"), () -> AuspiceLang.COMMAND_ADMIN_REGISTRY_UNREGISTER_SUCCESS));
 
-  public RegistryOperatorCommandUnregister(@KingdomsNamingContract.CommandName final @NotNull String name,
-                                           @Nullable KingdomsParentCommand parent,
-                                           @Nullable PermissionDefault permissionDefault,
-                                           @NotNull R registry,
-                                           @NotNull Class<T> valueType
+  public RegistryOperatorCommandUnregister(
+      @KingdomsNamingContract.CommandName final @NotNull String name,
+      @Nullable KingdomsParentCommand parent,
+      @Nullable PermissionDefault permissionDefault,
+      @NotNull R registry,
+      @NotNull Class<T> valueType
   ) {
     super(name, parent, permissionDefault, registry, valueType);
   }
