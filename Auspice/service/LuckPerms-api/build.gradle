@@ -1,4 +1,0 @@
-dependencies {
-  compileOnlyApi("net.luckperms:api:5.4")
-  compileOnlyApi(libs.yamlengine)  // TODO
-}

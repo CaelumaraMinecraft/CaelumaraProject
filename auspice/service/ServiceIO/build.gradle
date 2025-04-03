@@ -1,0 +1,24 @@
+plugins {
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.repository")
+  alias(libs.plugins.kotlin)
+}
+
+repositories {
+  aurikaRepos {
+    thenextlvl_releases()
+  }
+}
+
+dependencies {
+  // extends vault service
+  api(project(":service:Vault"))
+  // service-io
+  compileOnlyApi("net.thenextlvl.services:service-io:2.2.0")
+  compileOnlyApi(libs.server.paper)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
+}

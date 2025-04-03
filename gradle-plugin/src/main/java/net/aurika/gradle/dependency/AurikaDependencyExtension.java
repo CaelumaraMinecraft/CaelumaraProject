@@ -17,6 +17,14 @@ public class AurikaDependencyExtension {
 
   private final @NotNull Project project;
 
+  public static @NotNull ConfigurableFileCollection libsFiles(@NotNull Project project, @NotNull Object path) {
+    return rootGradle(project).getRootProject().files("libs/" + path);
+  }
+
+  public static @NotNull ConfigurableFileTree libsFileTree(@NotNull Project project, @NotNull Object path) {
+    return rootGradle(project).getRootProject().fileTree("libs/" + path);
+  }
+
   public AurikaDependencyExtension(@NotNull Project project) {
     Objects.requireNonNull(project, "project");
     this.project = project;
@@ -27,11 +35,11 @@ public class AurikaDependencyExtension {
   }
 
   public @NotNull ConfigurableFileCollection libsFiles(@NotNull Object path) {
-    return rootGradle(this.project).getRootProject().files("libs/" + path);
+    return libsFiles(project, path);
   }
 
   public @NotNull ConfigurableFileTree libsFileTree(@NotNull Object path) {
-    return rootGradle(this.project).getRootProject().fileTree("libs/" + path);
+    return libsFileTree(project, path);
   }
 
   public @NotNull ConfigurableFileTree libsFileTree(@NotNull Object baseDir, @NotNull Action<? super ConfigurableFileTree> configureAction) {

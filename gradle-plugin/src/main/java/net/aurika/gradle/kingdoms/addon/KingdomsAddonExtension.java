@@ -12,6 +12,7 @@ public class KingdomsAddonExtension {
 
   private final Project project;
   private boolean isAddonInterface = false;
+  private @NotNull String addonName = "Unknown";
 
   @Inject
   public KingdomsAddonExtension(@NotNull Project project) {
@@ -22,5 +23,9 @@ public class KingdomsAddonExtension {
   public boolean getIsAddonInterface() { return isAddonInterface; }
 
   public void setIsAddonInterface(boolean isAddonInterface) { this.isAddonInterface = isAddonInterface; }
+
+  public @NotNull String getAddonName() { return addonName; }
+
+  public void setAddonName(@NotNull String addonName) { this.addonName = addonName; }
 
 }

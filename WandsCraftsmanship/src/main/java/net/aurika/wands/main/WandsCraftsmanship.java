@@ -2,7 +2,7 @@ package net.aurika.wands.main;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import net.aurika.auspice.game.bukkit.api.BukkitPluginAuspiceUser;
+import net.aurika.auspice.server.bukkit.api.BukkitPluginAuspiceUser;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.diversity.StandardDiversity;
 import net.aurika.auspice.key.NSKey;

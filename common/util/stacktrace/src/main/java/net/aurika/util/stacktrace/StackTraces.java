@@ -1,6 +1,5 @@
 package net.aurika.util.stacktrace;
 
-import net.aurika.auspice.configs.messages.MessageHandler;
 import net.aurika.util.cache.caffeine.CacheHandler;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;

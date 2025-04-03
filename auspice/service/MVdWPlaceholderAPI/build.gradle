@@ -1,0 +1,16 @@
+plugins {
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  aurikaRepos {
+    mvdw_software()
+  }
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+//  compileOnly("be.maximvdw:MVdWPlaceholderAPI:3.1.1")
+  compileOnly(aurikaDependency.libsFileTree("plugins/MVdWPlaceholderAPI"))
+}

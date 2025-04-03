@@ -1,0 +1,8 @@
+plugins {
+  id("net.aurika.gradle.dependency")
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+  compileOnly(aurikaDependency.libsFileTree("plugins/MythicMobs-v4"))
+}

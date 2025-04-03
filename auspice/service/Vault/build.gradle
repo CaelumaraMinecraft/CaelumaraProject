@@ -1,0 +1,12 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  compileOnly(project(":api"))
+  compileOnly(project(":service-api"))
+  // https://github.com/MilkBowl/VaultAPI
+  compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+}

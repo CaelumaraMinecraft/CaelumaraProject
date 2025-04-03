@@ -9,7 +9,7 @@ public class AuspiceScalarResolver extends CoreScalarResolver {
   public static final AuspiceScalarResolver INSTANCE = new AuspiceScalarResolver();
 
   @Override
-  public @NotNull Tag resolve(String value, Boolean implicit) {
+  public @NotNull Tag resolve(@NotNull String value, @NotNull Boolean implicit) {
     return super.resolve(value, implicit);
   }
 

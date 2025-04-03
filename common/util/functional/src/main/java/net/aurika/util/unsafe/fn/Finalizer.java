@@ -10,7 +10,7 @@ import java.util.Objects;
  * conditions are met.
  * <p>
  * All runnables are executed in insertion order.
- * This finalizer is not re-usable and can be only ran once.
+ * This finalizer is not re-usable and can be only run once.
  */
 public final class Finalizer implements Runnable {
 

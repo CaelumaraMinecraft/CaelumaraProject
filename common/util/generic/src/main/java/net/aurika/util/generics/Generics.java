@@ -32,6 +32,7 @@ public final class Generics {
       Object key = entry.getKey();
       Object value = entry.getValue();
       if (keyType.isInstance(key) && valueType.isInstance(value)) {
+        // noinspection unchecked
         destMap.put((K) key, (V) value);
       }
     }
@@ -58,6 +59,7 @@ public final class Generics {
       Object key = entry.getKey();
       V value = entry.getValue();
       if (keyType.isInstance(key)) {
+        // noinspection unchecked
         destMap.put((K) key, value);
       }
     }
@@ -84,6 +86,7 @@ public final class Generics {
       K key = entry.getKey();
       Object value = entry.getValue();
       if (valueType.isInstance(value)) {
+        // noinspection unchecked
         destMap.put(key, (V) value);
       }
     }
@@ -108,6 +111,7 @@ public final class Generics {
     }
 
     if (allType) {
+      // noinspection unchecked
       return (M) map;
     }
     return null;
@@ -129,6 +133,7 @@ public final class Generics {
     }
 
     if (allType) {
+      // noinspection unchecked
       return (M) map;
     }
     return null;
@@ -150,6 +155,7 @@ public final class Generics {
     }
 
     if (allType) {
+      // noinspection unchecked
       return (M) map;
     }
     return null;
@@ -172,16 +178,18 @@ public final class Generics {
     }
 
     if (allType) {
+      // noinspection unchecked
       return (C) collection;
     }
     return null;
   }
 
   @Contract("_, _, _, _ -> param2")
-  public static <OldType, NewType, C extends Collection<NewType>> @NotNull C migrationType(@NotNull Collection<OldType> oldTypeCollection,
-                                                                                           @NotNull C newTypeCollection,
-                                                                                           @NotNull Class<NewType> newType,
-                                                                                           @NotNull Function<OldType, NewType> toNewType
+  public static <OldType, NewType, C extends Collection<NewType>> @NotNull C migrationType(
+      @NotNull Collection<OldType> oldTypeCollection,
+      @NotNull C newTypeCollection,
+      @NotNull Class<NewType> newType,
+      @NotNull Function<OldType, NewType> toNewType
   ) {
     Validate.Arg.notNull(oldTypeCollection, "oldTypeCollection");
     Validate.Arg.notNull(newTypeCollection, "newTypeCollection");

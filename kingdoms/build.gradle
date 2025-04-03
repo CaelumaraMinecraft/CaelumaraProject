@@ -1,7 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.relocation.SimpleRelocator
-import net.aurika.gradle.kingdoms.addon.KingdomsAddonExtension
-import net.aurika.gradle.kingdoms.addon.KingdomsAddonPlugin
-
 plugins {
   id("java-library")
   id("net.aurika.gradle.dependency")
@@ -13,7 +9,7 @@ plugins {
 
 group = "net.aurika.kingdoms"
 
-int targetJavaVersion = 17
+int targetJavaVersion = 21
 
 subprojects {
 
@@ -26,77 +22,18 @@ subprojects {
     plugins.apply(libs.plugins.shadow.get().pluginId)
   }
 
-  afterEvaluate {
-
-    KingdomsAddonPlugin kap = plugins.findPlugin(KingdomsAddonPlugin.class)
-    KingdomsAddonExtension kex = extensions.findByType(KingdomsAddonExtension.class)
-    boolean isAddonBody = kap != null && kex != null && kex.isAddonInterface
-    println(path + " is Kingdoms Addon interface: " + isAddonBody)
-
-    if (isAddonBody) {
-
-      String shortName = name
-      String fullName = "Kingdoms-Addon-$shortName"
-
-      tasks {
-
-        build {
-          dependsOn(shadowJar)
-        }
-
-        compileKotlin {
-          kotlinOptions {
-            jvmTarget = targetJavaVersion
-          }
-        }
-
-        jar {
-          enabled = false
-        }
-
-        shadowJar {
-          archiveBaseName = fullName
-          archiveClassifier = null
-
-          minimize()
-
-          kingdomsRelocates.kingdomsRelocates()
-
-          println("Relocators for " + fullName + ": ")
-          relocators.forEach { relocator ->
-            SimpleRelocator sr = (SimpleRelocator) relocator
-            println(sr.pattern + " => " + sr.shadedPattern)
-          }
-          println()
-
-          exclude("**/kotlin-stdlib**")
-          exclude("**/annotations**")
-        }
-
-        processResources {
-          def props = [project: new KingdomsAddonProject(fullName, version as String, description as String)]
-          inputs.properties(props)
-          filteringCharset = "UTF-8"
-          filesMatching("plugin.yml") {
-            expand(props)
-          }
-        }
-      }
-    }
-
-  }
-
   repositories {
+
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
+
     aurikaRepos {
       spigotMC {
         snapshots()
         releases()
       }
     }
-
-    mavenCentral()
-    mavenLocal()
-    gradlePluginPortal()
 
     maven {
       name = "nostal-snapshots"
@@ -125,13 +62,27 @@ subprojects {
         includeGroupByRegex("com\\.github\\..*")
       }
     }
+
   }
 
   dependencies {
     compileOnly(libs.server.spigot)
     compileOnly(libs.annotations.checker)
     compileOnly(libs.xseries)
-    compileOnly(aurikaDependency.libsFileTree("plugins/Kingdoms_relocated"))
+  }
+
+  build {
+    dependsOn(shadowJar)
+  }
+
+  compileKotlin {
+    kotlinOptions {
+      jvmTarget = targetJavaVersion
+    }
+  }
+
+  jar {
+    enabled = false
   }
 
   java {
@@ -145,20 +96,3 @@ subprojects {
   }
 
 }
-
-public class KingdomsAddonProject implements Serializable {
-  public String name;
-  public String version;
-  public String description;
-
-  public KingdomsAddonProject(String name, String version, String description) {
-    this.name = name
-    this.version = version
-    this.description = description
-  }
-}
-
-//println("Relocators:")
-//((ShadowJar) tasks.getByName("shadowJar")).relocators.forEach {
-//    println(((SimpleRelocator) it).pattern + "=>" + (it as SimpleRelocator).shadedPattern)
-//}

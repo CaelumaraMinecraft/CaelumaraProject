@@ -1,0 +1,19 @@
+plugins {
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  aurikaRepos {
+    oraxen {
+      releases()
+      snapshots()
+    }
+  }
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+//    compileOnly("io.th0rgal:Oraxen:1.189.0")
+  compileOnly(aurikaDependency.libsFileTree("plugins/Oraxen"))
+}

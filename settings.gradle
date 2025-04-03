@@ -114,132 +114,69 @@ include(
     ":ecliptor",
     ":ecliptor:annotations",
     ":ecliptor:data-api",
-    ":ecliptor:data-storage",
-    )
-
-include(
-    ":dyanasis",
-    ":dyanasis:dyanasis-api",
-    ":dyanasis:dyanasis-editor-api",
-    ":dyanasis:dyanasis-editor-app",
-    ":dyanasis:dyanasis-editor-intellij",
-    )
+    ":ecliptor:data-storage"
+)
 
 include(
     ":aurika:base",
     ":aurika:config-api"
 )
 
-include(
-    ":Auspice",
+//include(
+//    ":HiraethRPG",
+//    ":HiraethRPG:api",
+//
+//    ":HiraethRPG:game",
+//    ":HiraethRPG:game:api",
+//
+//    ":HiraethRPG:game:bukkit",
+//    ":HiraethRPG:game:bukkit:api",
+//
+//    ":HiraethRPG:game:bukkit:paper",
+//    ":HiraethRPG:game:bukkit:folia",
+//
+//
+//    ":HiraethRPG:proxy",
+//    ":HiraethRPG:proxy:api",
+//    )
 
-    ":Auspice:auspice-api",
-    ":Auspice:auspice-api:platform",
-    ":Auspice:auspice-api:platform:geyser",
+//include(
+//    ":KingdomsAddons:Civilizations",
+//    ":KingdomsAddons:PlaceholderAPI-Bridge",
+//    ":KingdomsAddons:Props",
+//
+//    ":KingdomsAddons:kingdoms",
+//    ":KingdomsAddons:kingdoms:Peace-Treaties",
+//    ":KingdomsAddons:kingdoms:Outposts",
+//    ":KingdomsAddons:kingdoms:EngineHub",
+//    ":KingdomsAddons:kingdoms:EngineHub:commons",
+//    ":KingdomsAddons:kingdoms:EngineHub:worldguard",
+//    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v6",
+//    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v7"
+//)
 
-
-    ":Auspice:game",
-    ":Auspice:game-api",
-
-    ":Auspice:game:bukkit-api",
-
-    ":Auspice:game:bukkit:craftbukkit",
-    ":Auspice:game:bukkit:spigot",
-    ":Auspice:game:bukkit:paper",
-    ":Auspice:game:bukkit:purpur",
-    ":Auspice:game:bukkit:leaf",
-    ":Auspice:game:bukkit:folia",
-
-
-//        ":Auspice:game:fabric",
-//        ":Auspice:game:forge",
-    ":Auspice:game:sponge",
-
-
-    ":Auspice:proxy",
-    ":Auspice:proxy-api",
-
-    ":Auspice:proxy:bungee",
-    ":Auspice:proxy:velocity",
-
-    // services
-    ":Auspice:service-api",
-    ":Auspice:service-api:bukkit-api",
-    ":Auspice:service-api:bungee-api",
-    ":Auspice:service-api:velocity-api",
-    ":Auspice:service",
-    ":Auspice:service:AttributePlus",
-    ":Auspice:service:AuthMe",
-    ":Auspice:service:CMI",
-    ":Auspice:service:Essentials",
-    ":Auspice:service:ItemsAdder",
-    ":Auspice:service:Kingdoms",
-    ":Auspice:service:LuckPerms-api",
-    ":Auspice:service:LuckPerms",
-    ":Auspice:service:LuckPerms:bukkit",
-    ":Auspice:service:LuckPerms:bungee",
-    ":Auspice:service:LuckPerms:velocity",
-    ":Auspice:service:MVdWPlaceholderAPI",
-    ":Auspice:service:MyPet",
-    ":Auspice:service:MythicMobs-v4",
-    ":Auspice:service:MythicMobs-v5",
-    ":Auspice:service:Oraxen",
-    ":Auspice:service:PlaceholderAPI",
-    ":Auspice:service:ProjectKorra",
-    ":Auspice:service:ServiceIO",
-    ":Auspice:service:SimplePets",
-    ":Auspice:service:SkinsRestorer",
-    ":Auspice:service:SkinsRestorer-api",
-    ":Auspice:service:SkinsRestorer:bukkit",
-    ":Auspice:service:SkinsRestorer:bungee",
-    ":Auspice:service:SkinsRestorer:velocity",
-    ":Auspice:service:Vault",
-    ":Auspice:service:WorldEdit",
-
-    )
-
-include(
-    ":HiraethRPG",
-    ":HiraethRPG:api",
-
-    ":HiraethRPG:game",
-    ":HiraethRPG:game:api",
-
-    ":HiraethRPG:game:bukkit",
-    ":HiraethRPG:game:bukkit:api",
-
-    ":HiraethRPG:game:bukkit:paper",
-    ":HiraethRPG:game:bukkit:folia",
-
-
-    ":HiraethRPG:proxy",
-    ":HiraethRPG:proxy:api",
-    )
-
-include(
-    ":KingdomsAddons:Auspice",
-    ":KingdomsAddons:Civilizations",
-    ":KingdomsAddons:PlaceholderAPI-Bridge",
-    ":KingdomsAddons:Powerful-Territory",
-    ":KingdomsAddons:Props",
-    ":KingdomsAddons:Trade-Point",
-
-    ":KingdomsAddons:kingdoms",
-    ":KingdomsAddons:kingdoms:Peace-Treaties",
-    ":KingdomsAddons:kingdoms:Outposts",
-    ":KingdomsAddons:kingdoms:EngineHub",
-    ":KingdomsAddons:kingdoms:EngineHub:commons",
-    ":KingdomsAddons:kingdoms:EngineHub:worldguard",
-    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v6",
-    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v7",
-    )
-
-include(
-    ":WandsCraftsmanship"
-)
+//include(
+//    ":WandsCraftsmanship"
+//)
 
 includeBuild("gradle-plugin") {
   dependencySubstitution {
+  }
+}
+
+includeBuild("auspice") {
+  dependencySubstitution {
+    substitute(module("net.aurika:auspice-api")).using(project(":api"))
+
+    substitute(module("net.aurika:auspice-client-api")).using(project(":client-api"))
+
+    substitute(module("net.aurika:auspice-proxy-api")).using(project(":proxy-api"))
+
+    substitute(module("net.aurika:auspice-server-api")).using(project(":server-api"))
+    substitute(module("net.aurika:auspice-bukkit-api")).using(project(":bukkit-api"))
+    substitute(module("net.aurika:auspice-paper-api")).using(project(":paper-api"))
+    substitute(module("net.aurika:auspice-folia-api")).using(project(":folia-api"))
+
   }
 }
 
@@ -255,6 +192,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
     substitute(module("net.aurika:common-function")).using(project(":function"))
     substitute(module("net.aurika:common-key")).using(project(":key"))
+    substitute(module("net.aurika:common-lazy")).using(project(":lazy"))
     substitute(module("net.aurika:common-logging")).using(project(":logging"))
     substitute(module("net.aurika:common-nbt")).using(project(":nbt"))
     substitute(module("net.aurika:common-property")).using(project(":property"))
@@ -281,10 +219,20 @@ includeBuild("common") {
   }
 }
 
+includeBuild("dyanasis") {
+  dependencySubstitution {
+    substitute(module("net.aurika:dyanasis-api")).using(project(":api"))
+    substitute(module("net.aurika:dyanasis-editor-api")).using(project(":editor-api"))
+    substitute(module("net.aurika:dyanasis-editor-app")).using(project(":editor-app"))
+    substitute(module("net.aurika:dyanasis-editor-intellij")).using(project(":editor-intellij"))
+  }
+}
+
 includeBuild("kingdoms") {
   dependencySubstitution {
-    substitute(module("net.aurika:kingdoms-addon-auspice")).using(project(":Auspice"))
-    substitute(module("net.aurika:kingdoms-addon-powerful-territory")).using(project(":Powerful-Territory"))
+    substitute(module("net.aurika:kingdoms-addon-auspice")).using(project(":auspice"))
+    substitute(module("net.aurika:kingdoms-addon-powerful-territory")).using(project(":powerful-territory"))
+    substitute(module("net.aurika:kingdoms-addon-trade-point")).using(project(":trade-point"))
   }
 }
 

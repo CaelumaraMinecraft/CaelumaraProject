@@ -1,0 +1,9 @@
+plugins {
+  id("java-library")
+}
+
+dependencies {
+  // extends base api
+  api(project(":api"))
+  compileOnlyApi(libs.annotations.jetbrains)
+}

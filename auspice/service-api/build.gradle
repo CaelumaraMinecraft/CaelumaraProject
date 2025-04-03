@@ -1,0 +1,9 @@
+plugins {
+  id("java-library")
+}
+
+dependencies {
+  api("net.aurika:common-validate")
+  compileOnly("org.bukkit:bukkit:1.21.4-R0.1-SNAPSHOT")
+  compileOnlyApi(libs.annotations.jetbrains)
+}

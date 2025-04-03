@@ -1,8 +1,5 @@
 package net.aurika.config.profile;
 
-import net.aurika.auspice.utils.Validate;
-import net.aurika.config.sections.ConfigSection;
-import net.aurika.config.sections.YamlNodeSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.api.LoadSettings;
@@ -19,14 +16,11 @@ import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class LocalFileProfile implements Profile {
+public abstract class LocalFileProfile implements Profile {
 
-  @NotNull
-  protected final File file;
-  @NotNull
-  protected final ProfileType type;
-  @Nullable
-  protected ConfigSection root;
+  protected final @NotNull File file;
+  protected final @NotNull ProfileType type;
+
 
   public LocalFileProfile(@NotNull File file, @NotNull ProfileType type) {
     this.file = Objects.requireNonNull(file);
@@ -34,8 +28,8 @@ public class LocalFileProfile implements Profile {
   }
 
   @NotNull
-  public ConfigSection getRoot() {
-    Validate.notNull(this.file, "");
+  public YamlConfigPart config() {
+    net.aurika.validate.Validate.Arg.notNull(this.file, "");
 
     if (this.root != null) {
       return this.root;

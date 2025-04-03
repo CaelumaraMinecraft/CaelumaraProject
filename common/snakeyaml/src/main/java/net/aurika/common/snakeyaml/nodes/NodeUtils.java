@@ -24,10 +24,7 @@ import java.util.function.Predicate;
 public final class NodeUtils {
 
   static final @NotNull BaseRepresenter CORE_REPRESENTER = new StandardRepresenter(
-      DumpSettings.builder()
-          .setDumpComments(true)
-          .build()
-  ) {
+      DumpSettings.builder().setDumpComments(true).build()) {
 
   };
 
@@ -170,13 +167,17 @@ public final class NodeUtils {
   @Contract("_ -> new")
   public static SequenceNode shallowCopySequenceNode(SequenceNode node) {
     return new SequenceNode(
-        node.getTag(), true, node.getValue(), node.getFlowStyle(), node.getStartMark(), node.getEndMark());
+        node.getTag(), true, node.getValue(), node.getFlowStyle(), node.getStartMark(),
+        node.getEndMark()
+    );
   }
 
   @Contract("_ -> new")
   public static MappingNode shallowCopyMappingNode(MappingNode node) {
     return new MappingNode(
-        node.getTag(), true, node.getValue(), node.getFlowStyle(), node.getStartMark(), node.getEndMark());
+        node.getTag(), true, node.getValue(), node.getFlowStyle(), node.getStartMark(),
+        node.getEndMark()
+    );
   }
 
   @Contract("_ -> new")
@@ -187,7 +188,9 @@ public final class NodeUtils {
   @Contract("_ -> new")
   public static ScalarNode copyScalarNode(ScalarNode node) {
     return new ScalarNode(
-        node.getTag(), true, node.getValue(), node.getScalarStyle(), node.getStartMark(), node.getEndMark());
+        node.getTag(), true, node.getValue(), node.getScalarStyle(), node.getStartMark(),
+        node.getEndMark()
+    );
   }
 
   public static boolean hasNode(@NotNull MappingNode mappingNode, @NotNull String key) {
@@ -228,7 +231,7 @@ public final class NodeUtils {
       }
     }
     if (keyNode == null) {
-      keyNode = key(key);
+      keyNode = mapKey(key);
     }
     tupleList.add(new NodeTuple(keyNode, value));
     return null;
@@ -406,12 +409,31 @@ public final class NodeUtils {
     return node;
   }
 
-  static @NotNull ScalarNode key(@NotNull String key) {
-    Validate.Arg.notNull(key, "key");
-    if (key.contains(" ") || key.contains(":")) {
+  static @NotNull ScalarNode mapKey(@NotNull String key) {
+    Validate.Arg.notEmpty(key, "key");
+
+    if (key.contains(":")) {
       return new ScalarNode(Tag.STR, key, ScalarStyle.SINGLE_QUOTED);
     }
-    return new ScalarNode(Tag.STR, key, ScalarStyle.PLAIN);
+    char firstChar = key.charAt(0);
+    switch (firstChar) {
+      case '!', '@', '#', '%', '&', '*', '|', '"', '`':  {
+        return new ScalarNode(Tag.STR, key, ScalarStyle.PLAIN);
+      }
+    }
+    if ( key.startsWith("!")
+        || key.startsWith("@")
+        || key.startsWith("#")
+        || key.startsWith("%")
+        || key.startsWith("&")
+        || key.startsWith("*")
+        || key.startsWith("|")
+        || key.startsWith("\"")
+        || key.startsWith("'")
+        || key.startsWith("`")
+    ) {
+      return new ScalarNode(Tag.STR, key, ScalarStyle.PLAIN);
+    }
   }
 
   /**
@@ -445,13 +467,81 @@ public final class NodeUtils {
     if (node == null) return null;
 
     Object parsed = NodesKt.parsed(node);
-    if (
-        (requiredType != null && requiredType.isInstance(parsed))
-            && (requiredTag != null && requiredTag.equals(node.getTag()))
-    ) {
+    if ((requiredType != null && requiredType.isInstance(parsed)) && (requiredTag != null && requiredTag.equals(
+        node.getTag()))) {
+      // noinspection unchecked
       return (T) parsed;
     }
 
+    return null;
+  }
+
+  /**
+   * Replaces a sub node in the collection node.
+   *
+   * @param collectionNode the collection node
+   * @param fromNode       the node to be replaced
+   * @param toNode         the node to replace
+   * @return is successful replaced
+   */
+  public static boolean replaceSubNode(@NotNull CollectionNode<?> collectionNode, @NotNull Node fromNode, @NotNull Node toNode) {
+    Validate.Arg.notNull(collectionNode, "collectionNode");
+    Validate.Arg.notNull(fromNode, "fromNode");
+    Validate.Arg.notNull(toNode, "toNode");
+    if (collectionNode instanceof MappingNode mappingNode) {
+      return replaceValue(mappingNode, fromNode, toNode) != null;
+    }
+    if (collectionNode instanceof SequenceNode sequenceNode) {
+      return replaceElement(sequenceNode, fromNode, toNode);
+    }
+    throw new IllegalArgumentException("Unsupported node type: " + collectionNode.getClass().toGenericString());
+  }
+
+  /**
+   * Replaces a sequence element.
+   *
+   * @param sequenceNode the sequence
+   * @param fromNode     the node to be replaced
+   * @param toNode       the node to replace
+   * @return the element is replaced
+   */
+  @Contract(mutates = "param1")
+  public static boolean replaceElement(@NotNull SequenceNode sequenceNode, @NotNull Node fromNode, @NotNull Node toNode) {
+    Validate.Arg.notNull(sequenceNode, "sequenceNode");
+    Validate.Arg.notNull(fromNode, "fromNode");
+    Validate.Arg.notNull(toNode, "toNode");
+    List<Node> seqValue = sequenceNode.getValue();
+    if (seqValue.contains(fromNode)) {
+      int index = seqValue.indexOf(fromNode);
+      seqValue.add(index, toNode);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Replaces a mapping value. It will not change the key node.
+   *
+   * @param mappingNode the mapping
+   * @param fromNode    the value node to be replaced
+   * @param toNode      the value node to replace
+   * @return the old node tuple
+   */
+  @Contract(mutates = "param1")
+  public static @Nullable NodeTuple replaceValue(@NotNull MappingNode mappingNode, @NotNull Node fromNode, @NotNull Node toNode) {
+    Validate.Arg.notNull(mappingNode, "mappingNode");
+    Validate.Arg.notNull(fromNode, "fromNode");
+    Validate.Arg.notNull(toNode, "toNode");
+    List<NodeTuple> tupleList = mappingNode.getValue();
+    for (NodeTuple tuple : tupleList) {
+      if (Objects.equals(tuple.getValueNode(), fromNode)) {
+        Node keyNode = tuple.getKeyNode();
+        int index = tupleList.indexOf(tuple);
+        tupleList.add(index, new NodeTuple(keyNode, toNode));
+        return tuple;
+      }
+    }
     return null;
   }
 

@@ -27,16 +27,20 @@ public final class ConfigEntry implements BuildableObject {
     this.path = path;
   }
 
+  public int length() {
+    return path.length;
+  }
+
+  public boolean isEmpty() {
+    return this.path.length == 0;
+  }
+
   public @NotNull String @NotNull [] getPath() {
     return this.path.clone();
   }
 
   public @NotNull String getSection(int index) throws IndexOutOfBoundsException {
     return this.path[index];
-  }
-
-  public boolean isEmpty() {
-    return this.path.length == 0;
   }
 
   public @Nullable String getEnd() {

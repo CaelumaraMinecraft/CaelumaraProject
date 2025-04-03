@@ -1,0 +1,14 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  // extends auspice server api
+  api(project(":server-api"))
+  // bukkit general engines
+  api(libs.xseries)
+  // server
+  compileOnlyApi("org.bukkit:bukkit:1.21.4-R0.1-SNAPSHOT")
+}

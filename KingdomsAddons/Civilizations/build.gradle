@@ -2,11 +2,12 @@ version = "0.0.1-SNAPSHOT"
 description = ""
 
 dependencies {
-  compileOnly(project(":KingdomsAddons:Auspice"))
+  compileOnly("net.aurika:kingdoms-addon-auspice")
 }
 
 kingdoms {
   addon {
     isAddonInterface = true
+    addonName = "Civilizations"
   }
 }

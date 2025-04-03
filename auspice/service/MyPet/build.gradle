@@ -1,0 +1,9 @@
+plugins {
+  id("net.aurika.gradle.dependency")
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+  // Local https://wiki.mypet-plugin.de/hooks/hook-types
+  compileOnly(aurikaDependency.libsFileTree("plugins/MyPet"))
+}

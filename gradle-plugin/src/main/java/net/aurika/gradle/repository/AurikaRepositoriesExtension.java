@@ -147,7 +147,7 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
   public MavenArtifactRepository enginehub() {
     return repositories.maven(repo -> {
       repo.setUrl(URI.create("https://maven.enginehub.org/repo/"));
-      repo.setName("Enginehub");
+      repo.setName("EngineHub");
     });
   }
 

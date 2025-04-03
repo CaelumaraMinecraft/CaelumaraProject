@@ -9,3 +9,8 @@ dependencies {
   api(libs.asm.asm)
   api(libs.asm.commons)
 }
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

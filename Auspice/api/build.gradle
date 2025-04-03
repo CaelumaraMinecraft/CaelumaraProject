@@ -1,0 +1,79 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+}
+
+dependencies {
+
+  api("net.aurika:common-annotation")
+  api("net.aurika:common-config")
+  api("net.aurika:common-data-api")
+  api("net.aurika:common-dependency")
+  api("net.aurika:common-function")
+  api("net.aurika:common-nbt")
+  api("net.aurika:common-property")
+  api("net.aurika:common-snakeyaml")
+  api("net.aurika:common-scheduler")
+  api("net.aurika:common-task")
+  api("net.aurika:common-util-file")
+  api("net.aurika:common-util-functional")
+  api("net.aurika:common-util-gson")
+  api("net.aurika:common-util-math")
+  api("net.aurika:common-util-reflection")
+  api("net.aurika:common-util-string")
+  api("net.aurika:common-validate")
+
+  // Engines
+
+  api(libs.kyori.examination.api)
+  api(libs.kyori.examination.string)
+
+  api(libs.kyori.advntr.api)
+  api(libs.kyori.advntr.text.legacy)
+
+  api(libs.yamlengine)
+  api(libs.gson)
+
+  api(libs.asm.asm)
+  api(libs.asm.commons)
+
+  api(libs.caffeine)
+  api(libs.guava)
+
+  api(libs.apache.commons.io)
+
+//    implementation("com.github.cryptomorin:ReptileYAML:4.0.0")
+
+  api(libs.hikari)
+  api(libs.mongodb.core)
+  api(libs.mongodb.bson)
+  api(libs.mongodb.sync)
+  api(libs.h2)
+  api(libs.postgresql)
+
+
+  // Classpath libs
+  api(libs.annotations.jetbrains)
+  api(libs.annotations.checker)
+
+  // TODO
+  compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
+  compileOnly(libs.fastutil)
+  compileOnly(libs.apache.commons.lang)
+  compileOnly(libs.apache.commons.math)
+  compileOnly(libs.apache.commons.text)
+  compileOnly(libs.apache.commons.compress)
+  compileOnly(libs.apache.commons.config)
+  compileOnly(libs.apache.commons.collections)
+  compileOnly(libs.apache.commons.exec)
+
+
+}
+
+tasks {
+  compileKotlin {
+    kotlinOptions {
+      jvmTarget = 17
+    }
+  }
+}

@@ -1,0 +1,16 @@
+plugins {
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.kingdoms")
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+  compileOnly(aurikaDependency.libsFileTree("plugins/Kingdoms_relocated"))
+}
+
+tasks {
+  shadowJar {
+    kingdomsRelocates.kingdomsRelocates()
+  }
+}

@@ -5,6 +5,13 @@ plugins {
 
 description = "A dynamic, based on string placeholder system"
 
+allprojects {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+  }
+}
+
 dependencies {
   api("net.aurika:common-validate")
   compileOnlyApi(libs.annotations.jetbrains)

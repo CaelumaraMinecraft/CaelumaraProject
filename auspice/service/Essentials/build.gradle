@@ -1,0 +1,17 @@
+plugins {
+  id("net.aurika.gradle.repository")
+  id("java-library")
+}
+
+repositories {
+  aurikaRepos {
+    essentials_releases()
+    essentials_snapshots()
+  }
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+  compileOnly("net.essentialsx:EssentialsX:2.20.1")
+  compileOnly(libs.server.spigot)
+}

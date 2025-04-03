@@ -1,0 +1,5 @@
+name: "${project.fullName}"
+version: "${project.version}"
+description: "${project.description}"
+main: net.aurika.trade_point.TradePointAddon
+api-version: "1.13"

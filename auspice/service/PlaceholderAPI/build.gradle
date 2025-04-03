@@ -1,0 +1,15 @@
+plugins {
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  aurikaRepos {
+    placeholderAPI()
+  }
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+  compileOnly("me.clip:placeholderapi:2.11.6")
+  compileOnly(libs.server.craftbukkit)
+}

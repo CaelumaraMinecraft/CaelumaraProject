@@ -1,8 +1,10 @@
 package net.aurika.abstraction;
 
 public interface ScopedObject {
-    Scope getScope();
 
-    interface Scope {
-    }
+  Scope getScope();
+
+  interface Scope {
+  }
+
 }

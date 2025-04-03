@@ -2,7 +2,7 @@ package net.aurika.config.placeholder;
 
 import kotlin.collections.ArraysKt;
 import kotlin.ranges.RangesKt;
-import net.aurika.auspice.utils.string.Strings;
+import net.aurika.common.util.string.Strings;
 import org.jetbrains.annotations.NotNull;
 
 /**

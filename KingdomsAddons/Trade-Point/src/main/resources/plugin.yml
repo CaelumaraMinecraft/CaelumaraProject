@@ -1,5 +1,0 @@
-name: "${project_fullName}"
-version: "${project_version}"
-description: "${project_description}"
-main: top.mckingdom.trade_point.TradePointAddon
-api-version: '1.13'

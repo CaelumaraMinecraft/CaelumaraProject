@@ -1,6 +1,0 @@
-subprojects {
-  dependencies {
-    api(project(":Auspice:service:LuckPerms-api"))
-//        compileOnly("")  // TODO luck perms api
-  }
-}

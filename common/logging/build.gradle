@@ -3,10 +3,11 @@ plugins {
   id("maven-publish")
 }
 
-subprojects.forEach {
-  dependencies.api(it)
-}
-
 dependencies {
   compileOnlyApi(libs.annotations.jetbrains)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }

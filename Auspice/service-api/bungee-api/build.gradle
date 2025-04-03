@@ -1,8 +1,0 @@
-plugins {
-  id("java-library")
-}
-
-dependencies {
-  api(project(":Auspice:service-api"))
-  compileOnlyApi(libs.server.bungee)
-}

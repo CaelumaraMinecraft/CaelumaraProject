@@ -1,7 +1,0 @@
-plugins {
-  id("java-library")
-}
-
-dependencies {
-  api(project(":Auspice:auspice-api:platform:geyser"))
-}

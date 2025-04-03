@@ -1,0 +1,52 @@
+include(
+    ":api",
+
+    ":client-api",
+
+    ":proxy-api",
+
+    ":server-api",
+    ":bukkit-api",
+    ":paper-api",
+    ":folia-api",
+
+    ":fabric-api",
+
+    ":loader:bukkit",
+    ":loader:bungee",
+    ":loader:velocity",
+
+    ":provider",
+    ":provider:folia-1_20_1",
+    ":provider:leaf-1_21_4",
+    ":provider:paper-1_21_4",
+
+    ":nms",
+
+    // services
+    ":service-api",
+    ":service:AttributePlus",
+    ":service:AuthMe",
+    ":service:CMI",
+    ":service:Essentials",
+    ":service:Floodgate",
+    ":service:ItemsAdder",
+    ":service:Kingdoms",
+    ":service:LuckPerms",
+    ":service:MVdWPlaceholderAPI",
+    ":service:MyPet",
+    ":service:MythicMobs-v4",
+    ":service:MythicMobs-v5",
+    ":service:Oraxen",
+    ":service:PlaceholderAPI",
+    ":service:ProjectKorra",
+    ":service:ServiceIO",
+    ":service:SimplePets",
+    ":service:SkinsRestorer-base",
+    ":service:SkinsRestorer-bukkit",
+    ":service:SkinsRestorer-bungee",
+    ":service:SkinsRestorer-velocity",
+    ":service:Vault",
+    ":service:WorldEdit",
+    ":service:WorldGuard"
+)

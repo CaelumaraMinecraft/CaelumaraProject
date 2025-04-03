@@ -1,0 +1,12 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  // extends auspice bukkit api
+  api(project(":bukkit-api"))
+  // folia server
+  compileOnlyApi("dev.folia:folia-api:1.20.1-R0.1-SNAPSHOT")
+}

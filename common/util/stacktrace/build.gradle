@@ -9,3 +9,8 @@ dependencies {
   compileOnly(libs.annotations.jetbrains)
   compileOnly(libs.annotations.checker)
 }
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+}

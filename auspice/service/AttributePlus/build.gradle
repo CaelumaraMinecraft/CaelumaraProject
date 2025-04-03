@@ -1,0 +1,11 @@
+plugins {
+  id("java")
+  id("net.aurika.gradle.dependency")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  compileOnly(project(":service-api"))
+  compileOnly(aurikaDependency.libsFileTree("plugins/AttributePlus"))
+}
