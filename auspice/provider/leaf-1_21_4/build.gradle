@@ -7,12 +7,14 @@ plugins {
 
 repositories {
   aurikaRepos {
+    nostal_snapshots()
   }
 }
 
 dependencies {
-  // implements auspice folia api
+  // implements auspice paper api
   api(project(":paper-api"))
+  // extends auspice paper 1.21.4 provider
   api(project(":provider:paper-1_21_4"))
   compileOnly("cn.dreeam.leaf:leaf-api:1.21.4-R0.1-SNAPSHOT")
 }

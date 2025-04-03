@@ -1,5 +1,6 @@
 package net.aurika.gradle.repository;
 
+import net.aurika.gradle.repository.multistorage.SpigotMCRepositoryExtension;
 import net.kyori.indra.internal.SonatypeRepositoriesImpl;
 import net.kyori.indra.repository.SonatypeRepositories;
 import org.gradle.api.Plugin;
@@ -11,10 +12,6 @@ public class AurikaRepositoryPlugin implements Plugin<Project> {
 
   @Override
   public void apply(@NotNull Project project) {
-    createAurikaRepositoriesExtension(project);
-  }
-
-  public static AurikaRepositoriesExtension createAurikaRepositoriesExtension(@NotNull Project project) {
     RepositoryHandler repositories = project.getRepositories();
     project.getExtensions().create(
         SonatypeRepositories.class,
@@ -22,13 +19,12 @@ public class AurikaRepositoryPlugin implements Plugin<Project> {
         SonatypeRepositoriesImpl.class,
         new Object[]{repositories}
     );
-    AurikaRepositoriesExtension extension = project.getExtensions().create(
+    AurikaRepositoriesExtension reposExtension = project.getExtensions().create(
         AurikaRepositoriesExtension.class,
         AurikaRepositoriesExtension.EXTENSION_NAME,
         AurikaRepositoriesExtension.class,
         new Object[]{repositories}
     );
-    return extension;
   }
 
 }

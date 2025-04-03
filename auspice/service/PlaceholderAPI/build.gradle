@@ -11,5 +11,5 @@ repositories {
 dependencies {
   compileOnly(project(":service-api"))
   compileOnly("me.clip:placeholderapi:2.11.6")
-  compileOnly(libs.server.craftbukkit)
+  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
 }

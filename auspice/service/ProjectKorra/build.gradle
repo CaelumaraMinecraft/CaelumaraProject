@@ -6,5 +6,5 @@ plugins {
 dependencies {
   compileOnly(project(":service-api"))
   compileOnly(aurikaDependency.libsFileTree("plugins/MythicMobs-v4"))
-  compileOnly(libs.server.craftbukkit)
+  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
 }

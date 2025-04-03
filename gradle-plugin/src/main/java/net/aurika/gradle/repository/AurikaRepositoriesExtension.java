@@ -31,7 +31,12 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
   public AurikaRepositoriesExtension(@NotNull RepositoryHandler repositories) {
     Objects.requireNonNull(repositories, "repositories");
     this.repositories = repositories;
-    this.spigotMC = new SpigotMCRepositoryExtension(repositories);
+    this.spigotMC = getExtensions().create(
+        SpigotMCRepositoryExtension.class,
+        SpigotMCRepositoryExtension.EXTENSION_NAME,
+        SpigotMCRepositoryExtension.class,
+        new Object[]{repositories}
+    );
     this.paperMC = new PaperMCRepositoryExtension(repositories);
     this.purpurMC = new PurpurMCRepositoryExtension(repositories);
     this.codeMC = new CodeMCRepositoryExtension(repositories);
@@ -51,22 +56,12 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
     return codeMC;
   }
 
-  public void spigotMC(@NotNull Closure spigotMCRepoClosure) {
-    spigotMCRepoClosure.setDelegate(spigotMC);
-    spigotMCRepoClosure.call();
-  }
-
   public void spigotMC(@NotNull Action<? super @NotNull SpigotMCRepositoryExtension> action) {
     action.execute(spigotMC);
   }
 
   public @NotNull SpigotMCRepositoryExtension getSpigotMC() {
     return spigotMC;
-  }
-
-  public void paperMC(@NotNull Closure paperMCRepoClosure) {
-    paperMCRepoClosure.setDelegate(paperMC);
-    paperMCRepoClosure.call();
   }
 
   public void paperMC(@NotNull Action<? super PaperMCRepositoryExtension> action) {
@@ -77,11 +72,6 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
     return paperMC;
   }
 
-  public void purpurMC(@NotNull Closure purpurMCRepoClosure) {
-    purpurMCRepoClosure.setDelegate(purpurMC);
-    purpurMCRepoClosure.call();
-  }
-
   public void purpurMC(@NotNull Action<? super PurpurMCRepositoryExtension> action) {
     action.execute(purpurMC);
   }
@@ -90,36 +80,12 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
     return purpurMC;
   }
 
-  public void oraxen(@NotNull Closure oraxenRepoClosure) {
-    oraxenRepoClosure.setDelegate(oraxen);
-    oraxenRepoClosure.call();
-  }
-
   public void oraxen(@NotNull Action<? super @NotNull OraxenRepositoryExtension> action) {
     action.execute(oraxen);
   }
 
   public @NotNull OraxenRepositoryExtension getOraxen() {
     return oraxen;
-  }
-
-  public MavenArtifactRepository purpurMC_snapshots() {
-    return repositories.maven(repo -> {
-      repo.setUrl(URI.create("https://repo.purpurmc.org/snapshots"));
-      repo.setName("PurpurMC-snapshots");
-      repo.mavenContent(MavenRepositoryContentDescriptor::snapshotsOnly);
-    });
-  }
-
-  /**
-   * Empty.
-   */
-  public MavenArtifactRepository purpurMC_releases() {
-    return repositories.maven(repo -> {
-      repo.setUrl(URI.create("https://repo.purpurmc.org/releases"));
-      repo.setName("PurpurMC-releases");
-      repo.mavenContent(MavenRepositoryContentDescriptor::releasesOnly);
-    });
   }
 
   public MavenArtifactRepository fabricMC() {
@@ -136,10 +102,11 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
     });
   }
 
+  @Deprecated
   public MavenArtifactRepository nostal_snapshots() {
     return repositories.maven(repo -> {
       repo.setUrl(URI.create("https://maven.nostal.ink/repository/maven-snapshots/"));
-      repo.setName("Nostal-napshots");
+      repo.setName("Nostal-snapshots");
       repo.mavenContent(MavenRepositoryContentDescriptor::snapshotsOnly);
     });
   }

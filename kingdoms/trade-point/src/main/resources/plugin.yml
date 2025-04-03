@@ -1,4 +1,4 @@
-name: "${project.fullName}"
+name: "${project.name}"
 version: "${project.version}"
 description: "${project.description}"
 main: net.aurika.trade_point.TradePointAddon

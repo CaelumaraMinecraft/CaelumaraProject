@@ -7,15 +7,17 @@ plugins {
 repositories {
   aurikaRepos {
     thenextlvl_releases()
+    thenextlvl_snapshots()
   }
 }
 
 dependencies {
-  // extends vault service
+  // extends auspice vault service
   api(project(":service:Vault"))
   // service-io
-  compileOnlyApi("net.thenextlvl.services:service-io:2.2.0")
-  compileOnlyApi(libs.server.paper)
+  compileOnly("net.thenextlvl.services:service-io:2.2.0")
+  // paper server
+  compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 }
 
 java {

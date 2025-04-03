@@ -12,6 +12,5 @@ dependencies {
   // https://www.spigotmc.org/resources/100106/
   // https://repo.bsdevelopment.org/#/releases/simplepets/brainsynder/API
   compileOnly("simplepets.brainsynder:API:5.0-BUILD-273")
-  compileOnly(libs.server.spigot)
-  compileOnlyApi(libs.annotations.jetbrains)
+  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
 }

@@ -1,4 +1,4 @@
 dependencies {
   api(project(":service:SkinsRestorer-base"))
-  compileOnly(libs.server.craftbukkit)
+  compileOnlyApi("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
 }

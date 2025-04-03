@@ -18,6 +18,7 @@ include(
 
     ":provider",
     ":provider:folia-1_20_1",
+    ":provider:folia-1_21_4",
     ":provider:leaf-1_21_4",
     ":provider:paper-1_21_4",
 

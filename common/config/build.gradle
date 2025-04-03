@@ -8,3 +8,8 @@ dependencies {
   api(project(":config:config-json"))
   api(project(":config:config-yaml"))
 }
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

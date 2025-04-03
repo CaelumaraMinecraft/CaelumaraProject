@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
   compileOnly(project(":service-api"))
-  compileOnly(libs.server.craftbukkit)
+  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
   // https://github.com/AuthMe/AuthMeReloaded
   compileOnly("fr.xephi:authme:5.7.0-SNAPSHOT")
 }

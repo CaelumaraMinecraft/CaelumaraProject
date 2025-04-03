@@ -7,3 +7,8 @@ dependencies {
   api(project(":config:config-api"))
   api(libs.gson)
 }
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

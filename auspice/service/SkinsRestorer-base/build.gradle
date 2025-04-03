@@ -12,6 +12,6 @@ repositories {
 }
 
 dependencies {
-//  compileOnlyApi("net.skinsrestorer:skinsrestorer-api:15.5.2")  // TODO
+  compileOnly("net.skinsrestorer:skinsrestorer-api:15.5.2")
   compileOnlyApi(aurikaDependency.libsFileTree("plugins/SkinsRestorer"))
 }

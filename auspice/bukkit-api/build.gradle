@@ -1,7 +1,14 @@
 plugins {
   id("java-library")
+  id("net.aurika.gradle.repository")
   alias(libs.plugins.kotlin)
   alias(libs.plugins.shadow)
+}
+
+repositories {
+  maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
+  maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+  aurikaRepos.spigotMC.snapshots()
 }
 
 dependencies {
@@ -9,6 +16,11 @@ dependencies {
   api(project(":server-api"))
   // bukkit general engines
   api(libs.xseries)
-  // server
-  compileOnlyApi("org.bukkit:bukkit:1.21.4-R0.1-SNAPSHOT")
+  // minecraft bukkit server
+  compileOnlyApi("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")  // TODO
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
 }

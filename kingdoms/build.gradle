@@ -3,8 +3,8 @@ plugins {
   id("net.aurika.gradle.dependency")
   id("net.aurika.gradle.kingdoms")
   id("net.aurika.gradle.repository")
-  alias(libs.plugins.kotlin) apply false
-  alias(libs.plugins.shadow) apply false
+  alias(libs.plugins.kotlin).apply(false)
+  alias(libs.plugins.shadow).apply(false)
 }
 
 group = "net.aurika.kingdoms"

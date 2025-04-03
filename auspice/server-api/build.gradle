@@ -7,3 +7,8 @@ dependencies {
   api(project(":api"))
   compileOnlyApi(libs.annotations.jetbrains)
 }
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+}
