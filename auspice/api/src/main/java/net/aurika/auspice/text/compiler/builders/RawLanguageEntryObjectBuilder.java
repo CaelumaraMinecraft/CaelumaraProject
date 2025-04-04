@@ -9,7 +9,7 @@ import net.aurika.auspice.text.compiler.builders.context.PlainTextBuilderContext
 import net.aurika.auspice.text.compiler.pieces.TextPiece;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
 import net.aurika.auspice.translation.messenger.EnumDefinedMessenger;
-import net.aurika.config.path.ConfigEntry;
+import net.aurika.configuration.path.ConfigEntry;
 
 import java.util.ArrayList;
 import java.util.function.Function;

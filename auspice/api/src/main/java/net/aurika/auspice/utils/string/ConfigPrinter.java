@@ -1,7 +1,7 @@
 package net.aurika.auspice.utils.string;
 
 import net.aurika.auspice.configs.messages.MessageHandler;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 import net.aurika.util.stacktrace.StackTraces;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

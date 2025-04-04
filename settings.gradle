@@ -223,6 +223,7 @@ includeBuild("configuration") {
     substitute(module("net.aurika:configuration-api")).using(project(":api"))
     substitute(module("net.aurika:configuration-json")).using(project(":json"))
     substitute(module("net.aurika:configuration-yaml")).using(project(":yaml"))
+    substitute(module("net.aurika:configuration-util-accessor")).using(project(":util:accessor"))
   }
 }
 

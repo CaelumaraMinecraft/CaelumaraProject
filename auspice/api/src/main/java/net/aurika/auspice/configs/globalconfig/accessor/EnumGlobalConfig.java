@@ -2,8 +2,8 @@ package net.aurika.auspice.configs.globalconfig.accessor;
 
 import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.compiler.math.MathCompiler;
-import net.aurika.config.accessor.ClearlyConfigAccessor;
-import net.aurika.config.accessor.UndefinedPathConfigAccessor;
+import net.aurika.configuration.accessor.ClearlyConfigAccessor;
+import net.aurika.configuration.accessor.UndefinedPathConfigAccessor;
 
 import java.util.List;
 

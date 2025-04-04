@@ -10,7 +10,7 @@ import net.aurika.auspice.platform.entity.Player;
 import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.user.Auspice;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;

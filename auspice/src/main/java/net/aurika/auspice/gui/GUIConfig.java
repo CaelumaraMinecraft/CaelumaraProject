@@ -11,7 +11,7 @@ import net.aurika.auspice.main.BukkitAuspiceLoader;
 import net.aurika.auspice.utils.AuspiceLogger;
 import net.aurika.auspice.utils.Pair;
 import net.aurika.auspice.utils.filesystem.FolderRegistry;
-import net.aurika.config.profile.managers.ConfigManager;
+import net.aurika.configuration.profile.managers.ConfigManager;
 import net.aurika.snakeyaml.extension.validation.NodeValidator;
 import net.aurika.snakeyaml.extension.validation.Validator;
 import org.bukkit.plugin.Plugin;

@@ -1,8 +1,8 @@
 package net.aurika.auspice.service.luckperms;
 
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.config.accessor.YamlClearlyConfigAccessor;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.accessor.YamlClearlyConfigAccessor;
+import net.aurika.configuration.sections.ConfigSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.SequenceNode;

@@ -1,5 +1,7 @@
 include(
     ":api",
     ":json",
-    ":yaml"
+    ":yaml",
+
+    ":util:accessor"
 )

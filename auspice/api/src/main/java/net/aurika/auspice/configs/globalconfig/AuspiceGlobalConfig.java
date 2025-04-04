@@ -5,10 +5,10 @@ import net.aurika.auspice.configs.globalconfig.accessor.EnumGlobalConfig;
 import net.aurika.auspice.platform.entity.Player;
 import net.aurika.auspice.user.Auspice;
 import net.aurika.auspice.utils.time.TimeUtils;
-import net.aurika.config.accessor.YamlUndefinedPathConfigAccessor;
-import net.aurika.config.adapter.YamlResource;
-import net.aurika.config.path.ConfigPath;
-import net.aurika.config.yaml.importers.YamlGlobalImporter;
+import net.aurika.configuration.accessor.YamlUndefinedPathConfigAccessor;
+import net.aurika.configuration.adapter.YamlResource;
+import net.aurika.configuration.path.ConfigPath;
+import net.aurika.configuration.yaml.importers.YamlGlobalImporter;
 
 import java.io.File;
 

@@ -8,7 +8,7 @@ import net.aurika.auspice.constants.logs.Loggable;
 import net.aurika.auspice.constants.metadata.AuspiceMetadata;
 import net.aurika.auspice.constants.metadata.AuspiceMetadataHandler;
 import net.aurika.auspice.constants.metadata.Metadatable;
-import net.aurika.config.accessor.ClearlyConfigAccessor;
+import net.aurika.configuration.accessor.ClearlyConfigAccessor;
 import net.aurika.ecliptor.api.DataObject;
 import net.aurika.util.collection.ZeroArrays;
 import net.aurika.util.collection.nonnull.NonNullMap;

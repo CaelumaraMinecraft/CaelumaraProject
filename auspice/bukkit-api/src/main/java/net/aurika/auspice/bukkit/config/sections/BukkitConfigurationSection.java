@@ -1,6 +1,6 @@
 package net.aurika.auspice.bukkit.config.sections;
 
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 import net.aurika.util.string.Strings;
 import org.bukkit.Color;
 import org.bukkit.Location;

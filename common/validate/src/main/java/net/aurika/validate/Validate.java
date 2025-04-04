@@ -61,49 +61,54 @@ public final class Validate {
     @Contract("null, _ -> fail")
     public static <T> @NotNull T notNull(T obj, @NotNull String paramName) {
       return check(
-          obj, notNullChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Null argument '" + paramName + '\''), Arg.class.getName())
+          obj,
+          notNullChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Null argument '" + paramName + '\''), Arg.class.getName())
       );
     }
 
     @Contract("null, _, _ -> fail")
     public static <T> @NotNull T notNull(T obj, @NotNull String paramName, @NotNull String message) {
       return check(
-          obj, notNullChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Null argument '" + paramName + "': " + message), Arg.class.getName())
+          obj,
+          notNullChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Null argument '" + paramName + "': " + message), Arg.class.getName())
       );
     }
 
     @Contract("null, _ -> fail")
     public static @NotNull String notEmpty(String str, @NotNull String paramName) {
       return check(
-          str, notEmptyChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Empty argument string '" + paramName + '\''), Arg.class.getName())
+          str,
+          notEmptyChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Empty argument string '" + paramName + '\''), Arg.class.getName())
       );
     }
 
     @Contract("null, _, _ -> fail")
     public static @NotNull String notEmpty(String str, @NotNull String paramName, @NotNull String message) {
       return check(
-          str, notEmptyChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Empty argument string '" + paramName + "': " + message),
-                  Arg.class.getName()
-              )
+          str,
+          notEmptyChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Empty argument string '" + paramName + "': " + message),
+              Arg.class.getName()
+          )
       );
     }
 
     @Contract("null, _ -> fail")
     public static <T> @NotNull T @NotNull [] nonNullArray(T[] arr, String paramName) {
       return check(
-          arr, nonNullArrayChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Argument array '" + paramName + "' contains null value"),
-                  Arg.class.getName()
-              )
+          arr,
+          nonNullArrayChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Argument array '" + paramName + "' contains null value"),
+              Arg.class.getName()
+          )
       );
     }
 
@@ -111,11 +116,12 @@ public final class Validate {
     public static <T> @NotNull T @NotNull [] nonNullArray(T[] arr, @NotNull String paramName, @NotNull String message) {
       notNull(arr, paramName, message);
       return check(
-          arr, nonNullArrayChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Argument array '" + paramName + "' contains null value: " + message),
-                  Arg.class.getName()
-              )
+          arr,
+          nonNullArrayChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Argument array '" + paramName + "' contains null value: " + message),
+              Arg.class.getName()
+          )
       );
     }
 
@@ -126,55 +132,60 @@ public final class Validate {
     @Contract("null, _ -> fail")
     public static <T> @NotNull T notNull(T obj, @NotNull String exprName) {
       return check(
-          obj, notNullChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Expression '" + exprName + "' returned null value"),
-                  Arg.class.getName()
-              )
+          obj,
+          notNullChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Expression '" + exprName + "' returned null value"),
+              Arg.class.getName()
+          )
       );
     }
 
     @Contract("null, _, _ -> fail")
     public static <T> @NotNull T notNull(T obj, @NotNull String exprName, @NotNull String message) {
       return check(
-          obj, notNullChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Expression '" + exprName + "' returned null value: " + message),
-                  Arg.class.getName()
-              )
+          obj,
+          notNullChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Expression '" + exprName + "' returned null value: " + message),
+              Arg.class.getName()
+          )
       );
     }
 
     @Contract("null, _ -> fail")
     public static @NotNull String notEmpty(String str, @NotNull String exprName) {
       return check(
-          str, notEmptyChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Expression '" + exprName + "' returned empty string value"),
-                  Arg.class.getName()
-              )
+          str,
+          notEmptyChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Expression '" + exprName + "' returned empty string value"),
+              Arg.class.getName()
+          )
       );
     }
 
     @Contract("null, _, _ -> fail")
     public static @NotNull String notEmpty(String str, @NotNull String exprName, @NotNull String message) {
       return check(
-          str, notEmptyChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Expression '" + exprName + "' returned empty string value: " + message),
-                  Arg.class.getName()
-              )
+          str,
+          notEmptyChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Expression '" + exprName + "' returned empty string value: " + message),
+              Arg.class.getName()
+          )
       );
     }
 
     @Contract("null, _ -> fail")
     public static <T> @NotNull T @NotNull [] nonNullArray(T[] arr, @NotNull String exprName) {
       return check(
-          arr, nonNullArrayChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException("Expression '" + exprName + "' returned array contains null value"),
-                  Arg.class.getName()
-              )
+          arr,
+          nonNullArrayChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException("Expression '" + exprName + "' returned array contains null value"),
+              Arg.class.getName()
+          )
       );
     }
 
@@ -182,12 +193,13 @@ public final class Validate {
     public static <T> @NotNull T @NotNull [] nonNullArray(T[] arr, @NotNull String exprName, @NotNull String message) {
       notNull(arr, exprName, message);
       return check(
-          arr, nonNullArrayChecker(), () ->
-              sanitizeStackTrace(
-                  new IllegalArgumentException(
-                      "Expression '" + exprName + "' returned array contains null value: " + message),
-                  Arg.class.getName()
-              )
+          arr,
+          nonNullArrayChecker(),
+          () -> sanitizeStackTrace(
+              new IllegalArgumentException(
+                  "Expression '" + exprName + "' returned array contains null value: " + message),
+              Arg.class.getName()
+          )
       );
     }
 

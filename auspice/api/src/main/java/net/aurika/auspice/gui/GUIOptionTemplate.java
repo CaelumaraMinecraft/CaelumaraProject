@@ -1,6 +1,6 @@
 package net.aurika.auspice.gui;
 
-import net.aurika.config.context.ConfigParsingContext;
+import net.aurika.configuration.context.ConfigParsingContext;
 
 public abstract class GUIOptionTemplate {
 

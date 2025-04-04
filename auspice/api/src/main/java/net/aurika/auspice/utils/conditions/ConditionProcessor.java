@@ -13,7 +13,7 @@ import net.aurika.auspice.translation.messenger.StaticMessenger;
 import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.compiler.condition.ConditionVariableTranslator;
 import net.aurika.auspice.utils.string.Strings;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,6 +1,6 @@
 package net.aurika.auspice.bukkit.config.accessor;
 
-import net.aurika.config.accessor.YamlClearlyConfigAccessor;
+import net.aurika.configuration.accessor.YamlClearlyConfigAccessor;
 import net.aurika.util.string.Strings;
 import net.aurika.util.unsafe.fn.Fn;
 import org.bukkit.Color;

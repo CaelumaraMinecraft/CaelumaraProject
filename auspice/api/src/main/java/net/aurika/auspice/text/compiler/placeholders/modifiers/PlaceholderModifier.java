@@ -4,7 +4,7 @@ import kotlin.jvm.internal.Intrinsics;
 import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
 import net.aurika.auspice.utils.logging.AuspiceLogger;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

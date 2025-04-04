@@ -4,7 +4,7 @@ import com.cryptomorin.xseries.XEnchantment;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.text.compiler.TextCompilerSettings;
 import net.aurika.common.snakeyaml.nodes.NodesKt;
-import net.aurika.config.validation.CacheType;
+import net.aurika.configuration.validation.CacheType;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;

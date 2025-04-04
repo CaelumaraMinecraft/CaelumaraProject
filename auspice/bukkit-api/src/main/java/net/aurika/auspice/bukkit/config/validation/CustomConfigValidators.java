@@ -1,12 +1,12 @@
 package net.aurika.auspice.bukkit.config.validation;
 
 import com.cryptomorin.xseries.XEnchantment;
-import net.aurika.config.sections.ConfigSection;
-import net.aurika.config.sections.label.Label;
-import net.aurika.config.validation.ConfigValidator;
-import net.aurika.config.validation.ConfigValidators;
-import net.aurika.config.validation.ValidationContext;
-import net.aurika.config.validation.ValidationFailure;
+import net.aurika.configuration.sections.ConfigSection;
+import net.aurika.configuration.sections.label.Label;
+import net.aurika.configuration.validation.ConfigValidator;
+import net.aurika.configuration.validation.ConfigValidators;
+import net.aurika.configuration.validation.ValidationContext;
+import net.aurika.configuration.validation.ValidationFailure;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;

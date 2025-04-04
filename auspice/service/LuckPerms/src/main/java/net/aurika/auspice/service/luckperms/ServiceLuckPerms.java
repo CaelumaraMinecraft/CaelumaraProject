@@ -1,8 +1,8 @@
 package net.aurika.auspice.service.luckperms;
 
 import net.aurika.auspice.service.api.BukkitService;
-import net.aurika.config.sections.ConfigSection;
-import net.aurika.config.sections.YamlNodeSection;
+import net.aurika.configuration.sections.ConfigSection;
+import net.aurika.configuration.sections.YamlNodeSection;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.context.ContextCalculator;
 import net.luckperms.api.context.ContextConsumer;

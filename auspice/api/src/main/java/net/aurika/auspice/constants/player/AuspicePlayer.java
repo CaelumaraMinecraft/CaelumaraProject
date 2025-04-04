@@ -7,8 +7,8 @@ import net.aurika.auspice.data.centers.AuspiceDataCenter;
 import net.aurika.auspice.platform.player.OfflinePlayer;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.common.annotations.data.LateInit;
-import net.aurika.config.functional.invoking.ConfigFunctionalInvokingData;
-import net.aurika.config.placeholder.invoking.PlaceholderInvokable;
+import net.aurika.configuration.functional.invoking.ConfigFunctionalInvokingData;
+import net.aurika.configuration.placeholder.invoking.PlaceholderInvokable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

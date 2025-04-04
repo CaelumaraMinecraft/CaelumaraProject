@@ -4,7 +4,7 @@ import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.auspice.text.compiler.PlaceholderTranslationContext;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
 import net.aurika.auspice.text.compiler.placeholders.types.KingdomsPlaceholder;
-import net.aurika.config.accessor.ClearlyConfigAccessor;
+import net.aurika.configuration.accessor.ClearlyConfigAccessor;
 import net.aurika.util.string.Strings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -14,7 +14,7 @@ import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.translation.message.provider.AdvanceMessageProvider;
 import net.aurika.auspice.translation.message.provider.SingleMessageProvider;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;

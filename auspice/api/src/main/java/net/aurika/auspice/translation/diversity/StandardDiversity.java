@@ -5,7 +5,7 @@ import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
 import net.aurika.auspice.user.Auspice;
 import net.aurika.common.key.namespace.NSedKey;
-import net.aurika.config.path.ConfigEntry;
+import net.aurika.configuration.path.ConfigEntry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -10,7 +10,7 @@ import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.compiler.math.MathCompiler;
 import net.aurika.auspice.utils.conditions.ConditionProcessor;
 import net.aurika.auspice.utils.math.MathUtils;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.sections.ConfigSection;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Nullable;
 

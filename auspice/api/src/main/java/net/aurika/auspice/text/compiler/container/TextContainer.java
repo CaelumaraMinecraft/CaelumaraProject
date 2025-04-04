@@ -6,9 +6,9 @@ import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.utils.Pair;
 import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.logging.AuspiceLogger;
-import net.aurika.config.accessor.ClearlyConfigAccessor;
-import net.aurika.config.accessor.UndefinedPathConfigAccessor;
-import net.aurika.config.sections.ConfigSection;
+import net.aurika.configuration.accessor.ClearlyConfigAccessor;
+import net.aurika.configuration.accessor.UndefinedPathConfigAccessor;
+import net.aurika.configuration.sections.ConfigSection;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import net.aurika.auspice.translation.TranslationEntry;
 import net.aurika.auspice.translation.message.manager.AuspiceMessageManager;
 import net.aurika.auspice.translation.message.manager.MessageManager;
 import net.aurika.auspice.translation.messenger.EnumDefinedMessenger;
-import net.aurika.config.annotations.Comment;
+import net.aurika.configuration.annotations.Comment;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 

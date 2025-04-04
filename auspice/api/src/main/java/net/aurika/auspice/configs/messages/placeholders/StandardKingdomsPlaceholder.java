@@ -5,7 +5,7 @@ import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.auspice.configs.messages.context.MessageContext;
 import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.text.compiler.container.TextContainer;
-import net.aurika.config.accessor.ClearlyConfigAccessor;
+import net.aurika.configuration.accessor.ClearlyConfigAccessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

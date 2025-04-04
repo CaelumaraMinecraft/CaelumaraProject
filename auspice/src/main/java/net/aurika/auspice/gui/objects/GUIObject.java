@@ -5,7 +5,7 @@ import net.aurika.abstraction.conditional.ConditionChain;
 import net.aurika.auspice.gui.objects.inventory.GUIInventoryConstructor;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.text.compiler.TextObject;
-import net.aurika.config.adapter.YamlWithDefaults;
+import net.aurika.configuration.adapter.YamlWithDefaults;
 import net.aurika.text.messenger.Messenger;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import org.bukkit.entity.Player;
