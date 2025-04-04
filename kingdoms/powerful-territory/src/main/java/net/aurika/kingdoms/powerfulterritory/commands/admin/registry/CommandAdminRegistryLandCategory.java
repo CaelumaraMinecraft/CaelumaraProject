@@ -16,7 +16,7 @@ public class CommandAdminRegistryLandCategory extends CommandAdminRegistryTempla
 
   public CommandAdminRegistryLandCategory(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
     super(
-        "land" + "category", parent, permissionDefault, PowerfulTerritoryAddon.get().getLandCategoryRegistry(),
+        "land" + "category", parent, permissionDefault, PowerfulTerritoryAddon.get().landCategoryRegistry(),
         LandCategory.class
     );
   }

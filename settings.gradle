@@ -159,10 +159,7 @@ include(
 //    ":WandsCraftsmanship"
 //)
 
-includeBuild("gradle-plugin") {
-  dependencySubstitution {
-  }
-}
+
 
 includeBuild("auspice") {
   dependencySubstitution {
@@ -180,13 +177,15 @@ includeBuild("auspice") {
   }
 }
 
+includeBuild("caeron") {
+  dependencySubstitution {
+    substitute(module("net.aurika:caeron-api")).using(project(":api"))
+  }
+}
+
 includeBuild("common") {
   dependencySubstitution {
     substitute(module("net.aurika:common-annotation")).using(project(":annotation"))
-    substitute(module("net.aurika:common-config")).using(project(":config"))
-    substitute(module("net.aurika:common-config-api")).using(project(":config:config-api"))
-    substitute(module("net.aurika:common-config-json")).using(project(":config:config-json"))
-    substitute(module("net.aurika:common-config-yaml")).using(project(":config:config-yaml"))
     substitute(module("net.aurika:common-data-api")).using(project(":data-api"))
     substitute(module("net.aurika:common-dependency")).using(project(":dependency"))
     substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
@@ -219,6 +218,14 @@ includeBuild("common") {
   }
 }
 
+includeBuild("configuration") {
+  dependencySubstitution {
+    substitute(module("net.aurika:configuration-api")).using(project(":api"))
+    substitute(module("net.aurika:configuration-json")).using(project(":json"))
+    substitute(module("net.aurika:configuration-yaml")).using(project(":yaml"))
+  }
+}
+
 includeBuild("dyanasis") {
   dependencySubstitution {
     substitute(module("net.aurika:dyanasis-api")).using(project(":api"))
@@ -236,9 +243,8 @@ includeBuild("kingdoms") {
   }
 }
 
-public static void addProjectAccesses(ConfigurableIncludedBuild includedBuild) {
-  String name = includedBuild.name
-  includedBuild.dependencySubstitution {
-    substitute(module("net.aurika." + name))
+includeBuild("gradle-plugin") {
+  dependencySubstitution {
+//    substitute(module("net.aurika:repository-gradle-plugin"))
   }
 }

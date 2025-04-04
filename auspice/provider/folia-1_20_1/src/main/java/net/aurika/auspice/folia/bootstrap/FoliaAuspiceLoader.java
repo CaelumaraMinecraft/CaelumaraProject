@@ -1,7 +1,7 @@
 package net.aurika.auspice.folia.bootstrap;
 
-import net.aurika.auspice.server.bukkit.loader.PluginAuspiceLoader;
-import net.aurika.auspice.server.bukkit.scheduler.BukkitSchedulerAdapter;
+import net.aurika.auspice.bukkit.loader.PluginAuspiceLoader;
+import net.aurika.auspice.bukkit.scheduler.BukkitSchedulerAdapter;
 import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
 import net.aurika.auspice.user.Auspice;
 import net.aurika.auspice.user.AuspiceUser;

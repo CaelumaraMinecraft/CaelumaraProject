@@ -9,6 +9,6 @@ public interface LandLeaseProjectTypeAware {
    *
    * @return the type
    */
-  @NotNull LandLeaseProjectType<?> landLeaseType();
+  @NotNull LandLeaseProjectType<?> landLeaseProjectType();
 
 }

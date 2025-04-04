@@ -6,6 +6,7 @@ import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 import net.aurika.kingdoms.powerfulterritory.commands.admin.land.CommandAdminLand;
 import net.aurika.kingdoms.powerfulterritory.commands.admin.registry.CommandAdminRegistryLandCategory;
 import net.aurika.kingdoms.powerfulterritory.commands.admin.registry.CommandAdminRegistryLandContraction;
+import net.aurika.kingdoms.powerfulterritory.commands.admin.registry.CommandAdminRegistryLandLease;
 import net.aurika.kingdoms.powerfulterritory.commands.general.land.CommandLand;
 import net.aurika.kingdoms.powerfulterritory.configs.PowerfulTerritoryConfig;
 import net.aurika.kingdoms.powerfulterritory.configs.PowerfulTerritoryLang;
@@ -15,6 +16,7 @@ import net.aurika.kingdoms.powerfulterritory.constant.land.category.LandCategory
 import net.aurika.kingdoms.powerfulterritory.constant.land.category.StandardLandCategory;
 import net.aurika.kingdoms.powerfulterritory.constant.land.contraction.LandContractionRegistry;
 import net.aurika.kingdoms.powerfulterritory.constant.land.contraction.std.StandardLandContraction;
+import net.aurika.kingdoms.powerfulterritory.constant.land.lease.project.LandLeaseProjectRegistry;
 import net.aurika.kingdoms.powerfulterritory.data.*;
 import net.aurika.kingdoms.powerfulterritory.managers.BeaconEffectsManager;
 import net.aurika.kingdoms.powerfulterritory.managers.BoatUseManager;
@@ -50,6 +52,7 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
 
   private final LandCategoryRegistry landCategoryRegistry = new LandCategoryRegistry();
   private final LandContractionRegistry landContractionRegistry = new LandContractionRegistry();
+  private final LandLeaseProjectRegistry landLeaseProjectRegistry = new LandLeaseProjectRegistry();
   private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();
 
   public PowerfulTerritoryAddon() {
@@ -71,6 +74,8 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
     LanguageManager.registerMessenger(PowerfulTerritoryLang.class);
 
     registerAllMetadataHandlers();
+
+    landLeaseProjectRegistry.registerDefaults();
 
     StandardInvadeProtection.init();
     StandardLandCategory.init();
@@ -135,6 +140,7 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
     new CommandAdminLand(CommandAdmin.getInstance());
 
     CommandAdminRegistry command_admin_registry = CommandAdminRegistry.getInstance();
+    new CommandAdminRegistryLandLease(command_admin_registry);
     new CommandAdminRegistryLandCategory(command_admin_registry);
     new CommandAdminRegistryLandContraction(command_admin_registry);
   }
@@ -149,12 +155,16 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
     landMetadataHandlers.forEach(mr::register);
   }
 
-  public @NotNull LandCategoryRegistry getLandCategoryRegistry() {
-    return this.landCategoryRegistry;
+  public @NotNull LandCategoryRegistry landCategoryRegistry() {
+    return landCategoryRegistry;
   }
 
-  public @NotNull LandContractionRegistry getLandContractionRegistry() {
-    return this.landContractionRegistry;
+  public @NotNull LandContractionRegistry landContractionRegistry() {
+    return landContractionRegistry;
+  }
+
+  public @NotNull LandLeaseProjectRegistry landLeaseProjectRegistry() {
+    return landLeaseProjectRegistry;
   }
 
   public static @NotNull PowerfulTerritoryAddon get() {

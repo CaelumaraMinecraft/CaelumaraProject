@@ -97,7 +97,7 @@ class LandCategoryMetaHandler private constructor() :
   ): KingdomMetadata {
     val chunkTypeNSString: String? = dataGetter.getDataProvider().asString()
     val chunkTypeNS = Namespace.fromString(chunkTypeNSString!!)
-    val landCategory = PowerfulTerritoryAddon.get().landCategoryRegistry.getRegistered(chunkTypeNS)
+    val landCategory = PowerfulTerritoryAddon.get().landCategoryRegistry().getRegistered(chunkTypeNS)
     if (landCategory == null) {
       PowerfulTerritoryLogger.warn(
         "Unknown land category: " + dataGetter.getDataProvider().asString() + ", ignore it"
@@ -127,7 +127,7 @@ object Categories {
     SupportedLanguage.entries.forEach { lang ->
       if (lang.isLoaded) {
         categoriesString.put(lang, HashMap<String, LandCategory>().also {
-          PowerfulTerritoryAddon.get().landCategoryRegistry.getRegistry().forEach { _, category ->
+          PowerfulTerritoryAddon.get().landCategoryRegistry().getRegistry().forEach { _, category ->
             it.put(category.getName(lang), category)
           }
         })

@@ -1,0 +1,7 @@
+include(
+    ":api",
+    ":paper-api",
+    ":folia-api",
+
+    ":provider:folia-1_21_4"
+)

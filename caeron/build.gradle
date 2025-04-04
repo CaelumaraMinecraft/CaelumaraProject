@@ -1,0 +1,15 @@
+plugins {
+  id("net.aurika.gradle.repository")
+}
+
+subprojects {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    aurikaRepos {
+      spigotMC.snapshots()
+      spigotMC.releases()
+      paperMC.maven_public()
+    }
+  }
+}

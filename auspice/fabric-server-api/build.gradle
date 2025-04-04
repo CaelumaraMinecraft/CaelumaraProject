@@ -1,0 +1,10 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api(project(":fabric-api"))
+  api(project(":server-api"))
+}

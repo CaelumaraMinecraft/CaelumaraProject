@@ -188,7 +188,7 @@ object Contractions {
     SupportedLanguage.entries.forEach { lang ->
       if (lang.isLoaded) {
         contractionsString.put(lang, HashMap<String, LandContraction>().also {
-          PowerfulTerritoryAddon.get().landContractionRegistry.getRegistry().forEach { _, contraction ->
+          PowerfulTerritoryAddon.get().landContractionRegistry().getRegistry().forEach { _, contraction ->
             it.put(contraction.getName(lang), contraction)
           }
         })
@@ -358,7 +358,7 @@ class LandContractionsMetaHandler private constructor() :
       LandContractionsData(
         provider.get("contractions")
           .asMap(HashMap()) { contractionsMap, contractionNamespace, contractionLandData ->
-            val contraction = PowerfulTerritoryAddon.get().landContractionRegistry
+            val contraction = PowerfulTerritoryAddon.get().landContractionRegistry()
               .getRegistered(Namespace.fromString(contractionNamespace.asString()!!))  // TODO nullability
             if (contraction != null) {
               contractionsMap.put(

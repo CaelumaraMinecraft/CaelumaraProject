@@ -6,7 +6,9 @@ plugins {
 dependencies {
 
   api("net.aurika:common-annotation")
-  api("net.aurika:common-config")
+  api("net.aurika:configuration-api")
+  api("net.aurika:configuration-json")
+  api("net.aurika:configuration-yaml")
   api("net.aurika:common-data-api")
   api("net.aurika:common-dependency")
   api("net.aurika:common-function")

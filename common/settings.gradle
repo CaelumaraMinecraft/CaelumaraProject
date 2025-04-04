@@ -1,9 +1,5 @@
 include(
     ":annotation",
-    ":config",
-    ":config:config-api",
-    ":config:config-json",
-    ":config:config-yaml",
     ":data-api",
     ":dependency",
     ":examinable-api",

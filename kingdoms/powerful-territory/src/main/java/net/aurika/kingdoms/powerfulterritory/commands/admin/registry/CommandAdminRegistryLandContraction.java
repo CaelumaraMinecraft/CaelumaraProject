@@ -16,7 +16,10 @@ public class CommandAdminRegistryLandContraction extends CommandAdminRegistryTem
 
   public CommandAdminRegistryLandContraction(@Nullable KingdomsParentCommand parent, PermissionDefault permissionDefault) {
     super(
-        "land" + "contraction", parent, permissionDefault, PowerfulTerritoryAddon.get().getLandContractionRegistry(),
+        "land" + "contraction",
+        parent,
+        permissionDefault,
+        PowerfulTerritoryAddon.get().landContractionRegistry(),
         LandContraction.class
     );
   }

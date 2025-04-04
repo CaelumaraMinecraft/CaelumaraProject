@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.powerfulterritory.constant.land.lease.project.type;
 
-import net.aurika.kingdoms.powerfulterritory.constant.land.lease.LandLease;
+import net.aurika.kingdoms.powerfulterritory.constant.land.lease.project.object.LandLeaseProject;
 import net.aurika.validate.Validate;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +12,7 @@ import org.kingdoms.data.database.dataprovider.SectionableDataGetter;
 
 import java.util.Objects;
 
-public abstract class LandLeaseProjectType<T extends LandLease> implements Namespaced, LandLeaseProjectTypeAware, StaticDeserializable<T> {
+public abstract class LandLeaseProjectType<T extends LandLeaseProject> implements Namespaced, LandLeaseProjectTypeAware, StaticDeserializable<T> {
 
   private static int hashCount = 0;
 
@@ -37,7 +37,7 @@ public abstract class LandLeaseProjectType<T extends LandLease> implements Names
   }
 
   @Override
-  public @NotNull LandLeaseProjectType<T> landLeaseType() {
+  public @NotNull LandLeaseProjectType<T> landLeaseProjectType() {
     return this;
   }
 

@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":provider:folia-1_20_1"))
+  compileOnly(project(":api"))
+  // noinspection VulnerableLibrariesLocal
+  api("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
 }

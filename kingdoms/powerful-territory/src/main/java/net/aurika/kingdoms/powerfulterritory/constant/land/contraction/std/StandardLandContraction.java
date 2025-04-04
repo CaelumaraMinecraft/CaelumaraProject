@@ -60,7 +60,7 @@ public class StandardLandContraction extends LandContraction {
         ns, MessengerUtil.createMessenger(new String[]{KEY, "land-contraction", key}, key),
         deserializeProperties
     );
-    PowerfulTerritoryAddon.get().getLandContractionRegistry().register(c);
+    PowerfulTerritoryAddon.get().landContractionRegistry().register(c);
     return c;
   }
 

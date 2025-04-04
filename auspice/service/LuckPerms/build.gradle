@@ -1,6 +1,5 @@
 dependencies {
-  compileOnly(project(":api"))
   api(project(":service-api"))
-  api("net.aurika:common-config-api")
-//  compileOnly("")  // TODO luck perms api
+  compileOnly(project(":api"))
+  compileOnly("net.luckperms:api:5.4")
 }

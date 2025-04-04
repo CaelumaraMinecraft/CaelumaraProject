@@ -111,7 +111,7 @@ public class StandardLandCategory extends LandCategory {
 
   protected static StandardLandCategory create(@NotNull Namespace ns, boolean editable, @NotNull Messenger name, @NotNull Messenger description) {
     StandardLandCategory landCategory = new StandardLandCategory(ns, editable, name, description);
-    PowerfulTerritoryAddon.get().getLandCategoryRegistry().register(landCategory);
+    PowerfulTerritoryAddon.get().landCategoryRegistry().register(landCategory);
     return landCategory;
   }
 
