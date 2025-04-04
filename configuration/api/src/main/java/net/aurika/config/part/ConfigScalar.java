@@ -1,21 +1,8 @@
 package net.aurika.config.part;
 
-import net.aurika.config.path.ConfigEntry;
 import org.jetbrains.annotations.NotNull;
 
 public interface ConfigScalar extends ConfigPart {
-
-  @Override
-  boolean hasAbsolutePath();
-
-  @Override
-  @NotNull ConfigEntry absolutePath();
-
-  @Override
-  boolean isNamed();
-
-  @Override
-  @NotNull String name();
 
   /**
    * Gets the scalar value.

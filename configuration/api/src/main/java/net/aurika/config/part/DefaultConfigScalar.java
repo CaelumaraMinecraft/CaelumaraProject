@@ -1,5 +1,6 @@
 package net.aurika.config.part;
 
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +27,12 @@ public class DefaultConfigScalar extends AbstractConfigPart implements ConfigSca
   @Override
   public @NotNull String scalarValue() {
     return value;
+  }
+
+  @Override
+  public void scalarValue(@NotNull String scalarValue) {
+    Validate.Arg.notNull(scalarValue, "scalarValue");
+    this.value = scalarValue;
   }
 
 }

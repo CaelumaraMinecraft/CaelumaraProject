@@ -33,13 +33,16 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
   public static <N extends Node> @NotNull DefaultYamlConfigPart<N> createRoot(@NotNull N rootNode) {
     Validate.Arg.notNull(rootNode, "rootNode");
     rootNode = (N) NodeUtils.unpackAnchor(rootNode);
-    if (rootNode instanceof ScalarNode scalarNode) {
+    if (rootNode instanceof ScalarNode) {
+      ScalarNode scalarNode = (ScalarNode) rootNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigScalar(scalarNode);
     }
-    if (rootNode instanceof SequenceNode sequenceNode) {
+    if (rootNode instanceof SequenceNode) {
+      SequenceNode sequenceNode = (SequenceNode) rootNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigSequence(sequenceNode);
     }
-    if (rootNode instanceof MappingNode mappingNode) {
+    if (rootNode instanceof MappingNode) {
+      MappingNode mappingNode = (MappingNode) rootNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigSection(mappingNode);
     }
     throw new UnsupportedOperationException("Unsupported node type: " + rootNode.getClass());
@@ -53,13 +56,16 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
     Validate.Arg.notNull(sequenceParent, "sequenceParent");
     Validate.Arg.notNull(elementNode, "elementNode");
     elementNode = (N) NodeUtils.unpackAnchor(elementNode);
-    if (elementNode instanceof ScalarNode scalarNode) {
+    if (elementNode instanceof ScalarNode) {
+      ScalarNode scalarNode = (ScalarNode) elementNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigScalar(sequenceParent, scalarNode);
     }
-    if (elementNode instanceof SequenceNode sequenceNode) {
+    if (elementNode instanceof SequenceNode) {
+      SequenceNode sequenceNode = (SequenceNode) elementNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigSequence(sequenceParent, sequenceNode);
     }
-    if (elementNode instanceof MappingNode mappingNode) {
+    if (elementNode instanceof MappingNode) {
+      MappingNode mappingNode = (MappingNode) elementNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigSection(sequenceParent, mappingNode);
     }
     throw new UnsupportedOperationException("Unsupported node type: " + elementNode.getClass());
@@ -75,13 +81,16 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
     Validate.Arg.notNull(name, "name");
     Validate.Arg.notNull(subNode, "subNode");
     subNode = (N) NodeUtils.unpackAnchor(subNode);
-    if (subNode instanceof ScalarNode scalarNode) {
+    if (subNode instanceof ScalarNode) {
+      ScalarNode scalarNode = (ScalarNode) subNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigScalar(parentSection, name, scalarNode);
     }
-    if (subNode instanceof SequenceNode sequenceNode) {
+    if (subNode instanceof SequenceNode) {
+      SequenceNode sequenceNode = (SequenceNode) subNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigSequence(parentSection, name, sequenceNode);
     }
-    if (subNode instanceof MappingNode mappingNode) {
+    if (subNode instanceof MappingNode) {
+      MappingNode mappingNode = (MappingNode) subNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigSection(parentSection, name, mappingNode);
     }
     throw new UnsupportedOperationException("Unsupported node type: " + subNode.getClass());
@@ -119,12 +128,14 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
    * Removes this config part into the present parent.
    */
   protected void removeThisFromParent() {
-    if (!hasNoParent()) {
+    if (hasParent()) {
       YamlConfigPart parent = parent();
-      if (parent instanceof YamlConfigSection sectionParent) {
+      if (parent instanceof YamlConfigSection) {
+        YamlConfigSection sectionParent = (YamlConfigSection) parent;
         sectionParent.removeSubPart(name());  // this should have name when parent is a section
       }
-      if (parent instanceof YamlConfigSequence sequenceParent) {
+      if (parent instanceof YamlConfigSequence) {
+        YamlConfigSequence sequenceParent = (YamlConfigSequence) parent;
         sequenceParent.yamlNode().getValue().remove(node);
       }
       if (parent instanceof YamlConfigScalar) {
@@ -134,9 +145,10 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
   }
 
   protected void changeThisInParent(@NotNull Node fromNode, @NotNull Node toNode) {
-    if (!hasNoParent()) {
+    if (hasParent()) {
       YamlConfigPart parent = parent();
-      if (parent instanceof YamlConfigSection sectionParent) {
+      if (parent instanceof YamlConfigSection) {
+        YamlConfigSection sectionParent = (YamlConfigSection) parent;
         MappingNode mapNode = sectionParent.yamlNode();
         if (NodeUtils.hasNode(mapNode, name())) {
           NodeUtils.putNode(mapNode, name(), toNode);
@@ -144,7 +156,8 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
           throw new IllegalStateException();
         }
       }
-      if (parent instanceof YamlConfigSequence sequenceParent) {
+      if (parent instanceof YamlConfigSequence) {
+        YamlConfigSequence sequenceParent = (YamlConfigSequence) parent;
         SequenceNode seqNode = sequenceParent.yamlNode();
         if (seqNode.getValue().contains(fromNode)) {
           seqNode.getValue().remove(fromNode);

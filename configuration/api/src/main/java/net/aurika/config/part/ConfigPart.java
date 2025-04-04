@@ -24,20 +24,11 @@ import org.jetbrains.annotations.NotNull;
 public interface ConfigPart {
 
   /**
-   * Returns this config part is a root of a config file.
-   *
-   * @return whether this part is root
-   */
-  boolean hasNoParent();
-
-  /**
    * Returns this config part has the parent part.
    *
    * @return whether this part has parent part
    */
-  default boolean hasParent() {
-    return !hasNoParent();
-  }
+  boolean hasParent();
 
   /**
    * Gets the parent part of this part.
@@ -64,6 +55,12 @@ public interface ConfigPart {
    */
   @NotNull ConfigEntry absolutePath() throws ConfigPartNotAbsolutePathException;
 
+  /**
+   * 获取配置片段的可访问路径. 当配置片段为一个 {@link ConfigSequence} 的下游配置片段时,
+   * 可访问路径为从这个配置数列的根元素开始到这个配置片段的路径.
+   *
+   * @return 可访问路径
+   */
   @NotNull ConfigEntry accessiblePath();
 
   /**
@@ -82,14 +79,15 @@ public interface ConfigPart {
 
     public static @NotNull State state(@NotNull ConfigPart config) {
       Validate.Arg.notNull(config, "config");
-      if (config.hasNoParent()) {
+      if (!config.hasParent()) {
         return ROOT;
       }
-      if (config.isNamed() && config.hasParent()) {
-        return SECTION_SUB;
-      }
-      if (!config.isNamed() && config.hasParent()) {
-        return SEQUENCE_ELEMENT;
+      if (config.hasParent()) {
+        if (config.isNamed()) {
+          return SECTION_SUB;
+        } else {
+          return SEQUENCE_ELEMENT;
+        }
       }
       throw new IllegalStateException();
     }

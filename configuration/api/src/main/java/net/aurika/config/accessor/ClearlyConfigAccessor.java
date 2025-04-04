@@ -9,6 +9,7 @@ import java.util.Set;
 /**
  * 配置读取器, 拥有确定的配置路径 ({@linkplain ConfigEntry})
  */
+@Deprecated
 public interface ClearlyConfigAccessor extends ConfigAccessor, DefaultableConfigAccessor {
 
   ConfigEntry getPath();

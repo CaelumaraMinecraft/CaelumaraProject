@@ -58,7 +58,7 @@ public class AbstractConfigPart implements ConfigPart {
     this.parent = parentPart;
     this.name = name;
 
-    this.absolutePath = new Lazy<>() {
+    this.absolutePath = new Lazy<ConfigEntry>() {
       @Override
       protected ConfigEntry init() {
         if (hasAbsolutePath()) return parent == null ? ConfigEntry.empty() : parent.absolutePath().append(name());
@@ -68,15 +68,10 @@ public class AbstractConfigPart implements ConfigPart {
     this.accessiblePath = new Lazy<ConfigEntry>() {
       @Override
       protected ConfigEntry init() {
-        if (hasNoParent() || !isNamed()) return ConfigEntry.empty();
-        else return parent().accessiblePath().append(name());
+        if (parent == null || AbstractConfigPart.this.name == null) return ConfigEntry.empty();
+        else return parent.accessiblePath().append(AbstractConfigPart.this.name);
       }
     };
-  }
-
-  @Override
-  public boolean hasNoParent() {
-    return parent == null;
   }
 
   @Override
@@ -92,7 +87,7 @@ public class AbstractConfigPart implements ConfigPart {
 
   @Override
   public boolean hasAbsolutePath() {
-    return parent == null || (parent.hasAbsolutePath() && isNamed());
+    return parent == null || (parent.hasAbsolutePath() && name != null);
   }
 
   @Override

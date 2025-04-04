@@ -2,10 +2,13 @@ package net.aurika.config.adapter;
 
 import net.aurika.config.accessor.ClearlyConfigAccessor;
 import net.aurika.config.sections.ConfigSection;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.io.File;
 import java.io.IOException;
 
+@ApiStatus.Obsolete
+@Deprecated
 public interface Profile {
 
   ConfigSection getConfig();
