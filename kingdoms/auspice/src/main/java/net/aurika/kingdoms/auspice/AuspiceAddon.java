@@ -54,6 +54,7 @@ public final class AuspiceAddon extends AddonTemplate {
   @Override
   protected void onInit0() {
     instance = this;
+    System.out.println("super init0 called");
   }
 
   @Override

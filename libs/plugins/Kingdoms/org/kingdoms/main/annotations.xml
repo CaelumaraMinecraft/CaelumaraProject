@@ -1,0 +1,42 @@
+<root>
+  <item name='org.kingdoms.main.Kingdoms auditLogRegistry'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms buildingArchitectRegistry'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms kingdomsBlockRegistry'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms metadataRegistry'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item
+      name='org.kingdoms.main.Kingdoms org.kingdoms.constants.group.model.logs.AuditLogRegistry getAuditLogRegistry()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item
+      name='org.kingdoms.main.Kingdoms org.kingdoms.constants.group.model.relationships.RelationAttributeRegistry getRelationAttributeRegistry()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item
+      name='org.kingdoms.main.Kingdoms org.kingdoms.constants.land.building.BuildingArchitectRegistry getBuildingArchitectRegistry()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms org.kingdoms.constants.metadata.KingdomMetadataRegistry getMetadataRegistry()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item
+      name='org.kingdoms.main.Kingdoms org.kingdoms.constants.player.KingdomPermissionRegistry getPermissionRegistery()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms org.kingdoms.managers.land.KingdomsBlockRegistry getKingdomsBlockRegistry()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms permissionRegistery'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.main.Kingdoms relationAttributeRegistry'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+</root>

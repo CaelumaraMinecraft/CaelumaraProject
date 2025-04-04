@@ -1,0 +1,21 @@
+<root>
+  <item
+      name='org.kingdoms.constants.player.KingdomPlayer boolean isInSameKingdomAs(org.kingdoms.constants.player.KingdomPlayer) 0'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='org.kingdoms.constants.player.KingdomPlayer boolean isUnreadMail(org.kingdoms.constants.mails.Mail) 0'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item
+      name='org.kingdoms.constants.player.KingdomPlayer int countUnreadMails(java.util.Map&lt;java.util.UUID,org.kingdoms.constants.mails.Mail&gt;) 0'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item
+      name='org.kingdoms.constants.player.KingdomPlayer org.kingdoms.constants.land.location.SimpleLocation getJailCell()'>
+    <annotation name='org.jetbrains.annotations.Nullable'/>
+  </item>
+  <item
+      name='org.kingdoms.constants.player.KingdomPlayer void setJailCell(org.kingdoms.constants.land.location.SimpleLocation) 0'>
+    <annotation name='org.jetbrains.annotations.Nullable'/>
+  </item>
+</root>

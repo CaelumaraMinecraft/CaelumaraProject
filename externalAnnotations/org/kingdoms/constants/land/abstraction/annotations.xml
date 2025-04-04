@@ -1,0 +1,6 @@
+<root>
+  <item
+      name='org.kingdoms.constants.land.abstraction.KingdomBuildingType org.kingdoms.gui.InteractiveGUI open(org.kingdoms.constants.land.abstraction.gui.KingdomItemGUIContext&lt;B&gt;)'>
+    <annotation name='org.jetbrains.annotations.Nullable'/>
+  </item>
+</root>

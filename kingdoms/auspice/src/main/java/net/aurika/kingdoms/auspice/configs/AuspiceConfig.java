@@ -1,11 +1,12 @@
 package net.aurika.kingdoms.auspice.configs;
 
 import net.aurika.kingdoms.auspice.AuspiceAddon;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.config.accessor.EnumConfig;
 import org.kingdoms.config.accessor.KeyedConfigAccessor;
 import org.kingdoms.config.implementation.KeyedYamlConfigAccessor;
 import org.kingdoms.config.managers.ConfigManager;
-import org.kingdoms.config.managers.ConfigWatcher;
 import org.kingdoms.main.Kingdoms;
 import org.kingdoms.utils.config.ConfigPath;
 import org.kingdoms.utils.config.adapters.YamlResource;
@@ -20,7 +21,7 @@ public enum AuspiceConfig implements EnumConfig {
 
   ;
 
-  public static final YamlResource AUSPICE_MAIN =
+  public static final YamlResource AUSPICE =
       new YamlResource(
           AuspiceAddon.get(),
           Kingdoms.getPath("auspice-addon.yml").toFile(),
@@ -28,15 +29,15 @@ public enum AuspiceConfig implements EnumConfig {
       ).load();
 
   static {
-    ConfigWatcher.register(AUSPICE_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-    ConfigManager.registerNormalWatcher(
-        "auspice-addon.yml", (event) -> {
-          ConfigWatcher.reload(AUSPICE_MAIN, "auspice-addon.yml");
-        }
-    );
+    ConfigManager.registerAsMainConfig(AUSPICE);
+    AUSPICE.reloadHandle(() -> {
+    });
+    ConfigManager.watch(AUSPICE);
   }
 
-  private final ConfigPath option;
+  public static void init() { }
+
+  private final @NotNull ConfigPath option;
 
   AuspiceConfig() {
     this.option = new ConfigPath(Strings.configOption(this));
@@ -47,11 +48,12 @@ public enum AuspiceConfig implements EnumConfig {
   }
 
   @Override
-  public KeyedConfigAccessor getManager() {
-    return new KeyedYamlConfigAccessor(AUSPICE_MAIN, this.option);
+  @Contract(" -> new")
+  public @NotNull KeyedConfigAccessor getManager() {
+    return new KeyedYamlConfigAccessor(AUSPICE, this.option);
   }
 
   public static YamlResource getConfig() {
-    return AUSPICE_MAIN;
+    return AUSPICE;
   }
 }
