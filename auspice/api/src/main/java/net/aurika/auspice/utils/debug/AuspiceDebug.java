@@ -11,7 +11,7 @@ public enum AuspiceDebug implements DebugEntry {
 
   private final DebugKey id;
 
-  AuspiceDebug(@KeyPatterns.IdentValue final @NotNull String identValueString) {
+  AuspiceDebug(@KeyPatterns.KeyPath final @NotNull String identValueString) {
     this.id = new DebugKey(Key.key(Auspice.NAMESPACE, identValueString));
   }
 

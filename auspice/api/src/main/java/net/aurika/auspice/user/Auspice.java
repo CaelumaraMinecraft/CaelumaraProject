@@ -133,7 +133,7 @@ public final class Auspice implements AuspiceUser {
     return this.getDataFolder().toPath().resolve(path);
   }
 
-  public static @NotNull Key createKey(@KeyPatterns.KeyValue final @NotNull String keyValue) {
+  public static @NotNull Key createKey(@KeyPatterns.Group final @NotNull String keyValue) {
     return Key.key(NAMESPACE, keyValue);
   }
 

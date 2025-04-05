@@ -1,55 +1,37 @@
 package net.aurika.common.key;
 
-import org.intellij.lang.annotations.Pattern;
-
 import java.lang.annotation.*;
-
-import static net.aurika.common.key.KeyImpl.ALLOWED_KEY;
-import static net.aurika.common.key.KeyImpl.ALLOWED_KEY_VALUE;
-import static net.aurika.common.key.NamespacedImpl.ALLOWED_NAMESPACE;
 
 public final class KeyPatterns {
 
+  @Deprecated
   @Documented
-  @Pattern(ALLOWED_NAMESPACE)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface Namespace {
+  public @interface Namespace { }
+
+  @Documented
+  @Retention(RetentionPolicy.CLASS)
+  @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
+  public @interface Group {
   }
 
   @Documented
-  @Pattern(ALLOWED_KEY_VALUE)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface KeyValue {
+  public @interface KeyPath {
   }
 
   @Documented
-  @Pattern(ALLOWED_IDENT_VALUE)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface IdentValue {
+  public @interface KeyPathEntry {
   }
 
   @Documented
-  @Pattern(ALLOWED_IDENT_SECTION)
-  @Retention(RetentionPolicy.CLASS)
-  @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface KeySection {
-  }
-
-  @Documented
-  @Pattern(ALLOWED_KEY)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
   public @interface Key {
-  }
-
-  @Documented
-  @Pattern(ALLOWED_IDENT)
-  @Retention(RetentionPolicy.CLASS)
-  @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface Ident {
   }
 
 }

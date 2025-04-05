@@ -86,7 +86,7 @@ class GroupImpl implements Group {
 
   @Override
   public String toString() {
-    return getClass().getSimpleName() + "(" + path + ")";
+    return Group.class.getSimpleName() + "[" + path + "]";
   }
 
 }

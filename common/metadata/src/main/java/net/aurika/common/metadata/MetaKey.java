@@ -1,4 +1,6 @@
 package net.aurika.common.metadata;
 
-public interface MetaKey  {
+import net.aurika.common.key.Keyed;
+
+public interface MetaKey extends Keyed {
 }

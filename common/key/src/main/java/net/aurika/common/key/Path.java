@@ -209,7 +209,7 @@ final class PathImpl implements Path {
 
   @Override
   public String toString() {
-    return getClass().getSimpleName() + Arrays.toString(value);
+    return Path.class.getSimpleName() + Arrays.toString(value);
   }
 
 }

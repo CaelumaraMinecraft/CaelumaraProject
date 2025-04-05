@@ -19,9 +19,10 @@ public interface Key extends Grouped, PathAware {
    * @throws IllegalArgumentException When the input string is not valid.
    */
   static @NotNull Key key(@NotNull String keyString) {
-    int sepIndex = keyString.indexOf(PATH_SEPARATOR);
+    int sepIndex = keyString.indexOf(SEPARATOR);
     if (sepIndex == -1) {
-      throw new IllegalArgumentException(keyString + " is not a valid key, cannot find separator '" + SEPARATOR + "'");
+      throw new IllegalArgumentException(
+          "'" + keyString + "' is not a valid key, cannot find separator '" + SEPARATOR + "'");
     }
     return key(keyString.substring(0, sepIndex), keyString.substring(sepIndex + 1));
   }
