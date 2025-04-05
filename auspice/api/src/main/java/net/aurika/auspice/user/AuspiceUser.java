@@ -5,8 +5,7 @@ import net.aurika.auspice.constants.metadata.AuspiceMetadataRegistry;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.messenger.DefinedMessenger;
 import net.aurika.common.annotations.UtilMethod;
-import net.aurika.common.key.KeyPatterns;
-import net.aurika.common.key.Namespaced;
+import net.aurika.common.key.*;
 import net.aurika.common.key.namespace.NSedKey;
 import net.aurika.common.key.namespace.nested.NestedNamespace;
 import net.aurika.util.scheduler.TaskScheduleProvider;
@@ -19,10 +18,10 @@ import java.util.Map;
 /**
  * AuspiceAPI 使用者
  */
-public interface AuspiceUser extends Namespaced {
+public interface AuspiceUser extends Grouped {
 
-  @KeyPatterns.Namespace
-  @NotNull String namespace();
+  @Override
+  @NotNull Group group();
 
   @AuspiceUserName
   @NotNull String auspiceUserName();
@@ -48,7 +47,7 @@ public interface AuspiceUser extends Namespaced {
   }
 
   @UtilMethod
-  default Map<NSedKey, DefinedMessenger[]> getDefaultMessages() {
+  default Map<Key, DefinedMessenger[]> getDefaultMessages() {
     return LanguageManager.getGroupedDefaultMessages(this);
   }
 

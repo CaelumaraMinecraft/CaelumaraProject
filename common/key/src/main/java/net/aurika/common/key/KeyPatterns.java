@@ -4,7 +4,6 @@ import org.intellij.lang.annotations.Pattern;
 
 import java.lang.annotation.*;
 
-import static net.aurika.common.key.IdentImpl.*;
 import static net.aurika.common.key.KeyImpl.ALLOWED_KEY;
 import static net.aurika.common.key.KeyImpl.ALLOWED_KEY_VALUE;
 import static net.aurika.common.key.NamespacedImpl.ALLOWED_NAMESPACE;
@@ -36,7 +35,7 @@ public final class KeyPatterns {
   @Pattern(ALLOWED_IDENT_SECTION)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface IdentSection {
+  public @interface KeySection {
   }
 
   @Documented

@@ -1,11 +1,10 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
-    <option name="Aurika" value="Project Default" />
-    <inspection_tool class="IfCanBeSwitch" enabled="true" level="TEXT ATTRIBUTES" enabled_by_default="true" editorAttributes="CONSIDERATION_ATTRIBUTES">
-      <option name="minimumBranches" value="3" />
-      <option name="suggestIntSwitches" value="false" />
-      <option name="suggestEnumSwitches" value="false" />
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="CollectionsFieldAccessReplaceableByMethodCall" enabled="true" level="WEAK WARNING" enabled_by_default="true" editorAttributes="INFO_ATTRIBUTES" />
+    <inspection_tool class="ForCanBeForeach" enabled="true" level="INFORMATION" enabled_by_default="true" editorAttributes="INFORMATION_ATTRIBUTES">
+      <option name="REPORT_INDEXED_LOOP" value="true" />
+      <option name="ignoreUntypedCollections" value="false" />
     </inspection_tool>
-    <inspection_tool class="PatternVariableCanBeUsed" enabled="true" level="INFORMATION" enabled_by_default="true" editorAttributes="INFORMATION_ATTRIBUTES" />
   </profile>
 </component>

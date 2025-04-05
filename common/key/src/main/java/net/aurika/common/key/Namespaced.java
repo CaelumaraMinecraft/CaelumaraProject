@@ -2,8 +2,11 @@ package net.aurika.common.key;
 
 import net.aurika.validate.Validate;
 import org.intellij.lang.annotations.Language;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+@ApiStatus.Obsolete
+@Deprecated
 public interface Namespaced {
 
   /**
@@ -35,12 +38,7 @@ public interface Namespaced {
 
 }
 
-class Test {
-
-  Namespaced NS = new NamespacedImpl("Dasdas");
-
-}
-
+@Deprecated
 class NamespacedImpl implements Namespaced {
 
   @Language("RegExp")

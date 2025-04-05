@@ -11,7 +11,7 @@ public final class StacktraceSettings {
   public static final StacktraceSettings INSTANCE = new StacktraceSettings();
   public boolean isWhitelist = true;
   @NotNull
-  public Set<DebugIdent> list = new LinkedHashSet<>();
+  public Set<DebugKey> list = new LinkedHashSet<>();
 
   private StacktraceSettings() {
   }

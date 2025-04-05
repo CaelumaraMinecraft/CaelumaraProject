@@ -2,7 +2,6 @@ package net.aurika.auspice.constants.ecomony.currency;
 
 import net.aurika.auspice.constants.ecomony.currency.bill.CurrencyEntry;
 import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
 import org.jetbrains.annotations.NotNull;
 
 public interface CurrencyType<T, C> extends Keyed {

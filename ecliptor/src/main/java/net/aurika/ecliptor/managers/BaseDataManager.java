@@ -1,7 +1,6 @@
 package net.aurika.ecliptor.managers;
 
 import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;

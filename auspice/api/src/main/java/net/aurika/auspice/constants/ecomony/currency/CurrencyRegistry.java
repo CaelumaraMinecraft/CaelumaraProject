@@ -1,10 +1,10 @@
 package net.aurika.auspice.constants.ecomony.currency;
 
 import net.aurika.auspice.user.Auspice;
-import net.aurika.common.key.registry.AbstractIdentifiedRegistry;
+import net.aurika.common.key.registry.AbstractKeyedRegistry;
 import org.bukkit.Bukkit;
 
-public final class CurrencyRegistry extends AbstractIdentifiedRegistry<CurrencyType<?, ?>> {
+public final class CurrencyRegistry extends AbstractKeyedRegistry<CurrencyType<?, ?>> {
 
   public static final CurrencyRegistry INSTANCE = new CurrencyRegistry();
 

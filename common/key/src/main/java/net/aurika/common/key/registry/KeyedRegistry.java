@@ -4,7 +4,7 @@ import net.aurika.common.key.Key;
 import net.aurika.common.key.Keyed;
 import org.jetbrains.annotations.Nullable;
 
-public interface KeyedRegistry<T extends Keyed> {
+public interface KeyedRegistry<T extends Keyed> extends BaseRegistry {
 
   void register(T obj);
 

@@ -1,102 +1,111 @@
 package net.aurika.common.key;
 
-import net.aurika.common.data.DataStringRepresentation;
 import net.aurika.validate.Validate;
-import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public interface Key extends Namespaced, DataStringRepresentation {
+public interface Key extends Grouped, PathAware {
 
   char SEPARATOR = ':';
+  char PATH_SEPARATOR = '/';
+  String ALLOWED_PATH_CHARS = "abcdefghijklmnopqrstuvwxyz_-";
 
   /**
-   * Create a {@linkplain Key} from a full key string.
-   * Such as: {@code "Aitclub:TEXT"} {@code "Bulug:CREATE_HOME"}
+   * Create a {@linkplain Key} from the key string.
+   * For example: {@code "net.aurika:messages/found/user"} {@code "org.city:city/create"}
    *
-   * @param keyString The full key string
+   * @param keyString The full ident string
+   * @throws IllegalArgumentException When the input string is not valid.
    */
-  @SuppressWarnings("PatternValidation")
-  static @NotNull Key key(@KeyPatterns.Key final @NotNull String keyString) {
-    Validate.Arg.notEmpty(keyString, "keyString");
-    int sepI = keyString.indexOf(SEPARATOR);
-    String namespace = keyString.substring(0, sepI);
-    String value = keyString.substring(sepI + 1);
-    return key(namespace, value);
+  static @NotNull Key key(@NotNull String keyString) {
+    int sepIndex = keyString.indexOf(PATH_SEPARATOR);
+    if (sepIndex == -1) {
+      throw new IllegalArgumentException(keyString + " is not a valid key, cannot find separator '" + SEPARATOR + "'");
+    }
+    return key(keyString.substring(0, sepIndex), keyString.substring(sepIndex + 1));
   }
 
-  static @NotNull Key key(
-      @KeyPatterns.Namespace final @NotNull String namespace,
-      @KeyPatterns.KeyValue final @NotNull String value
-  ) {
-    return new KeyImpl(namespace, value);
+  static @NotNull Key key(@NotNull String groupString, @NotNull String pathString) {
+    Validate.Arg.notNull(groupString, "groupString");
+    Validate.Arg.notNull(pathString, "pathString");
+    return new KeyImpl(Group.group(groupString), Path.path(pathString, SEPARATOR, ALLOWED_PATH_CHARS));
   }
 
-  @KeyPatterns.Namespace
-  @NotNull String namespace();
+  static @NotNull Key key(@NotNull String @NotNull [] groupArray, @NotNull String @NotNull [] pathArray) {
+    Validate.Arg.notNull(groupArray, "groupArray");
+    Validate.Arg.notNull(pathArray, "pathArray");
+    return new KeyImpl(Group.group(groupArray), Path.path(pathArray, ALLOWED_PATH_CHARS));
+  }
 
-  @KeyPatterns.KeyValue
-  @NotNull String value();
+  static @NotNull Key key(@NotNull Group group, @NotNull Path path) {
+    Validate.Arg.notNull(group, "group");
+    Validate.Arg.notNull(path, "path");
+    return new KeyImpl(group, path);
+  }
 
-  @NotNull String asDataString();
+  @Override
+  @NotNull Group group();
 
-  boolean equals(@NotNull Key other);
+  @Override
+  @NotNull Path path();
 
-  boolean equals(Object obj);
-
-  int hashCode();
+  @NotNull String asString();
 
 }
 
-class KeyImpl extends NamespacedImpl implements Key {
+class KeyImpl implements Key {
 
-  @Language("RegExp")
-  static final String ALLOWED_KEY_VALUE = "[A-Z0-9_]{3,50}";
-  static final java.util.regex.Pattern KEY_VALUE_PATTERN = java.util.regex.Pattern.compile(ALLOWED_NAMESPACE);
-  @Language("RegExp")
-  static final String ALLOWED_KEY = "(?:(" + ALLOWED_NAMESPACE + ":)?|:)" + ALLOWED_KEY_VALUE;
-  static final java.util.regex.Pattern KEY_PATTERN = java.util.regex.Pattern.compile(ALLOWED_KEY);
+  private final @NotNull Group group;
+  private final @NotNull Path path;
 
-  @KeyPatterns.KeyValue
-  private final @NotNull String value;
-
-  KeyImpl(@KeyPatterns.Namespace final @NotNull String namespace, @KeyPatterns.KeyValue final @NotNull String value) {
-    super(namespace);
-    Validate.Arg.notEmpty(value, "value");
-    Validate.Arg.require(
-        KEY_VALUE_PATTERN.matcher(value).matches(),
-        "Key value '" + value + "' is not matches regex " + ALLOWED_KEY_VALUE
-    );
-    this.value = value;
-  }
-
-  @KeyPatterns.KeyValue
-  public @NotNull String value() {
-    return value;
-  }
-
-  public @NotNull String asDataString() {
-    return namespace() + SEPARATOR + this.value;
+  KeyImpl(
+      @NotNull Group group,
+      @NotNull Path path
+  ) {
+    Validate.Arg.notNull(group, "group");
+    Validate.Arg.notNull(path, "path");
+    this.group = group;
+    this.path = path;
   }
 
   @Override
-  public boolean equals(@NotNull Key other) {
-    Validate.Arg.notNull(other, "other");
-    return Objects.equals(this.namespace(), other.namespace()) && Objects.equals(this.value(), other.value());
+  public @NotNull Group group() {
+    return group;
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof KeyImpl key)) return false;
-    return equals(key);
+  public @NotNull Path path() {
+    return path;
+  }
+
+  @Override
+  public @NotNull String asString() {
+    return group.asString() + SEPARATOR + path.asString(PATH_SEPARATOR);
   }
 
   @Override
   public int hashCode() {
-    int result = namespace().hashCode();
-    result = (31 * result) + this.value.hashCode();
+    int result = this.group.hashCode();
+    result = (31 * result) + this.path.hashCode();
     return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Key)) return false;
+    Key key = (Key) obj;
+    return Objects.equals(group, key.group()) && Objects.equals(path, key.path());
+  }
+
+  @Override
+  protected Object clone() throws CloneNotSupportedException {
+    return super.clone();
+  }
+
+  @Override
+  public String toString() {
+    return Key.class.getSimpleName() + "[group=" + group + ", path=" + path + "]";
   }
 
 }

@@ -5,7 +5,6 @@ import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.translation.TranslationEntry;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
 import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

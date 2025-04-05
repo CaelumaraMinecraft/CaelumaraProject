@@ -1,10 +1,10 @@
 package net.aurika.auspice.utils.debug;
 
-import net.aurika.common.key.Identified;
+import net.aurika.common.key.Keyed;
 import org.jetbrains.annotations.NotNull;
 
-public interface DebugEntry extends Identified {
+public interface DebugEntry extends Keyed {
 
-  @NotNull DebugIdent ident();
+  @NotNull DebugKey key();
 
 }

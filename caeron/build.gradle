@@ -2,6 +2,9 @@ plugins {
   id("net.aurika.gradle.repository")
 }
 
+version
+description = "A bukkit plugin like slimefun"
+
 subprojects {
   repositories {
     mavenCentral()

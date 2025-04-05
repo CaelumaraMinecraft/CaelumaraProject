@@ -23,6 +23,7 @@ include(
     ":provider:paper-1_21_4",
 
     ":nms",
+    ":nms:1_21_4",
 
     // services
     ":service-api",

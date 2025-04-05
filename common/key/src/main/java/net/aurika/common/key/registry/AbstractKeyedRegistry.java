@@ -34,7 +34,7 @@ public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedReg
    * @return The old registry (maybe null)
    */
   protected Map<Key, T> rawRegistry(Map<Key, T> newRegistry) {
-    var oldRegistry = registry;
+    Map<Key, T> oldRegistry = registry;
     this.registry = newRegistry;
     return oldRegistry;
   }
@@ -46,7 +46,7 @@ public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedReg
       this.registry = new HashMap<>();
     }
     Key key = obj.key();
-    Objects.requireNonNull(key, "obj key");
+    Objects.requireNonNull(key, "Obj key");
     this.registry.put(key, obj);
   }
 
