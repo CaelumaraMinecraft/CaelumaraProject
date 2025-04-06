@@ -7,7 +7,7 @@ plugins {
 dependencies {
   compileOnly(project(":service-api"))
   compileOnly(aurikaDependency.libsFileTree("plugins/Kingdoms_relocated"))
-//  compileOnly("com.github.cryptomorin:kingdoms:1.17.10-BETA")
+  compileOnly("com.github.cryptomorin:kingdoms:1.17.10-BETA")
 }
 
 tasks {

@@ -30,12 +30,13 @@ public class BugTestAddon extends JavaPlugin implements Addon {
   @Override
   public void onLoad() {
     registerAddon();
+    try { registerTestStructure(); } catch (Exception e) { e.printStackTrace(); }
   }
 
   @Override
   public void onEnable() {
     registerTestListener();
-    registerTestStructure();
+    try { registerTestStructure(); } catch (Exception e) { e.printStackTrace(); }
   }
 
   @Override
@@ -44,7 +45,7 @@ public class BugTestAddon extends JavaPlugin implements Addon {
 
   @Override
   public void reloadAddon() {
-    registerTestStructure();
+    try { registerTestStructure(); } catch (Exception e) { e.printStackTrace(); }
   }
 
   @Override

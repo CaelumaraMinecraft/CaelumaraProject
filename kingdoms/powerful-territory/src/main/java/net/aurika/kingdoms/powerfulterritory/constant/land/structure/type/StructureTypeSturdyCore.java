@@ -1,6 +1,5 @@
 package net.aurika.kingdoms.powerfulterritory.constant.land.structure.type;
 
-import net.aurika.kingdoms.powerfulterritory.PowerfulTerritoryAddon;
 import net.aurika.kingdoms.powerfulterritory.constant.land.structure.object.SturdyCore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
