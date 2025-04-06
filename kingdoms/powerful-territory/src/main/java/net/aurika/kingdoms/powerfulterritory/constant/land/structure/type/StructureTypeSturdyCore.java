@@ -1,7 +1,7 @@
 package net.aurika.kingdoms.powerfulterritory.constant.land.structure.type;
 
 import net.aurika.kingdoms.powerfulterritory.PowerfulTerritoryAddon;
-import net.aurika.kingdoms.powerfulterritory.constant.land.structure.SturdyCore;
+import net.aurika.kingdoms.powerfulterritory.constant.land.structure.object.SturdyCore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kingdoms.constants.land.abstraction.data.KingdomItemBuilder;
@@ -13,8 +13,10 @@ import org.kingdoms.gui.InteractiveGUI;
 
 public class StructureTypeSturdyCore extends StructureType {
 
-  public StructureTypeSturdyCore(@NotNull String name) {
-    super(PowerfulTerritoryAddon.KEY + "-sturdy-core");
+  public static final StructureTypeSturdyCore INSTANCE = new StructureTypeSturdyCore();
+
+  protected StructureTypeSturdyCore() {
+    super("sturdy-core");
   }
 
   @Override

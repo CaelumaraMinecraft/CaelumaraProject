@@ -1,0 +1,43 @@
+(import):
+  building:
+    anchors: [ &fnPoints fnPoints, &holograms holograms ]
+    extend: false
+  structure:
+    parameters:
+      <name>: nexus
+      <build-duration-factor>: '-45 seconds'
+      <durability-factor>: 100
+      <material-1>: CRYING_OBSIDIAN
+      <material-2>: CRYING_OBSIDIAN
+      <material-3>: CRYING_OBSIDIAN
+
+name: "&bSturdy Core"
+type: powerful-territory-sturdy-core
+default-name: "Sturdy Core"
+max-level: 5
+upgrade-cost: 'level * 1000'
+dont-update-holograms: true
+hide-holograms: true
+
+building:
+  4:
+    functional-points: *fnPoints
+    block:
+      material: CRYING_OBSIDIAN
+    holograms: *holograms
+  5:
+    functional-points: *fnPoints
+    block:
+      material: CRYING_OBSIDIAN
+    holograms: *holograms
+
+particles:
+  1:
+    place:
+      particle: DRAGON_BREATH
+      count: 70
+      offset: 0.5, 0.5, 0.5
+    break:
+      particle: DRAGON_BREATH
+      count: 70
+      offset: 0.5, 0.5, 0.5

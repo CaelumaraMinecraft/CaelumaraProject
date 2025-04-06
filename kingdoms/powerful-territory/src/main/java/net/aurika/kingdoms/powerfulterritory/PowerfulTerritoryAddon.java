@@ -17,11 +17,9 @@ import net.aurika.kingdoms.powerfulterritory.constant.land.category.StandardLand
 import net.aurika.kingdoms.powerfulterritory.constant.land.contraction.LandContractionRegistry;
 import net.aurika.kingdoms.powerfulterritory.constant.land.contraction.std.StandardLandContraction;
 import net.aurika.kingdoms.powerfulterritory.constant.land.lease.project.LandLeaseProjectRegistry;
+import net.aurika.kingdoms.powerfulterritory.constant.land.structure.type.StructureTypeSturdyCore;
 import net.aurika.kingdoms.powerfulterritory.data.*;
-import net.aurika.kingdoms.powerfulterritory.managers.BeaconEffectsManager;
-import net.aurika.kingdoms.powerfulterritory.managers.BoatUseManager;
-import net.aurika.kingdoms.powerfulterritory.managers.ElytraManager;
-import net.aurika.kingdoms.powerfulterritory.managers.EnderPearlTeleportManager;
+import net.aurika.kingdoms.powerfulterritory.managers.*;
 import net.aurika.kingdoms.powerfulterritory.util.GroupExt;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
@@ -29,6 +27,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.commands.admin.CommandAdmin;
 import org.kingdoms.config.KingdomsConfig;
+import org.kingdoms.constants.land.structures.StructureRegistry;
 import org.kingdoms.constants.metadata.KingdomMetadataHandler;
 import org.kingdoms.constants.metadata.KingdomMetadataRegistry;
 import org.kingdoms.constants.namespace.Namespace;
@@ -87,18 +86,15 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
   public void onEnable0() {
     registerAllEvents();
     registerAllCommands();
+    reloadAddon0();
   }
 
   @Override
-  public void onDisable0() {
-
-  }
+  public void onDisable0() { }
 
   @Override
   public void reloadAddon0() {
-    registerAllCommands();
-
-    registerAllEvents();
+    registerAllBuildings();
   }
 
   @Override
@@ -106,25 +102,35 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
     return "powerful-territory";
   }
 
+  public void registerAllBuildings() {
+    StructureRegistry.get().registerType(StructureTypeSturdyCore.INSTANCE);
+  }
+
+  public static void printStructures() {
+    System.out.println(Arrays.toString((StructureRegistry.get().getTypes().keySet()).toArray()));
+  }
+
   public void registerAllEvents() {
 
     if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ELYTRA.getManager().getBoolean()) {
-      registerEvents(new ElytraManager());
+      registerEvents(ElytraManager.INSTANCE);
     }
     if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_ENDER_PEARL.getManager().getBoolean()) {
-      registerEvents(new EnderPearlTeleportManager());
+      registerEvents(EnderPearlTeleportManager.INSTANCE);
       PlayerTeleportEvent.getHandlerList().unregister(Kingdoms.get());
     }
     if (
         KingdomsConfig.Claims.BEACON_PROTECTED_EFFECTS.getManager().getBoolean()
             && PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_RELATION_ATTRIBUTE_BEACON_EFFECTS.getManager().getBoolean()
     ) {
-      registerEvents(new BeaconEffectsManager());
+      registerEvents(BeaconEffectListener.INSTANCE);
       EntityPotionEffectEvent.getHandlerList().unregister(Kingdoms.get());
     }
     if (PowerfulTerritoryConfig.METICULOUS_LAND_PROTECTION_KINGDOM_PERMISSION_BOAT.getManager().getBoolean()) {
-      registerEvents(new BoatUseManager());
+      registerEvents(BoatUseListener.INSTANCE);
     }
+
+    registerEvents(ExplosionManager.INSTANCE);
   }
 
   private void registerEvents(Listener listener) {

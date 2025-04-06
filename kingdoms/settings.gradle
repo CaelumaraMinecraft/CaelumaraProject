@@ -1,5 +1,7 @@
 include(
     ":auspice",
     ":powerful-territory",
-    ":trade-point"
+    ":trade-point",
+
+    ":bug-test"
 )

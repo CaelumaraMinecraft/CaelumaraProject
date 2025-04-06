@@ -8,7 +8,11 @@ import org.bukkit.event.Listener;
 import org.kingdoms.events.invasion.KingdomPreInvadeEvent;
 import org.kingdoms.managers.invasions.Invasion;
 
-public class InvadeManager implements Listener {
+public final class InvadeManager implements Listener {
+
+  public static final InvadeManager INSTANCE = new InvadeManager();
+
+  private InvadeManager() { }
 
   @EventHandler(ignoreCancelled = true)
   public void onPlayerInvade(KingdomPreInvadeEvent event) {

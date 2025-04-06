@@ -17,10 +17,10 @@ dependencies {
   // bukkit general engines
   api(libs.xseries)
   // minecraft bukkit server
-  compileOnlyApi("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")  // TODO
+  compileOnlyApi("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_21
-  targetCompatibility = JavaVersion.VERSION_21
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
 }

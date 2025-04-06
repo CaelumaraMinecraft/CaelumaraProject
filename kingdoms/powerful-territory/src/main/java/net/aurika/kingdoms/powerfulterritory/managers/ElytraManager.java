@@ -14,7 +14,11 @@ import org.kingdoms.constants.land.Land;
 import org.kingdoms.constants.player.KingdomPlayer;
 import org.kingdoms.events.lands.LandChangeEvent;
 
-public class ElytraManager implements Listener {
+public final class ElytraManager implements Listener {
+
+  public static final ElytraManager INSTANCE = new ElytraManager();
+
+  private ElytraManager() { }
 
   @EventHandler(ignoreCancelled = true)
   public void onPlayerFlyPassLand(LandChangeEvent event) {

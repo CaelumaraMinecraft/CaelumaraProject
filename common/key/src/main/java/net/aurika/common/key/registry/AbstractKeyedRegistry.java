@@ -20,7 +20,7 @@ public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedReg
   }
 
   /**
-   * Get the raw registry.
+   * Gets the raw registry.
    *
    * @return The raw registry
    */
@@ -29,7 +29,7 @@ public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedReg
   }
 
   /**
-   * Set the raw registry.
+   * Sets the raw registry.
    *
    * @return The old registry (maybe null)
    */
