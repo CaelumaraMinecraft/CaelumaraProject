@@ -188,6 +188,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-annotation")).using(project(":annotation"))
     substitute(module("net.aurika:common-data-api")).using(project(":data-api"))
     substitute(module("net.aurika:common-dependency")).using(project(":dependency"))
+    substitute(module("net.aurika:common-event-api")).using(project(":event:event-api"))
     substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
     substitute(module("net.aurika:common-function")).using(project(":function"))
     substitute(module("net.aurika:common-key")).using(project(":key"))
