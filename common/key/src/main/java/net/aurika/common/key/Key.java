@@ -18,7 +18,8 @@ public interface Key extends Grouped, PathAware {
    * @param keyString The full ident string
    * @throws IllegalArgumentException When the input string is not valid.
    */
-  static @NotNull Key key(@NotNull String keyString) {
+  @SuppressWarnings("PatternValidation")
+  static @NotNull Key key(@KeyPatterns.Key final @NotNull String keyString) {
     int sepIndex = keyString.indexOf(SEPARATOR);
     if (sepIndex == -1) {
       throw new IllegalArgumentException(
@@ -27,7 +28,7 @@ public interface Key extends Grouped, PathAware {
     return key(keyString.substring(0, sepIndex), keyString.substring(sepIndex + 1));
   }
 
-  static @NotNull Key key(@NotNull String groupString, @NotNull String pathString) {
+  static @NotNull Key key(@KeyPatterns.Group final @NotNull String groupString, @KeyPatterns.KeyPath final @NotNull String pathString) {
     Validate.Arg.notNull(groupString, "groupString");
     Validate.Arg.notNull(pathString, "pathString");
     return new KeyImpl(Group.group(groupString), Path.path(pathString, SEPARATOR, ALLOWED_PATH_CHARS));

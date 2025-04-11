@@ -16,7 +16,6 @@ public final class DebugKey implements Key {
 
   @SuppressWarnings("PatternValidation")
   @Override
-  @KeyPatterns.Namespace
   public @NotNull String namespace() {
     return delegate.namespace();
   }

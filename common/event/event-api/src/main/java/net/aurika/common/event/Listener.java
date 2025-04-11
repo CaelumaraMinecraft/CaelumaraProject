@@ -21,7 +21,7 @@ public interface Listener<E extends Event> extends Keyed {
    *
    * @return the container
    */
-  @NotNull Transformer<? extends E> container();
+  @NotNull Emitter<? extends E> container();
 
   boolean ignoreCancelled();
 

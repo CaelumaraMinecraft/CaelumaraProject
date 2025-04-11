@@ -1,5 +1,7 @@
 package net.aurika.common.event;
 
+import net.aurika.common.key.KeyPatterns;
+
 import java.lang.annotation.*;
 
 /**
@@ -10,6 +12,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface EventListener {
 
+  @KeyPatterns.Key
   String key();
 
   boolean ignoreCancelled() default false;

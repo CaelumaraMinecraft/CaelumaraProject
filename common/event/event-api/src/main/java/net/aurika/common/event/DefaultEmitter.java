@@ -11,13 +11,13 @@ import java.util.Set;
 
 import static net.aurika.common.util.empty.EmptyArray.emptyArray;
 
-public class DefaultTransformer<E extends Event> implements Transformer<E> {
+public class DefaultEmitter<E extends Event> implements Emitter<E> {
 
   private final @NotNull Class<E> eventType;
-  protected @NotNull Transformer<? super E> @NotNull [] parents;
+  protected @NotNull Emitter<? super E> @NotNull [] parents;
   protected @NotNull LinkedList<Listener<E>> listeners;
 
-  protected DefaultTransformer(@NotNull Class<E> eventType) throws EventNotListenableException {
+  protected DefaultEmitter(@NotNull Class<E> eventType) throws EventNotListenableException {
     Validate.Arg.notNull(eventType, "eventType");
     if (!EventAPI.isListenable(eventType)) {
       throw new EventNotListenableException("Event class " + eventType.getName() + " is not listenable");
@@ -31,7 +31,7 @@ public class DefaultTransformer<E extends Event> implements Transformer<E> {
   @Contract(mutates = "this")
   protected void refreshParents() {
     Class<? super E>[] supers = Util.getSupers(eventType);
-    List<Transformer<? super E>> parentContainers = new LinkedList<>();
+    List<Emitter<? super E>> parentContainers = new LinkedList<>();
     for (int i = 0; i < supers.length; i++) {
       Class<? super E> superType = supers[i];
       if (Event.class.isAssignableFrom(superType)) {
@@ -39,21 +39,21 @@ public class DefaultTransformer<E extends Event> implements Transformer<E> {
         Class<? extends Event> fixedSuperType = (Class<? extends Event>) superType;
         if (EventAPI.isListenable(fixedSuperType)) {
           // ListenerContainer<? extends Event & super E>
-          Transformer parentListenerList = EventAPI.getListenerContainer(fixedSuperType);
+          Emitter parentListenerList = EventAPI.getListenerContainer(fixedSuperType);
           parentContainers.add(parentListenerList);
         }
       }
     }
-    this.parents = parentContainers.toArray(new Transformer[0]);
+    this.parents = parentContainers.toArray(new Emitter[0]);
   }
 
   @Override
-  public void transform(@NotNull E event) {
+  public void emit(@NotNull E event) {
     for (Listener<E> listener : listeners()) {
       listener.accept(event);
     }
-    for (Transformer<? super E> deepParent : allParentTransformers()) {
-      deepParent.transform(event);
+    for (Emitter<? super E> deepParent : allParentTransformers()) {
+      deepParent.emit(event);
     }
   }
 
@@ -68,15 +68,15 @@ public class DefaultTransformer<E extends Event> implements Transformer<E> {
   }
 
   @Override
-  public @NotNull Transformer<? super E> @NotNull [] directParentTransformers() {
+  public @NotNull Emitter<? super E> @NotNull [] directParentTransformers() {
     return parents.clone();
   }
 
   @Override
-  public @NotNull Set<@NotNull Transformer<? super E>> allParentTransformers() {
-    LinkedHashSet<Transformer<? super E>> allParents = new LinkedHashSet<>();
-    for (Transformer<? super E> parentTransformer : parents) {
-      allParents.addAll(parentTransformer.allParentTransformers());
+  public @NotNull Set<@NotNull Emitter<? super E>> allParentTransformers() {
+    LinkedHashSet<Emitter<? super E>> allParents = new LinkedHashSet<>();
+    for (Emitter<? super E> parentEmitter : parents) {
+      allParents.addAll(parentEmitter.allParentTransformers());
     }
     return allParents;
   }

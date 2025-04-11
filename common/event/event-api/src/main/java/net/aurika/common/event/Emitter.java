@@ -4,14 +4,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public interface Transformer<E extends Event> {
+public interface Emitter<E extends Event> {
 
   /**
-   * Transforms the {@code event} to registered listeners.
+   * Emits the {@code event} to registered listeners.
    *
    * @param event the event
    */
-  void transform(@NotNull E event);
+  void emit(@NotNull E event);
 
   /**
    * Registers a listener to this container.
@@ -33,17 +33,17 @@ public interface Transformer<E extends Event> {
    *
    * @return the parent containers
    */
-  @NotNull Transformer<? super E> @NotNull [] directParentTransformers();
+  @NotNull Emitter<? super E> @NotNull [] directParentTransformers();
 
   /**
    * Gets all containers directly or  extended by this listener container.
    *
    * @return the parent containers
    */
-  @NotNull Set<@NotNull Transformer<? super E>> allParentTransformers();
+  @NotNull Set<@NotNull Emitter<? super E>> allParentTransformers();
 
   /**
-   * Gets the registered listeners in the listener container. On synced listener container, it may be sequenced.
+   * Gets the registered listeners in the emitter. On synced listener container, it may be sequenced.
    *
    * @return the registered listeners
    */

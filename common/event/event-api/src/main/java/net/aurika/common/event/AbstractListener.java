@@ -9,11 +9,11 @@ public abstract class AbstractListener<E extends Event> implements Listener<E> {
   private final @NotNull Key key;
   private final @NotNull Class<? extends E> listenedEventType;
   private final boolean ignoreCancelled;
-  private final @NotNull Transformer<? extends E> container;
+  private final @NotNull Emitter<? extends E> container;
 
   public AbstractListener(
       @NotNull Key key,
-      @NotNull Transformer<? extends E> container,
+      @NotNull Emitter<? extends E> container,
       boolean ignoreCancelled,
       @NotNull Class<? extends E> listenedEventType
   ) {
@@ -33,7 +33,7 @@ public abstract class AbstractListener<E extends Event> implements Listener<E> {
   public abstract void accept(@NotNull E event);
 
   @Override
-  public @NotNull Transformer<? extends E> container() { return container; }
+  public @NotNull Emitter<? extends E> container() { return container; }
 
   @Override
   public boolean ignoreCancelled() { return ignoreCancelled; }

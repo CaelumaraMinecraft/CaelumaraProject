@@ -16,7 +16,7 @@ public class ReflectionListener<E extends Event> extends AbstractListener<E> {
       @NotNull Key key,
       @NotNull Method method,
       Object instance,
-      @NotNull Transformer<? extends E> container,
+      @NotNull Emitter<? extends E> container,
       boolean ignoreCancelled,
       @NotNull Class<? extends E> listenedEventType
   ) {

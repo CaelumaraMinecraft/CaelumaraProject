@@ -23,7 +23,7 @@ public interface EventAPI {
       return false;
     }
     try {
-      Method listenersMethod = eventClass.getMethod("transformer");
+      Method listenersMethod = eventClass.getMethod("emitter");
       if (Modifier.isAbstract(listenersMethod.getModifiers())) {  // require implement this method
         return false;
       }
@@ -31,21 +31,21 @@ public interface EventAPI {
       return false;
     }
     try {
-      Field listenersFiled = eventClass.getField(listenable.listenerContainerFieldName());
+      Field listenersFiled = eventClass.getField(listenable.emitterFieldName());
       return Modifier.isStatic(listenersFiled.getModifiers());
     } catch (NoSuchFieldException ignored) {
       return false;
     }
   }
 
-  static <E extends Event> @NotNull Transformer<E> getListenerContainer(@NotNull Class<E> eventClass) throws EventNotListenableException {
+  static <E extends Event> @NotNull Emitter<E> getListenerContainer(@NotNull Class<E> eventClass) throws EventNotListenableException {
     Validate.Arg.notNull(eventClass, "eventClass");
     if (!isListenable(eventClass)) {
       throw new EventNotListenableException("Event class " + eventClass.getName() + " is not listenable");
     }
     Listenable listenable = eventClass.getAnnotation(Listenable.class);
     assert listenable != null;
-    String listenersFieldName = listenable.listenerContainerFieldName();
+    String listenersFieldName = listenable.emitterFieldName();
     @NotNull Field listenersFiled;
     try {
       listenersFiled = eventClass.getField(listenersFieldName);
@@ -55,28 +55,28 @@ public interface EventAPI {
     try {
       listenersFiled.setAccessible(true);
       // noinspection unchecked
-      return (Transformer<E>) listenersFiled.get(null);
+      return (Emitter<E>) listenersFiled.get(null);
     } catch (IllegalAccessException e) {
       throw new RuntimeException(e);
     }
   }
 
   /**
-   * Creates a {@link DefaultTransformer} for the {@code eventClass}.
+   * Creates a {@link DefaultEmitter} for the {@code eventClass}.
    *
    * @param eventClass the event class
    * @param <E>        the event type
    * @return the created listener container
    * @throws EventNotListenableException when the {@code eventClass} is not listenable
    */
-  static <E extends Event> @NotNull DefaultTransformer<E> defaultTransformer(@NotNull Class<E> eventClass) throws EventNotListenableException {
+  static <E extends Event> @NotNull DefaultEmitter<E> defaultEmitter(@NotNull Class<E> eventClass) throws EventNotListenableException {
     Validate.Arg.notNull(eventClass, "eventClass");
-    return new DefaultTransformer<>(eventClass);
+    return new DefaultEmitter<>(eventClass);
   }
 
-  static <E extends Event> @NotNull DelegateTransformer<E> delegateTransformer(@NotNull Transformer<E> delegate) throws EventNotListenableException {
+  static <E extends Event> @NotNull DelegateEmitter<E> delegateEmitter(@NotNull Emitter<E> delegate) throws EventNotListenableException {
     Validate.Arg.notNull(delegate, "delegate");
-    return new DelegateTransformer<>(delegate);
+    return new DelegateEmitter<>(delegate);
   }
 
   /**
@@ -105,16 +105,16 @@ public interface EventAPI {
               if (EventAPI.isListenable(paramEventType)) {
                 Key listenerKey = Key.key(eventListener.key());
                 boolean ignoreCancelled = eventListener.ignoreCancelled();
-                Transformer<? extends Event> transformer = EventAPI.getListenerContainer(paramEventType);
+                Emitter<? extends Event> emitter = EventAPI.getListenerContainer(paramEventType);
                 ReflectionListener reflectionListener = new ReflectionListener<>(
                     listenerKey,
                     method,
                     instance,
-                    transformer,
+                    emitter,
                     ignoreCancelled,
                     paramEventType
                 );
-                transformer.register(reflectionListener);
+                emitter.register(reflectionListener);
               } else {
                 throw new EventNotListenableException("Event class " + paramType.getName() + " is not listenable");
               }

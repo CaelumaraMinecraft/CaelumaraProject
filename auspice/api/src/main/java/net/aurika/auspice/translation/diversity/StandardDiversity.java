@@ -20,10 +20,10 @@ public class StandardDiversity extends AbstractDiversity implements Diversity {
    * 简体中文
    */
   public static final StandardDiversity SIMPLIFIED_CHINESE = new StandardDiversity(
-      Auspice.createKey("DEFAULT_SIMPLIFIED_CHINESE"), );
+      Auspice.createKey("diversity/chinese_simplified"), );
 
   public static final StandardDiversity TRADITIONAL_CHINESE = new StandardDiversity(
-      Auspice.createKey("DEFAULT_TRADITIONAL_CHINESE"), )
+      Auspice.createKey("diversity/chinese_traditional"), )
 
   /**
    * 默认英语

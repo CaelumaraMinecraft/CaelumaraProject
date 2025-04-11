@@ -5,27 +5,27 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class DelegateTransformer<E extends Event> implements Transformer<E> {
+public class DelegateEmitter<E extends Event> implements Emitter<E> {
 
   private final @NotNull Class<E> eventType;
-  private @NotNull Transformer<E> delegate;
+  private @NotNull Emitter<E> delegate;
 
-  protected DelegateTransformer(@NotNull Transformer<E> delegate) {
+  protected DelegateEmitter(@NotNull Emitter<E> delegate) {
     this(delegate.eventType(), delegate);
   }
 
-  protected DelegateTransformer(@NotNull Class<E> eventType, @NotNull Transformer<E> delegate) {
+  protected DelegateEmitter(@NotNull Class<E> eventType, @NotNull Emitter<E> delegate) {
     Validate.Arg.notNull(eventType, "eventType");
     Validate.Arg.notNull(delegate, "delegate");
     this.eventType = eventType;
     delegate(delegate);
   }
 
-  public @NotNull Transformer<E> delegate() {
+  public @NotNull Emitter<E> delegate() {
     return this.delegate;
   }
 
-  public void delegate(@NotNull Transformer<E> delegate) {
+  public void delegate(@NotNull Emitter<E> delegate) {
     Validate.Arg.notNull(delegate, "delegate");
     if (delegate.eventType() != this.eventType) {
       throw new IllegalArgumentException("Delegate event type mismatch");
@@ -34,8 +34,8 @@ public class DelegateTransformer<E extends Event> implements Transformer<E> {
   }
 
   @Override
-  public void transform(@NotNull E event) {
-    delegate.transform(event);
+  public void emit(@NotNull E event) {
+    delegate.emit(event);
   }
 
   @Override
@@ -49,12 +49,12 @@ public class DelegateTransformer<E extends Event> implements Transformer<E> {
   }
 
   @Override
-  public @NotNull Transformer<? super E> @NotNull [] directParentTransformers() {
+  public @NotNull Emitter<? super E> @NotNull [] directParentTransformers() {
     return delegate.directParentTransformers();
   }
 
   @Override
-  public @NotNull Set<@NotNull Transformer<? super E>> allParentTransformers() {
+  public @NotNull Set<@NotNull Emitter<? super E>> allParentTransformers() {
     return delegate.allParentTransformers();
   }
 

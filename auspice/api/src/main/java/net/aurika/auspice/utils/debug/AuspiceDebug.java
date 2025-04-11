@@ -12,7 +12,7 @@ public enum AuspiceDebug implements DebugEntry {
   private final DebugKey id;
 
   AuspiceDebug(@KeyPatterns.KeyPath final @NotNull String identValueString) {
-    this.id = new DebugKey(Key.key(Auspice.NAMESPACE, identValueString));
+    this.id = new DebugKey(Key.key(Auspice.GROUP_STRING, identValueString));
   }
 
   @Override

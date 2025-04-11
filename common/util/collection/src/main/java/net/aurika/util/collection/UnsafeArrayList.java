@@ -1,34 +1,25 @@
 package net.aurika.util.collection;
 
-import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Consumer;
 
-@Deprecated
+@SuppressWarnings({"ReturnOfInnerClass"})
 public final class UnsafeArrayList<E> extends AbstractCollection<E> implements List<E>, RandomAccess {
 
   private static final int DEFAULT_CAPACITY = 10;
   private transient E[] array;
-  private int size;
+  public int size;
 
-  private UnsafeArrayList() {
-  }
-
-  private UnsafeArrayList(E @NotNull [] array) {
-    Validate.Arg.notNull(array, "array");
-    this.array = array;
-    this.size = array.length;
-  }
-
-  public static <E> @NotNull UnsafeArrayList<E> withZeroSize(E[] array) {
+  public static <E> @NotNull UnsafeArrayList<E> withSize(E[] array) {
     UnsafeArrayList<E> list = new UnsafeArrayList<>();
     list.array = array;
     return list;
   }
 
+  @Contract("_ -> new")
   @SafeVarargs
   public static <E> @NotNull UnsafeArrayList<E> of(E... elements) {
     return new UnsafeArrayList<>(elements);
@@ -40,8 +31,15 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     return new UnsafeArrayList<>(Arrays.copyOf(elements, elements.length));
   }
 
+  private UnsafeArrayList() { }
+
+  private UnsafeArrayList(E @NotNull [] array) {
+    this.array = array;
+    this.size = array.length;
+  }
+
   @Override
-  public @NotNull String toString() {
+  public String toString() {
     if (isEmpty()) return "UnsafeArrayList:[]";
     int iMax = size - 1;
 
@@ -64,7 +62,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
   }
 
   public void resetPointer() {
-    size = 0;
+    this.size = 0;
   }
 
   @Override
@@ -77,8 +75,9 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     return indexOf(o) != -1;
   }
 
+  @NotNull
   @Override
-  public @NotNull Iterator<E> iterator() {
+  public Iterator<E> iterator() {
     return new Itr(0);
   }
 
@@ -95,6 +94,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     return -1;
   }
 
+  @Contract(mutates = "this")
   public void setArray(E @NotNull [] elements) {
     this.array = elements;
     this.size = elements.length;
@@ -104,7 +104,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
    * Warning: Make sure to check for nulls and terminate if you use this.
    */
   public E[] getArray() {
-    return array;
+    return this.array;
   }
 
   @Override
@@ -112,18 +112,21 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     return lastIndexOfRange(o, 0, size);
   }
 
+  @NotNull
   @Override
-  public @NotNull ListIterator<E> listIterator() {
+  public ListIterator<E> listIterator() {
     return listIterator(0);
   }
 
+  @NotNull
   @Override
-  public @NotNull ListIterator<E> listIterator(int index) {
+  public ListIterator<E> listIterator(int index) {
     return new Itr(index);
   }
 
+  @NotNull
   @Override
-  public @NotNull List<E> subList(int fromIndex, int toIndex) {
+  public List<E> subList(int fromIndex, int toIndex) {
     throw new UnsupportedOperationException();
   }
 
@@ -135,14 +138,14 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
     return -1;
   }
 
-  @Override
+  @Contract(value = " -> new", pure = true)
   public E @NotNull [] toArray() {
     return Arrays.copyOf(array, size);
   }
 
   @SuppressWarnings({"unchecked", "ConstantConditions", "SuspiciousSystemArraycopy"})
-  @Override
-  public <T> T @NotNull [] toArray(T @NotNull [] a) {
+  @NotNull
+  public <T> T @NotNull [] toArray(@NotNull T @NotNull [] a) {
     if (a.length < size) return (T[]) Arrays.copyOf(array, size, a.getClass());
     System.arraycopy(array, 0, a, 0, size);
     if (a.length > size) a[size] = null;
@@ -266,11 +269,11 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
 
   @SuppressWarnings("unchecked")
   @Override
-  public boolean addAll(Collection<? extends E> c) {
+  public boolean addAll(@NotNull Collection<? extends E> c) {
     return addAll((E[]) c.toArray(new Object[0]));
   }
 
-  public boolean addAll(final E[] e) {
+  public boolean addAll(final E @NotNull [] e) {
     final int len = e.length;
     if (len == 0) return false;
 
@@ -298,7 +301,7 @@ public final class UnsafeArrayList<E> extends AbstractCollection<E> implements L
 
   @SuppressWarnings("SuspiciousSystemArraycopy")
   @Override
-  public boolean addAll(int index, Collection<? extends E> c) {
+  public boolean addAll(int index, @NotNull Collection<? extends E> c) {
     Object[] a = c.toArray();
     int numNew = a.length;
     if (numNew == 0) return false;

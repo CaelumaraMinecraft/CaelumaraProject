@@ -7,6 +7,7 @@ import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.diversity.StandardDiversity;
 import net.aurika.common.dependency.DependencyManager;
 import net.aurika.common.dependency.classpath.BootstrapProvider;
+import net.aurika.common.key.Group;
 import net.aurika.common.key.Key;
 import net.aurika.common.key.KeyPatterns;
 import org.jetbrains.annotations.ApiStatus;
@@ -18,8 +19,9 @@ import java.nio.file.Path;
 
 public final class Auspice implements AuspiceUser {
 
-  public static @KeyPatterns.Namespace
-  final @NotNull String NAMESPACE = "Auspice";
+  @KeyPatterns.Group
+  public static final @NotNull String GROUP_STRING = "net.aurika.auspice";
+  public static final Group GROUP = Group.group(GROUP_STRING);
   private static final Auspice INSTANCE = new Auspice();
   private State state;
   private AuspiceLoader loader;
@@ -80,10 +82,7 @@ public final class Auspice implements AuspiceUser {
   }
 
   @Override
-  @KeyPatterns.Namespace
-  public @NotNull String namespace() {
-    return NAMESPACE;
-  }
+  public @NotNull Group group() { return GROUP; }
 
   public static @NotNull Auspice get() {
     return INSTANCE;
@@ -129,12 +128,12 @@ public final class Auspice implements AuspiceUser {
     this.dataFolder = dataFolder;
   }
 
-  public Path getPath(String path) {
+  public @NotNull Path getPath(String path) {
     return this.getDataFolder().toPath().resolve(path);
   }
 
-  public static @NotNull Key createKey(@KeyPatterns.Group final @NotNull String keyValue) {
-    return Key.key(NAMESPACE, keyValue);
+  public static @NotNull Key createKey(@KeyPatterns.KeyPath final @NotNull String keyPath) {
+    return Key.key(GROUP_STRING, keyPath);
   }
 
   public static void init() {

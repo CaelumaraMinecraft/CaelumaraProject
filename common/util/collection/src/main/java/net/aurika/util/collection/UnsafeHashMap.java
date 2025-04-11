@@ -1,8 +1,7 @@
 package net.aurika.util.collection;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -12,12 +11,12 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-@Deprecated
-public class UnsafeHashMap<K, V> implements Cloneable, Map<K, V> {
+@SuppressWarnings("all")
+public final class UnsafeHashMap<K, V> implements Map<K, V>, Cloneable {
 
-  public static final int DEFAULT_INITIAL_CAPACITY = 16;
-  public static final int MAXIMUM_CAPACITY = 1073741824;
-  public static final float DEFAULT_LOAD_FACTOR = 0.75F;
+  public static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
+  public static final int MAXIMUM_CAPACITY = 1 << 30;
+  public static final float DEFAULT_LOAD_FACTOR = 0.75f;
   public static final int TREEIFY_THRESHOLD = 8;
   public static final int UNTREEIFY_THRESHOLD = 6;
   public static final int MIN_TREEIFY_CAPACITY = 64;
@@ -26,818 +25,757 @@ public class UnsafeHashMap<K, V> implements Cloneable, Map<K, V> {
   public transient Collection<V> values;
   public transient Node<K, V>[] table;
   public transient Set<Map.Entry<K, V>> entrySet;
-  private transient int a;
-  private transient int b;
-  private int c;
+  private transient int size;
+  private transient int modCount;
+  private int threshold;
 
-  public UnsafeHashMap(int var1, float var2) {
-    if (var1 < 0) {
-      throw new IllegalArgumentException("Illegal initial capacity: " + var1);
-    } else {
-      if (var1 > MAXIMUM_CAPACITY) {
-        var1 = MAXIMUM_CAPACITY;
-      }
+  public UnsafeHashMap(int initialCapacity, float loadFactor) {
+    if (initialCapacity < 0) throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
+    if (initialCapacity > MAXIMUM_CAPACITY) initialCapacity = MAXIMUM_CAPACITY;
+    if (loadFactor <= 0 || Float.isNaN(loadFactor))
+      throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
 
-      if (!(var2 <= 0.0F) && !Float.isNaN(var2)) {
-        this.loadFactor = var2;
-        this.c = tableSizeFor(var1);
-      } else {
-        throw new IllegalArgumentException("Illegal load factor: " + var2);
-      }
-    }
+    this.loadFactor = loadFactor;
+    this.threshold = tableSizeFor(initialCapacity);
   }
 
-  public UnsafeHashMap(int var1) {
-    this(var1, DEFAULT_LOAD_FACTOR);
+  /**
+   * Constructs an empty <code>HashMap</code> with the specified initial
+   * capacity and the default load factor (0.75).
+   *
+   * @param initialCapacity the initial capacity.
+   * @throws IllegalArgumentException if the initial capacity is negative.
+   */
+  public UnsafeHashMap(int initialCapacity) {
+    this(initialCapacity, DEFAULT_LOAD_FACTOR);
   }
 
+  /**
+   * Constructs an empty <code>HashMap</code> with the default initial capacity
+   * (16) and the default load factor (0.75).
+   */
   public UnsafeHashMap() {
-    this.loadFactor = DEFAULT_LOAD_FACTOR;
+    this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
   }
 
-  public UnsafeHashMap(Map<? extends K, ? extends V> var1) {
+  /**
+   * Constructs a new <code>HashMap</code> with the same mappings as the
+   * specified <code>Map</code>.  The <code>HashMap</code> is created with
+   * default load factor (0.75) and an initial capacity sufficient to
+   * hold the mappings in the specified <code>Map</code>.
+   *
+   * @param m the map whose mappings are to be placed in this map
+   * @throws NullPointerException if the specified map is null
+   */
+  public UnsafeHashMap(Map<? extends K, ? extends V> m) {
     this.loadFactor = DEFAULT_LOAD_FACTOR;
-    this.putMapEntries(var1, false);
+    putMapEntries(m, false);
   }
 
   @SafeVarargs
-  public static <K, V> UnsafeHashMap<K, V> of(Map.Entry<? extends K, ? extends V>... var0) {
-    UnsafeHashMap<K, V> var1 = new UnsafeHashMap<>();
-    var1.putEntries(false, var0);
-    return var1;
+  @SuppressWarnings("varargs")
+  public static <K, V> UnsafeHashMap<K, V> of(Map.Entry<? extends K, ? extends V>... entries) {
+    UnsafeHashMap<K, V> map = new UnsafeHashMap<>();
+    map.putEntries(false, entries);
+    return map;
   }
 
-  public static int hash(Object var0) {
-    if (var0 == null) {
-      throw new NullPointerException("Cannot hash null key to map");
-    } else {
-      int var1;
-      return (var1 = var0.hashCode()) ^ var1 >>> 16;
-    }
+  public static int hash(Object key) {
+    if (key == null) throw new NullPointerException("Cannot hash null key to map");
+    int h = key.hashCode();
+    return h ^ (h >>> 16);
   }
 
-  public static Class<?> comparableClassFor(Object var0) {
-    if (var0 instanceof Comparable) {
-      Class<?> var5 = var0.getClass();
-      if (var5 == String.class) {
-        return var5;
-      }
-
-      Type[] var1 = var5.getGenericInterfaces();
-      if (var1 != null) {
-        Type[] var2 = var1;
-        int var3 = var1.length;
-
-        for (int var4 = 0; var4 < var3; ++var4) {
-          Type var6;
-          ParameterizedType var7;
-          if ((var6 = var2[var4]) instanceof ParameterizedType && (var7 = (ParameterizedType) var6).getRawType() == Comparable.class && (var1 = var7.getActualTypeArguments()) != null && var1.length == 1 && var1[0] == var5) {
-            return var5;
-          }
+  public static Class<?> comparableClassFor(Object x) {
+    if (x instanceof Comparable) {
+      Class<?> c;
+      Type[] ts, as;
+      Type t;
+      ParameterizedType p;
+      if ((c = x.getClass()) == String.class) // bypass checks
+        return c;
+      if ((ts = c.getGenericInterfaces()) != null) {
+        for (Type type : ts) {
+          if (((t = type) instanceof ParameterizedType) &&
+              ((p = (ParameterizedType) t).getRawType() ==
+                  Comparable.class) &&
+              (as = p.getActualTypeArguments()) != null &&
+              as.length == 1 && as[0] == c) // type arg is c
+            return c;
         }
       }
     }
-
     return null;
   }
 
-  public static int compareComparables(Class<?> var0, Object var1, Object var2) {
-    return var2 != null && var2.getClass() == var0 ? ((Comparable) var1).compareTo(var2) : 0;
+  @SuppressWarnings({"rawtypes", "unchecked"}) // for cast to Comparable
+  public static int compareComparables(Class<?> kc, Object k, Object x) {
+    return x == null || x.getClass() != kc ? 0 : ((Comparable) k).compareTo(x);
   }
 
-  public static int tableSizeFor(int var0) {
-    if ((var0 = (var0 = (var0 = (var0 = (var0 = --var0 | var0 >>> 1) | var0 >>> 2) | var0 >>> 4) | var0 >>> 8) | var0 >>> 16) < 0) {
-      return 1;
-    } else {
-      return var0 >= MAXIMUM_CAPACITY ? MAXIMUM_CAPACITY : var0 + 1;
-    }
+  public static int tableSizeFor(int cap) {
+    int n = cap - 1;
+    n |= n >>> 1;
+    n |= n >>> 2;
+    n |= n >>> 4;
+    n |= n >>> 8;
+    n |= n >>> 16;
+    return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
   }
 
-  public final void putMapEntries(Map<? extends K, ? extends V> var1, boolean var2) {
-    this.putMapEntries(var1, false, var2);
+  public void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
+    putMapEntries(m, false, evict);
   }
 
-  public final void putMapEntries(Map<? extends K, ? extends V> var1, boolean var2, boolean var3) {
-    int var4;
-    if ((var4 = var1.size()) > 0) {
-      if (this.table == null) {
-        int var5;
-        float var7;
-        if ((var5 = (var7 = (float) var4 / this.loadFactor + 1.0F) < 1.0737418E9F ? (int) var7 : MAXIMUM_CAPACITY) > this.c) {
-          this.c = tableSizeFor(var5);
-        }
-      } else if (var4 > this.c) {
-        this.resize();
-      }
+  /**
+   * Implements Map.putAll and Map constructor
+   *
+   * @param m     the map
+   * @param evict false when initially constructing this map, else
+   *              true (relayed to method afterNodeInsertion).
+   */
+  public void putMapEntries(Map<? extends K, ? extends V> m, boolean ifAbsent, boolean evict) {
+    int s = m.size();
+    if (s > 0) {
+      if (table == null) { // pre-size
+        float ft = ((float) s / loadFactor) + 1.0F;
+        int t = ((ft < (float) MAXIMUM_CAPACITY) ? (int) ft : MAXIMUM_CAPACITY);
+        if (t > threshold) threshold = tableSizeFor(t);
+      } else if (s > threshold) resize();
 
-      for (Map.Entry<? extends K, ? extends V> entry : var1.entrySet()) {
-        K var6 = entry.getKey();
-        V var10 = entry.getValue();
-        this.putVal(hash(var6), var6, var10, var2, var3);
+      for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
+        K key = e.getKey();
+        V value = e.getValue();
+        putVal(hash(key), key, value, ifAbsent, evict);
       }
     }
   }
 
   @SafeVarargs
-  public final void putEntries(boolean var1, Map.Entry<? extends K, ? extends V>... var2) {
-    int var3;
-    if ((var3 = var2.length) > 0) {
-      int var4;
-      if (this.table == null) {
-        float var8;
-        if ((var4 = (var8 = (float) var3 / this.loadFactor + 1.0F) < 1.0737418E9F ? (int) var8 : MAXIMUM_CAPACITY) > this.c) {
-          this.c = tableSizeFor(var4);
-        }
-      } else if (var3 > this.c) {
-        this.resize();
-      }
+  public final void putEntries(boolean evict, Map.Entry<? extends K, ? extends V>... entries) {
+    int s = entries.length;
+    if (s > 0) {
+      if (table == null) { // pre-size
+        float ft = ((float) s / loadFactor) + 1.0F;
+        int t = ((ft < (float) MAXIMUM_CAPACITY) ? (int) ft : MAXIMUM_CAPACITY);
+        if (t > threshold) threshold = tableSizeFor(t);
+      } else if (s > threshold) resize();
 
-      var4 = var2.length;
-
-      for (int var7 = 0; var7 < var4; ++var7) {
-        Map.Entry<? extends K, ? extends V> var5 = var2[var7];
-        K var6 = (var5).getKey();
-        V var10 = var5.getValue();
-        this.putVal(hash(var6), var6, var10, false, var1);
+      for (Map.Entry<? extends K, ? extends V> e : entries) {
+        K key = e.getKey();
+        V value = e.getValue();
+        putVal(hash(key), key, value, false, evict);
       }
     }
   }
 
+  @Override
   public int size() {
-    return this.a;
+    return size;
   }
 
+  @Override
   public boolean isEmpty() {
-    return this.a == 0;
+    return size == 0;
   }
 
-  public V get(Object var1) {
-    Node<K, V> var2 = this.getNode(hash(var1), var1);
-    return var2 == null ? null : var2.value;
+  @Override
+  public V get(Object key) {
+    Node<K, V> e;
+    return (e = getNode(hash(key), key)) == null ? null : e.value;
   }
 
-  public @Nullable Node<K, V> getNode(int var1, @NonNull Object var2) {
-    if (this.table != null && this.table.length != 0) {
-      Node<K, V> var3 = this.table[this.table.length - 1 & var1];
-      if (var3 == null) {
-        return null;
-      } else {
-        Object var4;
-        if (var3.hash == var1 && ((var4 = var3.key) == var2 || var2.equals(var4))) {
-          return var3;
-        } else {
-          Node<K, V> var5 = var3.next;
-          if (var5 == null) {
-            return null;
-          } else if (var3 instanceof TreeNode<K, V>) {
-            return ((TreeNode<K, V>) var3).getTreeNode(var1, var2);
-          } else {
-            while (var5.hash != var1 || (var4 = var5.key) != var2 && !var2.equals(var4)) {
-              if ((var5 = var5.next) == null) {
-                return null;
-              }
-            }
+  @Nullable
+  public Node<K, V> getNode(int hash, @NonNull Object key) {
+    if (table == null || table.length == 0) return null;
 
-            return var5;
-          }
-        }
-      }
-    } else {
-      return null;
-    }
+    Node<K, V> first = table[(table.length - 1) & hash];
+    if (first == null) return null;
+
+    K k;
+    // always check first node
+    if (first.hash == hash && ((k = first.key) == key || key.equals(k))) return first;
+
+    Node<K, V> e = first.next;
+    if (e == null) return null;
+    if (first instanceof TreeNode) return ((TreeNode<K, V>) first).getTreeNode(hash, key);
+
+    do {
+      if (e.hash == hash && ((k = e.key) == key || key.equals(k))) return e;
+    } while ((e = e.next) != null);
+    return null;
   }
 
-  public boolean containsKey(@NonNull Object var1) {
-    return this.getNode(hash(var1), var1) != null;
+  public boolean containsKey(@NonNull Object key) {
+    return getNode(hash(key), key) != null;
   }
 
-  public @Nullable V put(@NonNull K var1, @Nullable V var2) {
-    return this.putVal(hash(var1), var1, var2, false, true);
+  @Nullable
+  public V put(@NonNull K key, @Nullable V value) {
+    return putVal(hash(key), key, value, false, true);
   }
 
-  public final V putVal(int var1, @NonNull K var2, @Nullable V var3, boolean var4, boolean var5) {
-    int var6;
-    Node<K, V>[] var10 = this.table;
-    if (var10 == null || (var6 = var10.length) == 0) {
-      var6 = (var10 = this.resize()).length;
-    }
+  public V putVal(int hash, @NonNull K key, @Nullable V value, boolean onlyIfAbsent, boolean evict) {
+    Node<K, V>[] tab = table;
+    int n;
+    if (tab == null || (n = tab.length) == 0) n = (tab = resize()).length;
 
-    var6 = var6 - 1 & var1;
-    Node<K, V> var7 = var10[var6];
-    if (var7 == null) {
-      var10[var6] = this.newNode(var1, var2, var3, null);
-    } else {
-      Object var8;
-      Node<K, V> var11;
-      if (var7.hash == var1 && ((var8 = var7.key) == var2 || var2.equals(var8))) {
-        var11 = var7;
-      } else if (var7 instanceof TreeNode<K, V>) {
-        var11 = ((TreeNode<K, V>) var7).putTreeVal(this, var10, var1, var2, var3);
-      } else {
-        int var9 = 0;
-
-        while (true) {
-          if ((var11 = var7.next) == null) {
-            var7.next = this.newNode(var1, var2, var3, null);
-            if (var9 >= 7) {
-              this.treeifyBin(var10, var1);
-            }
+    int i = (n - 1) & hash;
+    Node<K, V> p = tab[i];
+    if (p == null) tab[i] = newNode(hash, key, value, null);
+    else {
+      Node<K, V> e;
+      K k;
+      if (p.hash == hash && ((k = p.key) == key || key.equals(k)))
+        e = p;
+      else if (p instanceof TreeNode)
+        e = ((TreeNode<K, V>) p).putTreeVal(this, tab, hash, key, value);
+      else {
+        for (int binCount = 0; ; ++binCount) {
+          if ((e = p.next) == null) {
+            p.next = newNode(hash, key, value, null);
+            if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+              treeifyBin(tab, hash);
             break;
           }
-
-          if (var11.hash == var1 && ((var8 = var11.key) == var2 || var2.equals(var8))) {
-            break;
-          }
-
-          var7 = var11;
-          ++var9;
+          if (e.hash == hash && ((k = e.key) == key || key.equals(k))) break;
+          p = e;
         }
       }
-
-      if (var11 != null) {
-        V var12 = var11.value;
-        if (!var4 || var12 == null) {
-          var11.value = var3;
-        }
-
-        return var12;
+      if (e != null) { // existing mapping for key
+        V oldValue = e.value;
+        if (!onlyIfAbsent || oldValue == null) e.value = value;
+        afterNodeAccess(e);
+        return oldValue;
       }
     }
 
-    ++this.b;
-    if (++this.a > this.c) {
-      this.resize();
-    }
-
+    modCount++;
+    if (++size > threshold) resize();
+    afterNodeInsertion(evict);
     return null;
   }
 
   public Node<K, V>[] resize() {
-    Node<K, V>[] var1 = this.table;
-    int var2 = var1 == null ? 0 : var1.length;
-    int var3 = this.c;
-    int var5 = 0;
-    int var4;
-    if (var2 > 0) {
-      if (var2 >= MAXIMUM_CAPACITY) {
-        this.c = Integer.MAX_VALUE;
-        return var1;
-      }
-
-      if ((var4 = var2 << 1) < MAXIMUM_CAPACITY && var2 >= 16) {
-        var5 = var3 << 1;
-      }
-    } else if (var3 > 0) {
-      var4 = var3;
-    } else {
-      var4 = 16;
-      var5 = 12;
+    Node<K, V>[] oldTab = table;
+    int oldCap = (oldTab == null) ? 0 : oldTab.length;
+    int oldThr = threshold;
+    int newCap, newThr = 0;
+    if (oldCap > 0) {
+      if (oldCap >= MAXIMUM_CAPACITY) {
+        threshold = Integer.MAX_VALUE;
+        return oldTab;
+      } else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+          oldCap >= DEFAULT_INITIAL_CAPACITY)
+        newThr = oldThr << 1; // double threshold
+    } else if (oldThr > 0) // initial capacity was placed in threshold
+      newCap = oldThr;
+    else {               // zero initial threshold signifies using defaults
+      newCap = DEFAULT_INITIAL_CAPACITY;
+      newThr = (int) (DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
     }
-
-    if (var5 == 0) {
-      float var12 = (float) var4 * this.loadFactor;
-      var5 = var4 < MAXIMUM_CAPACITY && var12 < 1.0737418E9F ? (int) var12 : Integer.MAX_VALUE;
+    if (newThr == 0) {
+      float ft = (float) newCap * loadFactor;
+      newThr = (newCap < MAXIMUM_CAPACITY && ft < (float) MAXIMUM_CAPACITY ?
+          (int) ft : Integer.MAX_VALUE);
     }
-
-    this.c = var5;
-    Node<K, V>[] var13 = new Node[var4];
-    this.table = var13;
-    if (var1 != null) {
-      for (var5 = 0; var5 < var2; ++var5) {
-        Node<K, V> var6 = var1[var5];
-        if ((var6) != null) {
-          var1[var5] = null;
-          if (var6.next == null) {
-            var13[var6.hash & var4 - 1] = var6;
-          } else if (var6 instanceof TreeNode<K, V>) {
-            ((TreeNode<K, V>) var6).split(this, var13, var5, var2);
-          } else {
-            Node<K, V> var7 = null;
-            Node<K, V> var8 = null;
-            Node<K, V> var9 = null;
-            Node<K, V> var10 = null;
-
-            Node<K, V> var11;
+    threshold = newThr;
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    Node<K, V>[] newTab = (Node<K, V>[]) new Node[newCap];
+    table = newTab;
+    if (oldTab != null) {
+      for (int j = 0; j < oldCap; ++j) {
+        Node<K, V> e;
+        if ((e = oldTab[j]) != null) {
+          oldTab[j] = null;
+          if (e.next == null)
+            newTab[e.hash & (newCap - 1)] = e;
+          else if (e instanceof TreeNode)
+            ((TreeNode<K, V>) e).split(this, newTab, j, oldCap);
+          else { // preserve order
+            Node<K, V> loHead = null, loTail = null;
+            Node<K, V> hiHead = null, hiTail = null;
+            Node<K, V> next;
             do {
-              var11 = var6.next;
-              if ((var6.hash & var2) == 0) {
-                if (var8 == null) {
-                  var7 = var6;
-                } else {
-                  var8.next = var6;
-                }
-
-                var8 = var6;
+              next = e.next;
+              if ((e.hash & oldCap) == 0) {
+                if (loTail == null) loHead = e;
+                else loTail.next = e;
+                loTail = e;
               } else {
-                if (var10 == null) {
-                  var9 = var6;
-                } else {
-                  var10.next = var6;
-                }
-
-                var10 = var6;
+                if (hiTail == null) hiHead = e;
+                else hiTail.next = e;
+                hiTail = e;
               }
-
-              var6 = var11;
-            } while (var11 != null);
-
-            if (var8 != null) {
-              var8.next = null;
-              var13[var5] = var7;
+            } while ((e = next) != null);
+            if (loTail != null) {
+              loTail.next = null;
+              newTab[j] = loHead;
             }
-
-            if (var10 != null) {
-              var10.next = null;
-              var13[var5 + var2] = var9;
+            if (hiTail != null) {
+              hiTail.next = null;
+              newTab[j + oldCap] = hiHead;
             }
           }
         }
       }
     }
-
-    return var13;
+    return newTab;
   }
 
-  public void treeifyBin(Node<K, V>[] var1, int var2) {
-    int var3;
-    if (var1 != null && (var3 = var1.length) >= 64) {
-      Node<K, V> var7;
-      if ((var7 = var1[var2 &= var3 - 1]) != null) {
-        TreeNode<K, V> var4 = null;
-        TreeNode<K, V> var5 = null;
+  public void treeifyBin(Node<K, V>[] tab, int hash) {
+    int n, index;
+    Node<K, V> e;
+    if (tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY) resize();
+    else if ((e = tab[index = (n - 1) & hash]) != null) {
+      TreeNode<K, V> hd = null, tl = null;
+      do {
+        TreeNode<K, V> p = replacementTreeNode(e, null);
+        if (tl == null)
+          hd = p;
+        else {
+          p.prev = tl;
+          tl.next = p;
+        }
+        tl = p;
+      } while ((e = e.next) != null);
+      if ((tab[index] = hd) != null) hd.treeify(tab);
+    }
+  }
 
+  public void putAll(@NonNull Map<? extends K, ? extends V> m) {
+    putMapEntries(m, true);
+  }
+
+  public void putAllIfAbsent(@NonNull Map<? extends K, ? extends V> m) {
+    putMapEntries(m, true, true);
+  }
+
+  public V remove(@NonNull Object key) {
+    Node<K, V> e = removeNode(hash(key), key, null, false, true);
+    return e == null ? null : e.value;
+  }
+
+  /**
+   * Implements Map.remove and related methods
+   *
+   * @param hash       hash for key
+   * @param key        the key
+   * @param value      the value to match if matchValue, else ignored
+   * @param matchValue if true only remove if value is equal
+   * @param movable    if false do not move other nodes while removing
+   * @return the node, or null if none
+   */
+  @Nullable
+  public Node<K, V> removeNode(int hash, @NonNull Object key, @Nullable Object value, boolean matchValue, boolean movable) {
+    if (table == null || table.length == 0) return null;
+
+    int index = (table.length - 1) & hash;
+    Node<K, V> p = table[index];
+    if (p == null) return null;
+    Node<K, V>[] tab = table;
+
+    Node<K, V> node = null, e;
+    K k;
+    V v;
+    if (p.hash == hash && ((k = p.key) == key || key.equals(k))) node = p;
+    else if ((e = p.next) != null) {
+      if (p instanceof TreeNode)
+        node = ((TreeNode<K, V>) p).getTreeNode(hash, key);
+      else {
         do {
-          TreeNode<K, V> var6 = this.replacementTreeNode(var7, null);
-          if (var5 == null) {
-            var4 = var6;
-          } else {
-            var6.a = var5;
-            var5.next = var6;
+          if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            node = e;
+            break;
           }
-
-          var5 = var6;
-        } while ((var7 = var7.next) != null);
-
-        if ((var1[var2] = var4) != null) {
-          var4.treeify(var1);
-        }
+          p = e;
+        } while ((e = e.next) != null);
       }
-    } else {
-      this.resize();
     }
-  }
 
-  public void putAll(@NonNull Map<? extends K, ? extends V> var1) {
-    this.putMapEntries(var1, true);
-  }
+    if (node != null && (!matchValue || (v = node.value) == value || (value != null && value.equals(v)))) {
+      if (node instanceof TreeNode) ((TreeNode<K, V>) node).removeTreeNode(this, tab, movable);
+      else if (node == p) tab[index] = node.next;
+      else p.next = node.next;
 
-  public void putAllIfAbsent(@NonNull Map<? extends K, ? extends V> var1) {
-    this.putMapEntries(var1, true, true);
-  }
-
-  public V remove(@NonNull Object var1) {
-    Node<K, V> var2;
-    return (var2 = this.removeNode(hash(var1), var1, null, false, true)) == null ? null : var2.value;
-  }
-
-  public final @Nullable Node<K, V> removeNode(int var1, @NonNull Object var2, @Nullable Object var3, boolean var4, boolean var5) {
-    if (this.table != null && this.table.length != 0) {
-      int var6 = this.table.length - 1 & var1;
-      Node<K, V> var7;
-      if ((var7 = this.table[var6]) == null) {
-        return null;
-      } else {
-        Node<K, V>[] var8 = this.table;
-        Node<K, V> var9 = null;
-        Object var11;
-        if (var7.hash != var1 || (var11 = var7.key) != var2 && !var2.equals(var11)) {
-          Node<K, V> var10;
-          if ((var10 = var7.next) != null) {
-            if (var7 instanceof TreeNode<K, V>) {
-              var9 = ((TreeNode<K, V>) var7).getTreeNode(var1, var2);
-            } else {
-              label77:
-              {
-                while (var10.hash != var1 || (var11 = var10.key) != var2 && !var2.equals(var11)) {
-                  var7 = var10;
-                  if ((var10 = var10.next) == null) {
-                    break label77;
-                  }
-                }
-
-                var9 = var10;
-              }
-            }
-          }
-        } else {
-          var9 = var7;
-        }
-
-        Object var12;
-        if (var9 == null || var4 && (var12 = var9.value) != var3 && (var3 == null || !var3.equals(var12))) {
-          return null;
-        } else {
-          if (var9 instanceof TreeNode) {
-            ((TreeNode<K, V>) var9).removeTreeNode(this, var8, var5);
-          } else if (var9 == var7) {
-            var8[var6] = var9.next;
-          } else {
-            var7.next = var9.next;
-          }
-
-          ++this.b;
-          --this.a;
-          return var9;
-        }
-      }
-    } else {
-      return null;
+      modCount++;
+      size--;
+      afterNodeRemoval(node);
+      return node;
     }
+
+    return null;
   }
 
+  /**
+   * Removes all of the mappings from this map.
+   * The map will be empty after this call returns.
+   */
+  @SuppressWarnings("ExplicitArrayFilling")
   public void clear() {
-    ++this.b;
-    if (this.table != null && this.a > 0) {
-      Node<K, V>[] var1 = this.table;
-      this.a = 0;
-
-      for (int var2 = 0; var2 < var1.length; ++var2) {
-        var1[var2] = null;
-      }
+    modCount++;
+    if (table != null && size > 0) {
+      Node<K, V>[] tab = table;
+      size = 0;
+      for (int i = 0; i < tab.length; ++i) tab[i] = null;
     }
   }
 
-  public boolean containsValue(@NonNull Object var1) {
-    if (this.table != null && this.a > 0) {
-      Node<K, V>[] var10000 = this.table;
-      Node<K, V>[] var2;
-      int var3 = (var2 = this.table).length;
-
-      for (int var4 = 0; var4 < var3; ++var4) {
-        for (Node<K, V> var5 = var2[var4]; var5 != null; var5 = var5.next) {
-          Object var6;
-          if ((var6 = var5.value) == var1 || var1.equals(var6)) {
-            return true;
-          }
+  /**
+   * Returns <code>true</code> if this map maps one or more keys to the
+   * specified value.
+   *
+   * @param value value whose presence in this map is to be tested
+   * @return <code>true</code> if this map maps one or more keys to the
+   * specified value
+   */
+  public boolean containsValue(@NonNull Object value) {
+    if (table != null && size > 0) {
+      Node<K, V>[] tab = table;
+      for (Node<K, V> e : table) {
+        for (; e != null; e = e.next) {
+          V v = e.value;
+          if (v == value || value.equals(v)) return true;
         }
       }
     }
-
     return false;
   }
 
+  @Override
   public @NonNull Set<K> keySet() {
-    return this.keySet == null ? (this.keySet = new KeySet()) : this.keySet;
+    return keySet == null ? keySet = new KeySet() : keySet;
   }
 
+  @Override
   public @NonNull Collection<V> values() {
-    return this.values == null ? (this.values = new b()) : this.values;
+    return values == null ? values = new Values() : values;
   }
 
   public void initValues() {
-    this.values = new b();
+    values = new Values();
   }
 
+  @Override
   public @NonNull Set<Map.Entry<K, V>> entrySet() {
-    return this.entrySet == null ? (this.entrySet = new a()) : this.entrySet;
+    return entrySet == null ? entrySet = new EntrySet() : entrySet;
   }
 
-  public @Nullable V getOrDefault(@NonNull Object var1, @Nullable V var2) {
-    Node<K, V> var3 = this.getNode(hash(var1), var1);
-    return var3 == null ? var2 : var3.value;
+  @Override
+  @Nullable
+  public V getOrDefault(@NonNull Object key, @Nullable V defaultValue) {
+    Node<K, V> node = getNode(hash(key), key);
+    return node == null ? defaultValue : node.value;
   }
 
-  public @Nullable V putIfAbsent(@NonNull K var1, @Nullable V var2) {
-    return this.putVal(hash(var1), var1, var2, true, true);
+  @Override
+  @Nullable
+  public V putIfAbsent(@NonNull K key, @Nullable V value) {
+    return putVal(hash(key), key, value, true, true);
   }
 
-  public boolean remove(@NonNull Object var1, @Nullable Object var2) {
-    return this.removeNode(hash(var1), var1, var2, true, true) != null;
+  @Override
+  public boolean remove(@NonNull Object key, @Nullable Object value) {
+    return removeNode(hash(key), key, value, true, true) != null;
   }
 
-  public boolean replace(@NonNull K var1, V var2, V var3) {
-    Node<K, V> var4 = this.getNode(hash(var1), var1);
-    if (var4 == null) {
-      return false;
-    } else if (Objects.equals(var4.value, var2)) {
-      var4.value = var3;
+  @Override
+  public boolean replace(@NonNull K key, V oldValue, V newValue) {
+    Node<K, V> node = getNode(hash(key), key);
+    if (node == null) return false;
+
+    if (Objects.equals(node.value, oldValue)) {
+      node.value = newValue;
+      afterNodeAccess(node);
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
-  public @Nullable V replace(@NonNull K var1, @Nullable V var2) {
-    Node<K, V> var4 = this.getNode(hash(var1), var1);
-    if (var4 == null) {
-      return null;
-    } else {
-      V var3 = var4.value;
-      var4.value = var2;
-      return var3;
-    }
+  @Override
+  @Nullable
+  public V replace(@NonNull K key, @Nullable V value) {
+    Node<K, V> node = getNode(hash(key), key);
+    if (node == null) return null;
+
+    V oldValue = node.value;
+    node.value = value;
+    afterNodeAccess(node);
+    return oldValue;
   }
 
-  public @Nullable V computeIfAbsent(@NonNull K var1, @NonNull Function<? super K, ? extends V> var2) {
-    Objects.requireNonNull(var2);
-    int var3 = hash(var1);
-    int var7 = 0;
-    TreeNode<K, V> var8 = null;
-    Node<K, V> var9 = null;
-    Node<K, V>[] var4;
-    int var5;
-    if (this.a > this.c || (var4 = this.table) == null || (var5 = var4.length) == 0) {
-      var5 = (var4 = this.resize()).length;
-    }
-
-    int var6;
-    V var12;
-    Node<K, V> var13;
-    if ((var13 = var4[var6 = var5 - 1 & var3]) != null) {
-      if (var13 instanceof TreeNode) {
-        var9 = (var8 = (TreeNode<K, V>) var13).getTreeNode(var3, var1);
-      } else {
-        label67:
-        {
-          Node<K, V> var10 = var13;
-
-          Object var11;
-          while (var10.hash != var3 || (var11 = var10.key) != var1 && !var1.equals(var11)) {
-            ++var7;
-            if ((var10 = var10.next) == null) {
-              break label67;
-            }
+  @Override
+  @Nullable
+  public V computeIfAbsent(@NonNull K key, @NonNull Function<? super K, ? extends V> mappingFunction) {
+    if (mappingFunction == null) throw new NullPointerException();
+    int hash = hash(key);
+    Node<K, V>[] tab;
+    Node<K, V> first;
+    int n, i;
+    int binCount = 0;
+    TreeNode<K, V> t = null;
+    Node<K, V> old = null;
+    if (size > threshold || (tab = table) == null || (n = tab.length) == 0) n = (tab = resize()).length;
+    if ((first = tab[i = (n - 1) & hash]) != null) {
+      if (first instanceof TreeNode)
+        old = (t = (TreeNode<K, V>) first).getTreeNode(hash, key);
+      else {
+        Node<K, V> e = first;
+        K k;
+        do {
+          if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            old = e;
+            break;
           }
-
-          var9 = var10;
-        }
+          binCount++;
+        } while ((e = e.next) != null);
       }
-
-      if (var9 != null && (var12 = var9.value) != null) {
-        return var12;
-      }
-    }
-
-    if ((var12 = var2.apply(var1)) == null) {
-      return null;
-    } else if (var9 != null) {
-      var9.value = var12;
-      return var12;
-    } else {
-      if (var8 != null) {
-        var8.putTreeVal(this, var4, var3, var1, var12);
-      } else {
-        var4[var6] = this.newNode(var3, var1, var12, var13);
-        if (var7 >= 7) {
-          this.treeifyBin(var4, var3);
-        }
-      }
-
-      ++this.b;
-      ++this.a;
-      return var12;
-    }
-  }
-
-  public V computeIfPresent(@NonNull K var1, @NonNull BiFunction<? super K, ? super V, ? extends V> var2) {
-    Objects.requireNonNull(var2);
-    int var3 = hash(var1);
-    Node<K, V> var4;
-    if ((var4 = this.getNode(var3, var1)) == null) {
-      return null;
-    } else {
-      V var5;
-      if ((var5 = var4.value) == null) {
-        return null;
-      } else if ((var5 = var2.apply(var1, var5)) != null) {
-        var4.value = var5;
-        return var5;
-      } else {
-        this.removeNode(var3, var1, null, false, true);
-        return null;
+      V oldValue;
+      if (old != null && (oldValue = old.value) != null) {
+        afterNodeAccess(old);
+        return oldValue;
       }
     }
-  }
-
-  public V compute(@NonNull K key, @NonNull BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
-    Objects.requireNonNull(remappingFunction);
-    int var3 = hash(key);
-    Node<K, V>[] var4;
-    int var5;
-    if (this.a <= this.c && this.table != null && (var5 = this.table.length) != 0) {
-      var4 = this.table;
-    } else {
-      var5 = (var4 = this.resize()).length;
+    V v = mappingFunction.apply(key);
+    if (v == null) return null;
+    else if (old != null) {
+      old.value = v;
+      afterNodeAccess(old);
+      return v;
+    } else if (t != null) t.putTreeVal(this, tab, hash, key, v);
+    else {
+      tab[i] = newNode(hash, key, v, first);
+      if (binCount >= TREEIFY_THRESHOLD - 1)
+        treeifyBin(tab, hash);
     }
-
-    TreeNode<K, V> var7 = null;
-    Node<K, V> var8 = null;
-    int var9 = 0;
-    int var6;
-    V v;
-    Node<K, V> var12;
-    if ((var12 = this.table[var6 = var5 - 1 & var3]) != null) {
-      if (var12 instanceof TreeNode) {
-        var8 = (var7 = (TreeNode<K, V>) var12).getTreeNode(var3, key);
-      } else {
-        label66:
-        {
-          Node<K, V> kvNode = var12;
-
-          while (kvNode.hash != var3 || (v = (V) kvNode.key) != key && !key.equals(v)) {   //TODO cast
-            ++var9;
-            if ((kvNode = kvNode.next) == null) {
-              break label66;
-            }
-          }
-
-          var8 = kvNode;
-        }
-      }
-    }
-
-    V var13 = var8 == null ? null : var8.value;
-    v = remappingFunction.apply(key, var13);
-    if (var8 != null) {
-      if (v != null) {
-        var8.value = v;
-      } else {
-        this.removeNode(var3, key, null, false, true);
-      }
-    } else if (v != null) {
-      if (var7 != null) {
-        var7.putTreeVal(this, var4, var3, key, v);
-      } else {
-        var4[var6] = this.newNode(var3, key, v, var12);
-        if (var9 >= 7) {
-          this.treeifyBin(var4, var3);
-        }
-      }
-
-      ++this.b;
-      ++this.a;
-    }
-
+    modCount++;
+    size++;
+    afterNodeInsertion(true);
     return v;
   }
 
-  public V merge(@NonNull K var1, @Nullable V var2, @NonNull BiFunction<? super V, ? super V, ? extends V> var3) {
-    Objects.requireNonNull(var2);
-    Objects.requireNonNull(var3);
+  @Override
+  public V computeIfPresent(@NonNull K key, @NonNull BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+    if (remappingFunction == null) throw new NullPointerException();
 
-    {
-      int var4 = hash(var1);
-      int var8 = 0;
-      TreeNode<K, V> var9 = null;
-      Node<K, V> var10 = null;
-      Node<K, V>[] var5;
-      int var6;
-      if (this.a > this.c || (var5 = this.table) == null || (var6 = var5.length) == 0) {
-        var6 = (var5 = this.resize()).length;
-      }
+    int hash = hash(key);
+    Node<K, V> e = getNode(hash, key);
+    if (e == null) return null;
 
-      int var7;
-      Node<K, V> var14;
-      if ((var14 = var5[var7 = var6 - 1 & var4]) != null) {
-        if (var14 instanceof TreeNode) {
-          var10 = (var9 = (TreeNode<K, V>) var14).getTreeNode(var4, var1);
-        } else {
-          label68:
-          {
-            Node<K, V> var11 = var14;
+    V v = e.value; // Old Value
+    if (v == null) return null;
 
-            Object var12;
-            while (var11.hash != var4 || (var12 = var11.key) != var1 && !var1.equals(var12)) {
-              ++var8;
-              if ((var11 = var11.next) == null) {
-                break label68;
-              }
-            }
+    v = remappingFunction.apply(key, v); // New Value
+    if (v != null) {
+      e.value = v;
+      afterNodeAccess(e);
+      return v;
+    } else removeNode(hash, key, null, false, true);
+    return null;
+  }
 
-            var10 = var11;
+  @Override
+  public V compute(@NonNull K key, @NonNull BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+    if (remappingFunction == null) throw new NullPointerException();
+
+    int hash = hash(key);
+    Node<K, V>[] tab;
+    Node<K, V> first;
+    int n, i;
+    if (size > threshold || table == null || (n = table.length) == 0) n = (tab = resize()).length;
+    else tab = table;
+
+    TreeNode<K, V> t = null;
+    Node<K, V> old = null;
+    int binCount = 0;
+    if ((first = table[i = (n - 1) & hash]) != null) {
+      if (first instanceof TreeNode)
+        old = (t = (TreeNode<K, V>) first).getTreeNode(hash, key);
+      else {
+        Node<K, V> e = first;
+        K k;
+        do {
+          if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            old = e;
+            break;
           }
-        }
+          ++binCount;
+        } while ((e = e.next) != null);
+      }
+    }
+
+    V oldValue = old == null ? null : old.value;
+    V v = remappingFunction.apply(key, oldValue);
+    if (old != null) {
+      if (v != null) {
+        old.value = v;
+        afterNodeAccess(old);
+      } else removeNode(hash, key, null, false, true);
+    } else if (v != null) {
+      if (t != null) t.putTreeVal(this, tab, hash, key, v);
+      else {
+        tab[i] = newNode(hash, key, v, first);
+        if (binCount >= TREEIFY_THRESHOLD - 1) treeifyBin(tab, hash);
       }
 
-      if (var10 != null) {
-        V var13;
-        if (var10.value != null) {
-          var13 = var3.apply(var10.value, var2);
-        } else {
-          var13 = var2;
-        }
+      modCount++;
+      size++;
+      afterNodeInsertion(true);
+    }
+    return v;
+  }
 
-        if (var13 != null) {
-          var10.value = var13;
-        } else {
-          this.removeNode(var4, var1, null, false, true);
-        }
+  @Override
+  public V merge(@NonNull K key, @Nullable V value, @NonNull BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
+    if (value == null) throw new NullPointerException();
+    if (remappingFunction == null) throw new NullPointerException();
 
-        return var13;
-      } else {
-        if (var9 != null) {
-          var9.putTreeVal(this, var5, var4, var1, var2);
-        } else {
-          var5[var7] = this.newNode(var4, var1, var2, var14);
-          if (var8 >= 7) {
-            this.treeifyBin(var5, var4);
+    int hash = hash(key);
+    Node<K, V>[] tab;
+    Node<K, V> first;
+    int n, i;
+    int binCount = 0;
+    TreeNode<K, V> t = null;
+    Node<K, V> old = null;
+    if (size > threshold || (tab = table) == null || (n = tab.length) == 0) n = (tab = resize()).length;
+    if ((first = tab[i = (n - 1) & hash]) != null) {
+      if (first instanceof TreeNode) old = (t = (TreeNode<K, V>) first).getTreeNode(hash, key);
+      else {
+        Node<K, V> e = first;
+        K k;
+        do {
+          if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            old = e;
+            break;
           }
-        }
-
-        ++this.b;
-        ++this.a;
-        return var2;
+          binCount++;
+        } while ((e = e.next) != null);
       }
+    }
+
+    if (old != null) {
+      V v;
+      if (old.value != null) v = remappingFunction.apply(old.value, value);
+      else v = value;
+      if (v != null) {
+        old.value = v;
+        afterNodeAccess(old);
+      } else removeNode(hash, key, null, false, true);
+      return v;
+    }
+
+    if (t != null) t.putTreeVal(this, tab, hash, key, value);
+    else {
+      tab[i] = newNode(hash, key, value, first);
+      if (binCount >= TREEIFY_THRESHOLD - 1) treeifyBin(tab, hash);
+    }
+    modCount++;
+    size++;
+    afterNodeInsertion(true);
+    return value;
+  }
+
+  @Override
+  public void forEach(BiConsumer<? super K, ? super V> action) {
+    if (action == null) throw new NullPointerException();
+    if (size > 0 && table != null) {
+      Node<K, V>[] tab = table;
+      int mc = modCount;
+      for (Node<K, V> kvNode : tab) {
+        for (Node<K, V> e = kvNode; e != null; e = e.next)
+          action.accept(e.key, e.value);
+      }
+      if (modCount != mc) throw new ConcurrentModificationException();
     }
   }
 
-  public void forEach(BiConsumer<? super K, ? super V> var1) {
-    if (var1 == null) {
-      throw new NullPointerException();
-    } else {
-      if (this.a > 0 && this.table != null) {
-        Node<K, V>[] var2 = this.table;
-        int var3 = this.b;
-
-        for (Node<K, V> kvNode : var2) {
-          for (Node<K, V> var6 = kvNode; var6 != null; var6 = var6.next) {
-            var1.accept(var6.key, var6.value);
-          }
-        }
-
-        if (this.b != var3) {
-          throw new ConcurrentModificationException();
+  @Override
+  public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
+    if (function == null) throw new NullPointerException();
+    if (size > 0 && table != null) {
+      Node<K, V>[] tab = table;
+      int mc = modCount;
+      for (Node<K, V> kvNode : tab) {
+        for (Node<K, V> e = kvNode; e != null; e = e.next) {
+          e.value = function.apply(e.key, e.value);
         }
       }
+      if (modCount != mc) throw new ConcurrentModificationException();
     }
   }
 
-  public void replaceAll(BiFunction<? super K, ? super V, ? extends V> var1) {
-    if (var1 == null) {
-      throw new NullPointerException();
-    } else {
-      if (this.a > 0 && this.table != null) {
-        Node<K, V>[] var2 = this.table;
-        int var3 = this.b;
-
-        for (Node<K, V> kvNode : var2) {
-          for (Node<K, V> var6 = kvNode; var6 != null; var6 = var6.next) {
-            var6.value = var1.apply(var6.key, var6.value);
-          }
-        }
-
-        if (this.b != var3) {
-          throw new ConcurrentModificationException();
-        }
-      }
-    }
-  }
-
+  /**
+   * Returns a shallow copy of this <code>HashMap</code> instance: the keys and
+   * values themselves are not cloned.
+   *
+   * @return a shallow copy of this map
+   */
+  @SuppressWarnings("unchecked")
+  @Override
   public Object clone() {
-    UnsafeHashMap<K, V> var1;
+    UnsafeHashMap<K, V> result;
     try {
-      var1 = (UnsafeHashMap<K, V>) super.clone();
-    } catch (CloneNotSupportedException var2) {
-      throw new InternalError(var2);
+      result = (UnsafeHashMap<K, V>) super.clone();
+    } catch (CloneNotSupportedException e) {
+      // this shouldn't happen, since we are Cloneable
+      throw new InternalError(e);
     }
 
-    var1.reinitialize();
-    var1.putMapEntries(this, false);
-    return var1;
+    result.reinitialize();
+    result.putMapEntries(this, false);
+    return result;
   }
 
-  public final int capacity() {
-    if (this.table != null) {
-      return this.table.length;
-    } else {
-      return this.c > 0 ? this.c : DEFAULT_INITIAL_CAPACITY;
-    }
+  public int capacity() {
+    return table != null
+        ? table.length : threshold > 0
+        ? threshold : DEFAULT_INITIAL_CAPACITY;
   }
 
-  public Node<K, V> newNode(int var1, K var2, V var3, Node<K, V> var4) {
-    return new Node<>(var1, var2, var3, var4);
+  // Create a regular (non-tree) node
+  public Node<K, V> newNode(int hash, K key, V value, Node<K, V> next) {
+    return new Node<>(hash, key, value, next);
   }
 
-  public Node<K, V> replacementNode(Node<K, V> var1, Node<K, V> var2) {
-    return new Node<K, V>(var1.hash, var1.key, var1.value, var2);
+  // For conversion from TreeNodes to plain nodes
+  public Node<K, V> replacementNode(Node<K, V> p, Node<K, V> next) {
+    return new Node<>(p.hash, p.key, p.value, next);
   }
 
-  public TreeNode<K, V> newTreeNode(int var1, K var2, V var3, Node<K, V> var4) {
-    return new TreeNode<K, V>(var1, var2, var3, var4);
+  /* ------------------------------------------------------------ */
+  // Cloning and serialization
+
+  // Create a tree bin node
+  public TreeNode<K, V> newTreeNode(int hash, K key, V value, Node<K, V> next) {
+    return new TreeNode<>(hash, key, value, next);
   }
 
-  public TreeNode<K, V> replacementTreeNode(Node<K, V> var1, Node<K, V> var2) {
-    return new TreeNode<K, V>(var1.hash, var1.key, var1.value, var2);
+  // For treeifyBin
+  public TreeNode<K, V> replacementTreeNode(Node<K, V> p, Node<K, V> next) {
+    return new TreeNode<>(p.hash, p.key, p.value, next);
   }
 
+  /**
+   * Reset to initial default state.  Called by clone and readObject.
+   */
   public void reinitialize() {
-    this.table = null;
-    this.entrySet = null;
-    this.keySet = null;
-    this.values = null;
-    this.b = 0;
-    this.c = 0;
-    this.a = 0;
+    table = null;
+    entrySet = null;
+    keySet = null;
+    values = null;
+    modCount = 0;
+    threshold = 0;
+    size = 0;
+  }
+
+  // Callbacks to allow LinkedHashMap post-actions
+  void afterNodeAccess(Node<K, V> p) {
+  }
+
+  void afterNodeInsertion(boolean evict) {
+  }
+
+  void afterNodeRemoval(Node<K, V> p) {
   }
 
   public static class Node<K, V> implements Map.Entry<K, V> {
@@ -847,686 +785,882 @@ public class UnsafeHashMap<K, V> implements Cloneable, Map<K, V> {
     public V value;
     public Node<K, V> next;
 
-    public Node(int var1, K var2, V var3, Node<K, V> var4) {
-      this.hash = var1;
-      this.key = var2;
-      this.value = var3;
-      this.next = var4;
+    public Node(int hash, K key, V value, Node<K, V> next) {
+      this.hash = hash;
+      this.key = key;
+      this.value = value;
+      this.next = next;
     }
 
     public K getKey() {
-      return this.key;
+      return key;
     }
 
     public V getValue() {
-      return this.value;
+      return value;
     }
 
     public String toString() {
-      return this.key + "=" + this.value;
+      return key + "=" + value;
     }
 
     public int hashCode() {
-      return Objects.hashCode(this.key) ^ Objects.hashCode(this.value);
+      return Objects.hashCode(key) ^ Objects.hashCode(value);
     }
 
-    public V setValue(V var1) {
-      V var2 = this.value;
-      this.value = var1;
-      return var2;
+    public V setValue(V newValue) {
+      V oldValue = value;
+      value = newValue;
+      return oldValue;
     }
 
-    public boolean equals(Object var1) {
-      if (var1 == this) {
-        return true;
-      } else if (var1 instanceof Map.Entry<?, ?> var2) {
-        return Objects.equals(this.key, var2.getKey()) && Objects.equals(this.value, var2.getValue());
-      } else {
-        return false;
+    public boolean equals(Object o) {
+      if (o == this) return true;
+      if (o instanceof Map.Entry) {
+        Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+        return Objects.equals(key, e.getKey()) && Objects.equals(value, e.getValue());
       }
+      return false;
     }
 
   }
 
-  public static final class TreeNode<K, V> extends Entry<K, V> {
+  public static class HashMapSpliterator<K, V> {
 
-    private TreeNode<K, V> b;
-    private TreeNode<K, V> c;
-    private TreeNode<K, V> d;
-    TreeNode<K, V> a;
-    private boolean e;
-    // $FF: synthetic field
-    private static boolean f = !UnsafeHashMap.class.desiredAssertionStatus();
+    public final UnsafeHashMap<K, V> map;
+    public Node<K, V> current;         // current node
+    public int index;                  // current index, modified on advance/split
+    public int fence;                  // one past last index
+    public int est;                    // size estimate
+    public int expectedModCount;       // for comodification checks
 
-    TreeNode(int var1, K var2, V var3, Node<K, V> var4) {
-      super(var1, var2, var3, var4);
+    public HashMapSpliterator(
+        UnsafeHashMap<K, V> m, int origin,
+        int fence, int est, int expectedModCount
+    ) {
+      this.map = m;
+      this.index = origin;
+      this.fence = fence;
+      this.est = est;
+      this.expectedModCount = expectedModCount;
     }
 
-    public static <K, V> void moveRootToFront(Node<K, V>[] var0, TreeNode<K, V> var1) {
-      int var2;
-      if (var1 != null && var0 != null && (var2 = var0.length) > 0) {
-        var2 = var2 - 1 & var1.hash;
-        TreeNode<K, V> var3 = (TreeNode<K, V>) var0[var2];
-        if (var1 != var3) {
-          var0[var2] = var1;
-          TreeNode<K, V> var5 = var1.a;
-          Node<K, V> var4;
-          if ((var4 = var1.next) != null) {
-            ((TreeNode<K, V>) var4).a = var5;
+    public final int getFence() { // initialize fence and size on first use
+      if (fence >= 0) return fence;
+
+      est = map.size;
+      expectedModCount = map.modCount;
+      Node<K, V>[] tab = map.table;
+      return fence = tab == null ? 0 : tab.length;
+    }
+
+    public final long estimateSize() {
+      getFence(); // force init
+      return est;
+    }
+
+  }
+
+  public static final class KeySpliterator<K, V> extends HashMapSpliterator<K, V> implements Spliterator<K> {
+
+    KeySpliterator(
+        UnsafeHashMap<K, V> m, int origin, int fence, int est,
+        int expectedModCount
+    ) {
+      super(m, origin, fence, est, expectedModCount);
+    }
+
+    public KeySpliterator<K, V> trySplit() {
+      int hi = getFence(), mid = (index + hi) >>> 1;
+      return (index >= mid || current != null) ? null :
+          new KeySpliterator<>(map, index, index = mid, est >>>= 1, expectedModCount);
+    }
+
+    public void forEachRemaining(Consumer<? super K> action) {
+      if (action == null) throw new NullPointerException();
+
+      int i, hi, mc;
+      UnsafeHashMap<K, V> m = map;
+      Node<K, V>[] tab = m.table;
+      if ((hi = fence) < 0) {
+        mc = expectedModCount = m.modCount;
+        hi = fence = (tab == null) ? 0 : tab.length;
+      } else mc = expectedModCount;
+      if (tab != null && tab.length >= hi &&
+          (i = index) >= 0 && (i < (index = hi) || current != null)) {
+        Node<K, V> p = current;
+        current = null;
+        do {
+          if (p == null)
+            p = tab[i++];
+          else {
+            action.accept(p.key);
+            p = p.next;
           }
+        } while (p != null || i < hi);
+        if (m.modCount != mc) throw new ConcurrentModificationException();
+      }
+    }
 
-          if (var5 != null) {
-            var5.next = var4;
+    public boolean tryAdvance(Consumer<? super K> action) {
+      if (action == null) throw new NullPointerException();
+
+      int hi;
+      Node<K, V>[] tab = map.table;
+      if (tab != null && tab.length >= (hi = getFence()) && index >= 0) {
+        while (current != null || index < hi) {
+          if (current == null)
+            current = tab[index++];
+          else {
+            K k = current.key;
+            current = current.next;
+            action.accept(k);
+            if (map.modCount != expectedModCount)
+              throw new ConcurrentModificationException();
+            return true;
           }
+        }
+      }
+      return false;
+    }
 
-          if (var3 != null) {
-            var3.a = var1;
+    public int characteristics() {
+      return (fence < 0 || est == map.size ? Spliterator.SIZED : 0) |
+          Spliterator.DISTINCT;
+    }
+
+  }
+
+  public static final class ValueSpliterator<K, V> extends HashMapSpliterator<K, V> implements Spliterator<V> {
+
+    ValueSpliterator(
+        UnsafeHashMap<K, V> m, int origin, int fence, int est,
+        int expectedModCount
+    ) {
+      super(m, origin, fence, est, expectedModCount);
+    }
+
+    public ValueSpliterator<K, V> trySplit() {
+      int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
+      return (lo >= mid || current != null) ? null :
+          new ValueSpliterator<>(
+              map, lo, index = mid, est >>>= 1,
+              expectedModCount
+          );
+    }
+
+    public void forEachRemaining(Consumer<? super V> action) {
+      int i, hi, mc;
+      if (action == null)
+        throw new NullPointerException();
+      UnsafeHashMap<K, V> m = map;
+      Node<K, V>[] tab = m.table;
+      if ((hi = fence) < 0) {
+        mc = expectedModCount = m.modCount;
+        hi = fence = (tab == null) ? 0 : tab.length;
+      } else
+        mc = expectedModCount;
+      if (tab != null && tab.length >= hi &&
+          (i = index) >= 0 && (i < (index = hi) || current != null)) {
+        Node<K, V> p = current;
+        current = null;
+        do {
+          if (p == null)
+            p = tab[i++];
+          else {
+            action.accept(p.value);
+            p = p.next;
           }
-
-          var1.next = var3;
-          var1.a = null;
-        }
-
-        if (!f && !checkInvariants(var1)) {
-          throw new AssertionError();
-        }
+        } while (p != null || i < hi);
+        if (m.modCount != mc)
+          throw new ConcurrentModificationException();
       }
     }
 
-    public static int tieBreakOrder(Object var0, Object var1) {
-      int var2;
-      if (var0 == null || var1 == null || (var2 = var0.getClass().getName().compareTo(
-          var1.getClass().getName())) == 0) {
-        var2 = System.identityHashCode(var0) <= System.identityHashCode(var1) ? -1 : 1;
+    public boolean tryAdvance(Consumer<? super V> action) {
+      int hi;
+      if (action == null)
+        throw new NullPointerException();
+      Node<K, V>[] tab = map.table;
+      if (tab != null && tab.length >= (hi = getFence()) && index >= 0) {
+        while (current != null || index < hi) {
+          if (current == null)
+            current = tab[index++];
+          else {
+            V v = current.value;
+            current = current.next;
+            action.accept(v);
+            if (map.modCount != expectedModCount)
+              throw new ConcurrentModificationException();
+            return true;
+          }
+        }
       }
-
-      return var2;
+      return false;
     }
 
-    public static <K, V> TreeNode<K, V> rotateLeft(TreeNode<K, V> var0, TreeNode<K, V> var1) {
-      TreeNode<K, V> var2;
-      if (var1 != null && (var2 = var1.d) != null) {
-        TreeNode<K, V> var3;
-        if ((var3 = var1.d = var2.c) != null) {
-          var3.b = var1;
-        }
-
-        if ((var3 = var2.b = var1.b) == null) {
-          var0 = var2;
-          var2.e = false;
-        } else if (var3.c == var1) {
-          var3.c = var2;
-        } else {
-          var3.d = var2;
-        }
-
-        var2.c = var1;
-        var1.b = var2;
-      }
-
-      return var0;
+    public int characteristics() {
+      return (fence < 0 || est == map.size ? Spliterator.SIZED : 0);
     }
 
-    public static <K, V> TreeNode<K, V> rotateRight(TreeNode<K, V> var0, TreeNode<K, V> var1) {
-      TreeNode<K, V> var2;
-      if (var1 != null && (var2 = var1.c) != null) {
-        TreeNode<K, V> var3;
-        if ((var3 = var1.c = var2.d) != null) {
-          var3.b = var1;
-        }
+  }
 
-        if ((var3 = var2.b = var1.b) == null) {
-          var0 = var2;
-          var2.e = false;
-        } else if (var3.d == var1) {
-          var3.d = var2;
-        } else {
-          var3.c = var2;
-        }
+  /* ------------------------------------------------------------ */
+  // LinkedHashMap support
 
-        var2.d = var1;
-        var1.b = var2;
-      }
 
-      return var0;
+  /*
+   * The following package-protected methods are designed to be
+   * overridden by LinkedHashMap, but not by any other subclass.
+   * Nearly all other internal methods are also package-protected
+   * but are declared final, so can be used by LinkedHashMap, view
+   * classes, and HashSet.
+   */
+
+  public static final class EntrySpliterator<K, V>
+      extends HashMapSpliterator<K, V>
+      implements Spliterator<Map.Entry<K, V>> {
+
+    EntrySpliterator(
+        UnsafeHashMap<K, V> m, int origin, int fence, int est,
+        int expectedModCount
+    ) {
+      super(m, origin, fence, est, expectedModCount);
     }
 
-    public static <K, V> TreeNode<K, V> balanceInsertion(TreeNode<K, V> var0, TreeNode<K, V> var1) {
-      var1.e = true;
+    public EntrySpliterator<K, V> trySplit() {
+      int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
+      return (lo >= mid || current != null) ? null :
+          new EntrySpliterator<>(
+              map, lo, index = mid, est >>>= 1,
+              expectedModCount
+          );
+    }
 
-      TreeNode<K, V> var2;
-      while ((var2 = var1.b) != null) {
-        TreeNode<K, V> var3;
-        if (!var2.e || (var3 = var2.b) == null) {
-          return var0;
+    public void forEachRemaining(Consumer<? super Map.Entry<K, V>> action) {
+      int i, hi, mc;
+      if (action == null)
+        throw new NullPointerException();
+      UnsafeHashMap<K, V> m = map;
+      Node<K, V>[] tab = m.table;
+      if ((hi = fence) < 0) {
+        mc = expectedModCount = m.modCount;
+        hi = fence = (tab == null) ? 0 : tab.length;
+      } else
+        mc = expectedModCount;
+      if (tab != null && tab.length >= hi &&
+          (i = index) >= 0 && (i < (index = hi) || current != null)) {
+        Node<K, V> p = current;
+        current = null;
+        do {
+          if (p == null)
+            p = tab[i++];
+          else {
+            action.accept(p);
+            p = p.next;
+          }
+        } while (p != null || i < hi);
+        if (m.modCount != mc)
+          throw new ConcurrentModificationException();
+      }
+    }
+
+    public boolean tryAdvance(Consumer<? super Map.Entry<K, V>> action) {
+      int hi;
+      if (action == null)
+        throw new NullPointerException();
+      Node<K, V>[] tab = map.table;
+      if (tab != null && tab.length >= (hi = getFence()) && index >= 0) {
+        while (current != null || index < hi) {
+          if (current == null)
+            current = tab[index++];
+          else {
+            Node<K, V> e = current;
+            current = current.next;
+            action.accept(e);
+            if (map.modCount != expectedModCount)
+              throw new ConcurrentModificationException();
+            return true;
+          }
         }
+      }
+      return false;
+    }
 
-        TreeNode<K, V> var4;
-        if (var2 == (var4 = var3.c)) {
-          if ((var4 = var3.d) != null && var4.e) {
-            var4.e = false;
-            var2.e = false;
-            var3.e = true;
-            var1 = var3;
+    public int characteristics() {
+      return (fence < 0 || est == map.size ? Spliterator.SIZED : 0) |
+          Spliterator.DISTINCT;
+    }
+
+  }
+
+  public static class Entry<K, V> extends UnsafeHashMap.Node<K, V> {
+
+    Entry(int hash, K key, V value, UnsafeHashMap.Node<K, V> next) {
+      super(hash, key, value, next);
+    }
+
+  }
+
+  /**
+   * Entry for Tree bins. Extends LinkedHashMap.Entry (which in turn
+   * extends Node) so can be used as extension of either regular or
+   * linked node.
+   */
+  public static final class TreeNode<K, V> extends UnsafeHashMap.Entry<K, V> {
+
+    TreeNode<K, V> parent;  // red-black tree links
+    TreeNode<K, V> left;
+    TreeNode<K, V> right;
+    TreeNode<K, V> prev;    // needed to unlink next upon deletion
+    boolean red;
+
+    TreeNode(int hash, K key, V val, Node<K, V> next) {
+      super(hash, key, val, next);
+    }
+
+    /**
+     * Ensures that the given root is the first node of its bin.
+     */
+    public static <K, V> void moveRootToFront(Node<K, V>[] tab, TreeNode<K, V> root) {
+      int n;
+      if (root != null && tab != null && (n = tab.length) > 0) {
+        int index = (n - 1) & root.hash;
+        TreeNode<K, V> first = (TreeNode<K, V>) tab[index];
+        if (root != first) {
+          Node<K, V> rn;
+          tab[index] = root;
+          TreeNode<K, V> rp = root.prev;
+
+          if ((rn = root.next) != null) ((TreeNode<K, V>) rn).prev = rp;
+          if (rp != null) rp.next = rn;
+          if (first != null) first.prev = root;
+
+          root.next = first;
+          root.prev = null;
+        }
+        assert checkInvariants(root);
+      }
+    }
+
+    /**
+     * Tie-breaking utility for ordering insertions when equal
+     * hashCodes and non-comparable. We don't require a total
+     * order, just a consistent insertion rule to maintain
+     * equivalence across rebalancings. Tie-breaking further than
+     * necessary simplifies testing a bit.
+     */
+    public static int tieBreakOrder(Object a, Object b) {
+      int d;
+      if (a == null || b == null || (d = a.getClass().getName().compareTo(b.getClass().getName())) == 0)
+        d = System.identityHashCode(a) <= System.identityHashCode(b) ? -1 : 1;
+      return d;
+    }
+
+    public static <K, V> TreeNode<K, V> rotateLeft(TreeNode<K, V> root, TreeNode<K, V> p) {
+      TreeNode<K, V> r, pp, rl;
+      if (p != null && (r = p.right) != null) {
+        if ((rl = p.right = r.left) != null)
+          rl.parent = p;
+        if ((pp = r.parent = p.parent) == null)
+          (root = r).red = false;
+        else if (pp.left == p)
+          pp.left = r;
+        else
+          pp.right = r;
+        r.left = p;
+        p.parent = r;
+      }
+      return root;
+    }
+
+    public static <K, V> TreeNode<K, V> rotateRight(TreeNode<K, V> root, TreeNode<K, V> p) {
+      TreeNode<K, V> l, pp, lr;
+      if (p != null && (l = p.left) != null) {
+        if ((lr = p.left = l.right) != null)
+          lr.parent = p;
+        if ((pp = l.parent = p.parent) == null)
+          (root = l).red = false;
+        else if (pp.right == p)
+          pp.right = l;
+        else
+          pp.left = l;
+        l.right = p;
+        p.parent = l;
+      }
+      return root;
+    }
+
+    public static <K, V> TreeNode<K, V> balanceInsertion(TreeNode<K, V> root, TreeNode<K, V> x) {
+      x.red = true;
+      for (TreeNode<K, V> xp, xpp, xppl, xppr; ; ) {
+        if ((xp = x.parent) == null) {
+          x.red = false;
+          return x;
+        } else if (!xp.red || (xpp = xp.parent) == null)
+          return root;
+        if (xp == (xppl = xpp.left)) {
+          if ((xppr = xpp.right) != null && xppr.red) {
+            xppr.red = false;
+            xp.red = false;
+            xpp.red = true;
+            x = xpp;
           } else {
-            if (var1 == var2.d) {
-              var1 = var2;
-              var0 = rotateLeft(var0, var2);
-              var3 = (var2 = var2.b) == null ? null : var2.b;
+            if (x == xp.right) {
+              root = rotateLeft(root, x = xp);
+              xpp = (xp = x.parent) == null ? null : xp.parent;
             }
-
-            if (var2 != null) {
-              var2.e = false;
-              if (var3 != null) {
-                var3.e = true;
-                var0 = rotateRight(var0, var3);
+            if (xp != null) {
+              xp.red = false;
+              if (xpp != null) {
+                xpp.red = true;
+                root = rotateRight(root, xpp);
               }
             }
           }
-        } else if (var4 != null && var4.e) {
-          var4.e = false;
-          var2.e = false;
-          var3.e = true;
-          var1 = var3;
         } else {
-          if (var1 == var2.c) {
-            var1 = var2;
-            var0 = rotateRight(var0, var2);
-            var3 = (var2 = var2.b) == null ? null : var2.b;
-          }
-
-          if (var2 != null) {
-            var2.e = false;
-            if (var3 != null) {
-              var3.e = true;
-              var0 = rotateLeft(var0, var3);
+          if (xppl != null && xppl.red) {
+            xppl.red = false;
+            xp.red = false;
+            xpp.red = true;
+            x = xpp;
+          } else {
+            if (x == xp.left) {
+              root = rotateRight(root, x = xp);
+              xpp = (xp = x.parent) == null ? null : xp.parent;
+            }
+            if (xp != null) {
+              xp.red = false;
+              if (xpp != null) {
+                xpp.red = true;
+                root = rotateLeft(root, xpp);
+              }
             }
           }
         }
       }
-
-      var1.e = false;
-      return var1;
     }
 
-    public static <K, V> TreeNode<K, V> balanceDeletion(TreeNode<K, V> var0, TreeNode<K, V> var1) {
-      while (var1 != null && var1 != var0) {
-        TreeNode<K, V> var2;
-        if ((var2 = var1.b) == null) {
-          var1.e = false;
-          return var1;
-        }
-
-        if (var1.e) {
-          var1.e = false;
-          return var0;
-        }
-
-        TreeNode<K, V> var3;
-        TreeNode<K, V> var4;
-        TreeNode<K, V> var5;
-        if ((var3 = var2.c) == var1) {
-          if ((var3 = var2.d) != null && var3.e) {
-            var3.e = false;
-            var2.e = true;
-            var0 = rotateLeft(var0, var2);
-            var3 = (var2 = var1.b) == null ? null : var2.d;
+    @SuppressWarnings("ConstantValue")
+    public static <K, V> TreeNode<K, V> balanceDeletion(TreeNode<K, V> root, TreeNode<K, V> x) {
+      for (TreeNode<K, V> xp, xpl, xpr; ; ) {
+        if (x == null || x == root)
+          return root;
+        else if ((xp = x.parent) == null) {
+          x.red = false;
+          return x;
+        } else if (x.red) {
+          x.red = false;
+          return root;
+        } else if ((xpl = xp.left) == x) {
+          if ((xpr = xp.right) != null && xpr.red) {
+            xpr.red = false;
+            xp.red = true;
+            root = rotateLeft(root, xp);
+            xpr = (xp = x.parent) == null ? null : xp.right;
           }
-
-          if (var3 == null) {
-            var1 = var2;
-          } else {
-            var4 = var3.c;
-            if ((var5 = var3.d) != null && var5.e || var4 != null && var4.e) {
-              if (var5 == null || !var5.e) {
-                if (var4 != null) {
-                  var4.e = false;
-                }
-
-                var3.e = true;
-                var0 = rotateRight(var0, var3);
-                var3 = (var2 = var1.b) == null ? null : var2.d;
-              }
-
-              if (var3 != null) {
-                var3.e = var2 != null && var2.e;
-                if ((var5 = var3.d) != null) {
-                  var5.e = false;
-                }
-              }
-
-              if (var2 != null) {
-                var2.e = false;
-                var0 = rotateLeft(var0, var2);
-              }
-
-              var1 = var0;
+          if (xpr == null)
+            x = xp;
+          else {
+            TreeNode<K, V> sl = xpr.left, sr = xpr.right;
+            if ((sr == null || !sr.red) &&
+                (sl == null || !sl.red)) {
+              xpr.red = true;
+              x = xp;
             } else {
-              var3.e = true;
-              var1 = var2;
+              if (sr == null || !sr.red) {
+                if (sl != null) sl.red = false;
+                xpr.red = true;
+                root = rotateRight(root, xpr);
+                xpr = (xp = x.parent) == null ?
+                    null : xp.right;
+              }
+              if (xpr != null) {
+                xpr.red = xp != null && xp.red;
+                if ((sr = xpr.right) != null)
+                  sr.red = false;
+              }
+              if (xp != null) {
+                xp.red = false;
+                root = rotateLeft(root, xp);
+              }
+              x = root;
             }
           }
-        } else {
-          if (var3 != null && var3.e) {
-            var3.e = false;
-            var2.e = true;
-            var0 = rotateRight(var0, var2);
-            var3 = (var2 = var1.b) == null ? null : var2.c;
+        } else { // symmetric
+          if (xpl != null && xpl.red) {
+            xpl.red = false;
+            xp.red = true;
+            root = rotateRight(root, xp);
+            xpl = (xp = x.parent) == null ? null : xp.left;
           }
-
-          if (var3 == null) {
-            var1 = var2;
-          } else {
-            var4 = var3.c;
-            var5 = var3.d;
-            if (var4 != null && var4.e || var5 != null && var5.e) {
-              if (var4 == null || !var4.e) {
-                if (var5 != null) {
-                  var5.e = false;
-                }
-
-                var3.e = true;
-                var0 = rotateLeft(var0, var3);
-                var3 = (var2 = var1.b) == null ? null : var2.c;
-              }
-
-              if (var3 != null) {
-                var3.e = var2 != null && var2.e;
-                if ((var4 = var3.c) != null) {
-                  var4.e = false;
-                }
-              }
-
-              if (var2 != null) {
-                var2.e = false;
-                var0 = rotateRight(var0, var2);
-              }
-
-              var1 = var0;
+          if (xpl == null)
+            x = xp;
+          else {
+            TreeNode<K, V> sl = xpl.left, sr = xpl.right;
+            if ((sl == null || !sl.red) &&
+                (sr == null || !sr.red)) {
+              xpl.red = true;
+              x = xp;
             } else {
-              var3.e = true;
-              var1 = var2;
+              if (sl == null || !sl.red) {
+                if (sr != null)
+                  sr.red = false;
+                xpl.red = true;
+                root = rotateLeft(root, xpl);
+                xpl = (xp = x.parent) == null ?
+                    null : xp.left;
+              }
+              if (xpl != null) {
+                xpl.red = xp != null && xp.red;
+                if ((sl = xpl.left) != null)
+                  sl.red = false;
+              }
+              if (xp != null) {
+                xp.red = false;
+                root = rotateRight(root, xp);
+              }
+              x = root;
             }
           }
         }
       }
-
-      return var0;
     }
 
-    public static <K, V> boolean checkInvariants(TreeNode<K, V> var0) {
-      TreeNode<K, V> var1;
-      if ((var1 = var0.a) != null && var1.next != var0) {
-        return false;
-      } else if ((var1 = (TreeNode<K, V>) var0.next) != null && var1.a != var0) {
-        return false;
-      } else if ((var1 = var0.b) != null && var0 != var1.c && var0 != var1.d) {
-        return false;
-      } else if ((var1 = var0.c) != null && (var1.b != var0 || var1.hash > var0.hash)) {
-        return false;
-      } else {
-        TreeNode<K, V> var2;
-        if ((var2 = var0.d) == null || var2.b == var0 && var2.hash >= var0.hash) {
-          if (var0.e && var1 != null && var1.e && var2 != null && var2.e) {
-            return false;
-          } else if (var1 != null && !checkInvariants(var1)) {
-            return false;
-          } else {
-            return var2 == null || checkInvariants(var2);
-          }
-        } else {
-          return false;
-        }
-      }
+    /**
+     * Recursive invariant check
+     */
+    public static <K, V> boolean checkInvariants(TreeNode<K, V> t) {
+      TreeNode<K, V> tb = t.prev;
+      if (tb != null && tb.next != t) return false;
+
+      TreeNode<K, V> tn = (TreeNode<K, V>) t.next;
+      if (tn != null && tn.prev != t) return false;
+
+      TreeNode<K, V> tp = t.parent;
+      if (tp != null && t != tp.left && t != tp.right) return false;
+
+      TreeNode<K, V> tl = t.left;
+      if (tl != null && (tl.parent != t || tl.hash > t.hash)) return false;
+
+      TreeNode<K, V> tr = t.right;
+      if (tr != null && (tr.parent != t || tr.hash < t.hash)) return false;
+      if (t.red && tl != null && tl.red && tr != null && tr.red) return false;
+      if (tl != null && !checkInvariants(tl)) return false;
+      return tr == null || checkInvariants(tr);
     }
 
+    /**
+     * Returns root of tree containing this node.
+     */
     public TreeNode<K, V> root() {
-      TreeNode<K, V> var1;
-      TreeNode<K, V> var2;
-      for (var1 = this; (var2 = var1.b) != null; var1 = var2) {
+      for (TreeNode<K, V> r = this, p; ; ) {
+        if ((p = r.parent) == null) return r;
+        r = p;
       }
-
-      return var1;
     }
 
-    public TreeNode<K, V> find(int var1, Object var2, Class<?> var3) {
-      TreeNode<K, V> var4 = this;
-
+    /**
+     * Finds the node starting at root p with the given hash and key.
+     * The kc argument caches comparableClassFor(key) upon first use
+     * comparing keys.
+     */
+    public TreeNode<K, V> find(int h, Object k, Class<?> kc) {
+      TreeNode<K, V> p = this;
       do {
-        TreeNode<K, V> var6 = var4.c;
-        TreeNode<K, V> var7 = var4.d;
-        int var5;
-        if ((var5 = var4.hash) <= var1) {
-          if (var5 < var1) {
-            var4 = var7;
-            continue;
-          }
-
-          Object var9;
-          if ((var9 = var4.key) == var2 || var2 != null && var2.equals(var9)) {
-            return var4;
-          }
-
-          if (var6 == null) {
-            var4 = var7;
-            continue;
-          }
-
-          if (var7 != null) {
-            int var8;
-            if ((var3 != null || (var3 = UnsafeHashMap.comparableClassFor(
-                var2)) != null) && (var8 = UnsafeHashMap.compareComparables(var3, var2, var9)) != 0) {
-              var4 = var8 < 0 ? var6 : var7;
-              continue;
-            }
-
-            if ((var4 = var7.find(var1, var2, var3)) != null) {
-              return var4;
-            }
-          }
-        }
-
-        var4 = var6;
-      } while (var4 != null);
-
+        int ph, dir;
+        K pk;
+        TreeNode<K, V> pl = p.left, pr = p.right, q;
+        if ((ph = p.hash) > h)
+          p = pl;
+        else if (ph < h)
+          p = pr;
+        else if ((pk = p.key) == k || (k != null && k.equals(pk)))
+          return p;
+        else if (pl == null)
+          p = pr;
+        else if (pr == null)
+          p = pl;
+        else if ((kc != null ||
+            (kc = comparableClassFor(k)) != null) &&
+            (dir = compareComparables(kc, k, pk)) != 0)
+          p = (dir < 0) ? pl : pr;
+        else if ((q = pr.find(h, k, kc)) != null)
+          return q;
+        else
+          p = pl;
+      } while (p != null);
       return null;
     }
 
-    public TreeNode<K, V> getTreeNode(int var1, Object var2) {
-      return (this.b != null ? this.root() : this).find(var1, var2, null);
+    /**
+     * Calls find for root node.
+     */
+    public TreeNode<K, V> getTreeNode(int h, Object k) {
+      return ((parent != null) ? root() : this).find(h, k, null);
     }
 
-    public void treeify(Node<K, V>[] var1) {
-      TreeNode<K, V> var2 = null;
+    /* ------------------------------------------------------------ */
+    // Red-black tree methods, all adapted from CLR
 
-      TreeNode<K, V> var4;
-      for (TreeNode<K, V> var3 = this; var3 != null; var3 = var4) {
-        var4 = (TreeNode<K, V>) var3.next;
-        var3.c = var3.d = null;
-        if (var2 == null) {
-          var3.b = null;
-          var3.e = false;
-          var2 = var3;
+    /**
+     * Forms tree of the nodes linked from this node.
+     * return root of tree
+     */
+    public void treeify(Node<K, V>[] tab) {
+      TreeNode<K, V> root = null;
+      for (TreeNode<K, V> x = this, next; x != null; x = next) {
+        next = (TreeNode<K, V>) x.next;
+        x.left = x.right = null;
+        if (root == null) {
+          x.parent = null;
+          x.red = false;
+          root = x;
         } else {
-          Object var5 = var3.key;
-          int var6 = var3.hash;
-          Class<?> var7 = null;
-          TreeNode<K, V> var8 = var2;
+          K k = x.key;
+          int h = x.hash;
+          Class<?> kc = null;
+          for (TreeNode<K, V> p = root; ; ) {
+            int dir, ph;
+            K pk = p.key;
+            if ((ph = p.hash) > h)
+              dir = -1;
+            else if (ph < h)
+              dir = 1;
+            else if ((kc == null &&
+                (kc = comparableClassFor(k)) == null) ||
+                (dir = compareComparables(kc, k, pk)) == 0)
+              dir = tieBreakOrder(k, pk);
 
-          int var9;
-          TreeNode<K, V> var11;
-          do {
-            Object var10 = var8.key;
-            if ((var9 = var8.hash) > var6) {
-              var9 = -1;
-            } else if (var9 < var6) {
-              var9 = 1;
-            } else if (var7 == null && (var7 = UnsafeHashMap.comparableClassFor(
-                var5)) == null || (var9 = UnsafeHashMap.compareComparables(var7, var5, var10)) == 0) {
-              var9 = tieBreakOrder(var5, var10);
+            TreeNode<K, V> xp = p;
+            if ((p = (dir <= 0) ? p.left : p.right) == null) {
+              x.parent = xp;
+              if (dir <= 0)
+                xp.left = x;
+              else
+                xp.right = x;
+              root = balanceInsertion(root, x);
+              break;
             }
-
-            var11 = var8;
-          } while ((var8 = var9 <= 0 ? var8.c : var8.d) != null);
-
-          var3.b = var11;
-          if (var9 <= 0) {
-            var11.c = var3;
-          } else {
-            var11.d = var3;
           }
-
-          var2 = balanceInsertion(var2, var3);
         }
       }
-
-      moveRootToFront(var1, var2);
+      moveRootToFront(tab, root);
     }
 
-    public Node<K, V> untreeify(UnsafeHashMap<K, V> var1) {
-      Node<K, V> var2 = null;
-      Node<K, V> var3 = null;
-
-      for (Node<K, V> var4 = this; var4 != null; var4 = ((Node<K, V>) var4).next) {
-        Node<K, V> var5 = var1.replacementNode((Node<K, V>) var4, null);
-        if (var3 == null) {
-          var2 = var5;
-        } else {
-          var3.next = var5;
-        }
-
-        var3 = var5;
+    /**
+     * Returns a list of non-TreeNodes replacing those linked from
+     * this node.
+     */
+    public Node<K, V> untreeify(UnsafeHashMap<K, V> map) {
+      Node<K, V> hd = null, tl = null;
+      for (Node<K, V> q = this; q != null; q = q.next) {
+        Node<K, V> p = map.replacementNode(q, null);
+        if (tl == null) hd = p;
+        else tl.next = p;
+        tl = p;
       }
-
-      return var2;
+      return hd;
     }
 
-    public @Nullable TreeNode<K, V> putTreeVal(@NonNull UnsafeHashMap<K, V> var1, @NonNull UnsafeHashMap.Node<K, V>[] var2, int var3, @NonNull K var4, @Nullable V var5) {
-      Class<?> var6 = null;
-      boolean var7 = false;
-      TreeNode<K, V> var10000 = this.b != null ? this.root() : this;
-      TreeNode<K, V> var9 = var10000;
+    /**
+     * Tree version of putVal.
+     */
+    @Nullable
+    public TreeNode<K, V> putTreeVal(@NonNull UnsafeHashMap<K, V> map, @NonNull Node<K, V>[] tab, int h, @NonNull K k, @Nullable V v) {
+      Class<?> kc = null;
+      boolean searched = false;
+      TreeNode<K, V> root = (parent != null) ? root() : this;
+      for (TreeNode<K, V> p = root; ; ) {
+        int ph = p.hash;
+        int dir;
+        K pk;
 
-      int var10;
-      TreeNode<K, V> var12;
-      do {
-        if ((var10 = var9.hash) > var3) {
-          var10 = -1;
-        } else if (var10 < var3) {
-          var10 = 1;
-        } else {
-          Object var11;
-          if ((var11 = var9.key) == var4 || var4.equals(var11)) {
-            return var9;
+        if (ph > h) dir = -1;
+        else if (ph < h) dir = 1;
+        else if ((pk = p.key) == k || k.equals(pk)) return p;
+        else if ((kc == null &&
+            (kc = comparableClassFor(k)) == null) ||
+            (dir = compareComparables(kc, k, pk)) == 0) {
+          if (!searched) {
+            TreeNode<K, V> q, ch;
+            searched = true;
+            if (((ch = p.left) != null &&
+                (q = ch.find(h, k, kc)) != null) ||
+                ((ch = p.right) != null && (q = ch.find(h, k, kc)) != null))
+              return q;
           }
-
-          if (var6 == null && (var6 = UnsafeHashMap.comparableClassFor(
-              var4)) == null || (var10 = UnsafeHashMap.compareComparables(var6, var4, var11)) == 0) {
-            if (!var7) {
-              var7 = true;
-              TreeNode<K, V> var13;
-              if ((var13 = var9.c) != null && (var12 = var13.find(
-                  var3, var4, var6)) != null || (var13 = var9.d) != null && (var12 = var13.find(
-                  var3, var4, var6)) != null) {
-                return var12;
-              }
-            }
-
-            var10 = tieBreakOrder(var4, var11);
-          }
+          dir = tieBreakOrder(k, pk);
         }
 
-        var12 = var9;
-      } while ((var9 = var10 <= 0 ? var9.c : var9.d) != null);
+        TreeNode<K, V> xp = p;
+        if ((p = (dir <= 0) ? p.left : p.right) == null) {
+          Node<K, V> xpn = xp.next;
+          TreeNode<K, V> x = map.newTreeNode(h, k, v, xpn);
+          if (dir <= 0) xp.left = x;
+          else xp.right = x;
 
-      Node<K, V> var15 = var12.next;
-      TreeNode<K, V> var14 = var1.newTreeNode(var3, var4, var5, var15);
-      if (var10 <= 0) {
-        var12.c = var14;
-      } else {
-        var12.d = var14;
-      }
-
-      var12.next = var14;
-      var14.b = var14.a = var12;
-      if (var15 != null) {
-        ((TreeNode<K, V>) var15).a = var14;
-      }
-
-      moveRootToFront(var2, balanceInsertion(var10000, var14));
-      return null;
-    }
-
-    public void removeTreeNode(UnsafeHashMap<K, V> var1, Node<K, V>[] var2, boolean var3) {
-      if (var2 != null && var2.length != 0) {
-        int var4 = var2.length - 1 & super.hash;
-        TreeNode<K, V> var5;
-        TreeNode<K, V> var6 = var5 = (TreeNode<K, V>) var2[var4];
-        TreeNode<K, V> var7 = (TreeNode<K, V>) super.next;
-        TreeNode<K, V> var8;
-        if ((var8 = this.a) == null) {
-          var5 = var7;
-          var2[var4] = var7;
-        } else {
-          var8.next = var7;
-        }
-
-        if (var7 != null) {
-          var7.a = var8;
-        }
-
-        if (var5 != null) {
-          if (var6.b != null) {
-            var6 = var6.root();
-          }
-
-          if (var6 != null && var6.d != null && (var7 = var6.c) != null && var7.c != null) {
-            TreeNode<K, V> var11 = this.c;
-            var5 = this.d;
-            if (var11 != null && var5 != null) {
-              for (var7 = var5; (var8 = var7.c) != null; var7 = var8) {
-              }
-
-              boolean var12 = var7.e;
-              var7.e = this.e;
-              this.e = var12;
-              var8 = var7.d;
-              TreeNode<K, V> var9 = this.b;
-              if (var7 == var5) {
-                this.b = var7;
-                var7.d = this;
-              } else {
-                TreeNode<K, V> var10 = var7.b;
-                if ((this.b = var10) != null) {
-                  if (var7 == var10.c) {
-                    var10.c = this;
-                  } else {
-                    var10.d = this;
-                  }
-                }
-
-                if ((var7.d = var5) != null) {
-                  var5.b = var7;
-                }
-              }
-
-              this.c = null;
-              if ((this.d = var8) != null) {
-                var8.b = this;
-              }
-
-              if ((var7.c = var11) != null) {
-                var11.b = var7;
-              }
-
-              if ((var7.b = var9) == null) {
-                var6 = var7;
-              } else if (this == var9.c) {
-                var9.c = var7;
-              } else {
-                var9.d = var7;
-              }
-
-              if (var8 != null) {
-                var11 = var8;
-              } else {
-                var11 = this;
-              }
-            } else if (var11 != null) {
-            } else if (var5 != null) {
-              var11 = var5;
-            } else {
-              var11 = this;
-            }
-
-            if (var11 != this) {
-              if ((var7 = var11.b = this.b) == null) {
-                var6 = var11;
-              } else if (this == var7.c) {
-                var7.c = var11;
-              } else {
-                var7.d = var11;
-              }
-
-              this.c = this.d = this.b = null;
-            }
-
-            var7 = this.e ? var6 : balanceDeletion(var6, var11);
-            if (var11 == this) {
-              var8 = this.b;
-              this.b = null;
-              if (var8 != null) {
-                if (this == var8.c) {
-                  var8.c = null;
-                } else if (this == var8.d) {
-                  var8.d = null;
-                }
-              }
-            }
-
-            if (var3) {
-              moveRootToFront(var2, var7);
-            }
-          } else {
-            var2[var4] = var5.untreeify(var1);
-          }
+          xp.next = x;
+          x.parent = x.prev = xp;
+          if (xpn != null) ((TreeNode<K, V>) xpn).prev = x;
+          moveRootToFront(tab, balanceInsertion(root, x));
+          return null;
         }
       }
     }
 
-    public void split(UnsafeHashMap<K, V> var1, Node<K, V>[] var2, int var3, int var4) {
-      TreeNode<K, V> var6 = null;
-      TreeNode<K, V> var7 = null;
-      TreeNode<K, V> var8 = null;
-      TreeNode<K, V> var9 = null;
-      int var10 = 0;
-      int var11 = 0;
+    /**
+     * Removes the given node, that must be present before this call.
+     * This is messier than typical red-black deletion code because we
+     * cannot swap the contents of an interior node with a leaf
+     * successor that is pinned by "next" pointers that are accessible
+     * independently during traversal. So instead we swap the tree
+     * linkages. If the current tree appears to have too few nodes,
+     * the bin is converted back to a plain bin. (The test triggers
+     * somewhere between 2 and 6 nodes, depending on tree structure).
+     */
+    @SuppressWarnings("ConstantValue")
+    public void removeTreeNode(UnsafeHashMap<K, V> map, Node<K, V>[] tab, boolean movable) {
+      if (tab == null || tab.length == 0) return;
 
-      TreeNode<K, V> var12;
-      for (TreeNode<K, V> var5 = this; var5 != null; var5 = var12) {
-        var12 = (TreeNode<K, V>) var5.next;
-        var5.next = null;
-        if ((var5.hash & var4) == 0) {
-          if ((var5.a = var7) == null) {
-            var6 = var5;
-          } else {
-            var7.next = var5;
-          }
-
-          var7 = var5;
-          ++var10;
+      int index = (tab.length - 1) & hash;
+      TreeNode<K, V> first = (TreeNode<K, V>) tab[index], root = first, rl;
+      TreeNode<K, V> succ = (TreeNode<K, V>) next, pred = prev;
+      if (pred == null)
+        tab[index] = first = succ;
+      else
+        pred.next = succ;
+      if (succ != null)
+        succ.prev = pred;
+      if (first == null)
+        return;
+      if (root.parent != null)
+        root = root.root();
+      if (root == null || root.right == null ||
+          (rl = root.left) == null || rl.left == null) {
+        tab[index] = first.untreeify(map);  // too small
+        return;
+      }
+      TreeNode<K, V> p = this, pl = left, pr = right, replacement;
+      if (pl != null && pr != null) {
+        TreeNode<K, V> s = pr, sl;
+        while ((sl = s.left) != null) // find successor
+          s = sl;
+        boolean c = s.red;
+        s.red = p.red;
+        p.red = c; // swap colors
+        TreeNode<K, V> sr = s.right;
+        TreeNode<K, V> pp = p.parent;
+        if (s == pr) { // p was s's direct parent
+          p.parent = s;
+          s.right = p;
         } else {
-          if ((var5.a = var9) == null) {
-            var8 = var5;
-          } else {
-            var9.next = var5;
+          TreeNode<K, V> sp = s.parent;
+          if ((p.parent = sp) != null) {
+            if (s == sp.left)
+              sp.left = p;
+            else
+              sp.right = p;
           }
+          if ((s.right = pr) != null)
+            pr.parent = s;
+        }
+        p.left = null;
+        if ((p.right = sr) != null)
+          sr.parent = p;
+        if ((s.left = pl) != null)
+          pl.parent = s;
+        if ((s.parent = pp) == null)
+          root = s;
+        else if (p == pp.left)
+          pp.left = s;
+        else
+          pp.right = s;
+        if (sr != null)
+          replacement = sr;
+        else
+          replacement = p;
+      } else if (pl != null) replacement = pl;
+      else if (pr != null) replacement = pr;
+      else replacement = p;
 
-          var9 = var5;
-          ++var11;
+      if (replacement != p) {
+        TreeNode<K, V> pp = replacement.parent = p.parent;
+        if (pp == null)
+          root = replacement;
+        else if (p == pp.left)
+          pp.left = replacement;
+        else
+          pp.right = replacement;
+        p.left = p.right = p.parent = null;
+      }
+
+      TreeNode<K, V> r = p.red ? root : balanceDeletion(root, replacement);
+
+      if (replacement == p) {  // detach
+        TreeNode<K, V> pp = p.parent;
+        p.parent = null;
+        if (pp != null) {
+          if (p == pp.left)
+            pp.left = null;
+          else if (p == pp.right)
+            pp.right = null;
         }
       }
 
-      if (var6 != null) {
-        if (var10 <= 6) {
-          var2[var3] = var6.untreeify(var1);
+      if (movable) moveRootToFront(tab, r);
+    }
+
+    /**
+     * Splits nodes in a tree bin into lower and upper tree bins,
+     * or untreeifies if now too small. Called only from resize;
+     * see above discussion about split bits and indices.
+     *
+     * @param map   the map
+     * @param tab   the table for recording bin heads
+     * @param index the index of the table being split
+     * @param bit   the bit of hash to split on
+     */
+    public void split(UnsafeHashMap<K, V> map, Node<K, V>[] tab, int index, int bit) {
+      TreeNode<K, V> b = this;
+      // Relink into lo and hi lists, preserving order
+      TreeNode<K, V> loHead = null, loTail = null;
+      TreeNode<K, V> hiHead = null, hiTail = null;
+      int lc = 0, hc = 0;
+      for (TreeNode<K, V> e = b, next; e != null; e = next) {
+        next = (TreeNode<K, V>) e.next;
+        e.next = null;
+        if ((e.hash & bit) == 0) {
+          if ((e.prev = loTail) == null) loHead = e;
+          else loTail.next = e;
+          loTail = e;
+          ++lc;
         } else {
-          var2[var3] = var6;
-          if (var8 != null) {
-            var6.treeify(var2);
-          }
+          if ((e.prev = hiTail) == null)
+            hiHead = e;
+          else
+            hiTail.next = e;
+          hiTail = e;
+          ++hc;
         }
       }
 
-      if (var8 != null) {
-        if (var11 <= 6) {
-          var2[var3 + var4] = var8.untreeify(var1);
-          return;
+      if (loHead != null) {
+        if (lc <= UNTREEIFY_THRESHOLD)
+          tab[index] = loHead.untreeify(map);
+        else {
+          tab[index] = loHead;
+          if (hiHead != null) // (else is already treeified)
+            loHead.treeify(tab);
         }
-
-        var2[var3 + var4] = var8;
-        if (var6 != null) {
-          var8.treeify(var2);
+      }
+      if (hiHead != null) {
+        if (hc <= UNTREEIFY_THRESHOLD)
+          tab[index + bit] = hiHead.untreeify(map);
+        else {
+          tab[index + bit] = hiHead;
+          if (loHead != null)
+            hiHead.treeify(tab);
         }
       }
     }
@@ -1535,562 +1669,202 @@ public class UnsafeHashMap<K, V> implements Cloneable, Map<K, V> {
 
   public final class KeySet extends AbstractSet<K> {
 
-    public KeySet() {
-    }
-
     public int size() {
-      return UnsafeHashMap.this.a;
+      return size;
     }
 
     public void clear() {
       UnsafeHashMap.this.clear();
     }
 
-    public @NotNull Iterator<K> iterator() {
-      return UnsafeHashMap.this.new KeyIterator();
+    public Iterator<K> iterator() {
+      return new KeyIterator();
     }
 
-    public boolean contains(Object var1) {
-      return UnsafeHashMap.this.containsKey(var1);
+    public boolean contains(Object o) {
+      return containsKey(o);
     }
 
-    public boolean remove(Object var1) {
-      return UnsafeHashMap.this.removeNode(UnsafeHashMap.hash(var1), var1, null, false, true) != null;
+    public boolean remove(Object key) {
+      return removeNode(hash(key), key, null, false, true) != null;
     }
 
     public Spliterator<K> spliterator() {
       return new KeySpliterator<>(UnsafeHashMap.this, 0, -1, 0, 0);
     }
 
-    public void forEach(Consumer<? super K> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        if (UnsafeHashMap.this.a > 0 && UnsafeHashMap.this.table != null) {
-          Node<K, V>[] var2 = UnsafeHashMap.this.table;
-          int var3 = UnsafeHashMap.this.b;
-          int var4 = (var2).length;
-
-          for (int var5 = 0; var5 < var4; ++var5) {
-            for (Node<K, V> var6 = var2[var5]; var6 != null; var6 = var6.next) {
-              var1.accept(var6.key);
-            }
-          }
-
-          if (UnsafeHashMap.this.b != var3) {
-            throw new ConcurrentModificationException();
-          }
+    public void forEach(Consumer<? super K> action) {
+      if (action == null) throw new NullPointerException();
+      if (size > 0 && table != null) {
+        Node<K, V>[] tab = table;
+        int mc = modCount;
+        for (Node<K, V> e : tab) {
+          for (; e != null; e = e.next) action.accept(e.key);
         }
+        if (modCount != mc) throw new ConcurrentModificationException();
       }
     }
 
   }
 
-  private final class b extends AbstractCollection<V> {
-
-    private b() {
-    }
+  private final class Values extends AbstractCollection<V> {
 
     public int size() {
-      return UnsafeHashMap.this.a;
+      return size;
     }
 
     public void clear() {
       UnsafeHashMap.this.clear();
     }
 
-    @NotNull
+    @SuppressWarnings("ReturnOfInnerClass")
     public Iterator<V> iterator() {
-      return UnsafeHashMap.this.new ValueIterator();
+      return new ValueIterator();
     }
 
-    public boolean contains(Object var1) {
-      return UnsafeHashMap.this.containsValue(var1);
+    public boolean contains(Object o) {
+      return containsValue(o);
     }
 
     public Spliterator<V> spliterator() {
       return new ValueSpliterator<>(UnsafeHashMap.this, 0, -1, 0, 0);
     }
 
-    public void forEach(Consumer<? super V> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        if (UnsafeHashMap.this.a > 0 && UnsafeHashMap.this.table != null) {
-          Node<K, V>[] var2 = UnsafeHashMap.this.table;
-          int var3 = UnsafeHashMap.this.b;
-
-          for (Node<K, V> kvNode : var2) {
-            for (Node<K, V> var6 = kvNode; var6 != null; var6 = var6.next) {
-              var1.accept(var6.value);
-            }
-          }
-
-          if (UnsafeHashMap.this.b != var3) {
-            throw new ConcurrentModificationException();
-          }
+    public void forEach(Consumer<? super V> action) {
+      if (action == null) throw new NullPointerException();
+      if (size > 0 && table != null) {
+        Node<K, V>[] tab = table;
+        int mc = modCount;
+        for (Node<K, V> e : tab) {
+          for (; e != null; e = e.next) action.accept(e.value);
         }
+        if (modCount != mc) throw new ConcurrentModificationException();
       }
     }
 
   }
 
-  private final class a extends AbstractSet<Map.Entry<K, V>> {
-
-    private a() {
-    }
+  private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
     public int size() {
-      return UnsafeHashMap.this.a;
+      return size;
     }
 
     public void clear() {
       UnsafeHashMap.this.clear();
     }
 
-    @NotNull
     public Iterator<Map.Entry<K, V>> iterator() {
-      return UnsafeHashMap.this.new EntryIterator();
+      return new EntryIterator();
     }
 
-    public boolean contains(Object var1) {
-      if (!(var1 instanceof Map.Entry<?, ?>)) {
-        return false;
-      } else {
-        Map.Entry<K, V> var3;
-        Object var2 = (var3 = (Map.Entry<K, V>) var1).getKey();
-        Node<K, V> var4 = UnsafeHashMap.this.getNode(UnsafeHashMap.hash(var2), var2);
-        return var3.equals(var4);
-      }
+    public boolean contains(Object o) {
+      if (!(o instanceof Map.Entry)) return false;
+      Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+      Object key = e.getKey();
+      Node<K, V> candidate = getNode(hash(key), key);
+      return e.equals(candidate);
     }
 
-    public boolean remove(Object var1) {
-      if (var1 instanceof Map.Entry<?, ?>) {
-        Map.Entry<K, V> var3;
-        Object var2 = (var3 = (Map.Entry<K, V>) var1).getKey();
-        var1 = var3.getValue();
-        return UnsafeHashMap.this.removeNode(UnsafeHashMap.hash(var2), var2, var1, true, true) != null;
-      } else {
-        return false;
+    public boolean remove(Object o) {
+      if (o instanceof Map.Entry) {
+        Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+        Object key = e.getKey();
+        Object value = e.getValue();
+        return removeNode(hash(key), key, value, true, true) != null;
       }
+      return false;
     }
 
     public Spliterator<Map.Entry<K, V>> spliterator() {
       return new EntrySpliterator<>(UnsafeHashMap.this, 0, -1, 0, 0);
     }
 
-    public void forEach(Consumer<? super Map.Entry<K, V>> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        if (UnsafeHashMap.this.a > 0 && UnsafeHashMap.this.table != null) {
-          Node<K, V>[] var2 = UnsafeHashMap.this.table;
-          int var3 = UnsafeHashMap.this.b;
-
-          for (Node<K, V> kvNode : var2) {
-            for (Node<K, V> var6 = kvNode; var6 != null; var6 = var6.next) {
-              var1.accept(var6);
-            }
-          }
-
-          if (UnsafeHashMap.this.b != var3) {
-            throw new ConcurrentModificationException();
-          }
+    public void forEach(Consumer<? super Map.Entry<K, V>> action) {
+      if (action == null) throw new NullPointerException();
+      if (size > 0 && table != null) {
+        Node<K, V>[] tab = table;
+        int mc = modCount;
+        for (Node<K, V> e : tab) {
+          for (; e != null; e = e.next) action.accept(e);
         }
+        if (modCount != mc) throw new ConcurrentModificationException();
       }
-    }
-
-  }
-
-  public final class EntryIterator extends HashIterator implements Iterator<Map.Entry<K, V>> {
-
-    public EntryIterator() {
-      super();
-    }
-
-    public Map.Entry<K, V> next() {
-      return this.nextNode();
-    }
-
-  }
-
-  public final class ValueIterator extends HashIterator implements Iterator<V> {
-
-    public ValueIterator() {
-      super();
-    }
-
-    public V next() {
-      return this.nextNode().value;
-    }
-
-  }
-
-  public final class KeyIterator extends HashIterator implements Iterator<K> {
-
-    public KeyIterator() {
-      super();
-    }
-
-    public K next() {
-      return this.nextNode().key;
     }
 
   }
 
   public abstract class HashIterator {
 
-    public Node<K, V> next;
-    public Node<K, V> current;
-    public int expectedModCount;
-    public int index;
+    public Node<K, V> next;        // next entry to return
+    public Node<K, V> current;     // current entry
+    public int expectedModCount;  // for fast-fail
+    public int index;             // current slot
 
+    @SuppressWarnings("StatementWithEmptyBody")
     public HashIterator() {
-      this.expectedModCount = UnsafeHashMap.this.b;
-      this.current = this.next = null;
-      this.index = 0;
-      if (UnsafeHashMap.this.table != null && UnsafeHashMap.this.a > 0) {
-        Node<K, V>[] var2 = UnsafeHashMap.this.table;
-
-        while (this.index < var2.length && (this.next = var2[this.index++]) == null) {
-        }
+      expectedModCount = modCount;
+      current = next = null;
+      index = 0;
+      if (table != null && size > 0) { // advance to first entry
+        Node<K, V>[] tab = table;
+        do {
+        } while (index < tab.length && (next = tab[index++]) == null);
       }
     }
 
     public final boolean hasNext() {
-      return this.next != null;
+      return next != null;
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     public final Node<K, V> nextNode() {
-      if (UnsafeHashMap.this.b != this.expectedModCount) {
-        throw new ConcurrentModificationException();
-      } else if (this.next == null) {
-        throw new NoSuchElementException();
-      } else if (UnsafeHashMap.this.table == null) {
-        return this.next;
-      } else {
-        Node<K, V> var1 = this.next;
-        if ((this.next = (this.current = var1).next) == null) {
-          Node<K, V>[] var2 = UnsafeHashMap.this.table;
+      if (modCount != expectedModCount) throw new ConcurrentModificationException();
+      if (next == null) throw new NoSuchElementException();
+      if (table == null) return next;
 
-          while (this.index < var2.length && (this.next = var2[this.index++]) == null) {
-          }
-        }
-
-        return var1;
+      Node<K, V> e = next;
+      if ((next = (current = e).next) == null) {
+        Node<K, V>[] tab = table;
+        do {
+        } while (index < tab.length && (next = tab[index++]) == null);
       }
+      return e;
     }
 
     public final void remove() {
-      if (UnsafeHashMap.this.b != this.expectedModCount) {
-        throw new ConcurrentModificationException();
-      } else if (this.current == null) {
-        throw new IllegalStateException();
-      } else {
-        UnsafeHashMap.this.removeNode(this.current.hash, this.current.key, null, false, false);
-        this.expectedModCount = UnsafeHashMap.this.b;
-        this.current = null;
-      }
+      if (modCount != expectedModCount) throw new ConcurrentModificationException();
+      if (current == null) throw new IllegalStateException();
+
+      removeNode(current.hash, current.key, null, false, false);
+      expectedModCount = modCount;
+      current = null;
     }
 
   }
 
-  public static class Entry<K, V> extends Node<K, V> {
+  public final class KeyIterator extends HashIterator implements Iterator<K> {
 
-    Entry(int var1, K var2, V var3, Node<K, V> var4) {
-      super(var1, var2, var3, var4);
+    public K next() {
+      return nextNode().key;
     }
 
   }
 
-  public static final class EntrySpliterator<K, V> extends HashMapSpliterator<K, V> implements Spliterator<Map.Entry<K, V>> {
+  public final class ValueIterator extends HashIterator implements Iterator<V> {
 
-    EntrySpliterator(UnsafeHashMap<K, V> var1, int var2, int var3, int var4, int var5) {
-      super(var1, var2, var3, var4, var5);
-    }
-
-    public EntrySpliterator<K, V> trySplit() {
-      int var1 = this.getFence();
-      int var2;
-      var1 = (var2 = super.index) + var1 >>> 1;
-      return var2 < var1 && super.current == null ? new EntrySpliterator<>(
-          super.map, var2, super.index = var1, super.est >>>= 1, super.expectedModCount) : null;
-    }
-
-    public void forEachRemaining(Consumer<? super Map.Entry<K, V>> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        UnsafeHashMap<K, V> var5;
-        Node<K, V>[] var6 = (var5 = super.map).table;
-        int var3;
-        int var4;
-        if ((var3 = super.fence) < 0) {
-          var4 = super.expectedModCount = var5.b;
-          var3 = super.fence = var6 == null ? 0 : var6.length;
-        } else {
-          var4 = super.expectedModCount;
-        }
-
-        int var2;
-        if (var6 != null && var6.length >= var3 && (var2 = super.index) >= 0 && (var2 < (super.index = var3) || super.current != null)) {
-          Node<K, V> var7 = super.current;
-          super.current = null;
-
-          do {
-            do {
-              if (var7 == null) {
-                var7 = var6[var2++];
-              } else {
-                var1.accept(var7);
-                var7 = var7.next;
-              }
-            } while (var7 != null);
-          } while (var2 < var3);
-
-          if (var5.b != var4) {
-            throw new ConcurrentModificationException();
-          }
-        }
-      }
-    }
-
-    public boolean tryAdvance(Consumer<? super Map.Entry<K, V>> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        int var2;
-        Node<K, V>[] var3;
-        if ((var3 = super.map.table) != null && var3.length >= (var2 = this.getFence()) && super.index >= 0) {
-          while (super.current != null || super.index < var2) {
-            if (super.current != null) {
-              Node<K, V> var4 = super.current;
-              super.current = super.current.next;
-              var1.accept(var4);
-              if (super.map.b != super.expectedModCount) {
-                throw new ConcurrentModificationException();
-              }
-
-              return true;
-            }
-
-            super.current = var3[super.index++];
-          }
-        }
-
-        return false;
-      }
-    }
-
-    public int characteristics() {
-      return (super.fence >= 0 && super.est != super.map.a ? 0 : 64) | 1;
+    public V next() {
+      return nextNode().value;
     }
 
   }
 
-  public static final class ValueSpliterator<K, V> extends HashMapSpliterator<K, V> implements Spliterator<V> {
+  public final class EntryIterator extends HashIterator implements Iterator<Map.Entry<K, V>> {
 
-    ValueSpliterator(UnsafeHashMap<K, V> var1, int var2, int var3, int var4, int var5) {
-      super(var1, var2, var3, var4, var5);
-    }
-
-    public ValueSpliterator<K, V> trySplit() {
-      int var1 = this.getFence();
-      int var2;
-      var1 = (var2 = super.index) + var1 >>> 1;
-      return var2 < var1 && super.current == null ? new ValueSpliterator<>(
-          super.map, var2, super.index = var1, super.est >>>= 1, super.expectedModCount) : null;
-    }
-
-    public void forEachRemaining(Consumer<? super V> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        UnsafeHashMap<K, V> var5;
-        Node<K, V>[] var6 = (var5 = super.map).table;
-        int var3;
-        int var4;
-        if ((var3 = super.fence) < 0) {
-          var4 = super.expectedModCount = var5.b;
-          var3 = super.fence = var6 == null ? 0 : var6.length;
-        } else {
-          var4 = super.expectedModCount;
-        }
-
-        int var2;
-        if (var6 != null && var6.length >= var3 && (var2 = super.index) >= 0 && (var2 < (super.index = var3) || super.current != null)) {
-          Node<K, V> var7 = super.current;
-          super.current = null;
-
-          do {
-            do {
-              if (var7 == null) {
-                var7 = var6[var2++];
-              } else {
-                var1.accept(var7.value);
-                var7 = var7.next;
-              }
-            } while (var7 != null);
-          } while (var2 < var3);
-
-          if (var5.b != var4) {
-            throw new ConcurrentModificationException();
-          }
-        }
-      }
-    }
-
-    public boolean tryAdvance(Consumer<? super V> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        int var2;
-        Node<K, V>[] var3;
-        if ((var3 = super.map.table) != null && var3.length >= (var2 = this.getFence()) && super.index >= 0) {
-          while (super.current != null || super.index < var2) {
-            if (super.current != null) {
-              V var4 = super.current.value;
-              super.current = super.current.next;
-              var1.accept(var4);
-              if (super.map.b != super.expectedModCount) {
-                throw new ConcurrentModificationException();
-              }
-
-              return true;
-            }
-
-            super.current = var3[super.index++];
-          }
-        }
-
-        return false;
-      }
-    }
-
-    public int characteristics() {
-      return super.fence >= 0 && super.est != super.map.a ? 0 : 64;
-    }
-
-  }
-
-  public static final class KeySpliterator<K, V> extends HashMapSpliterator<K, V> implements Spliterator<K> {
-
-    KeySpliterator(UnsafeHashMap<K, V> var1, int var2, int var3, int var4, int var5) {
-      super(var1, var2, var3, var4, var5);
-    }
-
-    public KeySpliterator<K, V> trySplit() {
-      int var1 = this.getFence();
-      var1 = super.index + var1 >>> 1;
-      return super.index < var1 && super.current == null ? new KeySpliterator<>(
-          super.map, super.index, super.index = var1, super.est >>>= 1, super.expectedModCount) : null;
-    }
-
-    public void forEachRemaining(Consumer<? super K> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        UnsafeHashMap<K, V> var5;
-        Node<K, V>[] var6 = (var5 = super.map).table;
-        int var3;
-        int var4;
-        if ((var3 = super.fence) < 0) {
-          var4 = super.expectedModCount = var5.b;
-          var3 = super.fence = var6 == null ? 0 : var6.length;
-        } else {
-          var4 = super.expectedModCount;
-        }
-
-        int var2;
-        if (var6 != null && var6.length >= var3 && (var2 = super.index) >= 0 && (var2 < (super.index = var3) || super.current != null)) {
-          Node<K, V> var7 = super.current;
-          super.current = null;
-
-          do {
-            do {
-              if (var7 == null) {
-                var7 = var6[var2++];
-              } else {
-                var1.accept(var7.key);
-                var7 = var7.next;
-              }
-            } while (var7 != null);
-          } while (var2 < var3);
-
-          if (var5.b != var4) {
-            throw new ConcurrentModificationException();
-          }
-        }
-      }
-    }
-
-    public boolean tryAdvance(Consumer<? super K> var1) {
-      if (var1 == null) {
-        throw new NullPointerException();
-      } else {
-        int var2;
-        Node<K, V>[] var3;
-        if ((var3 = super.map.table) != null && var3.length >= (var2 = this.getFence()) && super.index >= 0) {
-          while (super.current != null || super.index < var2) {
-            if (super.current != null) {
-              K var4 = super.current.key;
-              super.current = super.current.next;
-              var1.accept(var4);
-              if (super.map.b != super.expectedModCount) {
-                throw new ConcurrentModificationException();
-              }
-
-              return true;
-            }
-
-            super.current = var3[super.index++];
-          }
-        }
-
-        return false;
-      }
-    }
-
-    public int characteristics() {
-      return (super.fence >= 0 && super.est != super.map.a ? 0 : 64) | 1;
-    }
-
-  }
-
-  public static class HashMapSpliterator<K, V> {
-
-    public final UnsafeHashMap<K, V> map;
-    public Node<K, V> current;
-    public int index;
-    public int fence;
-    public int est;
-    public int expectedModCount;
-
-    public HashMapSpliterator(UnsafeHashMap<K, V> var1, int var2, int var3, int var4, int var5) {
-      this.map = var1;
-      this.index = var2;
-      this.fence = var3;
-      this.est = var4;
-      this.expectedModCount = var5;
-    }
-
-    public final int getFence() {
-      if (this.fence >= 0) {
-        return this.fence;
-      } else {
-        this.est = this.map.a;
-        this.expectedModCount = this.map.b;
-        Node<K, V>[] var1 = this.map.table;
-        return this.fence = var1 == null ? 0 : var1.length;
-      }
-    }
-
-    public final long estimateSize() {
-      this.getFence();
-      return this.est;
+    public Map.Entry<K, V> next() {
+      return nextNode();
     }
 
   }
 
 }
-

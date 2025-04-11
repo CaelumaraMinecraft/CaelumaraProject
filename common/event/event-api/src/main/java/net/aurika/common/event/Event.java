@@ -10,27 +10,28 @@ import org.jetbrains.annotations.NotNull;
  * </pre></blockquote>
  *
  * <p><b>如何让声明的事件类能够被监听:</b></p>
- * <blockquote><pre>
- *   // need the {@link Listenable} annotation
- *   {@literal @}Listenable
+ * <li>1. 需要被 {@link Listenable} 注解</li>
+ * <li>2. 需要有一个静态的, 名称叫 {@code EMITTER} 的字段</li>
+ * <li>3. 实现 {@link Event#emitter()} 方法</li>
+ * <pre><code>
+ *   &#64;Listenable
  *   interface MyListenableEvent extends Event {
- *     // must have the listeners filed and this field has static modifier
- *     public static final ListenerContainer{@literal <}MyListenableEvent{@literal >} LISTENERS = ...;
+ *     public static final ListenerContainer&lt;MyListenableEvent&gt; EMITTER
+ *     = EventAPI.reflectionEmitter(MyListenableEvent.class);
  *
- *     // must implement the {@link Event#transformer()} method
- *     default ListenerContainer{@literal <}? extends MyListenableEvent{@literal >} listeners() {
- *       return LISTENERS;
+ *     default Emitter&lt;? extends MyListenableEvent&gt; emitter() {
+ *       return EMITTER;
  *     }
  *   }
- * </pre></blockquote>
+ * </code></pre>
  */
 public interface Event {
 
   /**
-   * Gets the {@link Transformer} of the event.
+   * Gets the {@link Emitter} of the event.
    *
    * @return the listener container
    */
-  @NotNull Transformer<? extends Event> transformer();
+  @NotNull Emitter<? extends Event> emitter();
 
 }

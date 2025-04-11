@@ -26,7 +26,7 @@ public final class Reflect {
     } catch (ClassNotFoundException | NoClassDefFoundError e) {
       return false;
     } catch (Throwable e) {
-      // Not sure if this'd happen, but some server software like silencing errors for some reasons.
+      // Not sure if this'd happen, but some server software like silencing errors for some reason.
       e.printStackTrace();
       return true;
     }
@@ -50,7 +50,7 @@ public final class Reflect {
     throw error;
   }
 
-  public static Class<?>[] getClassHierarchy(Class<?> clazz, boolean allowAnonymous) {
+  public static Class<?> @NotNull [] getClassHierarchy(Class<?> clazz, boolean allowAnonymous) {
     List<Class<?>> classes = new ArrayList<>();
 
     Class<?> lastUpperClass = clazz;
@@ -65,6 +65,7 @@ public final class Reflect {
   }
 
   public static @NotNull List<Field> getFields(@NotNull Class<?> clazz) {
+    Validate.Arg.notNull(clazz, "clazz");
     List<Field> fields = new ArrayList<>();
     for (Class<?> hierarchy : getClassHierarchy(clazz, false)) {
       fields.addAll(Arrays.asList(hierarchy.getDeclaredFields()));

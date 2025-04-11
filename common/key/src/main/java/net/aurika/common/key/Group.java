@@ -14,7 +14,7 @@ public interface Group extends PathAware, GroupAware {
   String ALLOWED_SECTION_CHARS = "abcdefghijklmnopqrstuvwxyz";
   char SEPARATOR = '.';
 
-  static @NotNull Group group(@NotNull String groupString) {
+  static @NotNull Group group(@KeyPatterns.Group final @NotNull String groupString) {
     Validate.Arg.notNull(groupString, "groupString");
     @Nullable String problem = checkPathStringProblem(groupString, SEPARATOR, ALLOWED_SECTION_CHARS);
     if (problem != null) {

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * An accessing. It can be a function invoking, a property getting, a namespace accessing or others.
  */
-public interface Access extends Statement {
+public interface Access extends Expression {
 
   /**
    * Gets the operand that be invoked.

@@ -15,8 +15,7 @@ public final class NonNullList<V> implements List<V> {
     this.list = list;
   }
 
-  @NotNull
-  public List<V> getList() {
+  public @NotNull List<V> getList() {
     return list;
   }
 

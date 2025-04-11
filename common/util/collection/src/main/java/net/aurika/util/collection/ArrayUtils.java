@@ -79,7 +79,7 @@ public final class ArrayUtils {
 
   public static final class ConditionalBuilder<T> {
 
-    protected final Collection<T> collection;
+    private final Collection<T> collection;
 
     private ConditionalBuilder(Collection<T> collection) {
       this.collection = collection;

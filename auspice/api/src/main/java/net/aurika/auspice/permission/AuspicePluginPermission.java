@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 public interface AuspicePluginPermission extends Permission {
 
   default @NotNull String namespace() {
-    return Auspice.NAMESPACE;
+    return Auspice.GROUP_STRING;
   }
 
 }
