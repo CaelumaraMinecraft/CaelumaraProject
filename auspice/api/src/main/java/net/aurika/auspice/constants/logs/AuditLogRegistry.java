@@ -12,6 +12,7 @@ public final class AuditLogRegistry extends AbstractKeyedRegistry<AuditLogConstr
     super();
   }
 
+  @Override
   public void register(@NotNull AuditLogConstructor logCtr) {
     if (opening) {
       super.register(logCtr);

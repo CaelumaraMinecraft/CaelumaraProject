@@ -18,6 +18,7 @@ public class AuspiceMetadataRegistry extends AbstractKeyedRegistry<AuspiceMetada
     super();
   }
 
+  @Override
   public final void register(@NotNull AuspiceMetadataHandler metadataHandler) {
     if (Auspice.get().namespace().equals(metadataHandler.key().namespace())) {
       throw new IllegalArgumentException("Cannot register metadata handlers as auspice namespace: " + metadataHandler);

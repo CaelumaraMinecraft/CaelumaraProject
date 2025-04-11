@@ -1,9 +1,9 @@
 package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
+import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.type.DyanasisType;

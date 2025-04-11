@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.part;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.part.AbstractConfigPart;
 import net.aurika.configuration.part.exception.ConfigPartIsRootException;
 import net.aurika.validate.Validate;
@@ -32,7 +32,7 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
   @SuppressWarnings("unchecked")
   public static <N extends Node> @NotNull DefaultYamlConfigPart<N> createRoot(@NotNull N rootNode) {
     Validate.Arg.notNull(rootNode, "rootNode");
-    rootNode = (N) NodeUtils.unpackAnchor(rootNode);
+    rootNode = (N) NodeUtil.unpackAnchor(rootNode);
     if (rootNode instanceof ScalarNode) {
       ScalarNode scalarNode = (ScalarNode) rootNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigScalar(scalarNode);
@@ -55,7 +55,7 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
   ) {
     Validate.Arg.notNull(sequenceParent, "sequenceParent");
     Validate.Arg.notNull(elementNode, "elementNode");
-    elementNode = (N) NodeUtils.unpackAnchor(elementNode);
+    elementNode = (N) NodeUtil.unpackAnchor(elementNode);
     if (elementNode instanceof ScalarNode) {
       ScalarNode scalarNode = (ScalarNode) elementNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigScalar(sequenceParent, scalarNode);
@@ -80,7 +80,7 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
     Validate.Arg.notNull(parentSection, "parentSection");
     Validate.Arg.notNull(name, "name");
     Validate.Arg.notNull(subNode, "subNode");
-    subNode = (N) NodeUtils.unpackAnchor(subNode);
+    subNode = (N) NodeUtil.unpackAnchor(subNode);
     if (subNode instanceof ScalarNode) {
       ScalarNode scalarNode = (ScalarNode) subNode;
       return (DefaultYamlConfigPart<N>) new DefaultYamlConfigScalar(parentSection, name, scalarNode);
@@ -150,8 +150,8 @@ public class DefaultYamlConfigPart<N extends Node> extends AbstractConfigPart im
       if (parent instanceof YamlConfigSection) {
         YamlConfigSection sectionParent = (YamlConfigSection) parent;
         MappingNode mapNode = sectionParent.yamlNode();
-        if (NodeUtils.hasNode(mapNode, name())) {
-          NodeUtils.putNode(mapNode, name(), toNode);
+        if (NodeUtil.hasNode(mapNode, name())) {
+          NodeUtil.putNode(mapNode, name(), toNode);
         } else {  // not root, but also has no parent
           throw new IllegalStateException();
         }

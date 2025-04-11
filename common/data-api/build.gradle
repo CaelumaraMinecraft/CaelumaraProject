@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  api(project(":validate"))
   api(libs.annotations.jetbrains)
 }
 

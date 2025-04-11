@@ -1,8 +1,8 @@
 package net.aurika.auspice.constants.location;
 
 import net.aurika.auspice.platform.entity.Entity;
-import net.aurika.auspice.platform.location.BlockPoint2D;
-import net.aurika.auspice.platform.location.BlockVector2;
+import net.aurika.auspice.platform.location.Block2D;
+import net.aurika.auspice.platform.location.Block2;
 import net.aurika.auspice.platform.location.Direction;
 import net.aurika.auspice.platform.location.Location;
 import net.aurika.ecliptor.api.DataStringRepresentation;
@@ -11,7 +11,6 @@ import net.aurika.ecliptor.api.structured.StructuredData;
 import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.ecliptor.api.structured.scalars.DataScalar;
 import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
-import net.aurika.util.string.CommaDataSplitStrategy;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +20,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, BlockPoint2D, StructuredDataObject {
+public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, Block2D, StructuredDataObject {
 
   private final @NonNull String world;
   private final int x;
@@ -55,7 +54,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
   public static SimpleChunkLocation of(Location var0) {
     Objects.requireNonNull(var0, "Cannot get simple chunk location of a null location");
     return new SimpleChunkLocation(
-        (Objects.requireNonNull(var0.getWorld(), "Simple chunk location cannot have a null world")).getName(),
+        (Objects.requireNonNull(var0.getWorld(), "Simple chunk location cannot have a null world")).name(),
         (int) var0.getX() >> 4, (int) var0.getZ() >> 4
     );
   }
@@ -65,8 +64,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new SimpleChunkLocation(var0.getWorld().getName(), var0.getX() >> 4, var0.getZ() >> 4);
   }
 
-  public BlockVector2 toBlockVector() {
-    return BlockVector2.of(this.x, this.z);
+  public Block2 toBlockVector() {
+    return Block2.of(this.x, this.z);
   }
 
   public static int calculateBorderSize(int var0) {
@@ -135,8 +134,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new org.bukkit.Location(var1, (double) var2, (double) var4, (double) var3);
   }
 
-  public BlockVector2 toLocationXZ() {
-    return BlockVector2.of((this.x << 4) + 8, (this.z << 4) + 8);
+  public Block2 toLocationXZ() {
+    return Block2.of((this.x << 4) + 8, (this.z << 4) + 8);
   }
 
   public org.bukkit.@NonNull Location getCenterLocation(double var1) {
@@ -156,11 +155,13 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return this.world;
   }
 
-  public int getX() {
+  @Override
+  public int x() {
     return this.x;
   }
 
-  public int getZ() {
+  @Override
+  public int z() {
     return this.z;
   }
 
@@ -172,8 +173,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
   }
 
-  public BlockVector2 worldlessWrapper() {
-    return BlockVector2.of(this.x, this.z);
+  public Block2 worldlessWrapper() {
+    return Block2.of(this.x, this.z);
   }
 
   public int hashCode() {

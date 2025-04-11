@@ -1,8 +1,8 @@
 package net.aurika.configuration.yaml.section;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
-import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpretContext;
-import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.common.snakeyaml.node.NodeUtil;
+import net.aurika.common.snakeyaml.node.interpret.NodeInterpretContext;
+import net.aurika.common.snakeyaml.node.interpret.NodeInterpreter;
 import net.aurika.configuration.sections.format.ConfigSectionFormat;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -150,7 +150,7 @@ public interface YamlConfigSection extends ConfigSection {
    */
   default @Nullable Node getNode(@NotNull String key) {
     Node root = getRootNode();
-    return root instanceof MappingNode ? NodeUtils.getNode((MappingNode) root, key) : null;
+    return root instanceof MappingNode ? NodeUtil.getNode((MappingNode) root, key) : null;
   }
 
   default @Nullable Node findNode(@NotNull String @NotNull [] path) {
@@ -160,7 +160,7 @@ public interface YamlConfigSection extends ConfigSection {
 
   default @Nullable NodeTuple getTuple(@NotNull String key) {
     Node root = getRootNode();
-    return root instanceof MappingNode ? NodeUtils.getTuple((MappingNode) root, key) : null;
+    return root instanceof MappingNode ? NodeUtil.getTuple((MappingNode) root, key) : null;
   }
 
   default @Nullable NodeTuple findTuple(@NotNull String @NotNull [] path) {
@@ -176,7 +176,7 @@ public interface YamlConfigSection extends ConfigSection {
 
     while (node instanceof MappingNode) {
       String sec = path[index];
-      NodeTuple subTuple = NodeUtils.getTuple((MappingNode) node, sec);
+      NodeTuple subTuple = NodeUtil.getTuple((MappingNode) node, sec);
       if (subTuple == null) {
         return null;
       }

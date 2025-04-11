@@ -2,8 +2,8 @@ package net.aurika.dyanasis.api.declaration.namespace;
 
 import net.aurika.dyanasis.api.Named;
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.container.SimpleDyanasisFunctionRegistry;
-import net.aurika.dyanasis.api.declaration.invokable.property.container.SimpleDyanasisPropertyRegistry;
+import net.aurika.dyanasis.api.declaration.member.function.container.SimpleDyanasisFunctionRegistry;
+import net.aurika.dyanasis.api.declaration.member.property.container.SimpleDyanasisPropertyRegistry;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.dyanasis.api.type.DyanasisType;

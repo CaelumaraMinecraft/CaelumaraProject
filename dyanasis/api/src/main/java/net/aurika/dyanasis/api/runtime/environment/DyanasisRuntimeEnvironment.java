@@ -1,8 +1,8 @@
 package net.aurika.dyanasis.api.runtime.environment;
 
 import net.aurika.dyanasis.api.declaration.file.DyanasisFile;
-import net.aurika.dyanasis.api.declaration.invokable.function.DyanasisFunction;
-import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisProperty;
+import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunction;
+import net.aurika.dyanasis.api.declaration.member.property.DyanasisProperty;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceContainer;
 import org.jetbrains.annotations.NotNull;
 

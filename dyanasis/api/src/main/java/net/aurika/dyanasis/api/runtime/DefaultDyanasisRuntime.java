@@ -31,4 +31,25 @@ public class DefaultDyanasisRuntime implements DyanasisRuntime {
   @Override
   public void label(String label) { this.label = label; }
 
+  @Override
+  public int hashCode() {
+    return runtimeID;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof DefaultDyanasisRuntime) {
+      DefaultDyanasisRuntime other = (DefaultDyanasisRuntime) obj;
+      return runtimeID() == other.runtimeID();
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    return "DefaultDyanasisRuntime{" +
+        "runtimeID=" + runtimeID +
+        '}';
+  }
+
 }

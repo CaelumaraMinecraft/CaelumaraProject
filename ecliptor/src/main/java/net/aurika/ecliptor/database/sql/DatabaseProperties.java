@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import kotlin.Pair;
 import kotlin.TuplesKt;
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.common.annotations.data.LateInit;
+import net.aurika.common.annotation.data.LateInit;
 import net.aurika.configuration.accessor.YamlClearlyConfigAccessor;
 import net.aurika.configuration.sections.ConfigSection;
 import net.aurika.ecliptor.database.DatabaseType;

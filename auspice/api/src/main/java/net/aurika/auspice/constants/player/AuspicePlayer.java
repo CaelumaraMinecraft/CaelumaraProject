@@ -6,7 +6,7 @@ import net.aurika.auspice.constants.base.KeyedAuspiceObject;
 import net.aurika.auspice.data.centers.AuspiceDataCenter;
 import net.aurika.auspice.platform.player.OfflinePlayer;
 import net.aurika.auspice.translation.diversity.Diversity;
-import net.aurika.common.annotations.data.LateInit;
+import net.aurika.common.annotation.data.LateInit;
 import net.aurika.configuration.functional.invoking.ConfigFunctionalInvokingData;
 import net.aurika.configuration.placeholder.invoking.PlaceholderInvokable;
 import org.jetbrains.annotations.NotNull;

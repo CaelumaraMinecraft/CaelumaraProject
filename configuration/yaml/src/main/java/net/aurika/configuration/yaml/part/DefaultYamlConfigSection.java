@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.part;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.part.ConfigPart;
 import net.aurika.configuration.part.annotation.NamedPart;
 import net.aurika.configuration.part.exception.ConfigPartAlreadyExistException;
@@ -43,26 +43,26 @@ public class DefaultYamlConfigSection extends DefaultYamlConfigPart<MappingNode>
   @Override
   public boolean hasSubPart(@NotNull String name) {
     Validate.Arg.notNull(name, "name");
-    return NodeUtils.hasNode(node, name);
+    return NodeUtil.hasNode(node, name);
   }
 
   @Override
   public @NamedPart @Nullable YamlConfigPart getSubPart(@NotNull String name) {
     Validate.Arg.notNull(name, "name");
-    @Nullable Node gotSubNode = NodeUtils.getNode(node, name);
+    @Nullable Node gotSubNode = NodeUtil.getNode(node, name);
     return gotSubNode == null ? null : getOrInitSubPartStorage(name, gotSubNode);
   }
 
   @Override
   public @NamedPart @Nullable YamlConfigPart removeSubPart(@NotNull String name) {
     Validate.Arg.notNull(name, "name");
-    @Nullable Node removedSubNode = NodeUtils.removeNode(node, name);
+    @Nullable Node removedSubNode = NodeUtil.removeNode(node, name);
     return removedSubNode == null ? null : getOrInitSubPartStorage(name, removedSubNode);
   }
 
   @Override
   public void addSubPart(@NotNull String name, @NamedPart @NotNull ConfigPart sub) throws ConfigPartAlreadyExistException, ConfigPartTypeNotSupportedException {
-    if (NodeUtils.hasNode(node, name)) {
+    if (NodeUtil.hasNode(node, name)) {
       throw new ConfigPartAlreadyExistException(name);
     } else {
       forceAddSubPart(name, sub);
@@ -72,7 +72,7 @@ public class DefaultYamlConfigSection extends DefaultYamlConfigPart<MappingNode>
   @Override
   public void forceAddSubPart(@NotNull String name, @NamedPart final @NotNull ConfigPart sub) throws ConfigPartTypeNotSupportedException {
     if (sub instanceof YamlConfigPart yamlSub) {
-      NodeUtils.putNode(node, name, yamlSub.yamlNode());
+      NodeUtil.putNode(node, name, yamlSub.yamlNode());
       // dont init sub part storage?
     } else {
       throw new ConfigPartTypeNotSupportedException();

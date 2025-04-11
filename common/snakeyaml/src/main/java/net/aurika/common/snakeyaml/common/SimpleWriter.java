@@ -21,7 +21,7 @@ public class SimpleWriter implements StreamDataWriter {
     try {
       this.writer.write(str);
     } catch (IOException ex) {
-      ex.printStackTrace();
+      throw new RuntimeException(ex);
     }
   }
 
@@ -30,7 +30,7 @@ public class SimpleWriter implements StreamDataWriter {
     try {
       this.writer.write(str, off, len);
     } catch (IOException ex) {
-      ex.printStackTrace();
+      throw new RuntimeException(ex);
     }
   }
 

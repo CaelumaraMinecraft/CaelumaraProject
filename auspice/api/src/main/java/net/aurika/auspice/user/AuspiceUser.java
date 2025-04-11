@@ -4,7 +4,7 @@ import net.aurika.auspice.configs.messages.LanguageManager;
 import net.aurika.auspice.constants.metadata.AuspiceMetadataRegistry;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.messenger.DefinedMessenger;
-import net.aurika.common.annotations.UtilMethod;
+import net.aurika.common.annotation.UtilMethod;
 import net.aurika.common.key.*;
 import net.aurika.common.key.namespace.NSedKey;
 import net.aurika.common.key.namespace.nested.NestedNamespace;

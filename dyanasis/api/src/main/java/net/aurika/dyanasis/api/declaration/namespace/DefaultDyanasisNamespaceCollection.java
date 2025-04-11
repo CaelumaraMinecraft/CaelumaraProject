@@ -29,7 +29,6 @@ public class DefaultDyanasisNamespaceCollection implements DyanasisNamespaceCont
 
     private final @NotNull DyanasisNamespaceIdent identifier;
 
-
     @Override
     @NamingContract.Namespace
     public @NotNull String name() {

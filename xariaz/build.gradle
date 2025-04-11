@@ -1,0 +1,10 @@
+plugins {
+  id("net.aurika.gradle.repository")
+}
+
+allprojects {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+  }
+}

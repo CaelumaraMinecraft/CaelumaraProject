@@ -1,11 +1,12 @@
 package net.aurika.dyanasis.api;
 
+import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
+import net.aurika.dyanasis.api.compiler.context.evaluating.DyanasisLexerVariableProvider;
+import net.aurika.dyanasis.api.compiler.expression.Expression;
+import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
 import net.aurika.dyanasis.api.declaration.file.DyanasisFile;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaced;
-import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
-import net.aurika.dyanasis.api.compiler.context.evaluating.DyanasisLexerVariableProvider;
-import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
 import net.aurika.dyanasis.api.object.DyanasisObjectArray;
 import net.aurika.dyanasis.api.object.DyanasisObjectMap;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
@@ -62,7 +63,7 @@ import net.aurika.dyanasis.api.object.DyanasisObjectString;
  *
  * see {@linkplain DyanasisCompiler Lexer}
  * see {@linkplain DyanasisCompilerSettings Lexer Settings}
- * see {@linkplain DyanasisCompiler.Expression Expression}
+ * see {@linkplain Expression Expression}
  * see {@linkplain DyanasisLexerVariableProvider Variable Provider}
  * </pre>
  */

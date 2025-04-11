@@ -2,8 +2,10 @@ package net.aurika.common.key.registry;
 
 import net.aurika.common.key.Key;
 import net.aurika.common.key.Keyed;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -58,6 +60,11 @@ public abstract class AbstractKeyedRegistry<T extends Keyed> implements KeyedReg
   @Override
   public @Nullable T getRegistered(Key key) {
     return this.registry == null ? null : this.registry.get(key);
+  }
+
+  @Override
+  public @NotNull Map<Key, T> registry() {
+    return this.registry == null ? new HashMap<>() : Collections.unmodifiableMap(this.registry);
   }
 
 }

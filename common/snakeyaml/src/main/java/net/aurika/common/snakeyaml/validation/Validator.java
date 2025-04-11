@@ -1,7 +1,7 @@
 package net.aurika.common.snakeyaml.validation;
 
 import net.aurika.common.snakeyaml.common.SimpleWriter;
-import net.aurika.common.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.node.NodesKt;
 import org.snakeyaml.engine.v2.api.Dump;
 import org.snakeyaml.engine.v2.api.DumpSettings;
 import org.snakeyaml.engine.v2.comments.CommentLine;

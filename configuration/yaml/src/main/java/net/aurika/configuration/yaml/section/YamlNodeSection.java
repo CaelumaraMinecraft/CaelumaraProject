@@ -1,7 +1,7 @@
 package net.aurika.configuration.yaml.section;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
-import net.aurika.common.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.node.NodeUtil;
+import net.aurika.common.snakeyaml.node.NodesKt;
 import net.aurika.configuration.path.ConfigEntry;
 import net.aurika.configuration.path.ConfigEntryMap;
 import net.aurika.configuration.sections.format.YamlConfigSectionFormat;
@@ -156,7 +156,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
       if (!(parentNode instanceof MappingNode mappingParentNode)) {
         throw new IllegalStateException("Parent node is not a mapping node");
       } else {
-        NodeUtils.putNode(mappingParentNode, this.getKey(), data);
+        NodeUtil.putNode(mappingParentNode, this.getKey(), data);
       }
     }
   }
@@ -171,7 +171,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     Validate.Arg.notNull(key, "key");
     MappingNode mappingNode = this.getMapRoot();
     if (mappingNode != null) {
-      Node subNode = NodeUtils.getNode(mappingNode, key);
+      Node subNode = NodeUtil.getNode(mappingNode, key);
       if (subNode != null) {
         return of(this.path.append(key), this, subNode);
       }
@@ -185,10 +185,10 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     Node rootNode = this.root;
     if (rootNode instanceof MappingNode mappingRoot) {
 
-      Node subNode = NodeUtils.getNode(mappingRoot, key);
+      Node subNode = NodeUtil.getNode(mappingRoot, key);
       if (subNode == null) {
-        subNode = NodeUtils.nodeOfObject(parsed);
-        NodeUtils.putNode(mappingRoot, key, subNode);
+        subNode = NodeUtil.nodeOfObject(parsed);
+        NodeUtil.putNode(mappingRoot, key, subNode);
       }
 
       Object this_parsed = NodesKt.parsed(rootNode);
@@ -207,7 +207,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     Objects.requireNonNull(key);
     MappingNode mappingNode = this.getMapRoot();
     if (mappingNode != null) {
-      Node removed = NodeUtils.removeNode(mappingNode, key);
+      Node removed = NodeUtil.removeNode(mappingNode, key);
       if (removed != null) {
         return of(this.path.append(key), this, removed);
       }
@@ -228,7 +228,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
       for (NodeTuple tuple : mappingNode.getValue()) {
         Node keyNode = tuple.getKeyNode();
         Node valueNode = tuple.getValueNode();
-        String key = NodeUtils.getScalarValue(keyNode);
+        String key = NodeUtil.getScalarValue(keyNode);
         if (key != null && valueNode != null) {
           subSections.put(key, of(this.path.append(key), this, valueNode));
         }
@@ -253,7 +253,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     if (index < path.length) {
       String name = path[index];
 
-      Node n = NodeUtils.getNode(parentNode, name);
+      Node n = NodeUtil.getNode(parentNode, name);
 
       if (index + 1 == path.length && n != null) {
         return of(parent.path.append(name), parent, n);
@@ -316,7 +316,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     if (depthCount > 0) {
       if (root != null) {
         for (NodeTuple tuple : root.getValue()) {
-          String key = NodeUtils.getScalarValue(tuple.getKeyNode());
+          String key = NodeUtil.getScalarValue(tuple.getKeyNode());
           if (key != null) {
             container.add(key);
           }
@@ -338,7 +338,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     MappingNode mappingNode = this.getMapRoot();
     if (mappingNode != null) {
       for (NodeTuple tuple : mappingNode.getValue()) {
-        String key = NodeUtils.getScalarValue(tuple.getKeyNode());
+        String key = NodeUtil.getScalarValue(tuple.getKeyNode());
         if (key != null) {
           sets.put(key, NodesKt.parsed(tuple.getValueNode()));
         }
@@ -358,7 +358,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
       if (node != null) {
         if (node instanceof MappingNode) {
           for (NodeTuple tuple : ((MappingNode) node).getValue()) {
-            String key = NodeUtils.getScalarValue(tuple.getKeyNode());
+            String key = NodeUtil.getScalarValue(tuple.getKeyNode());
             if (key != null) {
               container.put(key, NodesKt.parsed(tuple.getValueNode()));   // put(!null, nullable)
               $$get_sets(container, tuple.getValueNode(), depthCount - 1);
@@ -384,7 +384,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
         }
 
         if (node instanceof MappingNode) {
-          Node subnode = NodeUtils.getNode((MappingNode) node, path[index]);
+          Node subnode = NodeUtil.getNode((MappingNode) node, path[index]);
           return $$get_set(subnode, path, index + 1);
         }
       }
@@ -402,7 +402,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
   @Override
   public void set(Object value) {
-    Node newNode = NodeUtils.nodeOfObject(value);
+    Node newNode = NodeUtil.nodeOfObject(value);
     changeRoot(newNode);
     NodesKt.cacheConstructed(newNode, value);
   }
@@ -416,7 +416,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
     if (node.getNodeType() == NodeType.MAPPING) {
       for (NodeTuple tuple : ((MappingNode) node).getValue()) {
-        String key = NodeUtils.getScalarValue(tuple.getKeyNode());
+        String key = NodeUtil.getScalarValue(tuple.getKeyNode());
         if (key != null) {
           path = path.append(key);
           node = tuple.getValueNode();
@@ -429,7 +429,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
   @Override
   public @Nullable Object castToObject() {
-    return NodeUtils.deepGetParsed(this.root);
+    return NodeUtil.deepGetParsed(this.root);
   }
 
   @Override
@@ -440,13 +440,13 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
   @Override
   public @Nullable String getString(@NonNull String @NotNull [] path) {
-    return NodeUtils.getParsedWithFilter(this.findNode(path), String.class, Tag.STR);
+    return NodeUtil.getParsedWithFilter(this.findNode(path), String.class, Tag.STR);
   }
 
   @Override
   public @Nullable List<?> getList(@NonNull String @NotNull [] path) {
     Node node = this.findNode(path);
-    Object deepParsed = NodeUtils.deepGetParsed(node);
+    Object deepParsed = NodeUtil.deepGetParsed(node);
     if (deepParsed instanceof List<?>) {
       return (List<?>) deepParsed;
     }
@@ -456,7 +456,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
   @Override
   public @Nullable Map<?, ?> getMap(@NonNull String @NotNull [] path) {
     Node node = this.findNode(path);
-    Object deepParsed = NodeUtils.deepGetParsed(node);
+    Object deepParsed = NodeUtil.deepGetParsed(node);
     if (deepParsed instanceof Map) {
       return (Map<?, ?>) deepParsed;
     }
@@ -563,17 +563,17 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
   @Override
   public @Nullable Character getCharacter() {
-    return NodeUtils.getParsedWithFilter(this.root, Character.class, null);  // TODO
+    return NodeUtil.getParsedWithFilter(this.root, Character.class, null);  // TODO
   }
 
   @Override
   public @Nullable Number getNumber() {
-    return NodeUtils.getParsedWithFilter(this.root, Number.class, null);
+    return NodeUtil.getParsedWithFilter(this.root, Number.class, null);
   }
 
   @Override
   public @Nullable Byte getByte() {
-    Number number = NodeUtils.getParsedWithFilter(this.root, Number.class, Tag.INT);
+    Number number = NodeUtil.getParsedWithFilter(this.root, Number.class, Tag.INT);
     return number == null ? null : number.byteValue();
   }
 
@@ -615,7 +615,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
   @Override
   public @Nullable List<?> getList() {
     if (this.root instanceof SequenceNode seqRoot) {
-      return NodeUtils.deepGetParsed(seqRoot);
+      return NodeUtil.deepGetParsed(seqRoot);
     }
     Object parsed = NodesKt.parsed(this.root);
     return parsed instanceof List ? (List<?>) parsed : null;
@@ -624,7 +624,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
   @Override
   public @Nullable Map<?, ?> getMap() {
     if (this.root instanceof MappingNode mapRoot) {
-      return NodeUtils.deepGetParsed(mapRoot);
+      return NodeUtil.deepGetParsed(mapRoot);
     }
     Object parsed = NodesKt.parsed(this.root);
     return parsed instanceof Map ? (Map<?, ?>) parsed : null;
@@ -632,7 +632,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
   @Override
   public @Nullable String getConfigureString() {
-    return NodeUtils.getScalarValue(this.root);
+    return NodeUtil.getScalarValue(this.root);
   }
 
   @Override
@@ -646,7 +646,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
   @Override
   public <T> @Nullable T getObject(@NotNull String @NotNull [] path, @NotNull Class<T> type) {
     Node node = this.findNode(path);
-    Object obj = NodeUtils.objectOfNode(node);
+    Object obj = NodeUtil.objectOfNode(node);
     if (type.isInstance(obj)) {
       return type.cast(obj);
     }
@@ -735,7 +735,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
 
   protected static @Nullable <T> List<T> getList(@Nullable Node node, @Nullable Class<T> type, @Nullable Tag tag) {
     if (node instanceof SequenceNode seqNode) {
-      return NodeUtils.getParsedListWithElementFilter(seqNode, type, tag);
+      return NodeUtil.getParsedListWithElementFilter(seqNode, type, tag);
     }
     return null;
   }
@@ -745,7 +745,7 @@ public class YamlNodeSection extends AbstractConfigSection implements ConfigSect
     Validate.Arg.notNull(type, "type");
     Validate.Arg.notNull(toNumber, "toNumber");
     if (node instanceof SequenceNode seqNode) {
-      List<Number> numberList = NodeUtils.getParsedListWithElementFilter(seqNode, Number.class, tag);
+      List<Number> numberList = NodeUtil.getParsedListWithElementFilter(seqNode, Number.class, tag);
       if (numberList == null) return null;
       return Generics.migrationType(numberList, new LinkedList<>(), type, toNumber);
     }

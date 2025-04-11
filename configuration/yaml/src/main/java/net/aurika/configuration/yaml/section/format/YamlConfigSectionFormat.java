@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.section.format;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.sections.format.ConfigSectionFormat;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -107,7 +107,7 @@ public enum YamlConfigSectionFormat implements ConfigSectionFormat {
 
   public static @NotNull YamlConfigSectionFormat fromNode(@NotNull Node node) {
     Validate.Arg.notNull(node, "node");
-    node = NodeUtils.unpackAnchor(node);
+    node = NodeUtil.unpackAnchor(node);
     if (node instanceof ScalarNode sca) {
       ScalarStyle style = sca.getScalarStyle();
       if (style == ScalarStyle.PLAIN) return PLAIN_SCALAR;

@@ -1,8 +1,8 @@
 package net.aurika.auspice.text.context;
 
 import net.aurika.auspice.configs.messages.placeholders.context.PlaceholderContextBuilderImpl;
-import net.aurika.common.annotations.Getter;
-import net.aurika.common.annotations.Setter;
+import net.aurika.common.annotation.Getter;
+import net.aurika.common.annotation.Setter;
 
 public class TextContextImpl extends PlaceholderContextBuilderImpl implements TextContext {
 

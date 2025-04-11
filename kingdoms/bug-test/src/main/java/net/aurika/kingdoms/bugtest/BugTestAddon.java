@@ -1,7 +1,5 @@
 package net.aurika.kingdoms.bugtest;
 
-import net.aurika.kingdoms.bugtest.constant.StructureTypeTest;
-import net.aurika.kingdoms.bugtest.manager.BugTestHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -29,14 +27,24 @@ public class BugTestAddon extends JavaPlugin implements Addon {
 
   @Override
   public void onLoad() {
+    System.out.println("but test onLoad");
     registerAddon();
-    try { registerTestStructure(); } catch (Exception e) { e.printStackTrace(); }
+    try {
+      registerTestStructure();
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
   }
 
   @Override
   public void onEnable() {
+    System.out.println("but test onEnable");
     registerTestListener();
-    try { registerTestStructure(); } catch (Exception e) { e.printStackTrace(); }
+//    try {
+//      registerTestStructure();
+//    } catch (Exception e) {
+//      e.printStackTrace(System.err);
+//    }
   }
 
   @Override
@@ -45,7 +53,11 @@ public class BugTestAddon extends JavaPlugin implements Addon {
 
   @Override
   public void reloadAddon() {
-    try { registerTestStructure(); } catch (Exception e) { e.printStackTrace(); }
+//    try {
+//      registerTestStructure();
+//    } catch (Exception e) {
+//      e.printStackTrace(System.err);
+//    }
   }
 
   @Override

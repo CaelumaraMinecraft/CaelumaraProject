@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.importers;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.yaml.adapter.YamlContainer;
 import net.aurika.configuration.yaml.adapter.YamlImportDeclaration;
 import net.aurika.configuration.yaml.adapter.YamlModule;
@@ -30,7 +30,7 @@ public interface YamlImporter {
 
         if (importDeclaration.getExtends()) {
 //                    root.copyIfDoesntExist(declaration.getAdapter().getConfig().getNode(), "", (var0x) -> false);
-          NodeUtils.copyIfDoesntExist(
+          NodeUtil.copyIfDoesntExist(
               root, (MappingNode) declaration.getAdapter().getConfig().getRootNode(), "", (var0x) -> false);
         }
 

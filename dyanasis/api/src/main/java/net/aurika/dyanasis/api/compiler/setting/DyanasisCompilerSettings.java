@@ -118,7 +118,6 @@ public class DyanasisCompilerSettings {
 
     public @NotNull String transfer() { return transfer; }
 
-
     public @NotNull String functionInputLeft() { return functionInputLeft; }
 
     public @NotNull String functionInputRight() { return functionInputRight; }

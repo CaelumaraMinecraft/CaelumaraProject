@@ -1,13 +1,13 @@
 package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DefaultDyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.invokable.property.DyanasisGetableProperty;
-import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
-import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
-import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
+import net.aurika.dyanasis.api.declaration.member.function.key.DefaultDyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.member.property.DyanasisGetableProperty;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.executing.input.DyanasisExecuteInput;
+import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
@@ -127,7 +127,7 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
     }
 
     @Override
-    public @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input) {
+    public @NotNull DyanasisExecuteResult execute(@NotNull DyanasisExecuteInput input) {
       return value.substring();
     }
 
@@ -140,7 +140,7 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
     }
 
     @Override
-    public @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input) {
+    public @NotNull DyanasisExecuteResult execute(@NotNull DyanasisExecuteInput input) {
       return value.substring();
     }
 
@@ -165,8 +165,7 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
       super(key);
     }
 
-    @Override
-    public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+    public abstract @NotNull DyanasisExecuteResult execute(@NotNull DyanasisExecuteInput input);
 
     @Override
     public @NotNull StandardDyanasisObject<String, Lexer> owner() {

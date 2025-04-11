@@ -1,6 +1,6 @@
 package net.aurika.common.key.registry;
 
-public interface Lockable extends BaseRegistry {
+public interface Lockable {
 
   void lock();
 

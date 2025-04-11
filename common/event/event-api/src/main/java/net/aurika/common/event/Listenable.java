@@ -10,6 +10,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface Listenable {
 
-  String listenersFieldName() default "LISTENERS";
+  String listenerContainerFieldName() default "TRANSFORMER";
 
 }

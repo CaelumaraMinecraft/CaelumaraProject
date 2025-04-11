@@ -1,6 +1,7 @@
 package net.aurika.kingdoms.powerfulterritory.constant.land.category;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.namespace.Lockable;
 import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
@@ -24,10 +25,9 @@ public class LandCategoryRegistry extends NamespacedRegistry<LandCategory> imple
   }
 
   @Override
-  public final void register(LandCategory landCategory) {
+  public final void register(@NotNull LandCategory landCategory) {
     super.register(landCategory);
     a.put(landCategory.toConfigKey(), landCategory);
-//        StandardLandCategory.class.cast(null);
   }
 
   public static @Nullable LandCategory getLandCategoryFromConfigName(String name) {

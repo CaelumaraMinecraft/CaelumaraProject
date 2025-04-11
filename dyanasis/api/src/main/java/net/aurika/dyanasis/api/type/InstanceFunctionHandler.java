@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.type;
 
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import org.jetbrains.annotations.NotNull;
 

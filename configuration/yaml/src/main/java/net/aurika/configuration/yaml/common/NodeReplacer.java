@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.common;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.yaml.common.NodeReference.Type;
 import org.snakeyaml.engine.v2.common.Anchor;
 import org.snakeyaml.engine.v2.nodes.*;
@@ -170,7 +170,7 @@ public final class NodeReplacer {
                 newStr = ((ScalarNode) element).getValue();
                 Node value = this.variables.get(newStr);
                 if (value instanceof SequenceNode mergingValues) {
-                  newElements.addAll(mergingValues.getValue().stream().map(NodeUtils::deepCopyNode).toList());
+                  newElements.addAll(mergingValues.getValue().stream().map(NodeUtil::deepCopyNode).toList());
                   this.changed = true;
                   continue;
                 }

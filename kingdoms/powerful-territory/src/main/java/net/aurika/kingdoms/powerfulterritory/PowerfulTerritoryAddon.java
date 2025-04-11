@@ -45,7 +45,7 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
   private static PowerfulTerritoryAddon instance;
 
   public static @NotNull Namespace buildNS(@KingdomsNamingContract.Namespace.Key final @NotNull String key) {
-    //noinspection PatternValidation
+    // noinspection PatternValidation
     return new Namespace("PowerfulTerritory", key);
   }
 

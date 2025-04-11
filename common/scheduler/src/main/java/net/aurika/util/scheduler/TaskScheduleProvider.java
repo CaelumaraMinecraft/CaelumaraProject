@@ -1,7 +1,5 @@
 package net.aurika.util.scheduler;
 
-import net.aurika.auspice.platform.core.Server;
-
 public interface TaskScheduleProvider {
 
   TaskScheduler async();

@@ -1,7 +1,6 @@
 package net.aurika.auspice.constants.location;
 
-import net.aurika.auspice.platform.location.*;
-import net.aurika.common.annotations.data.Immutable;
+import net.aurika.common.annotation.data.Immutable;
 import net.aurika.ecliptor.api.DataStringRepresentation;
 import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
 import net.aurika.ecliptor.api.structured.StructuredData;

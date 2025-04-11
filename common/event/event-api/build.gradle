@@ -4,8 +4,10 @@ plugins {
 }
 
 dependencies {
-  api(project(":validate"))
-  compileOnlyApi(libs.annotations.jetbrains)
+  api("net.aurika:common-key")                // keyed
+  api("net.aurika:common-util-empty")         // empty arrays
+  api(project(":validate"))                   // validate arguments
+  compileOnlyApi(libs.annotations.jetbrains)  // annotations
 }
 
 java {

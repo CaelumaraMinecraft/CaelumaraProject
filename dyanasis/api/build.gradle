@@ -5,6 +5,12 @@ plugins {
 
 dependencies {
   api("net.aurika:common-validate")
+  api("net.aurika:common-key")
   compileOnlyApi(libs.annotations.jetbrains)
   compileOnlyApi(libs.annotations.checker)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }

@@ -1,12 +1,12 @@
 package net.aurika.dyanasis.api.declaration.file;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.container.SimpleDyanasisFunctionRegistry;
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.invokable.property.container.SimpleDyanasisPropertyRegistry;
+import net.aurika.dyanasis.api.declaration.member.function.container.SimpleDyanasisFunctionRegistry;
+import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.member.property.container.SimpleDyanasisPropertyRegistry;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
-import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
-import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
+import net.aurika.dyanasis.api.executing.input.DyanasisExecuteInput;
+import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import org.jetbrains.annotations.NotNull;
@@ -80,8 +80,7 @@ public class DefaultDyanasisFile extends AbstractDyanasisFile<DefaultDyanasisFil
       super(key);
     }
 
-    @Override
-    public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+    public abstract @NotNull DyanasisExecuteResult execute(@NotNull DyanasisExecuteInput input);
 
     @Override
     public @NotNull DefaultDyanasisFile owner() {

@@ -4,9 +4,9 @@ import net.aurika.ecliptor.api.structured.DataStructSchema;
 import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.common.function.FloatSupplier;
 import net.aurika.common.function.TriConsumer;
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
-import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpretContext;
-import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.common.snakeyaml.node.NodeUtil;
+import net.aurika.common.snakeyaml.node.interpret.NodeInterpretContext;
+import net.aurika.common.snakeyaml.node.interpret.NodeInterpreter;
 import net.aurika.util.unsafe.fn.Fn;
 import net.aurika.util.uuid.FastUUID;
 import net.aurika.validate.Validate;
@@ -44,7 +44,7 @@ public class YamlNodeDataProvider implements DataProvider, SectionCreatableDataS
 
     @Override
     public @NotNull SectionableDataSetter createSection() {
-        MappingNode element = NodeUtils.emptyMapping();
+        MappingNode element = NodeUtil.emptyMapping();
         if (this.node instanceof SequenceNode) {
             ((SequenceNode) this.node).getValue().add(element);
             return new YamlMappingDataProvider(null, element);

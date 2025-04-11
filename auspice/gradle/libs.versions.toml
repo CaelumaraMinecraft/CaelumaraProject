@@ -73,7 +73,8 @@ kyori_advntr_text_json = { group = "net.kyori", name = "adventure-text-serialize
 kyori_advntr_text_plain = { group = "net.kyori", name = "adventure-text-serializer-plain", version.ref = "adventure_main" }
 kyori_advntr_text_legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure_main" }
 kyori_advntr_text_minimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure_main" }
-kyori_advntr_platform_bukkit = { group = "nei.kyori", name = "adventure-platform-bukkit", version.ref = "adventure_platform" }
+kyori_advntr_platform_api = { group = "net.kyori", name = "adventure-platform-api", version.ref = "adventure_platform" }
+kyori_advntr_platform_bukkit = { group = "net.kyori", name = "adventure-platform-bukkit", version.ref = "adventure_platform" }
 kyori_advntr_platform_bungee = { group = "net.kyori", name = "adventure-platform-bungeecord", version.ref = "adventure_platform" }
 kyori_advntr_event = { group = "net.kyori", name = "event-api", version = "3.0.0" }
 

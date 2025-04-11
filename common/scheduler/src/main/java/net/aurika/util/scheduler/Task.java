@@ -4,6 +4,7 @@ public interface Task extends Runnable {
 
   ExecutionContextType getExecutionContextType();
 
+  @Override
   void run();
 
   enum ExecutionContextType {

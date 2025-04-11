@@ -4,8 +4,8 @@ import net.aurika.validate.Validate;
 import net.aurika.ecliptor.api.DataObject;
 import net.aurika.ecliptor.handler.DataHandler;
 import net.aurika.common.snakeyaml.common.SimpleWriter;
-import net.aurika.common.snakeyaml.nodes.MapNode;
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.MapNode;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.api.Dump;
 import org.snakeyaml.engine.v2.api.DumpSettings;
@@ -39,7 +39,7 @@ public final class YamlDatabase {
         Composer composer = new Composer(loadSettings, new ParserImpl(loadSettings, new StreamReader(loadSettings, reader)));
         var single = composer.getSingleNode();
         if (single.isEmpty()) {
-            return new YamlMappingDataProvider(null, new MapNode(NodeUtils.emptyMapping()));    // TODO 验证
+            return new YamlMappingDataProvider(null, new MapNode(NodeUtil.emptyMapping()));    // TODO 验证
         }
         if (!(single.get() instanceof MappingNode)) {
             throw new IllegalStateException("Expected a mapping single document");

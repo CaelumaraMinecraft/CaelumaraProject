@@ -45,8 +45,8 @@ public class BukkitWorldRegistry implements WorldRegistry {
   }
 
   @Override
-  public @Nullable BukkitWorld getWorld(@NotNull UUID id) {
-    return this.getWorld(Bukkit.getWorld(id));
+  public @Nullable BukkitWorld getWorld(@NotNull UUID uuid) {
+    return this.getWorld(Bukkit.getWorld(uuid));
   }
 
 }

@@ -2,7 +2,7 @@ package net.aurika.ecliptor.database.sql.statements.setters;
 
 import com.google.gson.JsonElement;
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.common.annotations.data.LateInit;
+import net.aurika.common.annotation.data.LateInit;
 import net.aurika.ecliptor.database.DatabaseType;
 import net.aurika.ecliptor.database.sql.base.SQLDatabase;
 import net.aurika.ecliptor.database.sql.statements.SQLUpsert;

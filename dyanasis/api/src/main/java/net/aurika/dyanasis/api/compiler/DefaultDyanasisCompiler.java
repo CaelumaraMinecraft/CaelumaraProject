@@ -1,13 +1,17 @@
 package net.aurika.dyanasis.api.compiler;
 
-import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceIdent;
 import net.aurika.dyanasis.api.compiler.context.evaluating.DyanasisCompilerEvaluateContext;
+import net.aurika.dyanasis.api.compiler.expression.*;
 import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceIdent;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
 
@@ -180,7 +184,7 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
     return original.charAt(bp);
   }
 
-  public class InvokeFunctionExprImpl extends DefaultInvoking implements InvokeFunctionStatement {
+  public class InvokeFunctionExprImpl extends DefaultAccess implements InvokeFunctionStatement {
 
     private final @NotNull String functionName;
     private final @NotNull String argumentsRaw;
@@ -210,7 +214,7 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
 
   }
 
-  public class InvokePropertyExprImpl extends DefaultInvoking implements InvokePropertyStatement {
+  public class InvokePropertyExprImpl extends DefaultAccess implements InvokePropertyStatement {
 
     private final @NotNull String propertyName;
 
@@ -232,11 +236,11 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
 
   }
 
-  public abstract class DefaultInvoking extends DedfaultExpression implements Invoking {
+  public abstract class DefaultAccess extends DedfaultExpression implements Access {
 
     private final @NotNull DefaultDyanasisCompiler.DedfaultExpression invoked;
 
-    protected DefaultInvoking(@NotNull DefaultDyanasisCompiler.DedfaultExpression invoked) {
+    protected DefaultAccess(@NotNull DefaultDyanasisCompiler.DedfaultExpression invoked) {
       Validate.Arg.notNull(invoked, "invoked");
       this.invoked = invoked;
     }
@@ -248,11 +252,11 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
 
   }
 
-  public class DefaultLocalVariableAccess extends DedfaultExpression implements LocalVariableAccess {
+  public class DefaultAccessLocalVariable extends DedfaultExpression implements AccessLocalVariable {
 
     private final @NotNull String variableName;
 
-    public DefaultLocalVariableAccess(@NotNull String variableName) {
+    public DefaultAccessLocalVariable(@NotNull String variableName) {
       Validate.Arg.notNull(variableName, "variableName");
       this.variableName = variableName;
     }
@@ -267,17 +271,17 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
 
   }
 
-  public class DefaultConstant extends DedfaultExpression implements Constant {
+  public class DefaultLiteralObject extends DedfaultExpression implements DeclareLiteralObject {
 
     private final @NotNull DyanasisObject value;
 
-    public DefaultConstant(@NotNull DyanasisObject value) {
+    public DefaultLiteralObject(@NotNull DyanasisObject value) {
       Validate.Arg.notNull(value, "value");
       this.value = value;
     }
 
     @Override
-    public @NotNull DyanasisObject constant() { return value; }
+    public @NotNull DyanasisObject literal() { return value; }
 
     @Override
     public @NotNull Object evaluate(DyanasisCompilerEvaluateContext context) { return value; }
@@ -328,9 +332,9 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
      */
     protected @Nullable DefaultDyanasisCompiler.DefaultStatementLexer.StandardInvokeExpr lexAnonymousSelfInvoke() {
       skipWhitespaces(false);
-      if (startWith(settings.idents().self(), ap)) {  // after skipping ws, if start with self ident
-        ap = ap + settings.idents().self().length();
-        skip(settings.idents().invoke());
+      if (startWith(settings().idents().self(), ap)) {  // after skipping ws, if start with self ident
+        ap = ap + settings().idents().self().length();
+        skip(settings().idents().invoke());
         return new InvokeVariableThisExprImpl();
       } else {
         int invEnd = findInvoke(ap);
@@ -343,7 +347,7 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
       }
     }
 
-    protected @Nullable DyanasisStatementCompiler.InvokeStatement lexInvoke(@NotNull DyanasisStatementCompiler.Statement invoked) {
+    protected @Nullable Access lexInvoke(@NotNull Statement invoked) {
 
     }
 
@@ -358,6 +362,16 @@ public class DefaultDyanasisCompiler extends AbstractDyanasisCompiler {
     public @NotNull DefaultDyanasisCompiler compiler() {
       return DefaultDyanasisCompiler.this;
     }
+
+  }
+
+  public static class Scope {
+
+    private final @NotNull Scope parent;
+    private @Nullable Expression selfReference;
+    private Map<String, DyanasisObject> localVariables = new HashMap<>();
+
+    public Scope(@NotNull Scope parent) { this.parent = parent; }
 
   }
 

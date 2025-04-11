@@ -15,8 +15,8 @@ import net.aurika.auspice.text.compiler.PlaceholderTranslationContext;
 import net.aurika.auspice.text.context.TextContext;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.message.manager.MessageManager;
-import net.aurika.common.annotations.Getter;
-import net.aurika.common.annotations.Setter;
+import net.aurika.common.annotation.Getter;
+import net.aurika.common.annotation.Setter;
 import net.aurika.util.cache.single.CachedSupplier;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.Contract;
@@ -163,10 +163,10 @@ public interface MessageContext extends TextContext, PlaceholderContextBuilder, 
       this.viewer(player);
       this.parse(
           "displayname", new CachedSupplier<>(() -> SoftService.VAULT.isAvailable() && ServiceVault.isAvailable(
-              ServiceVault.Component.CHAT) ? ServiceVault.getDisplayName(player) : player.getDisplayName())
+              ServiceVault.Component.CHAT) ? ServiceVault.getDisplayName(player) : player.displayName())
       );
       Objects.requireNonNull(player);
-      this.parse("pure-displayname", new CachedSupplier<>(player::getDisplayName));
+      this.parse("pure-displayname", new CachedSupplier<>(player::displayName));
     }
     return this;
   }

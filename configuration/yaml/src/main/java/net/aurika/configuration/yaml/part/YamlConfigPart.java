@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.part;
 
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
+import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.part.ConfigPart;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public interface YamlConfigPart extends ConfigPart {
       ConfigPart parent = subYamlConfig.parent();
       if (parent instanceof YamlConfigPart yamlParent) {
         if (yamlParent instanceof YamlConfigSection sectionParent) {
-          NodeUtils.putNode(sectionParent.yamlNode(), subYamlConfig.name(), yamlNode);
+          NodeUtil.putNode(sectionParent.yamlNode(), subYamlConfig.name(), yamlNode);
         }
         if (yamlParent instanceof YamlConfigSequence sequenceParent) {
           sequenceParent.yamlNode().getValue().add(yamlNode);
@@ -43,10 +43,10 @@ public interface YamlConfigPart extends ConfigPart {
     Validate.Arg.notNull(fromNode, "fromNode");
     Validate.Arg.notNull(toNode, "toNode");
     if (parentYamlConfig instanceof YamlConfigSection sectionParent) {
-      NodeUtils.replaceValue(sectionParent.yamlNode(), fromNode, toNode);
+      NodeUtil.replaceValue(sectionParent.yamlNode(), fromNode, toNode);
     }
     if (parentYamlConfig instanceof YamlConfigSequence sequenceParent) {
-      NodeUtils.replaceElement(sequenceParent.yamlNode(), fromNode, toNode);
+      NodeUtil.replaceElement(sequenceParent.yamlNode(), fromNode, toNode);
     }
     throw new IllegalArgumentException("Unsupported parent type: " + parentYamlConfig.getClass().toGenericString());
   }

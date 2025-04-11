@@ -49,7 +49,7 @@ class CommandTransferMember : KingdomsParentCommand("transferMember", true) {
     kingdom.getMembers().forEach { uuid: UUID ->
       val player = KingdomPlayer.getKingdomPlayer(uuid)
       if (player.rank!!.priority > kingdomPlayer.rank!!.priority) {
-        players.add(player.player!!.getName())
+        players.add(player.player!!.name)
       }
     }
 

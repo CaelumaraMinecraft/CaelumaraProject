@@ -4,6 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 public interface MetadataAware {
 
-  @NotNull MetadataContainer metadatas();
+  @NotNull MetaContainer metadata();
 
 }

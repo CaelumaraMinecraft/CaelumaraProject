@@ -4,6 +4,7 @@ public interface ScheduledTask extends Task, Cancellable {
 
   ExecutionContextType getExecutionContextType();
 
+  @Override
   void run();
 
   boolean cancel();

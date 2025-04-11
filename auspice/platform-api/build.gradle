@@ -1,0 +1,19 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api(libs.kyori.advntr.api)
+  api(libs.kyori.advntr.platform.api)
+  api("net.aurika:common-annotation")
+  api("net.aurika:common-data-api")
+  api("net.aurika:common-event-api")
+  api("net.aurika:common-util-string-split")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

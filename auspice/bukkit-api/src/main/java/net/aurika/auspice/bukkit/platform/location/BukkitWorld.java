@@ -40,34 +40,34 @@ public class BukkitWorld implements World {
   }
 
   @NotNull
-  public String getName() {
+  public String name() {
     return this.name;
   }
 
   @NotNull
-  public UUID getUID() {
+  public UUID uuid() {
     return this.id;
   }
 
-  public int getMaxHeight() {
+  public int maxHeight() {
     return this.maxHeight;
   }
 
-  public int getMinHeight() {
+  public int minHeight() {
     return this.minHeight;
   }
 
   public boolean equals(@Nullable Object other) {
-    return other instanceof World && Intrinsics.areEqual(this.getUID(), ((World) other).getUID());
+    return other instanceof World && Intrinsics.areEqual(this.uuid(), ((World) other).uuid());
   }
 
   public int hashCode() {
-    return this.getUID().hashCode();
+    return this.uuid().hashCode();
   }
 
   @NotNull
   public String toString() {
-    return "BukkitWorld(" + this.getUID() + ':' + this.getName() + "})";
+    return "BukkitWorld(" + this.uuid() + ':' + this.name() + "})";
   }
 
   @NotNull
@@ -87,7 +87,7 @@ public class BukkitWorld implements World {
     if (world instanceof BukkitWorld) {
       return ((BukkitWorld) world).getRealWorld();
     }
-    return getWorld(world.getUID(), world);
+    return getWorld(world.uuid(), world);
   }
 
   @NotNull

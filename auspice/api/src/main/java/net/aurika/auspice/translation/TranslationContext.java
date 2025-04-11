@@ -1,8 +1,8 @@
 package net.aurika.auspice.translation;
 
 import net.aurika.auspice.translation.diversity.Diversity;
-import net.aurika.common.annotations.Getter;
-import net.aurika.common.annotations.Setter;
+import net.aurika.common.annotation.Getter;
+import net.aurika.common.annotation.Setter;
 
 public interface TranslationContext {
 

@@ -1,6 +1,7 @@
 package net.aurika.dyanasis.api.compiler;
 
 import net.aurika.dyanasis.api.NamingContract;
+import net.aurika.dyanasis.api.compiler.expression.Expression;
 import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;

@@ -25,7 +25,7 @@ public class CommandAdminRelationAttribute extends KingdomsCommand {
   static List<String> relationsString = new ArrayList<>();
 
   static {
-    Arrays.asList(KingdomRelation.values()).forEach(relation -> relationsString.add(relation.name()));
+    Arrays.asList(KingdomRelation.values()).forEach((relation) -> relationsString.add(relation.name()));
     relationsString.remove("SELF");
   }
 

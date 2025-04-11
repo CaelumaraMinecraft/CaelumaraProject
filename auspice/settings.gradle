@@ -25,6 +25,8 @@ include(
     ":nms",
     ":nms:1_21_4",
 
+    ":platform-api",
+
     // services
     ":service-api",
     ":service:AttributePlus",

@@ -52,7 +52,8 @@ public class DyanasisTypeIdent implements DyanasisTypeIdentAware {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof DyanasisTypeIdent that)) return false;
+    if (!(obj instanceof DyanasisTypeIdent)) return false;
+    DyanasisTypeIdent that = (DyanasisTypeIdent) obj;
     return Objects.equals(namespaceIdent, that.namespaceIdent) && Objects.equals(
         typeName, that.typeName);
   }

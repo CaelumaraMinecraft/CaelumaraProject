@@ -2,8 +2,8 @@ package net.aurika.auspice.configs.messages.context;
 
 import net.aurika.auspice.text.context.TextContextImpl;
 import net.aurika.auspice.translation.diversity.Diversity;
-import net.aurika.common.annotations.Getter;
-import net.aurika.common.annotations.Setter;
+import net.aurika.common.annotation.Getter;
+import net.aurika.common.annotation.Setter;
 import net.aurika.util.string.Strings;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;

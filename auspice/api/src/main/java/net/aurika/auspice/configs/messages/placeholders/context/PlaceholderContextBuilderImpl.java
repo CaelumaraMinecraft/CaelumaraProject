@@ -1,7 +1,7 @@
 package net.aurika.auspice.configs.messages.placeholders.context;
 
-import net.aurika.common.annotations.Getter;
-import net.aurika.common.annotations.Setter;
+import net.aurika.common.annotation.Getter;
+import net.aurika.common.annotation.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

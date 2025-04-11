@@ -2,7 +2,7 @@ package net.aurika.configuration.yaml.accessor;
 
 import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.compiler.math.MathCompiler;
-import net.aurika.common.snakeyaml.nodes.interpret.NodeInterpreter;
+import net.aurika.common.snakeyaml.node.interpret.NodeInterpreter;
 import net.aurika.configuration.accessor.ClearlyConfigAccessor;
 import net.aurika.configuration.path.ConfigEntry;
 import net.aurika.configuration.path.ConfigPath;

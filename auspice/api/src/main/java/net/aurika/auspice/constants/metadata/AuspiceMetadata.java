@@ -1,8 +1,8 @@
 package net.aurika.auspice.constants.metadata;
 
 import net.aurika.auspice.constants.base.KeyedAuspiceObject;
-import net.aurika.common.annotations.Getter;
-import net.aurika.common.annotations.Setter;
+import net.aurika.common.annotation.Getter;
+import net.aurika.common.annotation.Setter;
 import net.aurika.ecliptor.database.dataprovider.SectionCreatableDataSetter;
 import org.jetbrains.annotations.NotNull;
 

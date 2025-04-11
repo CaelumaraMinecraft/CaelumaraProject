@@ -99,22 +99,22 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
             var19 = new net.aurika.tasks.priority.NumberedPriority(((NumberedPriority) priorityAnn).order());
           } else {
             RelativePriority.Type relativeType;
-            NSedKey relativeNs;
+            Key relativeID;
             if (priorityAnn instanceof Before) {
               relativeType = RelativePriority.Type.BEFORE;
-              relativeNs = NSedKey.fromString(((Before) priorityAnn).other());
-              Objects.requireNonNull(relativeNs);
-              var19 = new RelativePriority(relativeType, relativeNs);
+              relativeID = Key.key(((Before) priorityAnn).other());
+              Objects.requireNonNull(relativeID);
+              var19 = new RelativePriority(relativeType, relativeID);
             } else if (priorityAnn instanceof After) {
               relativeType = RelativePriority.Type.AFTER;
-              relativeNs = NSedKey.fromString(((After) priorityAnn).other());
-              Objects.requireNonNull(relativeNs);
-              var19 = (new RelativePriority(relativeType, relativeNs));
+              relativeID = Key.key(((After) priorityAnn).other());
+              Objects.requireNonNull(relativeID);
+              var19 = (new RelativePriority(relativeType, relativeID));
             } else if (priorityAnn instanceof Replace) {
               relativeType = RelativePriority.Type.REPLACE;
-              relativeNs = NSedKey.fromString(((Replace) priorityAnn).other());
-              Objects.requireNonNull(relativeNs);
-              var19 = (new RelativePriority(relativeType, relativeNs));
+              relativeID = Key.key(((Replace) priorityAnn).other());
+              Objects.requireNonNull(relativeID);
+              var19 = (new RelativePriority(relativeType, relativeID));
             } else {
               var19 = (new EnumPriority(PriorityPhase.NORMAL));
             }

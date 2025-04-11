@@ -42,14 +42,14 @@ enum class PowerfulTerritoryPlaceholders(
 
   ;
 
-  override fun translate(context: KingdomsPlaceholderTranslationContext): Any? {
-    return this.translator.apply(context)
-  }
-
-  override fun getFunctions(): Map<String, FunctionalPlaceholder.CompiledFunction>? {
-    val translator = this.translator
-    return if (translator is FunctionalPlaceholder) translator.functions else null
-  }
+//  override fun translate(context: KingdomsPlaceholderTranslationContext): Any? {
+//    return this.translator.apply(context)
+//  }
+//
+//  override fun getFunctions(): Map<String, FunctionalPlaceholder.CompiledFunction>? {
+//    val translator = this.translator
+//    return if (translator is FunctionalPlaceholder) translator.functions else null
+//  }
 
   companion object {
     @JvmStatic

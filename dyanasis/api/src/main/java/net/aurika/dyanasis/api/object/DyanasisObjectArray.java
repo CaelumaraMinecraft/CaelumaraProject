@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.object;
 
-import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
+import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
 import org.jetbrains.annotations.NotNull;
 
 public interface DyanasisObjectArray extends DyanasisObjectSupport {
@@ -27,7 +27,7 @@ public interface DyanasisObjectArray extends DyanasisObjectSupport {
     throw new UnsupportedOperationException();
   }
 
-  default @NotNull <Lambda extends DyanasisObjectLambda> DyanasisFunctionResult forEach(@NotNull Lambda lambda) {
+  default @NotNull <Lambda extends DyanasisObjectLambda> DyanasisExecuteResult forEach(@NotNull Lambda lambda) {
     throw new UnsupportedOperationException();
   }
 

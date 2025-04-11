@@ -1,6 +1,6 @@
 package net.aurika.auspice.permission;
 
-import net.aurika.common.annotations.data.Immutable;
+import net.aurika.common.annotation.data.Immutable;
 import net.aurika.util.string.Strings;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;

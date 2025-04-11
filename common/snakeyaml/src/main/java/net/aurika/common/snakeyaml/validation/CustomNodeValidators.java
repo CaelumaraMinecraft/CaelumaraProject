@@ -3,7 +3,7 @@ package net.aurika.common.snakeyaml.validation;
 import com.cryptomorin.xseries.XEnchantment;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.text.compiler.TextCompilerSettings;
-import net.aurika.common.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.node.NodesKt;
 import net.aurika.configuration.validation.CacheType;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;

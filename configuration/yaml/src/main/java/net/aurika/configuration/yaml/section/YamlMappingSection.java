@@ -1,8 +1,8 @@
 package net.aurika.configuration.yaml.section;
 
-import net.aurika.common.annotations.data.LateInit;
-import net.aurika.common.snakeyaml.nodes.NodeUtils;
-import net.aurika.common.snakeyaml.nodes.NodesKt;
+import net.aurika.common.annotation.data.LateInit;
+import net.aurika.common.snakeyaml.node.NodeUtil;
+import net.aurika.common.snakeyaml.node.NodesKt;
 import net.aurika.configuration.path.ConfigEntryMap;
 import net.aurika.configuration.sections.label.Label;
 import org.checkerframework.common.value.qual.IntRange;
@@ -30,7 +30,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
 
   public @Nullable Node getRootNode() {
     if (root == null) {
-      Node newRoot = NodeUtils.getNode(parentRoot, key);
+      Node newRoot = NodeUtil.getNode(parentRoot, key);
       if (newRoot == null) {
         // TODO
       }
@@ -41,9 +41,9 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
 
   public void setRootNode(Node newRoot) {
     if (newRoot == null) {
-      NodeUtils.removeNode(parentRoot, key);
+      NodeUtil.removeNode(parentRoot, key);
     } else {
-      NodeUtils.putNode(parentRoot, key, newRoot);
+      NodeUtil.putNode(parentRoot, key, newRoot);
     }
     root = newRoot;
   }
@@ -71,7 +71,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
   public @Nullable YamlMappingSection getSubSection(@NotNull String key) {
     Node root = getRootNode();
     if (root instanceof MappingNode mappingRoot) {
-      if (NodeUtils.hasNode(mappingRoot, key)) {
+      if (NodeUtil.hasNode(mappingRoot, key)) {
         return new YamlMappingSection(this, key, Label.AUTO);
       }
     }
@@ -81,14 +81,14 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
   @Override
   public @NotNull YamlMappingSection set(@NotNull String key, @Nullable Object parsed) {
     Node root = getRootNode();
-    Node subNode = NodeUtils.nodeOfObject(parsed);
+    Node subNode = NodeUtil.nodeOfObject(parsed);
     if (root instanceof MappingNode mappingRoot) {
-      NodeUtils.putNode(mappingRoot, key, subNode);
+      NodeUtil.putNode(mappingRoot, key, subNode);
       return new YamlMappingSection(this, key, Label.AUTO);
     }
     if (root == null) {
-      MappingNode newMapRoot = NodeUtils.emptyMapping();
-      NodeUtils.putNode(newMapRoot, key, subNode);
+      MappingNode newMapRoot = NodeUtil.emptyMapping();
+      NodeUtil.putNode(newMapRoot, key, subNode);
       setRootNode(newMapRoot);
       return new YamlMappingSection(this, key, Label.AUTO);
     }
@@ -99,7 +99,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
   public @Nullable YamlMappingSection removeSubSection(@NotNull String key) {
     Node root = getRootNode();
     if (root instanceof MappingNode mappingRoot) {
-      Node removed = NodeUtils.removeNode(mappingRoot, key);
+      Node removed = NodeUtil.removeNode(mappingRoot, key);
       return new YamlMappingSection(this, key, Label.AUTO);
     }
     return null;
@@ -170,7 +170,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
 
   @Override
   public void set(Object value) {
-    setRootNode(NodeUtils.nodeOfObject(value));
+    setRootNode(NodeUtil.nodeOfObject(value));
   }
 
   @Override
@@ -201,7 +201,7 @@ public class YamlMappingSection extends AbstractConfigSection implements ConfigS
 
   @Override
   public Object castToObject() {
-    return NodeUtils.objectOfNode(getRootNode());
+    return NodeUtil.objectOfNode(getRootNode());
   }
 
   @Override

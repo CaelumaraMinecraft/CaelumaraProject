@@ -4,7 +4,7 @@ import net.aurika.auspice.utils.Pair;
 import net.aurika.auspice.utils.Validate;
 import net.aurika.auspice.utils.arrays.ArrayUtils;
 import net.aurika.auspice.utils.string.Strings;
-import net.aurika.common.annotations.data.Immutable;
+import net.aurika.common.annotation.data.Immutable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

@@ -1,6 +1,6 @@
 package net.aurika.configuration.part.adapter;
 
-import net.aurika.common.annotations.flow.StaticUse;
+import net.aurika.common.annotation.flow.StaticUse;
 import net.aurika.configuration.part.ConfigPart;
 import org.jetbrains.annotations.NotNull;
 

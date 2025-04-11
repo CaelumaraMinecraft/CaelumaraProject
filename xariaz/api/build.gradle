@@ -1,0 +1,13 @@
+plugins {
+  id("java-library")
+}
+
+dependencies {
+  api("net.aurika:common-validate")
+  api("net.aurika:common-key")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

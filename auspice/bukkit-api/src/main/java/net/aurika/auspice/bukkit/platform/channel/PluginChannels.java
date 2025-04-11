@@ -6,7 +6,7 @@ import com.cryptomorin.xseries.reflection.minecraft.MinecraftMapping;
 import com.cryptomorin.xseries.reflection.minecraft.MinecraftPackage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import net.aurika.auspice.platform.location.BlockVector3;
+import net.aurika.auspice.platform.location.Block3;
 import net.aurika.auspice.utils.nonnull.NonNullMap;
 import net.aurika.auspice.utils.reflection.Reflect;
 import net.minecraft.resources.MinecraftKey;
@@ -121,8 +121,8 @@ public final class PluginChannels {
         if (!handles.remove(marker)) return;
       }
 
-      for (Map.Entry<BlockVector3, BlockMarker> block : marker.getMarkers().entrySet()) {
-        BlockVector3 loc = block.getKey();
+      for (Map.Entry<Block3, BlockMarker> block : marker.getMarkers().entrySet()) {
+        Block3 loc = block.getKey();
         Object packet = RecordAccessor.createCustomPayload(
             loc.getX(), loc.getY(), loc.getZ(),
             INVISIBLE_MARKER_ARGB, "", REMOVE_MARKER_DURATION
@@ -179,8 +179,8 @@ public final class PluginChannels {
     for (BlockMarkerPluginChannel marker : markers) {
       handles.add(marker);
 
-      for (Map.Entry<BlockVector3, BlockMarker> block : marker.getMarkers().entrySet()) {
-        BlockVector3 loc = block.getKey();
+      for (Map.Entry<Block3, BlockMarker> block : marker.getMarkers().entrySet()) {
+        Block3 loc = block.getKey();
         BlockMarker props = block.getValue();
 
         Object packet = RecordAccessor.createCustomPayload(

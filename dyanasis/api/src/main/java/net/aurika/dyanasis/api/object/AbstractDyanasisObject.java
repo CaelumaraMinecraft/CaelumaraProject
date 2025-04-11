@@ -1,14 +1,14 @@
 package net.aurika.dyanasis.api.object;
 
 import net.aurika.dyanasis.api.NamingContract;
+import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocEditable;
-import net.aurika.dyanasis.api.declaration.invokable.function.AbstractDyanasisFunction;
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.invokable.property.AbstractDyanasisProperty;
+import net.aurika.dyanasis.api.declaration.member.function.AbstractDyanasisFunction;
+import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.member.property.AbstractDyanasisProperty;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceContainer;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceIdent;
-import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.validate.Validate;

@@ -1,6 +1,7 @@
 package net.aurika.common.snakeyaml.constructor;
 
-import net.aurika.common.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.node.NodesKt;
+import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.api.LoadSettings;
 import org.snakeyaml.engine.v2.constructor.StandardConstructor;
@@ -11,7 +12,7 @@ import java.util.Objects;
 public class AuspiceConstructor extends StandardConstructor {
 
   public AuspiceConstructor(@NotNull LoadSettings settings) {
-    super(settings);
+    super(Validate.Arg.notNull(settings, "settings"));
   }
 
   public Object constructObject(@NotNull Node node) {

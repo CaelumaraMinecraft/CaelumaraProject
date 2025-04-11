@@ -160,7 +160,6 @@ include(
 //)
 
 
-
 includeBuild("auspice") {
   dependencySubstitution {
     substitute(module("net.aurika:auspice-api")).using(project(":api"))
@@ -192,6 +191,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
     substitute(module("net.aurika:common-function")).using(project(":function"))
     substitute(module("net.aurika:common-key")).using(project(":key"))
+    substitute(module("net.aurika:common-keyed-api")).using(project(":keyed-api"))
     substitute(module("net.aurika:common-lazy")).using(project(":lazy"))
     substitute(module("net.aurika:common-logging")).using(project(":logging"))
     substitute(module("net.aurika:common-metadata")).using(project(":metadata"))
@@ -199,10 +199,13 @@ includeBuild("common") {
     substitute(module("net.aurika:common-property")).using(project(":property"))
     substitute(module("net.aurika:common-scheduler")).using(project(":scheduler"))
     substitute(module("net.aurika:common-snakeyaml")).using(project(":snakeyaml"))
+    substitute(module("net.aurika:common-sorting-api")).using(project(":sorting-api"))
+    substitute(module("net.aurika:common-sorting-key")).using(project(":sorting-key"))
     substitute(module("net.aurika:common-task")).using(project(":task"))
 
     substitute(module("net.aurika:common-util-cache")).using(project(":util:cache"))
     substitute(module("net.aurika:common-util-collection")).using(project(":util:collection"))
+    substitute(module("net.aurika:common-util-empty")).using(project(":util:empty"))
     substitute(module("net.aurika:common-util-enumeration")).using(project(":util:enumeration"))
     substitute(module("net.aurika:common-util-file")).using(project(":util:file"))
     substitute(module("net.aurika:common-util-functional")).using(project(":util:functional"))
@@ -214,6 +217,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-util-registry")).using(project(":util:registry"))
     substitute(module("net.aurika:common-util-stacktrace")).using(project(":util:stacktrace"))
     substitute(module("net.aurika:common-util-string")).using(project(":util:string"))
+    substitute(module("net.aurika:common-util-string-split")).using(project(":util:string:split"))
     substitute(module("net.aurika:common-util-uuid")).using(project(":util:uuid"))
 
     substitute(module("net.aurika:common-validate")).using(project(":validate"))
@@ -243,6 +247,13 @@ includeBuild("kingdoms") {
     substitute(module("net.aurika:kingdoms-addon-auspice")).using(project(":auspice"))
     substitute(module("net.aurika:kingdoms-addon-powerful-territory")).using(project(":powerful-territory"))
     substitute(module("net.aurika:kingdoms-addon-trade-point")).using(project(":trade-point"))
+  }
+}
+
+includeBuild("xariaz") {
+  dependencySubstitution {
+    substitute(module("net.aurika:xariaz-api")).using(project(":api"))
+    substitute(module("net.aurika:xariaz-yaml")).using(project(":yaml"))
   }
 }
 

@@ -1,6 +1,6 @@
 package net.aurika.common.snakeyaml.validation;
 
-import net.aurika.common.snakeyaml.nodes.NodesKt;
+import net.aurika.common.snakeyaml.node.NodesKt;
 import net.aurika.common.snakeyaml.validation.ValidationFailure.Severity;
 import org.snakeyaml.engine.v2.common.ScalarStyle;
 import org.snakeyaml.engine.v2.nodes.ScalarNode;

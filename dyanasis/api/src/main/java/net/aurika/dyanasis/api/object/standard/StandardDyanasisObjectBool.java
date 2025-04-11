@@ -1,11 +1,11 @@
 package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.invokable.function.key.DyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
-import net.aurika.dyanasis.api.invoking.input.DyanasisFunctionInput;
-import net.aurika.dyanasis.api.invoking.result.DyanasisFunctionResult;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
+import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.executing.input.DyanasisExecuteInput;
+import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
 import net.aurika.dyanasis.api.object.DefaultDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectBool;
@@ -111,8 +111,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisCompiler> extends 
       super(key);
     }
 
-    @Override
-    public abstract @NotNull DyanasisFunctionResult apply(@NotNull DyanasisFunctionInput input);
+    public abstract @NotNull DyanasisExecuteResult execute(@NotNull DyanasisExecuteInput input);
 
     @Override
     public @NotNull StandardDyanasisObjectBool<Lexer> owner() {
