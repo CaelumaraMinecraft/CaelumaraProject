@@ -11,6 +11,7 @@ import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.object.DyanasisObjectString;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DefaultDyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisTypeIdent;
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +48,10 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
     properties = new StandardObjectStringPropertyContainer();
     functions = new StandardObjectStringFunctionContainer();
     // noinspection unchecked
-    type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardStringType(runtime, standardNS(runtime)));
+    type = standardType(
+        dyanasisRuntime(), TYPE_NAME, getClass(),
+        () -> new StandardStringType(dyanasisRuntime(), standardNS(dyanasisRuntime()))
+    );
   }
 
   public StandardDyanasisObjectString(@NotNull DyanasisRuntime runtime, String value, @NotNull Lexer lexer) {
@@ -108,14 +112,14 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
     }
 
     @Override
-    @NamingContract.Invokable
+    @NamingContract.Member
     public @NotNull String name() {
       return "length";
     }
 
     @Override
     public @NotNull DyanasisObjectNumber value() {
-      return new StandardDyanasisObjectNumber<>(runtime, value.length(), lexer);
+      return new StandardDyanasisObjectNumber<>(dyanasisRuntime(), value.length(), compiler);
     }
 
   }
@@ -148,7 +152,7 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
 
   public abstract class AbstractStringProperty extends DefaultObjectProperty {
 
-    public AbstractStringProperty(@NamingContract.Invokable final @NotNull String name) {
+    public AbstractStringProperty(@NamingContract.Member final @NotNull String name) {
       super(name);
     }
 
@@ -174,7 +178,7 @@ public class StandardDyanasisObjectString<Lexer extends DyanasisCompiler> extend
 
   }
 
-  public class StandardStringType extends DefaultObjectType<StandardDyanasisObjectString<Lexer>> {
+  public class StandardStringType extends DefaultDyanasisType<StandardDyanasisObjectString<Lexer>> {
 
     public StandardStringType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
       // noinspection unchecked

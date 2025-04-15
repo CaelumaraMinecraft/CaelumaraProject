@@ -1,5 +1,10 @@
 package net.aurika.dyanasis.api.type;
 
+import net.aurika.common.keyed.Keyed;
+import net.aurika.dyanasis.api.declaration.constructor.DyanasisConstructor;
+import net.aurika.dyanasis.api.declaration.constructor.DyanasisConstructorAnchor;
+import net.aurika.dyanasis.api.declaration.constructor.DyanasisConstructorContainer;
+import net.aurika.dyanasis.api.declaration.constructor.DyanasisConstructorsAware;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaced;
 import net.aurika.dyanasis.api.object.DyanasisObject;
@@ -12,16 +17,25 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param <O> the type of object
  */
-public interface DyanasisType<O extends DyanasisObject> extends DyanasisTypeAware, DyanasisNamespaced, DyanasisRuntimeObject {
+public interface DyanasisType<O extends DyanasisObject>
+    extends Keyed<DyanasisTypeIdent>,
+    DyanasisTypeAware,
+    DyanasisNamespaced,
+    DyanasisRuntimeObject,
+    DyanasisConstructorsAware, DyanasisConstructorAnchor {
 
-  @NotNull DyanasisTypeIdent ident();
+  @Override
+  @NotNull DyanasisTypeIdent key();
 
   boolean isInstance(DyanasisObject dyanasisObject);
 
   @Override
   @NotNull DyanasisNamespace dyanasisNamespace();
 
-  @NotNull Class<? extends DyanasisObject> clazz();
+  @NotNull Class<? extends O> clazz();
+
+  @Override
+  @NotNull DyanasisConstructorContainer constructors();
 
   @NotNull InstancePropertyHandler<O> instancePropertyHandler();
 
@@ -33,6 +47,13 @@ public interface DyanasisType<O extends DyanasisObject> extends DyanasisTypeAwar
   @Override
   default @NotNull DyanasisType<? extends O> dyanasisType() {
     return this;
+  }
+
+  interface TypeConstructor<T extends DyanasisType<?>> extends DyanasisConstructor {
+
+    @Override
+    @NotNull T owner();
+
   }
 
 }

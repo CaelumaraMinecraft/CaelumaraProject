@@ -1,0 +1,17 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  aurikaRepos {
+    essentials_releases()
+    essentials_snapshots()
+  }
+}
+
+dependencies {
+  compileOnly(project(":service:service-api-bukkit"))
+  compileOnly("net.essentialsx:EssentialsX:2.20.1")
+  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
+}

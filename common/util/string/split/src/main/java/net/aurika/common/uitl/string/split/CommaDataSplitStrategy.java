@@ -26,7 +26,7 @@ public final class CommaDataSplitStrategy {
     this.parseAllComponents();
   }
 
-  public void missing() {
+  private void missing() {
     throw new IllegalStateException("Components missing. Expected " + expectedComponentCount + ": " + data);
   }
 

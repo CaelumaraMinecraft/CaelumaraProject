@@ -1,0 +1,53 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api(project(":loader:loader-api"))
+  api(project(":proxy-api"))
+
+  compileOnly(libs.server.bungee)
+  compileOnly(libs.kyori.advntr.platform.bungee) {
+    exclude(module: "adventure-bom")
+    exclude(module: "adventure-api")
+    exclude(module: "adventure-nbt")
+  }
+
+  compileOnly(libs.kyori.advntr.text.bungee)
+
+//  compileOnly("com.imaginarycode.minecraft:RedisBungee:0.4")
+  compileOnly(libs.annotations.jetbrains)
+}
+
+shadowJar {
+  archiveFileName = "Auspice-Bungee"
+
+  dependencies {
+    include(dependency('me.lucko.luckperms:.*'))
+  }
+
+  relocate "net.kyori.adventure", "net.aurika.auspice.libs.adventure"
+  relocate "net.kyori.event", "net.aurika.auspice.libs.eventbus"
+  relocate "com.github.benmanes.caffeine", "net.aurika.auspice.libs.caffeine"
+  relocate "okio", "net.aurika.auspice.libs.okio"
+  relocate "okhttp3", "net.aurika.auspice.libs.okhttp3"
+  relocate "net.bytebuddy", "net.aurika.auspice.libs.bytebuddy"
+  relocate "me.lucko.commodore", "net.aurika.auspice.libs.commodore"
+  relocate "org.mariadb.jdbc", "net.aurika.auspice.libs.mariadb"
+  relocate "com.mysql", "net.aurika.auspice.libs.mysql"
+  relocate "org.postgresql", "net.aurika.auspice.libs.postgresql"
+  relocate "com.zaxxer.hikari", "net.aurika.auspice.libs.hikari"
+  relocate "com.mongodb", "net.aurika.auspice.libs.mongodb"
+  relocate "org.bson", "net.aurika.auspice.libs.bson"
+  relocate "redis.clients.jedis", "net.aurika.auspice.libs.jedis"
+  relocate "io.nats.client", "net.aurika.auspice.libs.nats"
+  relocate "com.rabbitmq", "net.aurika.auspice.libs.rabbitmq"
+  relocate "org.apache.commons.pool2", "net.aurika.auspice.libs.commonspool2"
+  relocate "ninja.leaping.configurate", "net.aurika.auspice.libs.configurate"
+}
+
+artifacts {
+  archives(shadowJar)
+}

@@ -1,7 +1,7 @@
 package net.aurika.dyanasis.api.declaration.function.container;
 
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunction;
-import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunction;
+import net.aurika.dyanasis.api.declaration.function.signature.DyanasisFunctionSignature;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -57,7 +57,7 @@ public interface DyanasisFunctionContainer<F extends DyanasisFunction> {
       DyanasisFunctionSignature fnKey = entry.getKey();
       if (fnKey != null) {
         if (fnKey.name().equals(name)) {
-          sameNameFns.put(fnKey.arity(), entry.getValue());
+          sameNameFns.put(fnKey.parameters().arity(), entry.getValue());
         }
       }
     }

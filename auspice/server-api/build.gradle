@@ -5,6 +5,7 @@ plugins {
 dependencies {
   // extends base api
   api(project(":api"))
+  api(project(":platform:platform-server"))
   compileOnlyApi(libs.annotations.jetbrains)
 }
 

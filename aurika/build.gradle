@@ -3,14 +3,19 @@ plugins {
   id("maven-publish")
 }
 
-version = "0.0.1-pre"
-
-subprojects {
-  it.version = this.version
-}
-
 dependencies {
-  subprojects.forEach {
-    api(it)
-  }
+  api("net.aurika:common-key")
+  api("net.aurika:common-validate")
+
+  api(libs.caffeine)
+  api(libs.kyori.advntr.api)
+
+  // TODO delete
+  compileOnly(libs.kyori.indra.common)
+  compileOnly(libs.kyori.lunar)
+  compileOnly(libs.kyori.mammoth)
+  compileOnly(libs.kryo)
+
+  compileOnly(libs.annotations.jetbrains)
+  compileOnly(libs.annotations.checker)
 }

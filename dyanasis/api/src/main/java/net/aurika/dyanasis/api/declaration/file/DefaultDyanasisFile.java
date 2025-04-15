@@ -1,10 +1,10 @@
 package net.aurika.dyanasis.api.declaration.file;
 
 import net.aurika.dyanasis.api.NamingContract;
-import net.aurika.dyanasis.api.declaration.member.function.container.SimpleDyanasisFunctionRegistry;
-import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
-import net.aurika.dyanasis.api.declaration.member.property.container.SimpleDyanasisPropertyRegistry;
+import net.aurika.dyanasis.api.declaration.function.container.SimpleDyanasisFunctionRegistry;
+import net.aurika.dyanasis.api.declaration.function.signature.DyanasisFunctionSignature;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.declaration.property.container.SimpleDyanasisPropertyRegistry;
 import net.aurika.dyanasis.api.executing.input.DyanasisExecuteInput;
 import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
 import net.aurika.dyanasis.api.object.DyanasisObject;
@@ -60,7 +60,7 @@ public class DefaultDyanasisFile extends AbstractDyanasisFile<DefaultDyanasisFil
 
   public abstract class DefaultFileProperty extends AbstractFileProperty {
 
-    public DefaultFileProperty(@NamingContract.Invokable final @NotNull String name) {
+    public DefaultFileProperty(@NamingContract.Member final @NotNull String name) {
       super(name);
     }
 

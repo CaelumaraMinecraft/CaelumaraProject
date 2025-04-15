@@ -1,9 +1,10 @@
 package net.aurika.dyanasis.api;
 
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDoc;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunction;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisProperty;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunction;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
+import net.aurika.dyanasis.api.declaration.property.DyanasisProperty;
+import net.aurika.dyanasis.api.type.DyanasisType;
 
 public enum DyanasisComponentType {
   /**
@@ -22,6 +23,10 @@ public enum DyanasisComponentType {
    * @see DyanasisDoc
    */
   DOC(DyanasisDoc.class),
+  /**
+   * @see DyanasisType
+   */
+  TYPE(DyanasisType.class),
   ;
   private final Object[] value;
 

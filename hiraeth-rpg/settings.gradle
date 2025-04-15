@@ -1,0 +1,6 @@
+include(
+    ":api",
+    ":server-api",
+    ":bukkit-api",
+    ":proxy-api"
+)

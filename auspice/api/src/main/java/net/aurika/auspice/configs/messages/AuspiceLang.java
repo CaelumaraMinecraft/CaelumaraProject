@@ -2,7 +2,7 @@ package net.aurika.auspice.configs.messages;
 
 import net.aurika.auspice.configs.messages.context.MessageContextImpl;
 import net.aurika.auspice.platform.command.CommandSender;
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.entity.Player;
 import net.aurika.auspice.platform.player.OfflinePlayer;
 import net.aurika.auspice.translation.TranslationEntry;

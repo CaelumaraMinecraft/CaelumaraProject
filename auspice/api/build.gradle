@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":platform-api"))
+  api(project(":platform:platform-api"))
 
   api("net.aurika:common-annotation")
   api("net.aurika:configuration-api")

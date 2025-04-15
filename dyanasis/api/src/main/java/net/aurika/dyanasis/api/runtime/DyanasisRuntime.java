@@ -23,14 +23,14 @@ public interface DyanasisRuntime {
   @NotNull DyanasisRuntimeEnvironment environment();
 
   /**
-   * Gets the label of this dyanasis runtime.
+   * Gets the label of the dyanasis runtime.
    *
    * @return the label
    */
   String label();
 
   /**
-   * Set the label of the dyanasis runtime.
+   * Sets the label of the dyanasis runtime.
    *
    * @param label the label
    */

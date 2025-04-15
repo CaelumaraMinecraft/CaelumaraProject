@@ -6,7 +6,7 @@ import net.aurika.auspice.configs.messages.context.MessageContextImpl;
 import net.aurika.auspice.configs.messages.placeholders.StandardKingdomsPlaceholder;
 import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
 import net.aurika.auspice.platform.command.CommandSender;
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.entity.Player;
 import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.user.Auspice;

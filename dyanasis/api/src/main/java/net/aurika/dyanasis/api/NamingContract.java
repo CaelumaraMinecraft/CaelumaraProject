@@ -2,10 +2,10 @@ package net.aurika.dyanasis.api;
 
 import net.aurika.validate.Validate;
 import org.intellij.lang.annotations.Language;
+import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.*;
-import java.util.regex.Pattern;
 
 public final class NamingContract {
 
@@ -47,29 +47,29 @@ public final class NamingContract {
 
   public static boolean isValidNamespaceName(@NotNull String str) {
     Validate.Arg.notNull(str, "str");
-    return NAMESPACE_PATTERN.matcher(str).matches();
+    return NAMESPACE_REGEX.matcher(str).matches();
   }
 
   @Language("RegExp")
-  public static final String ALLOWED_NAMESPACE = "[a-z]";
-  public static final Pattern NAMESPACE_PATTERN = Pattern.compile(ALLOWED_NAMESPACE);
+  public static final String NAMESPACE_PATTERN = "[a-z]";
+  public static final java.util.regex.Pattern NAMESPACE_REGEX = java.util.regex.Pattern.compile(NAMESPACE_PATTERN);
 
   @Language("RegExp")
-  public static final String ALLOWED_INVOKABLE = "[a-z]+[a-zA-Z0-9_]";
-  public static final Pattern INVOKABLE_PATTERN = Pattern.compile(ALLOWED_INVOKABLE);
+  public static final String MEMBER_PATTERN = "[a-z]+[a-zA-Z0-9_]";
+  public static final java.util.regex.Pattern MEMBER_REGEX = java.util.regex.Pattern.compile(MEMBER_PATTERN);
 
   @Documented
-  @org.intellij.lang.annotations.Pattern(ALLOWED_NAMESPACE)
+  @Pattern(NAMESPACE_PATTERN)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
   public @interface Namespace {
   }
 
   @Documented
-  @org.intellij.lang.annotations.Pattern(ALLOWED_INVOKABLE)
+  @Pattern(MEMBER_PATTERN)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
-  public @interface Invokable {
+  public @interface Member {
   }
 
 }

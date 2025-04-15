@@ -1,0 +1,18 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.kingdoms")
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  compileOnly(project(":service:service-api-bukkit"))
+  compileOnly(aurikaDependency.libsFileTree("plugins/Kingdoms_relocated"))
+  compileOnly("com.github.cryptomorin:kingdoms:1.17.10-BETA")
+}
+
+tasks {
+  shadowJar {
+    kingdomsRelocates.kingdomsRelocates()
+  }
+}

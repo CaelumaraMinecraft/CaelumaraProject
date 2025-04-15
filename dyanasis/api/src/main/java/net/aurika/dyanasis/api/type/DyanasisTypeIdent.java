@@ -11,14 +11,14 @@ public class DyanasisTypeIdent implements DyanasisTypeIdentAware {
   private final @NotNull DyanasisNamespaceIdent namespaceIdent;
   private final @NotNull String typeName;
 
-  public DyanasisTypeIdent(@NotNull DyanasisNamespaceIdent namespaceIdent, @NotNull String typeName) {
-    Validate.Arg.notNull(namespaceIdent, "namespaceIdent");
+  public DyanasisTypeIdent(@NotNull DyanasisNamespaceIdent namespaceID, @NotNull String typeName) {
+    Validate.Arg.notNull(namespaceID, "namespaceID");
     Validate.Arg.notNull(typeName, "typeName");
-    this.namespaceIdent = namespaceIdent;
+    this.namespaceIdent = namespaceID;
     this.typeName = typeName;
   }
 
-  public @NotNull DyanasisNamespaceIdent namespaceIdent() {
+  public @NotNull DyanasisNamespaceIdent namespaceID() {
     return namespaceIdent;
   }
 

@@ -1,32 +1,3 @@
-root:
-  "Auspices":
-    'Auspice':
-      'api':
-        description: "包含 server, 配置管理() 等 api"
-      'game':
-        'api': ~
-        'bukkit':
-          'craftbukkit':
-            impls: [ ':Auspice:game:api' ]
-          'spigot':
-          'paper':
-
-  "aurika":
-    'base':
-      depends: [ ':checker' ]
-    'checker': ~
-    'configuration':
-      depends: [ ':checker', ':base' ]
-    'data-storage':
-      depends: [ ':base' ]
-
-  "KingdomsAddons":
-    'Auspice':
-
-      #  atacswmfb6s  R!TyJ4sH!6i:atN    2012/5//9
-
-
-
 
     "minecraft:custom_name": { "extra": [ "", { "color": "dark_red", "text": "某虎私酿" } ], "italic": false, "text": "" },
     "minecraft:potion_contents":

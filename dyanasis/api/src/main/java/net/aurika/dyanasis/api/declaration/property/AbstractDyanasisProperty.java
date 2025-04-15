@@ -7,16 +7,16 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractDyanasisProperty implements DyanasisProperty {
 
-  @NamingContract.Invokable
+  @NamingContract.Member
   private final @NotNull String name;
 
-  public AbstractDyanasisProperty(@NamingContract.Invokable final @NotNull String name) {
+  public AbstractDyanasisProperty(@NamingContract.Member final @NotNull String name) {
     Validate.Arg.notNull(name, "name");
     this.name = name;
   }
 
   @Override
-  @NamingContract.Invokable
+  @NamingContract.Member
   public @NotNull String name() {
     return name;
   }

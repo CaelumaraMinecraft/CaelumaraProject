@@ -2,7 +2,7 @@ package net.aurika.dyanasis.api.object.standard;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
-import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.function.signature.DyanasisFunctionSignature;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.executing.input.DyanasisExecuteInput;
 import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
@@ -10,6 +10,7 @@ import net.aurika.dyanasis.api.object.DefaultDyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectBool;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DefaultDyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisTypeIdent;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,8 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisCompiler> extends 
     properties = new StandardObjectBoolPropertyContainer();
     functions = new StandardObjectBoolFunctionContainer();
     // noinspection unchecked
-    type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardObjectBoolType(standardNS(runtime)));
+    type = standardType(
+        dyanasisRuntime(), TYPE_NAME, getClass(), () -> new StandardObjectBoolType(standardNS(dyanasisRuntime())));
   }
 
   public StandardDyanasisObjectBool(@NotNull DyanasisRuntime runtime, boolean value, Lexer lexer) {
@@ -51,11 +53,14 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisCompiler> extends 
 
   @Override
   public boolean equals(@NotNull String cfgStr) {
-    return switch (cfgStr) {
-      case "true" -> value == Boolean.TRUE;
-      case "false" -> value == Boolean.FALSE;
-      default -> false;
-    };
+    switch (cfgStr) {  // TODO
+      case "true":
+        return value == Boolean.TRUE;
+      case "false":
+        return value == Boolean.FALSE;
+      default:
+        return false;
+    }
   }
 
   @Override
@@ -91,7 +96,7 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisCompiler> extends 
 
   public abstract class StandardObjectBoolProperty extends DefaultObjectProperty {
 
-    public StandardObjectBoolProperty(@NamingContract.Invokable final @NotNull String name) {
+    public StandardObjectBoolProperty(@NamingContract.Member final @NotNull String name) {
       super(name);
     }
 
@@ -120,24 +125,24 @@ public class StandardDyanasisObjectBool<Lexer extends DyanasisCompiler> extends 
 
   }
 
-  public class StandardObjectBoolType extends DefaultObjectType<StandardDyanasisObjectBool<Lexer>> {
+  public class StandardObjectBoolType extends DefaultDyanasisType<StandardDyanasisObjectBool<Lexer>> {
 
     public StandardObjectBoolType(@NotNull DyanasisNamespace namespace) {
       // noinspection unchecked
       super(
-          StandardDyanasisObjectBool.this.runtime, namespace, StandardDyanasisObjectBool.TYPE_NAME,
+          StandardDyanasisObjectBool.this.dyanasisRuntime(), namespace, StandardDyanasisObjectBool.TYPE_NAME,
           (Class<? extends StandardDyanasisObjectBool<Lexer>>) StandardDyanasisObjectBool.this.getClass()
       );
     }
 
   }
 
-  public static class StandardDyanasisBoolType extends DefaultObjectType<StandardDyanasisObjectBool<?>> {
+  public class StandardDyanasisBoolType extends DefaultDyanasisType<StandardDyanasisObjectBool<?>> {
 
     public StandardDyanasisBoolType(@NotNull DyanasisNamespace namespace) {
       // noinspection unchecked
       super(
-          StandardDyanasisObjectBool.this.runtime, namespace, StandardDyanasisObjectBool.TYPE_NAME,
+          StandardDyanasisObjectBool.this.dyanasisRuntime(), namespace, StandardDyanasisObjectBool.TYPE_NAME,
           (Class<? extends StandardDyanasisObjectBool<?>>) StandardDyanasisObjectBool.class
       );
     }

@@ -2,27 +2,28 @@ package net.aurika.dyanasis.api.compiler;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.compiler.expression.Expression;
-import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
+import net.aurika.dyanasis.api.compiler.setting.DefaultDyanasisCompilerSettings;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.IntPredicate;
 
+@Deprecated
 public abstract class AbstractDyanasisCompiler implements DyanasisCompiler {
 
   private final @Nullable DyanasisCompiler parent;
-  private final @Nullable DyanasisCompilerSettings settings;
+  private final @Nullable DefaultDyanasisCompilerSettings settings;
   protected final @NotNull String original;
 
-  public AbstractDyanasisCompiler(@NotNull DefaultDyanasisCompiler parent, @NotNull String original) {
+  public AbstractDyanasisCompiler(@NotNull DefaultDyanasisCompilerImpl parent, @NotNull String original) {
     Validate.Arg.notNull(parent, "parent");
     this.parent = parent;
     this.settings = null;
     this.original = original;
   }
 
-  public AbstractDyanasisCompiler(@NotNull DyanasisCompilerSettings settings, @NotNull String original) {
+  public AbstractDyanasisCompiler(@NotNull DefaultDyanasisCompilerSettings settings, @NotNull String original) {
     Validate.Arg.notNull(settings, "settings");
     this.parent = null;
     this.settings = settings;
@@ -144,7 +145,7 @@ public abstract class AbstractDyanasisCompiler implements DyanasisCompiler {
   }
 
   @Override
-  public abstract @NotNull Expression compile();
+  public abstract @NotNull Expression compile(@NotNull String string);
 
   @Override
   public final @Nullable DyanasisCompiler parent() {
@@ -152,7 +153,7 @@ public abstract class AbstractDyanasisCompiler implements DyanasisCompiler {
   }
 
   @Override
-  public final @NotNull DyanasisCompilerSettings settings() {
+  public final @NotNull DefaultDyanasisCompilerSettings settings() {
     DyanasisCompiler parent = this.parent;
     while (parent != null) {
       parent = parent.parent();

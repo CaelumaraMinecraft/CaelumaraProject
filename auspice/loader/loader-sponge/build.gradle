@@ -1,0 +1,59 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+version = "0.0.1-pre"
+
+repositories {
+  maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+}
+
+dependencies {
+  api(project(":loader:loader-api"))
+
+  compileOnly("org.spongepowered:spongeapi:8.0.0") {
+    exclude(module: "configurate-core")
+    exclude(module: "configurate-hocon")
+    exclude(module: "configurate-gson")
+    exclude(module: "configurate-yaml")
+  }
+}
+
+processResources {
+  filesMatching("META-INF/sponge_plugins.json") {
+    expand("version": version)
+  }
+}
+
+shadowJar {
+  archiveFileName = "Auspice-sponge"
+
+  dependencies {
+//        include(dependency('net.aurika.auspice:.*'))
+  }
+
+  relocate("net.kyori.adventure", "net.aurika.auspice.libs.adventure")
+  relocate("net.kyori.event", "net.aurika.auspice.libs.eventbus")
+  relocate("com.github.benmanes.caffeine", "net.aurika.auspice.libs.caffeine")
+  relocate("okio", "net.aurika.auspice.libs.okio")
+  relocate "okhttp3", "net.aurika.auspice.libs.okhttp3"
+  relocate "net.bytebuddy", "net.aurika.auspice.libs.bytebuddy"
+  relocate "me.lucko.commodore", "net.aurika.auspice.libs.commodore"
+  relocate "org.mariadb.jdbc", "net.aurika.auspice.libs.mariadb"
+  relocate "com.mysql", "net.aurika.auspice.libs.mysql"
+  relocate "org.postgresql", "net.aurika.auspice.libs.postgresql"
+  relocate "com.zaxxer.hikari", "net.aurika.auspice.libs.hikari"
+  relocate "com.mongodb", "net.aurika.auspice.libs.mongodb"
+  relocate "org.bson", "net.aurika.auspice.libs.bson"
+  relocate "redis.clients.jedis", "net.aurika.auspice.libs.jedis"
+  relocate "io.nats.client", "net.aurika.auspice.libs.nats"
+  relocate "com.rabbitmq", "net.aurika.auspice.libs.rabbitmq"
+  relocate "org.apache.commons.pool2", "net.aurika.auspice.libs.commonspool2"
+  relocate "ninja.leaping.configurate", "net.aurika.auspice.libs.configurate"
+}
+
+artifacts {
+  archives(shadowJar)
+}

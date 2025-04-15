@@ -1,6 +1,6 @@
 package net.aurika.auspice.permission;
 
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.permission.Permissible;
 import net.aurika.auspice.platform.permission.PermissionManager;
 import net.aurika.auspice.translation.messenger.Messenger;

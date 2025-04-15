@@ -6,6 +6,7 @@ import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionS
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.object.DyanasisObjectNumber;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DefaultDyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisTypeIdent;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,10 @@ public class StandardDyanasisObjectNumber<Lexer extends DyanasisCompiler> extend
     properties = new StandardObjectNumberPropertyContainer();
     functions = new StandardObjectNumberFunctionContainer();
     // noinspection unchecked
-    type = standardType(runtime, TYPE_NAME, getClass(), () -> new StandardNumberType(runtime, standardNS(runtime)));
+    type = standardType(
+        dyanasisRuntime(), TYPE_NAME, getClass(),
+        () -> new StandardNumberType(dyanasisRuntime(), standardNS(dyanasisRuntime()))
+    );
   }
 
   public StandardDyanasisObjectNumber(@NotNull DyanasisRuntime runtime, Number value, @NotNull Lexer lexer) {
@@ -76,7 +80,7 @@ public class StandardDyanasisObjectNumber<Lexer extends DyanasisCompiler> extend
 
   public abstract class AbstractNumberProperty extends DefaultObjectProperty {
 
-    public AbstractNumberProperty(@NamingContract.Invokable final @NotNull String name) {
+    public AbstractNumberProperty(@NamingContract.Member final @NotNull String name) {
       super(name);
     }
 
@@ -100,7 +104,7 @@ public class StandardDyanasisObjectNumber<Lexer extends DyanasisCompiler> extend
 
   }
 
-  public class StandardNumberType extends DefaultObjectType<StandardDyanasisObjectNumber<Lexer>> {
+  public class StandardNumberType extends DefaultDyanasisType<StandardDyanasisObjectNumber<Lexer>> {
 
     public StandardNumberType(@NotNull DyanasisRuntime runtime, @NotNull DyanasisNamespace namespace) {
       // noinspection unchecked

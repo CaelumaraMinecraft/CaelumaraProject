@@ -1,7 +1,7 @@
 package net.aurika.auspice.bukkit.platform.entity;
 
 import net.aurika.auspice.bukkit.server.core.BukkitServer;
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.entity.Entity;
 import net.aurika.auspice.platform.location.Location;
 import net.aurika.auspice.text.compiler.TextObject;

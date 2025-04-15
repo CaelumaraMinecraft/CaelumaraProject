@@ -1,7 +1,0 @@
-main: org.kingdoms.peacetreaties.PeaceTreatiesAddon
-name: "${project_fullName}"
-description: "${project_description}"
-author: Crypto Morin
-version: "${project_version}"
-api-version: "1.13"
-depend: [ Kingdoms ]

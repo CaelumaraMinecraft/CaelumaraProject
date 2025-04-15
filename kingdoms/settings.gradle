@@ -1,6 +1,9 @@
 include(
     ":auspice",
+    ":civilizations",
     ":powerful-territory",
+    ":props",
+    ":supreme-kingdom",
     ":trade-point",
 
     ":bug-test"

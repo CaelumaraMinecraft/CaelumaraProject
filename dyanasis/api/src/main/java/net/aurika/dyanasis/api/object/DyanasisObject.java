@@ -1,40 +1,32 @@
 package net.aurika.dyanasis.api.object;
 
 import net.aurika.dyanasis.api.declaration.NeedOwner;
-import net.aurika.dyanasis.api.declaration.doc.DyanasisDoc;
-import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
-import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAware;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunction;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunctionAnchor;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunctionsAware;
-import net.aurika.dyanasis.api.declaration.member.function.container.DyanasisFunctionContainer;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisPropertiesAware;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisProperty;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisPropertyAnchor;
-import net.aurika.dyanasis.api.declaration.member.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunction;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunctionAnchor;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunctionsAware;
+import net.aurika.dyanasis.api.declaration.function.container.DyanasisFunctionContainer;
+import net.aurika.dyanasis.api.declaration.property.DyanasisPropertiesAware;
+import net.aurika.dyanasis.api.declaration.property.DyanasisProperty;
+import net.aurika.dyanasis.api.declaration.property.DyanasisPropertyAnchor;
+import net.aurika.dyanasis.api.declaration.property.container.DyanasisPropertyContainer;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisTypeAware;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface DyanasisObject
     extends DyanasisRuntimeObject,
     DyanasisPropertiesAware, DyanasisPropertyAnchor,
     DyanasisFunctionsAware, DyanasisFunctionAnchor,
-    DyanasisDocAware, DyanasisDocAnchor,
     DyanasisTypeAware {
 
   @Override
-  @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties();
+  @NotNull ObjectPropertyContainer dyanasisProperties();
 
   @Override
-  @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions();
-
-  @Override
-  @Nullable ObjectDoc dyanasisDoc();
+  @NotNull ObjectFunctionContainer dyanasisFunctions();
 
   /**
    * {@inheritDoc} Note that the return type must be {@code DyanasisType<|X|>},
@@ -61,7 +53,7 @@ public interface DyanasisObject
   @Override
   @NotNull DyanasisRuntime dyanasisRuntime();
 
-  interface ObjectPropertyContainer<P extends ObjectProperty> extends DyanasisPropertyContainer<P>, NeedOwner {
+  interface ObjectPropertyContainer extends DyanasisPropertyContainer<ObjectProperty>, NeedOwner {
 
     @Override
     @ApiStatus.Experimental
@@ -69,7 +61,7 @@ public interface DyanasisObject
 
   }
 
-  interface ObjectFunctionContainer<F extends ObjectFunction> extends DyanasisFunctionContainer<F>, NeedOwner {
+  interface ObjectFunctionContainer extends DyanasisFunctionContainer<ObjectFunction>, NeedOwner {
 
     @Override
     @ApiStatus.Experimental
@@ -90,18 +82,6 @@ public interface DyanasisObject
   }
 
   interface ObjectFunction extends DyanasisFunction {
-
-    @Override
-    @NotNull DyanasisObject owner();
-
-    @Override
-    default @NotNull DyanasisRuntime dyanasisRuntime() {
-      return owner().dyanasisRuntime();
-    }
-
-  }
-
-  interface ObjectDoc extends DyanasisDoc {
 
     @Override
     @NotNull DyanasisObject owner();

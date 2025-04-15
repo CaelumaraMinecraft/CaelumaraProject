@@ -3,5 +3,5 @@ include(
     ":paper-api",
     ":folia-api",
 
-    ":provider:folia-1_21_4"
+    ":provider:provider-folia-1_21_4"
 )

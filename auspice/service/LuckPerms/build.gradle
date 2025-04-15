@@ -1,5 +1,0 @@
-dependencies {
-  api(project(":service-api"))
-  compileOnly(project(":api"))
-  compileOnly("net.luckperms:api:5.4")
-}

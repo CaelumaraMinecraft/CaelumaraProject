@@ -44,6 +44,13 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
 
   private static PowerfulTerritoryAddon instance;
 
+  public static @NotNull PowerfulTerritoryAddon get() {
+    if (instance == null) {
+      throw new IllegalStateException("PowerfulTerritory has not been initialized yet.");
+    }
+    return instance;
+  }
+
   public static @NotNull Namespace buildNS(@KingdomsNamingContract.Namespace.Key final @NotNull String key) {
     // noinspection PatternValidation
     return new Namespace("PowerfulTerritory", key);
@@ -171,13 +178,6 @@ public final class PowerfulTerritoryAddon extends AddonTemplate {
 
   public @NotNull LandLeaseProjectRegistry landLeaseProjectRegistry() {
     return landLeaseProjectRegistry;
-  }
-
-  public static @NotNull PowerfulTerritoryAddon get() {
-    if (instance == null) {
-      throw new IllegalStateException("PowerfulTerritory has not been initialized yet.");
-    }
-    return instance;
   }
 
 }

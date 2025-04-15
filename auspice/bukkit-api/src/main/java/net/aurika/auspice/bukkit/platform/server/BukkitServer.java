@@ -4,7 +4,7 @@ import net.aurika.auspice.bukkit.platform.adapers.BukkitNBTAdapter;
 import net.aurika.auspice.bukkit.platform.events.BukkitEventHandler;
 import net.aurika.auspice.bukkit.platform.location.BukkitWorldRegistry;
 import net.aurika.auspice.bukkit.platform.player.BukkitPlayerManager;
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;

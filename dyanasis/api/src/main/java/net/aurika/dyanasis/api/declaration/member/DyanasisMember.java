@@ -2,6 +2,7 @@ package net.aurika.dyanasis.api.declaration.member;
 
 import net.aurika.dyanasis.api.Named;
 import net.aurika.dyanasis.api.NamingContract;
+import net.aurika.dyanasis.api.access.DyanasisAccessible;
 import net.aurika.dyanasis.api.declaration.DyanasisDeclaration;
 import net.aurika.dyanasis.api.declaration.NeedOwner;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
@@ -17,7 +18,9 @@ import org.jetbrains.annotations.NotNull;
  * @see DyanasisFunction
  * @see DyanasisProperty
  */
-public interface DyanasisMember extends DyanasisDeclaration, DyanasisDocAnchor, NeedOwner, Named, DyanasisRuntimeObject {
+public interface DyanasisMember extends DyanasisDeclaration,
+    DyanasisDocAnchor, NeedOwner, Named,
+    DyanasisRuntimeObject, DyanasisAccessible {
 
   /**
    * Gets the name of the dyanasis member.
@@ -25,7 +28,7 @@ public interface DyanasisMember extends DyanasisDeclaration, DyanasisDocAnchor, 
    * @return the name
    */
   @Override
-  @NamingContract.Invokable
+  @NamingContract.Member
   @NotNull String name();
 
   @Override

@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.declaration.property.container;
 
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisProperty;
+import net.aurika.dyanasis.api.declaration.property.DyanasisProperty;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

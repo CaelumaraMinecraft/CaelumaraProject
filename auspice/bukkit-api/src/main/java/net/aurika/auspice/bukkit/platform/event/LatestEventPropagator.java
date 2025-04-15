@@ -1,6 +1,6 @@
 package net.aurika.auspice.bukkit.platform.event;
 
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.event.EntityDismountEvent;
 import net.aurika.auspice.platform.event.EntityMountEvent;
 import net.aurika.auspice.platform.event.EventPropagator;

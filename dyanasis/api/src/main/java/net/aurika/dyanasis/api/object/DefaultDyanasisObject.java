@@ -2,15 +2,14 @@ package net.aurika.dyanasis.api.object;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
-import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.function.AbstractDyanasisFunction;
+import net.aurika.dyanasis.api.declaration.function.signature.DyanasisFunctionSignature;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
-import net.aurika.dyanasis.api.executing.input.DyanasisExecuteInput;
-import net.aurika.dyanasis.api.executing.result.DyanasisExecuteResult;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceContainer;
+import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceIdent;
+import net.aurika.dyanasis.api.declaration.property.AbstractDyanasisProperty;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
-import net.aurika.dyanasis.api.type.AbstractDyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisType;
-import net.aurika.dyanasis.api.type.InstanceFunctionHandler;
-import net.aurika.dyanasis.api.type.InstancePropertyHandler;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,28 +18,72 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
-/**
- * {@linkplain DyanasisObject} 的默认实现. 自定义的类可以继承此类.
- */
-public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisCompiler> extends AbstractDyanasisObject<T, Lexer, DefaultDyanasisObject.DefaultObjectDoc> {
+public abstract class DefaultDyanasisObject<T, Compiler extends DyanasisCompiler> implements DyanasisObject {
 
-  protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer) {
-    this(runtime, value, lexer, null);
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  protected static <C extends DyanasisObject, T extends DyanasisType<C>> @NotNull T type(
+      @NotNull DyanasisRuntime runtime,
+      @NotNull DyanasisNamespaceIdent path,
+      @NotNull String typename,
+      Class<? extends C> clazz,
+      Supplier<? extends T> whenCreate
+  ) {
+    Validate.Arg.notNull(runtime, "runtime");
+    Validate.Arg.notNull(path, "path");
+    Validate.Arg.notNull(typename, "typename");
+    Validate.Arg.notNull(clazz, "clazz");
+    Validate.Arg.notNull(whenCreate, "whenCreate");
+    DyanasisType type;
+    DyanasisNamespaceContainer namespaces = runtime.environment().namespaces();
+    DyanasisNamespace ns = namespaces.foundOrCreate(path);
+    if (ns.hasDyanasisType(typename)) {
+      type = ns.findDyanasisType(typename);
+      if (!type.clazz().isAssignableFrom(clazz)) {
+        throw new IllegalStateException();
+      }
+    } else {
+      type = whenCreate.get();
+    }
+    return (T) type;
   }
 
-  protected DefaultDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc) {
-    super(runtime, value, lexer, doc);
+  protected T value;
+  protected final @NotNull Compiler compiler;
+
+  protected DefaultDyanasisObject(
+      T value,
+      @NotNull Compiler compiler
+  ) {
+    Validate.Arg.notNull(compiler, "compiler");
+    this.value = value;
+    this.compiler = compiler;
   }
 
-  @Override
-  public abstract boolean equals(@NotNull String cfgStr);
+  /**
+   * Gets the compiler of this dyanasis object.
+   *
+   * @return the compiler
+   */
+  public @NotNull Compiler compiler() { return compiler; }
 
   @Override
-  public abstract @NotNull DyanasisType<? extends DefaultDyanasisObject<T, Lexer>> dyanasisType();
+  public abstract @NotNull ObjectPropertyContainer<? extends ObjectProperty> dyanasisProperties();
 
-  public static abstract class DefaultObjectPropertyContainer<P extends ObjectProperty> implements AbstractObjectPropertyContainer<P> {
+  @Override
+  public abstract @NotNull ObjectFunctionContainer<? extends ObjectFunction> dyanasisFunctions();
+
+  @Override
+  public abstract @NotNull DyanasisType<? extends DyanasisObject> dyanasisType();
+
+  @Override
+  public @NotNull T valueAsJava() { return value; }
+
+  @Override
+  public @NotNull DyanasisRuntime dyanasisRuntime() { return dyanasisType().dyanasisRuntime(); }  // delegate to type
+
+  public static abstract class DefaultObjectPropertyContainer<P extends ObjectProperty> implements ObjectPropertyContainer<P> {
 
     protected final @NotNull Map<String, P> registry;
 
@@ -73,7 +116,7 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisCompiler> e
     }
 
     protected @NotNull Map<String, P> protectedProperties() {
-      return ownerType().instancePropertyHandler().handle(owner());
+      return ownerType().instancePropertyHandler().members(owner());
     }
 
     protected @NotNull DyanasisType ownerType() {
@@ -85,15 +128,16 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisCompiler> e
 
   }
 
-  public static abstract class DefaultObjectFunctionContainer<F extends ObjectFunction> implements AbstractObjectFunctionContainer<F> {
+  public static abstract class DefaultObjectFunctionContainer implements ObjectFunctionContainer {
 
-    protected final @NotNull Map<DyanasisFunctionSignature, F> registry;
+    // 拓展函数 (对于对象)
+    protected final @NotNull Map<DyanasisFunctionSignature, ObjectFunction> registry;
 
     protected DefaultObjectFunctionContainer() {
       this(new HashMap<>());
     }
 
-    protected DefaultObjectFunctionContainer(@NotNull Map<DyanasisFunctionSignature, F> registry) {
+    protected DefaultObjectFunctionContainer(@NotNull Map<DyanasisFunctionSignature, ObjectFunction> registry) {
       super();
       Validate.Arg.notNull(registry, "registry");
       this.registry = registry;
@@ -105,21 +149,21 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisCompiler> e
     }
 
     @Override
-    public @Nullable F getFunction(@NotNull DyanasisFunctionSignature key) {
-      var protectedFns = protectedFunctions();
+    public @Nullable ObjectFunction getFunction(@NotNull DyanasisFunctionSignature key) {
+      @NotNull Map<DyanasisFunctionSignature, ObjectFunction> protectedFns = protectedFunctions();
       return protectedFns.containsKey(key) ? protectedFns.get(key) : registry.get(key);
     }
 
     @Override
-    public @Unmodifiable @NotNull Map<DyanasisFunctionSignature, ? extends F> allFunctions() {
-      Map<DyanasisFunctionSignature, F> fns = new HashMap<>();
+    public @Unmodifiable @NotNull Map<DyanasisFunctionSignature, ObjectFunction> allFunctions() {
+      Map<DyanasisFunctionSignature, ObjectFunction> fns = new HashMap<>();
       fns.putAll(registry);
       fns.putAll(protectedFunctions());
       return fns;
     }
 
-    protected @NotNull Map<DyanasisFunctionSignature, F> protectedFunctions() {
-      return ownerType().instanceFunctionHandler().handle(owner());
+    protected @NotNull Map<DyanasisFunctionSignature, ObjectFunction> protectedFunctions() {
+      return ownerType().instanceFunctionHandler().members(owner());
     }
 
     protected @NotNull DyanasisType ownerType() {
@@ -131,9 +175,9 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisCompiler> e
 
   }
 
-  public abstract static class DefaultObjectProperty extends AbstractObjectProperty {
+  public abstract static class DefaultObjectProperty extends AbstractDyanasisProperty implements ObjectProperty {
 
-    public DefaultObjectProperty(@NamingContract.Invokable final @NotNull String name) {
+    public DefaultObjectProperty(@NamingContract.Member final @NotNull String name) {
       super(name);
     }
 
@@ -143,93 +187,25 @@ public abstract class DefaultDyanasisObject<T, Lexer extends DyanasisCompiler> e
     @Override
     public abstract @NotNull DyanasisObject owner();
 
+    @Override
+    public @NotNull DyanasisRuntime dyanasisRuntime() {
+      return owner().dyanasisRuntime();
+    }
+
   }
 
-  public abstract static class DefaultObjectFunction extends AbstractObjectFunction {
+  public abstract static class DefaultObjectFunction extends AbstractDyanasisFunction implements ObjectFunction {
 
     public DefaultObjectFunction(@NotNull DyanasisFunctionSignature key) {
       super(key);
     }
 
-    public abstract @NotNull DyanasisExecuteResult execute(@NotNull DyanasisExecuteInput input);
-
     @Override
     public abstract @NotNull DyanasisObject owner();
 
-  }
-
-  public abstract static class DefaultObjectDoc extends AbstractObjectDoc {
-
-    public DefaultObjectDoc(@NotNull String value) {
-      super(value);
-    }
-
     @Override
-    public abstract @NotNull DyanasisObject owner();
-
-  }
-
-  public static class DefaultObjectType<O extends DyanasisObject> extends AbstractDyanasisType<O> {
-
-    protected final Map<String, Function<O, DyanasisObject.ObjectProperty>> properties;
-    protected final Map<DyanasisFunctionSignature, Function<O, DyanasisObject.ObjectFunction>> functions;
-
-    public DefaultObjectType(
-        @NotNull DyanasisRuntime runtime,
-        @NotNull DyanasisNamespace namespace,
-        @NotNull String name,
-        @NotNull Class<? extends O> clazz
-    ) {
-      this(runtime, namespace, name, clazz, new HashMap<>(), new HashMap<>());
-    }
-
-    public DefaultObjectType(
-        @NotNull DyanasisRuntime runtime,
-        @NotNull DyanasisNamespace namespace,
-        @NotNull String name,
-        @NotNull Class<? extends O> clazz,
-        Map<String, Function<O, ObjectProperty>> propertyHandlers,
-        Map<DyanasisFunctionSignature, Function<O, ObjectFunction>> functionHandlers
-    ) {
-      super(runtime, namespace, name, clazz);
-      this.properties = propertyHandlers;
-      this.functions = functionHandlers;
-      addProperties();
-      addFunctions();
-    }
-
-    /**
-     * Adds property handlers on creating this object.
-     */
-    protected void addProperties() {
-    }
-
-    /**
-     * Adds function handlers on creating this object.
-     */
-    protected void addFunctions() {
-    }
-
-    @Override
-    public @NotNull InstancePropertyHandler<O> instancePropertyHandler() {
-      return (object) -> {
-        Map<String, ObjectProperty> props = new HashMap<>();
-        for (Map.Entry<String, Function<O, ObjectProperty>> entry : DefaultObjectType.this.properties.entrySet()) {
-          props.put(entry.getKey(), entry.getValue().apply(object));
-        }
-        return props;
-      };
-    }
-
-    @Override
-    public @NotNull InstanceFunctionHandler<O> instanceFunctionHandler() {
-      return (object) -> {
-        Map<DyanasisFunctionSignature, ObjectFunction> fns = new HashMap<>();
-        for (Map.Entry<DyanasisFunctionSignature, Function<O, ObjectFunction>> entry : DefaultObjectType.this.functions.entrySet()) {
-          fns.put(entry.getKey(), entry.getValue().apply(object));
-        }
-        return fns;
-      };
+    public @NotNull DyanasisRuntime dyanasisRuntime() {
+      return owner().dyanasisRuntime();
     }
 
   }

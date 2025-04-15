@@ -1,6 +1,0 @@
-name: "${project.name}"
-version: "${project.version}"
-description: "${project.description}"
-main: top.mckingdom.bridges.placeholderapi.PlaceholderAPIBridge
-api-version: "1.13"
-depend: [ Kingdoms ]

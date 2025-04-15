@@ -1,26 +1,26 @@
 package net.aurika.dyanasis.api.declaration.namespace;
 
 import net.aurika.dyanasis.api.NamingContract;
+import net.aurika.dyanasis.api.access.DyanasisAccessible;
 import net.aurika.dyanasis.api.declaration.DyanasisDeclaration;
 import net.aurika.dyanasis.api.declaration.NeedOwner;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDoc;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAnchor;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocAware;
 import net.aurika.dyanasis.api.declaration.doc.DyanasisDocEditable;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunction;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunctionAnchor;
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunctionsAware;
-import net.aurika.dyanasis.api.declaration.member.function.container.DyanasisFunctionContainer;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisPropertiesAware;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisProperty;
-import net.aurika.dyanasis.api.declaration.member.property.DyanasisPropertyAnchor;
-import net.aurika.dyanasis.api.declaration.member.property.container.DyanasisPropertyContainer;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunction;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunctionAnchor;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunctionsAware;
+import net.aurika.dyanasis.api.declaration.function.container.DyanasisFunctionContainer;
+import net.aurika.dyanasis.api.declaration.property.DyanasisPropertiesAware;
+import net.aurika.dyanasis.api.declaration.property.DyanasisProperty;
+import net.aurika.dyanasis.api.declaration.property.DyanasisPropertyAnchor;
+import net.aurika.dyanasis.api.declaration.property.container.DyanasisPropertyContainer;
 import net.aurika.dyanasis.api.domain.DyanasisDomainObjectsAware;
 import net.aurika.dyanasis.api.domain.DyanasisDomainObjectsContainer;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.dyanasis.api.type.DyanasisType;
-import net.aurika.validate.Validate;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,13 +31,8 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
     DyanasisPropertiesAware, DyanasisPropertyAnchor,
     DyanasisFunctionsAware, DyanasisFunctionAnchor,
     DyanasisDocAware, DyanasisDocAnchor, DyanasisDocEditable<DyanasisNamespace.NamespaceDoc>,
-    DyanasisRuntimeObject, DyanasisDomainObjectsAware {
-
-  @Deprecated(forRemoval = true)
-  static @NotNull DefaultDyanasisNamespaceTree.StandardDyanasisNamespace createIfAbsent(@NotNull DefaultDyanasisNamespaceTree tree, @NotNull DyanasisNamespaceIdent path) {
-    Validate.Arg.notNull(tree, "tree");
-    return tree.foundOrCreate(path);
-  }
+    DyanasisRuntimeObject, DyanasisDomainObjectsAware,
+    DyanasisAccessible {
 
   /**
    * Gets the dyanasis namespace name.
@@ -95,9 +90,9 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
    * Gets a {@linkplain DyanasisType} in the namespace by the type name.
    *
    * @param typename the type name
-   * @return the type, can be null
+   * @return the type, it can be null
    */
-  @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename);
+  @Nullable DyanasisType<?> findDyanasisType(@NotNull String typename);
 
   boolean hasDyanasisType(@NotNull String typename);
 
@@ -112,10 +107,10 @@ public interface DyanasisNamespace extends DyanasisDeclaration,
    * Adds a {@linkplain DyanasisType} to this namespace.
    *
    * @param type the dyanasis type
-   * @return the old type that has the same name
    * @throws IllegalArgumentException when the namespace of {@code type} doesn't equals this namespace
+   * @throws IllegalStateException    when the name of {@code type} was already exist in this namespace
    */
-  @Nullable DyanasisType<?> addDyanasisType(@NotNull DyanasisType<?> type);
+  void addDyanasisType(@NotNull DyanasisType<?> type) throws IllegalArgumentException, IllegalStateException;
 
   @Override
   @NotNull DyanasisRuntime dyanasisRuntime();

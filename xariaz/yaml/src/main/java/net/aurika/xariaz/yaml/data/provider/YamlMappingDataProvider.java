@@ -2,7 +2,6 @@ package net.aurika.xariaz.yaml.data.provider;
 
 import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.validate.Validate;
-import net.aurika.xariaz.api.data.provider.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

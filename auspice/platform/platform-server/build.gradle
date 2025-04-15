@@ -1,0 +1,14 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api(project(":platform:platform-api"))
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

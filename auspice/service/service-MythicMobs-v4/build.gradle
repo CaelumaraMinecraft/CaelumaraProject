@@ -1,0 +1,12 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.dependency")
+}
+
+dependencies {
+  compileOnly(project(":service:service-api-bukkit"))
+  // https://mvn.lumine.io/service/rest/repository/browse/maven-public/io/lumine/xikage/MythicMobs/
+//  compileOnly("io.lumine.xikage:MythicMobs:4.12.0")
+  compileOnly(aurikaDependency.libsFileTree("plugins/MythicMobs-v4"))
+  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
+}

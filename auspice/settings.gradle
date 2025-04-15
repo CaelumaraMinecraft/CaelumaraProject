@@ -12,45 +12,54 @@ include(
 
     ":fabric-api",
 
-    ":loader:bukkit",
-    ":loader:bungee",
-    ":loader:velocity",
+    // loader api
+    ":loader:loader-api",
+    // loaders
+    ":loader:loader-bukkit",
+    ":loader:loader-bungee",
+    ":loader:loader-velocity",
 
-    ":provider",
-    ":provider:folia-1_20_1",
-    ":provider:folia-1_21_4",
-    ":provider:leaf-1_21_4",
-    ":provider:paper-1_21_4",
+    // providers
+    ":provider:provider-folia-1_20_1",
+    ":provider:provider-folia-1_21_4",
+    ":provider:provider-leaf-1_21_4",
+    ":provider:provider-paper-1_21_4",
 
-    ":nms",
-    ":nms:1_21_4",
+    // net.minecraft.server
+    ":nms:nms-1_21_4",
 
-    ":platform-api",
+    // platform api
+    ":platform:platform-api",
+    // platforms
+    ":platform:platform-client",
+    ":platform:platform-server",
 
+    // service api
+    ":service:service-api",
+    ":service:service-api-bukkit",
     // services
-    ":service-api",
-    ":service:AttributePlus",
-    ":service:AuthMe",
-    ":service:CMI",
-    ":service:Essentials",
-    ":service:Floodgate",
-    ":service:ItemsAdder",
-    ":service:Kingdoms",
-    ":service:LuckPerms",
-    ":service:MVdWPlaceholderAPI",
-    ":service:MyPet",
-    ":service:MythicMobs-v4",
-    ":service:MythicMobs-v5",
-    ":service:Oraxen",
-    ":service:PlaceholderAPI",
-    ":service:ProjectKorra",
-    ":service:ServiceIO",
-    ":service:SimplePets",
-    ":service:SkinsRestorer-base",
-    ":service:SkinsRestorer-bukkit",
-    ":service:SkinsRestorer-bungee",
-    ":service:SkinsRestorer-velocity",
-    ":service:Vault",
-    ":service:WorldEdit",
-    ":service:WorldGuard"
+    ":service:service-AttributePlus",
+    ":service:service-AuthMe",
+    ":service:service-CMI",
+    ":service:service-Essentials",
+    ":service:service-Floodgate",
+    ":service:service-ItemsAdder",
+    ":service:service-Kingdoms",
+    ":service:service-LuckPerms",
+    ":service:service-MVdWPlaceholderAPI",
+    ":service:service-MyPet",
+    ":service:service-MythicMobs-v4",
+    ":service:service-MythicMobs-v5",
+    ":service:service-Oraxen",
+    ":service:service-PlaceholderAPI",
+    ":service:service-ProjectKorra",
+    ":service:service-ServiceIO",
+    ":service:service-SimplePets",
+    ":service:service-SkinsRestorer-base",
+    ":service:service-SkinsRestorer-bukkit",
+    ":service:service-SkinsRestorer-bungee",
+    ":service:service-SkinsRestorer-velocity",
+    ":service:service-Vault",
+    ":service:service-WorldEdit",
+    ":service:service-WorldGuard"
 )

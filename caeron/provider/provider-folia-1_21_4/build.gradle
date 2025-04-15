@@ -1,0 +1,30 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+  aurikaRepos {
+    spigotMC.snapshots()
+    spigotMC.releases()
+    paperMC.maven_public()
+    codeMC.maven_public()
+    codeMC.codemc()
+    nostal_snapshots()
+  }
+}
+
+dependencies {
+  api(project(":folia-api"))
+
+  // https://github.com/PaperMC/Folia/blob/master/README.md#the-new-rules
+  // https://github.com/PaperMC/Folia
+  compileOnly("dev.folia:folia-api:1.21.4-R0.1-SNAPSHOT")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
+}

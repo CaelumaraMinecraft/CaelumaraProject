@@ -82,7 +82,7 @@ public class DefaultDyanasisNamespaceCollection implements DyanasisNamespaceCont
     }
 
     @Override
-    public @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename) {
+    public @Nullable DyanasisType<?> findDyanasisType(@NotNull String typename) {
       return null;
     }
 

@@ -339,7 +339,7 @@ public class DefaultDyanasisNamespaceTree implements DyanasisNamespaceContainer,
     }
 
     @Override
-    public @Nullable DyanasisType<?> getDyanasisType(@NotNull String typename) {
+    public @Nullable DyanasisType<?> findDyanasisType(@NotNull String typename) {
       Validate.Arg.notNull(typename, "typename");
       checkAvailable();
       return types.get(typename);
@@ -362,7 +362,7 @@ public class DefaultDyanasisNamespaceTree implements DyanasisNamespaceContainer,
     public @Nullable DyanasisType<?> addDyanasisType(@NotNull DyanasisType<?> type) {
       Validate.Arg.notNull(type, "type");
       checkAvailable();
-      String typename = type.ident().typeName();
+      String typename = type.key().typeName();
       DyanasisNamespace namespace = type.dyanasisNamespace();
       if (!Objects.equals(namespace, this)) {
         throw new IllegalArgumentException(

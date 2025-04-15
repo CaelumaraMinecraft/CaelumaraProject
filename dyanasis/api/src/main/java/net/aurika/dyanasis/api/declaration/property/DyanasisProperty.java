@@ -14,7 +14,7 @@ public interface DyanasisProperty extends DyanasisMember, DyanasisVariable {
    * @return the dyanasis property name
    */
   @Override
-  @NamingContract.Invokable
+  @NamingContract.Member
   @NotNull String name();
 
   @Override
@@ -23,12 +23,8 @@ public interface DyanasisProperty extends DyanasisMember, DyanasisVariable {
   @Override
   @NotNull DyanasisObject value();
 
-  static boolean isGetable(@NotNull DyanasisProperty property) {
-    return property instanceof DyanasisGetableProperty;
-  }
+  static boolean isGettable(@NotNull DyanasisProperty property) { return property instanceof DyanasisGettableProperty; }
 
-  static boolean isSetable(@NotNull DyanasisProperty property) {
-    return property instanceof DyanasisSetableProperty;
-  }
+  static boolean isSettable(@NotNull DyanasisProperty property) { return property instanceof DyanasisSettableProperty; }
 
 }

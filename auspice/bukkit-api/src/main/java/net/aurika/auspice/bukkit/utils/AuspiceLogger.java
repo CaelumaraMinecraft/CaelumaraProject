@@ -4,7 +4,7 @@ import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.auspice.configs.messages.MessageHandler;
 import net.aurika.auspice.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.utils.debug.DebugKey;
 import net.aurika.auspice.utils.debug.DebugSettings;
 import net.aurika.auspice.utils.debug.StacktraceSettings;

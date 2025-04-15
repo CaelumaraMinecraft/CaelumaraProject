@@ -1,0 +1,15 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  aurikaRepos {
+    matteodev()
+  }
+}
+
+dependencies {
+  compileOnly(project(":service:service-api-bukkit"))
+  compileOnly("dev.lone:api-itemsadder:4.0.2-beta-release-11")
+}

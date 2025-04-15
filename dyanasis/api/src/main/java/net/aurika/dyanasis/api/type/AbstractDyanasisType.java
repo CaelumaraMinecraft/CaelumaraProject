@@ -27,11 +27,13 @@ public abstract class AbstractDyanasisType<O extends DyanasisObject> implements 
     this.namespace = namespace;
     this.name = name;
     this.clazz = clazz;
-    namespace.addDyanasisType(this);
+    if (namespace.hasDyanasisType(name)) {
+      namespace.addDyanasisType(this);
+    }
   }
 
   @Override
-  public @NotNull DyanasisTypeIdent ident() {
+  public @NotNull DyanasisTypeIdent key() {
     return namespace.ident().mergeToTypeIdent(name);
   }
 
@@ -46,7 +48,7 @@ public abstract class AbstractDyanasisType<O extends DyanasisObject> implements 
   }
 
   @Override
-  public @NotNull Class<? extends DyanasisObject> clazz() {
+  public @NotNull Class<? extends O> clazz() {
     return clazz;
   }
 

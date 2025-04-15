@@ -118,8 +118,7 @@ include(
 )
 
 include(
-    ":aurika:base",
-    ":aurika:config-api"
+    ":aurika",
 )
 
 //include(
@@ -172,6 +171,12 @@ includeBuild("auspice") {
     substitute(module("net.aurika:auspice-bukkit-api")).using(project(":bukkit-api"))
     substitute(module("net.aurika:auspice-paper-api")).using(project(":paper-api"))
     substitute(module("net.aurika:auspice-folia-api")).using(project(":folia-api"))
+
+    substitute(module("net.aurika:auspice-platform-api")).using(project(":platform:platform-api"))
+
+    substitute(module("net.aurika:auspice-nms-1_21_4")).using(project(":nms:nms-1_21_4"))
+
+    substitute(module("net.aurika:auspice-service-api")).using(project(":service:service-api"))
 
   }
 }
@@ -242,10 +247,22 @@ includeBuild("dyanasis") {
   }
 }
 
+includeBuild("hiraeth-rpg") {
+  dependencySubstitution {
+    substitute(module("net.aurika:hiraeth-api")).using(project(":api"))
+    substitute(module("net.aurika:hiraeth-server-api")).using(project(":server-api"))
+    substitute(module("net.aurika:hiraeth-bukkit-api")).using(project(":bukkit-api"))
+    substitute(module("net.aurika:hiraeth-proxy-api")).using(project(":proxy-api"))
+  }
+}
+
 includeBuild("kingdoms") {
   dependencySubstitution {
     substitute(module("net.aurika:kingdoms-addon-auspice")).using(project(":auspice"))
+    substitute(module("net.aurika:kingdoms-addon-civilizations")).using(project(":civilizations"))
     substitute(module("net.aurika:kingdoms-addon-powerful-territory")).using(project(":powerful-territory"))
+    substitute(module("net.aurika:kingdoms-addon-props")).using(project(":props"))
+    substitute(module("net.aurika:kingdoms-addon-supreme-kingdom")).using(project(":supreme-kingdom"))
     substitute(module("net.aurika:kingdoms-addon-trade-point")).using(project(":trade-point"))
   }
 }

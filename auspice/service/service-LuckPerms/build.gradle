@@ -1,0 +1,9 @@
+plugins {
+  id("java-library")
+}
+
+dependencies {
+  compileOnly(project(":service:service-api"))
+  compileOnly(project(":api"))
+  compileOnly("net.luckperms:api:5.4")
+}

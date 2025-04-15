@@ -1,6 +1,6 @@
 package net.aurika.auspice.utils.cache.single;
 
-import net.aurika.auspice.platform.server.Platform;
+import net.aurika.auspice.platform.Platform;
 import net.aurika.util.cache.single.CacheableObject;
 
 public class TickedCache<T> implements CacheableObject<T> {

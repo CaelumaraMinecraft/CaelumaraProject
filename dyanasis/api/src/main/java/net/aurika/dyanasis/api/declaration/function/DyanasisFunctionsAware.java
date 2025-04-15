@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.declaration.function;
 
-import net.aurika.dyanasis.api.declaration.member.function.container.DyanasisFunctionContainer;
+import net.aurika.dyanasis.api.declaration.function.container.DyanasisFunctionContainer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,6 +13,6 @@ public interface DyanasisFunctionsAware {
    *
    * @return the functions
    */
-  @NotNull DyanasisFunctionContainer dyanasisFunctions();
+  @NotNull DyanasisFunctionContainer<?> dyanasisFunctions();
 
 }

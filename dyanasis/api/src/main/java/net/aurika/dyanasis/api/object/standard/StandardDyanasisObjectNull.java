@@ -5,6 +5,7 @@ import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.object.DyanasisObjectNull;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
+import net.aurika.dyanasis.api.type.DefaultDyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +20,7 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisCompiler> extends 
   protected final StandardObjectNullFunctionContainer functions = new StandardObjectNullFunctionContainer();
   @SuppressWarnings("unchecked")
   private final @NotNull DyanasisType<? extends StandardDyanasisObjectNull<Lexer>> type = standardType(
-      runtime, TYPE_NAME, getClass(), () -> new StandardNullType(standardNS(runtime)));
+      dyanasisRuntime(), TYPE_NAME, getClass(), () -> new StandardNullType(standardNS(dyanasisRuntime())));
 
   public StandardDyanasisObjectNull(@NotNull DyanasisRuntime runtime, @NotNull Lexer lexer) {
     this(runtime, lexer, null);
@@ -41,7 +42,7 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisCompiler> extends 
 
   @Override
   public boolean equals(@NotNull String cfgStr) {
-    return Objects.equals(cfgStr, lexer().settings().idents().nil());
+    return Objects.equals(cfgStr, compiler().settings().idents().nil());
   }
 
   @Override
@@ -67,12 +68,12 @@ public class StandardDyanasisObjectNull<Lexer extends DyanasisCompiler> extends 
 
   }
 
-  public class StandardNullType extends DefaultObjectType<StandardDyanasisObjectNull<Lexer>> {
+  public class StandardNullType extends DefaultDyanasisType<StandardDyanasisObjectNull<Lexer>> {
 
     public StandardNullType(@NotNull DyanasisNamespace namespace) {
       // noinspection unchecked
       super(
-          StandardDyanasisObjectNull.this.runtime, namespace, StandardDyanasisObjectNull.TYPE_NAME,
+          StandardDyanasisObjectNull.this.dyanasisRuntime(), namespace, StandardDyanasisObjectNull.TYPE_NAME,
           (Class<? extends StandardDyanasisObjectNull<Lexer>>) StandardDyanasisObjectNull.this.getClass()
       );
     }

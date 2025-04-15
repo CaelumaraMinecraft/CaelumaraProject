@@ -1,6 +1,5 @@
 package net.aurika.gradle.repository;
 
-import groovy.lang.Closure;
 import net.aurika.gradle.repository.multistorage.*;
 import org.gradle.api.Action;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -41,11 +40,6 @@ public abstract class AurikaRepositoriesExtension implements ExtensionAware {
     this.purpurMC = new PurpurMCRepositoryExtension(repositories);
     this.codeMC = new CodeMCRepositoryExtension(repositories);
     this.oraxen = new OraxenRepositoryExtension(repositories);
-  }
-
-  public void codeMC(@NotNull Closure codeMCRepoClosure) {
-    codeMCRepoClosure.setDelegate(codeMC);
-    codeMCRepoClosure.call();
   }
 
   public void codeMC(@NotNull Action<? super @NotNull CodeMCRepositoryExtension> action) {

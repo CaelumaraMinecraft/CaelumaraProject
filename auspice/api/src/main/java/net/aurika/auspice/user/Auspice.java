@@ -19,9 +19,11 @@ import java.nio.file.Path;
 
 public final class Auspice implements AuspiceUser {
 
+  public static final String NAMESPACE = "auspice";
   @KeyPatterns.Group
   public static final @NotNull String GROUP_STRING = "net.aurika.auspice";
   public static final Group GROUP = Group.group(GROUP_STRING);
+  public static final String USER_NAME = "Auspice";
   private static final Auspice INSTANCE = new Auspice();
   private State state;
   private AuspiceLoader loader;
@@ -73,7 +75,7 @@ public final class Auspice implements AuspiceUser {
   @AuspiceUserName
   @Override
   public @NotNull String auspiceUserName() {
-    return "Auspice";
+    return USER_NAME;
   }
 
   @Override
@@ -136,12 +138,8 @@ public final class Auspice implements AuspiceUser {
     return Key.key(GROUP_STRING, keyPath);
   }
 
-  public static void init() {
+  static {
     StandardDiversity.init();
     DefaultAuspicePluginPermissions.init();
-  }
-
-  static {
-    init();
   }
 }

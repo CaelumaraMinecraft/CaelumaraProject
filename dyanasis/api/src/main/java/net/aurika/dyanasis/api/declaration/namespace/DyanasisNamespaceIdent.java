@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Range;
 import java.util.Arrays;
 import java.util.Objects;
 
-public final class DyanasisNamespaceIdent implements DyanasisNamespaceIdentAware {
+public class DyanasisNamespaceIdent implements DyanasisNamespaceIdentAware {
 
   private final @NotNull String @NotNull [] path;
 
@@ -71,11 +71,12 @@ public final class DyanasisNamespaceIdent implements DyanasisNamespaceIdentAware
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof DyanasisNamespaceIdent that)) {
-      return false;
+  public boolean equals(Object obj) {
+    if (obj instanceof DyanasisNamespaceIdent) {
+      DyanasisNamespaceIdent that = (DyanasisNamespaceIdent) obj;
+      return Objects.deepEquals(path, that.path);
     }
-    return Objects.deepEquals(path, that.path);
+    return false;
   }
 
   @Override

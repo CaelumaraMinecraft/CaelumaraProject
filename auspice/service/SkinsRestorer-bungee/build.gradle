@@ -1,4 +1,0 @@
-dependencies {
-  api(project(":service:SkinsRestorer-base"))
-  compileOnly(libs.server.bungee)
-}

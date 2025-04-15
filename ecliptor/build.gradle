@@ -14,7 +14,6 @@ description = "一个多数据库类型的数据存取 API"
 
 dependencies {
 
-  api(project(":aurika:base"))
   api(project(":ecliptor:data-api"))
   api("net.aurika:common-annotation")
   api("net.aurika:common-data-api")

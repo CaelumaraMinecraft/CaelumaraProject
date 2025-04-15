@@ -4,6 +4,8 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.aurika.auspice.utils.network.SocketJsonCommunicator
 import net.aurika.common.key.Key
+import net.aurika.common.key.Keyed
+import net.aurika.common.key.registry.AbstractKeyedRegistry
 import java.util.function.Consumer
 import java.util.logging.Logger
 
@@ -47,7 +49,7 @@ class SocketManager(val logger: Logger) : AbstractKeyedRegistry<SocketHandler>()
   }
 }
 
-abstract class SocketHandler(private val ns: Key, val needsRequestId: Boolean = false) {
+abstract class SocketHandler(private val ns: Key, val needsRequestId: Boolean = false) : Keyed {
   abstract fun onReceive(session: SocketSession)
   override fun key() = ns
 

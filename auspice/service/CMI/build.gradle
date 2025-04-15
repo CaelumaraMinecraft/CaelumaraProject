@@ -1,9 +1,0 @@
-plugins {
-  id("net.aurika.gradle.dependency")
-}
-
-dependencies {
-  compileOnly(project(":service-api"))
-  compileOnly(aurikaDependency.libsFileTree("plugins/CMI"))
-  compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
-}

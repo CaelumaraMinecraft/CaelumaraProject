@@ -1,12 +1,12 @@
 package net.aurika.dyanasis.api.executing.input;
 
-import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
+import net.aurika.dyanasis.api.compiler.setting.DefaultDyanasisCompilerSettings;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LazyDyanasisExecuteInput extends AbstractDyanasisExecuteInput {
 
-  private @Nullable DyanasisCompilerSettings settings;
+  private @Nullable DefaultDyanasisCompilerSettings settings;
   private String[] args;
 
   public LazyDyanasisExecuteInput(@NotNull String original) {
@@ -19,7 +19,7 @@ public class LazyDyanasisExecuteInput extends AbstractDyanasisExecuteInput {
    * @param original the original string
    * @param settings the lexer settings
    */
-  public LazyDyanasisExecuteInput(@NotNull String original, @Nullable DyanasisCompilerSettings settings) {
+  public LazyDyanasisExecuteInput(@NotNull String original, @Nullable DefaultDyanasisCompilerSettings settings) {
     super(original);
     this.settings = settings;
   }
@@ -43,7 +43,7 @@ public class LazyDyanasisExecuteInput extends AbstractDyanasisExecuteInput {
    *
    * @return the lexer settings
    */
-  public @Nullable DyanasisCompilerSettings settings() {
+  public @Nullable DefaultDyanasisCompilerSettings settings() {
     return settings;
   }
 
@@ -52,7 +52,7 @@ public class LazyDyanasisExecuteInput extends AbstractDyanasisExecuteInput {
    *
    * @param settings the lexer settings
    */
-  public void settings(@Nullable DyanasisCompilerSettings settings) {
+  public void settings(@Nullable DefaultDyanasisCompilerSettings settings) {
     this.settings = settings;
   }
 

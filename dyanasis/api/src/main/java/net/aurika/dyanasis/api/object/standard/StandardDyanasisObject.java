@@ -10,11 +10,10 @@ import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisTypeIdent;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public abstract class StandardDyanasisObject<T, Lexer extends DyanasisCompiler> extends DefaultDyanasisObject<T, Lexer> {
+public abstract class StandardDyanasisObject<T, Compiler extends DyanasisCompiler> extends DefaultDyanasisObject<T, Compiler> {
 
   public static final DyanasisNamespaceIdent STD_NS_PATH = DyanasisNamespaceIdent.path("std");
 
@@ -31,15 +30,11 @@ public abstract class StandardDyanasisObject<T, Lexer extends DyanasisCompiler> 
     return type(runtime, STD_NS_PATH, typename, clazz, whenCreate);
   }
 
-  protected StandardDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer) {
-    super(runtime, value, lexer);
-  }
-
-  protected StandardDyanasisObject(@NotNull DyanasisRuntime runtime, T value, @NotNull Lexer lexer, @Nullable DefaultDyanasisObject.DefaultObjectDoc doc) {
-    super(runtime, value, lexer, doc);
+  protected StandardDyanasisObject(T value, @NotNull Compiler compiler) {
+    super(value, compiler);
   }
 
   @Override
-  public abstract @NotNull DyanasisType<? extends StandardDyanasisObject<T, Lexer>> dyanasisType();
+  public abstract @NotNull DyanasisType<? extends StandardDyanasisObject<T, Compiler>> dyanasisType();
 
 }

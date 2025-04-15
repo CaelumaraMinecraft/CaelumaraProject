@@ -1,7 +1,7 @@
 package net.aurika.dyanasis.api.declaration.function.container;
 
-import net.aurika.dyanasis.api.declaration.member.function.DyanasisFunction;
-import net.aurika.dyanasis.api.declaration.member.function.key.DyanasisFunctionSignature;
+import net.aurika.dyanasis.api.declaration.function.DyanasisFunction;
+import net.aurika.dyanasis.api.declaration.function.signature.DyanasisFunctionSignature;
 import net.aurika.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

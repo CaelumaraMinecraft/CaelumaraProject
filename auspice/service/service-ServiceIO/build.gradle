@@ -1,0 +1,27 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.repository")
+  alias(libs.plugins.kotlin)
+}
+
+repositories {
+  aurikaRepos {
+    thenextlvl_releases()
+    thenextlvl_snapshots()
+  }
+}
+
+dependencies {
+  // extends auspice vault service
+  api(project(":service:service-Vault"))
+  // service-io
+  compileOnly("net.thenextlvl.services:service-io:2.2.0")
+  // paper server
+  compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
+}

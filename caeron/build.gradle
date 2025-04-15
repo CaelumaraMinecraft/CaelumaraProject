@@ -1,11 +1,14 @@
 plugins {
+  id("java-library")
   id("net.aurika.gradle.repository")
 }
 
-version
-description = "A bukkit plugin like slimefun"
+version = "0.0.1-pre"
+description = "A server plugin like slimefun"
 
-subprojects {
+allprojects {
+  plugins.apply("net.aurika.gradle.repository")
+
   repositories {
     mavenCentral()
     mavenLocal()
@@ -13,6 +16,14 @@ subprojects {
       spigotMC.snapshots()
       spigotMC.releases()
       paperMC.maven_public()
+      codeMC.maven_public()
+      codeMC.codemc()
+      nostal_snapshots()
     }
   }
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }

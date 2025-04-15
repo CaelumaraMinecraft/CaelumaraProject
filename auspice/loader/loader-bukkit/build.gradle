@@ -1,0 +1,10 @@
+plugins {
+  id("java-library")
+}
+
+dependencies {
+  api(project(":loader:loader-api"))
+  compileOnly(project(":api"))
+  // noinspection VulnerableLibrariesLocal
+  api("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
+}

@@ -1,0 +1,19 @@
+plugins {
+  id("java-library")
+  id("net.aurika.gradle.dependency")
+  id("net.aurika.gradle.repository")
+}
+
+repositories {
+  aurikaRepos {
+    codeMC {
+      maven_public()
+    }
+  }
+}
+
+dependencies {
+  api("net.aurika:auspice-service-api")
+  compileOnly("net.skinsrestorer:skinsrestorer-api:15.5.2")
+  compileOnlyApi(aurikaDependency.libsFileTree("plugins/SkinsRestorer"))
+}

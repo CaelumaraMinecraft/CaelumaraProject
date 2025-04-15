@@ -17,7 +17,7 @@ public interface DyanasisFunctionSignature extends Named {
    * @return the dyanasis function name
    */
   @Override
-  @NamingContract.Invokable
+  @NamingContract.Member
   @NotNull String name();
 
   @NotNull DyanasisParameterList parameters();

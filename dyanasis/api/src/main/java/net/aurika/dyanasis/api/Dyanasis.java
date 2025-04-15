@@ -3,7 +3,7 @@ package net.aurika.dyanasis.api;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.compiler.context.evaluating.DyanasisLexerVariableProvider;
 import net.aurika.dyanasis.api.compiler.expression.Expression;
-import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSettings;
+import net.aurika.dyanasis.api.compiler.setting.DyanasisCompilerSetting;
 import net.aurika.dyanasis.api.declaration.file.DyanasisFile;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespace;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaced;
@@ -40,6 +40,8 @@ import net.aurika.dyanasis.api.object.DyanasisObjectString;
  * </pre></blockquote>
  * <p><strong>Implementation requirements:</strong></p>
  *
+ * <b>拓展成员:</b>
+ * <p>若在类型上拓展, 则该拓展成员对所有这个类型创建的对象有效 (包括之前创建的), 若在对象上拓展, 则仅对该对象有效.</p>
  *
  * <b>File:</b>
  * <p>一个 {@linkplain DyanasisFile}, 继承了 {@linkplain DyanasisNamespaced}, 因此可以定义它的命名空间.
@@ -62,7 +64,7 @@ import net.aurika.dyanasis.api.object.DyanasisObjectString;
  *                                     ╚══════════════════════════════════════════╝  Next Variable...
  *
  * see {@linkplain DyanasisCompiler Lexer}
- * see {@linkplain DyanasisCompilerSettings Lexer Settings}
+ * see {@linkplain DyanasisCompilerSetting Compiler Settings}
  * see {@linkplain Expression Expression}
  * see {@linkplain DyanasisLexerVariableProvider Variable Provider}
  * </pre>

@@ -11,11 +11,11 @@ import java.util.Objects;
  */
 public class DefaultDyanasisFunctionSignature implements DyanasisFunctionSignature {
 
-  @NamingContract.Invokable
+  @NamingContract.Member
   private final @NotNull String name;
   private final @NotNull DyanasisParameterList parameters;
 
-  protected DefaultDyanasisFunctionSignature(@NamingContract.Invokable final @NotNull String name, @NotNull DyanasisParameterList parameters) {
+  protected DefaultDyanasisFunctionSignature(@NamingContract.Member final @NotNull String name, @NotNull DyanasisParameterList parameters) {
     this.name = name;
     this.parameters = parameters;
   }
@@ -27,7 +27,7 @@ public class DefaultDyanasisFunctionSignature implements DyanasisFunctionSignatu
    */
 
   @Override
-  @NamingContract.Invokable
+  @NamingContract.Member
   public @NotNull String name() {
     return name;
   }
