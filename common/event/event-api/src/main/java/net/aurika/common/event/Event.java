@@ -28,9 +28,9 @@ import org.jetbrains.annotations.NotNull;
 public interface Event {
 
   /**
-   * Gets the {@link Emitter} of the event.
+   * Gets the {@link Emitter} of the event. The generic type must be the type of the event.
    *
-   * @return the listener container
+   * @return the emitter
    */
   @NotNull Emitter<? extends Event> emitter();
 

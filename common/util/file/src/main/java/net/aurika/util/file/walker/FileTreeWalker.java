@@ -26,10 +26,12 @@ public class FileTreeWalker implements Closeable, FileWalkerController {
   private final ArrayDeque<DirectoryNode> stack = new ArrayDeque<>();
   private boolean closed;
 
-  public static Stream<PathVisit> walk(Path start,
-                                       Set<FileVisitOption> options,
-                                       int maxDepth,
-                                       AtomicReference<FileWalkerController> controller) throws IOException {
+  public static Stream<PathVisit> walk(
+      Path start,
+      Set<FileVisitOption> options,
+      int maxDepth,
+      AtomicReference<FileWalkerController> controller
+  ) throws IOException {
     FileTreeIterator iterator = new FileTreeIterator(start, maxDepth, options.toArray(new FileVisitOption[0]));
     controller.set(iterator);
     try {
@@ -43,10 +45,12 @@ public class FileTreeWalker implements Closeable, FileWalkerController {
     }
   }
 
-  public static void walkFileTree(Path start,
-                                  Set<FileVisitOption> options,
-                                  int maxDepth,
-                                  PathVisitor visitor) {
+  public static void walkFileTree(
+      Path start,
+      Set<FileVisitOption> options,
+      int maxDepth,
+      PathVisitor visitor
+  ) {
     try (FileTreeWalker walker = new FileTreeWalker(options, maxDepth)) {
       PathVisit ev = walker.walk(start);
       do {

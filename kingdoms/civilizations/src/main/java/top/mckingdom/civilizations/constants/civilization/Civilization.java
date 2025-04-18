@@ -311,20 +311,21 @@ public class Civilization extends KeyedKingdomsObject<UUID> {
   /**
    * 数据库已有的
    */
-  public Civilization(UUID dataKey,
-                      String name,
-                      String tag,
-                      Set<SimpleLocation> cores,
-                      int maxCores,
-                      Set<SimpleLocation> nodes,
-                      int maxNodes,
-                      Set<SimpleChunkLocation> lands,
-                      int maxLands,
-                      Set<Location> homes,
-                      int maxHomes,
-                      Set<CivilizationMember<?>> topMembers,
-                      Map<UUID, CivilizationRelation> relations,
-                      long since
+  public Civilization(
+      UUID dataKey,
+      String name,
+      String tag,
+      Set<SimpleLocation> cores,
+      int maxCores,
+      Set<SimpleLocation> nodes,
+      int maxNodes,
+      Set<SimpleChunkLocation> lands,
+      int maxLands,
+      Set<Location> homes,
+      int maxHomes,
+      Set<CivilizationMember<?>> topMembers,
+      Map<UUID, CivilizationRelation> relations,
+      long since
   ) {
     this.dataKey = dataKey;
     this.name = name;

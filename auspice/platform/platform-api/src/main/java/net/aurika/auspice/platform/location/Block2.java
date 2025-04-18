@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.location;
 
-import net.aurika.common.data.DataStringRepresentation;
+import net.aurika.common.data.string.DataStringRepresentation;
 import net.aurika.common.uitl.string.split.CommaDataSplitStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

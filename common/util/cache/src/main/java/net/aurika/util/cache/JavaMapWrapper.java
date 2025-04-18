@@ -1,6 +1,7 @@
 package net.aurika.util.cache;
 
 import com.github.benmanes.caffeine.cache.CacheLoader;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,30 +15,24 @@ public final class JavaMapWrapper<K, V> implements PeekableMap<K, V> {
   private final ConcurrentHashMap<K, V> cache;
   private final CacheLoader<K, V> loader;
 
-  public JavaMapWrapper(ConcurrentHashMap<K, V> cache, CacheLoader<K, V> loader) {
+  public JavaMapWrapper(@NotNull ConcurrentHashMap<K, V> cache, @NotNull CacheLoader<K, V> loader) {
+    Validate.Arg.notNull(cache, "cache");
+    Validate.Arg.notNull(loader, "loader");
     this.cache = cache;
     this.loader = loader;
   }
 
   @Override
-  public int size() {
-    return cache.size();
-  }
+  public int size() { return cache.size(); }
 
   @Override
-  public boolean isEmpty() {
-    return cache.isEmpty();
-  }
+  public boolean isEmpty() { return cache.isEmpty(); }
 
   @Override
-  public boolean containsKey(Object key) {
-    return cache.containsKey(key);
-  }
+  public boolean containsKey(Object key) { return cache.containsKey(key); }
 
   @Override
-  public boolean containsValue(Object value) {
-    throw new UnsupportedOperationException();
-  }
+  public boolean containsValue(Object value) { throw new UnsupportedOperationException(); }
 
   @SuppressWarnings("unchecked")
   @Override

@@ -11,7 +11,7 @@ import net.aurika.auspice.utils.compiler.math.MathCompiler;
 import net.aurika.auspice.utils.conditions.ConditionProcessor;
 import net.aurika.auspice.utils.math.MathUtils;
 import net.aurika.configuration.sections.ConfigSection;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;

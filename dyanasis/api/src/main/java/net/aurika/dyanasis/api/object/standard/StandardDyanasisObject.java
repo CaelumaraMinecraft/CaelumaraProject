@@ -8,7 +8,7 @@ import net.aurika.dyanasis.api.object.DyanasisObject;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.type.DyanasisType;
 import net.aurika.dyanasis.api.type.DyanasisTypeIdent;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;

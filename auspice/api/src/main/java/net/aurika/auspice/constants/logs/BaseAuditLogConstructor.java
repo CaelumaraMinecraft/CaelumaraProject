@@ -1,11 +1,11 @@
 package net.aurika.auspice.constants.logs;
 
-import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.Identified;
 import org.jetbrains.annotations.NotNull;
 
-public interface BaseAuditLogConstructor extends Keyed {
+public interface BaseAuditLogConstructor extends Identified {
 
-  @NotNull Key key();
+  @NotNull Ident ident();
 
 }

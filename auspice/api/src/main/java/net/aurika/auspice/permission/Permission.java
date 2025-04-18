@@ -5,7 +5,7 @@ import net.aurika.auspice.platform.permission.Permissible;
 import net.aurika.auspice.platform.permission.PermissionManager;
 import net.aurika.auspice.translation.messenger.Messenger;
 import net.aurika.auspice.translation.messenger.StaticMessenger;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

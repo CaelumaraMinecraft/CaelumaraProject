@@ -1,18 +1,18 @@
 package net.aurika.auspice.constants.logs;
 
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AuditLogConstructor implements BaseAuditLogConstructor {
 
-  private final @NotNull Key id;
+  private final @NotNull Ident id;
 
-  public AuditLogConstructor(@NotNull Key id) {
+  public AuditLogConstructor(@NotNull Ident id) {
     this.id = id;
   }
 
   @Override
-  public final @NotNull Key key() {
+  public final @NotNull Ident ident() {
     return id;
   }
 

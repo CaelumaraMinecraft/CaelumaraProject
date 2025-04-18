@@ -1,15 +1,15 @@
 package net.aurika.auspice.constants.metadata;
 
 import net.aurika.auspice.user.Auspice;
-import net.aurika.common.key.registry.AbstractKeyedRegistry;
-import net.aurika.common.key.registry.Lockable;
+import net.aurika.common.ident.registry.AbstractIdentifiedRegistry;
+import net.aurika.common.ident.registry.Lockable;
 import net.aurika.ecliptor.api.KeyedDataObject;
 import net.aurika.ecliptor.managers.base.KeyedDataManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
-public class AuspiceMetadataRegistry extends AbstractKeyedRegistry<AuspiceMetadataHandler> implements Lockable {
+public class AuspiceMetadataRegistry extends AbstractIdentifiedRegistry<AuspiceMetadataHandler> implements Lockable {
 
   private static boolean unlocked = true;
   public static final AuspiceMetadataRegistry INSTANCE = new AuspiceMetadataRegistry();
@@ -20,7 +20,7 @@ public class AuspiceMetadataRegistry extends AbstractKeyedRegistry<AuspiceMetada
 
   @Override
   public final void register(@NotNull AuspiceMetadataHandler metadataHandler) {
-    if (Auspice.get().namespace().equals(metadataHandler.key().namespace())) {
+    if (Auspice.get().namespace().equals(metadataHandler.ident().namespace())) {
       throw new IllegalArgumentException("Cannot register metadata handlers as auspice namespace: " + metadataHandler);
     } else {
       super.register(metadataHandler);

@@ -1,22 +1,22 @@
 package net.aurika.auspice.utils.debug;
 
 import net.aurika.auspice.user.Auspice;
-import net.aurika.common.key.Key;
-import net.aurika.common.key.KeyPatterns;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.KeyPatterns;
 import org.jetbrains.annotations.NotNull;
 
 public enum AuspiceDebug implements DebugEntry {
   FOLDER_REGISTRY("file.folder_registry"),
   SAVE_ALL("data.save.save_all");
 
-  private final DebugKey id;
+  private final DebugIdent id;
 
-  AuspiceDebug(@KeyPatterns.KeyPath final @NotNull String identValueString) {
-    this.id = new DebugKey(Key.key(Auspice.GROUP_STRING, identValueString));
+  AuspiceDebug(@KeyPatterns.IdentPath final @NotNull String identValueString) {
+    this.id = new DebugIdent(Ident.ident(Auspice.GROUP_STRING, identValueString));
   }
 
   @Override
-  public @NotNull DebugKey key() {
+  public @NotNull DebugIdent ident() {
     return this.id;
   }
 }

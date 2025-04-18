@@ -1,5 +1,6 @@
 package net.aurika.dyanasis.api;
 
+import net.aurika.common.ident.Group;
 import net.aurika.dyanasis.api.compiler.DyanasisCompiler;
 import net.aurika.dyanasis.api.compiler.context.evaluating.DyanasisLexerVariableProvider;
 import net.aurika.dyanasis.api.compiler.expression.Expression;
@@ -72,6 +73,8 @@ import net.aurika.dyanasis.api.object.DyanasisObjectString;
 public final class Dyanasis {
 
   public static final String NAMESPACE = "dyanasis";
+  public static final String GROUP_STRING = "net.aurika." + NAMESPACE;
+  public static final Group GROUP = Group.group(GROUP_STRING);
 
   private Dyanasis() { }
 

@@ -42,18 +42,23 @@ public enum CivilizationsAddonConfig implements EnumConfig {
   }
 
   public static class Companion {
+
     public static final YamlResource CIVILIZATION_MAIN =
         new YamlResource(
             CivilizationsAddon.get(),
-            Kingdoms.getPath("civilizations.yml").toFile(), "civilizations.yml").load();
+            Kingdoms.getPath("civilizations.yml").toFile(), "civilizations.yml"
+        ).load();
 
   }
 
   static {
-    ConfigWatcher.register(Companion.CIVILIZATION_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
-    ConfigManager.registerNormalWatcher("Civilizations-Addon", (event) -> {
-      ConfigWatcher.reload(Companion.CIVILIZATION_MAIN, "civilizations.yml");
-    });
+    ConfigWatcher.register(
+        Companion.CIVILIZATION_MAIN.getFile().toPath().getParent(), ConfigWatcher::handleNormalConfigs);
+    ConfigManager.registerNormalWatcher(
+        "Civilizations-Addon", (event) -> {
+          ConfigWatcher.reload(Companion.CIVILIZATION_MAIN, "civilizations.yml");
+        }
+    );
   }
 
   private final ConfigPath option;
@@ -91,8 +96,10 @@ public enum CivilizationsAddonConfig implements EnumConfig {
   }
 
   public static void errorSound(Player player) {
-    XSound.play(KingdomsConfig.ERROR_SOUND.getString(), (var1) -> {
-      var1.forPlayers(player);
-    });
+    XSound.play(
+        KingdomsConfig.ERROR_SOUND.getString(), (var1) -> {
+          var1.forPlayers(player);
+        }
+    );
   }
 }

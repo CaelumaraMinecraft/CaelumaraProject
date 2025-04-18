@@ -1,13 +1,18 @@
 package net.aurika.common.event;
 
-import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.Identified;
 import org.jetbrains.annotations.NotNull;
 
-public interface Listener<E extends Event> extends Keyed {
+/**
+ * A listener to an {@link Event}.
+ *
+ * @param <E> the event type
+ */
+public interface Listener<E extends Event> extends Identified {
 
   @Override
-  @NotNull Key key();
+  @NotNull Ident ident();
 
   /**
    * Handles the {@code event}.
@@ -25,6 +30,11 @@ public interface Listener<E extends Event> extends Keyed {
 
   boolean ignoreCancelled();
 
+  /**
+   * Gets the listened event type.
+   *
+   * @return the event type
+   */
   @NotNull Class<? extends E> listenedEventType();
 
 }

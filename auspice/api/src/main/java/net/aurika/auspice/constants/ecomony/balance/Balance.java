@@ -1,8 +1,8 @@
 package net.aurika.auspice.constants.ecomony.balance;
 
 import net.aurika.auspice.constants.ecomony.currency.NumberCurrency;
-import net.aurika.common.data.DataStringRepresentation;
-import net.aurika.validate.Validate;
+import net.aurika.common.data.string.DataStringRepresentation;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public interface Balance<T> extends Comparable<Number>, DataStringRepresentation {

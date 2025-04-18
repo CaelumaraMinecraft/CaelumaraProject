@@ -1,5 +1,5 @@
 plugins {
-  `java-library`
+  id("java-library")
   kotlin("jvm")
 }
 
@@ -17,24 +17,13 @@ kingdoms {
   }
 }
 
-val targetJavaVersion = 17
+val targetJavaVersion: Int = 21
+
+java {
+  sourceCompatibility = JavaVersion.toVersion(targetJavaVersion)
+  targetCompatibility = JavaVersion.toVersion(targetJavaVersion)
+}
+
 kotlin {
   jvmToolchain(targetJavaVersion)
 }
-
-tasks {
-
-  build {
-    dependsOn("shadowJar")
-  }
-  processResources {
-    val props = mapOf("version" to version)
-    inputs.properties(props)
-    filteringCharset = "UTF-8"
-    filesMatching("plugin.yml") {
-      expand(props)
-    }
-  }
-}
-
-

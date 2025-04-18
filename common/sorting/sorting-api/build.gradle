@@ -1,0 +1,20 @@
+plugins {
+  id("java-library")
+  id("maven-publish")
+}
+
+dependencies {
+  api("net.aurika:common-function")
+  api("net.aurika:common-ident")
+  api("net.aurika:common-metadata")
+  api("net.aurika:common-util-collection")
+  api("net.aurika:common-util-string")
+  api("net.aurika:common-util-generic")
+  api("net.aurika:common-validate")
+  compileOnlyApi(libs.annotations.jetbrains)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

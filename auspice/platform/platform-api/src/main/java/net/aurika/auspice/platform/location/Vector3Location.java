@@ -1,7 +1,9 @@
 package net.aurika.auspice.platform.location;
 
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.validate.Validate;
+import net.aurika.auspice.platform.world.World;
+import net.aurika.auspice.platform.world.WorldAware;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

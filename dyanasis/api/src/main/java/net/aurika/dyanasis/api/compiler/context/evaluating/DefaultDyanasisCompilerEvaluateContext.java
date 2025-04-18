@@ -1,7 +1,7 @@
 package net.aurika.dyanasis.api.compiler.context.evaluating;
 
 import net.aurika.dyanasis.api.variable.DyanasisVariable;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

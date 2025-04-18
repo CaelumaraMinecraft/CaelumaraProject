@@ -7,14 +7,15 @@ import java.util.Objects;
 
 public class SQLRestore extends SQLStatement {
 
-    private final @NotNull Path from;
+  private final @NotNull Path from;
 
-    public SQLRestore(@NotNull Path from) {
-        Objects.requireNonNull(from);
-        this.from = from;
-    }
+  public SQLRestore(@NotNull Path from) {
+    Objects.requireNonNull(from);
+    this.from = from;
+  }
 
-    public @NotNull Path getFrom() {
-        return this.from;
-    }
+  public @NotNull Path getFrom() {
+    return this.from;
+  }
+
 }

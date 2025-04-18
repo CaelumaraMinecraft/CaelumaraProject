@@ -5,7 +5,7 @@ import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.translation.TranslationEntry;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
 import net.aurika.common.key.namespace.NSedKey;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

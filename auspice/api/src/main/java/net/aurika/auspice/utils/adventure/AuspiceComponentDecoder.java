@@ -4,7 +4,7 @@ import net.aurika.auspice.configs.messages.context.MessageContextImpl;
 import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.text.compiler.builders.context.ComplexTextBuilderContextProvider;
 import net.aurika.auspice.text.compiler.pieces.TextPiece;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.ComponentDecoder;
 import org.jetbrains.annotations.NotNull;

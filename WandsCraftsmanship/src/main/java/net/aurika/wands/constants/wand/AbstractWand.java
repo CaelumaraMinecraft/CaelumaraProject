@@ -6,26 +6,28 @@ import net.aurika.auspice.data.database.dataprovider.SectionableDataSetter;
 import net.aurika.wands.constants.spells.objects.SpellObject;
 
 public abstract class AbstractWand implements Wand {
-    protected ItemStack itemStack;
-    protected SpellObject[] spells;
 
-    public AbstractWand(ItemStack itemStack, SpellObject[] spells) {
-        this.itemStack = itemStack;
-        this.spells = spells;
-    }
+  protected ItemStack itemStack;
+  protected SpellObject[] spells;
 
-    @Override
-    public ItemStack getItemStack() {
-        return this.itemStack;
-    }
+  public AbstractWand(ItemStack itemStack, SpellObject[] spells) {
+    this.itemStack = itemStack;
+    this.spells = spells;
+  }
 
-    @Override
-    public SpellObject[] getSpells() {
-        return this.spells;
-    }
+  @Override
+  public ItemStack getItemStack() {
+    return this.itemStack;
+  }
 
-    @Override
-    public void serialize(@NotNull SectionableDataSetter dataSetter) {
+  @Override
+  public SpellObject[] getSpells() {
+    return this.spells;
+  }
 
-    }
+  @Override
+  public void serialize(@NotNull SectionableDataSetter dataSetter) {
+
+  }
+
 }

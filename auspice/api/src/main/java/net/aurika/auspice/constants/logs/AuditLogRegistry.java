@@ -1,10 +1,10 @@
 package net.aurika.auspice.constants.logs;
 
-import net.aurika.common.key.registry.AbstractKeyedRegistry;
-import net.aurika.common.key.registry.Lockable;
+import net.aurika.common.ident.registry.AbstractIdentifiedRegistry;
+import net.aurika.common.ident.registry.Lockable;
 import org.jetbrains.annotations.NotNull;
 
-public final class AuditLogRegistry extends AbstractKeyedRegistry<AuditLogConstructor> implements Lockable {
+public final class AuditLogRegistry extends AbstractIdentifiedRegistry<AuditLogConstructor> implements Lockable {
 
   private static boolean opening = true;
 

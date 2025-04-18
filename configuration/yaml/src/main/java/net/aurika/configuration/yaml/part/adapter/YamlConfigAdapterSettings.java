@@ -1,6 +1,6 @@
 package net.aurika.configuration.yaml.part.adapter;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.constructor.BaseConstructor;
 import org.snakeyaml.engine.v2.representer.BaseRepresenter;

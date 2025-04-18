@@ -4,7 +4,7 @@ import net.aurika.configuration.part.exception.ConfigPartIsRootException;
 import net.aurika.configuration.part.exception.ConfigPartNotAbsolutePathException;
 import net.aurika.configuration.part.exception.ConfigPartNotNamedException;
 import net.aurika.configuration.path.ConfigEntry;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 /**

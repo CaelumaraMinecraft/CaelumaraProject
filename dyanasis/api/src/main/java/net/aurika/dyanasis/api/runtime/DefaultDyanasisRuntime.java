@@ -1,7 +1,7 @@
 package net.aurika.dyanasis.api.runtime;
 
 import net.aurika.dyanasis.api.runtime.environment.DyanasisRuntimeEnvironment;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public class DefaultDyanasisRuntime implements DyanasisRuntime {

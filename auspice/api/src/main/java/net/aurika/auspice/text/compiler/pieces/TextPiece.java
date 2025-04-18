@@ -17,7 +17,7 @@ import net.aurika.auspice.utils.chat.BaseColorUtils;
 import net.aurika.auspice.utils.chat.TextFormatCodes;
 import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.conditions.ConditionProcessor;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.text.Component;

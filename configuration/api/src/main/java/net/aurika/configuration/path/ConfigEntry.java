@@ -3,7 +3,7 @@ package net.aurika.configuration.path;
 import net.aurika.abstraction.BuildableObject;
 import net.aurika.util.collection.ArrayUtils;
 import net.aurika.util.string.Strings;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

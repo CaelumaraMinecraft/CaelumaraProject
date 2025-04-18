@@ -2,7 +2,7 @@ package net.aurika.tasks.context;
 
 import net.aurika.tasks.TaskState;
 import net.aurika.tasks.container.TaskSession;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractTaskContext implements TaskContext {

@@ -1,6 +1,0 @@
-name: "${project.name}"
-version: "${project.version}"
-description: "${project.description}"
-main: net.aurika.kingdoms.powerfulterritory.PowerfulTerritoryAddon
-api-version: "1.20"
-depend: [ Kingdoms, Kingdoms-Addon-Auspice ]

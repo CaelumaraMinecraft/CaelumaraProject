@@ -15,7 +15,7 @@ import net.aurika.auspice.translation.message.provider.AdvancedMessageProvider;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
 import net.aurika.auspice.translation.message.provider.SingleMessageProvider;
 import net.aurika.util.collection.UnsafeArrayList;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

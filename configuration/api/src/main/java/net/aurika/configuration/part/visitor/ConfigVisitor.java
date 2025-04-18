@@ -3,7 +3,7 @@ package net.aurika.configuration.part.visitor;
 import net.aurika.configuration.part.ConfigPart;
 import net.aurika.configuration.part.ConfigSection;
 import net.aurika.configuration.path.ConfigEntry;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

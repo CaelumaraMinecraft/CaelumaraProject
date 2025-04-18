@@ -12,7 +12,7 @@ import net.aurika.auspice.text.compiler.placeholders.Placeholder;
 import net.aurika.auspice.text.compiler.placeholders.PlaceholderParser;
 import net.aurika.common.annotation.Getter;
 import net.aurika.common.annotation.Setter;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

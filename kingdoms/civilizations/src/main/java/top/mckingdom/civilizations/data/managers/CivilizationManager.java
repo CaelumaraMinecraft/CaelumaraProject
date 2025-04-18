@@ -13,6 +13,7 @@ import top.mckingdom.civilizations.constants.civilization.Civilization;
 import java.util.*;
 
 public class CivilizationManager extends KeyedDataManager<UUID, Civilization> {
+
   private static final Map<QuantumString, UUID> a = new HashMap();
   private static final IndexedHashMap<UUID, Integer> b = new IndexedHashMap(new UUID[0]);
   private static final HashSet<UUID> civilizationsUUID = new HashSet<>();

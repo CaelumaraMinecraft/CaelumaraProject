@@ -3,24 +3,24 @@ package net.aurika.auspice.translation;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.message.manager.MessageManager;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
-import net.aurika.common.key.Key;
-import net.aurika.validate.Validate;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FullTranslationEntry {
 
-  private final @NotNull Key managerID;
+  private final @NotNull Ident managerID;
   private final @NotNull TranslationEntry entry;
 
-  public FullTranslationEntry(@NotNull Key managerID, @NotNull TranslationEntry entry) {
+  public FullTranslationEntry(@NotNull Ident managerID, @NotNull TranslationEntry entry) {
     Validate.Arg.notNull(managerID, "managerID");
     Validate.Arg.notNull(entry, "entry");
     this.managerID = managerID;
     this.entry = entry;
   }
 
-  public @NotNull Key managerID() {
+  public @NotNull Ident managerID() {
     return managerID;
   }
 

@@ -1,44 +1,46 @@
 package net.aurika.ecliptor.database.dataprovider;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface SectionableDataGetter extends DataGetter, SectionableDataProvider {
-    @NotNull SectionableDataGetter get(@NotNull String key);
 
-    /**
-     * 将此 {@link DataGetter} 转为 {@link SectionableDataGetter}
-     */
-    @NotNull SectionableDataGetter asSection();
+  @NotNull SectionableDataGetter get(@NotNull String key);
 
-    default int getInt(@NotNull String key) {
-        Validate.Arg.notNull(key, "key");
-        return this.get(key).asInt();
-    }
+  /**
+   * 将此 {@link DataGetter} 转为 {@link SectionableDataGetter}
+   */
+  @NotNull SectionableDataGetter asSection();
 
-    default long getLong(@NotNull String key) {
-        Validate.Arg.notNull(key, "key");
-        return this.get(key).asLong();
-    }
+  default int getInt(@NotNull String key) {
+    Validate.Arg.notNull(key, "key");
+    return this.get(key).asInt();
+  }
 
-    default float getFloat(@NotNull String key) {
-        Validate.Arg.notNull(key, "key");
-        return this.get(key).asFloat();
-    }
+  default long getLong(@NotNull String key) {
+    Validate.Arg.notNull(key, "key");
+    return this.get(key).asLong();
+  }
 
-    default double getDouble(@NotNull String key) {
-        Validate.Arg.notNull(key, "key");
-        return this.get(key).asDouble();
-    }
+  default float getFloat(@NotNull String key) {
+    Validate.Arg.notNull(key, "key");
+    return this.get(key).asFloat();
+  }
 
-    default boolean getBoolean(@NotNull String key) {
-        Validate.Arg.notNull(key, "key");
-        return this.get(key).asBoolean();
-    }
+  default double getDouble(@NotNull String key) {
+    Validate.Arg.notNull(key, "key");
+    return this.get(key).asDouble();
+  }
 
-    default @Nullable String getString(@NotNull String key) {
-        Validate.Arg.notNull(key, "key");
-        return this.get(key).asString();
-    }
+  default boolean getBoolean(@NotNull String key) {
+    Validate.Arg.notNull(key, "key");
+    return this.get(key).asBoolean();
+  }
+
+  default @Nullable String getString(@NotNull String key) {
+    Validate.Arg.notNull(key, "key");
+    return this.get(key).asString();
+  }
+
 }

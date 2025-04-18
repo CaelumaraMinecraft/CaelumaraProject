@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.auspice.util.permission;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -14,11 +14,6 @@ import org.kingdoms.locale.messenger.StaticMessenger;
 import org.kingdoms.main.Kingdoms;
 
 public class XKingdomPermission extends KingdomPermission {
-//    private static int hashCounter = 180;
-//
-//    private static synchronized int increaseHashCounter() {
-//        return hashCounter++;
-//    }
 
   private final @NotNull Messenger name;
   private final @NotNull Messenger description;
@@ -74,7 +69,6 @@ public class XKingdomPermission extends KingdomPermission {
 
   /**
    * Create.
-   * It will automatically set a unique hash.
    */
   protected XKingdomPermission(@NotNull Namespace namespace, @NotNull Messenger name, @NotNull Messenger description, @NotNull Messenger deniedMessage) {
     super(namespace);
@@ -84,7 +78,6 @@ public class XKingdomPermission extends KingdomPermission {
     this.name = name;
     this.description = description;
     this.deniedMessage = deniedMessage;
-//        setHash(increaseHashCounter()); // fixed in KingdomsX 1.17.10-BETA
   }
 
   public final void sendDeniedMessage(@NotNull Player player) {

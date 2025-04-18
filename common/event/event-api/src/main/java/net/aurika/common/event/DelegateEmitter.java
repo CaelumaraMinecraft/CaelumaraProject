@@ -1,6 +1,6 @@
 package net.aurika.common.event;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -49,13 +49,13 @@ public class DelegateEmitter<E extends Event> implements Emitter<E> {
   }
 
   @Override
-  public @NotNull Emitter<? super E> @NotNull [] directParentTransformers() {
-    return delegate.directParentTransformers();
+  public @NotNull Emitter<? super E> @NotNull [] directParentEmitters() {
+    return delegate.directParentEmitters();
   }
 
   @Override
-  public @NotNull Set<@NotNull Emitter<? super E>> allParentTransformers() {
-    return delegate.allParentTransformers();
+  public @NotNull Set<@NotNull Emitter<? super E>> allParentEmitters() {
+    return delegate.allParentEmitters();
   }
 
   @Override

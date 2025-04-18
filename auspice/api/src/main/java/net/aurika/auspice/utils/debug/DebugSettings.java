@@ -13,7 +13,7 @@ public class DebugSettings {
 
   protected boolean isWightList;
   @NotNull
-  protected final Set<DebugKey> debugs;
+  protected final Set<DebugIdent> debugs;
   @NotNull
   public static final Map<UUID, DebugSettings> SETTINGS = new NonNullMap<>();
 
@@ -21,7 +21,7 @@ public class DebugSettings {
     this(false, new HashSet<>());
   }
 
-  public DebugSettings(boolean isWhiteList, @NotNull Set<DebugKey> debugs) {
+  public DebugSettings(boolean isWhiteList, @NotNull Set<DebugIdent> debugs) {
     Objects.requireNonNull(debugs);
     this.isWightList = isWhiteList;
     this.debugs = debugs;
@@ -36,7 +36,7 @@ public class DebugSettings {
   }
 
   @NotNull
-  public final Set<DebugKey> getList() {
+  public final Set<DebugIdent> getList() {
     return this.debugs;
   }
 

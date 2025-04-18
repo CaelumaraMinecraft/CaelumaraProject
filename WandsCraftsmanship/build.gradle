@@ -1,10 +1,10 @@
 //import static net.aurika.gradle.repository.AurikaExtReposKt.sonatype
 
 plugins {
-    id("java-library")
-    id("net.aurika.gradle.repository")
-    alias(libs.plugins.shadow)
-    alias(libs.plugins.kotlin)
+  id("java-library")
+  id("net.aurika.gradle.repository")
+  alias(libs.plugins.shadow)
+  alias(libs.plugins.kotlin)
 }
 
 group = "net.aurika.wands"
@@ -12,50 +12,50 @@ version = "0.0.1-SNAPSHOT"
 description = "Wands plugin"
 
 repositories {
-    mavenCentral()
-    mavenLocal()
-    aurikaRepos {
-        spigotMC.snapshots()
-        codeMC.maven_public()
-    }
+  mavenCentral()
+  mavenLocal()
+  aurikaRepos {
+    spigotMC.snapshots()
+    codeMC.maven_public()
+  }
 //    sonatype(it)
 }
 
 dependencies {
-    compileOnly(libs.server.craftbukkit)
-    compileOnly(project(":bukkit-api"))  // 这个 addon 仅适用于 CraftBukkit 及其下游分支平台
+  compileOnly(libs.server.craftbukkit)
+  compileOnly(project(":bukkit-api"))  // 这个 addon 仅适用于 CraftBukkit 及其下游分支平台
 }
 
 def targetJavaVersion = 21
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
+  def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+  sourceCompatibility = javaVersion
+  targetCompatibility = javaVersion
+  if (JavaVersion.current() < javaVersion) {
+    toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+  }
 }
 
 tasks {
 
-    compileJava {
-        options.encoding = "UTF-8"
+  compileJava {
+    options.encoding = "UTF-8"
 
-        if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-            options.release.set(targetJavaVersion)
-        }
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+      options.release.set(targetJavaVersion)
     }
+  }
 
 //    jar {
 //        destinationDirectory = file("$rootDir/output")
 //    }
 
-    processResources {
-        def props = [version: version]
-        inputs.properties(props)
-        filteringCharset = "UTF-8"
-        filesMatching("plugin.yml") {
-            expand(props)
-        }
+  processResources {
+    def props = [version: version]
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
+    filesMatching("plugin.yml") {
+      expand(props)
     }
+  }
 }

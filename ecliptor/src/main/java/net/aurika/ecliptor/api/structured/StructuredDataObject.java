@@ -13,10 +13,12 @@ import org.jetbrains.annotations.NotNull;
  * </pre></blockquote>
  */
 public interface StructuredDataObject {
-    /**
-     * 返回这个对象的固定数据结构及其值
-     */
-    @NotNull StructuredData structuredData();
 
-    @NotNull DataStructSchema<? extends StructuredDataObject> dataStructSchema();
+  /**
+   * 返回这个对象的固定数据结构及其值
+   */
+  @NotNull StructuredData structuredData();
+
+  @NotNull DataStructSchema<? extends StructuredDataObject> dataStructSchema();
+
 }

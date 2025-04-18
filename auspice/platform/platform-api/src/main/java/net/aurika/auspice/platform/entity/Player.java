@@ -17,7 +17,7 @@ public interface Player extends Entity, OfflinePlayer, CommandSender {
   default void sendActionBar(Component message) {
   }
 
-  @NotNull String getName();
+  @NotNull String name();
 
   @Nullable Object getRealPlayer();
 

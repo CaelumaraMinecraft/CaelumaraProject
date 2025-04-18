@@ -3,7 +3,7 @@ package net.aurika.auspice.text.compiler;
 import net.aurika.auspice.configs.messages.context.MessageContext;
 import net.aurika.auspice.configs.messages.placeholders.transformer.PlaceholderTransformerRegistry;
 import net.aurika.auspice.translation.messenger.Messenger;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

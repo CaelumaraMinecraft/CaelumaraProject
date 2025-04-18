@@ -5,7 +5,7 @@ import net.aurika.configuration.part.ConfigPart;
 import net.aurika.configuration.part.annotation.NamedPart;
 import net.aurika.configuration.part.exception.ConfigPartAlreadyExistException;
 import net.aurika.configuration.part.exception.ConfigPartTypeNotSupportedException;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.nodes.MappingNode;

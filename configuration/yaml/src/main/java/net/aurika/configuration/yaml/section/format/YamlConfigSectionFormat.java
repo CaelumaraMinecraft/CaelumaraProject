@@ -2,7 +2,7 @@ package net.aurika.configuration.yaml.section.format;
 
 import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.sections.format.ConfigSectionFormat;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.common.FlowStyle;
 import org.snakeyaml.engine.v2.common.ScalarStyle;

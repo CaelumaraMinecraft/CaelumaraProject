@@ -15,13 +15,15 @@ public class StandardMappingValidator implements ConfigValidator {
   private final ConfigValidator[] extendedValidators;
   private final boolean optional;
 
-  public StandardMappingValidator(ConfigValidator[] extendedValidators,
-                                  ConfigValidator keyValidator,
-                                  ConfigValidator validators,
-                                  Collection<String> valueValidatorKeys,
-                                  Map<String, ConfigValidator> specificValidators,
-                                  Collection<String> requiredKeys,
-                                  boolean isOptional) {
+  public StandardMappingValidator(
+      ConfigValidator[] extendedValidators,
+      ConfigValidator keyValidator,
+      ConfigValidator validators,
+      Collection<String> valueValidatorKeys,
+      Map<String, ConfigValidator> specificValidators,
+      Collection<String> requiredKeys,
+      boolean isOptional
+  ) {
     this.extendedValidators = extendedValidators;
     this.keyValidator = keyValidator;
     this.valueValidatorKeys = valueValidatorKeys == null ? null : new HashSet<>(valueValidatorKeys);

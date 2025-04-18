@@ -1,6 +1,6 @@
 package net.aurika.util.file.walker;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.FileVisitResult;

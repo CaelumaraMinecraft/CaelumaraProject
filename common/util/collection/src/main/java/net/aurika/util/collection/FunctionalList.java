@@ -1,7 +1,7 @@
 package net.aurika.util.collection;
 
 import net.aurika.util.collection.nonnull.NonNullList;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

@@ -2,6 +2,7 @@ package net.aurika.auspice.platform.location;
 
 import kotlin.jvm.internal.Intrinsics;
 import net.aurika.auspice.platform.Platform;
+import net.aurika.auspice.platform.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

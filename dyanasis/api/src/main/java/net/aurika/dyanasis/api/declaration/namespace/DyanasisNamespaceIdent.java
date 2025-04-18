@@ -1,7 +1,7 @@
 package net.aurika.dyanasis.api.declaration.namespace;
 
 import net.aurika.dyanasis.api.type.DyanasisTypeIdent;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;

@@ -3,11 +3,13 @@ plugins {
   id("maven-publish")
 }
 
+description = "An event API"
+
 dependencies {
-  api("net.aurika:common-key")                // keyed
-  api("net.aurika:common-util-empty")         // empty arrays
-  api(project(":validate"))                   // validate arguments
-  compileOnlyApi(libs.annotations.jetbrains)  // annotations
+  api("net.aurika:common-ident")
+  api("net.aurika:common-util-empty")
+  api("net.aurika:common-validate")
+  compileOnly(libs.annotations.jetbrains)
 }
 
 java {

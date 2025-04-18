@@ -1,5 +1,14 @@
 plugins {
   id("java-library")
   alias(libs.plugins.kotlin)
-  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api("net.aurika:common-ident")
+  api("net.aurika:common-validate")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }

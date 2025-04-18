@@ -5,7 +5,7 @@ import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.text.compiler.TextCompiler;
 import net.aurika.auspice.text.compiler.pieces.TextPiece;
 import net.aurika.util.string.Strings;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

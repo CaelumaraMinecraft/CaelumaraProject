@@ -1,7 +1,7 @@
 package net.aurika.common.event;
 
-import net.aurika.common.key.Key;
-import net.aurika.validate.Validate;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,14 +13,14 @@ public class ReflectionListener<E extends Event> extends AbstractListener<E> {
   private final Object instance;
 
   public ReflectionListener(
-      @NotNull Key key,
+      @NotNull Ident ident,
       @NotNull Method method,
       Object instance,
       @NotNull Emitter<? extends E> container,
       boolean ignoreCancelled,
       @NotNull Class<? extends E> listenedEventType
   ) {
-    super(key, container, ignoreCancelled, listenedEventType);
+    super(ident, container, ignoreCancelled, listenedEventType);
     Validate.Arg.notNull(method, "method");
     this.method = method;
     this.instance = instance;

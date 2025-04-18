@@ -3,8 +3,7 @@ package net.aurika.tasks.annotations;
 import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.jvm.internal.Ref;
-import net.aurika.common.key.Key;
-import net.aurika.common.key.namespace.NSedKey;
+import net.aurika.common.ident.Ident;
 import net.aurika.tasks.*;
 import net.aurika.tasks.container.ConditionalLocalTaskSession;
 import net.aurika.tasks.container.LocalTaskSession;
@@ -17,7 +16,7 @@ import net.aurika.tasks.priority.PriorityPhase;
 import net.aurika.tasks.priority.RelativePriority;
 import net.aurika.util.enumeration.QuickEnumSet;
 import net.aurika.util.reflection.AnnotationContainer;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,7 +55,7 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
     } else {
       GroupedTask grouped = AnnotationContainer.of(container.getDeclaringClass()).getAnnotation(GroupedTask.class);
       String groupedNs = grouped == null ? "" : grouped.namespace() + ':';
-      Key key = Key.key(groupedNs + task.key());
+      Ident ident = Ident.ident(groupedNs + task.key());
       if (container instanceof AnnotationContainer.Executable && ((AnnotationContainer.Executable) container).getJavaObject().getParameterCount() > 1) {
         throw new IllegalStateException(
             "Task has more than one parameter: " + ((AnnotationContainer.Executable) container).getJavaObject());
@@ -99,20 +98,20 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
             var19 = new net.aurika.tasks.priority.NumberedPriority(((NumberedPriority) priorityAnn).order());
           } else {
             RelativePriority.Type relativeType;
-            Key relativeID;
+            Ident relativeID;
             if (priorityAnn instanceof Before) {
               relativeType = RelativePriority.Type.BEFORE;
-              relativeID = Key.key(((Before) priorityAnn).other());
+              relativeID = Ident.ident(((Before) priorityAnn).other());
               Objects.requireNonNull(relativeID);
               var19 = new RelativePriority(relativeType, relativeID);
             } else if (priorityAnn instanceof After) {
               relativeType = RelativePriority.Type.AFTER;
-              relativeID = Key.key(((After) priorityAnn).other());
+              relativeID = Ident.ident(((After) priorityAnn).other());
               Objects.requireNonNull(relativeID);
               var19 = (new RelativePriority(relativeType, relativeID));
             } else if (priorityAnn instanceof Replace) {
               relativeType = RelativePriority.Type.REPLACE;
-              relativeID = Key.key(((Replace) priorityAnn).other());
+              relativeID = Ident.ident(((Replace) priorityAnn).other());
               Objects.requireNonNull(relativeID);
               var19 = (new RelativePriority(relativeType, relativeID));
             } else {
@@ -121,7 +120,7 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
           }
 
           net.aurika.tasks.priority.Priority priority = var19;
-          return new ProcessedTaskAnnotations(implicitReturnState, taskStatesInclude, taskStates, priority, key);
+          return new ProcessedTaskAnnotations(implicitReturnState, taskStatesInclude, taskStates, priority, ident);
         }
       }
     }
@@ -182,17 +181,17 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
     private final boolean taskStatesInclude;
     private final @Nullable Set<TaskState> taskStates;
     private final @NotNull net.aurika.tasks.priority.Priority priority;
-    private final @NotNull Key key;
+    private final @NotNull Ident ident;
 
-    public ProcessedTaskAnnotations(@NotNull TaskState implicitReturnState, boolean taskStatesInclude, @Nullable Set<TaskState> taskStates, @NotNull net.aurika.tasks.priority.Priority priority, @NotNull Key key) {
+    public ProcessedTaskAnnotations(@NotNull TaskState implicitReturnState, boolean taskStatesInclude, @Nullable Set<TaskState> taskStates, @NotNull net.aurika.tasks.priority.Priority priority, @NotNull Ident ident) {
       Validate.Arg.notNull(implicitReturnState, "implicitReturnState");
       Validate.Arg.notNull(priority, "priority");
-      Validate.Arg.notNull(key, "key");
+      Validate.Arg.notNull(ident, "key");
       this.implicitReturnState = implicitReturnState;
       this.taskStatesInclude = taskStatesInclude;
       this.taskStates = taskStates;
       this.priority = priority;
-      this.key = key;
+      this.ident = ident;
     }
 
     public @NotNull TaskState implicitReturnState() {
@@ -211,8 +210,8 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
       return this.priority;
     }
 
-    public @NotNull Key getNamespace() {
-      return this.key;
+    public @NotNull Ident getNamespace() {
+      return this.ident;
     }
 
   }
@@ -265,10 +264,11 @@ public final class TaskAnnotationProcessor<C extends TaskContext> {
     private final boolean directInputArg;
     private final boolean hasReturnValue;
 
-    public ReflectionTask(@NotNull TaskSessionConstructor<C> constructor,
-                          @NotNull TaskAnnotationProcessor.ProcessedTaskAnnotations settings,
-                          @NotNull Method method,
-                          @Nullable ParentTask<C> parentTask
+    public ReflectionTask(
+        @NotNull TaskSessionConstructor<C> constructor,
+        @NotNull TaskAnnotationProcessor.ProcessedTaskAnnotations settings,
+        @NotNull Method method,
+        @Nullable ParentTask<C> parentTask
     ) {
       super(settings.getNamespace(), settings.getPriority(), parentTask);
       Validate.Arg.notNull(constructor, "constructor");

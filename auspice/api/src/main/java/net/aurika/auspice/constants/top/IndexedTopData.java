@@ -1,7 +1,7 @@
 package net.aurika.auspice.constants.top;
 
 import net.aurika.util.collection.IndexedHashMap;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;

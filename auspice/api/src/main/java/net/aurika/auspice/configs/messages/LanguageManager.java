@@ -35,7 +35,8 @@ public class LanguageManager {
     if (!messengersClass.isEnum()) {
       throw new IllegalArgumentException("Messenger class must be an enum");
     }
-    registerDefaultMessages(provider, group, Objects.requireNonNull(
+    registerDefaultMessages(
+        provider, group, Objects.requireNonNull(
             messengersClass.getEnumConstants(),
             "The provided class is not an enum. Consider using registerMessenger(" + AuspiceUser.class.getSimpleName() + ", T[]) instead."
         )

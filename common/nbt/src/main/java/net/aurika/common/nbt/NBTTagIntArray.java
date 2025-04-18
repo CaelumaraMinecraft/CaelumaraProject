@@ -1,6 +1,6 @@
 package net.aurika.common.nbt;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.kyori.adventure.nbt.IntArrayBinaryTag;
 import org.jetbrains.annotations.NotNull;
 

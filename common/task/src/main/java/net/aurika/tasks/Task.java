@@ -1,16 +1,16 @@
 package net.aurika.tasks;
 
-import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.Identified;
 import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.Priority;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface Task<C extends TaskContext> extends Keyed {
+public interface Task<C extends TaskContext> extends Identified {
 
-  @NotNull Key key();
+  @NotNull Ident ident();
 
   @NotNull Priority priority();
 

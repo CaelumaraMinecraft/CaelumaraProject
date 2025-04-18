@@ -46,7 +46,7 @@ public final class Fn {
 
   /**
    * Used for Java's spastic generics' system.
-   * E.g. converting {@literal Set<Integer>} to {@literal Set<Number>}
+   * E.g., converting {@code Set<Integer>} to {@code Set<Number>}
    */
   @SuppressWarnings("unchecked")
   public static <T> T cast(Object obj) {

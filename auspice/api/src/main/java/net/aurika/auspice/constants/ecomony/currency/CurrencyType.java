@@ -1,7 +1,7 @@
 package net.aurika.auspice.constants.ecomony.currency;
 
 import net.aurika.auspice.constants.ecomony.currency.bill.CurrencyEntry;
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import org.jetbrains.annotations.NotNull;
 
 public interface CurrencyType<T, C> extends Keyed {
@@ -29,7 +29,7 @@ public interface CurrencyType<T, C> extends Keyed {
    * Get the currency type key.
    */
   @Override
-  @NotNull Key key();
+  @NotNull Ident key();
 
   /**
    * Return weather can apply the currency to the target

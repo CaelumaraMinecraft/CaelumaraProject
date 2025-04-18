@@ -1,11 +1,11 @@
 package net.aurika.auspice.bukkit.utils;
 
+import net.aurika.auspice.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.auspice.configs.globalconfig.AuspiceGlobalConfig;
 import net.aurika.auspice.configs.messages.MessageHandler;
-import net.aurika.auspice.bukkit.loader.PluginAuspiceLoader;
 import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
 import net.aurika.auspice.platform.Platform;
-import net.aurika.auspice.utils.debug.DebugKey;
+import net.aurika.auspice.utils.debug.DebugIdent;
 import net.aurika.auspice.utils.debug.DebugSettings;
 import net.aurika.auspice.utils.debug.StacktraceSettings;
 import net.aurika.util.stacktrace.StackTraces;
@@ -28,7 +28,7 @@ public final class AuspiceLogger {
     instance.info(message.toString());
   }
 
-  public static void debug(DebugKey debug, Object message) {
+  public static void debug(DebugIdent debug, Object message) {
     if (isDebugging()) {
       String debugPrefix = debug == null ? "" : "&8[&5" + debug.getNamespacedKey().asString() + "&8] &6";
       String msg = "&7[&5DEBUG&7] &6" + debugPrefix + message.toString();

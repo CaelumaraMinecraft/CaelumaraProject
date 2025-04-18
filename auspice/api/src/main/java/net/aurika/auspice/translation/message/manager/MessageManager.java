@@ -7,18 +7,18 @@ import net.aurika.auspice.platform.player.OfflinePlayer;
 import net.aurika.auspice.translation.TranslationEntry;
 import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
-import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
-import net.aurika.common.key.registry.AbstractKeyedRegistry;
-import net.aurika.common.key.registry.KeyedRegistry;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.Identified;
+import net.aurika.common.ident.registry.AbstractIdentifiedRegistry;
+import net.aurika.common.ident.registry.IdentifiedRegistry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public interface MessageManager extends Keyed {
+public interface MessageManager extends Identified {
 
-  KeyedRegistry<MessageManager> MANAGER_REGISTRY = new AbstractKeyedRegistry<>() {
+  IdentifiedRegistry<MessageManager> MANAGER_REGISTRY = new AbstractIdentifiedRegistry<>() {
     @Override
     public void register(@NotNull MessageManager manager) {
       super.register(manager);
@@ -26,7 +26,7 @@ public interface MessageManager extends Keyed {
   };
 
   @Override
-  @NotNull Key key();
+  @NotNull Ident ident();
 
   /**
    * Gets a message from a translation and a translation entry.
@@ -50,7 +50,7 @@ public interface MessageManager extends Keyed {
     MANAGER_REGISTRY.register(manager);
   }
 
-  static @Nullable MessageManager getManager(@NotNull Key managerID) {
+  static @Nullable MessageManager getManager(@NotNull Ident managerID) {
     return MANAGER_REGISTRY.getRegistered(managerID);
   }
 

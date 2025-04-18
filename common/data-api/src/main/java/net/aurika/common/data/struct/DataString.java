@@ -1,6 +1,6 @@
 package net.aurika.common.data.struct;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public final class DataString extends DataPart implements DataScalar {

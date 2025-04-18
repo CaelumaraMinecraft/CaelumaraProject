@@ -4,7 +4,8 @@ plugins {
 }
 
 dependencies {
-  api(project(":validate"))
+  api("net.aurika:common-data-string-api")
+  api("net.aurika:common-validate")
   api(libs.annotations.jetbrains)
 }
 

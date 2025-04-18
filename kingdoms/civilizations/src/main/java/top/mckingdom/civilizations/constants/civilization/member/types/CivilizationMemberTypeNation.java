@@ -8,6 +8,7 @@ import top.mckingdom.civilizations.constants.civilization.member.CivilizationMem
 import top.mckingdom.civilizations.constants.civilization.member.objects.CivilizationMemberNation;
 
 public class CivilizationMemberTypeNation extends CivilizationMemberType<Nation, CivilizationMember<Nation>> {
+
   public static final CivilizationMemberTypeNation INSTANCE = new CivilizationMemberTypeNation();
 
   protected CivilizationMemberTypeNation() {

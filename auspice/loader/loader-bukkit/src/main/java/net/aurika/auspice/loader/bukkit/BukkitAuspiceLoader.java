@@ -2,10 +2,10 @@ package net.aurika.auspice.loader.bukkit;
 
 import net.aurika.auspice.api.user.AuspiceUser;
 import net.aurika.auspice.dependencies.DependencyManager;
-import net.aurika.auspice.server.bukkit.loader.PluginAuspiceLoader;
-import net.aurika.auspice.server.bukkit.scheduler.BukkitSchedulerAdapter;
 import net.aurika.auspice.main.Auspice;
 import net.aurika.auspice.permission.DefaultAuspicePluginPermissions;
+import net.aurika.auspice.server.bukkit.loader.PluginAuspiceLoader;
+import net.aurika.auspice.server.bukkit.scheduler.BukkitSchedulerAdapter;
 import net.aurika.namespace.NSedKey;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -112,7 +112,7 @@ public final class ExpirableMap<K, V> implements Cache<K, V> {
   public @Nullable V getIfPresent(@CompatibleWith("K") @NotNull K key) {
     Objects.requireNonNull(key);
     ReferencedExpirableObject<V> var10000 = cache.getIfPresent(key);
-    return var10000 != null ? var10000.getReference() : null;
+    return var10000 != null ? var10000.reference() : null;
   }
 
   public boolean contains(@NotNull K key) {
@@ -131,7 +131,7 @@ public final class ExpirableMap<K, V> implements Cache<K, V> {
         }
     );
     Objects.requireNonNull(var10000);
-    return var10000.getReference();
+    return var10000.reference();
   }
 
   public @NotNull Map<K, V> getAllPresent(@NotNull Iterable<? extends K> keys) {
@@ -143,7 +143,7 @@ public final class ExpirableMap<K, V> implements Cache<K, V> {
     Map<K, V> destination$iv = (new HashMap<>());
 
     for (Map.Entry<K, ReferencedExpirableObject<V>> it : var10) {
-      destination$iv.put(it.getKey(), it.getValue().getReference());
+      destination$iv.put(it.getKey(), it.getValue().reference());
     }
 
     return destination$iv;

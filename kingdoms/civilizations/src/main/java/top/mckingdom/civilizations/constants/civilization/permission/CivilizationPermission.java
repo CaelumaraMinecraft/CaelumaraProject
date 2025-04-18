@@ -4,6 +4,7 @@ import org.kingdoms.constants.namespace.Namespace;
 import org.kingdoms.constants.namespace.Namespaced;
 
 public class CivilizationPermission implements Namespaced {
+
   private int hash;
   private final Namespace namespace;
   private final boolean canBeInherited;

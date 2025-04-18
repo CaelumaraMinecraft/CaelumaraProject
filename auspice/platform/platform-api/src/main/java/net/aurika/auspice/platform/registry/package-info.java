@@ -1,0 +1,1 @@
+package net.aurika.auspice.platform.registry;

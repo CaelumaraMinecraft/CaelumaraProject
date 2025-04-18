@@ -6,6 +6,7 @@ import org.kingdoms.data.database.dataprovider.SectionableDataGetter;
 import org.kingdoms.data.handlers.DataHandlerMetadata;
 
 public abstract class CivilizationMemberType<T, M extends CivilizationMember<T>> implements Namespaced {
+
   private final Namespace namespace;
   private final Class<T> type;
 
@@ -26,9 +27,11 @@ public abstract class CivilizationMemberType<T, M extends CivilizationMember<T>>
     } catch (Exception e) {
       throw new IllegalStateException("The stored data should include section 'subordinates'.", e);
     }
-    subordinatesSection.asCollection(member.getSubordinates(), (membersSet, getter) -> {
-      CivilizationMemberTypeRegistry.deserializeIntactMember(getter).changeSuperior(member);
-    });
+    subordinatesSection.asCollection(
+        member.getSubordinates(), (membersSet, getter) -> {
+          CivilizationMemberTypeRegistry.deserializeIntactMember(getter).changeSuperior(member);
+        }
+    );
     DataHandlerMetadata.deserializeMetadata(section, member);
     return member;
   }

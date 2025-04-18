@@ -4,7 +4,7 @@ import net.aurika.auspice.user.AuspiceUser;
 import net.aurika.common.key.namespace.nested.NestedNamespace;
 import net.aurika.configuration.CompleteConfigPath;
 import net.aurika.configuration.scope.ConfigScope;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public class AuspiceUserConfigScope implements ConfigScope {

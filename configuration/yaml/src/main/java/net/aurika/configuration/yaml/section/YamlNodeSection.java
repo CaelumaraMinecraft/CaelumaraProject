@@ -7,7 +7,7 @@ import net.aurika.configuration.path.ConfigEntryMap;
 import net.aurika.configuration.sections.format.YamlConfigSectionFormat;
 import net.aurika.configuration.sections.label.Label;
 import net.aurika.util.generics.Generics;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.common.value.qual.IntRange;
 import org.jetbrains.annotations.Contract;

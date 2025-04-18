@@ -5,6 +5,7 @@ import top.mckingdom.props.prop.PropActiveContext;
 import top.mckingdom.props.prop.PropType;
 
 public class PropChampionLeash extends PropType {
+
   public PropChampionLeash() {
     super("champion-leash");
   }

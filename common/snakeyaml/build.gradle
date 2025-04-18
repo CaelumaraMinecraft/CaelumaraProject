@@ -5,12 +5,12 @@ plugins {
 }
 
 dependencies {
-  api(project(":function"))
-  api(project(":key"))
-  api(project(":util:collection"))
-  api(project(":util:string"))
-  api(project(":util:generic"))
-  api(project(":validate"))
+  api("net.aurika:common-function")
+  api("net.aurika:common-ident")
+  api("net.aurika:common-util-collection")
+  api("net.aurika:common-util-string")
+  api("net.aurika:common-util-generic")
+  api("net.aurika:common-validate")
   api(libs.yamlengine)
   compileOnlyApi(libs.annotations.jetbrains)
 }

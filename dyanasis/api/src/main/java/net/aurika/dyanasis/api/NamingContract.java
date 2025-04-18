@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.intellij.lang.annotations.Language;
 import org.intellij.lang.annotations.Pattern;
 import org.jetbrains.annotations.NotNull;

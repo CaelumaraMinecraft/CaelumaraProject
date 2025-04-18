@@ -1,7 +1,7 @@
 package net.aurika.common.nbt;
 
 import net.aurika.util.unsafe.fn.Fn;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.kyori.adventure.nbt.BinaryTag;
 import net.kyori.adventure.nbt.ListBinaryTag;
 import org.jetbrains.annotations.Contract;

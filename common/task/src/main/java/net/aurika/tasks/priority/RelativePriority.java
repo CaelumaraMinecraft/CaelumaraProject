@@ -1,9 +1,9 @@
 package net.aurika.tasks.priority;
 
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import net.aurika.tasks.Task;
 import net.aurika.tasks.TaskRegistry;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,9 +12,9 @@ import java.util.Objects;
 public class RelativePriority implements Priority {
 
   private final @NotNull Type type;
-  private final @NotNull Key targetTaskID;
+  private final @NotNull Ident targetTaskID;
 
-  public RelativePriority(@NotNull Type type, @NotNull Key targetTaskID) {
+  public RelativePriority(@NotNull Type type, @NotNull Ident targetTaskID) {
     Validate.Arg.notNull(type, "type");
     Validate.Arg.notNull(targetTaskID, "targetTaskID");
     this.type = type;
@@ -25,20 +25,20 @@ public class RelativePriority implements Priority {
     return this.type;
   }
 
-  public final @NotNull Key targetTaskKey() {
+  public final @NotNull Ident targetTaskKey() {
     return this.targetTaskID;
   }
 
   public @Nullable String validateFor(@NotNull Task<?> task) {
     Validate.Arg.notNull(task, "task");
-    return Objects.equals(task.key(), this.targetTaskID) ? "Circular task priority" : null;
+    return Objects.equals(task.ident(), this.targetTaskID) ? "Circular task priority" : null;
   }
 
   public int compareTo(@NotNull Task<?> second, @NotNull TaskRegistry<?, ?> registry) {
     Validate.Arg.notNull(second, "second");
     Validate.Arg.notNull(registry, "registry");
     int var10000;
-    if (Objects.equals(second.key(), this.targetTaskID)) {
+    if (Objects.equals(second.ident(), this.targetTaskID)) {
       var10000 = switch (this.type) {
         case BEFORE -> -1;
         case REPLACE -> 0;
@@ -65,7 +65,7 @@ public class RelativePriority implements Priority {
   }
 
   public @NotNull String toString() {
-    return "RelativePriority(" + type + ' ' + targetTaskID.asString() + ')';
+    return "RelativePriority(" + type + ' ' + targetTaskID.asDataString() + ')';
   }
 
   public enum Type {

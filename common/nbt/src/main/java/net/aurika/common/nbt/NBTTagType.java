@@ -55,10 +55,11 @@ public class NBTTagType<T extends NBTTag> {
   private static final @NotNull Map<Class<?>, NBTTagType<?>> JAVA_TO_NBT;
   private static final @NotNull NBTTagType<?>[] TAG_TYPES;
 
-  private NBTTagType(@NotNull NBTTagId id,
-                     @NotNull BinaryTagType<? extends BinaryTag> adventureType,
-                     @NotNull Class<T> javaType,
-                     @NotNull Function<Object, T> ctor
+  private NBTTagType(
+      @NotNull NBTTagId id,
+      @NotNull BinaryTagType<? extends BinaryTag> adventureType,
+      @NotNull Class<T> javaType,
+      @NotNull Function<Object, T> ctor
   ) {
     this.id = id;
     this.adventureType = adventureType;

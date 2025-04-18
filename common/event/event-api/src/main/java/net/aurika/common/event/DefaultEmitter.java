@@ -1,6 +1,6 @@
 package net.aurika.common.event;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,13 +52,18 @@ public class DefaultEmitter<E extends Event> implements Emitter<E> {
     for (Listener<E> listener : listeners()) {
       listener.accept(event);
     }
-    for (Emitter<? super E> deepParent : allParentTransformers()) {
+    for (Emitter<? super E> deepParent : allParentEmitters()) {
       deepParent.emit(event);
     }
   }
 
   @Override
-  public void register(@NotNull Listener<E> listener) {    // TODO 顺序排列
+  public void register(@NotNull Listener<E> listener) {
+    Validate.Arg.notNull(listener, "listener");
+    if (listener.listenedEventType() != eventType) {
+      throw new IllegalArgumentException(
+          "The emitter event type " + eventType.getName() + " does not match the listener event type " + listener.listenedEventType());
+    }
     listeners.add(listener);
   }
 
@@ -68,15 +73,15 @@ public class DefaultEmitter<E extends Event> implements Emitter<E> {
   }
 
   @Override
-  public @NotNull Emitter<? super E> @NotNull [] directParentTransformers() {
+  public @NotNull Emitter<? super E> @NotNull [] directParentEmitters() {
     return parents.clone();
   }
 
   @Override
-  public @NotNull Set<@NotNull Emitter<? super E>> allParentTransformers() {
+  public @NotNull Set<@NotNull Emitter<? super E>> allParentEmitters() {
     LinkedHashSet<Emitter<? super E>> allParents = new LinkedHashSet<>();
     for (Emitter<? super E> parentEmitter : parents) {
-      allParents.addAll(parentEmitter.allParentTransformers());
+      allParents.addAll(parentEmitter.allParentEmitters());
     }
     return allParents;
   }

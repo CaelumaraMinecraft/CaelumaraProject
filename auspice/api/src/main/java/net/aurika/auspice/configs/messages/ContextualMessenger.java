@@ -5,7 +5,7 @@ import net.aurika.auspice.configs.messages.context.MessageContextProvider;
 import net.aurika.auspice.platform.command.CommandSender;
 import net.aurika.auspice.platform.entity.Player;
 import net.aurika.auspice.translation.messenger.Messenger;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.ApiStatus.NonExtendable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

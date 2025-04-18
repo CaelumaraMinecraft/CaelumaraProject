@@ -2,7 +2,7 @@ package net.aurika.util.file.walker.visitors;
 
 import net.aurika.util.file.walker.FileTreeWalker;
 import net.aurika.util.file.walker.FileWalkerController;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

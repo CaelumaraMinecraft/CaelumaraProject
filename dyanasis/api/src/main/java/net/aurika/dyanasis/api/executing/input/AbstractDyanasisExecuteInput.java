@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.executing.input;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 

@@ -11,25 +11,27 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SingularMongoIdQueryContainer implements Encoder<SingularMongoIdQueryContainer>, Bson {
-    public SingularMongoIdQueryContainer() {
-    }
 
-    public <TDocument> BsonDocument toBsonDocument(Class<TDocument> klass, CodecRegistry codecRegistry) {
-        return new BsonDocumentWrapper<>(this, this);
-    }
+  public SingularMongoIdQueryContainer() {
+  }
 
-    public void encode(@NotNull BsonWriter writer, @NotNull SingularMongoIdQueryContainer container, @Nullable EncoderContext context) {
-        writer.writeStartDocument();
-        writer.writeName(MongoDBDatabase.PRIMARY_KEY_ID);
-        writer.writeNull();
-        writer.writeEndDocument();
-    }
+  public <TDocument> BsonDocument toBsonDocument(Class<TDocument> klass, CodecRegistry codecRegistry) {
+    return new BsonDocumentWrapper<>(this, this);
+  }
 
-    public Class<SingularMongoIdQueryContainer> getEncoderClass() {
-        return SingularMongoIdQueryContainer.class;
-    }
+  public void encode(@NotNull BsonWriter writer, @NotNull SingularMongoIdQueryContainer container, @Nullable EncoderContext context) {
+    writer.writeStartDocument();
+    writer.writeName(MongoDBDatabase.PRIMARY_KEY_ID);
+    writer.writeNull();
+    writer.writeEndDocument();
+  }
 
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
+  public Class<SingularMongoIdQueryContainer> getEncoderClass() {
+    return SingularMongoIdQueryContainer.class;
+  }
+
+  public String toString() {
+    return this.getClass().getSimpleName();
+  }
+
 }

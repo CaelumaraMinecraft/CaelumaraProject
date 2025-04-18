@@ -1,26 +1,26 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
+  id("java-library")
+  id("maven-publish")
 }
 
 dependencies {
-    
-    api("net.aurika:common-annotation")
-    api("net.aurika:common-data-api")
-    api("net.aurika:common-dependency")
-    api("net.aurika:common-function")
-    api("net.aurika:common-nbt")
-    api("net.aurika:common-property")
-    api("net.aurika:common-snakeyaml")
-    api("net.aurika:common-scheduler")
-    api("net.aurika:common-task")
-    api("net.aurika:common-util-file")
-    api("net.aurika:common-util-functional")
-    api("net.aurika:common-util-gson")
-    api("net.aurika:common-util-math")
-    api("net.aurika:common-util-string")
-    api("net.aurika:common-validate")
 
-    api(libs.annotations.jetbrains)
-    api(libs.annotations.checker)
+  api("net.aurika:common-annotation")
+  api("net.aurika:common-data-api")
+  api("net.aurika:common-dependency")
+  api("net.aurika:common-function")
+  api("net.aurika:common-nbt")
+  api("net.aurika:common-property")
+  api("net.aurika:common-snakeyaml")
+  api("net.aurika:common-scheduler")
+  api("net.aurika:common-task")
+  api("net.aurika:common-util-file")
+  api("net.aurika:common-util-functional")
+  api("net.aurika:common-util-gson")
+  api("net.aurika:common-util-math")
+  api("net.aurika:common-util-string")
+  api("net.aurika:common-validate")
+
+  api(libs.annotations.jetbrains)
+  api(libs.annotations.checker)
 }

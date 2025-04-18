@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface EventManager {
 
-  void callEvent(@NotNull Object event);
+  void callEvent(@NotNull Event event);
 
-  void registerEvents(@NotNull Object listener);
+  void registerEventHandler(@NotNull Object listener);
 
   default void onLoad() {
   }

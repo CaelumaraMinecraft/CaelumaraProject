@@ -3,7 +3,7 @@ package net.aurika.ecliptor.database.dataprovider;
 import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.util.unsafe.fn.Fn;
 import net.aurika.util.uuid.FastUUID;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,75 +15,76 @@ import java.util.function.Function;
 
 public class StringMappedIdSetter implements MappedIdSetter {  // SimpleData   ComponentsDataLike
 
-    private final @NotNull Function<String, SectionCreatableDataSetter> handler;
+  private final @NotNull Function<String, SectionCreatableDataSetter> handler;
 
-    private @Nullable String str;
+  private @Nullable String str;
 
-    public StringMappedIdSetter(@NotNull Function<String, SectionCreatableDataSetter> var1) {
-        Validate.Arg.notNull(var1, "");
-        this.handler = var1;
+  public StringMappedIdSetter(@NotNull Function<String, SectionCreatableDataSetter> var1) {
+    Validate.Arg.notNull(var1, "");
+    this.handler = var1;
+  }
+
+  private static UnsupportedOperationException unsupported(String type) {
+    return new UnsupportedOperationException(type + " ID type is not supported");
+  }
+
+  @Override
+  public @NotNull SectionCreatableDataSetter getValueProvider() {
+    if (str == null) {
+      throw new IllegalStateException("Cannot get value provider before setting the ID");
+    } else {
+      return handler.apply(str);
     }
+  }
 
-    private static UnsupportedOperationException unsupported(String type) {
-        return new UnsupportedOperationException(type + " ID type is not supported");
-    }
+  @Override
+  public void setInt(int value) {
+    this.str = String.valueOf(value);
+  }
 
-    @Override
-    public @NotNull SectionCreatableDataSetter getValueProvider() {
-        if (str == null) {
-            throw new IllegalStateException("Cannot get value provider before setting the ID");
-        } else {
-            return handler.apply(str);
-        }
-    }
+  @Override
+  public void setLong(long value) {
+    this.str = String.valueOf(value);
+  }
 
-    @Override
-    public void setInt(int value) {
-        this.str = String.valueOf(value);
-    }
+  @Override
+  public void setFloat(float value) {
+    throw unsupported("Float");
+  }
 
-    @Override
-    public void setLong(long value) {
-        this.str = String.valueOf(value);
-    }
+  @Override
+  public void setDouble(double value) {
+    throw unsupported("Double");
+  }
 
-    @Override
-    public void setFloat(float value) {
-        throw unsupported("Float");
-    }
+  @Override
+  public void setBoolean(boolean value) {
+    throw unsupported("Boolean");
+  }
 
-    @Override
-    public void setDouble(double value) {
-        throw unsupported("Double");
-    }
+  @Override
+  public void setString(@Nullable String value) {
+    this.str = value;
+  }
 
-    @Override
-    public void setBoolean(boolean value) {
-        throw unsupported("Boolean");
-    }
+  @Override
+  public void setUUID(@Nullable UUID value) {
+    this.str = value != null ? FastUUID.toString(value) : null;
+  }
 
-    @Override
-    public void setString(@Nullable String value) {
-        this.str = value;
-    }
+  @Override
+  public void setStruct(@Nullable StructuredDataObject value) {
+    str = value != null ? value.dataStructSchema().objectToPlain(Fn.cast(value)) : null;
+  }
 
-    @Override
-    public void setUUID(@Nullable UUID value) {
-        this.str = value != null ? FastUUID.toString(value) : null;
-    }
+  @Override
+  public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
+    throw unsupported("Collection");
+  }
 
-    @Override
-    public void setStruct(@Nullable StructuredDataObject value) {
-        str = value != null ? value.dataStructSchema().objectToPlain(Fn.cast(value)) : null;
-    }
+  @Override
+  public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
+    throw unsupported("Map");
+  }
 
-    @Override
-    public <V> void setCollection(@NotNull Collection<? extends V> value, @NotNull BiConsumer<SectionCreatableDataSetter, V> handler) {
-        throw unsupported("Collection");
-    }
-
-    @Override
-    public <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler) {
-        throw unsupported("Map");
-    }
 }

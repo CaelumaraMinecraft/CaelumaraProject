@@ -7,11 +7,11 @@ import net.aurika.common.snakeyaml.node.interpret.NodeInterpretContext;
 import net.aurika.common.snakeyaml.node.interpret.NodeInterpreter;
 import net.aurika.configuration.accessor.UndefinedConfigPathAccessException;
 import net.aurika.configuration.accessor.UndefinedPathConfigAccessor;
-import net.aurika.configuration.yaml.adapter.YamlContainer;
-import net.aurika.configuration.yaml.adapter.YamlWithDefaults;
 import net.aurika.configuration.path.ConfigPath;
 import net.aurika.configuration.path.ConfigPathBuilder;
 import net.aurika.configuration.sections.YamlNodeSection;
+import net.aurika.configuration.yaml.adapter.YamlContainer;
+import net.aurika.configuration.yaml.adapter.YamlWithDefaults;
 import net.aurika.util.Checker;
 import org.snakeyaml.engine.v2.nodes.Node;
 

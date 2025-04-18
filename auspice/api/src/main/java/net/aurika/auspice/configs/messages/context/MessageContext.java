@@ -18,7 +18,7 @@ import net.aurika.auspice.translation.message.manager.MessageManager;
 import net.aurika.common.annotation.Getter;
 import net.aurika.common.annotation.Setter;
 import net.aurika.util.cache.single.CachedSupplier;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -194,7 +194,7 @@ public interface MessageContext extends TextContext, PlaceholderContextBuilder, 
   default MessageContext other(Player var1) {
     TextContext.super.other(var1);
     if (var1 != null) {
-      this.raw("other_player", var1.getName());
+      this.raw("other_player", var1.name());
     }
 
     return this;

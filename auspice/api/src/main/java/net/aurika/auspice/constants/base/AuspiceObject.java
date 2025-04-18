@@ -115,7 +115,7 @@ public interface AuspiceObject extends DataObject, CascadingMessageContextProvid
 
         while (var6.hasNext()) {
           AuditLog nextLog = var6.next();
-          Long var8 = var5.get(new String[]{nextLog.constructor().key().asDataString()}).getLong(
+          Long var8 = var5.get(new String[]{nextLog.constructor().ident().asDataString()}).getLong(
               ZeroArrays.STRING);  // TODO replace to getTimeMillis()
           if (var8 == null) {
             var8 = def;
@@ -135,7 +135,7 @@ public interface AuspiceObject extends DataObject, CascadingMessageContextProvid
     @Override
     public void log(@NotNull AuditLog log) {
       this.ensureObjectExpiration();
-      if (!AuspiceGlobalConfig.AUDIT_LOGS_DISABLED.getStringList().contains(log.constructor().key().asDataString())) {
+      if (!AuspiceGlobalConfig.AUDIT_LOGS_DISABLED.getStringList().contains(log.constructor().ident().asDataString())) {
         this.logs.add(log);
       }
     }

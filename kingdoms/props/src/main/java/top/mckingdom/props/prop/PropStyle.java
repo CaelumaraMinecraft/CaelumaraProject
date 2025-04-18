@@ -7,6 +7,7 @@ import org.kingdoms.utils.config.ConfigPath;
 import org.kingdoms.utils.config.adapters.YamlResource;
 
 public class PropStyle {
+
   private final YamlResource yaml;
   private final String name;
   private final PropType type;

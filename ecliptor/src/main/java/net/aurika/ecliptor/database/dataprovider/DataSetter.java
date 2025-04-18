@@ -11,28 +11,30 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 public interface DataSetter {
-    default void setString(@NotNull DataStringRepresentation value) {
-        Objects.requireNonNull(value, "value");
-        this.setString(value.asDataString());
-    }
 
-    void setInt(int value);
+  default void setString(@NotNull DataStringRepresentation value) {
+    Objects.requireNonNull(value, "value");
+    this.setString(value.asDataString());
+  }
 
-    void setLong(long value);
+  void setInt(int value);
 
-    void setFloat(float value);
+  void setLong(long value);
 
-    void setDouble(double value);
+  void setFloat(float value);
 
-    void setBoolean(boolean value);
+  void setDouble(double value);
 
-    void setString(@NotNull String value);
+  void setBoolean(boolean value);
 
-    void setUUID(@NotNull UUID value);
+  void setString(@NotNull String value);
 
-    void setStruct(@NotNull StructuredDataObject value);
+  void setUUID(@NotNull UUID value);
 
-    <E> void setCollection(@NotNull Collection<? extends E> value, @NotNull BiConsumer<SectionCreatableDataSetter, E> handler);
+  void setStruct(@NotNull StructuredDataObject value);
 
-    <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler);
+  <E> void setCollection(@NotNull Collection<? extends E> value, @NotNull BiConsumer<SectionCreatableDataSetter, E> handler);
+
+  <K, V> void setMap(@NotNull Map<K, ? extends V> value, @NotNull MappingSetterHandler<K, V> handler);
+
 }

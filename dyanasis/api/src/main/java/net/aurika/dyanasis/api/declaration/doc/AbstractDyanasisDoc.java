@@ -1,6 +1,6 @@
 package net.aurika.dyanasis.api.declaration.doc;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractDyanasisDoc implements DyanasisDoc {

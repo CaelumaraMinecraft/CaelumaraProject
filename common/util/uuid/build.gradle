@@ -4,10 +4,8 @@ plugins {
 }
 
 dependencies {
-  api(project(":validate"))
-
+  api("net.aurika:common-validate")
   compileOnly(libs.annotations.jetbrains)
-  compileOnly(libs.annotations.checker)
 }
 
 java {

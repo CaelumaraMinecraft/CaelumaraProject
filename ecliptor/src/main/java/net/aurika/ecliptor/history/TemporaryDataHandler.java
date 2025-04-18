@@ -1,8 +1,10 @@
 package net.aurika.ecliptor.history;
 
-import org.jetbrains.annotations.NotNull;
 import net.aurika.ecliptor.database.dataprovider.SectionableDataGetter;
+import org.jetbrains.annotations.NotNull;
 
 public interface TemporaryDataHandler<H extends DataHolder> {
-    void load(@NotNull SectionableDataGetter provider, @NotNull H dataHolder);
+
+  void load(@NotNull SectionableDataGetter provider, @NotNull H dataHolder);
+
 }

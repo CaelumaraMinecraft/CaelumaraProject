@@ -1,6 +1,9 @@
 package net.aurika.auspice.platform.location;
 
 import net.aurika.auspice.platform.Platform;
+import net.aurika.auspice.platform.world.World;
+import net.aurika.auspice.platform.world.WorldAware;
+import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.common.uitl.string.split.CommaDataSplitStrategy;
 import net.aurika.ecliptor.object.DataStringRepresentation;
 import org.jetbrains.annotations.NotNull;

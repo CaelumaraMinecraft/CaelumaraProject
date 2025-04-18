@@ -1,12 +1,11 @@
 package net.aurika.util.cache.caffeine;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
-public final class ReferencedExpirableObject<T> implements ExpirableObject {
+public class ReferencedExpirableObject<T> implements ExpirableObject {
 
   private final T reference;
-
   private final @NotNull ExpirationStrategy expirationStrategy;
 
   public ReferencedExpirableObject(T reference, @NotNull ExpirationStrategy expirationStrategy) {
@@ -15,11 +14,11 @@ public final class ReferencedExpirableObject<T> implements ExpirableObject {
     this.expirationStrategy = expirationStrategy;
   }
 
-  public T getReference() {
+  public T reference() {
     return this.reference;
   }
 
-  public @NotNull ExpirationStrategy getExpirationStrategy() {
+  public @NotNull ExpirationStrategy expirationStrategy() {
     return this.expirationStrategy;
   }
 

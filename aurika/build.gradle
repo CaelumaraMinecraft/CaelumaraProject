@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api("net.aurika:common-key")
+  api("net.aurika:common-ident")
   api("net.aurika:common-validate")
 
   api(libs.caffeine)

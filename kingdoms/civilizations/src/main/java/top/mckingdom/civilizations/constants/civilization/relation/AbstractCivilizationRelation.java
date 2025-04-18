@@ -6,6 +6,7 @@ import org.kingdoms.constants.namespace.Namespace;
 import java.util.Objects;
 
 public abstract class AbstractCivilizationRelation implements CivilizationRelation {
+
   private final Namespace namespace;
 
   public AbstractCivilizationRelation(@NotNull Namespace namespace) {

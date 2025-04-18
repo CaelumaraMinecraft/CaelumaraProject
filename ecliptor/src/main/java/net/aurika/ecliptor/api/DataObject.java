@@ -5,21 +5,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface DataObject extends CompressedSmartObject {
-    class Impl extends CompressedSmartObject.Impl implements DataObject {
+
+  class Impl extends CompressedSmartObject.Impl implements DataObject {
+  }
+
+  interface Wrapper extends DataObject {
+
+    @NotNull DataObject getWrapped();
+
+    @Override
+    default @Nullable ByteArrayOutputStream getObjectState() {
+      return this.getWrapped().getObjectState();
     }
 
-    interface Wrapper extends DataObject {
-
-        @NotNull DataObject getWrapped();
-
-        @Override
-        default @Nullable ByteArrayOutputStream getObjectState() {
-            return this.getWrapped().getObjectState();
-        }
-
-        @Override
-        default void setObjectState(@Nullable ByteArrayOutputStream objectState) {
-            this.getWrapped().setObjectState(objectState);
-        }
+    @Override
+    default void setObjectState(@Nullable ByteArrayOutputStream objectState) {
+      this.getWrapped().setObjectState(objectState);
     }
+
+  }
+
 }

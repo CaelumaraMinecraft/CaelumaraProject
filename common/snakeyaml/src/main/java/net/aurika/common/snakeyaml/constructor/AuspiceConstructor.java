@@ -1,7 +1,7 @@
 package net.aurika.common.snakeyaml.constructor;
 
 import net.aurika.common.snakeyaml.node.NodesKt;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.api.LoadSettings;
 import org.snakeyaml.engine.v2.constructor.StandardConstructor;

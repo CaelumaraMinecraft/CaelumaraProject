@@ -1,6 +1,6 @@
 package net.aurika.auspice.translation;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

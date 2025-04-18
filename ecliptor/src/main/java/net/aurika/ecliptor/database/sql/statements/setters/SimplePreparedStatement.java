@@ -6,17 +6,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public interface SimplePreparedStatement {
-    void setString(@NotNull String key, @Nullable String value);
 
-    void setInt(@NotNull String key, int value);
+  void setString(@NotNull String key, @Nullable String value);
 
-    void setFloat(@NotNull String key, float value);
+  void setInt(@NotNull String key, int value);
 
-    void setLong(@NotNull String key, long value);
+  void setFloat(@NotNull String key, float value);
 
-    void setBoolean(@NotNull String key, boolean value);
+  void setLong(@NotNull String key, long value);
 
-    void setDouble(@NotNull String key, double value);
+  void setBoolean(@NotNull String key, boolean value);
 
-    void setUUID(@NotNull String key, @Nullable UUID value);
+  void setDouble(@NotNull String key, double value);
+
+  void setUUID(@NotNull String key, @Nullable UUID value);
+
 }

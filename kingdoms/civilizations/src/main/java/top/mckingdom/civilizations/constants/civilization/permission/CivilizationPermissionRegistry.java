@@ -4,6 +4,7 @@ import org.kingdoms.constants.namespace.Lockable;
 import org.kingdoms.constants.namespace.NamespacedRegistry;
 
 public class CivilizationPermissionRegistry extends NamespacedRegistry<CivilizationPermission> implements Lockable {
+
   public static boolean unLock = true;
 
   @Override

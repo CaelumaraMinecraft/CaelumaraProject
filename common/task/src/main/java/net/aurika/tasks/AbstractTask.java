@@ -1,9 +1,9 @@
 package net.aurika.tasks;
 
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.Priority;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,14 +11,14 @@ import java.util.Objects;
 
 public abstract class AbstractTask<C extends TaskContext> implements Task<C> {
 
-  private final @NotNull Key key;
+  private final @NotNull Ident ident;
   private final @NotNull Priority priority;
   private final @Nullable Task<C> parent;
 
-  public AbstractTask(@NotNull Key key, @NotNull Priority priority, @Nullable Task<C> parent) {
-    Validate.Arg.notNull(key, "key");
+  public AbstractTask(@NotNull Ident ident, @NotNull Priority priority, @Nullable Task<C> parent) {
+    Validate.Arg.notNull(ident, "key");
     Validate.Arg.notNull(priority, "priority");
-    this.key = key;
+    this.ident = ident;
     this.priority = priority;
     this.parent = parent;
     String var10000 = this.priority.validateFor(this);
@@ -27,8 +27,8 @@ public abstract class AbstractTask<C extends TaskContext> implements Task<C> {
     }
   }
 
-  public final @NotNull Key key() {
-    return this.key;
+  public final @NotNull Ident ident() {
+    return this.ident;
   }
 
   public final @NotNull Priority priority() {
@@ -43,16 +43,16 @@ public abstract class AbstractTask<C extends TaskContext> implements Task<C> {
     if (this == other) {
       return true;
     } else {
-      return other instanceof Task && Objects.equals(this.key, ((Task<?>) other).key());
+      return other instanceof Task && Objects.equals(this.ident, ((Task<?>) other).ident());
     }
   }
 
   public final int hashCode() {
-    return this.key.hashCode();
+    return this.ident.hashCode();
   }
 
   public @NotNull String toString() {
-    return this.getClass().getSimpleName() + "(name=" + this.key.asDataString() + ", priority=" + this.priority + ", parent=" + this.parent + ')';
+    return this.getClass().getSimpleName() + "(name=" + this.ident.asDataString() + ", priority=" + this.priority + ", parent=" + this.parent + ')';
   }
 
 }

@@ -11,7 +11,8 @@ public class StandardCivilizationRelation extends AbstractCivilizationRelation {
   private final boolean canCustomizeAttributes;
 
   private static StandardCivilizationRelation b(String key, boolean canCustomizeAttributes$default) {
-    StandardCivilizationRelation relation = new StandardCivilizationRelation(CivilizationsAddon.buildNS(key), canCustomizeAttributes$default);
+    StandardCivilizationRelation relation = new StandardCivilizationRelation(
+        CivilizationsAddon.buildNS(key), canCustomizeAttributes$default);
     CivilizationRelationRegister.get().register(relation);
     return relation;
   }

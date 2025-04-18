@@ -1,6 +1,6 @@
 package net.aurika.common.uitl.string.split;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

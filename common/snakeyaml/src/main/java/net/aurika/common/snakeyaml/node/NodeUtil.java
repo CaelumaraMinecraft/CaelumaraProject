@@ -2,7 +2,7 @@ package net.aurika.common.snakeyaml.node;
 
 import net.aurika.common.function.TriConsumer;
 import net.aurika.util.generics.Generics;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

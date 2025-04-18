@@ -4,7 +4,7 @@ import net.aurika.auspice.configs.messages.context.MessageContextImpl;
 import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.translation.TranslationEntry;
 import net.aurika.auspice.translation.message.provider.MessageProvider;
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +15,7 @@ import java.util.TimeZone;
 public interface Diversity extends Keyed {
 
   @Override
-  @NotNull Key key();
+  @NotNull Ident key();
 
   /**
    * Gets the folder name.

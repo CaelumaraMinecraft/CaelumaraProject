@@ -5,42 +5,44 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class BooleanDataScalar extends DataScalar {
-    public static final BooleanDataScalar TRUE = new BooleanDataScalar(true);
-    public static final BooleanDataScalar FALSE = new BooleanDataScalar(false);
 
-    private final boolean value;
+  public static final BooleanDataScalar TRUE = new BooleanDataScalar(true);
+  public static final BooleanDataScalar FALSE = new BooleanDataScalar(false);
 
-    protected BooleanDataScalar(boolean value) {
-        this.value = value;
-    }
+  private final boolean value;
 
-    public boolean value() {
-        return value;
-    }
+  protected BooleanDataScalar(boolean value) {
+    this.value = value;
+  }
 
-    @Override
-    public @NotNull DataScalarType type() {
-        return DataScalarType.BOOLEAN;
-    }
+  public boolean value() {
+    return value;
+  }
 
-    @Override
-    public @NotNull Boolean valueAsObject() {
-        return value;
-    }
+  @Override
+  public @NotNull DataScalarType type() {
+    return DataScalarType.BOOLEAN;
+  }
 
-    @Override
-    public @NotNull String valueToString() {
-        return Boolean.toString(value);
-    }
+  @Override
+  public @NotNull Boolean valueAsObject() {
+    return value;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof BooleanDataScalar that)) return false;
-        return value == that.value;
-    }
+  @Override
+  public @NotNull String valueToString() {
+    return Boolean.toString(value);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(value);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof BooleanDataScalar that)) return false;
+    return value == that.value;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(value);
+  }
+
 }

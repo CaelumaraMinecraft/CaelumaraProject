@@ -1,5 +1,6 @@
 package net.aurika.kingdoms.auspice;
 
+import net.aurika.common.ident.Group;
 import net.aurika.kingdoms.auspice.commands.admin.registry.CommandAdminRegistry;
 import net.aurika.kingdoms.auspice.commands.admin.relation.CommandAdminRelation;
 import net.aurika.kingdoms.auspice.configs.AuspiceLang;
@@ -25,7 +26,9 @@ import static net.aurika.kingdoms.auspice.util.KingdomsNamingContract.Namespace.
 
 public final class AuspiceAddon extends AddonTemplate {
 
-  public static final String NAMESPACE = "Auspice";
+  public static final String NAMESPACE = "auspice";
+  public static final String GROUP_STRING = "net.aurika.kingdoms." + NAMESPACE;
+  public static final Group GROUP = Group.group(GROUP_STRING);
 
   private static AuspiceAddon instance;
 

@@ -7,9 +7,9 @@ import net.aurika.auspice.translation.diversity.Diversity;
 import net.aurika.auspice.translation.diversity.StandardDiversity;
 import net.aurika.common.dependency.DependencyManager;
 import net.aurika.common.dependency.classpath.BootstrapProvider;
-import net.aurika.common.key.Group;
-import net.aurika.common.key.Key;
-import net.aurika.common.key.KeyPatterns;
+import net.aurika.common.ident.Group;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.KeyPatterns;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,15 +21,18 @@ public final class Auspice implements AuspiceUser {
 
   public static final String NAMESPACE = "auspice";
   @KeyPatterns.Group
-  public static final @NotNull String GROUP_STRING = "net.aurika.auspice";
+  public static final @NotNull String GROUP_STRING = "net.aurika." + NAMESPACE;
   public static final Group GROUP = Group.group(GROUP_STRING);
-  public static final String USER_NAME = "Auspice";
   private static final Auspice INSTANCE = new Auspice();
+  public static @NotNull Auspice get() {
+    return INSTANCE;
+  }
   private State state;
   private AuspiceLoader loader;
   private File dataFolder;
   private AuspiceDataCenter dataCenter;
   private BootstrapProvider bootstrapProvider;
+
   private DependencyManager dependencyManager;
 
   @ApiStatus.Internal
@@ -75,7 +78,7 @@ public final class Auspice implements AuspiceUser {
   @AuspiceUserName
   @Override
   public @NotNull String auspiceUserName() {
-    return USER_NAME;
+    return NAMESPACE;
   }
 
   @Override
@@ -85,10 +88,6 @@ public final class Auspice implements AuspiceUser {
 
   @Override
   public @NotNull Group group() { return GROUP; }
-
-  public static @NotNull Auspice get() {
-    return INSTANCE;
-  }
 
   public DependencyManager getDependencyManager() {
     return this.dependencyManager;
@@ -134,8 +133,8 @@ public final class Auspice implements AuspiceUser {
     return this.getDataFolder().toPath().resolve(path);
   }
 
-  public static @NotNull Key createKey(@KeyPatterns.KeyPath final @NotNull String keyPath) {
-    return Key.key(GROUP_STRING, keyPath);
+  public static @NotNull Ident createKey(@KeyPatterns.IdentPath final @NotNull String keyPath) {
+    return Ident.ident(GROUP_STRING, keyPath);
   }
 
   static {

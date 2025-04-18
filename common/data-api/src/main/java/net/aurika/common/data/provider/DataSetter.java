@@ -1,6 +1,6 @@
 package net.aurika.common.data.provider;
 
-import net.aurika.validate.NotNull;
+import net.aurika.common.validate.NotNull;
 
 import java.util.Collection;
 import java.util.Map;

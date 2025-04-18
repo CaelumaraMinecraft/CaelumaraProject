@@ -4,7 +4,7 @@ import net.aurika.auspice.utils.compiler.condition.ConditionCompiler;
 import net.aurika.auspice.utils.compiler.math.MathCompiler;
 import net.aurika.auspice.utils.string.Strings;
 import net.aurika.common.snakeyaml.node.NodesKt;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.snakeyaml.engine.v2.common.ScalarStyle;

@@ -29,11 +29,13 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
     this(key, type, null, new HashSet<>(), permissions);
   }
 
-  public CivilizationMember(T key,
-                            CivilizationMemberType<T, CivilizationMember<T>> type,
-                            @Nullable CivilizationMember<?> superior,
-                            @NotNull Set<CivilizationMember<?>> subordinates,
-                            @NotNull Set<CivilizationPermission> permissions) {
+  public CivilizationMember(
+      T key,
+      CivilizationMemberType<T, CivilizationMember<T>> type,
+      @Nullable CivilizationMember<?> superior,
+      @NotNull Set<CivilizationMember<?>> subordinates,
+      @NotNull Set<CivilizationPermission> permissions
+  ) {
     super(key, type);
     this.superior = superior;
     this.subordinates = subordinates;
@@ -50,9 +52,11 @@ public abstract non-sealed class CivilizationMember<T> extends MarkingCivilizati
   public void serialize(SectionableDataSetter section, boolean serializeIntactData) {
     super.serialize(section, serializeIntactData);
     if (serializeIntactData) {
-      section.get("subordinates").setCollection(this.subordinates, (subSection, sub) -> {
-        sub.serialize(subSection.createSection(), true);
-      });
+      section.get("subordinates").setCollection(
+          this.subordinates, (subSection, sub) -> {
+            sub.serialize(subSection.createSection(), true);
+          }
+      );
       DataHandlerMetadata.serializeMetadata(section, this);
     }
   }

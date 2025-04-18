@@ -7,7 +7,7 @@ import net.aurika.dyanasis.api.declaration.member.property.container.SimpleDyana
 import net.aurika.dyanasis.api.runtime.DyanasisRuntime;
 import net.aurika.dyanasis.api.runtime.DyanasisRuntimeObject;
 import net.aurika.dyanasis.api.type.DyanasisType;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

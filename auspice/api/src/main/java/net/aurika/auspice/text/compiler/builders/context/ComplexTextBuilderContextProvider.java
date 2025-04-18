@@ -2,7 +2,7 @@ package net.aurika.auspice.text.compiler.builders.context;
 
 import net.aurika.auspice.text.compiler.pieces.TextPiece;
 import net.aurika.auspice.text.context.TextContext;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.Style.Merge;

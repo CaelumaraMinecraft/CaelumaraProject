@@ -3,7 +3,7 @@ package net.aurika.configuration.yaml.part;
 import net.aurika.common.snakeyaml.node.NodeUtil;
 import net.aurika.configuration.part.AbstractConfigPart;
 import net.aurika.configuration.part.exception.ConfigPartIsRootException;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.nodes.MappingNode;
 import org.snakeyaml.engine.v2.nodes.Node;

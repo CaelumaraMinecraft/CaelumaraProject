@@ -2,7 +2,7 @@ package net.aurika.dyanasis.api.declaration.property;
 
 import net.aurika.dyanasis.api.NamingContract;
 import net.aurika.dyanasis.api.object.DyanasisObject;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractDyanasisProperty implements DyanasisProperty {

@@ -1,8 +1,8 @@
 package net.aurika.tasks;
 
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.common.key.Key;
-import net.aurika.common.key.registry.AbstractKeyedRegistry;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.registry.AbstractIdentifiedRegistry;
 import net.aurika.tasks.annotations.TaskAnnotationProcessor;
 import net.aurika.tasks.annotations.TaskSessionConstructor;
 import net.aurika.tasks.container.AbstractTaskSession;
@@ -11,7 +11,7 @@ import net.aurika.tasks.container.TaskSession;
 import net.aurika.tasks.context.AbstractIOTaskContext;
 import net.aurika.tasks.context.IOTaskContext;
 import net.aurika.tasks.context.TaskContext;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import java.util.*;
 import java.util.function.Consumer;
 
-public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extends AbstractKeyedRegistry<T> {
+public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extends AbstractIdentifiedRegistry<T> {
 
   private final @Nullable ParentTask<C> parentTask;
   private final @NotNull LinkedList<T> usableList;
@@ -35,12 +35,12 @@ public final class TaskRegistry<C extends TaskContext, T extends Task<C>> extend
   @Override
   public void register(@NotNull T task) {
     Objects.requireNonNull(task, "task");
-    Key key = task.key();
-    Objects.requireNonNull(key, "Cannot register task with null key");
+    Ident ident = task.ident();
+    Objects.requireNonNull(ident, "Cannot register task with null key");
     if (this.parentTask != null && !Objects.equals(task.parent(), this.parentTask)) {
       throw new IllegalArgumentException("Task parent mismatch: " + task + " not a child of " + this.parentTask);
     } else {
-      Task<C> prev = this.rawRegistry().putIfAbsent(key, task);
+      Task<C> prev = this.rawRegistry().putIfAbsent(ident, task);
       if (prev != null) {
         String var5 = task + " was already registered";
         throw new IllegalArgumentException(var5);

@@ -1,7 +1,7 @@
 package net.aurika.configuration.part.adapter;
 
 import net.aurika.configuration.part.ConfigPart;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractConfigPartAdapter<P extends ConfigPart> implements ConfigPartAdapter<P> {

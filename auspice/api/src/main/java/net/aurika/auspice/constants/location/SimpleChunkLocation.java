@@ -1,8 +1,8 @@
 package net.aurika.auspice.constants.location;
 
 import net.aurika.auspice.platform.entity.Entity;
-import net.aurika.auspice.platform.location.Block2D;
 import net.aurika.auspice.platform.location.Block2;
+import net.aurika.auspice.platform.location.Block2D;
 import net.aurika.auspice.platform.location.Direction;
 import net.aurika.auspice.platform.location.Location;
 import net.aurika.ecliptor.api.DataStringRepresentation;

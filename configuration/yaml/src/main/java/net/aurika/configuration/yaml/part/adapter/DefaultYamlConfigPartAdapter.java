@@ -2,7 +2,7 @@ package net.aurika.configuration.yaml.part.adapter;
 
 import net.aurika.configuration.part.adapter.AbstractConfigPartAdapter;
 import net.aurika.configuration.yaml.part.YamlConfigPart;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public class DefaultYamlConfigPartAdapter<P extends YamlConfigPart> extends AbstractConfigPartAdapter<P> implements YamlConfigPartAdapter<P> {

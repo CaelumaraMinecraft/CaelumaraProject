@@ -8,6 +8,7 @@ import org.kingdoms.constants.land.structures.StructureType;
 import org.kingdoms.gui.InteractiveGUI;
 
 public class StructureCivilizationNode extends StructureType {
+
   public StructureCivilizationNode() {
     super("civilization-node");
   }

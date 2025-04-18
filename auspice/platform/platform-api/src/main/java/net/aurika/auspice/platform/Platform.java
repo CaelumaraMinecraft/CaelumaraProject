@@ -1,5 +1,6 @@
 package net.aurika.auspice.platform;
 
+import net.aurika.auspice.platform.registry.RegistryContainer;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -34,13 +35,17 @@ public interface Platform {
     return platform;
   }
 
-  default void onStartup() {
-  }
+  /**
+   * Gets registries of the platform.
+   *
+   * @return the registries
+   */
+  @NotNull RegistryContainer registries();
 
-  default void onReady() {
-  }
+  default void onStartup() { }
 
-  default void onEnable() {
-  }
+  default void onReady() { }
+
+  default void onEnable() { }
 
 }

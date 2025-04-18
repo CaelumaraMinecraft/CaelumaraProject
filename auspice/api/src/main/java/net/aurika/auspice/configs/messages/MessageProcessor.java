@@ -2,7 +2,7 @@ package net.aurika.auspice.configs.messages;
 
 import net.aurika.auspice.text.TextObject;
 import net.aurika.auspice.text.compiler.TextCompiler;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

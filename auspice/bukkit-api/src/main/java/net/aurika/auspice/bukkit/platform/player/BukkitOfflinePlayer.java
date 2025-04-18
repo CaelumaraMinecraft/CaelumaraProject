@@ -41,7 +41,7 @@ public class BukkitOfflinePlayer implements OfflinePlayer, org.bukkit.OfflinePla
   }
 
   @Override
-  public @Nullable String getName() {
+  public @Nullable String name() {
     return this.name;
   }
 
@@ -226,7 +226,7 @@ public class BukkitOfflinePlayer implements OfflinePlayer, org.bukkit.OfflinePla
   }
 
   @Override
-  public @NotNull UUID getUniqueId() {
+  public @NotNull UUID id() {
     return this.id;
   }
 

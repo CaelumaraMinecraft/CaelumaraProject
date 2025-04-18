@@ -117,47 +117,7 @@ include(
     ":ecliptor:data-storage"
 )
 
-include(
-    ":aurika",
-)
-
-//include(
-//    ":HiraethRPG",
-//    ":HiraethRPG:api",
-//
-//    ":HiraethRPG:game",
-//    ":HiraethRPG:game:api",
-//
-//    ":HiraethRPG:game:bukkit",
-//    ":HiraethRPG:game:bukkit:api",
-//
-//    ":HiraethRPG:game:bukkit:paper",
-//    ":HiraethRPG:game:bukkit:folia",
-//
-//
-//    ":HiraethRPG:proxy",
-//    ":HiraethRPG:proxy:api",
-//    )
-
-//include(
-//    ":KingdomsAddons:Civilizations",
-//    ":KingdomsAddons:PlaceholderAPI-Bridge",
-//    ":KingdomsAddons:Props",
-//
-//    ":KingdomsAddons:kingdoms",
-//    ":KingdomsAddons:kingdoms:Peace-Treaties",
-//    ":KingdomsAddons:kingdoms:Outposts",
-//    ":KingdomsAddons:kingdoms:EngineHub",
-//    ":KingdomsAddons:kingdoms:EngineHub:commons",
-//    ":KingdomsAddons:kingdoms:EngineHub:worldguard",
-//    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v6",
-//    ":KingdomsAddons:kingdoms:EngineHub:worldguard:v7"
-//)
-
-//include(
-//    ":WandsCraftsmanship"
-//)
-
+include(":aurika")
 
 includeBuild("auspice") {
   dependencySubstitution {
@@ -191,11 +151,12 @@ includeBuild("common") {
   dependencySubstitution {
     substitute(module("net.aurika:common-annotation")).using(project(":annotation"))
     substitute(module("net.aurika:common-data-api")).using(project(":data-api"))
+    substitute(module("net.aurika:common-data-string-api")).using(project(":data-string-api"))
     substitute(module("net.aurika:common-dependency")).using(project(":dependency"))
     substitute(module("net.aurika:common-event-api")).using(project(":event:event-api"))
     substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
     substitute(module("net.aurika:common-function")).using(project(":function"))
-    substitute(module("net.aurika:common-key")).using(project(":key"))
+    substitute(module("net.aurika:common-ident")).using(project(":ident"))
     substitute(module("net.aurika:common-keyed-api")).using(project(":keyed-api"))
     substitute(module("net.aurika:common-lazy")).using(project(":lazy"))
     substitute(module("net.aurika:common-logging")).using(project(":logging"))
@@ -204,8 +165,8 @@ includeBuild("common") {
     substitute(module("net.aurika:common-property")).using(project(":property"))
     substitute(module("net.aurika:common-scheduler")).using(project(":scheduler"))
     substitute(module("net.aurika:common-snakeyaml")).using(project(":snakeyaml"))
-    substitute(module("net.aurika:common-sorting-api")).using(project(":sorting-api"))
-    substitute(module("net.aurika:common-sorting-key")).using(project(":sorting-key"))
+    substitute(module("net.aurika:common-sorting-api")).using(project(":sorting:sorting-api"))
+    substitute(module("net.aurika:common-sorting-ident")).using(project(":sorting:sorting-ident"))
     substitute(module("net.aurika:common-task")).using(project(":task"))
 
     substitute(module("net.aurika:common-util-cache")).using(project(":util:cache"))
@@ -260,7 +221,7 @@ includeBuild("kingdoms") {
   dependencySubstitution {
     substitute(module("net.aurika:kingdoms-addon-auspice")).using(project(":auspice"))
     substitute(module("net.aurika:kingdoms-addon-civilizations")).using(project(":civilizations"))
-    substitute(module("net.aurika:kingdoms-addon-powerful-territory")).using(project(":powerful-territory"))
+    substitute(module("net.aurika:kingdoms-addon-territories")).using(project(":territories"))
     substitute(module("net.aurika:kingdoms-addon-props")).using(project(":props"))
     substitute(module("net.aurika:kingdoms-addon-supreme-kingdom")).using(project(":supreme-kingdom"))
     substitute(module("net.aurika:kingdoms-addon-trade-point")).using(project(":trade-point"))

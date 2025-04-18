@@ -2,7 +2,7 @@ package net.aurika.auspice.service.vault;
 
 import net.aurika.auspice.service.api.BukkitServiceEconomy;
 import net.aurika.auspice.service.vault.constants.VaultBalance;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;

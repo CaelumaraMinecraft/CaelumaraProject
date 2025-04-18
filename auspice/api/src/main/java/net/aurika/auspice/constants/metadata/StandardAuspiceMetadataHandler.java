@@ -1,7 +1,7 @@
 package net.aurika.auspice.constants.metadata;
 
 import net.aurika.auspice.constants.base.KeyedAuspiceObject;
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import net.aurika.ecliptor.database.dataprovider.SectionableDataGetter;
 import net.aurika.ecliptor.database.flatfile.ObjectDataProvider;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 @Deprecated
 public class StandardAuspiceMetadataHandler extends AuspiceMetadataHandler {
 
-  public StandardAuspiceMetadataHandler(Key id) {
+  public StandardAuspiceMetadataHandler(Ident id) {
     super(id);
   }
 

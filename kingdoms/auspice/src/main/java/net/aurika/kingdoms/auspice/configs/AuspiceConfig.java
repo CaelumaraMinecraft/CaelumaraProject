@@ -24,8 +24,8 @@ public enum AuspiceConfig implements EnumConfig {
   public static final YamlResource AUSPICE =
       new YamlResource(
           AuspiceAddon.get(),
-          Kingdoms.getPath("auspice-addon.yml").toFile(),
-          "auspice-addon.yml"
+          Kingdoms.getPath("auspice.yml").toFile(),
+          "auspice.yml"
       ).load();
 
   static {
@@ -50,7 +50,7 @@ public enum AuspiceConfig implements EnumConfig {
   @Override
   @Contract(" -> new")
   public @NotNull KeyedConfigAccessor getManager() {
-    return new KeyedYamlConfigAccessor(AUSPICE, this.option);
+    return new KeyedYamlConfigAccessor(AUSPICE, option);
   }
 
   public static YamlResource getConfig() {

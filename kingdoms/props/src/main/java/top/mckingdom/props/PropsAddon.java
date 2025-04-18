@@ -1,10 +1,10 @@
 package top.mckingdom.props;
 
-import org.jetbrains.annotations.NotNull;
-import org.kingdoms.constants.namespace.Namespace;
 import net.aurika.kingdoms.auspice.util.AddonTemplate;
 import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 import net.aurika.kingdoms.auspice.util.permission.XKingdomPermission;
+import org.jetbrains.annotations.NotNull;
+import org.kingdoms.constants.namespace.Namespace;
 
 import static net.aurika.kingdoms.auspice.configs.MsgConst.E_COLOR;
 import static net.aurika.kingdoms.auspice.configs.MsgConst.S_COLOR;

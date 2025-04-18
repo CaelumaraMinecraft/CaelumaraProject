@@ -5,7 +5,7 @@ import net.aurika.auspice.configs.messages.placeholders.context.VariableProvider
 import net.aurika.auspice.text.compiler.PlaceholderTranslationContext;
 import net.aurika.auspice.text.compiler.placeholders.Placeholder;
 import net.aurika.auspice.text.compiler.placeholders.modifiers.PlaceholderModifier;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

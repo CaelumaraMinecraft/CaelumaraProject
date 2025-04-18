@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public final class PropRegistry {
+
   private static final PropRegistry INSTANCE = new PropRegistry();
   private static final Map<String, PropType> types = new HashMap<>();
   private static final Map<String, PropStyle> styles = new HashMap<>();
@@ -47,7 +48,10 @@ public final class PropRegistry {
   }
 
   public static void validate(String styleName, YamlContainer yaml) {
-    ConfigManager.warnAboutValidation("Props/" + styleName, Validator.validate(yaml.getConfig().getNode(), SCHEMA, CustomConfigValidators.getValidators()));
+    ConfigManager.warnAboutValidation(
+        "Props/" + styleName,
+        Validator.validate(yaml.getConfig().getNode(), SCHEMA, CustomConfigValidators.getValidators())
+    );
   }
 
   public static PropRegistry get() {
@@ -62,11 +66,13 @@ public final class PropRegistry {
     registerType(new PropRangedTurretJammer());
     registerType(new PropSingleTurretJammer());
     styles.clear();
-    (new FolderYamlRegistry("Prop", "Props", (styleName, yaml) -> {    //parm1: display name, param2: folder path, param3:
+    (new FolderYamlRegistry(
+        "Prop", "Props", (styleName, yaml) -> {    //parm1: display name, param2: folder path, param3:
       validate(styleName, yaml);
       yaml.setImporter(YamlGlobalImporter.INSTANCE).importDeclarations();
       this.registerStyle(new PropStyle(styleName, yaml));
-    })).useDefaults(false).copyDefaults(false).register();
+    }
+    )).useDefaults(false).copyDefaults(false).register();
   }
 
   public PropStyle getStyle(String s) {

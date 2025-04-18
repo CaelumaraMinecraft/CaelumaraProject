@@ -1,6 +1,6 @@
 package net.aurika.tasks;
 
-import net.aurika.common.key.Key;
+import net.aurika.common.ident.Ident;
 import net.aurika.tasks.context.TaskContext;
 import net.aurika.tasks.priority.Priority;
 import org.jetbrains.annotations.NotNull;
@@ -10,8 +10,8 @@ public abstract class AbstractParentTask<C extends TaskContext> extends Abstract
 
   private final @NotNull TaskRegistry<C, Task<C>> subTasks;
 
-  public AbstractParentTask(@NotNull Key key, @NotNull Priority priority, @Nullable Task<C> parent) {
-    super(key, priority, parent);
+  public AbstractParentTask(@NotNull Ident ident, @NotNull Priority priority, @Nullable Task<C> parent) {
+    super(ident, priority, parent);
     this.subTasks = new TaskRegistry<>(this);
   }
 

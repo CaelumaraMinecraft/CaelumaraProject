@@ -3,7 +3,7 @@ package net.aurika.configuration.part.accessor;
 import net.aurika.configuration.part.ConfigPart;
 import net.aurika.configuration.part.visitor.ConfigVisitor;
 import net.aurika.configuration.path.ConfigEntry;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractConfigAccessor<P extends ConfigPart> implements DefaultableConfigAccessor, ConfigReader, ConfigWriter {

@@ -1,7 +1,7 @@
 package net.aurika.auspice.bukkit.platform.entity;
 
-import net.aurika.auspice.bukkit.server.core.BukkitServer;
 import net.aurika.auspice.bukkit.platform.location.BukkitWorld;
+import net.aurika.auspice.bukkit.server.core.BukkitServer;
 import net.aurika.auspice.platform.entity.Player;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
@@ -51,7 +51,7 @@ public class BukkitPlayer extends BukkitEntity implements Player {
     return BukkitWorld.of(bukkitPlayer.getWorld());
   }
 
-  public @NotNull UUID getUniqueId() {
+  public @NotNull UUID id() {
     return this.uniqueId;
   }
 
@@ -60,7 +60,7 @@ public class BukkitPlayer extends BukkitEntity implements Player {
     return this.player;
   }
 
-  public @NotNull String getName() {
+  public @NotNull String name() {
     return this.name;
   }
 

@@ -1,5 +1,6 @@
 package net.aurika.configuration.profile;
 
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.snakeyaml.engine.v2.api.LoadSettings;
 import org.snakeyaml.engine.v2.api.YamlUnicodeReader;
@@ -20,7 +21,6 @@ public abstract class LocalFileProfile implements Profile {
   protected final @NotNull File file;
   protected final @NotNull ProfileType type;
 
-
   public LocalFileProfile(@NotNull File file, @NotNull ProfileType type) {
     this.file = Objects.requireNonNull(file);
     this.type = Objects.requireNonNull(type);
@@ -28,7 +28,7 @@ public abstract class LocalFileProfile implements Profile {
 
   @NotNull
   public YamlConfigPart config() {
-    net.aurika.validate.Validate.Arg.notNull(this.file, "");
+    Validate.Arg.notNull(this.file, "");
 
     if (this.root != null) {
       return this.root;

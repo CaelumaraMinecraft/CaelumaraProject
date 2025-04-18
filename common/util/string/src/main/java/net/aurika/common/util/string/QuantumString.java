@@ -1,6 +1,6 @@
 package net.aurika.common.util.string;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -2,7 +2,7 @@ package net.aurika.auspice.platform.server;
 
 import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.event.EventManager;
-import net.aurika.auspice.platform.location.WorldRegistry;
+import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.auspice.platform.permission.PermissionManager;
 import net.aurika.auspice.platform.player.PlayerManager;
 import org.jetbrains.annotations.NotNull;

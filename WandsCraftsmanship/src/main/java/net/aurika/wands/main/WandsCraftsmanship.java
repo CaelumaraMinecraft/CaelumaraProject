@@ -8,73 +8,75 @@ import net.aurika.auspice.translation.diversity.StandardDiversity;
 import net.aurika.auspice.key.NSKey;
 
 public final class WandsCraftsmanship extends JavaPlugin implements BukkitPluginAuspiceUser {
-    private static WandsCraftsmanship instance;
-    public static final String NAMESPACE = "WandsCraftsmanship";
 
-    private State state;
+  private static WandsCraftsmanship instance;
+  public static final String NAMESPACE = "WandsCraftsmanship";
 
-    public WandsCraftsmanship() {
-        instance = this;
-        this.state = State.INITIATING;
-        registerAuspiceUser();
+  private State state;
 
-        this.state = State.INITIATED;
-    }
+  public WandsCraftsmanship() {
+    instance = this;
+    this.state = State.INITIATING;
+    registerAuspiceUser();
 
-    @Override
-    public void onLoad() {
-        this.state = State.LOADING;
+    this.state = State.INITIATED;
+  }
 
-
-        this.state = State.LOADED;
-    }
-
-    @Override
-    public void onEnable() {
-        this.state = State.ENABLING;
+  @Override
+  public void onLoad() {
+    this.state = State.LOADING;
 
 
-        this.state = State.ENABLED;
-    }
+    this.state = State.LOADED;
+  }
 
-    @Override
-    public void onReload() {
-        this.state = State.RELOADING;
+  @Override
+  public void onEnable() {
+    this.state = State.ENABLING;
 
 
-        this.state = State.RELOADED;
-    }
+    this.state = State.ENABLED;
+  }
 
-    @Override
-    public void onDisable() {
-        this.state = State.DISABLING;
+  @Override
+  public void onReload() {
+    this.state = State.RELOADING;
 
-        this.state = State.DISABLED;
-    }
 
-    @Override
-    @AuspiceUserName
-    public @NotNull String auspiceUserName() {
-        return "WandsCraftsmanship";
-    }
+    this.state = State.RELOADED;
+  }
 
-    @Override
-    @NSKey.Namespace
-    public @NotNull String getNamespace() {
-        return NAMESPACE;
-    }
+  @Override
+  public void onDisable() {
+    this.state = State.DISABLING;
 
-    @Override
-    public @NotNull Diversity defaultDiversity() {
-        return StandardDiversity.SIMPLIFIED_CHINESE;
-    }
+    this.state = State.DISABLED;
+  }
 
-    @Override
-    public @NotNull State state() {
-        return this.state;
-    }
+  @Override
+  @AuspiceUserName
+  public @NotNull String auspiceUserName() {
+    return "WandsCraftsmanship";
+  }
 
-    public static WandsCraftsmanship get() {
-        return instance;
-    }
+  @Override
+  @NSKey.Namespace
+  public @NotNull String getNamespace() {
+    return NAMESPACE;
+  }
+
+  @Override
+  public @NotNull Diversity defaultDiversity() {
+    return StandardDiversity.SIMPLIFIED_CHINESE;
+  }
+
+  @Override
+  public @NotNull State state() {
+    return this.state;
+  }
+
+  public static WandsCraftsmanship get() {
+    return instance;
+  }
+
 }

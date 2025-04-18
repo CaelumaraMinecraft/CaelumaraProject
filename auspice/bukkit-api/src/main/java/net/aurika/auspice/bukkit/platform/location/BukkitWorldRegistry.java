@@ -1,7 +1,7 @@
 package net.aurika.auspice.bukkit.platform.location;
 
 import net.aurika.auspice.bukkit.server.core.BukkitServer;
-import net.aurika.auspice.platform.location.WorldRegistry;
+import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.auspice.utils.nonnull.NonNullMap;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;

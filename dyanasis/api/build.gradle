@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   api("net.aurika:common-validate")
-  api("net.aurika:common-key")
+  api("net.aurika:common-ident")
   compileOnlyApi(libs.annotations.jetbrains)
   compileOnlyApi(libs.annotations.checker)
 }

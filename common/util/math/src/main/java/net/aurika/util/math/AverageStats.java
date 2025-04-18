@@ -9,15 +9,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AverageStats<K, V extends Number> {
 
-  @NotNull
-  private final Map<K, Avg> data = new ConcurrentHashMap<>();
+  private final @NotNull Map<K, Avg> data = new ConcurrentHashMap<>();
 
   public AverageStats() {
   }
 
   public final void addData(@NotNull K key, @NotNull V data) {
-    Objects.requireNonNull(key);
-    Objects.requireNonNull(data);
+    Objects.requireNonNull(key, "key");
+    Objects.requireNonNull(data, "data");
     Map<K, Avg> $this$getOrPut$iv = this.data;
     Object value$iv = $this$getOrPut$iv.get(key);
     Object var10000;
@@ -30,12 +29,12 @@ public class AverageStats<K, V extends Number> {
     }
 
     Avg avg = (Avg) var10000;
-    avg.setSum(avg.getSum() + data.doubleValue());
-    long var11 = avg.getCount();
-    avg.setCount(var11 + 1L);
-    if (avg.getSum() >= Double.MAX_VALUE) {
-      avg.setSum(Double.MAX_VALUE / (double) avg.getCount());
-      avg.setCount(1L);
+    avg.sum(avg.sum() + data.doubleValue());
+    long var11 = avg.count();
+    avg.count(var11 + 1L);
+    if (avg.sum() >= Double.MAX_VALUE) {
+      avg.sum(Double.MAX_VALUE / (double) avg.count());
+      avg.count(1L);
     }
   }
 
@@ -46,7 +45,7 @@ public class AverageStats<K, V extends Number> {
     if (var10000 == null) {
       return null;
     } else {
-      return (V) (Number) var10000.getAverage();
+      return (V) (Number) var10000.average();
     }
   }
 

@@ -1,10 +1,10 @@
 package net.aurika.configuration.yaml.importers;
 
+import net.aurika.configuration.sections.YamlNodeSection;
+import net.aurika.configuration.yaml.FolderYamlRegistry;
 import net.aurika.configuration.yaml.adapter.YamlContainer;
 import net.aurika.configuration.yaml.adapter.YamlImportDeclaration;
 import net.aurika.configuration.yaml.adapter.YamlModule;
-import net.aurika.configuration.sections.YamlNodeSection;
-import net.aurika.configuration.yaml.FolderYamlRegistry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

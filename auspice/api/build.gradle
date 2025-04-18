@@ -14,7 +14,7 @@ dependencies {
   api("net.aurika:common-dependency")
   api("net.aurika:common-event-api")
   api("net.aurika:common-function")
-  api("net.aurika:common-key")
+  api("net.aurika:common-ident")
   api("net.aurika:common-nbt")
   api("net.aurika:common-property")
   api("net.aurika:common-snakeyaml")

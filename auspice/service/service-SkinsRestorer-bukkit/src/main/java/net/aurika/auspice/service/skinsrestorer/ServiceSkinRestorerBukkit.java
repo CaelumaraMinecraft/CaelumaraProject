@@ -1,7 +1,7 @@
 package net.aurika.auspice.service.skinsrestorer;
 
 import net.aurika.auspice.service.api.BukkitService;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.skinsrestorer.api.exception.DataRequestException;
 import net.skinsrestorer.api.exception.MineSkinException;
 import net.skinsrestorer.api.property.SkinProperty;

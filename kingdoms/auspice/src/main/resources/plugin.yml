@@ -1,9 +1,19 @@
 name: "${project.name}"
-version: '${project.version}'
 main: net.aurika.kingdoms.auspice.AuspiceAddon
+version: '${project.version}'
 description: "${project.description}"
-api-version: "1.13"
+author: Attaccer
+authors: [ Attaccer, DuoDuoJuZi ]
+website: ~
+prefix: Kingdoms-Auspice
+database: false
+load: POSTWORLD
 depend: [ Kingdoms ]
 softdepend: [ Vault, PlaceholderAPI ]
-authors: [ Attaccer and DuoDuoJuZi ]
-load: POSTWORLD
+loadbefore: [ ]
+commands: { }
+permissions: { }
+default-permission: "op"
+awareness: [ ]
+api-version: "1.13"
+library: [ ]

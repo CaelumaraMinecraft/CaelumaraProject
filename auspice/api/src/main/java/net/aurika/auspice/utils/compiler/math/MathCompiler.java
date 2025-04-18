@@ -6,7 +6,7 @@ import kotlin.jvm.internal.Ref;
 import kotlin.ranges.IntRange;
 import net.aurika.auspice.utils.time.TimeUtils;
 import net.aurika.util.string.Strings;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;

@@ -1,7 +1,7 @@
 package net.aurika.util.reflection;
 
 import net.aurika.util.collection.ArrayUtils;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -74,6 +74,7 @@ public final class Reflect {
   }
 
   public static @NotNull String toString(@NotNull Object obj) {
+    Validate.Arg.notNull(obj, "obj");
     Class<?> clazz = obj.getClass();
     List<Field> fields = getFields(clazz);
     StringBuilder string = new StringBuilder(clazz.getSimpleName()).append('{');

@@ -1,14 +1,14 @@
 package net.aurika.auspice.constants.location;
 
 import net.aurika.common.annotation.data.Immutable;
-import net.aurika.common.data.DataStringRepresentation;
+import net.aurika.common.data.string.DataStringRepresentation;
 import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
 import net.aurika.ecliptor.api.structured.StructuredData;
 import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.ecliptor.api.structured.scalars.DataScalar;
 import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
 import net.aurika.util.string.CommaDataSplitStrategy;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

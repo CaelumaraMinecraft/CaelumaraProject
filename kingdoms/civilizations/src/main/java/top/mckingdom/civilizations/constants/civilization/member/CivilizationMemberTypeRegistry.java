@@ -29,7 +29,8 @@ public class CivilizationMemberTypeRegistry extends NamespacedRegistry<Civilizat
     Namespace typeNS = Namespace.fromString(section.get("type").asString());
     CivilizationMemberType<?, ?> type = CivilizationMemberTypeRegistry.get().getRegistered(typeNS);
     if (type == null) {
-      throw new IllegalStateException("can not found civilization member type namespaced: '" + (section.get("type").asString()) + '\'');    //todo
+      throw new IllegalStateException(
+          "can not found civilization member type namespaced: '" + (section.get("type").asString()) + '\'');    //todo
     } else {
       return type.deserializeMarkingMember(section);
     }
@@ -50,7 +51,8 @@ public class CivilizationMemberTypeRegistry extends NamespacedRegistry<Civilizat
     Namespace typeNS = Namespace.fromString(section.get("type").asString());
     CivilizationMemberType<?, ?> type = CivilizationMemberTypeRegistry.get().getRegistered(typeNS);
     if (type == null) {
-      throw new IllegalStateException("can not found civilization member type namespaced: '" + (section.get("type").asString()) + '\'');    //todo
+      throw new IllegalStateException(
+          "can not found civilization member type namespaced: '" + (section.get("type").asString()) + '\'');    //todo
     } else {
       return type.deserializeIntactMember(section);
     }

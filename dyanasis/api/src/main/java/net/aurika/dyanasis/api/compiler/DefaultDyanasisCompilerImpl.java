@@ -5,7 +5,7 @@ import net.aurika.dyanasis.api.compiler.expression.*;
 import net.aurika.dyanasis.api.compiler.setting.DefaultDyanasisCompilerSettings;
 import net.aurika.dyanasis.api.declaration.namespace.DyanasisNamespaceIdent;
 import net.aurika.dyanasis.api.object.DyanasisObject;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,6 +1,6 @@
 package net.aurika.xariaz;
 
-import net.aurika.common.key.Group;
+import net.aurika.common.ident.Group;
 
 public final class Xariaz {
 

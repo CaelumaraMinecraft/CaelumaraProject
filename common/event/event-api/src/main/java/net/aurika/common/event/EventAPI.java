@@ -1,7 +1,7 @@
 package net.aurika.common.event;
 
-import net.aurika.common.key.Key;
-import net.aurika.validate.Validate;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -103,11 +103,11 @@ public interface EventAPI {
             if (Event.class.isAssignableFrom(paramType)) {
               Class<? extends Event> paramEventType = (Class<? extends Event>) paramType;
               if (EventAPI.isListenable(paramEventType)) {
-                Key listenerKey = Key.key(eventListener.key());
+                Ident listenerIdent = Ident.ident(eventListener.key());
                 boolean ignoreCancelled = eventListener.ignoreCancelled();
                 Emitter<? extends Event> emitter = EventAPI.getListenerContainer(paramEventType);
                 ReflectionListener reflectionListener = new ReflectionListener<>(
-                    listenerKey,
+                    listenerIdent,
                     method,
                     instance,
                     emitter,

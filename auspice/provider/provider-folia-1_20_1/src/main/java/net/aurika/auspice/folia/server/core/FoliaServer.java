@@ -1,7 +1,7 @@
 package net.aurika.auspice.folia.server.core;
 
 import net.aurika.auspice.platform.Platform;
-import net.aurika.auspice.platform.location.WorldRegistry;
+import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.auspice.platform.player.PlayerManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;

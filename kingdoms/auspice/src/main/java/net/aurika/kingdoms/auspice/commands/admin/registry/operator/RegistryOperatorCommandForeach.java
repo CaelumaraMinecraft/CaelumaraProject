@@ -3,7 +3,7 @@ package net.aurika.kingdoms.auspice.commands.admin.registry.operator;
 import net.aurika.kingdoms.auspice.configs.AuspiceLang;
 import net.aurika.kingdoms.auspice.util.KingdomsNamingContract;
 import net.aurika.kingdoms.auspice.util.LazyMessenger;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;

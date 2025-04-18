@@ -5,7 +5,7 @@ import kotlin.jvm.internal.Intrinsics;
 import net.aurika.auspice.constants.location.SimpleBlockLocation;
 import net.aurika.auspice.platform.player.OfflinePlayer;
 import net.aurika.util.map.HierarchalClassMap;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -112,11 +112,11 @@ public final class PlaceholderTransformerRegistry {
     INSTANCE.register(
         OfflinePlayer.class, (offlinePlayer -> {
           Checker.Arg.notNull(offlinePlayer, "offlinePlayer");
-          String name = offlinePlayer.getName();
+          String name = offlinePlayer.name();
           if (!Strings.isNullOrEmpty(name)) {
             return name;
           } else {
-            return offlinePlayer.getUniqueId();
+            return offlinePlayer.id();
           }
         })
     );

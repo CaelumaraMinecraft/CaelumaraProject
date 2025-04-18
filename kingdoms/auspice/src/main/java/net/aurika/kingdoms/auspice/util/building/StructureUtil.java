@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.auspice.util.building;
 
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

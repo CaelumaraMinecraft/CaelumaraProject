@@ -4,16 +4,16 @@ import net.aurika.wands.constants.spells.types.SpellType;
 
 public abstract class SpellObject implements Cloneable {
 
-    protected final SpellType type;
+  protected final SpellType type;
 
-    protected SpellObject(SpellType type) {
-        this.type = type;
-    }
+  protected SpellObject(SpellType type) {
+    this.type = type;
+  }
 
-    public SpellType getType() {
-        return this.type;
-    }
+  public SpellType getType() {
+    return this.type;
+  }
 
-    public abstract SpellObject clone();
+  public abstract SpellObject clone();
 
 }

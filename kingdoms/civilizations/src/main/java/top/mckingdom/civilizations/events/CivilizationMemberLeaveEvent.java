@@ -7,6 +7,7 @@ import top.mckingdom.civilizations.constants.civilization.Civilization;
 import top.mckingdom.civilizations.constants.civilization.member.CivilizationMember;
 
 public class CivilizationMemberLeaveEvent extends KingdomsEvent {
+
   private static final HandlerList handlers = new HandlerList();
   private final Civilization civilization;
   private final CivilizationMember<?> member;

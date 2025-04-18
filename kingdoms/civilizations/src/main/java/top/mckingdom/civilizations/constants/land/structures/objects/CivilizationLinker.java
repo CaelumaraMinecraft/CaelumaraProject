@@ -13,6 +13,7 @@ import top.mckingdom.civilizations.constants.civilization.member.CivilizationMem
 import top.mckingdom.civilizations.constants.civilization.member.MarkingCivilizationMember;
 
 public abstract class CivilizationLinker extends Structure {
+
   @NotNull
   private Civilization civilization;
   @NotNull

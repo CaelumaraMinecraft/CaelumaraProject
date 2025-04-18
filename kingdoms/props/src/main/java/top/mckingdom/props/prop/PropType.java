@@ -1,6 +1,7 @@
 package top.mckingdom.props.prop;
 
 public abstract class PropType {
+
   private final String name;
 
   public PropType(String name) {

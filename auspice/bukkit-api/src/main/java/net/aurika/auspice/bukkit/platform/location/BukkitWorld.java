@@ -1,7 +1,8 @@
 package net.aurika.auspice.bukkit.platform.location;
 
 import kotlin.jvm.internal.Intrinsics;
-import net.aurika.auspice.platform.location.World;
+import net.aurika.auspice.platform.world.World;
+import net.aurika.common.validate.Validate;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,7 @@ public class BukkitWorld implements World {
   }
 
   public BukkitWorld(@NotNull org.bukkit.World world) {
-    Objects.requireNonNull(world);
+    Validate.Arg.notNull(world, "world");
     this.world = world;
     this.name = world.getName();
     this.id = world.getUID();
@@ -34,40 +35,41 @@ public class BukkitWorld implements World {
     this.minHeight = SUPPORTS_MIN_HEIGHT ? this.world.getMinHeight() : 0;
   }
 
-  @NotNull
-  public org.bukkit.World getRealWorld() {
+  public @NotNull org.bukkit.World getRealWorld() {
     return this.world;
   }
 
-  @NotNull
-  public String name() {
+  @Override
+  public @NotNull String name() {
     return this.name;
   }
 
-  @NotNull
-  public UUID uuid() {
+  @Override
+  public @NotNull UUID id() {
     return this.id;
   }
 
+  @Override
   public int maxHeight() {
     return this.maxHeight;
   }
 
+  @Override
   public int minHeight() {
     return this.minHeight;
   }
 
   public boolean equals(@Nullable Object other) {
-    return other instanceof World && Intrinsics.areEqual(this.uuid(), ((World) other).uuid());
+    return other instanceof World && Intrinsics.areEqual(this.id(), ((World) other).id());
   }
 
   public int hashCode() {
-    return this.uuid().hashCode();
+    return this.id().hashCode();
   }
 
   @NotNull
   public String toString() {
-    return "BukkitWorld(" + this.uuid() + ':' + this.name() + "})";
+    return "BukkitWorld(" + this.id() + ':' + this.name() + "})";
   }
 
   @NotNull

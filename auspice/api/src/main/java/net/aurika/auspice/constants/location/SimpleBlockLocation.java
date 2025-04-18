@@ -8,7 +8,7 @@ import net.aurika.ecliptor.api.structured.StructuredDataObject;
 import net.aurika.ecliptor.api.structured.scalars.DataScalar;
 import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
 import net.aurika.util.string.CommaDataSplitStrategy;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import net.kyori.examination.Examinable;
 import net.kyori.examination.ExaminableProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;

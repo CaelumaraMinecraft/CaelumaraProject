@@ -1,6 +1,5 @@
 package net.aurika.gradle.repository;
 
-import net.aurika.gradle.repository.multistorage.SpigotMCRepositoryExtension;
 import net.kyori.indra.internal.SonatypeRepositoriesImpl;
 import net.kyori.indra.repository.SonatypeRepositories;
 import org.gradle.api.Plugin;

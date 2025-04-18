@@ -6,11 +6,13 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Closeable;
 
 public interface Database<T> extends Closeable {
-    @NotNull DatabaseType getDatabaseType();
 
-    void save(T data);
+  @NotNull DatabaseType getDatabaseType();
 
-    void deleteAllData();
+  void save(T data);
 
-    void close();
+  void deleteAllData();
+
+  void close();
+
 }

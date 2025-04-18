@@ -8,7 +8,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.MalformedJsonException;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -138,7 +138,7 @@ public final class AurikaGson {
     return object;
   }
 
-  private static JsonElement parse(JsonReader reader) throws JsonParseException {
+  private static JsonElement parse(@NotNull JsonReader reader) throws JsonParseException {
     boolean isEmpty = true;
     try {
       reader.peek();

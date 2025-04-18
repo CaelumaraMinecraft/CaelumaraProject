@@ -1,23 +1,23 @@
 package net.aurika.auspice.constants.metadata;
 
 import net.aurika.auspice.constants.base.KeyedAuspiceObject;
-import net.aurika.common.key.Key;
-import net.aurika.common.key.Keyed;
+import net.aurika.common.ident.Ident;
+import net.aurika.common.ident.Identified;
 import net.aurika.ecliptor.database.dataprovider.SectionableDataGetter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public abstract class AuspiceMetadataHandler implements Keyed {
+public abstract class AuspiceMetadataHandler implements Identified {
 
-  protected final Key id;
+  protected final Ident id;
 
-  protected AuspiceMetadataHandler(@NotNull Key id) {
+  protected AuspiceMetadataHandler(@NotNull Ident id) {
     Objects.requireNonNull(id, "id");
     this.id = id;
   }
 
-  public final @NotNull Key key() {
+  public final @NotNull Ident ident() {
     return this.id;
   }
 

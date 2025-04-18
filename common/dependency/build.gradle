@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":key"))
+  api("net.aurika:common-ident")
   api(project(":validate"))
   api(libs.asm.asm)
   api(libs.asm.commons)

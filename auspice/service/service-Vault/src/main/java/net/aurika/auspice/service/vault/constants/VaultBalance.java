@@ -2,7 +2,7 @@ package net.aurika.auspice.service.vault.constants;
 
 import net.aurika.auspice.constants.ecomony.balance.Balance;
 import net.aurika.auspice.service.vault.ServiceVault;
-import net.aurika.validate.Validate;
+import net.aurika.common.validate.Validate;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
