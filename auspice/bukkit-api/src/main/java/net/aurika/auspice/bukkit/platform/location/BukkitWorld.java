@@ -16,7 +16,7 @@ public class BukkitWorld implements World {
 
   private final @NotNull org.bukkit.World world;
   private final @NotNull String name;
-  private final @NotNull UUID id;
+  private final @NotNull UUID uuid;
   private final int maxHeight;
   private final int minHeight;
   private static final boolean SUPPORTS_MIN_HEIGHT;
@@ -30,7 +30,7 @@ public class BukkitWorld implements World {
     Validate.Arg.notNull(world, "world");
     this.world = world;
     this.name = world.getName();
-    this.id = world.getUID();
+    this.uuid = world.getUID();
     this.maxHeight = this.world.getMaxHeight();
     this.minHeight = SUPPORTS_MIN_HEIGHT ? this.world.getMinHeight() : 0;
   }
@@ -45,8 +45,8 @@ public class BukkitWorld implements World {
   }
 
   @Override
-  public @NotNull UUID id() {
-    return this.id;
+  public @NotNull UUID uuid() {
+    return this.uuid;
   }
 
   @Override
@@ -60,16 +60,16 @@ public class BukkitWorld implements World {
   }
 
   public boolean equals(@Nullable Object other) {
-    return other instanceof World && Intrinsics.areEqual(this.id(), ((World) other).id());
+    return other instanceof World && Intrinsics.areEqual(this.uuid(), ((World) other).uuid());
   }
 
   public int hashCode() {
-    return this.id().hashCode();
+    return this.uuid().hashCode();
   }
 
   @NotNull
   public String toString() {
-    return "BukkitWorld(" + this.id() + ':' + this.name() + "})";
+    return "BukkitWorld(" + this.uuid() + ':' + this.name() + "})";
   }
 
   @NotNull

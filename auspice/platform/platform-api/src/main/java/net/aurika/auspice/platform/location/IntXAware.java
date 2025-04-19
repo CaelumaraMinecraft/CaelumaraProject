@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface BlockZAware {
+public interface IntXAware {
 
-  int z();
+  int intX();
 
 }

@@ -1,12 +1,12 @@
 package net.aurika.auspice.platform.location;
 
-public interface Block2D extends BlockXAware, BlockZAware {
+public interface Block2D extends IntXAware, IntZAware {
 
   @Override
-  int x();
+  int intX();
 
   @Override
-  int z();
+  int intZ();
 
 }
 

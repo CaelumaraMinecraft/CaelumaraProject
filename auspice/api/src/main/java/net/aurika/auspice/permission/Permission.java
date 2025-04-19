@@ -96,27 +96,36 @@ public interface Permission {
     TRUE;
 
     public @Nullable Boolean toBoolean() {
-      return switch (this) {
-        case TRUE -> Boolean.TRUE;
-        case FALSE -> Boolean.FALSE;
-        default -> null;
-      };
+      switch (this) {
+        case TRUE:
+          return Boolean.TRUE;
+        case FALSE:
+          return Boolean.FALSE;
+        default:
+          return null;
+      }
     }
 
     public boolean toBooleanOrElse(final boolean other) {
-      return switch (this) {
-        case TRUE -> true;
-        case FALSE -> false;
-        default -> other;
-      };
+      switch (this) {
+        case TRUE:
+          return true;
+        case FALSE:
+          return false;
+        default:
+          return other;
+      }
     }
 
     public boolean toBooleanOrElseGet(final @NotNull BooleanSupplier supplier) {
-      return switch (this) {
-        case TRUE -> true;
-        case FALSE -> false;
-        default -> supplier.getAsBoolean();
-      };
+      switch (this) {
+        case TRUE:
+          return true;
+        case FALSE:
+          return false;
+        default:
+          return supplier.getAsBoolean();
+      }
     }
 
     public static @NotNull Permission.State byBoolean(final boolean value) {

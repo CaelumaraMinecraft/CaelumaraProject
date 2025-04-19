@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface BlockXAware {
+public interface FloatXAware {
 
-  int x();
+  double floatX();
 
 }

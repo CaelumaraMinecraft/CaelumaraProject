@@ -20,6 +20,7 @@ public interface Server extends Platform, EventServer {
 
   @NotNull EventManager eventManager();
 
+  @Override
   @NotNull WorldRegistry worldRegistry();
 
   @NotNull PlayerManager playerManager();

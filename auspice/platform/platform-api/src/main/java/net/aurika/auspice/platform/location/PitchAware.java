@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.location;
 
-public interface FloatPitchAware {
+public interface PitchAware {
 
   float pitch();
 

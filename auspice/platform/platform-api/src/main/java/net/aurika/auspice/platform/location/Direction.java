@@ -1,11 +1,9 @@
 package net.aurika.auspice.platform.location;
 
-import net.aurika.util.enumeration.Enums;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Objects;
 
 public enum Direction implements Directional {
@@ -29,105 +27,125 @@ public enum Direction implements Directional {
   SOUTH_SOUTH_WEST(SOUTH, SOUTH_WEST, Type.SECONDARY_ORDINAL),
   WEST_SOUTH_WEST(WEST, SOUTH_WEST, Type.SECONDARY_ORDINAL);
 
-  public static final Direction @NotNull [] VALUES = values();
-  private static final Map<String, Direction> MAPPINGS = Enums.createMapping(values());
   private final @NotNull Type type;
   private final int x;
   private final int y;
   private final int z;
-  private final float yaw;
   private final float pitch;
+  private final float yaw;
 
-  @NotNull
-  public final Type getType() {
+  public @NotNull Type getType() {
     return this.type;
   }
 
-  public final int getX() {
+  public int modX() {
     return this.x;
   }
 
-  public final int getY() {
+  public int modY() {
     return this.y;
   }
 
-  public final int getZ() {
+  public int modZ() {
     return this.z;
   }
 
-  public float getYaw() {
+  @Override
+  public float yaw() {
     return this.yaw;
   }
 
-  public float getPitch() {
+  @Override
+  public float pitch() {
     return this.pitch;
   }
 
+  Direction(@NotNull Direction face1, @NotNull Direction face2, Type type) {
+    this(face1.x + face2.x, face1.y + face2.y, face1.z + face2.z, type);
+  }
+
   Direction(int modX, int modY, int modZ, @NotNull Type type) {
-    Objects.requireNonNull(type);
+    Objects.requireNonNull(type, "type");
     this.x = modX;
     this.y = modY;
     this.z = modZ;
     this.type = type;
-    Directional directional = LocationUtils.fromDirection(Vector3.of(modX, modY, modZ));
+    Directional directional = LocationUtils.fromDirection(AbstractFloat3D.of(modX, modY, modZ));
     if (modX == 0 && modZ == 0) {
       this.yaw = 0.0F;
-      this.pitch = directional.getPitch();
+      this.pitch = directional.pitch();
     } else if (modY == 0) {
-      this.yaw = (directional.getYaw() + 180.0F) % (float) 360;
+      this.yaw = (directional.yaw() + 180.0F) % (float) 360;
       this.pitch = 0.0F;
     } else {
-      this.yaw = (directional.getYaw() + 180.0F) % (float) 360;
-      this.pitch = directional.getPitch();
+      this.yaw = (directional.yaw() + 180.0F) % (float) 360;
+      this.pitch = directional.pitch();
     }
   }
 
-  Direction(Direction face1, Direction face2, Type type) {
-    this(face1.x + face2.x, face1.y + face2.y, face1.z + face2.z, type);
-  }
-
   public final boolean isCartesian() {
-    return switch (this) {
-      case NORTH, EAST, SOUTH, WEST, UP, DOWN -> true;
-      default -> false;
-    };
+    switch (this) {
+      case NORTH:
+      case EAST:
+      case SOUTH:
+      case WEST:
+      case UP:
+      case DOWN:
+        return true;
+      default:
+        return false;
+    }
   }
 
   @NotNull
   public final Direction getOppositeFace() {
-    return switch (this) {
-      case NORTH -> SOUTH;
-      case EAST -> WEST;
-      case SOUTH -> NORTH;
-      case WEST -> EAST;
-      case UP -> DOWN;
-      case DOWN -> UP;
-      case NORTH_EAST -> SOUTH_WEST;
-      case NORTH_WEST -> SOUTH_EAST;
-      case SOUTH_EAST -> NORTH_WEST;
-      case SOUTH_WEST -> NORTH_EAST;
-      case WEST_NORTH_WEST -> EAST_SOUTH_EAST;
-      case NORTH_NORTH_WEST -> SOUTH_SOUTH_EAST;
-      case NORTH_NORTH_EAST -> SOUTH_SOUTH_WEST;
-      case EAST_NORTH_EAST -> WEST_SOUTH_WEST;
-      case EAST_SOUTH_EAST -> WEST_NORTH_WEST;
-      case SOUTH_SOUTH_EAST -> NORTH_NORTH_WEST;
-      case SOUTH_SOUTH_WEST -> NORTH_NORTH_EAST;
-      case WEST_SOUTH_WEST -> EAST_NORTH_EAST;
-    };
+    switch (this) {
+      case NORTH:
+        return SOUTH;
+      case EAST:
+        return WEST;
+      case SOUTH:
+        return NORTH;
+      case WEST:
+        return EAST;
+      case UP:
+        return DOWN;
+      case DOWN:
+        return UP;
+      case NORTH_EAST:
+        return SOUTH_WEST;
+      case NORTH_WEST:
+        return SOUTH_EAST;
+      case SOUTH_EAST:
+        return NORTH_WEST;
+      case SOUTH_WEST:
+        return NORTH_EAST;
+      case WEST_NORTH_WEST:
+        return EAST_SOUTH_EAST;
+      case NORTH_NORTH_WEST:
+        return SOUTH_SOUTH_EAST;
+      case NORTH_NORTH_EAST:
+        return SOUTH_SOUTH_WEST;
+      case EAST_NORTH_EAST:
+        return WEST_SOUTH_WEST;
+      case EAST_SOUTH_EAST:
+        return WEST_NORTH_WEST;
+      case SOUTH_SOUTH_EAST:
+        return NORTH_NORTH_WEST;
+      case SOUTH_SOUTH_WEST:
+        return NORTH_NORTH_EAST;
+      case WEST_SOUTH_WEST:
+        return EAST_NORTH_EAST;
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 
   @Nullable
-  public static Direction fromString(@NotNull String name) {
-    Objects.requireNonNull(name);
-    return Direction.MAPPINGS.get(name);
-  }
-
-  @Nullable
-  public static Direction findClosest(@NotNull Vector3 immutableVector, @NotNull Collection<? extends Type> allowedTypes) {
+  public static Direction findClosest(@NotNull AbstractFloat3D immutableVector, @NotNull Collection<? extends Type> allowedTypes) {
     Objects.requireNonNull(immutableVector);
     Objects.requireNonNull(allowedTypes);
-    Vector3 vector = immutableVector;
+    AbstractFloat3D vector = immutableVector;
     if (allowedTypes.contains(Type.VERTICAL)) {
       vector = immutableVector.withY(0.0);
     }

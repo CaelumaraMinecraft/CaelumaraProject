@@ -10,7 +10,7 @@ public interface World extends WorldInfo {
   @NotNull String name();
 
   @Override
-  @NotNull UUID id();
+  @NotNull UUID uuid();
 
   /**
    * Gets the max height of the world.

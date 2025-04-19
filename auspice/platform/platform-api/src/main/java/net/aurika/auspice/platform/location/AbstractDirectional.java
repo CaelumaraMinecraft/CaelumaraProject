@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.location;
 
-class AbstractDirectional implements Directional {
+public class AbstractDirectional implements Directional {
 
   private final float pitch;
   private final float yaw;
@@ -10,11 +10,13 @@ class AbstractDirectional implements Directional {
     this.yaw = yaw;
   }
 
-  public float getPitch() {
+  @Override
+  public float pitch() {
     return this.pitch;
   }
 
-  public float getYaw() {
+  @Override
+  public float yaw() {
     return this.yaw;
   }
 

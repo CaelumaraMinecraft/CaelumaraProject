@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface FloatYawAware {
+public interface IntXMutable {
 
-  float yaw();
+  void intX(int x);
 
 }

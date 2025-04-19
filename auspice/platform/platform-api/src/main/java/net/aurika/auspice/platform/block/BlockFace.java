@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.block;
 
-import net.aurika.auspice.platform.location.Vector3;
+import net.aurika.auspice.platform.location.AbstractFloat3D;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -76,8 +76,8 @@ public enum BlockFace {
    * @return the normal vector
    */
   @NotNull
-  public Vector3 getDirection() {
-    Vector3 direction = new Vector3(this.modX, this.modY, this.modZ);
+  public AbstractFloat3D getDirection() {
+    AbstractFloat3D direction = new AbstractFloat3D(this.modX, this.modY, this.modZ);
     if (this.modX != 0 || this.modY != 0 || this.modZ != 0) {
       direction.normalize();
     }

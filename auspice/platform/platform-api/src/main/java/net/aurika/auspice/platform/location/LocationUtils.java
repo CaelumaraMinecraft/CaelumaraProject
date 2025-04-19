@@ -17,11 +17,11 @@ public final class LocationUtils {
   }
 
   @NotNull
-  public static Directional fromDirection(@NotNull Vector3 vector) {
+  public static Directional fromDirection(@NotNull AbstractFloat3D vector) {
     Objects.requireNonNull(vector);
-    double x = vector.x();
-    double y = vector.y();
-    double z = vector.z();
+    double x = vector.floatX();
+    double y = vector.floatY();
+    double z = vector.floatZ();
     if (x == 0.0 && z == 0.0) {
       return Directional.of(0.0F, y > 0.0 ? -90.0F : 90.0F);
     } else {

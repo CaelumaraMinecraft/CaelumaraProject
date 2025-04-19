@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface VectorYAware {
+public interface FloatZAware {
 
-  double y();
+  double floatZ();
 
 }

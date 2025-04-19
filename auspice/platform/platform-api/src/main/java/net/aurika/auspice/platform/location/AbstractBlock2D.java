@@ -7,38 +7,38 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class Block2 implements Block2D, DataStringRepresentation {
+public class AbstractBlock2D implements Block2D, DataStringRepresentation {
 
   private final int x;
   private final int z;
   public static final int CHUNK_SHIFTS = 4;
   public static final int CHUNK_SHIFTS_Y = 8;
 
-  public Block2(int x, int z) {
+  public AbstractBlock2D(int x, int z) {
     this.x = x;
     this.z = z;
   }
 
   @Override
-  public int x() {
+  public int intX() {
     return this.x;
   }
 
   @Override
-  public int z() {
+  public int intZ() {
     return this.z;
   }
 
   @NotNull
   public String asDataString() {
-    Object[] var1 = new Object[]{this.x(), this.z()};
+    Object[] var1 = new Object[]{this.intX(), this.intZ()};
     String var10000 = CommaDataSplitStrategy.toString(var1);
     Objects.requireNonNull(var10000);
     return var10000;
   }
 
   public int hashCode() {
-    return this.z() << 16 ^ this.x();
+    return this.intZ() << 16 ^ this.intX();
   }
 
   public boolean equals(@Nullable Object obj) {
@@ -47,30 +47,30 @@ public class Block2 implements Block2D, DataStringRepresentation {
       return false;
     } else {
       Block2D other = var10000;
-      return this.x() == other.x() && this.z() == other.z();
+      return this.intX() == other.intX() && this.intZ() == other.intZ();
     }
   }
 
   @NotNull
   public String toString() {
-    return "BlockVector2(" + this.x() + ", " + this.z() + ')';
+    return "BlockVector2(" + this.intX() + ", " + this.intZ() + ')';
   }
 
   @NotNull
-  public static Block2 of(@NotNull Block2D other) {
-    return of(other.x(), other.z());
+  public static AbstractBlock2D of(@NotNull Block2D other) {
+    return of(other.intX(), other.intZ());
   }
 
   @NotNull
-  public static Block2 of(int x, int z) {
-    return new Block2(x, z);
+  public static AbstractBlock2D of(int x, int z) {
+    return new AbstractBlock2D(x, z);
   }
 
   @NotNull
-  public static Block2 fromString(@NotNull String str) {
+  public static AbstractBlock2D fromString(@NotNull String str) {
     Objects.requireNonNull(str);
     CommaDataSplitStrategy $this$fromString_u24lambda_u240 = new CommaDataSplitStrategy(str, 2);
-    return new Block2($this$fromString_u24lambda_u240.nextInt(), $this$fromString_u24lambda_u240.nextInt());
+    return new AbstractBlock2D($this$fromString_u24lambda_u240.nextInt(), $this$fromString_u24lambda_u240.nextInt());
   }
 
 }

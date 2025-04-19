@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface BlockYAware {
+public interface YawAware {
 
-  int y();
+  float yaw();
 
 }

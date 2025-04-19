@@ -4,8 +4,8 @@ import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.world.World;
 import net.aurika.auspice.platform.world.WorldAware;
 import net.aurika.auspice.platform.world.WorldRegistry;
+import net.aurika.common.data.string.DataStringRepresentation;
 import net.aurika.common.uitl.string.split.CommaDataSplitStrategy;
-import net.aurika.ecliptor.object.DataStringRepresentation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,24 +31,22 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
     return this.world;
   }
 
-  public int getX() {
+  public int intX() {
     return this.x;
   }
 
-  public int getY() {
+  public int intY() {
     return this.y;
   }
 
-  public int getZ() {
+  public int intZ() {
     return this.z;
   }
 
   @NotNull
   public String asDataString() {
-    Object[] var1 = new Object[]{this.world().name(), this.getX(), this.getY(), this.getZ()};
-    String var10000 = CommaDataSplitStrategy.toString(var1);
-    Objects.requireNonNull(var10000);
-    return var10000;
+    Object[] edits = new Object[]{this.world().name(), this.intX(), this.intY(), this.intZ()};
+    return CommaDataSplitStrategy.toString(edits);
   }
 
   @NotNull
@@ -69,8 +67,8 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
   }
 
   @NotNull
-  public final Block3 toVector() {
-    return Block3.of(this.getX(), this.getY(), this.getZ());
+  public final AbstractBlock3D toVector() {
+    return AbstractBlock3D.of(this.intX(), this.intY(), this.intZ());
   }
 
   public int hashCode() {
@@ -83,7 +81,7 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
 
   @NotNull
   public String toString() {
-    return "BlockLocation3(" + this.world() + ", " + this.getX() + ", " + this.getY() + ", " + this.getZ() + ')';
+    return "BlockLocation3(" + this.world() + ", " + this.intX() + ", " + this.intY() + ", " + this.intZ() + ')';
   }
 
   @NotNull
@@ -99,7 +97,7 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
   public static BlockLocation3 of(@NotNull World world, @NotNull Block3D other) {
     Objects.requireNonNull(world);
     Objects.requireNonNull(other);
-    return of(world, other.getX(), other.getY(), other.getZ());
+    return of(world, other.intX(), other.intY(), other.intZ());
   }
 
   @NotNull

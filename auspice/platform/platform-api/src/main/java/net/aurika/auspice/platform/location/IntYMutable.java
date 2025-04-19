@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface VectorZAware {
+public interface IntYMutable {
 
-  double z();
+  void intY(int y);
 
 }

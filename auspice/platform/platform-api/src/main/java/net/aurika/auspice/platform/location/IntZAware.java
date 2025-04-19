@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface VectorXAware {
+public interface IntZAware {
 
-  double x();
+  int intZ();
 
 }

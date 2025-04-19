@@ -3,7 +3,7 @@ package net.aurika.auspice.bukkit.platform.entity;
 import net.aurika.auspice.bukkit.server.core.BukkitServer;
 import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.entity.Entity;
-import net.aurika.auspice.platform.location.Location;
+import net.aurika.auspice.platform.location.PrecisionLocation;
 import net.aurika.auspice.text.compiler.TextObject;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import org.jetbrains.annotations.NotNull;
@@ -27,9 +27,9 @@ public class BukkitEntity implements Entity {
   }
 
   @Override
-  public @NotNull Location getLocationCopy() {
+  public @NotNull PrecisionLocation getLocationCopy() {
     org.bukkit.Location loc = this.entity.getLocation();
-    return new Location(
+    return new PrecisionLocation(
         this.server.getWorldRegistry().getWorld(loc.getWorld()),
         loc.getX(),
         loc.getY(),
@@ -40,7 +40,7 @@ public class BukkitEntity implements Entity {
   }
 
   @Override
-  public Location joinLocation(@Nullable Location location) {
+  public PrecisionLocation joinLocation(@Nullable PrecisionLocation location) {
     if (location == null) return null;
     org.bukkit.Location loc = this.entity.getLocation();
     location.setWorld(this.server.getWorldRegistry().getWorld(loc.getWorld()));

@@ -1,6 +1,8 @@
 package net.aurika.auspice.platform;
 
 import net.aurika.auspice.platform.registry.RegistryContainer;
+import net.aurika.auspice.platform.world.WorldRegistry;
+import net.aurika.common.annotation.container.ThrowOnAbsent;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -16,19 +18,18 @@ public interface Platform {
    * @param platform the platform that auspice running on
    */
   @ApiStatus.Internal
-  static void init(Platform platform) {
-    PlatformContainer.INSTANCE = platform;
-  }
+  public static void init(Platform platform) { Companion.PLATFORM = platform; }
 
   /**
    * Gets the platform instance.
    *
    * @return the platform instance
-   * @throws IllegalStateException when the server was not initialized or has other problems
+   * @throws IllegalStateException when the platform was not initialized
    */
   @Contract(pure = true)
-  static @NotNull Platform get() throws IllegalStateException {
-    Platform platform = PlatformContainer.INSTANCE;
+  @ThrowOnAbsent
+  public static @NotNull Platform get() throws IllegalStateException {
+    Platform platform = Companion.PLATFORM;
     if (platform == null) {
       throw new IllegalStateException("Server instance not initiated yet");
     }
@@ -41,6 +42,13 @@ public interface Platform {
    * @return the registries
    */
   @NotNull RegistryContainer registries();
+
+  /**
+   * Gets the worlds on the platform.
+   *
+   * @return the worlds
+   */
+  @NotNull WorldRegistry worldRegistry();
 
   default void onStartup() { }
 

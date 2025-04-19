@@ -1,10 +1,10 @@
 package net.aurika.auspice.constants.location;
 
 import net.aurika.auspice.platform.entity.Entity;
-import net.aurika.auspice.platform.location.Block2;
+import net.aurika.auspice.platform.location.AbstractBlock2D;
 import net.aurika.auspice.platform.location.Block2D;
 import net.aurika.auspice.platform.location.Direction;
-import net.aurika.auspice.platform.location.Location;
+import net.aurika.auspice.platform.location.PrecisionLocation;
 import net.aurika.ecliptor.api.DataStringRepresentation;
 import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
 import net.aurika.ecliptor.api.structured.StructuredData;
@@ -51,11 +51,11 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new SimpleChunkLocation(var0.getWorld().getName(), var0.getX(), var0.getZ());
   }
 
-  public static SimpleChunkLocation of(Location var0) {
+  public static SimpleChunkLocation of(PrecisionLocation var0) {
     Objects.requireNonNull(var0, "Cannot get simple chunk location of a null location");
     return new SimpleChunkLocation(
         (Objects.requireNonNull(var0.getWorld(), "Simple chunk location cannot have a null world")).name(),
-        (int) var0.getX() >> 4, (int) var0.getZ() >> 4
+        (int) var0.x() >> 4, (int) var0.z() >> 4
     );
   }
 
@@ -64,8 +64,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new SimpleChunkLocation(var0.getWorld().getName(), var0.getX() >> 4, var0.getZ() >> 4);
   }
 
-  public Block2 toBlockVector() {
-    return Block2.of(this.x, this.z);
+  public AbstractBlock2D toBlockVector() {
+    return AbstractBlock2D.of(this.x, this.z);
   }
 
   public static int calculateBorderSize(int var0) {
@@ -99,7 +99,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     if (var1.getType() != Direction.Type.CARDINAL) {
       throw new IllegalArgumentException("Only cardinal directions can be used for relative chunks: " + var1);
     } else {
-      return this.getRelative(var1.getX(), var1.getZ());
+      return this.getRelative(var1.modX(), var1.modZ());
     }
   }
 
@@ -134,8 +134,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new org.bukkit.Location(var1, (double) var2, (double) var4, (double) var3);
   }
 
-  public Block2 toLocationXZ() {
-    return Block2.of((this.x << 4) + 8, (this.z << 4) + 8);
+  public AbstractBlock2D toLocationXZ() {
+    return AbstractBlock2D.of((this.x << 4) + 8, (this.z << 4) + 8);
   }
 
   public org.bukkit.@NonNull Location getCenterLocation(double var1) {
@@ -156,12 +156,12 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
   }
 
   @Override
-  public int x() {
+  public int intX() {
     return this.x;
   }
 
   @Override
-  public int z() {
+  public int intZ() {
     return this.z;
   }
 
@@ -173,8 +173,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
   }
 
-  public Block2 worldlessWrapper() {
-    return Block2.of(this.x, this.z);
+  public AbstractBlock2D worldlessWrapper() {
+    return AbstractBlock2D.of(this.x, this.z);
   }
 
   public int hashCode() {

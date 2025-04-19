@@ -5,42 +5,42 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 
-public interface Vector3D extends Comparable<Vector3D>, VectorXAware, VectorYAware, VectorZAware {
+public interface Float3D extends Comparable<Float3D>, FloatXAware, FloatYAware, FloatZAware {
 
   @Override
-  double x();
+  double floatX();
 
   @Override
-  double y();
+  double floatY();
 
   @Override
-  double z();
+  double floatZ();
 
   @Override
-  default int compareTo(@NotNull Vector3D other) {
+  default int compareTo(@NotNull Float3D other) {
     Validate.Arg.notNull(other, "other");
     return NaturalComparator.INSTANCE.compare(this, other);
   }
 
-  final class NaturalComparator implements Comparator<Vector3D> {
+  public static final class NaturalComparator implements Comparator<Float3D> {
 
     public static final NaturalComparator INSTANCE = new NaturalComparator();
 
     private NaturalComparator() { }
 
     @Override
-    public int compare(@NotNull Vector3D first, @NotNull Vector3D second) {
+    public int compare(@NotNull Float3D first, @NotNull Float3D second) {
       Validate.Arg.notNull(first, "first");
       Validate.Arg.notNull(second, "second");
-      int y = Double.compare(first.y(), second.y());
+      int y = Double.compare(first.floatY(), second.floatY());
       if (y != 0) {
         return y;
       } else {
-        int x = Double.compare(first.x(), second.x());
+        int x = Double.compare(first.floatX(), second.floatX());
         if (x != 0) {
           return x;
         } else {
-          int z = Double.compare(first.z(), second.z());
+          int z = Double.compare(first.floatZ(), second.floatZ());
           return z;
         }
       }

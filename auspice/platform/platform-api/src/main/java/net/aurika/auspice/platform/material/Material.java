@@ -5,6 +5,9 @@ import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.translation.Translatable;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A material.
+ */
 public interface Material extends Keyed, Translatable {
 
   @Override
@@ -12,5 +15,7 @@ public interface Material extends Keyed, Translatable {
 
   @Override
   @NotNull String translationKey();
+
+  int defaultMaxStackSize();
 
 }
