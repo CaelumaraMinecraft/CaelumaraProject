@@ -6,60 +6,63 @@ import net.aurika.auspice.platform.world.WorldAware;
 import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.common.data.string.DataStringRepresentation;
 import net.aurika.common.uitl.string.split.CommaDataSplitStrategy;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresentation {
+public class Grid3DLocation implements Grid3D, WorldAware, DataStringRepresentation {
 
   private final @NotNull World world;
   private final int x;
   private final int y;
   private final int z;
 
-  public BlockLocation3(@NotNull World world, int x, int y, int z) {
-    Objects.requireNonNull(world);
+  public Grid3DLocation(@NotNull World world, int x, int y, int z) {
+    Validate.Arg.notNull(world, "world");
     this.world = world;
     this.x = x;
     this.y = y;
     this.z = z;
   }
 
-  @NotNull
-  public World world() {
+  public @NotNull World world() {
     return this.world;
   }
 
-  public int intX() {
+  @Override
+  public int gridX() {
     return this.x;
   }
 
-  public int intY() {
+  @Override
+  public int gridY() {
     return this.y;
   }
 
-  public int intZ() {
+  @Override
+  public int gridZ() {
     return this.z;
   }
 
   @NotNull
   public String asDataString() {
-    Object[] edits = new Object[]{this.world().name(), this.intX(), this.intY(), this.intZ()};
+    Object[] edits = new Object[]{this.world().name(), this.gridX(), this.gridY(), this.gridZ()};
     return CommaDataSplitStrategy.toString(edits);
   }
 
   @NotNull
-  public final BlockLocation3 add(@NotNull Number x, @NotNull Number y, @NotNull Number z) {
+  public final Grid3DLocation add(@NotNull Number x, @NotNull Number y, @NotNull Number z) {
     Objects.requireNonNull(this.world);
     Objects.requireNonNull(x);
     Objects.requireNonNull(y);
     Objects.requireNonNull(z);
-    return new BlockLocation3(this.world, x.intValue(), y.intValue(), z.intValue());
+    return new Grid3DLocation(this.world, x.intValue(), y.intValue(), z.intValue());
   }
 
   @NotNull
-  public final BlockLocation3 subtract(@NotNull Number x, @NotNull Number y, @NotNull Number z) {
+  public final Grid3DLocation subtract(@NotNull Number x, @NotNull Number y, @NotNull Number z) {
     Objects.requireNonNull(x);
     Objects.requireNonNull(y);
     Objects.requireNonNull(z);
@@ -67,8 +70,8 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
   }
 
   @NotNull
-  public final AbstractBlock3D toVector() {
-    return AbstractBlock3D.of(this.intX(), this.intY(), this.intZ());
+  public final AbstractGrid3D toVector() {
+    return AbstractGrid3D.of(this.gridX(), this.gridY(), this.gridZ());
   }
 
   public int hashCode() {
@@ -81,27 +84,27 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
 
   @NotNull
   public String toString() {
-    return "BlockLocation3(" + this.world() + ", " + this.intX() + ", " + this.intY() + ", " + this.intZ() + ')';
+    return "BlockLocation3(" + this.world() + ", " + this.gridX() + ", " + this.gridY() + ", " + this.gridZ() + ')';
   }
 
   @NotNull
-  public static BlockLocation3 of(@NotNull World world, @NotNull Number x, @NotNull Number y, @NotNull Number z) {
+  public static Grid3DLocation of(@NotNull World world, @NotNull Number x, @NotNull Number y, @NotNull Number z) {
     Objects.requireNonNull(world);
     Objects.requireNonNull(x);
     Objects.requireNonNull(y);
     Objects.requireNonNull(z);
-    return new BlockLocation3(world, x.intValue(), y.intValue(), z.intValue());
+    return new Grid3DLocation(world, x.intValue(), y.intValue(), z.intValue());
   }
 
   @NotNull
-  public static BlockLocation3 of(@NotNull World world, @NotNull Block3D other) {
+  public static Grid3DLocation of(@NotNull World world, @NotNull Grid3D other) {
     Objects.requireNonNull(world);
     Objects.requireNonNull(other);
-    return of(world, other.intX(), other.intY(), other.intZ());
+    return of(world, other.gridX(), other.gridY(), other.gridZ());
   }
 
   @NotNull
-  public static BlockLocation3 fromString(@NotNull String str) {
+  public static Grid3DLocation fromString(@NotNull String str) {
     Objects.requireNonNull(str);
     CommaDataSplitStrategy fromString = new CommaDataSplitStrategy(str, 4);
     WorldRegistry worldRegistry = Platform.get().worldRegistry();
@@ -113,7 +116,7 @@ public class BlockLocation3 implements Block3D, WorldAware, DataStringRepresenta
     if (world == null) {
       throw new IllegalArgumentException("Cannot parse block location when get the world: " + str);
     }
-    return new BlockLocation3(world, fromString.nextInt(), fromString.nextInt(), fromString.nextInt());
+    return new Grid3DLocation(world, fromString.nextInt(), fromString.nextInt(), fromString.nextInt());
   }
 
 }

@@ -20,6 +20,7 @@ include(
     ":loader:loader-velocity",
 
     // providers
+    ":provider:provider-common-bukkit-modern",
     ":provider:provider-folia-1_20_1",
     ":provider:provider-folia-1_21_4",
     ":provider:provider-leaf-1_21_4",

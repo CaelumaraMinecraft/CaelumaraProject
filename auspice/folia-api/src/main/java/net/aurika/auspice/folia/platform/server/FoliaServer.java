@@ -1,6 +1,6 @@
 package net.aurika.auspice.folia.platform.server;
 
-import net.aurika.auspice.platform.server.Server;
+import net.aurika.auspice.bukkit.platform.server.BukkitServer;
 
-public interface FoliaServer extends Server {
+public interface FoliaServer extends BukkitServer {
 }

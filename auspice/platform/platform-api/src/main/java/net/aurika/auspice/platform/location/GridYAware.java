@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface IntYMutable {
+public interface GridYAware {
 
-  void intY(int y);
+  int gridY();
 
 }

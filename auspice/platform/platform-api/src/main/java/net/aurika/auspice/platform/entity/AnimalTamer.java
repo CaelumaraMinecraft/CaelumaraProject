@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public interface AnimalTamer {
+
   /**
    * Gets the name of the {@code AnimalTamer}.
    *

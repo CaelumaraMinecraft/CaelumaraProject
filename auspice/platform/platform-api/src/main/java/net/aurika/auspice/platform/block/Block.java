@@ -14,7 +14,7 @@ public interface Block extends BlockTypeAware, BlockDataAware, MaterialAware {
   @Override
   @NotNull BlockData blockData();
 
-  void blockData(@NotNull BlockData blockData)throws ClassCastException;
+  void blockData(@NotNull BlockData blockData) throws ClassCastException;
 
   @Override
   @NotNull Material material();

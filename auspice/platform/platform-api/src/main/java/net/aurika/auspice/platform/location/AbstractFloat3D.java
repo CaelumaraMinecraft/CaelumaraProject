@@ -37,8 +37,8 @@ public class AbstractFloat3D implements Float3D {
   }
 
   @NotNull
-  public final AbstractBlock3D toBlockVector() {
-    return AbstractBlock3D.of(
+  public final AbstractGrid3D toBlockVector() {
+    return AbstractGrid3D.of(
         LocationUtils.toBlock(this.floatX()), LocationUtils.toBlock(this.floatY()),
         LocationUtils.toBlock(this.floatZ())
     );
@@ -50,9 +50,9 @@ public class AbstractFloat3D implements Float3D {
   }
 
   @NotNull
-  public final AbstractFloat3D add(@NotNull Block3D other) {
+  public final AbstractFloat3D add(@NotNull Grid3D other) {
     Objects.requireNonNull(other);
-    return this.add(other.intX(), other.intY(), other.intZ());
+    return this.add(other.gridX(), other.gridY(), other.gridZ());
   }
 
   @NotNull
@@ -62,9 +62,9 @@ public class AbstractFloat3D implements Float3D {
   }
 
   @NotNull
-  public final PrecisionLocation inWorld(@NotNull World world) {
+  public final AbstractLocationMutable inWorld(@NotNull World world) {
     Objects.requireNonNull(world);
-    return PrecisionLocation.precisionLocation(world, this.floatX(), this.floatY(), this.floatZ(), 0.0F, 0.0F);
+    return AbstractLocationMutable.precisionLocation(world, this.floatX(), this.floatY(), this.floatZ(), 0.0F, 0.0F);
   }
 
   public final double lengthSq() {
@@ -159,9 +159,9 @@ public class AbstractFloat3D implements Float3D {
   }
 
   @NotNull
-  public static AbstractFloat3D of(@NotNull Block3D other) {
+  public static AbstractFloat3D of(@NotNull Grid3D other) {
     Objects.requireNonNull(other);
-    return new AbstractFloat3D(other.intX(), other.intY(), other.intZ());
+    return new AbstractFloat3D(other.gridX(), other.gridY(), other.gridZ());
   }
 
   public static @NotNull AbstractFloat3D of(@NotNull Float3D other) {

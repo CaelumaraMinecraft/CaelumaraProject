@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface IntXMutable {
+public interface GridZAware {
 
-  void intX(int x);
+  int gridZ();
 
 }

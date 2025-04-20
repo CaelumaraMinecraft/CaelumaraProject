@@ -74,9 +74,9 @@ public class Float3Location implements WorldAware, Float3D {
   }
 
   @NotNull
-  public final Float3Location add(@NotNull Block3D other) {
+  public final Float3Location add(@NotNull Grid3D other) {
     Objects.requireNonNull(other);
-    return this.add(other.intX(), other.intY(), other.intZ());
+    return this.add(other.gridX(), other.gridY(), other.gridZ());
   }
 
   @NotNull
@@ -86,9 +86,9 @@ public class Float3Location implements WorldAware, Float3D {
   }
 
   @NotNull
-  public final Float3Location subtract(@NotNull Block3D other) {
+  public final Float3Location subtract(@NotNull Grid3D other) {
     Objects.requireNonNull(other);
-    return this.subtract(other.intX(), other.intY(), other.intZ());
+    return this.subtract(other.gridX(), other.gridY(), other.gridZ());
   }
 
   @NotNull
@@ -100,13 +100,13 @@ public class Float3Location implements WorldAware, Float3D {
   }
 
   @NotNull
-  public final BlockLocation3 toBlockLocation() {
-    return BlockLocation3.of(this.world(), (int) this.floatX(), (int) this.floatY(), (int) this.floatZ());
+  public final Grid3DLocation toBlockLocation() {
+    return Grid3DLocation.of(this.world(), (int) this.floatX(), (int) this.floatY(), (int) this.floatZ());
   }
 
   @NotNull
-  public final AbstractBlock3D toBlockVector() {
-    return AbstractBlock3D.of((int) this.floatX(), (int) this.floatY(), (int) this.floatZ());
+  public final AbstractGrid3D toBlockVector() {
+    return AbstractGrid3D.of((int) this.floatX(), (int) this.floatY(), (int) this.floatZ());
   }
 
   public final @NotNull AbstractFloat3D toVector() {

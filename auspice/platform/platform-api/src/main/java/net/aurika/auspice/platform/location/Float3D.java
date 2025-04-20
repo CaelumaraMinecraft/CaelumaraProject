@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 
-public interface Float3D extends Comparable<Float3D>, FloatXAware, FloatYAware, FloatZAware {
+public interface Float3D extends FloatXAware, FloatYAware, FloatZAware {
 
   @Override
   double floatX();
@@ -15,12 +15,6 @@ public interface Float3D extends Comparable<Float3D>, FloatXAware, FloatYAware, 
 
   @Override
   double floatZ();
-
-  @Override
-  default int compareTo(@NotNull Float3D other) {
-    Validate.Arg.notNull(other, "other");
-    return NaturalComparator.INSTANCE.compare(this, other);
-  }
 
   public static final class NaturalComparator implements Comparator<Float3D> {
 

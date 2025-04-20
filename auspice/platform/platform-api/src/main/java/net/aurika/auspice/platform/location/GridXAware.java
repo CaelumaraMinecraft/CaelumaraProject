@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.location;
 
-public interface IntXAware {
+public interface GridXAware {
 
-  int intX();
+  int gridX();
 
 }

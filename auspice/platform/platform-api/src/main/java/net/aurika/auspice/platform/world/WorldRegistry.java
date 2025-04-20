@@ -10,8 +10,8 @@ public interface WorldRegistry {
 
   @NotNull List<? extends World> getWorlds();
 
-  @Nullable World getWorld(@NotNull UUID uuid);
-
   @Nullable World getWorld(@NotNull String name);
+
+  @Nullable World getWorld(@NotNull UUID uuid);
 
 }

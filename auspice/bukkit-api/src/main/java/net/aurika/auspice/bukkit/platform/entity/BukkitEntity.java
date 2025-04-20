@@ -3,7 +3,7 @@ package net.aurika.auspice.bukkit.platform.entity;
 import net.aurika.auspice.bukkit.server.core.BukkitServer;
 import net.aurika.auspice.platform.Platform;
 import net.aurika.auspice.platform.entity.Entity;
-import net.aurika.auspice.platform.location.PrecisionLocation;
+import net.aurika.auspice.platform.location.AbstractLocationMutable;
 import net.aurika.auspice.text.compiler.TextObject;
 import net.aurika.text.placeholders.context.TextPlaceholderProvider;
 import org.jetbrains.annotations.NotNull;
@@ -27,9 +27,9 @@ public class BukkitEntity implements Entity {
   }
 
   @Override
-  public @NotNull PrecisionLocation getLocationCopy() {
+  public @NotNull AbstractLocationMutable getLocationCopy() {
     org.bukkit.Location loc = this.entity.getLocation();
-    return new PrecisionLocation(
+    return new AbstractLocationMutable(
         this.server.getWorldRegistry().getWorld(loc.getWorld()),
         loc.getX(),
         loc.getY(),
@@ -40,15 +40,15 @@ public class BukkitEntity implements Entity {
   }
 
   @Override
-  public PrecisionLocation joinLocation(@Nullable PrecisionLocation location) {
+  public AbstractLocationMutable joinLocation(@Nullable AbstractLocationMutable location) {
     if (location == null) return null;
     org.bukkit.Location loc = this.entity.getLocation();
-    location.setWorld(this.server.getWorldRegistry().getWorld(loc.getWorld()));
-    location.setX(loc.getX());
-    location.setY(loc.getY());
-    location.setZ(loc.getZ());
-    location.setYaw(loc.getYaw());
-    location.setPitch(loc.getPitch());
+    location.world(this.server.getWorldRegistry().getWorld(loc.getWorld()));
+    location.floatX(loc.getX());
+    location.floatY(loc.getY());
+    location.floatZ(loc.getZ());
+    location.yaw(loc.getYaw());
+    location.pitch(loc.getPitch());
     return location;
   }
 

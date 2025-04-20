@@ -2,6 +2,7 @@ package net.aurika.auspice.paper.utils.paper.asyncchunks;
 
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
@@ -28,6 +29,6 @@ public abstract class AsyncChunks {
     return getChunkAtAsync(world, x, z, generate, false);
   }
 
-  public abstract CompletableFuture<Chunk> getChunkAtAsync(World world, int x, int z, boolean generate, boolean isUrgent);
+  public abstract CompletableFuture<Chunk> getChunkAtAsync(@NotNull World world, int x, int z, boolean generate, boolean isUrgent);
 
 }

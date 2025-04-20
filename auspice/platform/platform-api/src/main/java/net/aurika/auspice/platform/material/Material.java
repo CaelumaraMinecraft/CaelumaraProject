@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * A material.
+ * 材料覆盖了方块类型和物品类型.
  */
 public interface Material extends Keyed, Translatable {
 

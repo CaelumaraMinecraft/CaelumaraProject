@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
+
 /**
  * Represents a reference to a player identity and the data belonging to a
  * player that is stored on the disk and can, thus, be retrieved without the
