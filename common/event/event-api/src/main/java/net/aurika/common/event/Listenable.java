@@ -1,7 +1,5 @@
 package net.aurika.common.event;
 
-import org.jetbrains.annotations.ApiStatus;
-
 import java.lang.annotation.*;
 
 /**
@@ -10,9 +8,4 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Listenable {
-
-  @ApiStatus.Experimental
-  String emitterFieldName() default "EMITTER";
-
-}
+public @interface Listenable { }

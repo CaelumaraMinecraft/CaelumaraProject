@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.server;
 
 import net.aurika.auspice.platform.Platform;
-import net.aurika.auspice.platform.event.EventManager;
+import net.aurika.auspice.event.api.MinecraftEventManager;
 import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.auspice.platform.permission.PermissionManager;
 import net.aurika.auspice.platform.player.PlayerManager;
@@ -18,7 +18,7 @@ public interface Server extends Platform, EventServer {
 
   boolean isMainThread();
 
-  @NotNull EventManager eventManager();
+  @NotNull MinecraftEventManager eventManager();
 
   @Override
   @NotNull WorldRegistry worldRegistry();

@@ -1,12 +1,15 @@
 package net.aurika.auspice.platform.inventory;
 
+import net.aurika.auspice.platform.inventory.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
-public interface Inventory extends Iterable<ItemStack> {
+public interface Inventory extends InventoryAware {
+
+  @NotNull Iterator<ItemStack> items();
 
   @Override
-  @NotNull Iterator<ItemStack> iterator();
+  default @NotNull Inventory inventory() { return this; }
 
 }

@@ -1,0 +1,19 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api("net.aurika:auspice-event-api")
+//  implementation("net.aurika:common-lazy")
+  implementation(libs.bytebuddy)
+  compileOnly("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
+
+  testImplementation("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

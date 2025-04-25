@@ -1,10 +1,7 @@
 package net.aurika.auspice.constants.location;
 
-import net.aurika.auspice.platform.entity.Entity;
-import net.aurika.auspice.platform.location.AbstractGrid2D;
-import net.aurika.auspice.platform.location.Grid2D;
-import net.aurika.auspice.platform.location.Direction;
-import net.aurika.auspice.platform.location.AbstractLocationMutable;
+import net.aurika.auspice.platform.entity.abstraction.Entity;
+import net.aurika.auspice.platform.location.*;
 import net.aurika.ecliptor.api.DataStringRepresentation;
 import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
 import net.aurika.ecliptor.api.structured.StructuredData;
@@ -20,7 +17,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, Grid2D, StructuredDataObject {
+public class SimpleChunkLocation implements Cloneable, DataStringRepresentation, Grid2Pos, StructuredDataObject {
 
   private final @NonNull String world;
   private final int x;
@@ -51,7 +48,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new SimpleChunkLocation(var0.getWorld().getName(), var0.getX(), var0.getZ());
   }
 
-  public static SimpleChunkLocation of(AbstractLocationMutable var0) {
+  public static SimpleChunkLocation of(LocationMutable.AbstractLocationMutable var0) {
     Objects.requireNonNull(var0, "Cannot get simple chunk location of a null location");
     return new SimpleChunkLocation(
         (Objects.requireNonNull(var0.world(), "Simple chunk location cannot have a null world")).name(),
@@ -64,8 +61,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new SimpleChunkLocation(var0.getWorld().getName(), var0.getX() >> 4, var0.getZ() >> 4);
   }
 
-  public AbstractGrid2D toBlockVector() {
-    return AbstractGrid2D.of(this.x, this.z);
+  public AbstractGrid2 toBlockVector() {
+    return AbstractGrid2.of(this.x, this.z);
   }
 
   public static int calculateBorderSize(int var0) {
@@ -84,7 +81,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
   }
 
   public static Supplier<SimpleChunkLocation> resolve(Entity var0) {
-    return () -> of(var0.getLocationCopy());
+    return () -> of(var0.locationCopy());
   }
 
   public boolean equalsIgnoreWorld(SimpleChunkLocation var1) {
@@ -96,7 +93,7 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
   }
 
   public SimpleChunkLocation getRelative(Direction var1) {
-    if (var1.getType() != Direction.Type.CARDINAL) {
+    if (var1.directionType() != Direction.Type.CARDINAL) {
       throw new IllegalArgumentException("Only cardinal directions can be used for relative chunks: " + var1);
     } else {
       return this.getRelative(var1.modX(), var1.modZ());
@@ -134,8 +131,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     return new org.bukkit.Location(var1, (double) var2, (double) var4, (double) var3);
   }
 
-  public AbstractGrid2D toLocationXZ() {
-    return AbstractGrid2D.of((this.x << 4) + 8, (this.z << 4) + 8);
+  public AbstractGrid2 toLocationXZ() {
+    return AbstractGrid2.of((this.x << 4) + 8, (this.z << 4) + 8);
   }
 
   public org.bukkit.@NonNull Location getCenterLocation(double var1) {
@@ -173,8 +170,8 @@ public class SimpleChunkLocation implements Cloneable, DataStringRepresentation,
     }
   }
 
-  public AbstractGrid2D worldlessWrapper() {
-    return AbstractGrid2D.of(this.x, this.z);
+  public AbstractGrid2 worldlessWrapper() {
+    return AbstractGrid2.of(this.x, this.z);
   }
 
   public int hashCode() {

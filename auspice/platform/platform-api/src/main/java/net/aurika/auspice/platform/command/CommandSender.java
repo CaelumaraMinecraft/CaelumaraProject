@@ -1,12 +1,11 @@
 package net.aurika.auspice.platform.command;
 
 import net.aurika.auspice.platform.Platform;
-import net.aurika.auspice.platform.permission.Permissible;
 import net.aurika.common.annotation.ImplDontThrowUnsupported;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public interface CommandSender extends Permissible {
+public interface CommandSender {
 
   @ImplDontThrowUnsupported
   void sendMessage(@NotNull Component message);

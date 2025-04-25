@@ -3,5 +3,11 @@ plugins {
 }
 
 dependencies {
+  api("net.aurika:auspice-bukkit-api")
   compileOnly("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
 }

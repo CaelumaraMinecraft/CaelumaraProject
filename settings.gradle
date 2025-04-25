@@ -132,7 +132,14 @@ includeBuild("auspice") {
     substitute(module("net.aurika:auspice-paper-api")).using(project(":paper-api"))
     substitute(module("net.aurika:auspice-folia-api")).using(project(":folia-api"))
 
+    substitute(module("net.aurika:auspice-event-api")).using(project(":event:event-api"))
+    substitute(module("net.aurika:auspice-event-bukkit")).using(project(":event:event-bukkit"))
+
     substitute(module("net.aurika:auspice-platform-api")).using(project(":platform:platform-api"))
+    substitute(module("net.aurika:auspice-platform-server")).using(project(":platform:platform-server"))
+    substitute(module("net.aurika:auspice-platform-bukkit")).using(project(":platform:platform-bukkit"))
+    substitute(module("net.aurika:auspice-platform-paper")).using(project(":platform:platform-paper"))
+    substitute(module("net.aurika:auspice-platform-folia")).using(project(":platform:platform-folia"))
 
     substitute(module("net.aurika:auspice-nms-1_21_4")).using(project(":nms:nms-1_21_4"))
 
@@ -154,7 +161,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-data-string-api")).using(project(":data-string-api"))
     substitute(module("net.aurika:common-dependency")).using(project(":dependency"))
     substitute(module("net.aurika:common-event-api")).using(project(":event:event-api"))
-    substitute(module("net.aurika:common-examinable-api")).using(project(":examinable-api"))
+    substitute(module("net.aurika:common-examination")).using(project(":examination"))
     substitute(module("net.aurika:common-function")).using(project(":function"))
     substitute(module("net.aurika:common-ident")).using(project(":ident"))
     substitute(module("net.aurika:common-keyed-api")).using(project(":keyed-api"))
@@ -179,6 +186,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-util-gson")).using(project(":util:gson"))
     substitute(module("net.aurika:common-util-math")).using(project(":util:math"))
     substitute(module("net.aurika:common-util-number")).using(project(":util:number"))
+    substitute(module("net.aurika:common-util-reflect")).using(project(":util:reflection"))
     substitute(module("net.aurika:common-util-reflection")).using(project(":util:reflection"))
     substitute(module("net.aurika:common-util-registry")).using(project(":util:registry"))
     substitute(module("net.aurika:common-util-stacktrace")).using(project(":util:stacktrace"))

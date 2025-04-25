@@ -17,6 +17,11 @@ public interface Material extends Keyed, Translatable {
   @Override
   @NotNull String translationKey();
 
+  /**
+   * 材料作为物品的默认最大堆叠数量
+   *
+   * @return the default max stack size
+   */
   int defaultMaxStackSize();
 
 }

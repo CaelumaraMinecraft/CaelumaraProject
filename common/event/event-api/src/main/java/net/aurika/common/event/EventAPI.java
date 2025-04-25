@@ -5,7 +5,7 @@ import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -31,9 +31,12 @@ public interface EventAPI {
       return false;
     }
     try {
-      Field listenersFiled = eventClass.getField(listenable.emitterFieldName());
-      return Modifier.isStatic(listenersFiled.getModifiers());
-    } catch (NoSuchFieldException ignored) {
+      @Nullable EmitterMethodName emitterMethodNameAnn = eventClass.getAnnotation(EmitterMethodName.class);
+      @NotNull String emitterMethodName = emitterMethodNameAnn != null ? emitterMethodNameAnn.value() : EmitterMethodName.DEFAULT_VALUE;
+      Method emitterMethod = eventClass.getMethod(emitterMethodName);
+      int modifiers = emitterMethod.getModifiers();
+      return Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers);
+    } catch (NoSuchMethodException e) {
       return false;
     }
   }
@@ -45,18 +48,20 @@ public interface EventAPI {
     }
     Listenable listenable = eventClass.getAnnotation(Listenable.class);
     assert listenable != null;
-    String listenersFieldName = listenable.emitterFieldName();
-    @NotNull Field listenersFiled;
+
+    @Nullable EmitterMethodName emitterMethodNameAnn = eventClass.getAnnotation(EmitterMethodName.class);
+    String emitterMethodName = emitterMethodNameAnn != null ? emitterMethodNameAnn.value() : EmitterMethodName.DEFAULT_VALUE;
+    @NotNull Method listenersFiled;
     try {
-      listenersFiled = eventClass.getField(listenersFieldName);
-    } catch (NoSuchFieldException e) {
+      listenersFiled = eventClass.getMethod(emitterMethodName, new Class[]{});
+    } catch (NoSuchMethodException e) {
       throw new RuntimeException(e);
     }
     try {
       listenersFiled.setAccessible(true);
       // noinspection unchecked
-      return (Emitter<E>) listenersFiled.get(null);
-    } catch (IllegalAccessException e) {
+      return (Emitter<E>) listenersFiled.invoke(null);
+    } catch (IllegalAccessException | InvocationTargetException e) {
       throw new RuntimeException(e);
     }
   }

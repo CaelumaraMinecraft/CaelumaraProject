@@ -1,0 +1,19 @@
+plugins {
+  id("java-library")
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.shadow)
+}
+
+dependencies {
+  api(project(":platform:platform-bukkit-api"))
+  implementation(project(":platform:platform-bukkit-common"))
+  implementation("net.aurika:common-util-reflect")
+  implementation(libs.bytebuddy)
+  implementation(libs.xseries)
+  compileOnly("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

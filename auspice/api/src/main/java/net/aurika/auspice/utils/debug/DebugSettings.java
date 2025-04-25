@@ -51,7 +51,7 @@ public class DebugSettings {
   @NotNull
   public static DebugSettings getSettings(@NotNull CommandSender var1) {
     Objects.requireNonNull(var1, "");
-    UUID var2 = var1 instanceof Player ? ((Player) var1).getUniqueId() : FastUUID.ZERO;
+    UUID var2 = var1 instanceof Player ? ((Player) var1).uniqueId() : FastUUID.ZERO;
     DebugSettings var10000 = DebugSettings.SETTINGS.computeIfAbsent(var2, (uuid -> new DebugSettings()));
     Objects.requireNonNull(var10000, "");
     return var10000;

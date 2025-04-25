@@ -1,9 +1,7 @@
 package net.aurika.auspice.platform.location;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.Objects;
 
 public enum Direction implements Directional {
@@ -34,31 +32,19 @@ public enum Direction implements Directional {
   private final float pitch;
   private final float yaw;
 
-  public @NotNull Type getType() {
-    return this.type;
-  }
+  public @NotNull Type directionType() { return this.type; }
 
-  public int modX() {
-    return this.x;
-  }
+  public int modX() { return this.x; }
 
-  public int modY() {
-    return this.y;
-  }
+  public int modY() { return this.y; }
 
-  public int modZ() {
-    return this.z;
-  }
+  public int modZ() { return this.z; }
 
   @Override
-  public float yaw() {
-    return this.yaw;
-  }
+  public float yaw() { return this.yaw; }
 
   @Override
-  public float pitch() {
-    return this.pitch;
-  }
+  public float pitch() { return this.pitch; }
 
   Direction(@NotNull Direction face1, @NotNull Direction face2, Type type) {
     this(face1.x + face2.x, face1.y + face2.y, face1.z + face2.z, type);
@@ -70,7 +56,7 @@ public enum Direction implements Directional {
     this.y = modY;
     this.z = modZ;
     this.type = type;
-    Directional directional = LocationUtils.fromDirection(AbstractFloat3D.of(modX, modY, modZ));
+    Directional directional = LocationUtils.fromDirection(Float3Pos.float3Pos(modX, modY, modZ));
     if (modX == 0 && modZ == 0) {
       this.yaw = 0.0F;
       this.pitch = directional.pitch();
@@ -141,38 +127,12 @@ public enum Direction implements Directional {
     }
   }
 
-  @Nullable
-  public static Direction findClosest(@NotNull AbstractFloat3D immutableVector, @NotNull Collection<? extends Type> allowedTypes) {
-    Objects.requireNonNull(immutableVector);
-    Objects.requireNonNull(allowedTypes);
-    AbstractFloat3D vector = immutableVector;
-    if (allowedTypes.contains(Type.VERTICAL)) {
-      vector = immutableVector.withY(0.0);
-    }
-
-    vector = vector.normalize();
-    Direction closest = null;
-    double closestDot = -2.0;
-    Direction[] var7 = Direction.values();
-    int i = 0;
-
-    for (int length = var7.length; i < length; ++i) {
-      Direction direction = var7[i];
-      if (allowedTypes.contains(direction.getType())) {
-
-      }
-    }
-
-    return closest;
-  }
-
   public static float normalizeMinecraftYaw(float yaw0) {
     float yaw = (yaw0 + 180.0F) % (float) 360;
     return yaw < 0.0F ? yaw + (float) 360 : yaw;
   }
 
-  @NotNull
-  public static Direction getPitchDirection(float pitch) {
+  public static @NotNull Direction getPitchDirection(float pitch) {
     if (-90.0F <= pitch && pitch <= 0.0F) {
       return Direction.DOWN;
     } else {
@@ -184,8 +144,7 @@ public enum Direction implements Directional {
     }
   }
 
-  @NotNull
-  public static Direction cardinalDirectionFromYaw(float yaw) {
+  public static @NotNull Direction cardinalDirectionFromYaw(float yaw) {
     float transformedYaw = normalizeMinecraftYaw(yaw);
     if (0.0F <= transformedYaw && transformedYaw <= 45.0F) {
       return Direction.NORTH;

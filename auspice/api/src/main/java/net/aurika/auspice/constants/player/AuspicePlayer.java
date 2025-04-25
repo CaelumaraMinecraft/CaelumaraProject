@@ -17,7 +17,7 @@ import java.util.UUID;
 public interface AuspicePlayer extends KeyedAuspiceObject<UUID>, AuspicePlayerOperator, PlaceholderInvokable {
 
   static @NotNull AuspicePlayer getAuspicePlayer(@NotNull OfflinePlayer offlinePlayer) {
-    return getAuspicePlayer(offlinePlayer.id());
+    return getAuspicePlayer(offlinePlayer.uuid());
   }
 
   /**

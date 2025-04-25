@@ -48,14 +48,18 @@ public final class Validate {
 
   public static final class Arg {
 
-    public static void require(boolean expression, @NotNull Supplier<String> errorMessageSupplier) {
+    public static void require(boolean expression, @NotNull String paramName, @NotNull Supplier<String> errorMessageSupplier) {
       if (!expression)
-        throw sanitizeStackTrace(new IllegalArgumentException(errorMessageSupplier.get()), Arg.class.getName());
+        throw sanitizeStackTrace(
+            new IllegalArgumentException("Wrong argument '" + paramName + "'" + errorMessageSupplier.get()),
+            Arg.class.getName()
+        );
     }
 
-    public static void require(boolean expression, @NotNull String errorMessage) {
+    public static void require(boolean expression, @NotNull String paramName, @NotNull String errorMessage) {
       if (!expression)
-        throw sanitizeStackTrace(new IllegalArgumentException(errorMessage), Arg.class.getName());
+        throw sanitizeStackTrace(
+            new IllegalArgumentException("Wrong argument '" + paramName + "'" + errorMessage), Arg.class.getName());
     }
 
     @Contract("null, _ -> fail")

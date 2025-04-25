@@ -132,7 +132,7 @@ public class CommandContext extends SimpleMessenger {
   }
 
   public boolean requireConfirmation(@NonNull Messenger var1) {
-    UUID var2 = this.isPlayer() ? this.senderAsPlayer().getUniqueId() : new UUID(0L, 0L);
+    UUID var2 = this.isPlayer() ? this.senderAsPlayer().uniqueId() : new UUID(0L, 0L);
     a var3 = a.getIfPresent(var2);
     if (var3 != null && var3.a == this.command && Arrays.equals(var3.b, this.args)) {
       return false;

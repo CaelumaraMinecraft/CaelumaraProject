@@ -29,11 +29,21 @@ include(
     // net.minecraft.server
     ":nms:nms-1_21_4",
 
+    // event
+    ":event:event-api",
+    ":event:event-bukkit",
+
     // platform api
     ":platform:platform-api",
     // platforms
     ":platform:platform-client",
     ":platform:platform-server",
+    ":platform:platform-bukkit",
+    ":platform:platform-bukkit-api",
+    ":platform:platform-bukkit-common",
+    ":platform:platform-bukkit-1_13_x",
+    ":platform:platform-paper",
+    ":platform:platform-folia",
 
     // service api
     ":service:service-api",

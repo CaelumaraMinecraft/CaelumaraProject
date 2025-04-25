@@ -1,0 +1,16 @@
+plugins {
+  id("java-library")
+  id("maven-publish")
+}
+
+dependencies {
+  api(project(":validate"))
+  api(libs.kyori.examination.api)
+  api(libs.kyori.examination.string)
+  compileOnlyApi(libs.annotations.jetbrains)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

@@ -116,7 +116,7 @@ public final class PlaceholderTransformerRegistry {
           if (!Strings.isNullOrEmpty(name)) {
             return name;
           } else {
-            return offlinePlayer.id();
+            return offlinePlayer.uuid();
           }
         })
     );

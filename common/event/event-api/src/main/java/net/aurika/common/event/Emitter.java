@@ -39,14 +39,20 @@ public interface Emitter<E extends Event> {
    *
    * @return the parent containers
    */
-  @NotNull Emitter<? super E> @NotNull [] directParentEmitters();
+  @Deprecated
+  default @NotNull Emitter<? super E> @NotNull [] directParentEmitters() {
+    throw new UnsupportedOperationException("directParentEmitters");
+  }
 
   /**
    * Gets all containers directly or  extended by this listener container.
    *
    * @return the parent containers
    */
-  @NotNull Set<@NotNull Emitter<? super E>> allParentEmitters();
+  @Deprecated
+  default @NotNull Set<@NotNull Emitter<? super E>> allParentEmitters() {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * Gets the registered listeners in the emitter. On synced listener container, it may be sequenced.

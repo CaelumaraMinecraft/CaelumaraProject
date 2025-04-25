@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.server;
 
+import net.aurika.auspice.event.api.MinecraftEventManager;
 import net.aurika.auspice.platform.Platform;
-import net.aurika.auspice.platform.event.EventManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -9,6 +9,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface EventServer extends Platform {
 
-  @NotNull EventManager eventManager();
+  @NotNull MinecraftEventManager eventManager();
 
 }

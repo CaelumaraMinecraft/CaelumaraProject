@@ -1,0 +1,9 @@
+package net.aurika.auspice.platform.entity;
+
+import net.aurika.auspice.platform.entity.abstraction.SizedFireball;
+
+/**
+ * 大火球.
+ */
+public interface LargeFireball extends SizedFireball {
+}

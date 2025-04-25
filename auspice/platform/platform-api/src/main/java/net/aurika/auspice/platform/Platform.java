@@ -1,5 +1,6 @@
 package net.aurika.auspice.platform;
 
+import net.aurika.auspice.platform.adapter.AdapterRegistry;
 import net.aurika.auspice.platform.registry.RegistryContainer;
 import net.aurika.auspice.platform.world.WorldRegistry;
 import net.aurika.common.annotation.container.ThrowOnAbsent;
@@ -18,7 +19,7 @@ public interface Platform {
    * @param platform the platform that auspice running on
    */
   @ApiStatus.Internal
-  public static void init(Platform platform) { Companion.PLATFORM = platform; }
+  public static void init(Platform platform) { Platform$Companion.PLATFORM = platform; }
 
   /**
    * Gets the platform instance.
@@ -29,12 +30,19 @@ public interface Platform {
   @Contract(pure = true)
   @ThrowOnAbsent
   public static @NotNull Platform get() throws IllegalStateException {
-    Platform platform = Companion.PLATFORM;
+    Platform platform = Platform$Companion.PLATFORM;
     if (platform == null) {
       throw new IllegalStateException("Server instance not initiated yet");
     }
     return platform;
   }
+
+  /**
+   * Gets adapters of the platform.
+   *
+   * @return the adapter registry
+   */
+  @NotNull AdapterRegistry adapters();
 
   /**
    * Gets registries of the platform.
@@ -55,5 +63,13 @@ public interface Platform {
   default void onReady() { }
 
   default void onEnable() { }
+
+}
+
+final class Platform$Companion {
+
+  static Platform PLATFORM = null;
+
+  private Platform$Companion() { }
 
 }

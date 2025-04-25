@@ -1,5 +1,8 @@
 package net.aurika.auspice.platform.location;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 public interface GridXMutable {
 
   /**
@@ -7,6 +10,8 @@ public interface GridXMutable {
    *
    * @param x the x
    */
-  void gridX(int x);
+  @Contract(value = "_ -> this", mutates = "this")
+  @NotNull
+  GridXMutable gridX(int x);
 
 }
