@@ -1,3 +1,5 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   id("maven-publish")
@@ -5,10 +7,10 @@ plugins {
 
 dependencies {
   api("net.aurika:common-validate")
-  implementation(libs.bytebuddy)
-  implementation(libs.asm.asm)
-  implementation(libs.asm.commons)
-  compileOnly(libs.annotations.jetbrains)
+  implementation(AurikaDependencies.BYTEBUDDY)
+  implementation(AurikaDependencies.ASM)
+  implementation(AurikaDependencies.ASM_COMMONS)
+  compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
 }
 
 java {

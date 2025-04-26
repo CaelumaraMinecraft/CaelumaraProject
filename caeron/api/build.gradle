@@ -1,9 +1,14 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
 }
 
 dependencies {
+  api("net.aurika:common-ident")
   api("net.aurika:common-validate")
+  api(AurikaDependencies.EXAMINATION_API)
+  api(AurikaDependencies.EXAMINATION_STRING)
 }
 
 java {

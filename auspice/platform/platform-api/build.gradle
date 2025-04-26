@@ -11,7 +11,7 @@ dependencies {
   api("net.aurika:common-annotation")
   api("net.aurika:common-data-api")
   api("net.aurika:common-event-api")
-  api("net.aurika:common-examination")
+  api("net.aurika:common-examinable-reflection")
   api("net.aurika:common-util-string-split")
 }
 

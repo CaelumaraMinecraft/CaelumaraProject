@@ -1,11 +1,13 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   id("maven-publish")
 }
 
 dependencies {
-  api(project(":validate"))
-  compileOnly(libs.annotations.jetbrains)
+  api("net.aurika:common-validate")
+  compileOnly(AurikaDependencies.JETBRAINS_ANNOTATIONS)
 }
 
 java {

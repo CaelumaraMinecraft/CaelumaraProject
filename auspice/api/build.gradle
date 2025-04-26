@@ -1,3 +1,5 @@
+import static net.aurika.gradle.AurikaDependencies.*
+
 plugins {
   id("java-library")
   alias(libs.plugins.kotlin)
@@ -30,20 +32,20 @@ dependencies {
 
   // Engines
 
-  api(libs.kyori.examination.api)
-  api(libs.kyori.examination.string)
+  api(EXAMINATION_API)
+  api(EXAMINATION_STRING)
 
-  api(libs.kyori.advntr.api)
-  api(libs.kyori.advntr.text.legacy)
+  api(ADVENTURE_API)
+  api(ADVENTURE_TEXT_LEGACY)
 
-  api(libs.yamlengine)
-  api(libs.gson)
+  api(YAMLENGINE)
+  api(GSON)
 
-  api(libs.asm.asm)
-  api(libs.asm.commons)
+  api(ASM)
+  api(ASM_COMMONS)
 
-  api(libs.caffeine)
-  api(libs.guava)
+  api(CAFFEINE)
+  api(GUAVA)
 
   api(libs.apache.commons.io)
 
@@ -58,8 +60,8 @@ dependencies {
 
 
   // Classpath libs
-  api(libs.annotations.jetbrains)
-  api(libs.annotations.checker)
+  api(JETBRAINS_ANNOTATIONS)
+  api(CHECKER_ANNOTATIONS)
 
   // TODO
   compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")

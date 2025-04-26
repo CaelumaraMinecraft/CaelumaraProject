@@ -1,3 +1,5 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   id("maven-publish")
@@ -6,7 +8,7 @@ plugins {
 dependencies {
   api("net.aurika:common-data-string-api")
   api("net.aurika:common-validate")
-  api(libs.annotations.jetbrains)
+  compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
 }
 
 java {

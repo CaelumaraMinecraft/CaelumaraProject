@@ -137,9 +137,9 @@ includeBuild("auspice") {
 
     substitute(module("net.aurika:auspice-platform-api")).using(project(":platform:platform-api"))
     substitute(module("net.aurika:auspice-platform-server")).using(project(":platform:platform-server"))
-    substitute(module("net.aurika:auspice-platform-bukkit")).using(project(":platform:platform-bukkit"))
-    substitute(module("net.aurika:auspice-platform-paper")).using(project(":platform:platform-paper"))
-    substitute(module("net.aurika:auspice-platform-folia")).using(project(":platform:platform-folia"))
+    substitute(module("net.aurika:auspice-platform-bukkit-api")).using(project(":platform:platform-bukkit-api"))
+    substitute(module("net.aurika:auspice-platform-paper-api")).using(project(":platform:platform-paper-api"))
+    substitute(module("net.aurika:auspice-platform-folia-api")).using(project(":platform:platform-folia-api"))
 
     substitute(module("net.aurika:auspice-nms-1_21_4")).using(project(":nms:nms-1_21_4"))
 
@@ -161,7 +161,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-data-string-api")).using(project(":data-string-api"))
     substitute(module("net.aurika:common-dependency")).using(project(":dependency"))
     substitute(module("net.aurika:common-event-api")).using(project(":event:event-api"))
-    substitute(module("net.aurika:common-examination")).using(project(":examination"))
+    substitute(module("net.aurika:common-examinable-reflection")).using(project(":examinable-reflection"))
     substitute(module("net.aurika:common-function")).using(project(":function"))
     substitute(module("net.aurika:common-ident")).using(project(":ident"))
     substitute(module("net.aurika:common-keyed-api")).using(project(":keyed-api"))
@@ -213,6 +213,8 @@ includeBuild("dyanasis") {
     substitute(module("net.aurika:dyanasis-editor-api")).using(project(":editor-api"))
     substitute(module("net.aurika:dyanasis-editor-app")).using(project(":editor-app"))
     substitute(module("net.aurika:dyanasis-editor-intellij")).using(project(":editor-intellij"))
+    substitute(module("net.aurika:dyanasis-object-reflect-api")).using(project(":object-reflect-api"))
+    substitute(module("net.aurika:dyanasis-object-reflect-examinable")).using(project(":object-reflect-examinable"))
   }
 }
 

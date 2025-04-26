@@ -1,8 +1,11 @@
 plugins {
   id("java-library")
+  id("net.aurika.gradle.dependency")
 }
 
 allprojects {
+
+  plugins.apply("net.aurika.gradle.dependency")
 
   repositories {
     mavenCentral()

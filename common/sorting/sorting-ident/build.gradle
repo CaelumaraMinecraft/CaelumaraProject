@@ -6,7 +6,6 @@ plugins {
 dependencies {
   api("net.aurika:common-ident")
   api("net.aurika:common-sorting-api")
-  compileOnlyApi(libs.annotations.jetbrains)
 }
 
 java {

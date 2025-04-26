@@ -1,3 +1,5 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   id("maven-publish")
@@ -6,10 +8,11 @@ plugins {
 description = ""
 
 dependencies {
-  api(project(":util:functional"))
-  api(project(":validate"))
+  api("net.aurika:common-util-functional")
+  api("net.aurika:common-validate")
   api(libs.kyori.advntr.nbt)
-  compileOnlyApi(libs.annotations.jetbrains)
+  api(AurikaDependencies.ADVENTURE_NBT)
+  compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
 }
 
 java {

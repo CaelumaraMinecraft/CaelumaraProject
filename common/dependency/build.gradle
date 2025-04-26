@@ -1,3 +1,5 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   id("maven-publish")
@@ -5,9 +7,9 @@ plugins {
 
 dependencies {
   api("net.aurika:common-ident")
-  api(project(":validate"))
-  api(libs.asm.asm)
-  api(libs.asm.commons)
+  api("net.aurika:common-validate")
+  api(AurikaDependencies.ASM)
+  api(AurikaDependencies.ASM_COMMONS)
 }
 
 java {

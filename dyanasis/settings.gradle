@@ -2,5 +2,7 @@ include(
     ":api",
     ":editor-api",
     ":editor-app",
-    ":editor-intellij"
+    ":editor-intellij",
+    ":object-reflect-api",
+    ":object-reflect-examinable"
 )

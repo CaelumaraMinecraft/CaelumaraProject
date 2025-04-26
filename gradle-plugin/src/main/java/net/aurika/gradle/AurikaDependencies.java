@@ -1,7 +1,53 @@
 package net.aurika.gradle;
 
-public class AurikaDependencies {
+public final class AurikaDependencies {
+
+  public static final String YAMLENGINE = "org.snakeyaml:snakeyaml-engine:2.9";
+  public static final String GSON = "com.google.code.gson:gson:2.13.1";
+  public static final String CAFFEINE = "com.github.ben-manes.caffeine:caffeine:3.2.0";
+  public static final String GUAVA = "com.google.guava:guava:33.4.8-jre";
 
   public static final String XSERIES = "com.github.cryptomorin:XSeries:13.1.0";
+  public static final String EXAMINATION_API = Groups.KYORI + ":examination-api:" + Versions.EXAMINATION;
+  public static final String EXAMINATION_STRING = Groups.KYORI + ":examination-string:" + Versions.EXAMINATION;
+
+  public static final String ADVENTURE_KEY = Groups.KYORI + ":adventure-key:" + Versions.ADVENTURE;
+  public static final String ADVENTURE_API = Groups.KYORI + ":adventure-api:" + Versions.ADVENTURE;
+  public static final String ADVENTURE_NBT = Groups.KYORI + ":adventure-nbt:" + Versions.ADVENTURE;
+
+  public static final String ADVENTURE_TEXT_BUNGEE = Groups.KYORI + ":adventure-text-serializer-bungeecord:" + Versions.ADVENTURE_PLATFORM;
+  public static final String ADVENTURE_TEXT_GSON = Groups.KYORI + ":adventure-text-serializer-gson:" + Versions.ADVENTURE;
+  public static final String ADVENTURE_TEXT_JSON = Groups.KYORI + ":adventure-text-serializer-json:" + Versions.ADVENTURE;
+  public static final String ADVENTURE_TEXT_PLAIN = Groups.KYORI + ":adventure-text-serializer-plain:" + Versions.ADVENTURE;
+  public static final String ADVENTURE_TEXT_LEGACY = Groups.KYORI + ":adventure-text-serializer-legacy:" + Versions.ADVENTURE;
+  public static final String ADVENTURE_TEXT_MINIMESSAGE = Groups.KYORI + ":adventure-text-minimessage:" + Versions.ADVENTURE;
+
+  public static final String ADVENTURE_PLATFORM_BUKKIT = Groups.KYORI + ":adventure-platform-bukkit:" + Versions.ADVENTURE_PLATFORM;
+  public static final String ADVENTURE_PLATFORM_BUNGEECORD = Groups.KYORI + ":adventure-platform-bungeecord:" + Versions.ADVENTURE_PLATFORM;
+
+  public static final String EVENT_API = Groups.KYORI + ":event-api:" + Versions.EVENT;
+  public static final String EVENT_METHOD = Groups.KYORI + ":event-method:" + Versions.EVENT;
+
+  public static final String JETBRAINS_ANNOTATIONS = "org.jetbrains:annotations:26.0.2";
+  public static final String CHECKER_ANNOTATIONS = "org.checkerframework:checker-qual:3.49.2";
+  public static final String BYTEBUDDY = "net.bytebuddy:byte-buddy:1.17.5";
+  public static final String ASM = "org.ow2.asm:asm:" + Versions.ASM;
+  public static final String ASM_COMMONS = "org.ow2.asm:asm-commons:" + Versions.ASM;
+
+  public static final class Groups {
+
+    public static final String KYORI = "net.kyori";
+
+  }
+
+  public static final class Versions {
+
+    public static final String ASM = "9.8";
+    public static final String EXAMINATION = "1.3.0";
+    public static final String ADVENTURE = "4.20.0";
+    public static final String ADVENTURE_PLATFORM = "4.3.4";
+    public static final String EVENT = "3.0.0";
+
+  }
 
 }
