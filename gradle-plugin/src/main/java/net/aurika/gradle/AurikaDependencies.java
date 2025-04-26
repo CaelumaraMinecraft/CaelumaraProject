@@ -6,6 +6,11 @@ public final class AurikaDependencies {
   public static final String GSON = "com.google.code.gson:gson:2.13.1";
   public static final String CAFFEINE = "com.github.ben-manes.caffeine:caffeine:3.2.0";
   public static final String GUAVA = "com.google.guava:guava:33.4.8-jre";
+  public static final String FASTUTIL = "it.unimi.dsi:fastutil:8.5.15";
+
+  public static final String MONGODB_CORE = Groups.MONGODB + ":mongodb-driver-core:" + Versions.MONGODB;
+  public static final String MONGODB_SYNC = Groups.MONGODB + ":mongodb-driver-sync:" + Versions.MONGODB;
+  public static final String MONGODB_BSON = Groups.MONGODB + ":bson:" + Versions.MONGODB;
 
   public static final String XSERIES = "com.github.cryptomorin:XSeries:13.1.0";
   public static final String EXAMINATION_API = Groups.KYORI + ":examination-api:" + Versions.EXAMINATION;
@@ -37,6 +42,7 @@ public final class AurikaDependencies {
   public static final class Groups {
 
     public static final String KYORI = "net.kyori";
+    public static final String MONGODB = "org.mongodb";
 
   }
 
@@ -47,6 +53,7 @@ public final class AurikaDependencies {
     public static final String ADVENTURE = "4.20.0";
     public static final String ADVENTURE_PLATFORM = "4.3.4";
     public static final String EVENT = "3.0.0";
+    public static final String MONGODB = "5.2.1";
 
   }
 

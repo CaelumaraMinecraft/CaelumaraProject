@@ -1,3 +1,5 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   alias(libs.plugins.kotlin)
@@ -7,6 +9,8 @@ plugins {
 dependencies {
   api("net.aurika:common-annotation")
   api("net.aurika:common-event-api")
+  api(AurikaDependencies.EVENT_API)
+  api(AurikaDependencies.EVENT_METHOD)
 }
 
 java {

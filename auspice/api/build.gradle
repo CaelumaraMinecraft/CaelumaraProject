@@ -30,7 +30,7 @@ dependencies {
   api("net.aurika:common-util-string")
   api("net.aurika:common-validate")
 
-  // Engines
+  // engines
 
   api(EXAMINATION_API)
   api(EXAMINATION_STRING)
@@ -52,20 +52,20 @@ dependencies {
 //    implementation("com.github.cryptomorin:ReptileYAML:4.0.0")
 
   api(libs.hikari)
-  api(libs.mongodb.core)
-  api(libs.mongodb.bson)
-  api(libs.mongodb.sync)
+  api(MONGODB_CORE)
+  api(MONGODB_SYNC)
+  api(MONGODB_BSON)
   api(libs.h2)
   api(libs.postgresql)
 
 
-  // Classpath libs
+  // annotations
   api(JETBRAINS_ANNOTATIONS)
   api(CHECKER_ANNOTATIONS)
 
   // TODO
   compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
-  compileOnly(libs.fastutil)
+  compileOnly(FASTUTIL)
   compileOnly(libs.apache.commons.lang)
   compileOnly(libs.apache.commons.math)
   compileOnly(libs.apache.commons.text)
