@@ -69,7 +69,7 @@ class TestExaminable implements Examinable {
   private final int a, b;
   private final TestExaminableSub sub;
 
-  @ExaminableConstructor(properties = {"a", "b", "sub"})
+  @ExaminableConstructor(publicType = TestExaminable.class, properties = {"a", "b", "sub"})
   public TestExaminable(int a, int b, TestExaminableSub sub) {
     this.a = a;
     this.b = b;
@@ -91,7 +91,7 @@ class TestExaminableSub implements Examinable {
 
   private final int c, d;
 
-  @ExaminableConstructor(properties = {"c", "d"})
+  @ExaminableConstructor(publicType = TestExaminableSub.class, properties = {"c", "d"})
   TestExaminableSub(int c, int d) {
     this.c = c;
     this.d = d;
@@ -113,7 +113,7 @@ class TestData1 implements Examinable {
   private final byte c2;
   private final String c3;
 
-  @ExaminableConstructor(properties = {"c1", "c2", "c3"})
+  @ExaminableConstructor(publicType = TestData1.class, properties = {"c1", "c2", "c3"})
   public static @NotNull TestData1 create(int c1, byte c2, String c3) {
     return new TestData1(c1, c2, c3);
   }
