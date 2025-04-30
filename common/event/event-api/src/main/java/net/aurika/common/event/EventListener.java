@@ -12,6 +12,9 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface EventListener {
 
+  /**
+   * @return the event listener id
+   */
   @IdentPatterns.Ident
   String id();
 

@@ -39,7 +39,7 @@ public class DefaultConduit<E extends Event> implements Conduit<E> {
   }
 
   @Override
-  public void register(@NotNull Listener<E> listener) {
+  public void registerListener(@NotNull Listener<E> listener) {
     Validate.Arg.notNull(listener, "listener");
     if (listener.listenedEventType() != eventType) {
       throw new IllegalArgumentException(
@@ -67,12 +67,10 @@ public class DefaultConduit<E extends Event> implements Conduit<E> {
   }
 
   @Override
-  public @NotNull Listener<E> getListener(int index) {
-    return listenerList.get(index);
-  }
+  public @NotNull Listener<E> listenerAtIndex(int index) { return listenerList.get(index); }
 
   @Override
-  public @NotNull Listener<E> getListener(@NotNull Ident id) {
+  public @NotNull Listener<E> listener(@NotNull Ident id) {
     if (!listenerMap.containsKey(id)) {
       throw new IllegalArgumentException("Listener of id: " + id + " is not registered");
     } else {
@@ -81,18 +79,12 @@ public class DefaultConduit<E extends Event> implements Conduit<E> {
   }
 
   @Override
-  public int hashCode() {
-    return super.hashCode();
-  }
+  public int hashCode() { return super.hashCode(); }
 
   @Override
-  public boolean equals(Object obj) {
-    return super.equals(obj);
-  }
+  public boolean equals(Object obj) { return super.equals(obj); }
 
   @Override
-  public String toString() {
-    return getClass().getSimpleName() + "(" + eventType + ")";
-  }
+  public @NotNull String toString() { return getClass().getSimpleName() + "(" + eventType + ")"; }
 
 }

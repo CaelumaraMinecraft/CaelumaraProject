@@ -11,14 +11,14 @@ public @interface ConduitGetter {
 
   @Language(
       value = "JAVA",
-      prefix = "class X { public static net.aurika.common.event.Emitter<?> ",
+      prefix = "class X { public static net.aurika.common.event.Conduit<?> ",
       suffix = "() { } }"
   )
   String DEFAULT_VALUE = "emitter";
 
   @Language(
       value = "JAVA",
-      prefix = "class X { public static net.aurika.common.event.Emitter<?> ",
+      prefix = "class X { public static net.aurika.common.event.Conduit<?> ",
       suffix = "() { } }"
   )
   String value() default ConduitGetter.DEFAULT_VALUE;

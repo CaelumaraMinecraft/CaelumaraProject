@@ -1,5 +1,6 @@
 package net.aurika.common.event;
 
+import net.aurika.common.ident.Ident;
 import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,19 +34,13 @@ public class DelegateConduit<E extends Event> implements Conduit<E> {
   }
 
   @Override
-  public void transport(@NotNull E event) {
-    delegate.transport(event);
-  }
+  public void transport(@NotNull E event) { delegate.transport(event); }
 
   @Override
-  public void register(@NotNull Listener<E> listener) {
-    delegate.register(listener);
-  }
+  public void registerListener(@NotNull Listener<E> listener) { delegate.registerListener(listener); }
 
   @Override
-  public @NotNull Class<E> eventType() {
-    return eventType;
-  }
+  public @NotNull Class<E> eventType() { return eventType; }
 
 
   @Override
@@ -54,18 +49,18 @@ public class DelegateConduit<E extends Event> implements Conduit<E> {
   }
 
   @Override
-  public int hashCode() {
-    return super.hashCode();
-  }
+  public @NotNull Listener<E> listenerAtIndex(int index) throws IndexOutOfBoundsException { return delegate.listenerAtIndex(index); }
 
   @Override
-  public boolean equals(Object obj) {
-    return super.equals(obj);
-  }
+  public @NotNull Listener<E> listener(@NotNull Ident id) throws IllegalArgumentException { return delegate.listener(id); }
 
   @Override
-  public String toString() {
-    return getClass().getSimpleName() + "(" + eventType + ")";
-  }
+  public int hashCode() { return super.hashCode(); }
+
+  @Override
+  public boolean equals(Object obj) { return super.equals(obj); }
+
+  @Override
+  public String toString() { return getClass().getSimpleName() + "(" + eventType + ")"; }
 
 }

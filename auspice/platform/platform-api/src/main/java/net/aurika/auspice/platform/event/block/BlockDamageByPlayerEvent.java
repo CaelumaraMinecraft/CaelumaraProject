@@ -2,7 +2,7 @@ package net.aurika.auspice.platform.event.block;
 
 import net.aurika.auspice.platform.event.player.PlayerEvent;
 import net.aurika.common.event.Conduit;
-import net.aurika.common.event.EmitterReplaceMethod;
+import net.aurika.common.event.ConduitReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public interface BlockDamageByPlayerEvent extends BlockEvent, PlayerEvent {
     return EMITTER_CONTAINER.conduit();
   }
 
-  @EmitterReplaceMethod
+  @ConduitReplaceMethod
   static @NotNull Conduit<BlockDamageByPlayerEvent> replaceEmitter(@NotNull Conduit<BlockDamageByPlayerEvent> newConduit) {
     return EMITTER_CONTAINER.replaceConduit(newConduit);
   }

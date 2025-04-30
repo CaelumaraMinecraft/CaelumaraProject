@@ -3,7 +3,7 @@ package net.aurika.auspice.platform.event.weather;
 import net.aurika.auspice.platform.event.world.WorldEvent;
 import net.aurika.auspice.platform.world.World;
 import net.aurika.common.event.Conduit;
-import net.aurika.common.event.EmitterReplaceMethod;
+import net.aurika.common.event.ConduitReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
 import net.aurika.common.validate.Validate;
@@ -17,7 +17,7 @@ public interface WeatherEvent extends WorldEvent {
   /**
    * @see net.aurika.auspice.platform.event.player.PlayerEvent#replaceEmitter(Conduit)
    */
-  @EmitterReplaceMethod
+  @ConduitReplaceMethod
   static @NotNull Conduit<WeatherEvent> replaceEmitter(@NotNull Conduit<WeatherEvent> newConduit) {
     Validate.Arg.notNull(newConduit, "newEmitter");
     synchronized (WeatherEvent$Companion.EMITTER_CONTAINER) {

@@ -5,14 +5,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 /**
- * An event manager to manage events.
+ * An event manager to manage events, conduits and event transports.
  *
  * @param <BE> the base event type
  */
 public interface EventManager<BE extends Event> {
 
   /**
-   * Calls an {@code event} to the emitters.
+   * Calls an {@code event} to the conduits.
    *
    * @param event the event to call
    */
@@ -23,8 +23,8 @@ public interface EventManager<BE extends Event> {
    *
    * @return the emitter collection
    */
-  @NotNull Collection<? extends Conduit<? extends BE>> emitters();
+  @NotNull Collection<? extends Conduit<? extends BE>> conduits();
 
-  void addEmitter(@NotNull Conduit<? extends BE> conduit);
+  void addConduit(@NotNull Conduit<? extends BE> conduit);
 
 }

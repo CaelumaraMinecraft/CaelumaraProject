@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-public interface EventAPI {
+public final class EventAPI {
 
   @Deprecated
   static boolean isCancellable(@NotNull Class<? extends Event> eventClass) {
@@ -17,7 +17,7 @@ public interface EventAPI {
     return Cancelable.class.isAssignableFrom(eventClass);
   }
 
-  static boolean isListenable(@NotNull Class<? extends Event> eventClass) {
+  public static boolean isListenable(@NotNull Class<? extends Event> eventClass) {
     Validate.Arg.notNull(eventClass, "eventClass");
     Listenable listenable = eventClass.getAnnotation(Listenable.class);
     if (listenable == null) {
@@ -42,26 +42,34 @@ public interface EventAPI {
     }
   }
 
-  static <E extends Event> @NotNull Conduit<E> getListenerContainer(@NotNull Class<E> eventClass) throws EventNotListenableException {
+  /**
+   * Gets the conduit for an event type.
+   *
+   * @param eventClass the event type
+   * @param <E>        the event type
+   * @return the conduit
+   * @throws EventNotListenableException when the {@code eventType} is not listenable
+   */
+  public static <E extends Event> @NotNull Conduit<E> getConduit(@NotNull Class<E> eventClass) throws EventNotListenableException {
     Validate.Arg.notNull(eventClass, "eventClass");
     if (!isListenable(eventClass)) {
       throw new EventNotListenableException("Event class " + eventClass.getName() + " is not listenable");
     }
     Listenable listenable = eventClass.getAnnotation(Listenable.class);
-    assert listenable != null;
+    assert listenable != null : "Event class " + eventClass.getName() + " is not listenable";
 
     @Nullable ConduitGetter conduitGetterAnn = eventClass.getAnnotation(ConduitGetter.class);
     String emitterMethodName = conduitGetterAnn != null ? conduitGetterAnn.value() : ConduitGetter.DEFAULT_VALUE;
-    @NotNull Method listenersFiled;
+    @NotNull Method conduitGetter;
     try {
-      listenersFiled = eventClass.getMethod(emitterMethodName, new Class[]{});
+      conduitGetter = eventClass.getMethod(emitterMethodName);
     } catch (NoSuchMethodException e) {
       throw new RuntimeException(e);
     }
     try {
-      listenersFiled.setAccessible(true);
+      conduitGetter.setAccessible(true);
       // noinspection unchecked
-      return (Conduit<E>) listenersFiled.invoke(null);
+      return (Conduit<E>) conduitGetter.invoke(null);
     } catch (IllegalAccessException | InvocationTargetException e) {
       throw new RuntimeException(e);
     }
@@ -75,13 +83,13 @@ public interface EventAPI {
    * @return the created listener container
    * @throws EventNotListenableException when the {@code eventClass} is not listenable
    */
-  static <E extends Event> @NotNull DefaultConduit<E> defaultEmitter(@NotNull Class<E> eventClass) throws EventNotListenableException {
+  public static <E extends Event> @NotNull DefaultConduit<E> defaultConduit(@NotNull Class<E> eventClass) throws EventNotListenableException {
     Validate.Arg.notNull(eventClass, "eventClass");
     return new DefaultConduit<>(eventClass);
   }
 
   @Deprecated
-  static <E extends Event> @NotNull DelegateConduit<E> delegateEmitter(@NotNull Conduit<E> delegate) throws EventNotListenableException {
+  public static <E extends Event> @NotNull DelegateConduit<E> delegateEmitter(@NotNull Conduit<E> delegate) throws EventNotListenableException {
     Validate.Arg.notNull(delegate, "delegate");
     return new DelegateConduit<>(delegate);
   }
@@ -94,8 +102,8 @@ public interface EventAPI {
    * @param instance the instance to reflect reflection listener
    * @param inherit  whether reflect the super methods
    */
-  @SuppressWarnings({"unchecked", "rawtypes"})
-  static void registerReflectListeners(@NotNull Object instance, boolean inherit) {
+  @SuppressWarnings({"unchecked", "rawtypes", "PatternValidation"})
+  public static void registerReflectListeners(@NotNull Object instance, boolean inherit) {
     Validate.Arg.notNull(instance, "instance");
     Class<?> clazz = instance.getClass();
     Method[] methods = inherit ? clazz.getMethods() : clazz.getDeclaredMethods();
@@ -111,19 +119,20 @@ public interface EventAPI {
               Class<? extends Event> paramEventType = (Class<? extends Event>) paramType;
               if (EventAPI.isListenable(paramEventType)) {
                 Ident listenerIdent = Ident.ident(eventListener.id());
-                Conduit<? extends Event> conduit = EventAPI.getListenerContainer(paramEventType);
+                Conduit<? extends Event> conduit = EventAPI.getConduit(paramEventType);
                 ReflectionListener reflectionListener = new ReflectionListener<>(
                     listenerIdent,
                     method,
                     instance,
                     paramEventType
                 );
-                conduit.register(reflectionListener);
+                conduit.registerListener(reflectionListener);
               } else {
                 throw new EventNotListenableException("Event class " + paramType.getName() + " is not listenable");
               }
             } else {
-              throw new IllegalArgumentException("");
+              throw new IllegalArgumentException(
+                  "The method argument type " + paramType + " is not assignable to " + Event.class.getName());
             }
           } else {
             throw new IllegalArgumentException(

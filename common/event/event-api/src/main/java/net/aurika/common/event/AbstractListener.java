@@ -25,7 +25,6 @@ public abstract class AbstractListener<E extends Event> implements Listener<E> {
   @Override
   public abstract void accept(@NotNull E event);
 
-
   @Override
   public @NotNull Class<? extends E> listenedEventType() { return listenedEventType; }
 

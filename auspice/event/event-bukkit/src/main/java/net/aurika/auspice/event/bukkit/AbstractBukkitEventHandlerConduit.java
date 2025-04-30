@@ -34,7 +34,7 @@ public abstract class AbstractBukkitEventHandlerConduit<E extends org.bukkit.eve
   }
 
   @Override
-  public void register(@NotNull Listener<E> listener) {
+  public void registerListener(@NotNull Listener<E> listener) {
     Validate.Arg.notNull(listener, "listener");
     if (listener.listenedEventType() != eventType()) {
       throw new IllegalArgumentException(

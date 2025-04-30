@@ -17,7 +17,7 @@ public interface Listener<E extends Event> extends Identified {
   @NotNull Ident ident();
 
   /**
-   * Handles the {@code event}.
+   * Receives and handles the {@code event}.
    *
    * @param event the event
    */

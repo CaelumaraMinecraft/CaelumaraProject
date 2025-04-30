@@ -10,6 +10,7 @@ description = "An event API"
 dependencies {
   api("net.aurika:common-ident")
   api("net.aurika:common-util-empty")
+  api("net.aurika:common-util-reflection")
   api("net.aurika:common-validate")
   compileOnlyApi(JETBRAINS_ANNOTATIONS)
 }

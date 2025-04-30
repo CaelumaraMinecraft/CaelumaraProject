@@ -16,7 +16,7 @@ public interface BukkitEventHandlerConduit<E extends org.bukkit.event.Event & Bu
   public void transport(@NotNull E event);
 
   @Override
-  public void register(@NotNull Listener<E> listener);
+  public void registerListener(@NotNull Listener<E> listener);
 
   @Override
   public @NotNull Class<E> eventType();

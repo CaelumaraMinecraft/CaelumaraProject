@@ -59,13 +59,13 @@ public class BukkitEventManager extends InheritableEventManager<MinecraftEvent> 
   }
 
   @Override
-  public @NotNull Collection<? extends Conduit<? extends MinecraftEvent>> emitters() {
-    return super.emitters();
+  public @NotNull Collection<? extends Conduit<? extends MinecraftEvent>> conduits() {
+    return super.conduits();
   }
 
   @Override
-  public void addEmitter(@NotNull Conduit<? extends MinecraftEvent> conduit) {
-    super.addEmitter(conduit);
+  public void addConduit(@NotNull Conduit<? extends MinecraftEvent> conduit) {
+    super.addConduit(conduit);
   }
 
 }

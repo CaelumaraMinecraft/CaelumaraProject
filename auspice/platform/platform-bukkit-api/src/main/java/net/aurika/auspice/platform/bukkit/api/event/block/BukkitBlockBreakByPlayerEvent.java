@@ -8,11 +8,14 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class BukkitBlockBreakByPlayerEvent extends org.bukkit.event.block.BlockBreakEvent implements AbstractBukkitBlockBreakByPlayerEvent {
+/**
+ * @see org.bukkit.event.block.BlockBreakEvent
+ */
+public class BukkitBlockBreakByPlayerEvent extends org.bukkit.event.block.BlockBreakEvent implements AbstractBukkitBlockBreakByPlayerEvent, BlockBreakByPlayerEvent {
 
   @Contract("-> new")
-  protected static @NotNull Conduit<BlockBreakByPlayerEvent> emitter() {
-    return EventAPI.defaultEmitter(BlockBreakByPlayerEvent.class);
+  protected static @NotNull Conduit<BukkitBlockBreakByPlayerEvent> conduit() {
+    return EventAPI.defaultConduit(BukkitBlockBreakByPlayerEvent.class);
   }
 
   public BukkitBlockBreakByPlayerEvent(org.bukkit.block.Block theBlock, Player player) {
@@ -25,8 +28,8 @@ public class BukkitBlockBreakByPlayerEvent extends org.bukkit.event.block.BlockB
   }
 
   @Override
-  public @NotNull Conduit<? extends AbstractBukkitBlockEvent> eventConduit() {
-    return null;
+  public @NotNull Conduit<? extends BukkitBlockBreakByPlayerEvent> eventConduit() {
+    return conduit();
   }
 
 }

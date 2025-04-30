@@ -37,12 +37,12 @@ public class InheritableEventManager<BE extends Event> implements EventManager<B
   }
 
   @Override
-  public @NotNull Collection<? extends Conduit<? extends BE>> emitters() {
+  public @NotNull Collection<? extends Conduit<? extends BE>> conduits() {
     return emitters.values();
   }
 
   @Override
-  public void addEmitter(@NotNull Conduit<? extends BE> conduit) {
+  public void addConduit(@NotNull Conduit<? extends BE> conduit) {
     Class<? extends BE> eventClass = conduit.eventType();
     if (!EventAPI.isListenable(eventClass)) {
       throw new IllegalArgumentException("Event class on " + conduit + " is not listenable");

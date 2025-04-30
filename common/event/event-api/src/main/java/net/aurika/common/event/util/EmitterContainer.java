@@ -14,7 +14,7 @@ public final class EmitterContainer<E extends Event> {
   public EmitterContainer(@NotNull Class<E> eventType) {
     Validate.Arg.notNull(eventType, "eventType");
     this.eventType = eventType;
-    this.conduit = EventAPI.defaultEmitter(eventType);
+    this.conduit = EventAPI.defaultConduit(eventType);
   }
 
   public EmitterContainer(@NotNull Class<E> eventType, @NotNull Conduit<E> conduit) {

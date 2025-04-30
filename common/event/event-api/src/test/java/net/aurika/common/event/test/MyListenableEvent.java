@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 @Listenable
 public interface MyListenableEvent extends Event {
 
-  Conduit<MyListenableEvent> CONDUIT = EventAPI.defaultEmitter(MyListenableEvent.class);
+  Conduit<MyListenableEvent> CONDUIT = EventAPI.defaultConduit(MyListenableEvent.class);
 
   default @NotNull Conduit<? extends MyListenableEvent> emitter() {
     return CONDUIT;

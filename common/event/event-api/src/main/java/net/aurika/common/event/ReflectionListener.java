@@ -13,12 +13,12 @@ public class ReflectionListener<E extends Event> extends AbstractListener<E> {
   private final Object instance;
 
   public ReflectionListener(
-      @NotNull Ident ident,
+      @NotNull Ident id,
       @NotNull Method method,
       Object instance,
       @NotNull Class<? extends E> listenedEventType
   ) {
-    super(ident, listenedEventType);
+    super(id, listenedEventType);
     Validate.Arg.notNull(method, "method");
     this.method = method;
     this.instance = instance;

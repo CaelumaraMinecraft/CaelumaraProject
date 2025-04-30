@@ -2,7 +2,7 @@ package net.aurika.auspice.event.bukkit;
 
 import net.aurika.auspice.event.api.MinecraftEvent;
 import net.aurika.common.event.Conduit;
-import net.aurika.common.event.EmitterReplaceMethod;
+import net.aurika.common.event.ConduitReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ public interface BukkitEvent extends MinecraftEvent {
 
   static @NotNull Conduit<BukkitEvent> emitter() { return BukkitEvent$Companion.EMITTER_CONTAINER.conduit(); }
 
-  @EmitterReplaceMethod
+  @ConduitReplaceMethod
   static @NotNull Conduit<BukkitEvent> replaceEmitter(@NotNull Conduit<BukkitEvent> newConduit) {
     synchronized (BukkitEvent$Companion.EMITTER_CONTAINER) {
       return BukkitEvent$Companion.EMITTER_CONTAINER.replaceConduit(newConduit);
