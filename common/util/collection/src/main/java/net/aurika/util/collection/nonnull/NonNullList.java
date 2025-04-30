@@ -1,7 +1,6 @@
 package net.aurika.util.collection.nonnull;
 
-import kotlin.collections.CollectionsKt;
-import kotlin.jvm.internal.Intrinsics;
+import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -11,7 +10,7 @@ public final class NonNullList<V> implements List<V> {
   private final @NotNull List<V> list;
 
   public NonNullList(@NotNull List<V> list) {
-    Intrinsics.checkNotNullParameter(list, "list");
+    Validate.Arg.notNull(list, "list");
     this.list = list;
   }
 
@@ -45,13 +44,13 @@ public final class NonNullList<V> implements List<V> {
 
   @Override
   public boolean addAll(int index, @NotNull Collection<? extends V> elements) {
-    Intrinsics.checkNotNullParameter(elements, "elements");
+    Validate.Arg.notNull(elements, "elements");
     return list.addAll(index, Nullability.assertNonNullElements(elements));
   }
 
   @Override
   public boolean addAll(@NotNull Collection<? extends V> elements) {
-    Intrinsics.checkNotNullParameter(elements, "elements");
+    Validate.Arg.notNull(elements, "elements");
     return list.addAll(Nullability.assertNonNullElements(elements));
   }
 
@@ -77,20 +76,20 @@ public final class NonNullList<V> implements List<V> {
 
   @Override
   public boolean containsAll(@NotNull Collection<?> elements) {
-    Intrinsics.checkNotNullParameter(elements, "elements");
+    Validate.Arg.notNull(elements, "elements");
     return (new HashSet<>(list)).containsAll(Nullability.assertNonNullElements(elements));
   }
 
   @Override
   public boolean retainAll(@NotNull Collection<?> elements) {
-    Intrinsics.checkNotNullParameter(elements, "elements");
-    return list.retainAll(CollectionsKt.toSet(Nullability.assertNonNullElements(elements)));
+    Validate.Arg.notNull(elements, "elements");
+    return list.retainAll(new HashSet<>(Nullability.assertNonNullElements(elements)));
   }
 
   @Override
   public boolean removeAll(@NotNull Collection<?> elements) {
-    Intrinsics.checkNotNullParameter(elements, "elements");
-    return list.removeAll(CollectionsKt.toSet(Nullability.assertNonNullElements(elements)));
+    Validate.Arg.notNull(elements, "elements");
+    return list.removeAll(new HashSet<>(Nullability.assertNonNullElements(elements)));
   }
 
   public int hashCode() {
@@ -143,7 +142,7 @@ public final class NonNullList<V> implements List<V> {
 
   @Override
   public <T> T @NotNull [] toArray(T @NotNull [] array) {
-    Intrinsics.checkNotNullParameter(array, "array");
+    Validate.Arg.notNull(array, "array");
     return list.toArray(array);
   }
 

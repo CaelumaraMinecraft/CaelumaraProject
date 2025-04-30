@@ -23,10 +23,10 @@ import org.jetbrains.annotations.NotNull;
  *   }
  * </code></pre>
  *
- * 因为事件支持多继承, 且静态方法没有 "继承" 这一说法, 所以事件类需要实现 {@link Event#eventEmitter()} 方法来确定当前事件对应的 emitter
+ * 因为事件支持多继承, 且静态方法没有 "继承" 这一说法, 所以事件类需要实现 {@link Event#eventConduit()} 方法来确定当前事件对应的 emitter
  */
 public interface Event {
 
-  @NotNull Emitter<? extends Event> eventEmitter();
+  @NotNull Conduit<? extends Event> eventConduit();
 
 }

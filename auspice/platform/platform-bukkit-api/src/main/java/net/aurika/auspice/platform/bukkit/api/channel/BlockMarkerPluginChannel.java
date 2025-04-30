@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.bukkit.api.channel;
 
-import net.aurika.auspice.platform.location.Grid3Pos;
+import net.aurika.auspice.platform.location.grid.Grid3Pos;
 import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Collections;

@@ -1,4 +1,4 @@
-import net.aurika.gradle.AurikaDependencies
+import static net.aurika.gradle.AurikaDependencies.JETBRAINS_ANNOTATIONS
 
 plugins {
   id("java-library")
@@ -9,7 +9,7 @@ version = "0.0.1"
 description = "A library to validate something"
 
 dependencies {
-  compileOnly(AurikaDependencies.JETBRAINS_ANNOTATIONS)
+  compileOnly(JETBRAINS_ANNOTATIONS)
 }
 
 java {

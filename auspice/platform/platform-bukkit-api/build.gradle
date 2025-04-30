@@ -1,3 +1,5 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   alias(libs.plugins.kotlin)
@@ -14,12 +16,12 @@ repositories {
 
 dependencies {
   api(project(":platform:platform-server"))
+  api(AurikaDependencies.ADVENTURE_PLATFORM_BUKKIT)
   api("net.aurika:auspice-event-bukkit")
+  api(AurikaDependencies.BYTEBUDDY)
+  api(AurikaDependencies.XSERIES)
   implementation("net.aurika:common-util-reflect")
-  implementation(libs.bytebuddy)
-  implementation(libs.xseries)
   compileOnly("org.bukkit:bukkit:1.13-R0.1-SNAPSHOT")
-  compileOnly("org.spigotmc:spigot:1.21.5")
 }
 
 java {

@@ -5,25 +5,25 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public interface NBTTagArray<ARR> extends NBTTagObject<ARR> {
+public interface NBTTagArray<ARR> extends NBTTagMutableObject<ARR> {
 }
 
 abstract class NBTTagArrayImpl<ARR> extends NBTTagImpl implements NBTTagArray<ARR> {
 
-  protected NBTTagArrayImpl() {
-  }
+  protected NBTTagArrayImpl() { }
 
   public int hashCode() {
     int result = 1;
-    result = 31 * result + Internal.arrayHashCode(this.rawValue());
+    result = 31 * result + Internal.arrayHashCode(this.valueRaw());
     return result;
   }
 
   public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
-    } else if (obj instanceof NBTTagArray<?> that) {
-      return Objects.deepEquals(this.rawValue(), that.rawValue());  // will invoke array equals
+    } else if (obj instanceof NBTTagArray<?>) {
+      NBTTagArray<?> that = (NBTTagArray<?>) obj;
+      return Objects.deepEquals(this.valueRaw(), that.valueRaw());
     } else {
       return false;
     }

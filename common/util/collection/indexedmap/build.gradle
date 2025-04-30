@@ -1,0 +1,18 @@
+import static net.aurika.gradle.AurikaDependencies.CHECKER_ANNOTATIONS
+import static net.aurika.gradle.AurikaDependencies.JETBRAINS_ANNOTATIONS
+
+plugins {
+  id("java-library")
+  id("maven-publish")
+}
+
+dependencies {
+  api("net.aurika:common-validate")
+  compileOnlyApi(JETBRAINS_ANNOTATIONS)
+  compileOnlyApi(CHECKER_ANNOTATIONS)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

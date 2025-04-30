@@ -2,7 +2,7 @@ package net.aurika.auspice.event.bukkit;
 
 import net.aurika.auspice.event.api.MinecraftEvent;
 import net.aurika.auspice.event.api.MinecraftEventManager;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.InheritableEventManager;
 import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public class BukkitEventManager extends InheritableEventManager<MinecraftEvent> 
     this.eventGenerator = eventGenerator;
   }
 
-  public BukkitEventManager(@NotNull BukkitEventGenerator eventGenerator, @NotNull Map<Class<? extends MinecraftEvent>, Emitter<? extends MinecraftEvent>> emitters) {
+  public BukkitEventManager(@NotNull BukkitEventGenerator eventGenerator, @NotNull Map<Class<? extends MinecraftEvent>, Conduit<? extends MinecraftEvent>> emitters) {
     super(emitters);
     Validate.Arg.notNull(eventGenerator, "eventGenerator");
     this.eventGenerator = eventGenerator;
@@ -59,13 +59,13 @@ public class BukkitEventManager extends InheritableEventManager<MinecraftEvent> 
   }
 
   @Override
-  public @NotNull Collection<? extends Emitter<? extends MinecraftEvent>> emitters() {
+  public @NotNull Collection<? extends Conduit<? extends MinecraftEvent>> emitters() {
     return super.emitters();
   }
 
   @Override
-  public void addEmitter(@NotNull Emitter<? extends MinecraftEvent> emitter) {
-    super.addEmitter(emitter);
+  public void addEmitter(@NotNull Conduit<? extends MinecraftEvent> conduit) {
+    super.addEmitter(conduit);
   }
 
 }

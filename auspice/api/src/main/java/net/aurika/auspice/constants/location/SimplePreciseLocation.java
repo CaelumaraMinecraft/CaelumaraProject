@@ -1,89 +1,111 @@
 package net.aurika.auspice.constants.location;
 
+import net.aurika.auspice.platform.location.direction.Directional;
+import net.aurika.auspice.platform.location.floating.Float3Pos;
+import net.aurika.auspice.platform.location.vector.Vector3;
+import net.aurika.auspice.platform.world.WorldNameAware;
 import net.aurika.common.annotation.data.Immutable;
 import net.aurika.common.data.string.DataStringRepresentation;
-import net.aurika.ecliptor.api.structured.FunctionsDataStructSchema;
-import net.aurika.ecliptor.api.structured.StructuredData;
-import net.aurika.ecliptor.api.structured.StructuredDataObject;
-import net.aurika.ecliptor.api.structured.scalars.DataScalar;
-import net.aurika.ecliptor.api.structured.scalars.DataScalarType;
-import net.aurika.util.string.CommaDataSplitStrategy;
+import net.aurika.common.examination.ExaminablePropertyGetter;
+import net.aurika.common.examination.reflection.ExaminableConstructor;
+import net.aurika.common.uitl.string.split.CommaDataSplitStrategy;
 import net.aurika.common.validate.Validate;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.kyori.examination.ExaminableProperty;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+import java.util.stream.Stream;
 
 @Immutable
-public class SimplePreciseLocation implements DataStringRepresentation, StructuredDataObject {
+public final class SimplePreciseLocation implements WorldNameAware, Float3Pos, Directional, DataStringRepresentation {
 
-  private final @NotNull String world;
+  @Contract("_, _, _, _, _, _ -> new")
+  @ExaminableConstructor(publicType = SimplePreciseLocation.class, properties = {VAL_WORLD$NAME, VAL_X, VAL_Y, VAL_Z, VAL_PITCH, VAL_YAW})
+  public static @NotNull SimplePreciseLocation simplePreciseLocation(@NotNull String worldName, double x, double y, double z, float pitch, float yaw) {
+    return new SimplePreciseLocation(worldName, x, y, z, pitch, yaw);
+  }
+
+  private final @NotNull String worldName;
   private final double x;
   private final double y;
   private final double z;
-  private final float yaw;
   private final float pitch;
+  private final float yaw;
 
-  public static final FunctionsDataStructSchema<SimplePreciseLocation> DATA_TEMPLATE = FunctionsDataStructSchema.of(
-      SimplePreciseLocation.class,
-      data -> new SimplePreciseLocation(
-          data.getString("world"),
-          data.getDouble("x"),
-          data.getDouble("y"),
-          data.getDouble("z"),
-          data.getFloat("yaw"),
-          data.getFloat("pitch")
-      ),
-      SimplePreciseLocation::fromDataString,
-      SimplePreciseLocation::asDataString,
-      "world", DataScalarType.STRING,
-      "x", DataScalarType.DOUBLE,
-      "y", DataScalarType.DOUBLE,
-      "z", DataScalarType.DOUBLE,
-      "yaw", DataScalarType.FLOAT,
-      "pitch", DataScalarType.FLOAT
-  );
-
-  public SimplePreciseLocation(@NotNull String worldName, double x, double y, double z) {
+  private SimplePreciseLocation(@NotNull String worldName, double x, double y, double z) {
     this(worldName, x, y, z, 0.0F, 0.0F);
   }
 
-  public SimplePreciseLocation(@NotNull String worldName, double x, double y, double z, float yaw, float pitch) {
+  private SimplePreciseLocation(@NotNull String worldName, double x, double y, double z, float pitch, float yaw) {
     Validate.Arg.notNull(worldName, "worldName");
-    this.world = worldName;
+    this.worldName = worldName;
     this.x = x;
     this.y = y;
     this.z = z;
-    this.yaw = yaw;
     this.pitch = pitch;
+    this.yaw = yaw;
   }
 
-  public @NotNull String getWorld() {
-    return world;
+  @Override
+  public @NotNull SimplePreciseLocation add(@NotNull Vector3 vec) {
+    Validate.Arg.notNull(vec, "vec");
+    return new SimplePreciseLocation(worldName, x + vec.vectorX(), y + vec.vectorY(), z + vec.vectorZ(), pitch, yaw);
   }
 
-  public double getX() {
-    return x;
+  @Override
+  public @NotNull SimplePreciseLocation subtract(@NotNull Vector3 vec) {
+    Validate.Arg.notNull(vec, "vec");
+    return new SimplePreciseLocation(worldName, x - vec.vectorX(), y - vec.vectorY(), z - vec.vectorZ(), pitch, yaw);
   }
 
-  public double getY() {
-    return y;
+  @Override
+  public @NotNull SimplePreciseLocation multiply(@NotNull Vector3 vec) {
+    Validate.Arg.notNull(vec, "vec");
+    return new SimplePreciseLocation(worldName, x * vec.vectorX(), y * vec.vectorY(), z * vec.vectorZ(), pitch, yaw);
   }
 
-  public double getZ() {
-    return z;
+  @Override
+  public @NotNull SimplePreciseLocation divide(@NotNull Vector3 vec) {
+    Validate.Arg.notNull(vec, "vec");
+    return new SimplePreciseLocation(worldName, x / vec.vectorX(), y / vec.vectorY(), z / vec.vectorZ(), pitch, yaw);
   }
 
-  public float getYaw() {
-    return yaw;
+
+  @Override
+  @ExaminablePropertyGetter(VAL_WORLD$NAME)
+  public @NotNull String worldName() {
+    return worldName;
   }
 
-  public float getPitch() {
-    return pitch;
+  @ExaminablePropertyGetter(VAL_X)
+  public double floatX() { return x; }
+
+  @ExaminablePropertyGetter(VAL_Y)
+  public double floatY() { return y; }
+
+  @ExaminablePropertyGetter(VAL_Z)
+  public double floatZ() { return z; }
+
+  @ExaminablePropertyGetter(VAL_PITCH)
+  public float pitch() { return pitch; }
+
+  @ExaminablePropertyGetter(VAL_YAW)
+  public float yaw() { return yaw; }
+
+  @Override
+  public @NotNull Stream<? extends ExaminableProperty> examinableProperties() {
+    return Stream.of(
+        ExaminableProperty.of(VAL_WORLD$NAME, worldName),
+        ExaminableProperty.of(VAL_X, x),
+        ExaminableProperty.of(VAL_Y, y),
+        ExaminableProperty.of(VAL_Z, z),
+        ExaminableProperty.of(VAL_PITCH, pitch),
+        ExaminableProperty.of(VAL_YAW, yaw)
+    );
   }
 
-  public static SimplePreciseLocation fromString(String str) {
+  @Contract("_ -> new")
+  public static @NotNull SimplePreciseLocation fromString(String str) {
     return fromDataString(str);
   }
 
@@ -97,31 +119,12 @@ public class SimplePreciseLocation implements DataStringRepresentation, Structur
     double z = splitter.nextDouble();
     float yaw = splitter.nextFloat();
     float pitch = splitter.nextFloat();
-    return new SimplePreciseLocation(worldName, x, y, z, yaw, pitch);
+    return new SimplePreciseLocation(worldName, x, y, z, pitch, yaw);
   }
 
   @Override
   public @NotNull String asDataString() {
-    return CommaDataSplitStrategy.toString(new Object[]{this.world, this.x, this.y, this.z, this.yaw, this.pitch});
-  }
-
-  @Override
-  public @NonNull StructuredData structuredData() {
-    return StructuredData.structuredData(
-        Map.of(
-            "world", DataScalar.stringDataScalar(world),
-            "x", DataScalar.doubleDataScalar(x),
-            "y", DataScalar.doubleDataScalar(y),
-            "z", DataScalar.doubleDataScalar(z),
-            "yaw", DataScalar.floatDataScalar(yaw),
-            "pitch", DataScalar.floatDataScalar(pitch)
-        )
-    );
-  }
-
-  @Override
-  public @NotNull FunctionsDataStructSchema<? extends SimplePreciseLocation> dataStructSchema() {
-    return DATA_TEMPLATE;
+    return CommaDataSplitStrategy.toString(new Object[]{this.worldName, this.x, this.y, this.z, this.yaw, this.pitch});
   }
 
 }

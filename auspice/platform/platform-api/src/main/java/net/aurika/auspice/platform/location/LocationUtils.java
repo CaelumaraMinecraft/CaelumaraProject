@@ -1,5 +1,7 @@
 package net.aurika.auspice.platform.location;
 
+import net.aurika.auspice.platform.location.abstraction.Float3Pos;
+import net.aurika.auspice.platform.location.direction.Directional;
 import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 

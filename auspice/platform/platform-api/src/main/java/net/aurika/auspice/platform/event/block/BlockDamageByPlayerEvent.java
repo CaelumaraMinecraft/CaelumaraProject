@@ -1,7 +1,7 @@
 package net.aurika.auspice.platform.event.block;
 
 import net.aurika.auspice.platform.event.player.PlayerEvent;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.EmitterReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
@@ -16,17 +16,17 @@ import static net.aurika.auspice.platform.event.block.BlockDamageByPlayerEvent$C
 @Listenable
 public interface BlockDamageByPlayerEvent extends BlockEvent, PlayerEvent {
 
-  static @NotNull Emitter<BlockDamageByPlayerEvent> emitter() {
-    return EMITTER_CONTAINER.emitter();
+  static @NotNull Conduit<BlockDamageByPlayerEvent> emitter() {
+    return EMITTER_CONTAINER.conduit();
   }
 
   @EmitterReplaceMethod
-  static @NotNull Emitter<BlockDamageByPlayerEvent> replaceEmitter(@NotNull Emitter<BlockDamageByPlayerEvent> newEmitter) {
-    return EMITTER_CONTAINER.replaceEmitter(newEmitter);
+  static @NotNull Conduit<BlockDamageByPlayerEvent> replaceEmitter(@NotNull Conduit<BlockDamageByPlayerEvent> newConduit) {
+    return EMITTER_CONTAINER.replaceConduit(newConduit);
   }
 
   @Override
-  default @NotNull Emitter<? extends BlockDamageByPlayerEvent> eventEmitter() { return emitter(); }
+  default @NotNull Conduit<? extends BlockDamageByPlayerEvent> eventConduit() { return emitter(); }
 
 }
 

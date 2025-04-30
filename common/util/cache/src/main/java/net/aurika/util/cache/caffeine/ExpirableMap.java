@@ -20,10 +20,7 @@ public final class ExpirableMap<K, V> implements Cache<K, V> {
   private final @Nullable ExpirationStrategy defaultExpirationStrategy;
   private final @NotNull Cache<K, ReferencedExpirableObject<V>> cache;
 
-  @Nullable
-  public ExpirationStrategy getDefaultExpirationStrategy() {
-    return this.defaultExpirationStrategy;
-  }
+  public @Nullable ExpirationStrategy defaultExpirationStrategy() { return this.defaultExpirationStrategy; }
 
   public ExpirableMap() {
     this((ExpirationStrategy) null);

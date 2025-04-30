@@ -1,19 +1,11 @@
 package net.aurika.auspice.platform.world;
 
-import net.aurika.auspice.platform.DoubleIdentified;
+import net.aurika.auspice.platform.UUIDIdentified;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public interface WorldInfo extends DoubleIdentified {
-
-  /**
-   * Gets the unique name of the world.
-   *
-   * @return the unique name
-   */
-  @Override
-  @NotNull String name();
+public interface WorldInfo extends UUIDIdentified {
 
   /**
    * Gets the unique id of the world.
@@ -21,6 +13,13 @@ public interface WorldInfo extends DoubleIdentified {
    * @return the unique id
    */
   @Override
-  @NotNull UUID uuid();
+  @NotNull UUID uniqueId();
+
+  /**
+   * Gets the unique name of the world.
+   *
+   * @return the unique name
+   */
+  @NotNull String name();
 
 }

@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.block;
 
-import net.aurika.auspice.platform.location.Float3Pos;
+import net.aurika.auspice.platform.location.floating.Float3Pos;
 import org.jetbrains.annotations.NotNull;
 
 /**

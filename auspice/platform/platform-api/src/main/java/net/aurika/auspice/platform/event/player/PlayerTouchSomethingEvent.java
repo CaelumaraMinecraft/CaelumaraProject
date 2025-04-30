@@ -1,6 +1,6 @@
 package net.aurika.auspice.platform.event.player;
 
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
 import org.jetbrains.annotations.NotNull;
@@ -13,16 +13,16 @@ import static net.aurika.auspice.platform.event.player.PlayerTouchSomethingEvent
 @Listenable
 public interface PlayerTouchSomethingEvent extends PlayerEvent {
 
-  static @NotNull Emitter<PlayerTouchSomethingEvent> emitter() {
-    return EMITTER_CONTAINER.emitter();
+  static @NotNull Conduit<PlayerTouchSomethingEvent> emitter() {
+    return EMITTER_CONTAINER.conduit();
   }
 
-  static @NotNull Emitter<PlayerTouchSomethingEvent> replaceEmitter(@NotNull Emitter<PlayerTouchSomethingEvent> newEmitter) {
-    return EMITTER_CONTAINER.replaceEmitter(newEmitter);
+  static @NotNull Conduit<PlayerTouchSomethingEvent> replaceEmitter(@NotNull Conduit<PlayerTouchSomethingEvent> newConduit) {
+    return EMITTER_CONTAINER.replaceConduit(newConduit);
   }
 
   @Override
-  default @NotNull Emitter<? extends PlayerTouchSomethingEvent> eventEmitter() {
+  default @NotNull Conduit<? extends PlayerTouchSomethingEvent> eventConduit() {
     return emitter();
   }
 

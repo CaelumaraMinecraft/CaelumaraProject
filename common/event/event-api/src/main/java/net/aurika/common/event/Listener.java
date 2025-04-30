@@ -2,6 +2,7 @@ package net.aurika.common.event;
 
 import net.aurika.common.ident.Ident;
 import net.aurika.common.ident.Identified;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public interface Listener<E extends Event> extends Identified {
 
   @Override
+  @Contract(pure = true)
   @NotNull Ident ident();
 
   /**
@@ -20,15 +22,6 @@ public interface Listener<E extends Event> extends Identified {
    * @param event the event
    */
   void accept(@NotNull E event);
-
-  /**
-   * Gets the container of the listener.
-   *
-   * @return the container
-   */
-  @NotNull Emitter<? extends E> container();
-
-  boolean ignoreCancelled();
 
   /**
    * Gets the listened event type.

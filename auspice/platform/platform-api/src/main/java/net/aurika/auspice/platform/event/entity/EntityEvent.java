@@ -2,7 +2,7 @@ package net.aurika.auspice.platform.event.entity;
 
 import net.aurika.auspice.event.api.MinecraftEvent;
 import net.aurika.auspice.platform.entity.abstraction.Entity;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.EmitterReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
@@ -11,15 +11,15 @@ import org.jetbrains.annotations.NotNull;
 @Listenable
 public interface EntityEvent extends MinecraftEvent {
 
-  static @NotNull Emitter<EntityEvent> emitter() { return EntityEvent$Companion.EMITTER_CONTAINER.emitter(); }
+  static @NotNull Conduit<EntityEvent> emitter() { return EntityEvent$Companion.EMITTER_CONTAINER.conduit(); }
 
   /**
-   * @see net.aurika.auspice.platform.event.player.PlayerEvent#replaceEmitter(Emitter)
+   * @see net.aurika.auspice.platform.event.player.PlayerEvent#replaceEmitter(Conduit)
    */
   @EmitterReplaceMethod
-  static @NotNull Emitter<EntityEvent> replaceEmitter(@NotNull Emitter<EntityEvent> newEmitter) {
+  static @NotNull Conduit<EntityEvent> replaceEmitter(@NotNull Conduit<EntityEvent> newConduit) {
     synchronized (EntityEvent$Companion.EMITTER_CONTAINER) {
-      return EntityEvent$Companion.EMITTER_CONTAINER.replaceEmitter(newEmitter);
+      return EntityEvent$Companion.EMITTER_CONTAINER.replaceConduit(newConduit);
     }
   }
 

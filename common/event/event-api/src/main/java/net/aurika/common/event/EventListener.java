@@ -1,6 +1,6 @@
 package net.aurika.common.event;
 
-import net.aurika.common.ident.KeyPatterns;
+import net.aurika.common.ident.IdentPatterns;
 
 import java.lang.annotation.*;
 
@@ -12,9 +12,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface EventListener {
 
-  @KeyPatterns.Ident
-  String key();
-
-  boolean ignoreCancelled() default false;
+  @IdentPatterns.Ident
+  String id();
 
 }

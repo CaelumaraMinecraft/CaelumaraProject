@@ -1,8 +1,11 @@
 package net.aurika.common.event;
 
+import org.jetbrains.annotations.ApiStatus;
+
 /**
  * Marks an {@link Event} can be canceled and uncanceled.
  */
+@ApiStatus.Experimental
 public interface Cancelable {
 
   /**

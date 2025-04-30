@@ -2,7 +2,7 @@ package net.aurika.auspice.platform.event.block;
 
 import net.aurika.auspice.event.api.MinecraftEvent;
 import net.aurika.auspice.platform.block.Block;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.EmitterReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
@@ -14,19 +14,19 @@ import org.jetbrains.annotations.NotNull;
 @Listenable
 public interface BlockEvent extends MinecraftEvent {
 
-  static @NotNull Emitter<BlockEvent> emitter() { return BlockEvent$Companion.EMITTER_CONTAINER.emitter(); }
+  static @NotNull Conduit<BlockEvent> emitter() { return BlockEvent$Companion.EMITTER_CONTAINER.conduit(); }
 
   @EmitterReplaceMethod
-  static @NotNull Emitter<BlockEvent> replaceEmitter(@NotNull Emitter<BlockEvent> newEmitter) {
+  static @NotNull Conduit<BlockEvent> replaceEmitter(@NotNull Conduit<BlockEvent> newConduit) {
     synchronized (BlockEvent$Companion.EMITTER_CONTAINER) {
-      return BlockEvent$Companion.EMITTER_CONTAINER.replaceEmitter(newEmitter);
+      return BlockEvent$Companion.EMITTER_CONTAINER.replaceConduit(newConduit);
     }
   }
 
   Block block();
 
   @Override
-  default @NotNull Emitter<? extends BlockEvent> eventEmitter() { return emitter(); }
+  default @NotNull Conduit<? extends BlockEvent> eventConduit() { return emitter(); }
 
 }
 

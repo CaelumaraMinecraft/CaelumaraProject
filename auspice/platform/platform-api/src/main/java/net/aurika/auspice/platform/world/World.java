@@ -7,10 +7,10 @@ import java.util.UUID;
 public interface World extends WorldInfo {
 
   @Override
-  @NotNull String name();
+  @NotNull UUID uniqueId();
 
   @Override
-  @NotNull UUID uuid();
+  @NotNull String name();
 
   /**
    * Gets the max height of the world.

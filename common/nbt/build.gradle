@@ -1,18 +1,18 @@
-import net.aurika.gradle.AurikaDependencies
+import static net.aurika.gradle.AurikaDependencies.ADVENTURE_NBT
+import static net.aurika.gradle.AurikaDependencies.JETBRAINS_ANNOTATIONS
 
 plugins {
   id("java-library")
   id("maven-publish")
 }
 
-description = ""
+description = "A mutable nbt tags library, powered by adventure nbt"
 
 dependencies {
-  api("net.aurika:common-util-functional")
+  api("net.aurika:common-annotation")
   api("net.aurika:common-validate")
-  api(libs.kyori.advntr.nbt)
-  api(AurikaDependencies.ADVENTURE_NBT)
-  compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
+  api(ADVENTURE_NBT)
+  compileOnlyApi(JETBRAINS_ANNOTATIONS)
 }
 
 java {

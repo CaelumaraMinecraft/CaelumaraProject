@@ -2,16 +2,25 @@ package net.aurika.common.nbt;
 
 import net.aurika.common.validate.Validate;
 import net.kyori.adventure.nbt.IntArrayBinaryTag;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public interface NBTTagIntArray extends NBTTagArray<int[]> {
 
-  static @NotNull NBTTagIntArray nbtTagIntArray(int @NotNull ... value) {
+  @Contract("_ -> new")
+  static @NotNull NBTTagIntArray nbtTagIntArray(@NotNull IntArrayBinaryTag tag) {
+    Validate.Arg.notNull(tag, "tag");
+    return nbtTagIntArraySynced(tag.value());
+  }
+
+  @Contract("_ -> new")
+  static @NotNull NBTTagIntArray nbtTagIntArrayCloned(int @NotNull ... value) {
     Validate.Arg.notNull(value, "value");
     return new NBTTagIntArrayImpl(value.clone());
   }
 
-  static @NotNull NBTTagIntArray nbtTagIntArrayRaw(int @NotNull ... value) {
+  @Contract("_ -> new")
+  static @NotNull NBTTagIntArray nbtTagIntArraySynced(int @NotNull ... value) {
     return new NBTTagIntArrayImpl(value);
   }
 
@@ -21,26 +30,19 @@ public interface NBTTagIntArray extends NBTTagArray<int[]> {
   }
 
   @Override
-  default int @NotNull [] value() {
-    return this.rawValue().clone();
-  }
+  int @NotNull [] valueRaw();
 
   @Override
-  int @NotNull [] rawValue();
+  int @NotNull [] valueCopy();
 
   @Override
-  default void value(int @NotNull [] value) {
-    Validate.Arg.notNull(value, "value");
-    this.rawValue(value.clone());
-  }
+  void valueRaw(int @NotNull [] valueObject);
 
   @Override
-  void rawValue(int @NotNull [] valueObject);
+  void valueCopy(int @NotNull [] value);
 
   @Override
-  default @NotNull IntArrayBinaryTag asBinaryTag() {
-    return IntArrayBinaryTag.intArrayBinaryTag(this.rawValue());
-  }
+  @NotNull IntArrayBinaryTag asBinaryTag();
 
 }
 
@@ -54,14 +56,30 @@ class NBTTagIntArrayImpl extends NBTTagArrayImpl<int[]> implements NBTTagIntArra
   }
 
   @Override
-  public int @NotNull [] rawValue() {
+  public int @NotNull [] valueRaw() {
     return this.value;
   }
 
   @Override
-  public void rawValue(int @NotNull [] value) {
+  public int @NotNull [] valueCopy() {
+    return this.value.clone();
+  }
+
+  @Override
+  public void valueRaw(int @NotNull [] value) {
     Validate.Arg.notNull(value, "value");
     this.value = value;
+  }
+
+  @Override
+  public void valueCopy(int @NotNull [] value) {
+    Validate.Arg.notNull(value, "value");
+    this.value = value.clone();
+  }
+
+  @Override
+  public @NotNull IntArrayBinaryTag asBinaryTag() {
+    return IntArrayBinaryTag.intArrayBinaryTag(this.valueRaw());
   }
 
 }

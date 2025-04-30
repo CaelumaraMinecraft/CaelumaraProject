@@ -2,7 +2,7 @@ package net.aurika.auspice.utils.debug;
 
 import net.aurika.auspice.user.Auspice;
 import net.aurika.common.ident.Ident;
-import net.aurika.common.ident.KeyPatterns;
+import net.aurika.common.ident.IdentPatterns;
 import org.jetbrains.annotations.NotNull;
 
 public enum AuspiceDebug implements DebugEntry {
@@ -11,7 +11,7 @@ public enum AuspiceDebug implements DebugEntry {
 
   private final DebugIdent id;
 
-  AuspiceDebug(@KeyPatterns.IdentPath final @NotNull String identValueString) {
+  AuspiceDebug(@IdentPatterns.IdentPath final @NotNull String identValueString) {
     this.id = new DebugIdent(Ident.ident(Auspice.GROUP_STRING, identValueString));
   }
 

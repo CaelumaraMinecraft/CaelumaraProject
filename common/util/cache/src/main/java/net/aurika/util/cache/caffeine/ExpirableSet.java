@@ -11,7 +11,7 @@ public class ExpirableSet<K> {
   public ExpirableSet(ExpirationStrategy expirationStrategy) {
     Objects.requireNonNull(expirationStrategy, "Expiration etrategies cannot be null");
     this.map = new ExpirableMap<>(expirationStrategy);
-    this.duration = this.map.getDefaultExpirationStrategy().getExpiryAfterCreate().toMillis();
+    this.duration = this.map.defaultExpirationStrategy().getExpiryAfterCreate().toMillis();
   }
 
   public void add(K key) {

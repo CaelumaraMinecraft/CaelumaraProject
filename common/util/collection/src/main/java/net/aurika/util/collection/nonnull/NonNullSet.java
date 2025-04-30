@@ -1,11 +1,10 @@
 package net.aurika.util.collection.nonnull;
 
-import kotlin.jvm.internal.markers.KMutableSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public final class NonNullSet<E> implements Set<E>, KMutableSet {
+public final class NonNullSet<E> implements Set<E> {
 
   private final @NotNull Set<E> set;
 

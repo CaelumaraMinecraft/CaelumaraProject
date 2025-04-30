@@ -1,18 +1,17 @@
 package net.aurika.common.ident;
 
+import net.aurika.common.keyed.annotation.KeyedBy;
 import org.jetbrains.annotations.NotNull;
 
-public interface Identified extends IdentAware, net.aurika.common.keyed.Keyed<Ident> {
+@KeyedBy(value = "ident")
+public interface Identified extends IdentAware {
 
   /**
    * Gets the ident for this {@link Identified}.
    *
-   * @return the ident
+   * @return the ident, it is also the key
    */
   @Override
   @NotNull Ident ident();
-
-  @Override
-  default @NotNull Ident key() { return ident(); }
 
 }

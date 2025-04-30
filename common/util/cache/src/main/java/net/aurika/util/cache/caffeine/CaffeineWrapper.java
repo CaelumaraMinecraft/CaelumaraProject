@@ -1,6 +1,7 @@
 package net.aurika.util.cache.caffeine;
 
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import net.aurika.common.validate.Validate;
 import net.aurika.util.cache.PeekableMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,9 +12,10 @@ import java.util.Set;
 
 public final class CaffeineWrapper<K, V> implements PeekableMap<K, V> {
 
-  private final LoadingCache<K, V> cache;
+  private final @NotNull LoadingCache<K, V> cache;
 
-  public CaffeineWrapper(LoadingCache<K, V> cache) {
+  public CaffeineWrapper(@NotNull LoadingCache<K, V> cache) {
+    Validate.Arg.notNull(cache, "cache");
     this.cache = cache;
   }
 
@@ -24,26 +26,18 @@ public final class CaffeineWrapper<K, V> implements PeekableMap<K, V> {
   }
 
   @Override
-  public boolean isEmpty() {
-    return size() != 0;
-  }
+  public boolean isEmpty() { return size() != 0; }
 
   @SuppressWarnings("unchecked")
   @Override
-  public boolean containsKey(Object key) {
-    return cache.getIfPresent((K) key) != null;
-  }
+  public boolean containsKey(Object key) { return cache.getIfPresent((K) key) != null; }
 
   @Override
-  public boolean containsValue(Object value) {
-    throw new UnsupportedOperationException();
-  }
+  public boolean containsValue(Object value) { throw new UnsupportedOperationException(); }
 
   @SuppressWarnings("unchecked")
   @Override
-  public V get(Object key) {
-    return cache.get((K) key);
-  }
+  public V get(Object key) { return cache.get((K) key); }
 
   @Nullable
   @Override

@@ -1,0 +1,19 @@
+import static net.aurika.gradle.AurikaDependencies.*
+
+plugins {
+  id("java-library")
+  id("maven-publish")
+}
+
+dependencies {
+  api("net.aurika:common-ident")
+  api("net.aurika:common-validate")
+  api(EXAMINATION_API)
+  api(EXAMINATION_STRING)
+  compileOnlyApi(JETBRAINS_ANNOTATIONS)
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}

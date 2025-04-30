@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 /**
- * Sorter.
+ * An sorter.
  *
  * @param <E> the element type
  * @param <C> the container type
@@ -17,6 +17,6 @@ public interface Sorter<E, C> {
   void sort(@NotNull C container);
 
   @Contract(pure = true)
-  @NotNull Collection<? extends E> elements(C container);
+  @NotNull Collection<? extends E> elements(@NotNull C container);
 
 }

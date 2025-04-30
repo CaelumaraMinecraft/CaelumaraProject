@@ -15,26 +15,26 @@ public interface Enchantment extends Keyed {
    *
    * @return Maximum level of the Enchantment
    */
-  public abstract int getMaxLevel();
+  int maxLevel();
 
   /**
    * Gets the level that this Enchantment should start at
    *
    * @return Starting level of the Enchantment
    */
-  public abstract int getStartLevel();
+  int startLevel();
 
   /**
    * Get the name of the enchantment with its applied level.
    * <p>
-   * If the given {@code level} is either less than the {@link #getStartLevel()} or greater than the {@link #getMaxLevel()},
+   * If the given {@code level} is either less than the {@link #startLevel()} or greater than the {@link #maxLevel()},
    * the level may not be shown in the numeral format one may otherwise expect.
    * </p>
    *
    * @param level the level of the enchantment to show
    * @return the name of the enchantment with {@code level} applied
    */
-  public abstract @NotNull Component displayName(int level);
+  @NotNull Component displayName(int level);
 
   /**
    * Provides the description of this enchantment entry as displayed to the client, e.g. "Sharpness" for the sharpness
@@ -42,6 +42,6 @@ public interface Enchantment extends Keyed {
    *
    * @return the description component.
    */
-  public abstract @NotNull Component description();
+  @NotNull Component description();
 
 }

@@ -1,4 +1,4 @@
-import net.aurika.gradle.AurikaDependencies
+import static net.aurika.gradle.AurikaDependencies.JETBRAINS_ANNOTATIONS
 
 plugins {
   id("java-library")
@@ -6,7 +6,11 @@ plugins {
 }
 
 dependencies {
-  compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
+  api("net.aurika:common-metalang-api")
+  api("net.aurika:common-util-reflection")
+  api("net.aurika:common-validate")
+  compileOnlyApi("net.aurika:common-annotation")
+  compileOnlyApi(JETBRAINS_ANNOTATIONS)
 }
 
 java {

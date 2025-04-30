@@ -1,4 +1,4 @@
-import net.aurika.gradle.AurikaDependencies
+import static net.aurika.gradle.AurikaDependencies.JETBRAINS_ANNOTATIONS
 
 plugins {
   id("java-library")
@@ -11,7 +11,7 @@ dependencies {
   api("net.aurika:common-ident")
   api("net.aurika:common-util-empty")
   api("net.aurika:common-validate")
-  compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
+  compileOnlyApi(JETBRAINS_ANNOTATIONS)
 }
 
 java {

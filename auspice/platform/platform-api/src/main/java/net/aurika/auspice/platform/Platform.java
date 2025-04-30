@@ -13,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Platform {
 
+  String SCOPE_PLATFORM = "platform";
+
   /**
    * Initializes the platform when the platform startup.
    *

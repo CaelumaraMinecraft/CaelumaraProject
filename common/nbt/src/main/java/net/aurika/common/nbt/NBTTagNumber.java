@@ -5,6 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NBTTagNumber extends NBTTag {
 
+  default void value(@NotNull Number value) {
+    if (this instanceof NBTTagByte) {
+      ((NBTTagByte) this).value(value.byteValue());
+    }
+  }
+
   @Override
   @NotNull Number valueAsObject();
 
@@ -13,5 +19,4 @@ public interface NBTTagNumber extends NBTTag {
 
 }
 
-abstract class NBTTagNumberImpl implements NBTTagNumber {
-}
+abstract class NBTTagNumberImpl extends NBTTagImpl implements NBTTagNumber { }

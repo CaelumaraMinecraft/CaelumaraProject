@@ -2,7 +2,7 @@ package net.aurika.auspice.platform.event.weather;
 
 import net.aurika.auspice.platform.event.world.WorldEvent;
 import net.aurika.auspice.platform.world.World;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.EmitterReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
@@ -12,16 +12,16 @@ import org.jetbrains.annotations.NotNull;
 @Listenable
 public interface WeatherEvent extends WorldEvent {
 
-  static @NotNull Emitter<WeatherEvent> emitter() { return WeatherEvent$Companion.EMITTER_CONTAINER.emitter(); }
+  static @NotNull Conduit<WeatherEvent> emitter() { return WeatherEvent$Companion.EMITTER_CONTAINER.conduit(); }
 
   /**
-   * @see net.aurika.auspice.platform.event.player.PlayerEvent#replaceEmitter(Emitter)
+   * @see net.aurika.auspice.platform.event.player.PlayerEvent#replaceEmitter(Conduit)
    */
   @EmitterReplaceMethod
-  static @NotNull Emitter<WeatherEvent> replaceEmitter(@NotNull Emitter<WeatherEvent> newEmitter) {
-    Validate.Arg.notNull(newEmitter, "newEmitter");
+  static @NotNull Conduit<WeatherEvent> replaceEmitter(@NotNull Conduit<WeatherEvent> newConduit) {
+    Validate.Arg.notNull(newConduit, "newEmitter");
     synchronized (WeatherEvent$Companion.EMITTER_CONTAINER) {
-      return WeatherEvent$Companion.EMITTER_CONTAINER.replaceEmitter(newEmitter);
+      return WeatherEvent$Companion.EMITTER_CONTAINER.replaceConduit(newConduit);
     }
   }
 

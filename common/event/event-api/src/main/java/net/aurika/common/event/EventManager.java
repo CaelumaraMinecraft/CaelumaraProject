@@ -23,8 +23,8 @@ public interface EventManager<BE extends Event> {
    *
    * @return the emitter collection
    */
-  @NotNull Collection<? extends Emitter<? extends BE>> emitters();
+  @NotNull Collection<? extends Conduit<? extends BE>> emitters();
 
-  void addEmitter(@NotNull Emitter<? extends BE> emitter);
+  void addEmitter(@NotNull Conduit<? extends BE> conduit);
 
 }

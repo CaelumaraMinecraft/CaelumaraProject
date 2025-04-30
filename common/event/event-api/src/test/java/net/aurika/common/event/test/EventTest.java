@@ -12,7 +12,7 @@ public class EventTest {
 
       EventAPI.registerReflectListeners(new MyCustomListenerDeclaration(), false);
 
-      MyListenableEvent.EMITTER.emit(new MyListenableEventImpl());
+      MyListenableEvent.CONDUIT.transport(new MyListenableEventImpl());
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

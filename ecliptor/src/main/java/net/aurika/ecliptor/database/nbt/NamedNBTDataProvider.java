@@ -65,7 +65,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
   public @NotNull NamedNBTDataProvider asSection() {
     NBTTagCompound var10003 = _compound();
     if (var10003 == null) {
-      var10003 = NBTTagCompound.empty();
+      var10003 = NBTTagCompound.nbtTagComponentEmpty();
     }
 
     return new NamedNBTDataProvider(null, var10003);
@@ -132,7 +132,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
     Objects.requireNonNull(handler, "dataProcessor");
     NBTTagList list = (NBTTagList) obj.get(_name());
     if (list != null) {
-      List<NBTTag> elements = list.rawValue();
+      List<NBTTag> elements = list.valueRaw();
       for (NBTTag eTag : elements) {
         handler.accept(c, createProvider$core(eTag));
       }
@@ -146,7 +146,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
     Objects.requireNonNull(handler, "dataProcessor");
     NBTTagCompound compound = _compound();
     if (compound != null) {
-      for (Map.Entry<String, ? extends NBTTag> entry : compound.rawValue().entrySet()) {
+      for (Map.Entry<String, ? extends NBTTag> entry : compound.valueRaw().entrySet()) {
         handler.accept(
             m, new NBTDataProvider(NBTTagString.nbtTagString(entry.getKey())), createProvider$core(entry.getValue()));
       }
@@ -199,7 +199,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
     Objects.requireNonNull(value, "value");
     Objects.requireNonNull(handler, "");
     if (!value.isEmpty()) {
-      NBTTagList var10000 = NBTTagList.unknownEmpty();
+      NBTTagList var10000 = NBTTagList.nbtTagListEmpty();
 
       for (E var4 : value) {
         handler.accept(createProvider$core(var10000), var4);
@@ -214,7 +214,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
     Objects.requireNonNull(value, "value");
     Objects.requireNonNull(handler, "");
     if (!value.isEmpty()) {
-      final NBTTagCompound var3 = NBTTagCompound.empty();
+      final NBTTagCompound var3 = NBTTagCompound.nbtTagComponentEmpty();
 
       for (Map.Entry<K, ? extends V> entry : value.entrySet()) {
         handler.map(
@@ -230,7 +230,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
 
   @Override
   public @NotNull SectionableDataSetter createSection() {
-    NBTTagCompound sub = NBTTagCompound.empty();
+    NBTTagCompound sub = NBTTagCompound.nbtTagComponentEmpty();
     String name = this.name;
     if (name == null) throw new IllegalStateException("No key name set");
     obj.put(name, sub);
@@ -243,7 +243,7 @@ public class NamedNBTDataProvider implements DataProvider, SectionCreatableDataS
     if (name != null) {
       throw new IllegalStateException("Previous name not handled: " + name + " -> " + key);
     } else {
-      NBTTagCompound var10000 = NBTTagCompound.empty();
+      NBTTagCompound var10000 = NBTTagCompound.nbtTagComponentEmpty();
       Objects.requireNonNull(var10000);
       obj.put(key, var10000);
       return new NamedNBTDataProvider(null, var10000);

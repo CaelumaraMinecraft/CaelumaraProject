@@ -6,35 +6,31 @@ import org.jetbrains.annotations.NotNull;
 
 public interface NBTTagEnd extends NBTTag {
 
-  NBTTagEnd INSTANCE = new NBTTagEnd() {
-    @Override
-    public @NotNull BinaryTag asBinaryTag() {
-      return EndBinaryTag.endBinaryTag();
-    }
+  static @NotNull NBTTagEnd nbtTagEnd() { return NBTTagEndImpl.INSTANCE; }
 
-    @Override
-    public int hashCode() {
-      return System.identityHashCode(this);
-    }
+  @Override
+  default @NotNull NBTTagType<NBTTagEnd> nbtTagType() { return NBTTagType.END; }
 
-    @Override
-    public @NotNull String toString() {
-      return this.getClass().getSimpleName();
-    }
-  };
+  @Override
+  default @NotNull Void valueAsObject() { return null; }
 
-  static NBTTagEnd nbtTagEnd() {
-    return INSTANCE;
+}
+
+final class NBTTagEndImpl implements NBTTagEnd {
+
+  static final NBTTagEndImpl INSTANCE = new NBTTagEndImpl();
+
+  @Override
+  public @NotNull BinaryTag asBinaryTag() {
+    return EndBinaryTag.endBinaryTag();
   }
 
   @Override
-  default @NotNull NBTTagType<NBTTagEnd> nbtTagType() {
-    return NBTTagType.END;
-  }
+  public int hashCode() { return 0; }
 
   @Override
-  default @NotNull Void valueAsObject() {
-    return null;
+  public @NotNull String toString() {
+    return this.getClass().getSimpleName();
   }
 
 }

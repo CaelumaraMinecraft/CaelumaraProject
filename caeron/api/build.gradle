@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+  api("net.aurika:auspice-api")
   api("net.aurika:common-ident")
   api("net.aurika:common-validate")
   api(AurikaDependencies.EXAMINATION_API)

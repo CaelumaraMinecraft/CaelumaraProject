@@ -20,7 +20,7 @@ public interface Ident extends Grouped, PathAware, DataStringRepresentation, Ide
    * @throws IllegalArgumentException When the input string is not valid.
    */
   @SuppressWarnings("PatternValidation")
-  static @NotNull Ident ident(@KeyPatterns.Ident final @NotNull String identString) {
+  static @NotNull Ident ident(@IdentPatterns.Ident final @NotNull String identString) {
     int sepIndex = identString.indexOf(SEPARATOR);
     if (sepIndex == -1) {
       throw new IllegalArgumentException(
@@ -29,7 +29,7 @@ public interface Ident extends Grouped, PathAware, DataStringRepresentation, Ide
     return ident(identString.substring(0, sepIndex), identString.substring(sepIndex + 1));
   }
 
-  static @NotNull Ident ident(@KeyPatterns.Group final @NotNull String groupString, @KeyPatterns.IdentPath final @NotNull String pathString) {
+  static @NotNull Ident ident(@IdentPatterns.Group final @NotNull String groupString, @IdentPatterns.IdentPath final @NotNull String pathString) {
     Validate.Arg.notNull(groupString, "groupString");
     Validate.Arg.notNull(pathString, "pathString");
     return new IdentImpl(Group.group(groupString), Path.path(pathString, SEPARATOR, ALLOWED_PATH_CHARS));

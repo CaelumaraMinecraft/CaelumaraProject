@@ -17,6 +17,9 @@ allprojects {
   repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+      url = uri("https://repo.rosewooddev.io/repository/public/")
+    }
 
     aurikaRepos {
       spigotMC.releases()

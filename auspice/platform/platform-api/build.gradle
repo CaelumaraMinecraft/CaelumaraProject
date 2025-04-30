@@ -1,3 +1,6 @@
+import static net.aurika.gradle.AurikaDependencies.ADVENTURE_API
+import static net.aurika.gradle.AurikaDependencies.ADVENTURE_PLATFORM_API;
+
 plugins {
   id("java-library")
   alias(libs.plugins.kotlin)
@@ -5,8 +8,8 @@ plugins {
 }
 
 dependencies {
-  api(libs.kyori.advntr.api)
-  api(libs.kyori.advntr.platform.api)
+  api(ADVENTURE_API)
+  api(ADVENTURE_PLATFORM_API)
   api("net.aurika:auspice-event-api")
   api("net.aurika:common-annotation")
   api("net.aurika:common-data-api")

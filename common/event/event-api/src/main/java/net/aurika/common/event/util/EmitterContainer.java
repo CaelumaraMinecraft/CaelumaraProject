@@ -1,6 +1,6 @@
 package net.aurika.common.event.util;
 
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.Event;
 import net.aurika.common.event.EventAPI;
 import net.aurika.common.validate.Validate;
@@ -9,37 +9,37 @@ import org.jetbrains.annotations.NotNull;
 public final class EmitterContainer<E extends Event> {
 
   private final @NotNull Class<E> eventType;
-  private @NotNull Emitter<E> emitter;
+  private @NotNull Conduit<E> conduit;
 
   public EmitterContainer(@NotNull Class<E> eventType) {
     Validate.Arg.notNull(eventType, "eventType");
     this.eventType = eventType;
-    this.emitter = EventAPI.defaultEmitter(eventType);
+    this.conduit = EventAPI.defaultEmitter(eventType);
   }
 
-  public EmitterContainer(@NotNull Class<E> eventType, @NotNull Emitter<E> emitter) {
+  public EmitterContainer(@NotNull Class<E> eventType, @NotNull Conduit<E> conduit) {
     Validate.Arg.notNull(eventType, "eventType");
-    Validate.Arg.notNull(emitter, "emitter");
+    Validate.Arg.notNull(conduit, "emitter");
     this.eventType = eventType;
-    this.emitter = emitter;
+    this.conduit = conduit;
   }
 
   public @NotNull Class<E> eventType() {
     return this.eventType;
   }
 
-  public @NotNull Emitter<E> emitter() {
-    return this.emitter;
+  public @NotNull Conduit<E> conduit() {
+    return this.conduit;
   }
 
-  public @NotNull Emitter<E> replaceEmitter(@NotNull Emitter<E> newEmitter) {
-    Validate.Arg.notNull(newEmitter, "newEmitter");
-    if (newEmitter.eventType() != this.eventType) {
-      throw new IllegalArgumentException("Cannot replace emitter of event type " + newEmitter.eventType());
+  public @NotNull Conduit<E> replaceConduit(@NotNull Conduit<E> newConduit) {
+    Validate.Arg.notNull(newConduit, "newConduit");
+    if (newConduit.eventType() != this.eventType) {
+      throw new IllegalArgumentException("Requires event type " + eventType + " but got " + newConduit.eventType());
     }
-    Emitter<E> oleEmitter = this.emitter;
-    this.emitter = newEmitter;
-    return oleEmitter;
+    Conduit<E> oleConduit = this.conduit;
+    this.conduit = newConduit;
+    return oleConduit;
   }
 
 }

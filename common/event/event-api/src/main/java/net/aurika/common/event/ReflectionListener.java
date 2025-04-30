@@ -16,11 +16,9 @@ public class ReflectionListener<E extends Event> extends AbstractListener<E> {
       @NotNull Ident ident,
       @NotNull Method method,
       Object instance,
-      @NotNull Emitter<? extends E> container,
-      boolean ignoreCancelled,
       @NotNull Class<? extends E> listenedEventType
   ) {
-    super(ident, container, ignoreCancelled, listenedEventType);
+    super(ident, listenedEventType);
     Validate.Arg.notNull(method, "method");
     this.method = method;
     this.instance = instance;

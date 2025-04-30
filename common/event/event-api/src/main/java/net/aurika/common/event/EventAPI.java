@@ -11,6 +11,7 @@ import java.lang.reflect.Modifier;
 
 public interface EventAPI {
 
+  @Deprecated
   static boolean isCancellable(@NotNull Class<? extends Event> eventClass) {
     Validate.Arg.notNull(eventClass, "eventClass");
     return Cancelable.class.isAssignableFrom(eventClass);
@@ -23,7 +24,7 @@ public interface EventAPI {
       return false;
     }
     try {
-      Method listenersMethod = eventClass.getMethod("emitter");
+      Method listenersMethod = eventClass.getMethod("eventConduit");
       if (Modifier.isAbstract(listenersMethod.getModifiers())) {  // require implement this method
         return false;
       }
@@ -31,8 +32,8 @@ public interface EventAPI {
       return false;
     }
     try {
-      @Nullable EmitterMethodName emitterMethodNameAnn = eventClass.getAnnotation(EmitterMethodName.class);
-      @NotNull String emitterMethodName = emitterMethodNameAnn != null ? emitterMethodNameAnn.value() : EmitterMethodName.DEFAULT_VALUE;
+      @Nullable ConduitGetter conduitGetterAnn = eventClass.getAnnotation(ConduitGetter.class);
+      @NotNull String emitterMethodName = conduitGetterAnn != null ? conduitGetterAnn.value() : ConduitGetter.DEFAULT_VALUE;
       Method emitterMethod = eventClass.getMethod(emitterMethodName);
       int modifiers = emitterMethod.getModifiers();
       return Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers);
@@ -41,7 +42,7 @@ public interface EventAPI {
     }
   }
 
-  static <E extends Event> @NotNull Emitter<E> getListenerContainer(@NotNull Class<E> eventClass) throws EventNotListenableException {
+  static <E extends Event> @NotNull Conduit<E> getListenerContainer(@NotNull Class<E> eventClass) throws EventNotListenableException {
     Validate.Arg.notNull(eventClass, "eventClass");
     if (!isListenable(eventClass)) {
       throw new EventNotListenableException("Event class " + eventClass.getName() + " is not listenable");
@@ -49,8 +50,8 @@ public interface EventAPI {
     Listenable listenable = eventClass.getAnnotation(Listenable.class);
     assert listenable != null;
 
-    @Nullable EmitterMethodName emitterMethodNameAnn = eventClass.getAnnotation(EmitterMethodName.class);
-    String emitterMethodName = emitterMethodNameAnn != null ? emitterMethodNameAnn.value() : EmitterMethodName.DEFAULT_VALUE;
+    @Nullable ConduitGetter conduitGetterAnn = eventClass.getAnnotation(ConduitGetter.class);
+    String emitterMethodName = conduitGetterAnn != null ? conduitGetterAnn.value() : ConduitGetter.DEFAULT_VALUE;
     @NotNull Method listenersFiled;
     try {
       listenersFiled = eventClass.getMethod(emitterMethodName, new Class[]{});
@@ -60,28 +61,29 @@ public interface EventAPI {
     try {
       listenersFiled.setAccessible(true);
       // noinspection unchecked
-      return (Emitter<E>) listenersFiled.invoke(null);
+      return (Conduit<E>) listenersFiled.invoke(null);
     } catch (IllegalAccessException | InvocationTargetException e) {
       throw new RuntimeException(e);
     }
   }
 
   /**
-   * Creates a {@link DefaultEmitter} for the {@code eventClass}.
+   * Creates a {@link DefaultConduit} for the {@code eventClass}.
    *
    * @param eventClass the event class
    * @param <E>        the event type
    * @return the created listener container
    * @throws EventNotListenableException when the {@code eventClass} is not listenable
    */
-  static <E extends Event> @NotNull DefaultEmitter<E> defaultEmitter(@NotNull Class<E> eventClass) throws EventNotListenableException {
+  static <E extends Event> @NotNull DefaultConduit<E> defaultEmitter(@NotNull Class<E> eventClass) throws EventNotListenableException {
     Validate.Arg.notNull(eventClass, "eventClass");
-    return new DefaultEmitter<>(eventClass);
+    return new DefaultConduit<>(eventClass);
   }
 
-  static <E extends Event> @NotNull DelegateEmitter<E> delegateEmitter(@NotNull Emitter<E> delegate) throws EventNotListenableException {
+  @Deprecated
+  static <E extends Event> @NotNull DelegateConduit<E> delegateEmitter(@NotNull Conduit<E> delegate) throws EventNotListenableException {
     Validate.Arg.notNull(delegate, "delegate");
-    return new DelegateEmitter<>(delegate);
+    return new DelegateConduit<>(delegate);
   }
 
   /**
@@ -108,18 +110,15 @@ public interface EventAPI {
             if (Event.class.isAssignableFrom(paramType)) {
               Class<? extends Event> paramEventType = (Class<? extends Event>) paramType;
               if (EventAPI.isListenable(paramEventType)) {
-                Ident listenerIdent = Ident.ident(eventListener.key());
-                boolean ignoreCancelled = eventListener.ignoreCancelled();
-                Emitter<? extends Event> emitter = EventAPI.getListenerContainer(paramEventType);
+                Ident listenerIdent = Ident.ident(eventListener.id());
+                Conduit<? extends Event> conduit = EventAPI.getListenerContainer(paramEventType);
                 ReflectionListener reflectionListener = new ReflectionListener<>(
                     listenerIdent,
                     method,
                     instance,
-                    emitter,
-                    ignoreCancelled,
                     paramEventType
                 );
-                emitter.register(reflectionListener);
+                conduit.register(reflectionListener);
               } else {
                 throw new EventNotListenableException("Event class " + paramType.getName() + " is not listenable");
               }

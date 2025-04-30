@@ -2,7 +2,7 @@ package net.aurika.auspice.event.bukkit;
 
 import net.aurika.common.annotation.container.NoUseCache;
 import net.aurika.common.annotation.container.UseCache;
-import net.aurika.common.event.EmitterMethodName;
+import net.aurika.common.event.ConduitGetter;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.validate.Validate;
 import net.bytebuddy.ByteBuddy;
@@ -156,9 +156,9 @@ public class BukkitEventGenerator {
     if (generateEmitter) {
 
       String emitterFieldName = "generatedEmitter";
-      String emitterMethodName = EmitterMethodName.DEFAULT_VALUE;
+      String emitterMethodName = ConduitGetter.DEFAULT_VALUE;
 
-      BukkitEventHandlerEmitter<E> emitter = new AbstractBukkitEventHandlerEmitter<E>(handlerList) {
+      BukkitEventHandlerConduit<E> emitter = new AbstractBukkitEventHandlerConduit<E>(handlerList) {
         @Override
         public @NotNull Class<E> eventType() { return generatedEventClassLate.get(); }
       };
@@ -173,9 +173,9 @@ public class BukkitEventGenerator {
           // 生成字段 private static final BukkitEventEmitter emitter_filed_name = ...;
           .initializer(new LoadedTypeInitializer.ForStaticField(emitterFieldName, emitter))
 //          .defineField(emitterFieldName, BukkitEventEmitter.class, Modifier.PRIVATE | Modifier.STATIC | Modifier.FINAL)
-          .defineField(emitterFieldName, BukkitEventHandlerEmitter.class, Modifier.PRIVATE | Modifier.STATIC)
+          .defineField(emitterFieldName, BukkitEventHandlerConduit.class, Modifier.PRIVATE | Modifier.STATIC)
           // 生成方法 "public static Emitter emitter();"
-          .defineMethod(emitterMethodName, BukkitEventHandlerEmitter.class, Modifier.PUBLIC | Modifier.STATIC)
+          .defineMethod(emitterMethodName, BukkitEventHandlerConduit.class, Modifier.PUBLIC | Modifier.STATIC)
           .withParameters(new Type[]{})
           .intercept(FieldAccessor.ofField(emitterFieldName));
     }

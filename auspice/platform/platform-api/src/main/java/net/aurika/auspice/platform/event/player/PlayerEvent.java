@@ -2,7 +2,7 @@ package net.aurika.auspice.platform.event.player;
 
 import net.aurika.auspice.platform.entity.Player;
 import net.aurika.auspice.platform.event.entity.EntityEvent;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import net.aurika.common.event.EmitterReplaceMethod;
 import net.aurika.common.event.Listenable;
 import net.aurika.common.event.util.EmitterContainer;
@@ -11,18 +11,18 @@ import org.jetbrains.annotations.NotNull;
 @Listenable
 public interface PlayerEvent extends EntityEvent {
 
-  static @NotNull Emitter<PlayerEvent> emitter() { return PlayerEvent$Companion.EMITTER_CONTAINER.emitter(); }
+  static @NotNull Conduit<PlayerEvent> emitter() { return PlayerEvent$Companion.EMITTER_CONTAINER.conduit(); }
 
   /**
    * Replaces the emitter of the event.
    *
-   * @param newEmitter the new emitter
+   * @param newConduit the new emitter
    * @return the old emitter
    */
   @EmitterReplaceMethod
-  static @NotNull Emitter<PlayerEvent> replaceEmitter(@NotNull Emitter<PlayerEvent> newEmitter) {
+  static @NotNull Conduit<PlayerEvent> replaceEmitter(@NotNull Conduit<PlayerEvent> newConduit) {
     synchronized (PlayerEvent$Companion.EMITTER_CONTAINER) {
-      return PlayerEvent$Companion.EMITTER_CONTAINER.replaceEmitter(newEmitter);
+      return PlayerEvent$Companion.EMITTER_CONTAINER.replaceConduit(newConduit);
     }
   }
 

@@ -3,26 +3,40 @@ package net.aurika.common.nbt;
 import net.aurika.common.validate.Validate;
 import net.kyori.adventure.nbt.BinaryTag;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public interface NBTTagCompound extends NBTTagObject<Map<String, ? extends NBTTag>> {
+public interface NBTTagCompound extends NBTTagMutableObject<Map<String, NBTTag>> {
 
-  static @NotNull NBTTagCompound nbtTagCompound(@NotNull Map<String, ? extends NBTTag> value) {
+  @Contract("_ -> new")
+  static @NotNull NBTTagCompound nbtTagCompound(@NotNull CompoundBinaryTag tag) {
+    Validate.Arg.notNull(tag, "tag");
+    NBTTagCompound created = nbtTagComponentEmpty();
+    for (String key : tag.keySet()) {
+      created.put(key, NBTTag.nbtTag(tag.get(key)));
+    }
+    return created;
+  }
+
+  @Contract("_ -> new")
+  static @NotNull NBTTagCompound nbtTagCompoundSynced(@NotNull Map<String, NBTTag> value) {
     return new NBTTagCompoundImpl(value, true);
   }
 
-  static @NotNull NBTTagCompound empty() {
-    return new NBTTagCompoundImpl(new LinkedHashMap<>(), false);
+  @Contract("_ -> new")
+  static @NotNull NBTTagCompound nbtTagComponentCloned(@NotNull Map<String, NBTTag> value) {
+    return new NBTTagCompoundImpl(new LinkedHashMap<>(value), true);
   }
 
-  @Nullable NBTTag get(@NotNull String key);
+  static @NotNull NBTTagCompound nbtTagComponentEmpty() { return new NBTTagCompoundImpl(new LinkedHashMap<>(), false); }
 
-  boolean hasTag(@NotNull String key);
+  boolean containsKey(@NotNull String key);
+
+  @Nullable NBTTag get(@NotNull String key);
 
   /**
    * Puts a sub tag, and returns a tag that keyed by the key.
@@ -46,62 +60,49 @@ public interface NBTTagCompound extends NBTTagObject<Map<String, ? extends NBTTa
   @Nullable Object getAsObject(@NotNull String key);
 
   @Override
-  default @NotNull NBTTagType<NBTTagCompound> nbtTagType() {
-    return NBTTagType.COMPOUND;
-  }
+  default @NotNull NBTTagType<NBTTagCompound> nbtTagType() { return NBTTagType.COMPOUND; }
 
   @Override
-  default @NotNull Map<String, ? extends NBTTag> value() {
-    return new LinkedHashMap<>(this.rawValue());
-  }
+  @NotNull Map<String, NBTTag> valueCopy();
 
   @Override
-  @NotNull Map<String, ? extends NBTTag> rawValue();
+  @NotNull Map<String, NBTTag> valueRaw();
 
   @Override
-  default void value(@NotNull Map<String, ? extends NBTTag> value) {
-    Validate.Arg.notNull(value, "value");
-    this.rawValue(new LinkedHashMap<>(value));
-  }
+  void valueCopy(@NotNull Map<String, NBTTag> value);
 
   @Override
-  void rawValue(@NotNull Map<String, ? extends NBTTag> value);
+  void valueRaw(@NotNull Map<String, NBTTag> value);
 
   @Override
-  default @NotNull CompoundBinaryTag asBinaryTag() {
-    Map<String, BinaryTag> tags = new LinkedHashMap<>();
-    for (Map.Entry<String, ? extends NBTTag> entry : this.rawValue().entrySet()) {
-      tags.put(entry.getKey(), entry.getValue().asBinaryTag());
-    }
-    return CompoundBinaryTag.from(tags);
-  }
+  @NotNull CompoundBinaryTag asBinaryTag();
 
 }
 
 class NBTTagCompoundImpl extends NBTTagImpl implements NBTTagCompound {
 
-  private Map<String, ? extends NBTTag> value;
-
-  NBTTagCompoundImpl(@NotNull Map<String, ? extends NBTTag> value, boolean check) {
-    Objects.requireNonNull(value, "value is null");
-    if (check) {
-      for (NBTTag tag : value.values()) {
-        if (tag.nbtTagType().id() == NBTTagId.END) {
-          throw new IllegalArgumentException("Cannot add END tag to compound tag");
-        }
+  static void check(@NotNull Map<String, ? extends NBTTag> map) {
+    Validate.Arg.notNull(map, "value", "value is null");
+    for (NBTTag tag : map.values()) {
+      if (tag.nbtTagType().id() == NBTTagId.END) {
+        throw new IllegalArgumentException("Cannot add END tag to compound tag");
       }
     }
+  }
 
+  private @NotNull Map<String, NBTTag> value;
+
+  NBTTagCompoundImpl(@NotNull Map<String, NBTTag> value, boolean check) {
+    Validate.Arg.notNull(value, "value", "value is null");
+    if (check) check(value);
     this.value = value;
   }
 
   @Override
-  public @Nullable NBTTag get(@NotNull String key) {
-    return value.get(key);
-  }
+  public @Nullable NBTTag get(@NotNull String key) { return value.get(key); }
 
   @Override
-  public boolean hasTag(@NotNull String key) {
+  public boolean containsKey(@NotNull String key) {
     return this.value.containsKey(key);
   }
 
@@ -110,7 +111,7 @@ class NBTTagCompoundImpl extends NBTTagImpl implements NBTTagCompound {
     if (subTag.nbtTagType().id() == NBTTagId.END) {
       throw new IllegalArgumentException("Cannot add END tag to compound tag");
     } else {
-      return this.value.put(key, NBTTagType.castAs(subTag));
+      return this.value.put(key, subTag);
     }
   }
 
@@ -126,19 +127,39 @@ class NBTTagCompoundImpl extends NBTTagImpl implements NBTTagCompound {
 
   @Override
   public @Nullable Object getAsObject(@NotNull String key) {
-    NBTTag sub = this.rawValue().get(key);
+    NBTTag sub = this.valueRaw().get(key);
     return sub == null ? null : sub.valueAsObject();
   }
 
   @Override
-  public @NotNull Map<String, ? extends NBTTag> rawValue() {
+  public @NotNull Map<String, NBTTag> valueRaw() {
     return this.value;
   }
 
   @Override
-  public void rawValue(@NotNull Map<String, ? extends NBTTag> value) {
+  public @NotNull Map<String, NBTTag> valueCopy() {
+    return new LinkedHashMap<>(this.valueRaw());
+  }
+
+  @Override
+  public void valueRaw(@NotNull Map<String, NBTTag> value) {
     Validate.Arg.notNull(value, "value");
     this.value = value;
+  }
+
+  @Override
+  public void valueCopy(@NotNull Map<String, NBTTag> value) {
+    Validate.Arg.notNull(value, "value");
+    this.value = new LinkedHashMap<>(value);
+  }
+
+  @Override
+  public @NotNull CompoundBinaryTag asBinaryTag() {
+    Map<String, BinaryTag> tags = new LinkedHashMap<>();
+    for (Map.Entry<String, ? extends NBTTag> entry : this.valueRaw().entrySet()) {
+      tags.put(entry.getKey(), entry.getValue().asBinaryTag());
+    }
+    return CompoundBinaryTag.from(tags);
   }
 
   @Override

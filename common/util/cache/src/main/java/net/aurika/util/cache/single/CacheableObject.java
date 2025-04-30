@@ -9,20 +9,15 @@ public interface CacheableObject<T> extends Supplier<T> {
 
   boolean isCached();
 
-  default boolean contains(T other) {
-    return Objects.equals(this.get(), other);
-  }
+  default boolean contains(T other) { return Objects.equals(this.get(), other); }
 
-  default boolean isNull() {
-    return this.get() == null;
-  }
+  default boolean isNull() { return this.get() == null; }
 
-  default boolean isPresent() {
-    return this.get() != null;
-  }
+  default boolean isPresent() { return this.get() != null; }
 
+  @Override
   T get();
 
-  void set(T var1);
+  void set(T cache);
 
 }

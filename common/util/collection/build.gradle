@@ -3,7 +3,6 @@ import net.aurika.gradle.AurikaDependencies
 plugins {
   id("java-library")
   id("maven-publish")
-  alias(libs.plugins.kotlin)
 }
 
 dependencies {

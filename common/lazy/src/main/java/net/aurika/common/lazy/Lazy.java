@@ -32,8 +32,6 @@ public abstract class Lazy<T> {
     return value;
   }
 
-  public boolean initialized() {
-    return initialized;
-  }
+  public boolean initialized() { return initialized; }
 
 }

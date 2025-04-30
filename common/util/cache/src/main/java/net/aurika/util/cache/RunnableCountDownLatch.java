@@ -13,7 +13,7 @@ public final class RunnableCountDownLatch {
   private final @NotNull AtomicInteger total;
 
   public RunnableCountDownLatch(int countdown, @NotNull Consumer<RunnableCountDownLatch> runnable) {
-    Validate.Arg.require(countdown > 0, "Countdown number must be greater than zero");
+    Validate.Arg.require(countdown > 0, "countdown", "Countdown number must be greater than zero");
     Validate.Arg.notNull(runnable, "runnable");
     this.countdown = new AtomicInteger(countdown);
     this.total = new AtomicInteger(countdown);
@@ -30,8 +30,6 @@ public final class RunnableCountDownLatch {
     if (countdown.decrementAndGet() == 0) runnable.accept(this);
   }
 
-  public @NotNull AtomicInteger total() {
-    return total;
-  }
+  public @NotNull AtomicInteger total() { return total; }
 
 }

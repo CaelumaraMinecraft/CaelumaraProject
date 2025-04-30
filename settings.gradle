@@ -168,6 +168,7 @@ includeBuild("common") {
     substitute(module("net.aurika:common-lazy")).using(project(":lazy"))
     substitute(module("net.aurika:common-logging")).using(project(":logging"))
     substitute(module("net.aurika:common-metadata")).using(project(":metadata"))
+    substitute(module("net.aurika:common-metalang-api")).using(project(":metalang-api"))
     substitute(module("net.aurika:common-nbt")).using(project(":nbt"))
     substitute(module("net.aurika:common-property")).using(project(":property"))
     substitute(module("net.aurika:common-scheduler")).using(project(":scheduler"))

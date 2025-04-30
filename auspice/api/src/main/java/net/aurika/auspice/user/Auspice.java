@@ -9,7 +9,7 @@ import net.aurika.common.dependency.DependencyManager;
 import net.aurika.common.dependency.classpath.BootstrapProvider;
 import net.aurika.common.ident.Group;
 import net.aurika.common.ident.Ident;
-import net.aurika.common.ident.KeyPatterns;
+import net.aurika.common.ident.IdentPatterns;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +20,7 @@ import java.nio.file.Path;
 public final class Auspice implements AuspiceUser {
 
   public static final String NAMESPACE = "auspice";
-  @KeyPatterns.Group
+  @IdentPatterns.Group
   public static final @NotNull String GROUP_STRING = "net.aurika." + NAMESPACE;
   public static final Group GROUP = Group.group(GROUP_STRING);
   private static final Auspice INSTANCE = new Auspice();
@@ -133,7 +133,7 @@ public final class Auspice implements AuspiceUser {
     return this.getDataFolder().toPath().resolve(path);
   }
 
-  public static @NotNull Ident createKey(@KeyPatterns.IdentPath final @NotNull String keyPath) {
+  public static @NotNull Ident createKey(@IdentPatterns.IdentPath final @NotNull String keyPath) {
     return Ident.ident(GROUP_STRING, keyPath);
   }
 

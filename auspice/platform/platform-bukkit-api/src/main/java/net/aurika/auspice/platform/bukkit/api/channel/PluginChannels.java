@@ -6,7 +6,7 @@ import com.cryptomorin.xseries.reflection.minecraft.MinecraftMapping;
 import com.cryptomorin.xseries.reflection.minecraft.MinecraftPackage;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import net.aurika.auspice.platform.location.Grid3Pos;
+import net.aurika.auspice.platform.location.grid.Grid3Pos;
 import net.aurika.auspice.utils.nonnull.NonNullMap;
 import net.aurika.auspice.utils.reflection.Reflect;
 import net.minecraft.resources.MinecraftKey;

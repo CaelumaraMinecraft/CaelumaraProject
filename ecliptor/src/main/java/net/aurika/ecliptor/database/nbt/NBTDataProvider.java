@@ -31,7 +31,7 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
   @Override
   public @NotNull DataProvider createSection(@NotNull String var1) {
     Validate.Arg.notNull(var1, "");
-    NBTTagCompound var10000 = NBTTagCompound.empty();
+    NBTTagCompound var10000 = NBTTagCompound.nbtTagComponentEmpty();
     Intrinsics.checkNotNullExpressionValue(var10000, "");
     if (this.element instanceof NBTTagCompound) {
       ((NBTTagCompound) this.element).put(var1, var10000);
@@ -43,7 +43,7 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
 
   @Override
   public @NotNull SectionableDataSetter createSection() {
-    NBTTagCompound var10000 = NBTTagCompound.empty();
+    NBTTagCompound var10000 = NBTTagCompound.nbtTagComponentEmpty();
     if (this.element instanceof NBTTagList) {
       ((NBTTagList) this.element).add(var10000);
       return new NamedNBTDataProvider(null, var10000);
@@ -115,7 +115,7 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
   public <E, C extends Collection<E>> @NotNull C asCollection(@NotNull C c, @NotNull BiConsumer<C, SectionableDataGetter> handler) {
     Validate.Arg.notNull(c, "c");
     Validate.Arg.notNull(handler, "handler");
-    List<NBTTag> elements = ((NBTTagList) this.element).value();
+    List<NBTTag> elements = ((NBTTagList) this.element).valueCopy();
 
     for (NBTTag e : elements) {
       Objects.requireNonNull(e);
@@ -131,7 +131,7 @@ public class NBTDataProvider implements DataProvider, SectionCreatableDataSetter
     Validate.Arg.notNull(handler, "handler");
     NBTTag _element = this.element;
     Intrinsics.checkNotNull(_element);
-    Map var7 = ((NBTTagCompound) _element).value();
+    Map var7 = ((NBTTagCompound) _element).valueCopy();
     Intrinsics.checkNotNullExpressionValue(var7, "");
 
     for (Object o : var7.entrySet()) {

@@ -29,17 +29,11 @@ public enum NBTTagId {
     this.isTerminal = isTerminal;
   }
 
-  public boolean isTerminal() {
-    return isTerminal;
-  }
+  public boolean isTerminal() { return isTerminal; }
 
-  public byte id() {
-    return this.id;
-  }
+  public byte id() { return this.id; }
 
-  public @NotNull String toString() {
-    return this.name() + "[id=" + id + ']';
-  }
+  public @NotNull String toString() { return this.name() + "[id=" + id + ']'; }
 
   public static @NotNull NBTTagId fromId(int id) {
     if (!(id >= 0 && id < BY_ID.length)) {
@@ -52,21 +46,48 @@ public enum NBTTagId {
     Objects.requireNonNull(nbtObject);
     String name = nbtObject.getClass().getSimpleName();
 
-    return switch (name) {
-      case "NBTTagEnd", "EndTag" -> NBTTagId.END;
-      case "NBTTagByte", "ByteTag" -> NBTTagId.BYTE;
-      case "NBTTagShort", "ShortTag" -> NBTTagId.SHORT;
-      case "NBTTagInt", "IntTag" -> NBTTagId.INT;
-      case "NBTTagLong", "LongTag" -> NBTTagId.LONG;
-      case "NBTTagFloat", "FloatTag" -> NBTTagId.FLOAT;
-      case "NBTTagDouble", "DoubleTag" -> NBTTagId.DOUBLE;
-      case "NBTTagByteArray", "ByteArrayTag" -> NBTTagId.BYTE_ARRAY;
-      case "NBTTagString", "StringTag" -> NBTTagId.STRING;
-      case "NBTTagList", "ListTag" -> NBTTagId.LIST;
-      case "NBTTagCompound", "CompoundTag" -> NBTTagId.COMPOUND;
-      case "NBTTagIntArray", "IntArrayTag" -> NBTTagId.INT_ARRAY;
-      case "NBTTagLongArray", "LongArrayTag" -> NBTTagId.LONG_ARRAY;
-      default -> throw new UnsupportedOperationException("Unknown NBT type: " + name);
-    };
+    switch (name) {
+      case "NBTTagEnd":
+      case "EndTag":
+        return NBTTagId.END;
+      case "NBTTagByte":
+      case "ByteTag":
+        return NBTTagId.BYTE;
+      case "NBTTagShort":
+      case "ShortTag":
+        return NBTTagId.SHORT;
+      case "NBTTagInt":
+      case "IntTag":
+        return NBTTagId.INT;
+      case "NBTTagLong":
+      case "LongTag":
+        return NBTTagId.LONG;
+      case "NBTTagFloat":
+      case "FloatTag":
+        return NBTTagId.FLOAT;
+      case "NBTTagDouble":
+      case "DoubleTag":
+        return NBTTagId.DOUBLE;
+      case "NBTTagByteArray":
+      case "ByteArrayTag":
+        return NBTTagId.BYTE_ARRAY;
+      case "NBTTagString":
+      case "StringTag":
+        return NBTTagId.STRING;
+      case "NBTTagList":
+      case "ListTag":
+        return NBTTagId.LIST;
+      case "NBTTagCompound":
+      case "CompoundTag":
+        return NBTTagId.COMPOUND;
+      case "NBTTagIntArray":
+      case "IntArrayTag":
+        return NBTTagId.INT_ARRAY;
+      case "NBTTagLongArray":
+      case "LongArrayTag":
+        return NBTTagId.LONG_ARRAY;
+      default:
+        throw new UnsupportedOperationException("Unknown NBT type: " + name);
+    }
   }
 }

@@ -28,9 +28,9 @@ dependencies {
   api("net.aurika:common-util-math")
   api("net.aurika:common-util-reflection")
   api("net.aurika:common-util-string")
+  api("net.aurika:common-util-string-split")
   api("net.aurika:common-validate")
 
-  // engines
 
   api(EXAMINATION_API)
   api(EXAMINATION_STRING)
@@ -44,35 +44,31 @@ dependencies {
   api(ASM)
   api(ASM_COMMONS)
 
-  api(CAFFEINE)
+//  api(CAFFEINE)
   api(GUAVA)
-
-  api(libs.apache.commons.io)
 
 //    implementation("com.github.cryptomorin:ReptileYAML:4.0.0")
 
-  api(libs.hikari)
+  api(HIKARI)
   api(MONGODB_CORE)
   api(MONGODB_SYNC)
   api(MONGODB_BSON)
-  api(libs.h2)
-  api(libs.postgresql)
-
+  api(H2)
+  api(POSTGRESQL)
 
   // annotations
   api(JETBRAINS_ANNOTATIONS)
   api(CHECKER_ANNOTATIONS)
 
-  // TODO
-  compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
   compileOnly(FASTUTIL)
-  compileOnly(libs.apache.commons.lang)
-  compileOnly(libs.apache.commons.math)
-  compileOnly(libs.apache.commons.text)
-  compileOnly(libs.apache.commons.compress)
-  compileOnly(libs.apache.commons.config)
-  compileOnly(libs.apache.commons.collections)
-  compileOnly(libs.apache.commons.exec)
+  compileOnly(APACHE_COMMONS_COLLECTIONS)
+  compileOnly(APACHE_COMMONS_COMPRESS)
+  compileOnly(APACHE_COMMONS_CONFIGURATION)
+  compileOnly(APACHE_COMMONS_EXEC)
+  compileOnly(APACHE_COMMONS_IO)
+  compileOnly(APACHE_COMMONS_LANG)
+  compileOnly(APACHE_COMMONS_MATH)
+  compileOnly(APACHE_COMMONS_TEXT)
 
 
 }
@@ -80,12 +76,14 @@ dependencies {
 tasks {
   compileKotlin {
     kotlinOptions {
-      jvmTarget = 11
+      jvmTarget = "1.8"
     }
   }
 }
 
+java
+
 java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }

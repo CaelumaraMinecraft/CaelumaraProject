@@ -5,7 +5,7 @@ import net.aurika.auspice.event.bukkit.NativeBukkitEvent;
 import net.aurika.auspice.platform.bukkit.block.BukkitBlock;
 import net.aurika.auspice.platform.bukkit.block.BukkitBlockAdapter;
 import net.aurika.auspice.platform.event.block.BlockEvent;
-import net.aurika.common.event.Emitter;
+import net.aurika.common.event.Conduit;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,6 +25,6 @@ public interface AbstractBukkitBlockEvent extends BukkitEvent, BlockEvent {
   }
 
   @Override
-  @NotNull Emitter<? extends AbstractBukkitBlockEvent> eventEmitter();
+  @NotNull Conduit<? extends AbstractBukkitBlockEvent> eventConduit();
 
 }

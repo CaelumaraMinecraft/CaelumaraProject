@@ -8,12 +8,11 @@ plugins {
 dependencies {
   api("net.aurika:common-ident")
   api("net.aurika:common-util-collection")
-  api("net.aurika:common-util-stacktrace")
   api("net.aurika:common-validate")
   compileOnlyApi(AurikaDependencies.JETBRAINS_ANNOTATIONS)
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }

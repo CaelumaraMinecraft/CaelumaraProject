@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class InheritableEventManager<BE extends Event> implements EventManager<BE> {
 
-  private final @NotNull Map<Class<? extends BE>, Emitter<? extends BE>> emitters;
+  private final @NotNull Map<Class<? extends BE>, Conduit<? extends BE>> emitters;
 
   public InheritableEventManager() {
     this(new HashMap<>());
   }
 
-  public InheritableEventManager(@NotNull Map<Class<? extends BE>, Emitter<? extends BE>> emitters) {
+  public InheritableEventManager(@NotNull Map<Class<? extends BE>, Conduit<? extends BE>> emitters) {
     Validate.Arg.notNull(emitters, "emitters");
     this.emitters = emitters;
   }
@@ -29,25 +29,25 @@ public class InheritableEventManager<BE extends Event> implements EventManager<B
     } else {
       for (Class<? extends Event> registeredEventClass : emitters.keySet()) {
         if (registeredEventClass.isAssignableFrom(eventClass) && EventAPI.isListenable(registeredEventClass)) {
-          Emitter emitter = emitters.get(registeredEventClass);
-          emitter.emit(event);
+          Conduit conduit = emitters.get(registeredEventClass);
+          conduit.transport(event);
         }
       }
     }
   }
 
   @Override
-  public @NotNull Collection<? extends Emitter<? extends BE>> emitters() {
+  public @NotNull Collection<? extends Conduit<? extends BE>> emitters() {
     return emitters.values();
   }
 
   @Override
-  public void addEmitter(@NotNull Emitter<? extends BE> emitter) {
-    Class<? extends BE> eventClass = emitter.eventType();
+  public void addEmitter(@NotNull Conduit<? extends BE> conduit) {
+    Class<? extends BE> eventClass = conduit.eventType();
     if (!EventAPI.isListenable(eventClass)) {
-      throw new IllegalArgumentException("Event class on " + emitter + " is not listenable");
+      throw new IllegalArgumentException("Event class on " + conduit + " is not listenable");
     }
-    emitters.put(eventClass, emitter);
+    emitters.put(eventClass, conduit);
   }
 
 }

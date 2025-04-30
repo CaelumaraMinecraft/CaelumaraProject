@@ -1,6 +1,9 @@
+import net.aurika.gradle.AurikaDependencies
+
 plugins {
   id("java-library")
   id("maven-publish")
+  id("net.aurika.gradle.dependency")
 }
 
 dependencies {
@@ -15,6 +18,10 @@ dependencies {
   compileOnly(libs.kyori.lunar)
   compileOnly(libs.kyori.mammoth)
   compileOnly(libs.kryo)
+
+  compileOnly(AurikaDependencies.CAFFEINE)
+
+  compileOnly("com.flowpowered:flow-nbt:1.0.1-SNAPSHOT")
 
   compileOnly(libs.annotations.jetbrains)
   compileOnly(libs.annotations.checker)

@@ -1,56 +1,76 @@
 package net.aurika.common.nbt;
 
-import net.aurika.util.unsafe.fn.Fn;
 import net.kyori.adventure.nbt.BinaryTag;
 import net.kyori.adventure.nbt.BinaryTagType;
 import net.kyori.adventure.nbt.BinaryTagTypes;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Function;
 
-public class NBTTagType<T extends NBTTag> {
+public final class NBTTagType<T extends NBTTag> {
 
   public static final NBTTagType<NBTTagEnd> END = new NBTTagType<>(
-      NBTTagId.END, BinaryTagTypes.END, NBTTagEnd.class, (it) -> NBTTagEnd.nbtTagEnd());
+      NBTTagId.END, BinaryTagTypes.END, NBTTagEnd.class,
+      (it) -> NBTTagEnd.nbtTagEnd()
+  );
   public static final NBTTagType<NBTTagByte> BYTE = new NBTTagType<>(
-      NBTTagId.BYTE, BinaryTagTypes.BYTE, NBTTagByte.class, (it) -> NBTTagByte.nbtTagByte((Byte) it));
+      NBTTagId.BYTE, BinaryTagTypes.BYTE, NBTTagByte.class,
+      (it) -> NBTTagByte.nbtTagByte((Byte) it)
+  );
   public static final NBTTagType<NBTTagShort> SHORT = new NBTTagType<>(
-      NBTTagId.SHORT, BinaryTagTypes.SHORT, NBTTagShort.class, (it) -> NBTTagShort.nbtTagShort((Short) it));
+      NBTTagId.SHORT, BinaryTagTypes.SHORT, NBTTagShort.class,
+      (it) -> NBTTagShort.nbtTagShort((Short) it)
+  );
   public static final NBTTagType<NBTTagInt> INT = new NBTTagType<>(
-      NBTTagId.INT, BinaryTagTypes.INT, NBTTagInt.class, (it) -> NBTTagInt.nbtTagInt((Integer) it));
+      NBTTagId.INT, BinaryTagTypes.INT, NBTTagInt.class,
+      (it) -> NBTTagInt.nbtTagInt((Integer) it)
+  );
   public static final NBTTagType<NBTTagLong> LONG = new NBTTagType<>(
-      NBTTagId.LONG, BinaryTagTypes.LONG, NBTTagLong.class, (it) -> NBTTagLong.nbtTagLong((Long) it));
+      NBTTagId.LONG, BinaryTagTypes.LONG, NBTTagLong.class,
+      (it) -> NBTTagLong.nbtTagLong((Long) it)
+  );
   public static final NBTTagType<NBTTagFloat> FLOAT = new NBTTagType<>(
-      NBTTagId.FLOAT, BinaryTagTypes.FLOAT, NBTTagFloat.class, (it) -> NBTTagFloat.nbtTagFloat((Float) it));
+      NBTTagId.FLOAT, BinaryTagTypes.FLOAT, NBTTagFloat.class,
+      (it) -> NBTTagFloat.nbtTagFloat((Float) it)
+  );
   public static final NBTTagType<NBTTagDouble> DOUBLE = new NBTTagType<>(
-      NBTTagId.DOUBLE, BinaryTagTypes.DOUBLE, NBTTagDouble.class, (it) -> NBTTagDouble.nbtTagDouble((Double) it));
+      NBTTagId.DOUBLE, BinaryTagTypes.DOUBLE, NBTTagDouble.class,
+      (it) -> NBTTagDouble.nbtTagDouble((Double) it)
+  );
   public static final NBTTagType<NBTTagByteArray> BYTE_ARRAY = new NBTTagType<>(
       NBTTagId.BYTE_ARRAY, BinaryTagTypes.BYTE_ARRAY, NBTTagByteArray.class,
-      (it) -> NBTTagByteArray.nbtTagByteArrayRaw(Arrays.copyOf((byte[]) it, ((byte[]) it).length))
+      (it) -> NBTTagByteArray.nbtTagByteArrayCloned((byte[]) it)
   );
   public static final NBTTagType<NBTTagString> STRING = new NBTTagType<>(
-      NBTTagId.STRING, BinaryTagTypes.STRING, NBTTagString.class, (it) -> NBTTagString.nbtTagString((String) it));
-  public static final NBTTagType<NBTTagList<?>> LIST = Fn.cast(
-      new NBTTagType<>(NBTTagId.LIST, BinaryTagTypes.LIST, NBTTagList.class, (it) -> NBTTagList.ofUnknown((List) it)));
+      NBTTagId.STRING, BinaryTagTypes.STRING, NBTTagString.class,
+      (it) -> NBTTagString.nbtTagString((String) it)
+  );
+  public static final NBTTagType<NBTTagList<?>> LIST = Internal.cast(
+      new NBTTagType<>(
+          NBTTagId.LIST, BinaryTagTypes.LIST, NBTTagList.class,
+          (it) -> NBTTagList.nbtTagListSynced((List) it)
+      ));
+  @SuppressWarnings("unchecked")
   public static final NBTTagType<NBTTagCompound> COMPOUND = new NBTTagType<>(
       NBTTagId.COMPOUND, BinaryTagTypes.COMPOUND, NBTTagCompound.class,
-      (it) -> NBTTagCompound.nbtTagCompound(castAs(it))
+      (it) -> NBTTagCompound.nbtTagCompoundSynced((Map<String, NBTTag>) it)
   );
   public static final NBTTagType<NBTTagIntArray> INT_ARRAY = new NBTTagType<>(
       NBTTagId.INT_ARRAY, BinaryTagTypes.INT_ARRAY, NBTTagIntArray.class,
-      (it) -> NBTTagIntArray.nbtTagIntArrayRaw(Arrays.copyOf((int[]) it, ((int[]) it).length))
+      (it) -> NBTTagIntArray.nbtTagIntArraySynced((int[]) it)
   );
   public static final NBTTagType<NBTTagLongArray> LONG_ARRAY = new NBTTagType<>(
       NBTTagId.LONG_ARRAY, BinaryTagTypes.LONG_ARRAY, NBTTagLongArray.class,
-      (it) -> NBTTagLongArray.nbtTagLongArray(Arrays.copyOf((long[]) it, ((long[]) it).length))
+      (it) -> NBTTagLongArray.nbtTagLongArraySynced((long[]) it)
   );
 
   private final @NotNull NBTTagId id;
   private final @NotNull BinaryTagType<? extends BinaryTag> adventureType;
   private final @NotNull Class<T> javaType;
-  private final @NotNull Function<Object, T> ctor;
+  private final @NotNull Function<Object, T> syncedCtor;
 
   private static final @NotNull Map<Class<?>, NBTTagType<?>> JAVA_TO_NBT;
   private static final @NotNull NBTTagType<?>[] TAG_TYPES;
@@ -59,23 +79,19 @@ public class NBTTagType<T extends NBTTag> {
       @NotNull NBTTagId id,
       @NotNull BinaryTagType<? extends BinaryTag> adventureType,
       @NotNull Class<T> javaType,
-      @NotNull Function<Object, T> ctor
+      @NotNull Function<Object, T> syncedCtor
   ) {
     this.id = id;
     this.adventureType = adventureType;
     this.javaType = javaType;
-    this.ctor = ctor;
+    this.syncedCtor = syncedCtor;
   }
 
-  public final @NotNull String name() {
-    return this.id.name();
-  }
+  public @NotNull String name() { return this.id.name(); }
 
-  public final @NotNull NBTTagId id() {
-    return this.id;
-  }
+  public @NotNull NBTTagId id() { return this.id; }
 
-  public final T cast(@NotNull NBTTag tag) {
+  public T cast(@NotNull NBTTag tag) {
     Objects.requireNonNull(tag, "tag");
     if (tag.nbtTagType() != this) {
       String var3 = "Tag is a " + tag.nbtTagType().name() + ", not a " + this.name();
@@ -85,50 +101,25 @@ public class NBTTagType<T extends NBTTag> {
     }
   }
 
-  public final T construct(@NotNull Object obj) {
-    Objects.requireNonNull(obj);
-    return this.ctor.apply(obj);
+  public T constructSynced(@NotNull Object obj) {
+    return this.syncedCtor.apply(obj);
   }
 
-  public boolean equals(@Nullable Object o) {
-    if (this == o) {
-      return true;
-    } else if (o != null && Objects.equals(this.getClass(), o.getClass())) {
-      NBTTagType<?> that = (NBTTagType<?>) o;
-      return this.id == that.id;
-    } else {
-      return false;
-    }
+  public int hashCode() { return this.id.hashCode(); }
+
+  public boolean equals(@Nullable Object obj) {
+    return this == obj;
   }
 
-  public int hashCode() {
-    return this.id.hashCode();
-  }
+  public @NotNull String toString() { return this.id.toString(); }
 
-  public @NotNull String toString() {
-    return this.id.toString();
-  }
-
-  public static <T> T castAs(@NotNull Object obj) {
-    Objects.requireNonNull(obj);
-    return (T) obj;
-  }
-
-  public static @NotNull <T extends NBTTag> NBTTagType<NBTTagList<T>> listOf() {
-    return (NBTTagType<NBTTagList<T>>) (NBTTagType<?>) NBTTagType.LIST;
-  }
-
-  public static @NotNull <T extends NBTTag> NBTTagType<T> fromId(@NotNull NBTTagId id) {
-    Objects.requireNonNull(id, "id");
-    return (NBTTagType<T>) NBTTagType.TAG_TYPES[id.id()];
-  }
-
-  @NotNull
-  public static NBTTagType<?> fromJava(@NotNull Object obj) {
+  @ApiStatus.Obsolete
+  public static @NotNull NBTTagType<?> fromJava(@NotNull Object obj) {
     Objects.requireNonNull(obj, "obj");
     final NBTTagType nbtTagType = NBTTagType.JAVA_TO_NBT.get(obj.getClass());
     if (nbtTagType == null) {
-      throw new IllegalArgumentException("No NBT type could be detected for object: " + obj + " (" + obj.getClass());
+      throw new IllegalArgumentException(
+          "No NBT type could be detected for object: " + obj + " (" + obj.getClass() + ")");
     }
     return (NBTTagType<?>) nbtTagType;
   }
@@ -138,56 +129,47 @@ public class NBTTagType<T extends NBTTag> {
    *
    * @return the binary tag type
    */
-  public @NotNull BinaryTagType<? extends BinaryTag> toBinaryTagType() {
-    return adventureType;
+  public @NotNull BinaryTagType<? extends BinaryTag> advtrBinaryTagType() { return adventureType; }
+
+  public static <T extends NBTTag> @NotNull NBTTagType<NBTTagList<T>> nbtTagTypeList() {
+    return (NBTTagType<NBTTagList<T>>) (NBTTagType) NBTTagType.LIST;
   }
 
-  public static final class Companion {
-
-    private Companion() {
-    }
-
-    public <T> T castAs(@NotNull final Object obj) {
-      Objects.requireNonNull(obj, "obj");
-      return (T) obj;
-    }
-
-    @NotNull
-    public <T extends NBTTag<?>> NBTTagType<NBTTagList<T>> listOf() {
-      final NBTTagType list = NBTTagType.LIST;
-      Intrinsics.checkNotNull(
-          list,
-          "null cannot be cast to non-null type org.kingdoms.nbt.tag.NBTTagType<org.kingdoms.nbt.tag.NBTTagList<T of org.kingdoms.nbt.tag.NBTTagType.Companion.listOf>>"
-      );
-      return (NBTTagType<NBTTagList<T>>) list;
-    }
-
-    @NotNull
-    public <T extends NBTTag<?>> NBTTagType<T> fromId(@NotNull final NBTTagId id) {
-      Objects.requireNonNull(id, "id");
-      final NBTTagType nbtTagType = NBTTagType.TAG_TYPES[id.id()];
-      Intrinsics.checkNotNull(
-          nbtTagType,
-          "null cannot be cast to non-null type org.kingdoms.nbt.tag.NBTTagType<T of org.kingdoms.nbt.tag.NBTTagType.Companion.fromId>"
-      );
-      return (NBTTagType<T>) nbtTagType;
-    }
-
+  @NotNull
+  public static <T extends NBTTag> NBTTagType<T> fromId(@NotNull final NBTTagId id) {
+    Objects.requireNonNull(id, "id");
+    return (NBTTagType<T>) NBTTagType.TAG_TYPES[id.id()];
   }
 
   static {
-    Pair[] $this$toTypedArray$iv = new Pair[]{TuplesKt.to(Short.TYPE, SHORT), TuplesKt.to(Byte.TYPE, BYTE), TuplesKt.to(
-        Integer.class, INT), TuplesKt.to(Long.TYPE, LONG), TuplesKt.to(Float.TYPE, FLOAT), TuplesKt.to(
-        Double.TYPE, DOUBLE), TuplesKt.to(byte[].class, BYTE_ARRAY), TuplesKt.to(int[].class, INT_ARRAY), TuplesKt.to(
-        long[].class, LONG_ARRAY), TuplesKt.to(Boolean.TYPE, BOOL), TuplesKt.to(
-        NBTTagCompound.class, COMPOUND), TuplesKt.to(
-        Collection.class, LIST)};
-    JAVA_TO_NBT = MapsKt.hashMapOf($this$toTypedArray$iv);
-    NBTTagType<?>[] thisCollection$iv = new NBTTagType[]{END, BYTE, SHORT, INT, LONG, FLOAT, DOUBLE, BYTE_ARRAY, STRING, LIST, COMPOUND, INT_ARRAY, LONG_ARRAY};
-    Iterable<NBTTagType<?>> var10000 = CollectionsKt.listOf(thisCollection$iv);
-    Comparator<NBTTagType<?>> var10001 = Comparator.comparing((type) -> type.id);
-    Intrinsics.checkNotNullExpressionValue(var10001, "comparing(...)");
-    Collection<NBTTagType<?>> thisCollection$iv00 = CollectionsKt.sortedWith(var10000, var10001);
-    TAG_TYPES = (NBTTagType<?>[]) thisCollection$iv00.toArray(new NBTTagType[0]);
+    Map<Class<?>, NBTTagType<?>> javaToNBT = new HashMap<>();
+    javaToNBT.put(byte.class, NBTTagType.BYTE);
+    javaToNBT.put(short.class, NBTTagType.SHORT);
+    javaToNBT.put(int.class, NBTTagType.INT);
+    javaToNBT.put(long.class, NBTTagType.LONG);
+    javaToNBT.put(float.class, NBTTagType.FLOAT);
+    javaToNBT.put(double.class, NBTTagType.DOUBLE);
+    javaToNBT.put(byte[].class, NBTTagType.BYTE_ARRAY);
+    javaToNBT.put(String.class, NBTTagType.STRING);
+    javaToNBT.put(List.class, NBTTagType.LIST);
+    javaToNBT.put(Map.class, NBTTagType.COMPOUND);
+    javaToNBT.put(int[].class, NBTTagType.INT_ARRAY);
+    javaToNBT.put(long[].class, NBTTagType.LONG_ARRAY);
+    JAVA_TO_NBT = Collections.unmodifiableMap(javaToNBT);
+    NBTTagType<?>[] tagTypes = new NBTTagType<?>[NBTTagId.values().length];
+    tagTypes[NBTTagId.END.id()] = END;
+    tagTypes[NBTTagId.BYTE.id()] = BYTE;
+    tagTypes[NBTTagId.SHORT.id()] = SHORT;
+    tagTypes[NBTTagId.INT.id()] = INT;
+    tagTypes[NBTTagId.LONG.id()] = LONG;
+    tagTypes[NBTTagId.FLOAT.id()] = FLOAT;
+    tagTypes[NBTTagId.DOUBLE.id()] = DOUBLE;
+    tagTypes[NBTTagId.BYTE_ARRAY.id()] = BYTE_ARRAY;
+    tagTypes[NBTTagId.STRING.id()] = STRING;
+    tagTypes[NBTTagId.LIST.id()] = LIST;
+    tagTypes[NBTTagId.COMPOUND.id()] = COMPOUND;
+    tagTypes[NBTTagId.INT_ARRAY.id()] = INT_ARRAY;
+    tagTypes[NBTTagId.LONG_ARRAY.id()] = LONG_ARRAY;
+    TAG_TYPES = tagTypes;
   }
 }

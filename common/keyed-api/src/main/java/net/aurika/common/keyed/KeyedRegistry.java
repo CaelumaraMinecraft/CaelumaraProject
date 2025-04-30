@@ -2,7 +2,7 @@ package net.aurika.common.keyed;
 
 import org.jetbrains.annotations.Nullable;
 
-public interface KeyedRegistry<K, T extends Keyed<K>> {
+public interface KeyedRegistry<K, T> {
 
   void register(T obj);
 

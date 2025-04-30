@@ -6,6 +6,7 @@ plugins {
 dependencies {
   api("net.aurika:common-ident")
   api("net.aurika:common-sorting-api")
+  api("net.aurika:common-util-collection")
 }
 
 java {

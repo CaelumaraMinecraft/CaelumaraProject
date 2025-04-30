@@ -8,9 +8,22 @@ public final class AurikaDependencies {
   public static final String GUAVA = "com.google.guava:guava:33.4.8-jre";
   public static final String FASTUTIL = "it.unimi.dsi:fastutil:8.5.15";
 
+  public static final String APACHE_COMMONS_COMPRESS = "org.apache.commons:commons-compress:1.27.1";
+  public static final String APACHE_COMMONS_CONFIGURATION = "org.apache.commons:commons-configuration2:2.11.0";
+  public static final String APACHE_COMMONS_COLLECTIONS = "org.apache.commons:commons-collections4:4.5.0-M3";
+  public static final String APACHE_COMMONS_EXEC = "org.apache.commons:commons-exec:1.4.0";
+  public static final String APACHE_COMMONS_IO = "commons-io:commons-io:2.18.0";
+  public static final String APACHE_COMMONS_LANG = "org.apache.commons:commons-lang3:3.13.0";
+  public static final String APACHE_COMMONS_MATH = "org.apache.commons:commons-math3:3.6.1";
+  public static final String APACHE_COMMONS_TEXT = "org.apache.commons:commons-text:1.13.0";
+
+  public static final String HIKARI = "com.zaxxer:HikariCP:6.0.0";
+
   public static final String MONGODB_CORE = Groups.MONGODB + ":mongodb-driver-core:" + Versions.MONGODB;
   public static final String MONGODB_SYNC = Groups.MONGODB + ":mongodb-driver-sync:" + Versions.MONGODB;
   public static final String MONGODB_BSON = Groups.MONGODB + ":bson:" + Versions.MONGODB;
+  public static final String H2 = "com.h2database:h2:2.3.232";
+  public static final String POSTGRESQL = "org.postgresql:postgresql:42.7.5";
 
   public static final String XSERIES = "com.github.cryptomorin:XSeries:13.1.0";
   public static final String EXAMINATION_API = Groups.KYORI + ":examination-api:" + Versions.EXAMINATION;
@@ -27,6 +40,7 @@ public final class AurikaDependencies {
   public static final String ADVENTURE_TEXT_LEGACY = Groups.KYORI + ":adventure-text-serializer-legacy:" + Versions.ADVENTURE;
   public static final String ADVENTURE_TEXT_MINIMESSAGE = Groups.KYORI + ":adventure-text-minimessage:" + Versions.ADVENTURE;
 
+  public static final String ADVENTURE_PLATFORM_API = Groups.KYORI + ":adventure-platform-api:" + Versions.ADVENTURE_PLATFORM;
   public static final String ADVENTURE_PLATFORM_BUKKIT = Groups.KYORI + ":adventure-platform-bukkit:" + Versions.ADVENTURE_PLATFORM;
   public static final String ADVENTURE_PLATFORM_BUNGEECORD = Groups.KYORI + ":adventure-platform-bungeecord:" + Versions.ADVENTURE_PLATFORM;
 

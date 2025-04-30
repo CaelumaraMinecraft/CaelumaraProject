@@ -4,8 +4,8 @@ import net.aurika.auspice.platform.block.data.BlockData;
 import net.aurika.auspice.platform.block.data.BlockDataAware;
 import net.aurika.auspice.platform.block.type.BlockType;
 import net.aurika.auspice.platform.block.type.BlockTypeAware;
-import net.aurika.auspice.platform.location.Grid3Location;
-import net.aurika.auspice.platform.location.Grid3LocationAware;
+import net.aurika.auspice.platform.location.BlockLocation;
+import net.aurika.auspice.platform.location.BlockLocationAware;
 import net.aurika.auspice.platform.material.Material;
 import net.aurika.auspice.platform.material.MaterialAware;
 import net.aurika.auspice.platform.world.World;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
 
-public interface Block extends BlockTypeAware, BlockDataAware, MaterialAware, Grid3LocationAware, BlockAware, Examinable {
+public interface Block extends BlockTypeAware, BlockDataAware, MaterialAware, BlockLocationAware, BlockAware, Examinable {
 
   @ApiStatus.Experimental
   String VAL_LOCATION = "location";
@@ -42,7 +42,7 @@ public interface Block extends BlockTypeAware, BlockDataAware, MaterialAware, Gr
    * @param blockData the new block data
    * @throws ClassCastException when the type of block data is wrong
    */
-  void blockData(@NotNull BlockData blockData) throws ClassCastException;
+  void blockData(@NotNull BlockData blockData) throws IllegalArgumentException, ClassCastException;
 
   @Override
   @ExaminablePropertyGetter(VAL_MATERIAL)
@@ -52,29 +52,24 @@ public interface Block extends BlockTypeAware, BlockDataAware, MaterialAware, Gr
   @NotNull World world();
 
   @Override
-  int gridX();
+  int blockX();
 
   @Override
-  int gridY();
+  int blockY();
 
   @Override
-  int gridZ();
+  int blockZ();
 
-  @Override
   @ExaminablePropertyGetter(VAL_LOCATION)
-  default @NotNull Grid3Location grid3Location() {
-    return Grid3LocationAware.super.grid3Location();
-  }
+  default @NotNull BlockLocation blockLocation() { return BlockLocation.blockLocation(this); }
 
   @Override
-  default @NotNull Block block() {
-    return this;
-  }
+  default @NotNull Block block() { return this; }
 
   @Override
   default @NotNull Stream<? extends ExaminableProperty> examinableProperties() {
     return Stream.of(
-        ExaminableProperty.of(VAL_LOCATION, grid3Location()),        // location
+        ExaminableProperty.of(VAL_LOCATION, blockLocation()),        // location
         ExaminableProperty.of(VAL_TYPE, blockType()),                // type
         ExaminableProperty.of(VAL_DATA, blockData()),                // data
         ExaminableProperty.of(VAL_MATERIAL, material())              // material
