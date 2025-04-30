@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.territories.commands.admin.land;
 
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang;
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang;
 import net.aurika.kingdoms.territories.data.InvadeProtectionMetaHandler;
 import net.aurika.kingdoms.territories.data.LandCategoryMetaHandler;
 import net.aurika.kingdoms.territories.data.LandContractionsMetaHandler;

@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-  api("net.aurika:common-ident")
+  api("net.aurika:common-annotation")
   api("net.aurika:common-validate")
   api(EXAMINATION_API)
   api(EXAMINATION_STRING)

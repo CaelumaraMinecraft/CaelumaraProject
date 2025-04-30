@@ -1,3 +1,7 @@
+plugins {
+  id("net.aurika.gradle.kingdoms")
+}
+
 version = "0.0.1-SNAPSHOT"
 description = ""
 

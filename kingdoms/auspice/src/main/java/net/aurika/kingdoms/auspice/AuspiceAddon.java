@@ -8,7 +8,6 @@ import net.aurika.kingdoms.auspice.configs.AuspicePlaceholder;
 import net.aurika.kingdoms.auspice.configs.CustomConfigValidators;
 import net.aurika.kingdoms.auspice.costs.CurrencyRegistry;
 import net.aurika.kingdoms.auspice.util.AddonTemplate;
-import net.aurika.kingdoms.auspice.util.GroupExt;
 import net.aurika.kingdoms.auspice.util.land.LandUtil;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.commands.admin.CommandAdmin;
@@ -50,14 +49,11 @@ public final class AuspiceAddon extends AddonTemplate {
 
   private final Set<KingdomMetadataHandler> landMetadataHandlers = new HashSet<>();   // Land 的元数据存储器
 
-  public AuspiceAddon() {
-    super();
-  }
+  public AuspiceAddon() { super(); }
 
   @Override
   protected void onInit0() {
     instance = this;
-    System.out.println("super init0 called");
   }
 
   @Override
@@ -71,13 +67,9 @@ public final class AuspiceAddon extends AddonTemplate {
     LanguageManager.registerMessenger(AuspiceLang.class);
 
     GroupExt.init();
-
     CurrencyRegistry.init();
-
     CustomConfigValidators.init();
-
     LandUtil.init();
-
     AuspicePlaceholder.init();
   }
 
@@ -91,8 +83,7 @@ public final class AuspiceAddon extends AddonTemplate {
   }
 
   @Override
-  public void onDisable0() {
-  }
+  public void onDisable0() { }
 
   @Override
   public void reloadAddon0() {
@@ -121,9 +112,7 @@ public final class AuspiceAddon extends AddonTemplate {
   }
 
   @Override
-  public @NotNull String getAddonName() {
-    return "auspice";
-  }
+  public @NotNull String getAddonName() { return "auspice"; }
 
   private void registerAllCommands() {
     CommandAdmin ca = CommandAdmin.getInstance();
@@ -132,11 +121,4 @@ public final class AuspiceAddon extends AddonTemplate {
     new CommandAdminRegistry(ca);
   }
 
-  {
-    System.out.println("<init> called");
-  }
-
-  static {
-    System.out.println("<clinit> called");
-  }
 }

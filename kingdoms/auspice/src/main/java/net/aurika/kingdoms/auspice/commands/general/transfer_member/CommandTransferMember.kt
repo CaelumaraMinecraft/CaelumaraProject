@@ -1,7 +1,7 @@
 package net.aurika.kingdoms.auspice.commands.general.transfer_member
 
 import net.aurika.kingdoms.auspice.configs.AuspiceLang
-import net.aurika.kingdoms.auspice.util.GroupExt
+import net.aurika.kingdoms.auspice.GroupExt
 import org.bukkit.Bukkit
 import org.kingdoms.commands.CommandContext
 import org.kingdoms.commands.CommandResult

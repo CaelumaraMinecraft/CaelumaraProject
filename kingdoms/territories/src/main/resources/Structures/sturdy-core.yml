@@ -41,3 +41,13 @@ particles:
       particle: DRAGON_BREATH
       count: 70
       offset: 0.5, 0.5, 0.5
+
+item:
+  1:
+    name: "&bSturdy Core"
+    material: MUSIC_DISC_BLOCKS
+    flags: [ ALL ]
+    lore:
+      - "{$sep}Blocks in chunk with a sturdy core"
+      - "cannot be broken by explosion"
+      - "{$dot} {$p}Level{$colon} {$s}%roman@level%"

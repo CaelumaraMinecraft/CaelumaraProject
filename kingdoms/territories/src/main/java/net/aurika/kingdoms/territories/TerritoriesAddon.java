@@ -9,9 +9,9 @@ import net.aurika.kingdoms.territories.commands.admin.registry.CommandAdminRegis
 import net.aurika.kingdoms.territories.commands.admin.registry.CommandAdminRegistryLandContraction;
 import net.aurika.kingdoms.territories.commands.admin.registry.CommandAdminRegistryLandLease;
 import net.aurika.kingdoms.territories.commands.general.land.CommandLand;
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryConfig;
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang;
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryPlaceholder;
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryConfig;
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang;
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryPlaceholder;
 import net.aurika.kingdoms.territories.constant.invade_protection.StandardInvadeProtection;
 import net.aurika.kingdoms.territories.constant.land.category.LandCategoryRegistry;
 import net.aurika.kingdoms.territories.constant.land.category.StandardLandCategory;
@@ -20,7 +20,7 @@ import net.aurika.kingdoms.territories.constant.land.contraction.std.StandardLan
 import net.aurika.kingdoms.territories.constant.land.lease.project.LandLeaseProjectRegistry;
 import net.aurika.kingdoms.territories.constant.land.structure.type.StructureTypeSturdyCore;
 import net.aurika.kingdoms.territories.data.*;
-import net.aurika.kingdoms.territories.managers.*;
+import net.aurika.kingdoms.territories.manager.*;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -81,8 +81,8 @@ public final class TerritoriesAddon extends AddonTemplate {
 
     LanguageManager.registerMessenger(PowerfulTerritoryLang.class);
 
+    registerAllBuildings();
     registerAllMetadataHandlers();
-
     landLeaseProjectRegistry.registerDefaults();
 
     StandardInvadeProtection.init();
@@ -102,9 +102,7 @@ public final class TerritoriesAddon extends AddonTemplate {
   public void onDisable0() { }
 
   @Override
-  public void reloadAddon0() {
-    registerAllBuildings();
-  }
+  public void reloadAddon0() { }
 
   @Override
   public @NotNull String getAddonName() {
@@ -113,10 +111,6 @@ public final class TerritoriesAddon extends AddonTemplate {
 
   public void registerAllBuildings() {
     StructureRegistry.get().registerType(StructureTypeSturdyCore.INSTANCE);
-  }
-
-  public static void printStructures() {
-    System.out.println(Arrays.toString((StructureRegistry.get().getTypes().keySet()).toArray()));
   }
 
   public void registerAllEvents() {
@@ -170,16 +164,10 @@ public final class TerritoriesAddon extends AddonTemplate {
     landMetadataHandlers.forEach(mr::register);
   }
 
-  public @NotNull LandCategoryRegistry landCategoryRegistry() {
-    return landCategoryRegistry;
-  }
+  public @NotNull LandCategoryRegistry landCategoryRegistry() { return landCategoryRegistry; }
 
-  public @NotNull LandContractionRegistry landContractionRegistry() {
-    return landContractionRegistry;
-  }
+  public @NotNull LandContractionRegistry landContractionRegistry() { return landContractionRegistry; }
 
-  public @NotNull LandLeaseProjectRegistry landLeaseProjectRegistry() {
-    return landLeaseProjectRegistry;
-  }
+  public @NotNull LandLeaseProjectRegistry landLeaseProjectRegistry() { return landLeaseProjectRegistry; }
 
 }

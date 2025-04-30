@@ -1,7 +1,7 @@
 package net.aurika.kingdoms.territories.commands.general.land.contraction
 
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryConfig
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryConfig
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang
 import net.aurika.kingdoms.territories.constant.land.contraction.LandContraction
 import net.aurika.kingdoms.territories.constant.land.contraction.std.StandardLandContraction
 import net.aurika.kingdoms.territories.data.Contractions

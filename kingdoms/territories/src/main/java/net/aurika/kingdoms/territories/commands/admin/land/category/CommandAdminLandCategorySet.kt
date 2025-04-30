@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.territories.commands.admin.land.category
 
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang
 import net.aurika.kingdoms.territories.constant.land.category.LandCategory
 import net.aurika.kingdoms.territories.data.Categories
 import net.aurika.kingdoms.territories.data.Categories.categoriesString

@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.territories.commands.general.land.contraction
 
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang
 import net.aurika.kingdoms.territories.data.getContractions
 import org.kingdoms.commands.CommandContext
 import org.kingdoms.commands.CommandResult

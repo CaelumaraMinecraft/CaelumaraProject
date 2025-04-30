@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.territories.commands.admin.land.invade_protection;
 
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang;
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang;
 import net.aurika.kingdoms.territories.constant.invade_protection.InvadeProtection;
 import net.aurika.kingdoms.territories.constant.invade_protection.InvadeProtectionRegistry;
 import net.aurika.kingdoms.territories.data.InvadeProtections;

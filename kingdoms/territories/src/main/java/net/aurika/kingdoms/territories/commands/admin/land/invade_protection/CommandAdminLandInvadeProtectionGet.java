@@ -1,6 +1,6 @@
 package net.aurika.kingdoms.territories.commands.admin.land.invade_protection;
 
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryLang;
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryLang;
 import net.aurika.kingdoms.territories.data.InvadeProtections;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;

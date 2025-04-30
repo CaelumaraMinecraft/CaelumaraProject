@@ -4,7 +4,7 @@
 package net.aurika.kingdoms.territories.data
 
 import net.aurika.kingdoms.territories.TerritoriesAddon
-import net.aurika.kingdoms.territories.configs.PowerfulTerritoryConfig
+import net.aurika.kingdoms.territories.config.PowerfulTerritoryConfig
 import net.aurika.kingdoms.territories.constant.land.contraction.ContractionLandProperties
 import net.aurika.kingdoms.territories.constant.land.contraction.LandContraction
 import org.kingdoms.constants.base.KeyedKingdomsObject
