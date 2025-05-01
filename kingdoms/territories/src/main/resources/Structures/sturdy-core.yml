@@ -4,7 +4,7 @@
   #   extend: false
   structure:
     parameters:
-      <name>: sturdy-core
+      <name>: territories-sturdy-core
       <build-duration-factor>: '-45 seconds'
       <durability-factor>: 100
       <material-1>: REDSTONE_BLOCK
@@ -12,7 +12,7 @@
       <material-3>: CRYING_OBSIDIAN
 
 name: "&bSturdy Core"
-type: sturdy-core
+type: territories_sturdy-core
 default-name: "Sturdy Core"
 max-level: 5
 upgrade-cost: 'level * 2500 + 1000'

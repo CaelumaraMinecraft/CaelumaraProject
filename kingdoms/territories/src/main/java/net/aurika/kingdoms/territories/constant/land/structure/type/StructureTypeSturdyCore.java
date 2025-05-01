@@ -1,5 +1,6 @@
 package net.aurika.kingdoms.territories.constant.land.structure.type;
 
+import net.aurika.kingdoms.territories.TerritoriesAddon;
 import net.aurika.kingdoms.territories.constant.land.structure.object.SturdyCore;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +16,7 @@ public class StructureTypeSturdyCore extends StructureType {
   public static final StructureTypeSturdyCore INSTANCE = new StructureTypeSturdyCore();
 
   protected StructureTypeSturdyCore() {
-    super("sturdy-core");
+    super(TerritoriesAddon.NAMESPACE + "_sturdy-core");
   }
 
   @Override
