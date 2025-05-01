@@ -1,35 +1,35 @@
 (import):
-  building:
-    anchors: [ &fnPoints fnPoints, &holograms holograms ]
-    extend: false
+  # building:
+  #   anchors: [ &fnPoints fnPoints, &holograms holograms ]
+  #   extend: false
   structure:
     parameters:
-      <name>: nexus
+      <name>: sturdy-core
       <build-duration-factor>: '-45 seconds'
       <durability-factor>: 100
-      <material-1>: CRYING_OBSIDIAN
-      <material-2>: CRYING_OBSIDIAN
+      <material-1>: REDSTONE_BLOCK
+      <material-2>: OBSIDIAN
       <material-3>: CRYING_OBSIDIAN
 
 name: "&bSturdy Core"
 type: sturdy-core
 default-name: "Sturdy Core"
 max-level: 5
-upgrade-cost: 'level * 1000'
+upgrade-cost: 'level * 2500 + 1000'
 dont-update-holograms: true
 hide-holograms: true
 
-building:
-  4:
-    functional-points: *fnPoints
-    block:
-      material: CRYING_OBSIDIAN
-    holograms: *holograms
-  5:
-    functional-points: *fnPoints
-    block:
-      material: CRYING_OBSIDIAN
-    holograms: *holograms
+# building:
+#   4:
+#     functional-points: *fnPoints
+#     block:
+#       material: CRYING_OBSIDIAN
+#     holograms: *holograms
+#   5:
+#     functional-points: *fnPoints
+#     block:
+#       material: CRYING_OBSIDIAN
+#     holograms: *holograms
 
 particles:
   1:
@@ -45,7 +45,7 @@ particles:
 item:
   1:
     name: "&bSturdy Core"
-    material: MUSIC_DISC_BLOCKS
+    material: IRON_INGOT
     flags: [ ALL ]
     lore:
       - "{$sep}Blocks in chunk with a sturdy core"

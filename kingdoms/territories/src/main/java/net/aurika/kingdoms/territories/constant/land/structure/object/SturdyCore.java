@@ -1,6 +1,7 @@
 package net.aurika.kingdoms.territories.constant.land.structure.object;
 
 import net.aurika.common.validate.Validate;
+import org.bukkit.Location;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.kingdoms.constants.land.Land;
@@ -9,6 +10,15 @@ import org.kingdoms.constants.land.structures.Structure;
 import org.kingdoms.constants.land.structures.StructureStyle;
 
 public class SturdyCore extends Structure {
+
+  public static boolean isProtectedBySturdyCore(@NotNull Location location) {
+    Validate.Arg.notNull(location, "location");
+    Land land = Land.getLand(location);
+    if (land != null) {
+      return isProtectedBySturdyCore(land);
+    }
+    return false;
+  }
 
   public static boolean isProtectedBySturdyCore(@NotNull Land land) {
     Validate.Arg.notNull(land, "land");

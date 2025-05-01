@@ -64,7 +64,7 @@ public final class AurikaDependencies {
 
     public static final String ASM = "9.8";
     public static final String EXAMINATION = "1.3.0";
-    public static final String ADVENTURE = "4.20.0";
+    public static final String ADVENTURE = "4.21.0";
     public static final String ADVENTURE_PLATFORM = "4.3.4";
     public static final String EVENT = "3.0.0";
     public static final String MONGODB = "5.2.1";
