@@ -18,21 +18,18 @@ public final class IdentPatterns {
   @Pattern(GROUP_PATTERN)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface Group {
-  }
+  public @interface Group { }
 
   @Documented
   @Pattern(KEY_PATH_PATTERN)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface IdentPath {
-  }
+  public @interface IdentPath { }
 
   @Documented
   @Pattern(KEY_PATTERN)
   @Retention(RetentionPolicy.CLASS)
   @Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.METHOD, ElementType.PARAMETER})
-  public @interface Ident {
-  }
+  public @interface Ident { }
 
 }

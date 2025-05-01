@@ -7,7 +7,6 @@ import net.aurika.common.event.DefaultEventManager;
 import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.Map;
 
 public class BukkitEventManager extends DefaultEventManager<MinecraftEvent> implements MinecraftEventManager {
@@ -45,27 +44,6 @@ public class BukkitEventManager extends DefaultEventManager<MinecraftEvent> impl
     return eventGenerator.generateEventClass(bukkitEventClass, eventInterface, otherInterfaces);
   }
 
-  public @NotNull BukkitEventGenerator eventGenerator() {
-    return this.eventGenerator;
-  }
-
-  @Override
-  public void callEvent(@NotNull MinecraftEvent event) {
-    if (event instanceof BukkitEvent) {
-      super.callEvent(event);
-    } else {
-      throw new IllegalArgumentException("Unsupported event type: " + event.getClass().getName());
-    }
-  }
-
-  @Override
-  public @NotNull Collection<? extends Conduit<? extends MinecraftEvent>> conduits() {
-    return super.conduits();
-  }
-
-  @Override
-  public void addConduit(@NotNull Conduit<? extends MinecraftEvent> conduit) {
-    super.addConduit(conduit);
-  }
+  public @NotNull BukkitEventGenerator eventGenerator() { return this.eventGenerator; }
 
 }

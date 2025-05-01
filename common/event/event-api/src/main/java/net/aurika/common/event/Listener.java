@@ -12,6 +12,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Listener<E extends Event> extends Identified {
 
+  /**
+   * Gets the id for the listener.
+   *
+   * @return the listener id
+   */
   @Override
   @Contract(pure = true)
   @NotNull Ident ident();

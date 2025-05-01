@@ -1,5 +1,6 @@
 package net.aurika.gradle.kingdoms.dependency;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Collections;
@@ -37,7 +38,7 @@ public final class KingdomsDependency {
     return map;
   }
 
-  public static Map<String, String> reverseRelocates() {
+  public static @NotNull Map<String, String> reverseRelocates() {
     Map<String, String> relocates = buildRelocates();
     Map<String, String> reverses = new HashMap<>(relocates.size());
     for (Map.Entry<String, String> entry : relocates.entrySet()) {

@@ -5,7 +5,7 @@ import net.aurika.common.ident.Ident;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A conduit to transport {@link Event events}.
+ * A conduit to transport {@link Event events}. It can store {@link Listener listeners} and order them.
  * In a conduit, a listener has lower order, the later the listener calls, and the higher the priority for determining an event.
  *
  * @param <E> the event type
@@ -45,10 +45,28 @@ public interface Conduit<E extends Event> {
    */
   @NotNull Listener<E> @NotNull [] listeners();
 
+  int listenersCount();
+
+  /**
+   * Gets a listener at the {@code index}.
+   *
+   * @param index the index. It must be lower than {@link #listenersCount()}
+   * @return the listener
+   * @throws IndexOutOfBoundsException if the {@code index} is out of bound
+   */
   @ThrowOnAbsent
   @NotNull Listener<E> listenerAtIndex(int index) throws IndexOutOfBoundsException;
 
+  boolean hasListener(@NotNull Ident id);
+
+  /**
+   * Gets a listener by the {@code id}.
+   *
+   * @param id the listener id
+   * @return the listener
+   * @throws IllegalArgumentException if the conduit doesn't have the listener
+   */
   @ThrowOnAbsent
-  @NotNull Listener<E> listener(@NotNull Ident id) throws IllegalArgumentException;
+  @NotNull Listener<E> listenerById(@NotNull Ident id) throws IllegalArgumentException;
 
 }

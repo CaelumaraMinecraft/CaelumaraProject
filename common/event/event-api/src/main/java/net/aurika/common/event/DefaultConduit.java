@@ -61,6 +61,11 @@ public class DefaultConduit<E extends Event> implements Conduit<E> {
   public @NotNull Class<E> eventType() { return eventType; }
 
   @Override
+  public int listenersCount() {
+    return listenerList.size();
+  }
+
+  @Override
   public @NotNull Listener<E> @NotNull [] listeners() {
     // noinspection unchecked
     return listenerList.toArray(emptyArray(Listener.class));
@@ -70,7 +75,12 @@ public class DefaultConduit<E extends Event> implements Conduit<E> {
   public @NotNull Listener<E> listenerAtIndex(int index) { return listenerList.get(index); }
 
   @Override
-  public @NotNull Listener<E> listener(@NotNull Ident id) {
+  public boolean hasListener(@NotNull Ident id) {
+    return listenerMap.containsKey(id);
+  }
+
+  @Override
+  public @NotNull Listener<E> listenerById(@NotNull Ident id) {
     if (!listenerMap.containsKey(id)) {
       throw new IllegalArgumentException("Listener of id: " + id + " is not registered");
     } else {

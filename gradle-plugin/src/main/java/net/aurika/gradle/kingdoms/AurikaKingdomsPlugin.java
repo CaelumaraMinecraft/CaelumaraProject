@@ -27,27 +27,27 @@ public class AurikaKingdomsPlugin implements Plugin<Project> {
         KingdomsExtension.class,
         KingdomsExtension.EXTENSION_NAME,
         KingdomsExtension.class,
-        new Object[]{project}
+        project
     );
     // addon extension
-    KingdomsAddonExtension addonExt = ((ExtensionAware) mainExt).getExtensions().create(
+    KingdomsAddonExtension addonExt = mainExt.getExtensions().create(
         KingdomsAddonExtension.class,
         KingdomsAddonExtension.EXTENSION_NAME,
         KingdomsAddonExtension.class,
-        new Object[]{project}
+        project
     );
 
     project.getDependencies().getExtensions().create(
         KingdomsDependencyHandlerExtension.class,
         KingdomsDependencyHandlerExtension.EXTENSION_NAME,
         KingdomsDependencyHandlerExtension.class,
-        new Object[]{project}
+        project
     );
     project.getExtensions().create(
         KingdomsDependencyRelocateExtension.class,
         KingdomsDependencyRelocateExtension.EXTENSION_NAME,
         KingdomsDependencyRelocateExtension.class,
-        new Object[]{project}
+        project
     );
 
     project.getDependencies().add(

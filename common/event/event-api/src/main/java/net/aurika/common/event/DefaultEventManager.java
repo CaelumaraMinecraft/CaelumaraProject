@@ -4,9 +4,10 @@ import net.aurika.common.validate.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class DefaultEventManager<BE extends Event> implements EventManager<BE> {
 
@@ -46,16 +47,35 @@ public class DefaultEventManager<BE extends Event> implements EventManager<BE> {
     }
   }
 
+  @Override
   public @NotNull Class<BE> baseEventType() { return baseEventType; }
 
   @Override
-  public @NotNull Collection<? extends Conduit<? extends BE>> conduits() {
-    return conduits.values();
+  public @NotNull Set<? extends Conduit<? extends BE>> conduits() {
+    return new HashSet<>(conduits.values());
+  }
+
+  @Override
+  public boolean hasConduit(@NotNull Class<? extends BE> eventType) {
+    return conduits.containsKey(eventType);
+  }
+
+  @Override
+  public @NotNull Conduit<? extends BE> getConduit(@NotNull Class<? extends BE> eventType) {
+    @Nullable Conduit<? extends BE> conduit = conduits.get(eventType);
+    if (conduit == null) {
+      throw new IllegalArgumentException("No conduit found for " + eventType.getName());
+    }
+    return conduit;
   }
 
   @Override
   public void addConduit(@NotNull Conduit<? extends BE> conduit) {
     Class<? extends BE> eventClass = conduit.eventType();
+    if (!baseEventType.isAssignableFrom(eventClass)) {
+      throw new IllegalArgumentException(
+          "Event must be assignable from: " + baseEventType.getName() + ", but got" + eventClass.getName());
+    }
     if (!EventAPI.isListenable(eventClass)) {
       throw new IllegalArgumentException("Event class for conduit" + conduit + " is not listenable");
     }

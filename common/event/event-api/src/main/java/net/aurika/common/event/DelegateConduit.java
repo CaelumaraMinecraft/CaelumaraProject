@@ -49,10 +49,16 @@ public class DelegateConduit<E extends Event> implements Conduit<E> {
   }
 
   @Override
+  public int listenersCount() { return delegate.listenersCount(); }
+
+  @Override
   public @NotNull Listener<E> listenerAtIndex(int index) throws IndexOutOfBoundsException { return delegate.listenerAtIndex(index); }
 
   @Override
-  public @NotNull Listener<E> listener(@NotNull Ident id) throws IllegalArgumentException { return delegate.listener(id); }
+  public boolean hasListener(@NotNull Ident id) { return delegate.hasListener(id); }
+
+  @Override
+  public @NotNull Listener<E> listenerById(@NotNull Ident id) throws IllegalArgumentException { return delegate.listenerById(id); }
 
   @Override
   public int hashCode() { return super.hashCode(); }
